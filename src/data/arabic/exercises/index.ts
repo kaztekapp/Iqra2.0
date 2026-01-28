@@ -147,6 +147,69 @@ export const getExercisesForGrammarLesson = (lessonId: string): Exercise[] => {
       'ex-grammar-11-18', 'ex-grammar-11-19', 'ex-grammar-11-20', 'ex-grammar-11-21', 'ex-grammar-11-22',
       'ex-grammar-11-23', 'ex-grammar-11-24'
     ],
+    'grammar-12': [
+      'ex-grammar-12-1', 'ex-grammar-12-2', 'ex-grammar-12-3', 'ex-grammar-12-4', 'ex-grammar-12-5',
+      'ex-grammar-12-6', 'ex-grammar-12-7', 'ex-grammar-12-8',
+      // Writing exercises
+      'ex-grammar-12-9', 'ex-grammar-12-10', 'ex-grammar-12-11', 'ex-grammar-12-12', 'ex-grammar-12-13',
+      'ex-grammar-12-14', 'ex-grammar-12-15', 'ex-grammar-12-16', 'ex-grammar-12-17', 'ex-grammar-12-18'
+    ],
+    'grammar-13': [
+      'ex-grammar-13-1', 'ex-grammar-13-2', 'ex-grammar-13-3', 'ex-grammar-13-4', 'ex-grammar-13-5',
+      'ex-grammar-13-6',
+      // Writing exercises
+      'ex-grammar-13-7', 'ex-grammar-13-8', 'ex-grammar-13-9', 'ex-grammar-13-10', 'ex-grammar-13-11',
+      'ex-grammar-13-12', 'ex-grammar-13-13', 'ex-grammar-13-14', 'ex-grammar-13-15', 'ex-grammar-13-16'
+    ],
+    'grammar-14': [
+      'ex-grammar-14-1', 'ex-grammar-14-2', 'ex-grammar-14-3', 'ex-grammar-14-4', 'ex-grammar-14-5',
+      'ex-grammar-14-6', 'ex-grammar-14-7', 'ex-grammar-14-8',
+      // Writing exercises
+      'ex-grammar-14-9', 'ex-grammar-14-10', 'ex-grammar-14-11', 'ex-grammar-14-12', 'ex-grammar-14-13',
+      'ex-grammar-14-14', 'ex-grammar-14-15', 'ex-grammar-14-16', 'ex-grammar-14-17', 'ex-grammar-14-18'
+    ],
+    'grammar-15': [
+      'ex-grammar-15-1', 'ex-grammar-15-2', 'ex-grammar-15-3', 'ex-grammar-15-4', 'ex-grammar-15-5',
+      'ex-grammar-15-6', 'ex-grammar-15-7', 'ex-grammar-15-8',
+      // Writing exercises
+      'ex-grammar-15-9', 'ex-grammar-15-10', 'ex-grammar-15-11', 'ex-grammar-15-12', 'ex-grammar-15-13',
+      'ex-grammar-15-14', 'ex-grammar-15-15', 'ex-grammar-15-16', 'ex-grammar-15-17', 'ex-grammar-15-18'
+    ],
+    'grammar-16': [
+      'ex-grammar-16-1', 'ex-grammar-16-2', 'ex-grammar-16-3', 'ex-grammar-16-4', 'ex-grammar-16-5',
+      'ex-grammar-16-6', 'ex-grammar-16-7', 'ex-grammar-16-8',
+      // Writing exercises
+      'ex-grammar-16-9', 'ex-grammar-16-10', 'ex-grammar-16-11', 'ex-grammar-16-12', 'ex-grammar-16-13',
+      'ex-grammar-16-14', 'ex-grammar-16-15', 'ex-grammar-16-16', 'ex-grammar-16-17', 'ex-grammar-16-18'
+    ],
+    'grammar-17': [
+      'ex-grammar-17-1', 'ex-grammar-17-2', 'ex-grammar-17-3', 'ex-grammar-17-4', 'ex-grammar-17-5',
+      'ex-grammar-17-6', 'ex-grammar-17-7', 'ex-grammar-17-8',
+      // Writing exercises
+      'ex-grammar-17-9', 'ex-grammar-17-10', 'ex-grammar-17-11', 'ex-grammar-17-12', 'ex-grammar-17-13',
+      'ex-grammar-17-14', 'ex-grammar-17-15', 'ex-grammar-17-16', 'ex-grammar-17-17', 'ex-grammar-17-18'
+    ],
+    'grammar-18': [
+      'ex-grammar-18-1', 'ex-grammar-18-2', 'ex-grammar-18-3', 'ex-grammar-18-4', 'ex-grammar-18-5',
+      'ex-grammar-18-6', 'ex-grammar-18-7', 'ex-grammar-18-8',
+      // Writing exercises
+      'ex-grammar-18-9', 'ex-grammar-18-10', 'ex-grammar-18-11', 'ex-grammar-18-12', 'ex-grammar-18-13',
+      'ex-grammar-18-14', 'ex-grammar-18-15', 'ex-grammar-18-16', 'ex-grammar-18-17', 'ex-grammar-18-18'
+    ],
+    'grammar-19': [
+      'ex-grammar-19-1', 'ex-grammar-19-2', 'ex-grammar-19-3', 'ex-grammar-19-4', 'ex-grammar-19-5',
+      'ex-grammar-19-6', 'ex-grammar-19-7', 'ex-grammar-19-8',
+      // Writing exercises
+      'ex-grammar-19-9', 'ex-grammar-19-10', 'ex-grammar-19-11', 'ex-grammar-19-12', 'ex-grammar-19-13',
+      'ex-grammar-19-14', 'ex-grammar-19-15', 'ex-grammar-19-16', 'ex-grammar-19-17', 'ex-grammar-19-18'
+    ],
+    'grammar-20': [
+      'ex-grammar-20-1', 'ex-grammar-20-2', 'ex-grammar-20-3', 'ex-grammar-20-4', 'ex-grammar-20-5',
+      'ex-grammar-20-6', 'ex-grammar-20-7', 'ex-grammar-20-8',
+      // Writing exercises
+      'ex-grammar-20-9', 'ex-grammar-20-10', 'ex-grammar-20-11', 'ex-grammar-20-12', 'ex-grammar-20-13',
+      'ex-grammar-20-14', 'ex-grammar-20-15', 'ex-grammar-20-16', 'ex-grammar-20-17', 'ex-grammar-20-18'
+    ],
   };
 
   const exerciseIds = lessonExerciseMap[lessonId] || [];
