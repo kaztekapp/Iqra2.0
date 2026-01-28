@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getExercisesForGrammarLesson } from '../../src/data/arabic/exercises';
-import { Exercise } from '../../src/types/arabic';
+import { Exercise, GrammarLesson, GrammarContent } from '../../src/types/arabic';
 import ArabicKeyboard from '../../src/components/arabic/ArabicKeyboard';
+import { getLessonById } from '../../src/data/arabic/grammar/lessons';
 
 // Comprehensive lesson content with many examples
 const lessonContent: Record<string, {
@@ -763,6 +764,7 @@ const lessonContent: Record<string, {
 };
 
 // Map for lesson IDs to grammar IDs (for exercises)
+// Map old lesson IDs to grammar IDs (for backwards compatibility)
 const lessonToGrammarMap: Record<string, string> = {
   'definite-article': 'grammar-3',
   'personal-pronouns': 'grammar-4',
@@ -772,6 +774,16 @@ const lessonToGrammarMap: Record<string, string> = {
   'prepositions': 'grammar-10',
   'adjectives': 'grammar-11',
   'numbers': 'grammar-12',
+};
+
+// Helper function to get grammar ID from lesson ID
+const getGrammarId = (lessonId: string): string => {
+  // If it's already a grammar ID (e.g., 'grammar-13'), use it directly
+  if (lessonId.startsWith('grammar-')) {
+    return lessonId;
+  }
+  // Otherwise, try the mapping
+  return lessonToGrammarMap[lessonId] || lessonId;
 };
 
 export default function GrammarLessonScreen() {
@@ -788,8 +800,60 @@ export default function GrammarLessonScreen() {
   const [practiceType, setPracticeType] = useState<'regular' | 'writing' | null>(null);
   const [activeExercises, setActiveExercises] = useState<Exercise[]>([]);
 
-  const lesson = lessonContent[lessonId || ''];
-  const grammarId = lessonToGrammarMap[lessonId || ''];
+  // Try to get lesson from data file first (for grammar-X IDs)
+  const dataLesson = getLessonById(lessonId || '');
+  // Fall back to hardcoded content for old IDs
+  const hardcodedLesson = lessonContent[lessonId || ''];
+
+  // Use data lesson if available, converting its content structure
+  const lesson = dataLesson ? {
+    title: dataLesson.title,
+    titleArabic: dataLesson.titleArabic,
+    sections: dataLesson.content.reduce((acc: any[], item: GrammarContent, index: number) => {
+      if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
+        acc.push({
+          title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
+          content: item.content,
+          examples: [],
+        });
+      } else if (item.type === 'example') {
+        // Add example to the last section or create a new one
+        const lastSection = acc[acc.length - 1];
+        if (lastSection && lastSection.examples) {
+          lastSection.examples.push({
+            arabic: item.arabic || '',
+            transliteration: item.transliteration || '',
+            english: item.translation || '',
+          });
+        } else {
+          acc.push({
+            title: item.content || 'Examples',
+            content: '',
+            examples: [{
+              arabic: item.arabic || '',
+              transliteration: item.transliteration || '',
+              english: item.translation || '',
+            }],
+          });
+        }
+      } else if (item.type === 'table' && item.tableData) {
+        // Convert table to section with examples
+        const examples = item.tableData.rows.map(row => ({
+          arabic: row[0] || '',
+          transliteration: row[1] || '',
+          english: row[row.length - 1] || '',
+        }));
+        acc.push({
+          title: item.content || 'Reference',
+          content: `Columns: ${item.tableData.headers.join(' | ')}`,
+          examples,
+        });
+      }
+      return acc;
+    }, []),
+  } : hardcodedLesson;
+
+  const grammarId = getGrammarId(lessonId || '');
   const allExercises = grammarId ? getExercisesForGrammarLesson(grammarId) : [];
 
   // Separate exercises by type

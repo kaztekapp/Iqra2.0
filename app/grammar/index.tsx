@@ -3,99 +3,29 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useProgressStore } from '../../src/stores/progressStore';
+import { grammarLessons as lessonsData } from '../../src/data/arabic/grammar/lessons';
 
-const grammarLessons = [
-  {
-    id: 'definite-article',
-    title: 'The Definite Article',
-    titleArabic: 'أَلْ التَّعْرِيف',
-    description: 'Learn how to make words definite with "al-"',
-    level: 'beginner',
-    icon: 'text',
-    color: '#6366f1',
-  },
-  {
-    id: 'gender',
-    title: 'Gender in Arabic',
-    titleArabic: 'الْمُذَكَّرُ وَالْمُؤَنَّث',
-    description: 'Understanding masculine and feminine nouns',
-    level: 'beginner',
-    icon: 'people',
-    color: '#ec4899',
-  },
-  {
-    id: 'personal-pronouns',
-    title: 'Personal Pronouns',
-    titleArabic: 'الضَّمَائِر',
-    description: 'I, you, he, she, we, they in Arabic',
-    level: 'beginner',
-    icon: 'person',
-    color: '#22c55e',
-  },
-  {
-    id: 'possessive',
-    title: 'Possessive Pronouns',
-    titleArabic: 'ضَمَائِرُ الْمِلْكِيَّة',
-    description: 'My, your, his, her, our, their',
-    level: 'beginner',
-    icon: 'hand-left',
-    color: '#f59e0b',
-  },
-  {
-    id: 'nominal-sentence',
-    title: 'Nominal Sentences',
-    titleArabic: 'الْجُمْلَةُ الاِسْمِيَّة',
-    description: 'Sentences that begin with a noun',
-    level: 'intermediate',
-    icon: 'create',
-    color: '#8b5cf6',
-  },
-  {
-    id: 'verbal-sentence',
-    title: 'Verbal Sentences',
-    titleArabic: 'الْجُمْلَةُ الْفِعْلِيَّة',
-    description: 'Sentences that begin with a verb',
-    level: 'intermediate',
-    icon: 'shuffle',
-    color: '#ef4444',
-  },
-  {
-    id: 'adjectives',
-    title: 'Adjectives',
-    titleArabic: 'الصِّفَات',
-    description: 'Describing nouns with adjectives',
-    level: 'beginner',
-    icon: 'color-palette',
-    color: '#D4AF37',
-  },
-  {
-    id: 'prepositions',
-    title: 'Prepositions',
-    titleArabic: 'حُرُوفُ الْجَرّ',
-    description: 'In, on, from, to, with, and more',
-    level: 'beginner',
-    icon: 'locate',
-    color: '#14b8a6',
-  },
-  {
-    id: 'numbers',
-    title: 'Numbers & Counting',
-    titleArabic: 'الأَعْدَاد',
-    description: 'Arabic number system and counting rules',
-    level: 'intermediate',
-    icon: 'calculator',
-    color: '#6366f1',
-  },
-  {
-    id: 'dual-plural',
-    title: 'Dual & Plural Forms',
-    titleArabic: 'الْمُثَنَّى وَالْجَمْع',
-    description: 'How to form dual and plural nouns',
-    level: 'intermediate',
-    icon: 'layers',
-    color: '#22c55e',
-  },
-];
+// Map category to icon and color
+const categoryConfig: Record<string, { icon: string; color: string }> = {
+  articles: { icon: 'text', color: '#6366f1' },
+  pronouns: { icon: 'person', color: '#22c55e' },
+  verbs: { icon: 'flash', color: '#ef4444' },
+  nouns: { icon: 'cube', color: '#f59e0b' },
+  adjectives: { icon: 'color-palette', color: '#D4AF37' },
+  sentences: { icon: 'create', color: '#8b5cf6' },
+  other: { icon: 'bulb', color: '#14b8a6' },
+};
+
+// Transform lessons data for UI
+const grammarLessons = lessonsData.map((lesson) => ({
+  id: lesson.id,
+  title: lesson.title,
+  titleArabic: lesson.titleArabic,
+  description: lesson.description,
+  level: lesson.level,
+  icon: categoryConfig[lesson.category]?.icon || 'book',
+  color: categoryConfig[lesson.category]?.color || '#6366f1',
+}));
 
 export default function GrammarScreen() {
   const { progress, getGrammarCompletionPercent } = useProgressStore();
