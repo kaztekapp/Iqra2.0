@@ -79,6 +79,10 @@ export default function QuranScreen() {
     router.push('/quran/memorization' as any);
   };
 
+  const handleQuizPress = () => {
+    router.push('/quran/quiz' as any);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -144,18 +148,25 @@ export default function QuranScreen() {
 
         {/* Quick Actions */}
         <View style={styles.quickActions}>
+          <Pressable style={styles.actionCard} onPress={handleQuizPress}>
+            <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
+              <Ionicons name="help-circle" size={24} color="#f59e0b" />
+            </View>
+            <Text style={styles.actionTitle}>Quizzes</Text>
+            <Text style={styles.actionDesc}>Test knowledge</Text>
+          </Pressable>
           <Pressable style={styles.actionCard} onPress={handleTajweedPress}>
             <View style={[styles.actionIcon, { backgroundColor: '#10b98120' }]}>
               <Ionicons name="musical-notes" size={24} color="#10b981" />
             </View>
-            <Text style={styles.actionTitle}>Tajweed Rules</Text>
-            <Text style={styles.actionDesc}>Learn pronunciation</Text>
+            <Text style={styles.actionTitle}>Tajweed</Text>
+            <Text style={styles.actionDesc}>Pronunciation</Text>
           </Pressable>
           <Pressable style={styles.actionCard} onPress={handleMemorizationPress}>
             <View style={[styles.actionIcon, { backgroundColor: '#8b5cf620' }]}>
               <Ionicons name="heart" size={24} color="#8b5cf6" />
             </View>
-            <Text style={styles.actionTitle}>Memorization</Text>
+            <Text style={styles.actionTitle}>Memorize</Text>
             <Text style={styles.actionDesc}>Track progress</Text>
           </Pressable>
         </View>

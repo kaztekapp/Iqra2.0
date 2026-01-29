@@ -287,3 +287,72 @@ export interface QuranExercise {
   explanation?: string;
   xpReward: number;
 }
+
+// ============ Quiz Types ============
+
+export type QuizCategory =
+  | 'surah_structure'    // Surah names, numbers, order
+  | 'juz'                // Juz-related questions
+  | 'ayah_knowledge'     // Ayah identification, counts
+  | 'meaning_tafsir'     // Meanings and themes
+  | 'makki_madani'       // Revelation location
+  | 'tajweed'            // Tajweed rules
+  | 'memorization';      // Hifdh/recall
+
+export type QuizFormat =
+  | 'multiple_choice'
+  | 'true_false'
+  | 'fill_blank'
+  | 'ordering'
+  | 'matching';
+
+export interface QuizCategoryInfo {
+  id: QuizCategory;
+  nameEnglish: string;
+  nameArabic: string;
+  description: string;
+  icon: string;
+  color: string;
+  questionCount: number;
+}
+
+export interface QuizQuestion {
+  id: string;
+  category: QuizCategory;
+  format: QuizFormat;
+  difficulty: 'easy' | 'medium' | 'hard';
+  question: string;
+  questionArabic?: string;
+  options?: string[];
+  correctAnswer: string | string[] | number;
+  explanation?: string;
+  relatedSurah?: string;
+  relatedAyah?: number;
+}
+
+export interface QuizSession {
+  id: string;
+  category: QuizCategory;
+  questions: QuizQuestion[];
+  currentIndex: number;
+  answers: QuizAnswer[];
+  score: number;
+  startedAt: string;
+  completedAt?: string;
+}
+
+export interface QuizAnswer {
+  questionId: string;
+  userAnswer: string | string[] | number;
+  isCorrect: boolean;
+  timeSpent: number; // seconds
+}
+
+export interface QuizResult {
+  totalQuestions: number;
+  correctAnswers: number;
+  score: number; // percentage
+  timeSpent: number;
+  category: QuizCategory;
+  completedAt: string;
+}
