@@ -1,14 +1,57 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Pressable, StyleSheet, Modal, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { getTajweedRuleById } from '../../../src/data/arabic/quran/tajweed/rules';
 import { useQuranStore } from '../../../src/stores/quranStore';
-import { TajweedRuleId } from '../../../src/types/quran';
+import { TajweedRuleId, TajweedExample } from '../../../src/types/quran';
+import {
+  quranAudioService,
+  QURAN_RECITERS,
+  ReciterId,
+  AudioState
+} from '../../../src/services/quranAudioService';
+
+// Recommended reciters for Tajweed learning (clear pronunciation)
+const TAJWEED_RECITERS = [
+  {
+    id: 'mahmoud-khalil-husary' as ReciterId,
+    name: 'Al-Husary',
+    nameArabic: 'الحصري',
+    description: 'Classic teaching style',
+    icon: 'school-outline',
+  },
+  {
+    id: 'mishary-alafasy' as ReciterId,
+    name: 'Alafasy',
+    nameArabic: 'العفاسي',
+    description: 'Clear & melodic',
+    icon: 'musical-notes-outline',
+  },
+  {
+    id: 'abdul-basit-murattal' as ReciterId,
+    name: 'Abdul Basit',
+    nameArabic: 'عبد الباسط',
+    description: 'Traditional murattal',
+    icon: 'mic-outline',
+  },
+  {
+    id: 'minshawi-murattal' as ReciterId,
+    name: 'Al-Minshawi',
+    nameArabic: 'المنشاوي',
+    description: 'Beautiful tajweed',
+    icon: 'heart-outline',
+  },
+];
 
 export default function TajweedRuleDetailScreen() {
   const { ruleId } = useLocalSearchParams<{ ruleId: string }>();
+  const [selectedReciter, setSelectedReciter] = useState<ReciterId>('mahmoud-khalil-husary');
+  const [showReciterModal, setShowReciterModal] = useState(false);
+  const [playingExample, setPlayingExample] = useState<number | null>(null);
+  const [audioState, setAudioState] = useState<AudioState>('idle');
 
   const rule = getTajweedRuleById(ruleId as TajweedRuleId);
   const {
@@ -17,6 +60,13 @@ export default function TajweedRuleDetailScreen() {
     isTajweedRuleLearned,
     isTajweedRuleMastered,
   } = useQuranStore();
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      quranAudioService.stop();
+    };
+  }, []);
 
   if (!rule) {
     return (
@@ -29,11 +79,53 @@ export default function TajweedRuleDetailScreen() {
   const isLearned = isTajweedRuleLearned(rule.id);
   const isMastered = isTajweedRuleMastered(rule.id);
 
-  const playExample = (text: string) => {
-    Speech.speak(text, {
+  // Play individual letter using TTS (for letter buttons)
+  const playLetter = (letter: string) => {
+    Speech.speak(letter, {
       language: 'ar',
-      rate: 0.7,
+      rate: 0.5,
     });
+  };
+
+  // Play Quran verse example using real reciter audio
+  const playExample = async (example: TajweedExample, index: number) => {
+    // If already playing this example, stop it
+    if (playingExample === index && audioState === 'playing') {
+      await quranAudioService.stop();
+      setPlayingExample(null);
+      setAudioState('idle');
+      return;
+    }
+
+    // Stop any current playback
+    await quranAudioService.stop();
+
+    setPlayingExample(index);
+    setAudioState('loading');
+
+    await quranAudioService.playAyah(
+      example.surahNumber,
+      example.ayahNumber,
+      {
+        reciterId: selectedReciter,
+        rate: 0.85, // Slightly slower for learning
+        onStateChange: (state) => {
+          setAudioState(state);
+          if (state === 'idle') {
+            setPlayingExample(null);
+          }
+        },
+        onComplete: () => {
+          setPlayingExample(null);
+          setAudioState('idle');
+        },
+        onError: (error) => {
+          console.error('Audio error:', error);
+          setPlayingExample(null);
+          setAudioState('idle');
+        },
+      }
+    );
   };
 
   const handleMarkLearned = () => {
@@ -43,6 +135,8 @@ export default function TajweedRuleDetailScreen() {
   const handleMarkMastered = () => {
     markTajweedRuleMastered(rule.id);
   };
+
+  const selectedReciterInfo = TAJWEED_RECITERS.find(r => r.id === selectedReciter);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,14 +160,22 @@ export default function TajweedRuleDetailScreen() {
           </View>
         </View>
 
-        {/* Color Indicator */}
-        <View style={styles.colorCard}>
-          <View style={[styles.colorSwatch, { backgroundColor: rule.colorCode }]} />
-          <View style={styles.colorInfo}>
-            <Text style={styles.colorLabel}>Tajweed Color</Text>
-            <Text style={styles.colorHex}>{rule.colorCode}</Text>
+        {/* Reciter Selection */}
+        <Pressable
+          style={styles.reciterSelector}
+          onPress={() => setShowReciterModal(true)}
+        >
+          <View style={styles.reciterInfo}>
+            <Ionicons name="person-circle-outline" size={24} color="#10b981" />
+            <View style={styles.reciterText}>
+              <Text style={styles.reciterLabel}>Reciter</Text>
+              <Text style={styles.reciterName}>
+                {selectedReciterInfo?.name} ({selectedReciterInfo?.nameArabic})
+              </Text>
+            </View>
           </View>
-        </View>
+          <Ionicons name="chevron-down" size={20} color="#64748b" />
+        </Pressable>
 
         {/* Description */}
         <View style={styles.section}>
@@ -90,12 +192,13 @@ export default function TajweedRuleDetailScreen() {
         {rule.letters && rule.letters.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Letters Involved</Text>
+            <Text style={styles.sectionHint}>Tap a letter to hear its pronunciation</Text>
             <View style={styles.lettersContainer}>
               {rule.letters.map((letter, index) => (
                 <Pressable
                   key={index}
                   style={styles.letterButton}
-                  onPress={() => playExample(letter)}
+                  onPress={() => playLetter(letter)}
                 >
                   <Text style={styles.letterText}>{letter}</Text>
                 </Pressable>
@@ -111,36 +214,114 @@ export default function TajweedRuleDetailScreen() {
             <View style={styles.durationCard}>
               <Ionicons name="time-outline" size={24} color="#10b981" />
               <Text style={styles.durationText}>{rule.duration} Harakat</Text>
+              <View style={styles.durationDots}>
+                {Array.from({ length: rule.duration }).map((_, i) => (
+                  <View key={i} style={styles.durationDot} />
+                ))}
+              </View>
             </View>
           </View>
         )}
 
-        {/* Examples */}
+        {/* Examples with Real Quran Audio */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Examples</Text>
-          {rule.examples.map((example, index) => (
-            <View key={index} style={styles.exampleCard}>
-              <Pressable
-                style={styles.exampleHeader}
-                onPress={() => playExample(example.text)}
-              >
-                <Text style={styles.exampleArabic}>{example.text}</Text>
-                <View style={styles.playIcon}>
-                  <Ionicons name="volume-high" size={20} color="#10b981" />
-                </View>
-              </Pressable>
-              <Text style={styles.exampleTranslit}>{example.transliteration}</Text>
-              <View style={styles.exampleSource}>
-                <Ionicons name="book-outline" size={14} color="#64748b" />
-                <Text style={styles.exampleSourceText}>
-                  {example.surahName} : {example.ayahNumber}
+          <Text style={styles.sectionTitle}>Examples from the Quran</Text>
+          <Text style={styles.sectionHint}>
+            Listen to real recitation demonstrating this rule
+          </Text>
+          {rule.examples.map((example, index) => {
+            const isCurrentlyPlaying = playingExample === index;
+            const isLoading = isCurrentlyPlaying && audioState === 'loading';
+            const isPlaying = isCurrentlyPlaying && audioState === 'playing';
+
+            // Render full ayah text with highlighted portion
+            const renderHighlightedAyah = () => {
+              const fullText = example.fullAyahText || example.text;
+              const highlightText = example.highlightText;
+
+              if (!highlightText || !fullText.includes(highlightText)) {
+                return <Text style={styles.fullAyahText}>{fullText}</Text>;
+              }
+
+              const parts = fullText.split(highlightText);
+              return (
+                <Text style={styles.fullAyahText}>
+                  {parts.map((part, i) => (
+                    <Text key={i}>
+                      {part}
+                      {i < parts.length - 1 && (
+                        <Text style={[styles.highlightedPortion, { color: '#FFFF00', backgroundColor: '#FFFF0030' }]}>
+                          {highlightText}
+                        </Text>
+                      )}
+                    </Text>
+                  ))}
                 </Text>
+              );
+            };
+
+            return (
+              <View key={index} style={styles.exampleCard}>
+                {/* Surah/Ayah reference at top */}
+                <View style={styles.exampleSourceTop}>
+                  <Ionicons name="book-outline" size={14} color="#10b981" />
+                  <Text style={styles.exampleSourceTextTop}>
+                    Surah {example.surahName} ({example.surahNumber}:{example.ayahNumber})
+                  </Text>
+                </View>
+
+                {/* Full Ayah Text with Highlighted Rule */}
+                <View style={styles.fullAyahContainer}>
+                  {renderHighlightedAyah()}
+                </View>
+
+                {/* Play button and controls */}
+                <View style={styles.audioControlsRow}>
+                  <Pressable
+                    style={[
+                      styles.playButton,
+                      isPlaying && styles.playButtonActive,
+                      isLoading && styles.playButtonLoading,
+                    ]}
+                    onPress={() => playExample(example, index)}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <ActivityIndicator size="small" color="#10b981" />
+                    ) : (
+                      <Ionicons
+                        name={isPlaying ? "pause" : "play"}
+                        size={24}
+                        color={isPlaying ? "#10b981" : "#ffffff"}
+                      />
+                    )}
+                  </Pressable>
+                  <Text style={styles.playHintText}>
+                    {isPlaying ? 'Playing...' : isLoading ? 'Loading...' : 'Tap to listen'}
+                  </Text>
+                </View>
+
+                {/* Rule highlight badge */}
+                {example.highlightText && (
+                  <View style={styles.ruleHighlightSection}>
+                    <View style={[styles.highlightBadge, { borderColor: '#FFFF00' }]}>
+                      <Text style={[styles.highlightText, { color: '#FFFF00' }]}>
+                        {example.highlightText}
+                      </Text>
+                      <Text style={styles.highlightLabel}>Rule applied here</Text>
+                    </View>
+                  </View>
+                )}
+
+                {example.explanation && (
+                  <View style={styles.explanationContainer}>
+                    <Ionicons name="information-circle-outline" size={16} color="#10b981" />
+                    <Text style={styles.exampleExplanation}>{example.explanation}</Text>
+                  </View>
+                )}
               </View>
-              {example.explanation && (
-                <Text style={styles.exampleExplanation}>{example.explanation}</Text>
-              )}
-            </View>
-          ))}
+            );
+          })}
         </View>
 
         {/* Action Buttons */}
@@ -165,6 +346,59 @@ export default function TajweedRuleDetailScreen() {
           )}
         </View>
       </ScrollView>
+
+      {/* Reciter Selection Modal */}
+      <Modal
+        visible={showReciterModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowReciterModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Choose Reciter</Text>
+              <Pressable onPress={() => setShowReciterModal(false)}>
+                <Ionicons name="close" size={24} color="#ffffff" />
+              </Pressable>
+            </View>
+            <Text style={styles.modalSubtitle}>
+              Select a reciter for Tajweed examples
+            </Text>
+
+            {TAJWEED_RECITERS.map((reciter) => (
+              <Pressable
+                key={reciter.id}
+                style={[
+                  styles.reciterOption,
+                  selectedReciter === reciter.id && styles.reciterOptionSelected,
+                ]}
+                onPress={() => {
+                  setSelectedReciter(reciter.id);
+                  setShowReciterModal(false);
+                }}
+              >
+                <View style={styles.reciterOptionIcon}>
+                  <Ionicons
+                    name={reciter.icon as any}
+                    size={24}
+                    color={selectedReciter === reciter.id ? '#10b981' : '#64748b'}
+                  />
+                </View>
+                <View style={styles.reciterOptionInfo}>
+                  <Text style={styles.reciterOptionName}>
+                    {reciter.name} ({reciter.nameArabic})
+                  </Text>
+                  <Text style={styles.reciterOptionDesc}>{reciter.description}</Text>
+                </View>
+                {selectedReciter === reciter.id && (
+                  <Ionicons name="checkmark-circle" size={24} color="#10b981" />
+                )}
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -206,32 +440,32 @@ const styles = StyleSheet.create({
     width: 40,
     alignItems: 'flex-end',
   },
-  colorCard: {
+  reciterSelector: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#1e293b',
     marginHorizontal: 20,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 20,
-  },
-  colorSwatch: {
-    width: 50,
-    height: 50,
     borderRadius: 12,
+    padding: 14,
+    marginBottom: 16,
   },
-  colorInfo: {
-    marginLeft: 16,
+  reciterInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
-  colorLabel: {
+  reciterText: {
+    gap: 2,
+  },
+  reciterLabel: {
     color: '#64748b',
     fontSize: 12,
   },
-  colorHex: {
+  reciterName: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
-    marginTop: 2,
   },
   section: {
     paddingHorizontal: 20,
@@ -241,6 +475,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
+    marginBottom: 4,
+  },
+  sectionHint: {
+    color: '#64748b',
+    fontSize: 12,
     marginBottom: 12,
   },
   descriptionCard: {
@@ -290,52 +529,111 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  durationDots: {
+    flexDirection: 'row',
+    gap: 6,
+    marginLeft: 'auto',
+  },
+  durationDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#10b981',
+  },
   exampleCard: {
     backgroundColor: '#1e293b',
     borderRadius: 16,
     padding: 16,
     marginBottom: 12,
   },
-  exampleHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  exampleArabic: {
-    color: '#ffffff',
-    fontSize: 26,
-    flex: 1,
-    textAlign: 'right',
-  },
-  playIcon: {
-    marginLeft: 16,
-    padding: 8,
-    backgroundColor: '#10b98120',
-    borderRadius: 20,
-  },
-  exampleTranslit: {
-    color: '#94a3b8',
-    fontSize: 14,
-    fontStyle: 'italic',
-    marginBottom: 8,
-  },
-  exampleSource: {
+  exampleSourceTop: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+    marginBottom: 12,
   },
-  exampleSourceText: {
+  exampleSourceTextTop: {
+    color: '#10b981',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  fullAyahContainer: {
+    backgroundColor: '#0f172a',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+  },
+  fullAyahText: {
+    color: '#ffffff',
+    fontSize: 24,
+    textAlign: 'right',
+    lineHeight: 42,
+    fontFamily: undefined, // Uses system Arabic font
+  },
+  highlightedPortion: {
+    fontWeight: '700',
+    borderRadius: 4,
+    paddingHorizontal: 2,
+  },
+  audioControlsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 12,
+  },
+  playHintText: {
     color: '#64748b',
-    fontSize: 12,
+    fontSize: 13,
+  },
+  ruleHighlightSection: {
+    marginBottom: 12,
+  },
+  highlightBadge: {
+    backgroundColor: '#FFFF0015',
+    borderRadius: 8,
+    padding: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderStyle: 'dashed',
+  },
+  highlightText: {
+    fontSize: 26,
+    fontWeight: '600',
+  },
+  highlightLabel: {
+    color: '#64748b',
+    fontSize: 11,
+    marginTop: 4,
+  },
+  playButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#10b981',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  playButtonActive: {
+    backgroundColor: '#10b98130',
+    borderWidth: 2,
+    borderColor: '#10b981',
+  },
+  playButtonLoading: {
+    backgroundColor: '#10b98130',
+  },
+  explanationContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#334155',
   },
   exampleExplanation: {
     color: '#94a3b8',
     fontSize: 13,
-    marginTop: 10,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#334155',
+    flex: 1,
+    lineHeight: 20,
   },
   actionsContainer: {
     paddingHorizontal: 20,
@@ -381,5 +679,68 @@ const styles = StyleSheet.create({
     color: '#f59e0b',
     fontSize: 16,
     fontWeight: '600',
+  },
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#1e293b',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 20,
+    paddingBottom: 40,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  modalTitle: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  modalSubtitle: {
+    color: '#64748b',
+    fontSize: 14,
+    marginBottom: 20,
+  },
+  reciterOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f172a',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 10,
+  },
+  reciterOptionSelected: {
+    borderWidth: 2,
+    borderColor: '#10b981',
+  },
+  reciterOptionIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#1e293b',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reciterOptionInfo: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  reciterOptionName: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  reciterOptionDesc: {
+    color: '#64748b',
+    fontSize: 12,
+    marginTop: 2,
   },
 });

@@ -100,14 +100,13 @@ class QuranAudioService {
   private onStateChangeCallback: ((state: AudioState) => void) | null = null;
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
-  private isAudioConfigured = false;
 
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
   private currentAyah: number | null = null;
 
   constructor() {
-    this.configureAudio();
+    // Audio will be configured before each playback
   }
 
   private async configureAudio(): Promise<boolean> {
@@ -116,19 +115,12 @@ class QuranAudioService {
         playsInSilentMode: true,
         shouldPlayInBackground: true,
       });
-      this.isAudioConfigured = true;
+      // Small delay to let iOS audio session initialize
+      await new Promise(resolve => setTimeout(resolve, 50));
       return true;
     } catch (error) {
       console.error('Error configuring audio:', error);
-      this.isAudioConfigured = false;
       return false;
-    }
-  }
-
-  // Ensure audio is configured before playing
-  private async ensureAudioConfigured(): Promise<void> {
-    if (!this.isAudioConfigured) {
-      await this.configureAudio();
     }
   }
 
@@ -200,8 +192,8 @@ class QuranAudioService {
       // Stop any current playback first
       await this.stop();
 
-      // Ensure audio session is configured
-      await this.ensureAudioConfigured();
+      // Configure audio session fresh before each playback
+      await this.configureAudio();
 
       // Update state to loading
       this.audioState = 'loading';
@@ -261,19 +253,30 @@ class QuranAudioService {
         }
       });
 
-      // Start playing
-      this.player.play();
+      // Start playing with error handling
+      try {
+        this.player.play();
+      } catch (playError) {
+        // If play fails, try reconfiguring and playing again
+        if (retryCount < 2) {
+          console.log('Play failed, retrying...', retryCount + 1);
+          this.isTransitioning = false;
+          await new Promise(resolve => setTimeout(resolve, 100));
+          return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
+        }
+        throw playError;
+      }
+
       this.isTransitioning = false;
     } catch (error) {
       console.error('Error playing ayah:', error);
       this.isTransitioning = false;
 
-      // Check if it's a session error and retry once
+      // Check if it's a session error and retry
       const errorMessage = (error as Error)?.message || '';
-      if (errorMessage.includes('Session') && retryCount < 1) {
-        // Reconfigure audio and retry
-        this.isAudioConfigured = false;
-        await this.configureAudio();
+      if ((errorMessage.includes('Session') || errorMessage.includes('OSStatus')) && retryCount < 2) {
+        // Wait a bit and retry
+        await new Promise(resolve => setTimeout(resolve, 200));
         return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
       }
 
