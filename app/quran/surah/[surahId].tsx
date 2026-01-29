@@ -2,8 +2,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect, useCallback } from 'react';
-import { getSurahById } from '../../../src/data/arabic/quran';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { getSurahById, getSurahByNumber } from '../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
@@ -14,6 +14,15 @@ export default function SurahDetailScreen() {
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [activeAyahId, setActiveAyahId] = useState<string | null>(null);
   const [audioState, setAudioState] = useState<AudioState>('idle');
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [currentPlayingAyah, setCurrentPlayingAyah] = useState<number | null>(null);
+
+  // Refs to track state in callbacks (avoids stale closures)
+  const isPlayingAllRef = useRef(false);
+  const currentPlayingIndexRef = useRef(0);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const ayahPositions = useRef<{ [key: string]: number }>({});
+  const ayahsContainerOffset = useRef(0);
 
   // Get surah metadata from static data (always available)
   const surah = getSurahById(surahId);
@@ -100,6 +109,102 @@ export default function SurahDetailScreen() {
     quranAudioService.setRate(speed);
   }, []);
 
+  // Scroll to a specific ayah
+  const scrollToAyah = useCallback((ayahId: string) => {
+    const position = ayahPositions.current[ayahId];
+    if (position !== undefined && scrollViewRef.current) {
+      const scrollY = ayahsContainerOffset.current + position - 100;
+      scrollViewRef.current.scrollTo({ y: scrollY, animated: true });
+    }
+  }, []);
+
+  // Play a specific ayah by index and chain to next on completion
+  const playAyahAtIndex = useCallback(async (index: number) => {
+    if (!surah || !ayahs[index]) return;
+
+    const ayah = ayahs[index];
+    currentPlayingIndexRef.current = index;
+    setCurrentPlayingAyah(ayah.ayahNumber);
+    setActiveAyahId(ayah.id);
+
+    // Auto-scroll to the current ayah
+    scrollToAyah(ayah.id);
+
+    await quranAudioService.playAyah(surah.surahNumber, ayah.ayahNumber, {
+      rate: progress.settings.playbackSpeed,
+      onStateChange: (state) => {
+        setAudioState(state);
+      },
+      onComplete: () => {
+        // Check if we should continue to next ayah
+        if (!isPlayingAllRef.current) return;
+
+        const nextIndex = currentPlayingIndexRef.current + 1;
+        if (nextIndex < ayahs.length) {
+          // Play next ayah after a short delay
+          setTimeout(() => {
+            playAyahAtIndex(nextIndex);
+          }, 300);
+        } else {
+          // Finished all ayahs
+          isPlayingAllRef.current = false;
+          setIsPlayingAll(false);
+          setCurrentPlayingAyah(null);
+          setActiveAyahId(null);
+          setAudioState('idle');
+        }
+      },
+      onError: () => {
+        isPlayingAllRef.current = false;
+        setIsPlayingAll(false);
+        setCurrentPlayingAyah(null);
+        setActiveAyahId(null);
+        setAudioState('idle');
+      },
+    });
+  }, [surah, ayahs, progress.settings.playbackSpeed]);
+
+  // Play/Stop entire surah
+  const handlePlayAllToggle = useCallback(async () => {
+    if (!surah) return;
+
+    if (isPlayingAll || audioState === 'playing' || audioState === 'loading') {
+      // Stop playback
+      isPlayingAllRef.current = false;
+      await quranAudioService.stop();
+      setIsPlayingAll(false);
+      setCurrentPlayingAyah(null);
+      setActiveAyahId(null);
+      setAudioState('idle');
+    } else {
+      // Start playing all ayahs from the beginning
+      isPlayingAllRef.current = true;
+      setIsPlayingAll(true);
+      playAyahAtIndex(0);
+    }
+  }, [surah, isPlayingAll, audioState, playAyahAtIndex]);
+
+  // Navigation to previous/next surah
+  const handlePreviousSurah = useCallback(() => {
+    if (surah && surah.surahNumber > 1) {
+      const prevSurah = getSurahByNumber(surah.surahNumber - 1);
+      if (prevSurah) {
+        quranAudioService.stop();
+        router.replace(`/quran/surah/${prevSurah.id}` as any);
+      }
+    }
+  }, [surah]);
+
+  const handleNextSurah = useCallback(() => {
+    if (surah && surah.surahNumber < 114) {
+      const nextSurah = getSurahByNumber(surah.surahNumber + 1);
+      if (nextSurah) {
+        quranAudioService.stop();
+        router.replace(`/quran/surah/${nextSurah.id}` as any);
+      }
+    }
+  }, [surah]);
+
   // Early returns after all hooks
   if (!surah) {
     return (
@@ -136,7 +241,7 @@ export default function SurahDetailScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
@@ -146,8 +251,30 @@ export default function SurahDetailScreen() {
             <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
             <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
           </View>
-          <View style={styles.headerInfo}>
+          <View style={styles.headerNav}>
+            <Pressable
+              style={[styles.navButton, surah.surahNumber <= 1 && styles.navButtonDisabled]}
+              onPress={handlePreviousSurah}
+              disabled={surah.surahNumber <= 1}
+            >
+              <Ionicons
+                name="chevron-back"
+                size={20}
+                color={surah.surahNumber <= 1 ? '#334155' : '#10b981'}
+              />
+            </Pressable>
             <Text style={styles.surahNumber}>#{surah.surahNumber}</Text>
+            <Pressable
+              style={[styles.navButton, surah.surahNumber >= 114 && styles.navButtonDisabled]}
+              onPress={handleNextSurah}
+              disabled={surah.surahNumber >= 114}
+            >
+              <Ionicons
+                name="chevron-forward"
+                size={20}
+                color={surah.surahNumber >= 114 ? '#334155' : '#10b981'}
+              />
+            </Pressable>
           </View>
         </View>
 
@@ -216,6 +343,30 @@ export default function SurahDetailScreen() {
         {/* View Toggle */}
         <View style={styles.viewToggle}>
           <Text style={styles.sectionTitle}>Verses</Text>
+          <Pressable
+            style={[
+              styles.playAllButton,
+              (isPlayingAll || audioState === 'playing') && styles.playAllButtonActive,
+            ]}
+            onPress={handlePlayAllToggle}
+          >
+            {audioState === 'loading' && isPlayingAll ? (
+              <ActivityIndicator size="small" color="#ffffff" />
+            ) : (
+              <Ionicons
+                name={isPlayingAll || audioState === 'playing' ? 'stop' : 'play'}
+                size={14}
+                color="#ffffff"
+              />
+            )}
+            <Text style={styles.playAllButtonText}>
+              {isPlayingAll || audioState === 'playing'
+                ? currentPlayingAyah
+                  ? `${currentPlayingAyah}/${surah.ayahCount}`
+                  : 'Stop'
+                : 'Play All'}
+            </Text>
+          </Pressable>
           <View style={styles.toggleButtons}>
             <Pressable
               style={[styles.toggleButton, viewMode === 'cards' && styles.toggleButtonActive]}
@@ -241,39 +392,65 @@ export default function SurahDetailScreen() {
         </View>
 
         {/* Ayahs */}
-        <View style={[styles.ayahsContainer, { marginBottom: 100 }]}>
+        <View
+          style={[styles.ayahsContainer, { marginBottom: 100 }]}
+          onLayout={(event) => {
+            ayahsContainerOffset.current = event.nativeEvent.layout.y;
+          }}
+        >
           {viewMode === 'cards' ? (
             ayahs.map((ayah) => (
-              <AyahCard
+              <View
                 key={ayah.id}
-                ayah={ayah}
-                showTransliteration={progress.settings.showTransliteration}
-                showTranslation={progress.settings.showTranslation}
-                showTajweed={progress.settings.showTajweedColors}
-                isLearned={isAyahLearned(surahId, ayah.id)}
-                isMemorized={isAyahMemorized(surahId, ayah.id)}
-                isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
-                isLoading={activeAyahId === ayah.id && audioState === 'loading'}
-                isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
-                isPaused={activeAyahId === ayah.id && audioState === 'paused'}
-                playbackSpeed={progress.settings.playbackSpeed}
-                onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
-                onBookmark={() => handleBookmark(ayah.id)}
-                onPress={() => handleAyahPress(ayah.id)}
-                onSpeedChange={handleSpeedChange}
-              />
+                onLayout={(event) => {
+                  ayahPositions.current[ayah.id] = event.nativeEvent.layout.y;
+                }}
+              >
+                <AyahCard
+                  ayah={ayah}
+                  showTransliteration={progress.settings.showTransliteration}
+                  showTranslation={progress.settings.showTranslation}
+                  showTajweed={progress.settings.showTajweedColors}
+                  isLearned={isAyahLearned(surahId, ayah.id)}
+                  isMemorized={isAyahMemorized(surahId, ayah.id)}
+                  isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
+                  isLoading={activeAyahId === ayah.id && audioState === 'loading'}
+                  isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
+                  isPaused={activeAyahId === ayah.id && audioState === 'paused'}
+                  playbackSpeed={progress.settings.playbackSpeed}
+                  onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
+                  onBookmark={() => handleBookmark(ayah.id)}
+                  onPress={() => handleAyahPress(ayah.id)}
+                  onSpeedChange={handleSpeedChange}
+                />
+              </View>
             ))
           ) : (
             ayahs.map((ayah) => (
-              <AyahListItem
+              <View
                 key={ayah.id}
-                ayah={ayah}
-                isLearned={isAyahLearned(surahId, ayah.id)}
-                isMemorized={isAyahMemorized(surahId, ayah.id)}
-                onPress={() => handleAyahPress(ayah.id)}
-              />
+                onLayout={(event) => {
+                  ayahPositions.current[ayah.id] = event.nativeEvent.layout.y;
+                }}
+              >
+                <AyahListItem
+                  ayah={ayah}
+                  isLearned={isAyahLearned(surahId, ayah.id)}
+                  isMemorized={isAyahMemorized(surahId, ayah.id)}
+                  onPress={() => handleAyahPress(ayah.id)}
+                />
+              </View>
             ))
           )}
+
+          {/* Back to Top Button */}
+          <Pressable
+            style={styles.backToTopButton}
+            onPress={() => scrollViewRef.current?.scrollTo({ y: 0, animated: true })}
+          >
+            <Ionicons name="arrow-up" size={18} color="#10b981" />
+            <Text style={styles.backToTopText}>Back to Top</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -342,12 +519,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 2,
   },
-  headerInfo: {
-    padding: 8,
+  headerNav: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  navButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#1e293b',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonDisabled: {
+    opacity: 0.4,
   },
   surahNumber: {
     color: '#64748b',
     fontSize: 14,
+    minWidth: 36,
+    textAlign: 'center',
   },
   infoCard: {
     backgroundColor: '#1e293b',
@@ -464,6 +656,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  playAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#10b981',
+    borderRadius: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    gap: 5,
+  },
+  playAllButtonActive: {
+    backgroundColor: '#ef4444',
+  },
+  playAllButtonText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
   viewToggle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -490,5 +699,21 @@ const styles = StyleSheet.create({
   },
   ayahsContainer: {
     paddingHorizontal: 12,
+  },
+  backToTopButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    paddingVertical: 14,
+    marginTop: 16,
+    marginHorizontal: 8,
+  },
+  backToTopText: {
+    color: '#10b981',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

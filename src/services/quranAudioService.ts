@@ -100,6 +100,7 @@ class QuranAudioService {
   private onStateChangeCallback: ((state: AudioState) => void) | null = null;
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
+  private stoppedByUser = false; // Track if playback was stopped by user
 
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
@@ -308,10 +309,12 @@ class QuranAudioService {
   ): Promise<void> {
     const repeatCount = options?.repeatCount || 1;
 
+    this.stoppedByUser = false;
+
     for (let repeat = 0; repeat < repeatCount; repeat++) {
       for (let ayah = startAyah; ayah <= endAyah; ayah++) {
-        if (this.audioState === 'idle' && ayah > startAyah) {
-          // Playback was stopped
+        if (this.stoppedByUser) {
+          // Playback was stopped by user
           return;
         }
 
