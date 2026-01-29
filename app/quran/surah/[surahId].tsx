@@ -96,7 +96,7 @@ export default function SurahDetailScreen() {
   }, [surahId, surahProgress.bookmarkedAyahs, unbookmarkAyah, bookmarkAyah]);
 
   const handleSpeedChange = useCallback((speed: number) => {
-    useQuranStore.getState().setPlaybackSpeed(speed as 0.5 | 0.75 | 1);
+    useQuranStore.getState().setPlaybackSpeed(speed as 0.75 | 1 | 1.25 | 1.5 | 1.75);
     quranAudioService.setRate(speed);
   }, []);
 

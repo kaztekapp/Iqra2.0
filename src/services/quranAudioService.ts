@@ -100,6 +100,7 @@ class QuranAudioService {
   private onStateChangeCallback: ((state: AudioState) => void) | null = null;
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
+  private isAudioConfigured = false;
 
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
@@ -109,14 +110,25 @@ class QuranAudioService {
     this.configureAudio();
   }
 
-  private async configureAudio() {
+  private async configureAudio(): Promise<boolean> {
     try {
       await setAudioModeAsync({
         playsInSilentMode: true,
         shouldPlayInBackground: true,
       });
+      this.isAudioConfigured = true;
+      return true;
     } catch (error) {
       console.error('Error configuring audio:', error);
+      this.isAudioConfigured = false;
+      return false;
+    }
+  }
+
+  // Ensure audio is configured before playing
+  private async ensureAudioConfigured(): Promise<void> {
+    if (!this.isAudioConfigured) {
+      await this.configureAudio();
     }
   }
 
@@ -175,7 +187,8 @@ class QuranAudioService {
       onComplete?: () => void;
       onError?: (error: Error) => void;
       onStateChange?: (state: AudioState) => void;
-    }
+    },
+    retryCount = 0
   ): Promise<void> {
     // Prevent race conditions
     if (this.isTransitioning) {
@@ -186,6 +199,9 @@ class QuranAudioService {
     try {
       // Stop any current playback first
       await this.stop();
+
+      // Ensure audio session is configured
+      await this.ensureAudioConfigured();
 
       // Update state to loading
       this.audioState = 'loading';
@@ -250,10 +266,20 @@ class QuranAudioService {
       this.isTransitioning = false;
     } catch (error) {
       console.error('Error playing ayah:', error);
+      this.isTransitioning = false;
+
+      // Check if it's a session error and retry once
+      const errorMessage = (error as Error)?.message || '';
+      if (errorMessage.includes('Session') && retryCount < 1) {
+        // Reconfigure audio and retry
+        this.isAudioConfigured = false;
+        await this.configureAudio();
+        return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
+      }
+
       this.audioState = 'idle';
       this.currentSurah = null;
       this.currentAyah = null;
-      this.isTransitioning = false;
       options?.onStateChange?.('idle');
       options?.onError?.(error as Error);
       this.onErrorCallback?.(error as Error);

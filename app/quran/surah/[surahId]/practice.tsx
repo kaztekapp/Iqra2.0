@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -25,13 +25,31 @@ export default function PracticeModeScreen() {
   const [currentRepeat, setCurrentRepeat] = useState(0);
   const [autoAdvance, setAutoAdvance] = useState(false);
 
+  // Verse range selection (1-indexed verse numbers)
+  const [startVerse, setStartVerse] = useState(1);
+  const [endVerse, setEndVerse] = useState(ayahs.length || 1);
+  const [startVerseInput, setStartVerseInput] = useState('1');
+  const [endVerseInput, setEndVerseInput] = useState(String(ayahs.length || 1));
+  const [showRangeSelector, setShowRangeSelector] = useState(false);
+
   // Use ref to track values in callbacks (avoids stale closure)
   const currentRepeatRef = useRef(0);
   const repeatCountRef = useRef(1);
   const autoAdvanceRef = useRef(false);
   const currentAyahIndexRef = useRef(0);
+  const startVerseRef = useRef(1);
+  const endVerseRef = useRef(ayahs.length || 1);
 
   const currentAyah = ayahs[currentAyahIndex];
+
+  // Update end verse when ayahs load
+  useEffect(() => {
+    if (ayahs.length > 0 && endVerse === 1) {
+      setEndVerse(ayahs.length);
+      setEndVerseInput(String(ayahs.length));
+      endVerseRef.current = ayahs.length;
+    }
+  }, [ayahs.length]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -59,7 +77,7 @@ export default function PracticeModeScreen() {
     );
   }
 
-  const SPEED_OPTIONS = [0.5, 0.75, 1, 1.25, 1.5];
+  const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 1.75];
   const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
 
   // Handle repeat completion
@@ -90,11 +108,19 @@ export default function PracticeModeScreen() {
     }
   };
 
-  // Go to next verse and auto-play
+  // Go to next verse and auto-play (respects verse range)
   const goToNextVerse = () => {
     const currentIndex = currentAyahIndexRef.current;
-    // Loop back to first verse after last verse
-    const nextIndex = currentIndex >= ayahs.length - 1 ? 0 : currentIndex + 1;
+    const startIdx = startVerseRef.current - 1; // Convert to 0-indexed
+    const endIdx = endVerseRef.current - 1; // Convert to 0-indexed
+
+    // Loop back to start verse after reaching end verse
+    let nextIndex: number;
+    if (currentIndex >= endIdx) {
+      nextIndex = startIdx;
+    } else {
+      nextIndex = currentIndex + 1;
+    }
 
     // Update both ref and state
     currentAyahIndexRef.current = nextIndex;
@@ -150,9 +176,12 @@ export default function PracticeModeScreen() {
     });
   };
 
-  // Play ayah (used for repeat)
+  // Play ayah (used for repeat) - uses ref to get current ayah to avoid stale closures
   const playAyahAudio = async () => {
-    await quranAudioService.playAyah(surah.surahNumber, currentAyah.ayahNumber, {
+    const ayahToPlay = ayahs[currentAyahIndexRef.current];
+    if (!ayahToPlay) return;
+
+    await quranAudioService.playAyah(surah.surahNumber, ayahToPlay.ayahNumber, {
       rate: playbackSpeed,
       onStateChange: (state) => {
         setAudioState(state);
@@ -194,17 +223,46 @@ export default function PracticeModeScreen() {
     autoAdvanceRef.current = newValue;
   };
 
+  const handleStartVerseChange = (verse: number) => {
+    const validVerse = Math.max(1, Math.min(verse, endVerse));
+    setStartVerse(validVerse);
+    setStartVerseInput(String(validVerse));
+    startVerseRef.current = validVerse;
+    // Jump to start verse if current is before it
+    if (currentAyahIndex < validVerse - 1) {
+      const newIndex = validVerse - 1;
+      currentAyahIndexRef.current = newIndex;
+      setCurrentAyahIndex(newIndex);
+    }
+  };
+
+  const handleEndVerseChange = (verse: number) => {
+    const validVerse = Math.max(startVerse, Math.min(verse, ayahs.length));
+    setEndVerse(validVerse);
+    setEndVerseInput(String(validVerse));
+    endVerseRef.current = validVerse;
+    // Jump to end verse if current is after it
+    if (currentAyahIndex > validVerse - 1) {
+      const newIndex = validVerse - 1;
+      currentAyahIndexRef.current = newIndex;
+      setCurrentAyahIndex(newIndex);
+    }
+  };
+
   const handleNext = () => {
     quranAudioService.stop();
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
-    if (currentAyahIndex < ayahs.length - 1) {
+
+    if (currentAyahIndex >= ayahs.length - 1) {
+      // At last verse of surah - finish
+      router.back();
+    } else {
+      // Go to next verse
       const nextIndex = currentAyahIndex + 1;
       currentAyahIndexRef.current = nextIndex;
       setCurrentAyahIndex(nextIndex);
       setShowHint(false);
-    } else {
-      router.back();
     }
   };
 
@@ -212,6 +270,7 @@ export default function PracticeModeScreen() {
     quranAudioService.stop();
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
+
     if (currentAyahIndex > 0) {
       const prevIndex = currentAyahIndex - 1;
       currentAyahIndexRef.current = prevIndex;
@@ -235,6 +294,11 @@ export default function PracticeModeScreen() {
           <Text style={styles.statsText}>
             {currentAyahIndex + 1}/{ayahs.length}
           </Text>
+          {(startVerse !== 1 || endVerse !== ayahs.length) && (
+            <Text style={styles.rangeIndicator}>
+              ({startVerse}-{endVerse})
+            </Text>
+          )}
         </View>
       </View>
 
@@ -303,8 +367,150 @@ export default function PracticeModeScreen() {
 
         {/* Audio Controls */}
         <View style={styles.controlsCard}>
+          {/* Verse Range Selector */}
+          <Pressable
+            style={styles.rangeSelectorHeader}
+            onPress={() => setShowRangeSelector(!showRangeSelector)}
+          >
+            <View style={styles.rangeSelectorInfo}>
+              <Ionicons name="options" size={18} color="#10b981" />
+              <Text style={styles.rangeSelectorTitle}>
+                Verse Range: {startVerse} - {endVerse}
+              </Text>
+            </View>
+            <Ionicons
+              name={showRangeSelector ? "chevron-up" : "chevron-down"}
+              size={18}
+              color="#64748b"
+            />
+          </Pressable>
+
+          {showRangeSelector && (
+            <View style={styles.rangeControls}>
+              {/* Start Verse */}
+              <View style={styles.rangeRow}>
+                <Text style={styles.rangeLabel}>Start</Text>
+                <View style={styles.rangeInputContainer}>
+                  <Pressable
+                    style={[styles.rangeButton, startVerse <= 1 && styles.rangeButtonDisabled]}
+                    onPress={() => handleStartVerseChange(startVerse - 1)}
+                    disabled={startVerse <= 1}
+                  >
+                    <Ionicons name="remove" size={16} color={startVerse <= 1 ? '#475569' : '#ffffff'} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.rangeInput}
+                    value={startVerseInput}
+                    onChangeText={(text) => {
+                      // Allow empty and numeric input while typing
+                      if (text === '' || /^\d+$/.test(text)) {
+                        setStartVerseInput(text);
+                      }
+                    }}
+                    onBlur={() => {
+                      // Validate on blur
+                      const num = parseInt(startVerseInput, 10);
+                      if (!isNaN(num) && num >= 1) {
+                        handleStartVerseChange(num);
+                      } else {
+                        // Reset to current valid value
+                        setStartVerseInput(String(startVerse));
+                      }
+                    }}
+                    keyboardType="number-pad"
+                    selectTextOnFocus
+                    maxLength={3}
+                  />
+                  <Pressable
+                    style={[styles.rangeButton, startVerse >= endVerse && styles.rangeButtonDisabled]}
+                    onPress={() => handleStartVerseChange(startVerse + 1)}
+                    disabled={startVerse >= endVerse}
+                  >
+                    <Ionicons name="add" size={16} color={startVerse >= endVerse ? '#475569' : '#ffffff'} />
+                  </Pressable>
+                </View>
+              </View>
+
+              {/* End Verse */}
+              <View style={styles.rangeRow}>
+                <Text style={styles.rangeLabel}>End</Text>
+                <View style={styles.rangeInputContainer}>
+                  <Pressable
+                    style={[styles.rangeButton, endVerse <= startVerse && styles.rangeButtonDisabled]}
+                    onPress={() => handleEndVerseChange(endVerse - 1)}
+                    disabled={endVerse <= startVerse}
+                  >
+                    <Ionicons name="remove" size={16} color={endVerse <= startVerse ? '#475569' : '#ffffff'} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.rangeInput}
+                    value={endVerseInput}
+                    onChangeText={(text) => {
+                      // Allow empty and numeric input while typing
+                      if (text === '' || /^\d+$/.test(text)) {
+                        setEndVerseInput(text);
+                      }
+                    }}
+                    onBlur={() => {
+                      // Validate on blur
+                      const num = parseInt(endVerseInput, 10);
+                      if (!isNaN(num) && num >= 1) {
+                        handleEndVerseChange(num);
+                      } else {
+                        // Reset to current valid value
+                        setEndVerseInput(String(endVerse));
+                      }
+                    }}
+                    keyboardType="number-pad"
+                    selectTextOnFocus
+                    maxLength={3}
+                  />
+                  <Pressable
+                    style={[styles.rangeButton, endVerse >= ayahs.length && styles.rangeButtonDisabled]}
+                    onPress={() => handleEndVerseChange(endVerse + 1)}
+                    disabled={endVerse >= ayahs.length}
+                  >
+                    <Ionicons name="add" size={16} color={endVerse >= ayahs.length ? '#475569' : '#ffffff'} />
+                  </Pressable>
+                </View>
+              </View>
+
+              {/* Quick Select Buttons */}
+              <View style={styles.quickSelectRow}>
+                <Pressable
+                  style={styles.quickSelectButton}
+                  onPress={() => {
+                    const start = currentAyahIndex + 1;
+                    const end = Math.min(start + 4, ayahs.length);
+                    setStartVerse(start);
+                    setEndVerse(end);
+                    setStartVerseInput(String(start));
+                    setEndVerseInput(String(end));
+                    startVerseRef.current = start;
+                    endVerseRef.current = end;
+                  }}
+                >
+                  <Text style={styles.quickSelectText}>Next 5</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.quickSelectButton}
+                  onPress={() => {
+                    setStartVerse(1);
+                    setEndVerse(ayahs.length);
+                    setStartVerseInput('1');
+                    setEndVerseInput(String(ayahs.length));
+                    startVerseRef.current = 1;
+                    endVerseRef.current = ayahs.length;
+                  }}
+                >
+                  <Text style={styles.quickSelectText}>Reset</Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
+
           {/* Speed Control */}
-          <View style={styles.controlSection}>
+          <View style={[styles.controlSection, { marginTop: showRangeSelector ? 20 : 0 }]}>
             <Text style={styles.controlLabel}>Speed</Text>
             <View style={styles.controlButtons}>
               {SPEED_OPTIONS.map((speed) => (
@@ -396,7 +602,7 @@ export default function PracticeModeScreen() {
           onPress={handleNext}
         >
           <Text style={styles.nextButtonText}>
-            {currentAyahIndex < ayahs.length - 1 ? 'Next' : 'Finish'}
+            {currentAyahIndex >= ayahs.length - 1 ? 'Finish' : 'Next'}
           </Text>
           <Ionicons name="arrow-forward" size={24} color="#ffffff" />
         </Pressable>
@@ -457,6 +663,11 @@ const styles = StyleSheet.create({
   statsText: {
     color: '#64748b',
     fontSize: 14,
+  },
+  rangeIndicator: {
+    color: '#10b981',
+    fontSize: 11,
+    marginTop: 2,
   },
   scrollView: {
     flex: 1,
@@ -552,6 +763,88 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     marginBottom: 100,
+  },
+  rangeSelectorHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 16,
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#334155',
+  },
+  rangeSelectorInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  rangeSelectorTitle: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  rangeControls: {
+    backgroundColor: '#334155',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+  },
+  rangeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  rangeLabel: {
+    color: '#94a3b8',
+    fontSize: 14,
+    width: 50,
+  },
+  rangeInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  rangeButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: '#475569',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rangeButtonDisabled: {
+    backgroundColor: '#334155',
+  },
+  rangeInput: {
+    width: 60,
+    height: 36,
+    backgroundColor: '#1e293b',
+    borderRadius: 8,
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: '#475569',
+  },
+  quickSelectRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginTop: 8,
+  },
+  quickSelectButton: {
+    flex: 1,
+    backgroundColor: '#475569',
+    borderRadius: 8,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  quickSelectText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '500',
   },
   controlSection: {
     marginBottom: 20,
