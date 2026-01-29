@@ -3,15 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useState, useEffect, useRef } from 'react';
-import { getRandomQuestions, getCategoryById } from '../../../src/data/arabic/quran/quizzes';
+import { getRandomQuestions, getCategoryById, getQuestionsBySet, getTotalSets, getSetName } from '../../../src/data/arabic/quran/quizzes';
 import { QuizQuestion, QuizCategory, QuizAnswer } from '../../../src/types/quran';
 
-const QUESTIONS_PER_QUIZ = 10;
+const PASSING_SCORE = 70; // Percentage required to pass and unlock next set
 
 export default function QuizScreen() {
-  const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
+  const { categoryId, setIndex } = useLocalSearchParams<{ categoryId: string; setIndex?: string }>();
   const category = getCategoryById(categoryId as QuizCategory);
 
+  const [currentSetIndex, setCurrentSetIndex] = useState(0);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -22,15 +23,30 @@ export default function QuizScreen() {
   const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
 
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  const totalSets = categoryId ? getTotalSets(categoryId as QuizCategory) : 1;
 
   useEffect(() => {
     if (categoryId) {
-      const quizQuestions = getRandomQuestions(categoryId as QuizCategory, QUESTIONS_PER_QUIZ);
-      setQuestions(quizQuestions);
-      setStartTime(Date.now());
-      setQuestionStartTime(Date.now());
+      // Start at specified set index if provided, otherwise start at 0
+      const initialSetIndex = setIndex ? parseInt(setIndex, 10) : 0;
+      loadSetQuestions(initialSetIndex);
     }
-  }, [categoryId]);
+  }, [categoryId, setIndex]);
+
+  const loadSetQuestions = (setIndex: number) => {
+    const quizQuestions = getQuestionsBySet(categoryId as QuizCategory, setIndex);
+    // Shuffle questions within the set
+    const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5);
+    setQuestions(shuffled);
+    setCurrentSetIndex(setIndex);
+    setCurrentIndex(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setAnswers([]);
+    setQuizComplete(false);
+    setStartTime(Date.now());
+    setQuestionStartTime(Date.now());
+  };
 
   if (!category || questions.length === 0) {
     return (
@@ -95,15 +111,14 @@ export default function QuizScreen() {
   };
 
   const handleRestart = () => {
-    const quizQuestions = getRandomQuestions(categoryId as QuizCategory, QUESTIONS_PER_QUIZ);
-    setQuestions(quizQuestions);
-    setCurrentIndex(0);
-    setSelectedAnswer(null);
-    setShowResult(false);
-    setAnswers([]);
-    setQuizComplete(false);
-    setStartTime(Date.now());
-    setQuestionStartTime(Date.now());
+    // Restart the same set
+    loadSetQuestions(currentSetIndex);
+  };
+
+  const handleNextSet = () => {
+    if (currentSetIndex < totalSets - 1) {
+      loadSetQuestions(currentSetIndex + 1);
+    }
   };
 
   const getOptionStyle = (option: string) => {
@@ -138,28 +153,35 @@ export default function QuizScreen() {
   if (quizComplete) {
     const totalTime = Math.round((Date.now() - startTime) / 1000);
     const percentage = Math.round((score / questions.length) * 100);
+    const passed = percentage >= PASSING_SCORE;
+    const hasNextSet = currentSetIndex < totalSets - 1;
+    const currentSetName = getSetName(categoryId as QuizCategory, currentSetIndex);
 
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.resultContainer}>
           <View style={styles.resultCard}>
-            <View style={[styles.resultIcon, { backgroundColor: percentage >= 70 ? '#10b98120' : '#ef444420' }]}>
+            <View style={[styles.resultIcon, { backgroundColor: passed ? '#10b98120' : '#ef444420' }]}>
               <Ionicons
-                name={percentage >= 70 ? 'trophy' : 'refresh'}
+                name={passed ? 'trophy' : 'refresh'}
                 size={48}
-                color={percentage >= 70 ? '#10b981' : '#ef4444'}
+                color={passed ? '#10b981' : '#ef4444'}
               />
             </View>
 
             <Text style={styles.resultTitle}>
-              {percentage >= 70 ? 'Excellent!' : percentage >= 50 ? 'Good Try!' : 'Keep Learning!'}
+              {passed ? 'Passed!' : percentage >= 50 ? 'Almost There!' : 'Keep Learning!'}
             </Text>
 
             <Text style={styles.resultCategory}>{category.nameEnglish}</Text>
+            <Text style={styles.resultSetName}>{currentSetName}</Text>
+            {totalSets > 1 && (
+              <Text style={styles.resultSetProgress}>Set {currentSetIndex + 1} of {totalSets}</Text>
+            )}
 
-            <View style={styles.scoreCircle}>
-              <Text style={styles.scorePercentage}>{percentage}%</Text>
-              <Text style={styles.scoreLabel}>Score</Text>
+            <View style={[styles.scoreCircle, { borderColor: passed ? '#10b981' : '#ef4444' }]}>
+              <Text style={[styles.scorePercentage, { color: passed ? '#10b981' : '#ef4444' }]}>{percentage}%</Text>
+              <Text style={styles.scoreLabel}>{passed ? 'Passed' : `Need ${PASSING_SCORE}%`}</Text>
             </View>
 
             <View style={styles.resultStats}>
@@ -181,12 +203,18 @@ export default function QuizScreen() {
             </View>
 
             <View style={styles.resultActions}>
+              {hasNextSet && (
+                <Pressable style={styles.nextSetButton} onPress={handleNextSet}>
+                  <Text style={styles.nextSetButtonText}>Next Set</Text>
+                  <Ionicons name="arrow-forward" size={20} color="#ffffff" />
+                </Pressable>
+              )}
               <Pressable style={styles.restartButton} onPress={handleRestart}>
                 <Ionicons name="refresh" size={20} color="#ffffff" />
                 <Text style={styles.restartButtonText}>Try Again</Text>
               </Pressable>
               <Pressable style={styles.backButton} onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={20} color="#10b981" />
+                <Ionicons name="arrow-back" size={20} color="#64748b" />
                 <Text style={styles.backButtonText}>Back to Categories</Text>
               </Pressable>
             </View>
@@ -220,11 +248,20 @@ export default function QuizScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View style={{ opacity: fadeAnim }}>
           {/* Category Badge */}
-          <View style={[styles.categoryBadge, { backgroundColor: `${category.color}20` }]}>
-            <Ionicons name={category.icon as any} size={16} color={category.color} />
-            <Text style={[styles.categoryBadgeText, { color: category.color }]}>
-              {category.nameEnglish}
-            </Text>
+          <View style={styles.badgeRow}>
+            <View style={[styles.categoryBadge, { backgroundColor: `${category.color}20` }]}>
+              <Ionicons name={category.icon as any} size={16} color={category.color} />
+              <Text style={[styles.categoryBadgeText, { color: category.color }]}>
+                {category.nameEnglish}
+              </Text>
+            </View>
+            {totalSets > 1 && (
+              <View style={styles.setBadge}>
+                <Text style={styles.setBadgeText}>
+                  {getSetName(categoryId as QuizCategory, currentSetIndex)}
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Question */}
@@ -365,15 +402,31 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  badgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 16,
+  },
   categoryBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     gap: 6,
-    marginBottom: 16,
+  },
+  setBadge: {
+    backgroundColor: '#f59e0b20',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  setBadgeText: {
+    color: '#f59e0b',
+    fontSize: 12,
+    fontWeight: '600',
   },
   categoryBadgeText: {
     fontSize: 12,
@@ -626,7 +679,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   backButton: {
-    backgroundColor: '#10b98120',
+    backgroundColor: '#334155',
     borderRadius: 16,
     paddingVertical: 16,
     flexDirection: 'row',
@@ -635,6 +688,46 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   backButtonText: {
+    color: '#64748b',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  resultSetName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#f59e0b',
+    marginTop: 4,
+  },
+  resultSetProgress: {
+    fontSize: 14,
+    color: '#64748b',
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  nextSetButton: {
+    backgroundColor: '#3b82f6',
+    borderRadius: 16,
+    paddingVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  nextSetButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  retryButton: {
+    backgroundColor: '#10b98120',
+    borderRadius: 16,
+    paddingVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  retryButtonText: {
     color: '#10b981',
     fontSize: 16,
     fontWeight: '600',

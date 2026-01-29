@@ -2,7 +2,11 @@
 // Comprehensive question banks for all quiz categories
 
 import { QuizQuestion, QuizCategory, QuizCategoryInfo } from '../../../../types/quran';
-import { ALL_SURAH_STRUCTURE_QUESTIONS } from './surahStructure';
+import { ALL_SURAH_STRUCTURE_QUESTIONS, SURAH_STRUCTURE_SETS, SURAH_STRUCTURE_SET_KEYS } from './surahStructure';
+import { ALL_JUZ_QUESTIONS, JUZ_SETS, JUZ_SET_KEYS, JUZ_SET_NAMES } from './juzQuestions';
+import { ALL_MEANING_QUESTIONS, MEANING_SETS, MEANING_SET_KEYS, MEANING_SET_NAMES } from './meaningQuestions';
+import { ALL_MAKKI_MADANI_QUESTIONS, MAKKI_MADANI_SETS, MAKKI_MADANI_SET_KEYS, MAKKI_MADANI_SET_NAMES } from './makkiMadaniQuestions';
+import { ALL_TAJWEED_QUESTIONS, TAJWEED_SETS, TAJWEED_SET_KEYS, TAJWEED_SET_NAMES } from './tajweedQuestions';
 
 // Quiz Categories Configuration
 export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
@@ -19,19 +23,10 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
     id: 'juz',
     nameEnglish: 'Juz (Ajza\')',
     nameArabic: 'الأجزاء',
-    description: 'Questions about Juz divisions and their contents',
+    description: 'Learn and test your knowledge of the 30 Juz',
     icon: 'layers',
     color: '#3b82f6',
-    questionCount: 15,
-  },
-  {
-    id: 'ayah_knowledge',
-    nameEnglish: 'Ayah Knowledge',
-    nameArabic: 'معرفة الآيات',
-    description: 'Identify Surahs from Ayahs and verse counts',
-    icon: 'document-text',
-    color: '#8b5cf6',
-    questionCount: 20,
+    questionCount: 100,
   },
   {
     id: 'meaning_tafsir',
@@ -40,7 +35,7 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
     description: 'Understand the meanings and themes of Surahs',
     icon: 'bulb',
     color: '#f59e0b',
-    questionCount: 20,
+    questionCount: 50,
   },
   {
     id: 'makki_madani',
@@ -49,7 +44,7 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
     description: 'Learn about revelation locations',
     icon: 'location',
     color: '#ec4899',
-    questionCount: 20,
+    questionCount: 50,
   },
   {
     id: 'tajweed',
@@ -58,621 +53,7 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
     description: 'Test your Tajweed knowledge',
     icon: 'musical-notes',
     color: '#14b8a6',
-    questionCount: 20,
-  },
-  {
-    id: 'memorization',
-    nameEnglish: 'Memorization Test',
-    nameArabic: 'اختبار الحفظ',
-    description: 'Recall and complete Ayahs',
-    icon: 'heart',
-    color: '#ef4444',
-    questionCount: 15,
-  },
-];
-
-// ============ Surah & Structure Questions ============
-export const SURAH_STRUCTURE_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'ss_1',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is the number of Surah Al-Baqarah?',
-    options: ['1', '2', '3', '4'],
-    correctAnswer: '2',
-    explanation: 'Al-Baqarah (The Cow) is the 2nd Surah of the Quran.',
-  },
-  {
-    id: 'ss_2',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'How many Surahs are in the Quran?',
-    options: ['100', '114', '120', '124'],
-    correctAnswer: '114',
-    explanation: 'The Quran contains exactly 114 Surahs.',
-  },
-  {
-    id: 'ss_3',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'Which Surah is the first in the Quran?',
-    options: ['Al-Baqarah', 'Al-Fatiha', 'Al-Ikhlas', 'An-Nas'],
-    correctAnswer: 'Al-Fatiha',
-    explanation: 'Al-Fatiha (The Opening) is the first Surah of the Quran.',
-  },
-  {
-    id: 'ss_4',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'Which is the shortest Surah in the Quran?',
-    options: ['Al-Ikhlas', 'Al-Kawthar', 'An-Nasr', 'Al-Asr'],
-    correctAnswer: 'Al-Kawthar',
-    explanation: 'Al-Kawthar has only 3 verses, making it the shortest Surah.',
-  },
-  {
-    id: 'ss_5',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'Which is the longest Surah in the Quran?',
-    options: ['Al-Imran', 'Al-Baqarah', 'An-Nisa', 'Al-Maidah'],
-    correctAnswer: 'Al-Baqarah',
-    explanation: 'Al-Baqarah has 286 verses, making it the longest Surah.',
-  },
-  {
-    id: 'ss_6',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Surah comes after An-Nisa?',
-    options: ['Al-Imran', 'Al-Maidah', 'Al-Anam', 'Al-Baqarah'],
-    correctAnswer: 'Al-Maidah',
-    explanation: 'The order is: An-Nisa (4) → Al-Maidah (5)',
-  },
-  {
-    id: 'ss_7',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What is the number of Surah Yasin?',
-    options: ['32', '34', '36', '38'],
-    correctAnswer: '36',
-    explanation: 'Yasin is the 36th Surah of the Quran.',
-  },
-  {
-    id: 'ss_8',
-    category: 'surah_structure',
-    format: 'true_false',
-    difficulty: 'easy',
-    question: 'Surah Al-Fatiha has 7 verses.',
-    options: ['True', 'False'],
-    correctAnswer: 'True',
-    explanation: 'Al-Fatiha has exactly 7 verses and is often called "The Seven Oft-Repeated".',
-  },
-  {
-    id: 'ss_9',
-    category: 'surah_structure',
-    format: 'true_false',
-    difficulty: 'medium',
-    question: 'Surah Al-Ikhlas is longer than Surah Al-Kawthar.',
-    options: ['True', 'False'],
-    correctAnswer: 'True',
-    explanation: 'Al-Ikhlas has 4 verses while Al-Kawthar has only 3 verses.',
-  },
-  {
-    id: 'ss_10',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Surah is known as "The Heart of the Quran"?',
-    options: ['Al-Fatiha', 'Al-Baqarah', 'Yasin', 'Al-Rahman'],
-    correctAnswer: 'Yasin',
-    explanation: 'Prophet Muhammad (PBUH) called Yasin the heart of the Quran.',
-  },
-  {
-    id: 'ss_11',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is the last Surah of the Quran?',
-    options: ['Al-Falaq', 'An-Nas', 'Al-Ikhlas', 'Al-Kawthar'],
-    correctAnswer: 'An-Nas',
-    explanation: 'An-Nas (Mankind) is the 114th and final Surah.',
-  },
-  {
-    id: 'ss_12',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'How many verses are in Surah Al-Baqarah?',
-    options: ['256', '276', '286', '296'],
-    correctAnswer: '286',
-    explanation: 'Al-Baqarah contains 286 verses.',
-  },
-  {
-    id: 'ss_13',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Surah is named after a Prophet?',
-    options: ['Al-Baqarah', 'Yusuf', 'Al-Kahf', 'Al-Mulk'],
-    correctAnswer: 'Yusuf',
-    explanation: 'Surah Yusuf (Joseph) is named after Prophet Yusuf (AS).',
-  },
-  {
-    id: 'ss_14',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What does "Al-Fatiha" mean?',
-    options: ['The Cow', 'The Opening', 'The Light', 'The Star'],
-    correctAnswer: 'The Opening',
-    explanation: 'Al-Fatiha means "The Opening" as it opens the Quran.',
-  },
-  {
-    id: 'ss_15',
-    category: 'surah_structure',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'Which Surah does NOT begin with Bismillah?',
-    options: ['Al-Fatiha', 'At-Tawbah', 'An-Naml', 'Al-Mulk'],
-    correctAnswer: 'At-Tawbah',
-    explanation: 'Surah At-Tawbah (9) is the only Surah that does not begin with Bismillah.',
-  },
-];
-
-// ============ Juz Questions ============
-export const JUZ_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'juz_1',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'How many Juz are in the Quran?',
-    options: ['20', '25', '30', '40'],
-    correctAnswer: '30',
-    explanation: 'The Quran is divided into 30 equal parts called Juz (plural: Ajza).',
-  },
-  {
-    id: 'juz_2',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Surah Al-Mulk is in which Juz?',
-    options: ['Juz 27', 'Juz 28', 'Juz 29', 'Juz 30'],
-    correctAnswer: 'Juz 29',
-    explanation: 'Surah Al-Mulk (67) is located in Juz 29.',
-  },
-  {
-    id: 'juz_3',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is Juz 30 also called?',
-    options: ['Juz Tabarak', 'Juz Amma', 'Juz Yasin', 'Juz Rahman'],
-    correctAnswer: 'Juz Amma',
-    explanation: 'Juz 30 is called "Juz Amma" after its first word "عَمَّ" (Amma).',
-  },
-  {
-    id: 'juz_4',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Juz starts with Surah Al-Baqarah?',
-    options: ['Juz 1', 'Juz 2', 'Juz 3', 'None'],
-    correctAnswer: 'Juz 1',
-    explanation: 'Juz 1 begins with Al-Fatiha and continues with Al-Baqarah.',
-  },
-  {
-    id: 'juz_5',
-    category: 'juz',
-    format: 'true_false',
-    difficulty: 'medium',
-    question: 'Each Juz is divided into 2 Hizb.',
-    options: ['True', 'False'],
-    correctAnswer: 'True',
-    explanation: 'Each Juz contains 2 Hizb, totaling 60 Hizb in the entire Quran.',
-  },
-  {
-    id: 'juz_6',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'Juz Tabarak starts with which Surah?',
-    options: ['Al-Mulk', 'Al-Qalam', 'Al-Muzzammil', 'Al-Muddathir'],
-    correctAnswer: 'Al-Mulk',
-    explanation: 'Juz 29 (Tabarak) starts with Surah Al-Mulk, also known as Tabarak.',
-  },
-  {
-    id: 'juz_7',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Surah An-Naba is in which Juz?',
-    options: ['Juz 28', 'Juz 29', 'Juz 30', 'Juz 27'],
-    correctAnswer: 'Juz 30',
-    explanation: 'Surah An-Naba (78) is the first Surah of Juz 30 (Juz Amma).',
-  },
-  {
-    id: 'juz_8',
-    category: 'juz',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'How many Surahs are in Juz 30?',
-    options: ['27', '33', '37', '42'],
-    correctAnswer: '37',
-    explanation: 'Juz 30 contains 37 short Surahs from An-Naba (78) to An-Nas (114).',
-  },
-];
-
-// ============ Ayah Knowledge Questions ============
-export const AYAH_KNOWLEDGE_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'ak_1',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'How many Ayahs are in Surah Al-Kahf?',
-    options: ['100', '105', '110', '115'],
-    correctAnswer: '110',
-    explanation: 'Surah Al-Kahf contains 110 Ayahs.',
-  },
-  {
-    id: 'ak_2',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Ayah is known as Ayat al-Kursi?',
-    options: ['Al-Baqarah 254', 'Al-Baqarah 255', 'Al-Baqarah 256', 'Al-Baqarah 257'],
-    correctAnswer: 'Al-Baqarah 255',
-    explanation: 'Ayat al-Kursi is verse 255 of Surah Al-Baqarah.',
-  },
-  {
-    id: 'ak_3',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'Which Surah contains this Ayah: "قُلْ هُوَ اللَّهُ أَحَدٌ"?',
-    questionArabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ',
-    options: ['Al-Falaq', 'An-Nas', 'Al-Ikhlas', 'Al-Kafirun'],
-    correctAnswer: 'Al-Ikhlas',
-    explanation: 'This is the first verse of Surah Al-Ikhlas (Say, "He is Allah, the One").',
-  },
-  {
-    id: 'ak_4',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'How many Ayahs are in Surah Al-Fatiha?',
-    options: ['5', '6', '7', '8'],
-    correctAnswer: '7',
-    explanation: 'Al-Fatiha has 7 Ayahs.',
-  },
-  {
-    id: 'ak_5',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'Which Surah contains the verse "فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ"?',
-    questionArabic: 'فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ',
-    options: ['Al-Mulk', 'Ar-Rahman', 'Al-Waqiah', 'Al-Hadid'],
-    correctAnswer: 'Ar-Rahman',
-    explanation: 'This verse "So which of the favors of your Lord would you deny?" is repeated 31 times in Surah Ar-Rahman.',
-  },
-  {
-    id: 'ak_6',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'How many Ayahs are in Surah Al-Ikhlas?',
-    options: ['3', '4', '5', '6'],
-    correctAnswer: '4',
-    explanation: 'Surah Al-Ikhlas has 4 Ayahs.',
-  },
-  {
-    id: 'ak_7',
-    category: 'ayah_knowledge',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'The total number of Ayahs in the Quran is approximately:',
-    options: ['5000', '6000', '6236', '7000'],
-    correctAnswer: '6236',
-    explanation: 'The Quran contains 6,236 Ayahs (according to the Kufi count).',
-  },
-];
-
-// ============ Meaning & Tafsir Questions ============
-export const MEANING_TAFSIR_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'mt_1',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is the main theme of Surah Al-Ikhlas?',
-    options: ['Stories of Prophets', 'Oneness of Allah', 'Day of Judgment', 'Prayer'],
-    correctAnswer: 'Oneness of Allah',
-    explanation: 'Al-Ikhlas is about Tawheed (the absolute oneness of Allah).',
-  },
-  {
-    id: 'mt_2',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What does "Al-Falaq" mean?',
-    options: ['The People', 'The Dawn/Daybreak', 'The Night', 'The Sun'],
-    correctAnswer: 'The Dawn/Daybreak',
-    explanation: 'Al-Falaq means "The Daybreak" or "The Dawn".',
-  },
-  {
-    id: 'mt_3',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which Surah talks about the People of the Cave?',
-    options: ['Surah Yusuf', 'Surah Al-Kahf', 'Surah Maryam', 'Surah Taha'],
-    correctAnswer: 'Surah Al-Kahf',
-    explanation: 'Al-Kahf (The Cave) tells the story of the Companions of the Cave.',
-  },
-  {
-    id: 'mt_4',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What does "An-Nas" mean?',
-    options: ['The Angels', 'The Jinn', 'Mankind', 'The Believers'],
-    correctAnswer: 'Mankind',
-    explanation: 'An-Nas means "Mankind" or "The People".',
-  },
-  {
-    id: 'mt_5',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'Surah Al-Masad was revealed about whom?',
-    options: ['Abu Jahl', 'Abu Lahab', 'Abu Sufyan', 'Umar ibn Khattab'],
-    correctAnswer: 'Abu Lahab',
-    explanation: 'Al-Masad condemns Abu Lahab and his wife for their opposition to Islam.',
-  },
-  {
-    id: 'mt_6',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What does "Al-Kawthar" refer to?',
-    options: ['A river in Paradise', 'The Quran', 'The Kaaba', 'Angels'],
-    correctAnswer: 'A river in Paradise',
-    explanation: 'Al-Kawthar is a river in Paradise granted to Prophet Muhammad (PBUH).',
-  },
-  {
-    id: 'mt_7',
-    category: 'meaning_tafsir',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What does "Al-Rahman" mean?',
-    options: ['The King', 'The Most Merciful', 'The Creator', 'The Provider'],
-    correctAnswer: 'The Most Merciful',
-    explanation: 'Ar-Rahman means "The Most Merciful" or "The Most Gracious".',
-  },
-];
-
-// ============ Makki vs Madani Questions ============
-export const MAKKI_MADANI_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'mm_1',
-    category: 'makki_madani',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'Is Surah Al-Fatiha Makki or Madani?',
-    options: ['Makki', 'Madani', 'Both', 'Neither'],
-    correctAnswer: 'Makki',
-    explanation: 'Al-Fatiha was revealed in Makkah before the Hijrah.',
-  },
-  {
-    id: 'mm_2',
-    category: 'makki_madani',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Is Surah Al-Baqarah Makki or Madani?',
-    options: ['Makki', 'Madani'],
-    correctAnswer: 'Madani',
-    explanation: 'Al-Baqarah was revealed in Madinah after the Hijrah.',
-  },
-  {
-    id: 'mm_3',
-    category: 'makki_madani',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Most Makki Surahs focus on what?',
-    options: ['Legal rulings', 'Tawheed and Akhirah', 'History of Madinah', 'Marriage laws'],
-    correctAnswer: 'Tawheed and Akhirah',
-    explanation: 'Makki Surahs generally focus on belief, resurrection, and Tawheed.',
-  },
-  {
-    id: 'mm_4',
-    category: 'makki_madani',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Most Madani Surahs focus on what?',
-    options: ['Stories of Prophets', 'Legal rulings and social laws', 'Day of Judgment', 'Descriptions of Paradise'],
-    correctAnswer: 'Legal rulings and social laws',
-    explanation: 'Madani Surahs often contain laws, rulings, and guidance for the Muslim community.',
-  },
-  {
-    id: 'mm_5',
-    category: 'makki_madani',
-    format: 'true_false',
-    difficulty: 'easy',
-    question: 'Surah Al-Ikhlas is a Makki Surah.',
-    options: ['True', 'False'],
-    correctAnswer: 'True',
-    explanation: 'Al-Ikhlas was revealed in Makkah.',
-  },
-  {
-    id: 'mm_6',
-    category: 'makki_madani',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'How many Surahs are Madani?',
-    options: ['20', '28', '86', '100'],
-    correctAnswer: '28',
-    explanation: 'Approximately 28 Surahs are classified as Madani.',
-  },
-  {
-    id: 'mm_7',
-    category: 'makki_madani',
-    format: 'true_false',
-    difficulty: 'medium',
-    question: 'Juz Amma contains mostly Makki Surahs.',
-    options: ['True', 'False'],
-    correctAnswer: 'True',
-    explanation: 'Most Surahs in Juz 30 (Juz Amma) are Makki, being short early revelations.',
-  },
-];
-
-// ============ Tajweed Questions ============
-export const TAJWEED_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'tj_1',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What rule applies to نْ followed by ب?',
-    options: ['Izhar', 'Ikhfa', 'Iqlab', 'Idgham'],
-    correctAnswer: 'Iqlab',
-    explanation: 'When noon sakinah or tanween is followed by ب, it becomes Iqlab (conversion to meem).',
-  },
-  {
-    id: 'tj_2',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is Ghunnah?',
-    options: ['Stopping', 'Nasalization', 'Elongation', 'Merging'],
-    correctAnswer: 'Nasalization',
-    explanation: 'Ghunnah is the nasalization sound produced when pronouncing noon or meem with shaddah.',
-  },
-  {
-    id: 'tj_3',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'How many types of Madd (elongation) exist?',
-    options: ['2', '4', '6', '9'],
-    correctAnswer: '9',
-    explanation: 'There are 9 types of Madd in Tajweed, including Madd Tabii, Madd Wajib, Madd Jaiz, etc.',
-  },
-  {
-    id: 'tj_4',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'easy',
-    question: 'What is Qalqalah?',
-    options: ['Echo/Bouncing sound', 'Nasalization', 'Elongation', 'Stopping'],
-    correctAnswer: 'Echo/Bouncing sound',
-    explanation: 'Qalqalah is the echoing or bouncing sound when pronouncing certain letters (ق ط ب ج د).',
-  },
-  {
-    id: 'tj_5',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'Which letters are Qalqalah letters?',
-    options: ['ق ط ب ج د', 'ن م و ي', 'ا و ي', 'ث ح خ ش'],
-    correctAnswer: 'ق ط ب ج د',
-    explanation: 'The Qalqalah letters are: ق (Qaf), ط (Ta), ب (Ba), ج (Jeem), د (Dal) - remembered as "قطب جد".',
-  },
-  {
-    id: 'tj_6',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'hard',
-    question: 'What is Ikhfa?',
-    options: ['Clear pronunciation', 'Hidden pronunciation', 'Complete merging', 'Conversion'],
-    correctAnswer: 'Hidden pronunciation',
-    explanation: 'Ikhfa means "hiding" - pronouncing noon sakinah/tanween in a hidden manner before certain letters.',
-  },
-  {
-    id: 'tj_7',
-    category: 'tajweed',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What is the duration of Madd Tabii (natural elongation)?',
-    options: ['1 count', '2 counts', '4 counts', '6 counts'],
-    correctAnswer: '2 counts',
-    explanation: 'Madd Tabii (natural elongation) is held for 2 counts (harakaat).',
-  },
-];
-
-// ============ Memorization Questions ============
-export const MEMORIZATION_QUESTIONS: QuizQuestion[] = [
-  {
-    id: 'mem_1',
-    category: 'memorization',
-    format: 'fill_blank',
-    difficulty: 'easy',
-    question: 'Complete: "الْحَمْدُ لِلَّهِ رَبِّ ___"',
-    questionArabic: 'الْحَمْدُ لِلَّهِ رَبِّ ___',
-    options: ['الْعَالَمِينَ', 'السَّمَاوَاتِ', 'الْأَرْضِ', 'النَّاسِ'],
-    correctAnswer: 'الْعَالَمِينَ',
-    explanation: 'The verse is "Alhamdulillahi Rabbil Aalameen" - All praise is due to Allah, Lord of the worlds.',
-    relatedSurah: 'Al-Fatiha',
-    relatedAyah: 2,
-  },
-  {
-    id: 'mem_2',
-    category: 'memorization',
-    format: 'fill_blank',
-    difficulty: 'easy',
-    question: 'Complete: "قُلْ هُوَ اللَّهُ ___"',
-    questionArabic: 'قُلْ هُوَ اللَّهُ ___',
-    options: ['أَحَدٌ', 'وَاحِدٌ', 'الْأَوَّلُ', 'الْعَظِيمُ'],
-    correctAnswer: 'أَحَدٌ',
-    explanation: 'The verse is "Qul Huwa Allahu Ahad" - Say, "He is Allah, the One."',
-    relatedSurah: 'Al-Ikhlas',
-    relatedAyah: 1,
-  },
-  {
-    id: 'mem_3',
-    category: 'memorization',
-    format: 'fill_blank',
-    difficulty: 'medium',
-    question: 'Complete: "قُلْ أَعُوذُ بِرَبِّ ___"',
-    questionArabic: 'قُلْ أَعُوذُ بِرَبِّ ___',
-    options: ['الْفَلَقِ', 'النَّاسِ', 'الْعَالَمِينَ', 'السَّمَاءِ'],
-    correctAnswer: 'الْفَلَقِ',
-    explanation: 'This is from Al-Falaq: "Say, I seek refuge in the Lord of daybreak."',
-    relatedSurah: 'Al-Falaq',
-    relatedAyah: 1,
-  },
-  {
-    id: 'mem_4',
-    category: 'memorization',
-    format: 'multiple_choice',
-    difficulty: 'medium',
-    question: 'What comes after "إِيَّاكَ نَعْبُدُ"?',
-    questionArabic: 'إِيَّاكَ نَعْبُدُ ...',
-    options: ['وَإِيَّاكَ نَسْتَعِينُ', 'صِرَاطَ الْمُسْتَقِيمَ', 'رَبِّ الْعَالَمِينَ', 'يَوْمِ الدِّينِ'],
-    correctAnswer: 'وَإِيَّاكَ نَسْتَعِينُ',
-    explanation: '"You alone we worship, and You alone we ask for help."',
-    relatedSurah: 'Al-Fatiha',
-    relatedAyah: 5,
-  },
-  {
-    id: 'mem_5',
-    category: 'memorization',
-    format: 'fill_blank',
-    difficulty: 'hard',
-    question: 'Complete: "اللَّهُ الصَّمَدُ • لَمْ يَلِدْ وَلَمْ ___"',
-    questionArabic: 'لَمْ يَلِدْ وَلَمْ ___',
-    options: ['يُولَدْ', 'يَخْلُقْ', 'يَمُتْ', 'يَعْلَمْ'],
-    correctAnswer: 'يُولَدْ',
-    explanation: '"He neither begets nor is He begotten." (Al-Ikhlas:3)',
-    relatedSurah: 'Al-Ikhlas',
-    relatedAyah: 3,
+    questionCount: 50,
   },
 ];
 
@@ -682,17 +63,13 @@ export function getQuestionsByCategory(category: QuizCategory): QuizQuestion[] {
     case 'surah_structure':
       return ALL_SURAH_STRUCTURE_QUESTIONS;
     case 'juz':
-      return JUZ_QUESTIONS;
-    case 'ayah_knowledge':
-      return AYAH_KNOWLEDGE_QUESTIONS;
+      return ALL_JUZ_QUESTIONS;
     case 'meaning_tafsir':
-      return MEANING_TAFSIR_QUESTIONS;
+      return ALL_MEANING_QUESTIONS;
     case 'makki_madani':
-      return MAKKI_MADANI_QUESTIONS;
+      return ALL_MAKKI_MADANI_QUESTIONS;
     case 'tajweed':
-      return TAJWEED_QUESTIONS;
-    case 'memorization':
-      return MEMORIZATION_QUESTIONS;
+      return ALL_TAJWEED_QUESTIONS;
     default:
       return [];
   }
@@ -708,4 +85,97 @@ export function getRandomQuestions(category: QuizCategory, count: number = 10): 
 // Get category info
 export function getCategoryById(categoryId: QuizCategory): QuizCategoryInfo | undefined {
   return QUIZ_CATEGORIES.find(c => c.id === categoryId);
+}
+
+// Set names for display (Surah Structure)
+export const SET_NAMES: Record<string, string> = {
+  set1_surahs_1_10: 'Surahs 1-10',
+  set2_surahs_11_20: 'Surahs 11-20',
+  set3_surahs_21_30: 'Surahs 21-30',
+  set4_surahs_31_40: 'Surahs 31-40',
+  set5_surahs_41_50: 'Surahs 41-50',
+  set6_surahs_51_60: 'Surahs 51-60',
+  set7_surahs_61_70: 'Surahs 61-70',
+  set8_surahs_71_80: 'Surahs 71-80',
+  set9_surahs_81_90: 'Surahs 81-90',
+  set10_surahs_91_100: 'Surahs 91-100',
+  set11_surahs_101_114: 'Surahs 101-114',
+  set12_which_comes_next: 'Which Comes Next',
+  set13_name_from_number: 'Name from Number',
+  set14_true_false: 'True or False',
+  set15_special_facts: 'Special Facts',
+};
+
+// Get total number of sets for a category
+export function getTotalSets(category: QuizCategory): number {
+  switch (category) {
+    case 'surah_structure':
+      return SURAH_STRUCTURE_SET_KEYS.length;
+    case 'juz':
+      return JUZ_SET_KEYS.length;
+    case 'meaning_tafsir':
+      return MEANING_SET_KEYS.length;
+    case 'makki_madani':
+      return MAKKI_MADANI_SET_KEYS.length;
+    case 'tajweed':
+      return TAJWEED_SET_KEYS.length;
+    default:
+      return 1;
+  }
+}
+
+// Get questions by set number (0-indexed)
+export function getQuestionsBySet(category: QuizCategory, setIndex: number): QuizQuestion[] {
+  switch (category) {
+    case 'surah_structure': {
+      const setKey = SURAH_STRUCTURE_SET_KEYS[setIndex];
+      return setKey ? SURAH_STRUCTURE_SETS[setKey] : [];
+    }
+    case 'juz': {
+      const setKey = JUZ_SET_KEYS[setIndex];
+      return setKey ? JUZ_SETS[setKey] : [];
+    }
+    case 'meaning_tafsir': {
+      const setKey = MEANING_SET_KEYS[setIndex];
+      return setKey ? MEANING_SETS[setKey] : [];
+    }
+    case 'makki_madani': {
+      const setKey = MAKKI_MADANI_SET_KEYS[setIndex];
+      return setKey ? MAKKI_MADANI_SETS[setKey] : [];
+    }
+    case 'tajweed': {
+      const setKey = TAJWEED_SET_KEYS[setIndex];
+      return setKey ? TAJWEED_SETS[setKey] : [];
+    }
+    default:
+      return getQuestionsByCategory(category);
+  }
+}
+
+// Get set name by index
+export function getSetName(category: QuizCategory, setIndex: number): string {
+  switch (category) {
+    case 'surah_structure': {
+      const setKey = SURAH_STRUCTURE_SET_KEYS[setIndex];
+      return setKey ? (SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
+    }
+    case 'juz': {
+      const setKey = JUZ_SET_KEYS[setIndex];
+      return setKey ? (JUZ_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
+    }
+    case 'meaning_tafsir': {
+      const setKey = MEANING_SET_KEYS[setIndex];
+      return setKey ? (MEANING_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
+    }
+    case 'makki_madani': {
+      const setKey = MAKKI_MADANI_SET_KEYS[setIndex];
+      return setKey ? (MAKKI_MADANI_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
+    }
+    case 'tajweed': {
+      const setKey = TAJWEED_SET_KEYS[setIndex];
+      return setKey ? (TAJWEED_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
+    }
+    default:
+      return `Set ${setIndex + 1}`;
+  }
 }

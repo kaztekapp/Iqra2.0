@@ -1640,3 +1640,6 @@ export const SURAH_STRUCTURE_SETS = {
   set14_true_false: SET_14_QUESTIONS,
   set15_special_facts: SET_15_QUESTIONS,
 };
+
+// Set keys for iteration
+export const SURAH_STRUCTURE_SET_KEYS = Object.keys(SURAH_STRUCTURE_SETS) as (keyof typeof SURAH_STRUCTURE_SETS)[];

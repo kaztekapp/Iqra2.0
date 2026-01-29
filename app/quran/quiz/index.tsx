@@ -32,6 +32,11 @@ function CategoryCard({ category, onPress }: CategoryCardProps) {
 
 export default function QuizCategoriesScreen() {
   const handleCategoryPress = (categoryId: string) => {
+    // Juz category has its own dedicated learning screen with Learn/Quiz tabs
+    if (categoryId === 'juz') {
+      router.push('/quran/juz' as any);
+      return;
+    }
     router.push(`/quran/quiz/${categoryId}` as any);
   };
 

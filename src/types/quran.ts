@@ -97,10 +97,13 @@ export interface TajweedRule {
 }
 
 export interface TajweedExample {
-  text: string;
+  text: string; // The phrase/excerpt showing the rule
+  fullAyahText: string; // Complete ayah text (matches the audio)
   transliteration: string;
+  surahNumber: number;
   surahName: string;
   ayahNumber: number;
+  highlightText?: string; // The specific letters demonstrating the rule
   explanation?: string;
 }
 
@@ -293,11 +296,9 @@ export interface QuranExercise {
 export type QuizCategory =
   | 'surah_structure'    // Surah names, numbers, order
   | 'juz'                // Juz-related questions
-  | 'ayah_knowledge'     // Ayah identification, counts
   | 'meaning_tafsir'     // Meanings and themes
   | 'makki_madani'       // Revelation location
-  | 'tajweed'            // Tajweed rules
-  | 'memorization';      // Hifdh/recall
+  | 'tajweed';           // Tajweed rules
 
 export type QuizFormat =
   | 'multiple_choice'
