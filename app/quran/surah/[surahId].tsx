@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { getSurahById, getSurahByNumber } from '../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
-import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
+import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
 
 export default function SurahDetailScreen() {
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
@@ -16,6 +16,7 @@ export default function SurahDetailScreen() {
   const [audioState, setAudioState] = useState<AudioState>('idle');
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [currentPlayingAyah, setCurrentPlayingAyah] = useState<number | null>(null);
+  const [showReciterModal, setShowReciterModal] = useState(false);
 
   // Refs to track state in callbacks (avoids stale closures)
   const isPlayingAllRef = useRef(false);
@@ -38,7 +39,19 @@ export default function SurahDetailScreen() {
     bookmarkAyah,
     unbookmarkAyah,
     progress,
+    setReciter,
   } = useQuranStore();
+
+  // Get current reciter info
+  const currentReciterId = progress.settings.reciterId as ReciterId;
+  const currentReciter = QURAN_RECITERS[currentReciterId] || QURAN_RECITERS['mishary-alafasy'];
+
+  // Handle reciter change
+  const handleReciterChange = useCallback((reciterId: ReciterId) => {
+    setReciter(reciterId);
+    quranAudioService.setReciter(reciterId);
+    setShowReciterModal(false);
+  }, [setReciter]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -297,32 +310,71 @@ export default function SurahDetailScreen() {
           </View>
         </View>
 
-        {/* Progress Card */}
-        <View style={styles.progressCard}>
-          <View style={styles.progressHeader}>
-            <Text style={styles.progressTitle}>Your Progress</Text>
-            <Text style={styles.progressPercent}>{surahProgress.completionPercent}%</Text>
-          </View>
-          <View style={styles.progressBar}>
-            <View
-              style={[styles.progressFill, { width: `${surahProgress.completionPercent}%` }]}
-            />
-          </View>
-          <View style={styles.progressStats}>
-            <View style={styles.progressStat}>
-              <Text style={styles.progressStatValue}>
-                {surahProgress.ayahsLearned.length}/{surah.ayahCount}
-              </Text>
-              <Text style={styles.progressStatLabel}>Learned</Text>
+        {/* Reciter Selector */}
+        <Pressable style={styles.reciterCard} onPress={() => setShowReciterModal(true)}>
+          <View style={styles.reciterInfo}>
+            <View style={styles.reciterIcon}>
+              <Ionicons name="mic" size={20} color="#10b981" />
             </View>
-            <View style={styles.progressStat}>
-              <Text style={[styles.progressStatValue, { color: '#8b5cf6' }]}>
-                {surahProgress.ayahsMemorized.length}/{surah.ayahCount}
-              </Text>
-              <Text style={styles.progressStatLabel}>Memorized</Text>
+            <View style={styles.reciterDetails}>
+              <Text style={styles.reciterLabel}>Reciter</Text>
+              <Text style={styles.reciterName}>{currentReciter.nameEnglish}</Text>
+              <Text style={styles.reciterNameArabic}>{currentReciter.nameArabic}</Text>
             </View>
           </View>
-        </View>
+          <View style={styles.reciterAction}>
+            <Text style={styles.changeText}>Change</Text>
+            <Ionicons name="chevron-forward" size={18} color="#64748b" />
+          </View>
+        </Pressable>
+
+        {/* Reciter Selection Modal */}
+        <Modal
+          visible={showReciterModal}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setShowReciterModal(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalTitle}>Select Reciter</Text>
+                <Pressable onPress={() => setShowReciterModal(false)}>
+                  <Ionicons name="close" size={24} color="#ffffff" />
+                </Pressable>
+              </View>
+              <ScrollView style={styles.reciterList}>
+                {Object.values(QURAN_RECITERS).map((reciter) => (
+                  <Pressable
+                    key={reciter.id}
+                    style={[
+                      styles.reciterOption,
+                      currentReciterId === reciter.id && styles.reciterOptionActive,
+                    ]}
+                    onPress={() => handleReciterChange(reciter.id as ReciterId)}
+                  >
+                    <View style={styles.reciterOptionInfo}>
+                      <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>
+                      <Text style={styles.reciterOptionArabic}>{reciter.nameArabic}</Text>
+                      <View style={styles.reciterMeta}>
+                        <Text style={styles.reciterStyle}>{reciter.style}</Text>
+                        {reciter.recommended && (
+                          <View style={styles.recommendedBadge}>
+                            <Ionicons name="star" size={10} color="#f59e0b" />
+                            <Text style={styles.recommendedText}>Recommended</Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+                    {currentReciterId === reciter.id && (
+                      <Ionicons name="checkmark-circle" size={24} color="#10b981" />
+                    )}
+                  </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
 
         {/* Action Buttons */}
         <View style={styles.actionButtons}>
@@ -569,56 +621,134 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: 13,
   },
-  progressCard: {
+  reciterCard: {
     backgroundColor: '#1e293b',
     marginHorizontal: 20,
     borderRadius: 16,
-    padding: 20,
+    padding: 16,
     marginBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  progressHeader: {
+  reciterInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  reciterIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: '#10b98120',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reciterDetails: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  reciterLabel: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  reciterName: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  reciterNameArabic: {
+    color: '#10b981',
+    fontSize: 14,
+    marginTop: 2,
+  },
+  reciterAction: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  changeText: {
+    color: '#64748b',
+    fontSize: 13,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#1e293b',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    maxHeight: '80%',
+  },
+  modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#334155',
   },
-  progressTitle: {
+  modalTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  reciterList: {
+    padding: 16,
+  },
+  reciterOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    backgroundColor: '#0f172a',
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+  reciterOptionActive: {
+    borderWidth: 1,
+    borderColor: '#10b981',
+  },
+  reciterOptionInfo: {
+    flex: 1,
+  },
+  reciterOptionName: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  reciterOptionArabic: {
     color: '#94a3b8',
     fontSize: 14,
+    marginTop: 2,
   },
-  progressPercent: {
-    color: '#10b981',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: '#334155',
-    borderRadius: 4,
-    overflow: 'hidden',
-    marginBottom: 16,
-  },
-  progressFill: {
-    height: '100%',
-    backgroundColor: '#10b981',
-    borderRadius: 4,
-  },
-  progressStats: {
+  reciterMeta: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  progressStat: {
     alignItems: 'center',
+    gap: 10,
+    marginTop: 6,
   },
-  progressStatValue: {
-    color: '#10b981',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  progressStatLabel: {
+  reciterStyle: {
     color: '#64748b',
     fontSize: 12,
-    marginTop: 2,
+    textTransform: 'capitalize',
+  },
+  recommendedBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#f59e0b20',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+  recommendedText: {
+    color: '#f59e0b',
+    fontSize: 10,
+    fontWeight: '600',
   },
   actionButtons: {
     flexDirection: 'row',
