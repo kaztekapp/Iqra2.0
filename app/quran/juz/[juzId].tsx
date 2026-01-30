@@ -50,6 +50,31 @@ function ExpandableSection({
   );
 }
 
+// Static Section Component (always expanded, no collapse button)
+function StaticSection({
+  title,
+  icon,
+  iconColor,
+  children,
+}: {
+  title: string;
+  icon: string;
+  iconColor: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <View style={styles.expandableSection}>
+      <View style={styles.staticHeader}>
+        <View style={[styles.sectionIcon, { backgroundColor: `${iconColor}20` }]}>
+          <Ionicons name={icon as any} size={18} color={iconColor} />
+        </View>
+        <Text style={styles.sectionTitle}>{title}</Text>
+      </View>
+      <View style={styles.expandableContent}>{children}</View>
+    </View>
+  );
+}
+
 // Famous Verse Card
 function VerseCard({
   verse,
@@ -250,7 +275,7 @@ export default function JuzDetailScreen() {
 
           {/* Stories */}
           {juz.stories && juz.stories.length > 0 && (
-            <ExpandableSection
+            <StaticSection
               title="Stories & Narratives"
               icon="book"
               iconColor="#8b5cf6"
@@ -265,11 +290,11 @@ export default function JuzDetailScreen() {
                   </View>
                 ))}
               </View>
-            </ExpandableSection>
+            </StaticSection>
           )}
 
           {/* Memorization Tips */}
-          <ExpandableSection
+          <StaticSection
             title="Memorization Guide"
             icon="school"
             iconColor="#22c55e"
@@ -307,7 +332,7 @@ export default function JuzDetailScreen() {
                 </View>
               ))}
             </View>
-          </ExpandableSection>
+          </StaticSection>
 
           {/* Quick Navigation */}
           <View style={styles.quickNav}>
@@ -473,6 +498,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
+  },
+  staticHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    paddingBottom: 0,
   },
   sectionIcon: {
     width: 36,

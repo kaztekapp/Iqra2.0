@@ -137,7 +137,10 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
             ~{juz.memorization.estimatedDays} days to memorize
           </Text>
         </View>
-        <Ionicons name="chevron-forward" size={20} color="#64748b" />
+        <Pressable style={styles.viewButton} onPress={onPress}>
+          <Text style={styles.viewButtonText}>View</Text>
+          <Ionicons name="arrow-forward" size={16} color="#ffffff" />
+        </Pressable>
       </View>
     </Pressable>
   );
@@ -646,6 +649,20 @@ const styles = StyleSheet.create({
   memorizeText: {
     fontSize: 12,
     color: '#3b82f6',
+  },
+  viewButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#3b82f6',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+  viewButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#ffffff',
   },
   // Quiz Tab Styles
   quizHeaderCard: {
