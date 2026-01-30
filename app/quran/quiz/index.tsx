@@ -37,6 +37,11 @@ export default function QuizCategoriesScreen() {
       router.push('/quran/juz' as any);
       return;
     }
+    // Surah Structure category has its own dedicated learning screen with Learn/Quiz tabs
+    if (categoryId === 'surah_structure') {
+      router.push('/quran/surah-learn' as any);
+      return;
+    }
     router.push(`/quran/quiz/${categoryId}` as any);
   };
 
