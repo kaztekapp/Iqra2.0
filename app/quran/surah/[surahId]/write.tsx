@@ -25,12 +25,21 @@ interface MistakeInfo {
   explanation: string;
 }
 
+interface WordComparison {
+  word: string;
+  isCorrect: boolean;
+  userWord?: string;
+}
+
 interface ComparisonResult {
   isCorrect: boolean;
   mistakes: MistakeInfo[];
   accuracy: number;
   userChars: { char: string; status: 'correct' | 'wrong' | 'extra' }[];
   expectedChars: { char: string; status: 'correct' | 'missing' }[];
+  wordComparison: WordComparison[];
+  correctWords: number;
+  totalWords: number;
 }
 
 // Arabic diacritics (tashkeel)
@@ -163,12 +172,36 @@ function compareTexts(userText: string, expectedText: string): ComparisonResult 
   const totalChars = Math.max(normalizedExpected.length, 1);
   const accuracy = Math.round((correctCount / totalChars) * 100);
 
+  // Word-by-word comparison
+  const expectedWords = expectedText.trim().split(/\s+/);
+  const userWords = userText.trim().split(/\s+/);
+  const wordComparison: WordComparison[] = [];
+  let correctWords = 0;
+
+  expectedWords.forEach((expectedWord, index) => {
+    const userWord = userWords[index] || '';
+    const normalizedExpectedWord = normalizeArabic(removeDiacritics(expectedWord));
+    const normalizedUserWord = normalizeArabic(removeDiacritics(userWord));
+    const isWordCorrect = normalizedExpectedWord === normalizedUserWord;
+
+    if (isWordCorrect) correctWords++;
+
+    wordComparison.push({
+      word: expectedWord,
+      isCorrect: isWordCorrect,
+      userWord: userWord || undefined,
+    });
+  });
+
   return {
     isCorrect: mistakes.length === 0,
     mistakes,
     accuracy,
     userChars,
     expectedChars,
+    wordComparison,
+    correctWords,
+    totalWords: expectedWords.length,
   };
 }
 
@@ -472,77 +505,49 @@ export default function WritingExerciseScreen() {
           {/* Result Section */}
           {hasSubmitted && comparisonResult && (
             <View style={styles.resultCard}>
-              {/* Accuracy Score */}
+              {/* Word Accuracy Score */}
               <View
                 style={[
                   styles.accuracyBadge,
-                  comparisonResult.isCorrect
+                  comparisonResult.correctWords === comparisonResult.totalWords
                     ? styles.accuracyPerfect
-                    : comparisonResult.accuracy >= 80
+                    : comparisonResult.correctWords >= comparisonResult.totalWords * 0.8
                     ? styles.accuracyGood
-                    : comparisonResult.accuracy >= 50
+                    : comparisonResult.correctWords >= comparisonResult.totalWords * 0.5
                     ? styles.accuracyMedium
                     : styles.accuracyLow,
                 ]}
               >
                 <Ionicons
-                  name={comparisonResult.isCorrect ? 'checkmark-circle' : 'analytics'}
+                  name={comparisonResult.correctWords === comparisonResult.totalWords ? 'checkmark-circle' : 'analytics'}
                   size={24}
                   color="#ffffff"
                 />
                 <Text style={styles.accuracyText}>
-                  {comparisonResult.isCorrect ? 'Perfect!' : `${comparisonResult.accuracy}% Accurate`}
+                  {comparisonResult.correctWords === comparisonResult.totalWords
+                    ? 'Perfect!'
+                    : `${comparisonResult.correctWords}/${comparisonResult.totalWords} Words Correct`}
                 </Text>
               </View>
 
-              {/* Mistakes List */}
-              {comparisonResult.mistakes.length > 0 && (
-                <View style={styles.mistakesSection}>
-                  <Text style={styles.mistakesTitle}>
-                    {comparisonResult.mistakes.length} Mistake
-                    {comparisonResult.mistakes.length > 1 ? 's' : ''} Found:
-                  </Text>
-                  {comparisonResult.mistakes.slice(0, 5).map((mistake, index) => (
-                    <View key={index} style={styles.mistakeItem}>
-                      <View
-                        style={[
-                          styles.mistakeIcon,
-                          mistake.type === 'missing'
-                            ? styles.mistakeMissing
-                            : mistake.type === 'extra'
-                            ? styles.mistakeExtra
-                            : styles.mistakeWrong,
-                        ]}
-                      >
-                        <Ionicons
-                          name={
-                            mistake.type === 'missing'
-                              ? 'remove-circle'
-                              : mistake.type === 'extra'
-                              ? 'add-circle'
-                              : 'swap-horizontal'
-                          }
-                          size={16}
-                          color="#ffffff"
-                        />
-                      </View>
-                      <View style={styles.mistakeContent}>
-                        <Text style={styles.mistakeType}>
-                          {mistake.type === 'missing'
-                            ? 'Missing Letter'
-                            : mistake.type === 'extra'
-                            ? 'Extra Letter'
-                            : 'Wrong Letter'}
+              {/* Word Comparison Display */}
+              {comparisonResult.correctWords < comparisonResult.totalWords && (
+                <View style={styles.wordComparisonSection}>
+                  <Text style={styles.wordComparisonTitle}>Your Answer:</Text>
+                  <Text style={styles.wordComparisonText}>
+                    {comparisonResult.wordComparison.map((wordInfo, index) => (
+                      <Text key={index}>
+                        <Text
+                          style={[
+                            wordInfo.isCorrect ? styles.wordCorrectInline : styles.wordIncorrectInline,
+                          ]}
+                        >
+                          {wordInfo.userWord || '___'}
                         </Text>
-                        <Text style={styles.mistakeExplanation}>{mistake.explanation}</Text>
-                      </View>
-                    </View>
-                  ))}
-                  {comparisonResult.mistakes.length > 5 && (
-                    <Text style={styles.moreMistakes}>
-                      +{comparisonResult.mistakes.length - 5} more mistakes
-                    </Text>
-                  )}
+                        {index < comparisonResult.wordComparison.length - 1 && ' '}
+                      </Text>
+                    ))}
+                  </Text>
                 </View>
               )}
 
@@ -564,10 +569,36 @@ export default function WritingExerciseScreen() {
               )}
 
               {/* Solution */}
-              {showSolution && selectedAyah && (
+              {showSolution && selectedAyah && comparisonResult && (
                 <View style={styles.solutionCard}>
-                  <Text style={styles.solutionLabel}>Correct Ayah:</Text>
-                  <Text style={styles.solutionText}>{selectedAyah.textUthmani}</Text>
+                  <Text style={styles.solutionLabel}>Word-by-Word Correction:</Text>
+
+                  {/* Show incorrect words with explanation */}
+                  {comparisonResult.wordComparison
+                    .filter((w) => !w.isCorrect)
+                    .map((wordInfo, index) => (
+                      <View key={index} style={styles.wordCorrectionItem}>
+                        <View style={styles.wordCorrectionRow}>
+                          <View style={styles.wordCorrectionBox}>
+                            <Text style={styles.wordCorrectionLabel}>You wrote:</Text>
+                            <Text style={styles.wordWrong}>
+                              {wordInfo.userWord || '(missing)'}
+                            </Text>
+                          </View>
+                          <Ionicons name="arrow-forward" size={20} color="#64748b" />
+                          <View style={styles.wordCorrectionBox}>
+                            <Text style={styles.wordCorrectionLabel}>Correct:</Text>
+                            <Text style={styles.wordRight}>{wordInfo.word}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    ))}
+
+                  {/* Full correct ayah */}
+                  <View style={styles.fullAyahSection}>
+                    <Text style={styles.fullAyahLabel}>Complete Ayah:</Text>
+                    <Text style={styles.fullAyahText}>{selectedAyah.textUthmani}</Text>
+                  </View>
                 </View>
               )}
             </View>
@@ -998,12 +1029,101 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#10b98130',
   },
+  solutionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   solutionLabel: {
     color: '#10b981',
     fontSize: 13,
-    marginBottom: 10,
+  },
+  wordScore: {
+    color: '#94a3b8',
+    fontSize: 12,
   },
   solutionText: {
+    fontSize: 22,
+    lineHeight: 40,
+    textAlign: 'right',
+  },
+  solutionWord: {
+    paddingHorizontal: 2,
+  },
+  wordCorrect: {
+    color: '#10b981',
+  },
+  wordIncorrect: {
+    color: '#ef4444',
+    textDecorationLine: 'underline',
+  },
+  wordComparisonSection: {
+    marginBottom: 16,
+  },
+  wordComparisonTitle: {
+    color: '#94a3b8',
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  wordComparisonText: {
+    backgroundColor: '#0f172a',
+    padding: 12,
+    borderRadius: 10,
+    fontSize: 20,
+    lineHeight: 36,
+    textAlign: 'right',
+  },
+  wordCorrectInline: {
+    color: '#10b981',
+  },
+  wordIncorrectInline: {
+    color: '#ef4444',
+    backgroundColor: '#ef444420',
+  },
+  wordCorrectionItem: {
+    marginBottom: 12,
+  },
+  wordCorrectionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  wordCorrectionBox: {
+    flex: 1,
+    backgroundColor: '#0f172a',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  wordCorrectionLabel: {
+    color: '#64748b',
+    fontSize: 11,
+    marginBottom: 4,
+  },
+  wordWrong: {
+    color: '#ef4444',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  wordRight: {
+    color: '#10b981',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  fullAyahSection: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#10b98130',
+  },
+  fullAyahLabel: {
+    color: '#10b981',
+    fontSize: 12,
+    marginBottom: 8,
+  },
+  fullAyahText: {
     color: '#ffffff',
     fontSize: 20,
     lineHeight: 36,
