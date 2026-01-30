@@ -37,6 +37,7 @@ const CATEGORY_NAMES: Record<string, { english: string; arabic: string }> = {
   qalqalah: { english: 'Qalqalah (Echo)', arabic: 'القلقلة' },
   ghunnah: { english: 'Ghunnah (Nasal)', arabic: 'الغنة' },
   lam_shamsiyyah: { english: 'Lam Rules', arabic: 'اللام' },
+  recitation_styles: { english: 'Recitation Styles', arabic: 'أساليب التلاوة' },
   other: { english: 'Other Rules', arabic: 'قواعد أخرى' },
 };
 

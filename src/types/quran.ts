@@ -59,6 +59,7 @@ export type TajweedCategory =
   | 'qalqalah'
   | 'ghunnah'
   | 'lam_shamsiyyah'
+  | 'recitation_styles'
   | 'other';
 
 export type TajweedRuleId =
@@ -80,7 +81,11 @@ export type TajweedRuleId =
   | 'qalqalah_kubra'
   | 'ghunnah'
   | 'lam_shamsiyyah'
-  | 'lam_qamariyyah';
+  | 'lam_qamariyyah'
+  | 'recitation_tahqiq'
+  | 'recitation_tartil'
+  | 'recitation_tadwir'
+  | 'recitation_hadr';
 
 export interface TajweedRule {
   id: TajweedRuleId;

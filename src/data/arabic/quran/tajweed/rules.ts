@@ -1261,6 +1261,100 @@ export const TAJWEED_RULES: TajweedRule[] = [
       },
     ],
   },
+
+  // ============ Recitation Styles (Speeds) ============
+  {
+    id: 'recitation_tahqiq',
+    nameArabic: 'تحقيق',
+    nameEnglish: 'Tahqiq (Precision)',
+    category: 'recitation_styles',
+    colorCode: TAJWEED_COLORS.recitation_tahqiq,
+    description:
+      'Tahqiq is the SLOWEST style of recitation, designed specifically for learning and teaching. Every letter is given its full right - articulation points are precise, elongations are at maximum length, and rules are applied with extreme care. This is ideal for beginners learning Tajweed, as it allows time to focus on each rule. Think of it as "slow motion" Quran recitation where nothing is rushed.',
+    descriptionArabic:
+      'التحقيق هو أبطأ أنواع التلاوة، مخصص للتعليم والتعلم. يُعطى كل حرف حقه الكامل مع التأني في إخراج الحروف وتطبيق الأحكام بدقة متناهية',
+    examples: [
+      {
+        text: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+        fullAyahText: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+        highlightText: 'الْحَمْدُ',
+        transliteration: "al-ḥamdu lillāhi rabbi al-'ālamīn",
+        surahNumber: 1,
+        surahName: 'Al-Fatiha',
+        ayahNumber: 2,
+        explanation: 'In Tahqiq, each letter is pronounced slowly with full attention to articulation points',
+      },
+    ],
+  },
+  {
+    id: 'recitation_tartil',
+    nameArabic: 'ترتيل',
+    nameEnglish: 'Tartil (Measured)',
+    category: 'recitation_styles',
+    colorCode: TAJWEED_COLORS.recitation_tartil,
+    description:
+      'Tartil is the style RECOMMENDED by Allah in the Quran: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا" (And recite the Quran with measured recitation - 73:4). It is slow and measured, but slightly faster than Tahqiq. Each word is given proper attention, Tajweed rules are fully applied, and there is contemplation (tadabbur) of the meaning. This is the ideal style for regular recitation and prayer.',
+    descriptionArabic:
+      'الترتيل هو الأسلوب الذي أمر الله به في قوله: "وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا". تلاوة متأنية مع تدبر المعاني وتطبيق أحكام التجويد كاملة',
+    examples: [
+      {
+        text: 'وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا',
+        fullAyahText: 'أَوْ زِدْ عَلَيْهِ وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا',
+        highlightText: 'وَرَتِّلِ',
+        transliteration: "wa rattilil-qur'āna tartīlā",
+        surahNumber: 73,
+        surahName: 'Al-Muzzammil',
+        ayahNumber: 4,
+        explanation: 'The command from Allah to recite with Tartil - slow, measured, and contemplative',
+      },
+    ],
+  },
+  {
+    id: 'recitation_tadwir',
+    nameArabic: 'تدوير',
+    nameEnglish: 'Tadwir (Moderate)',
+    category: 'recitation_styles',
+    colorCode: TAJWEED_COLORS.recitation_tadwir,
+    description:
+      'Tadwir is the MIDDLE pace between Tartil (slow) and Hadr (fast). It maintains all Tajweed rules while moving at a comfortable, moderate speed. This style is commonly used by many famous reciters in their recordings. It balances between careful pronunciation and fluid recitation, making it suitable for those who have mastered the basics and want a natural flow.',
+    descriptionArabic:
+      'التدوير هو الوسط بين الترتيل والحدر. تلاوة بسرعة معتدلة مع الحفاظ على جميع أحكام التجويد. هذا الأسلوب شائع بين القراء المشهورين',
+    examples: [
+      {
+        text: 'قُلْ هُوَ اللَّهُ أَحَدٌ',
+        fullAyahText: 'قُلْ هُوَ اللَّهُ أَحَدٌ',
+        highlightText: 'قُلْ هُوَ',
+        transliteration: "qul huwa Allāhu aḥad",
+        surahNumber: 112,
+        surahName: 'Al-Ikhlas',
+        ayahNumber: 1,
+        explanation: 'Tadwir allows moderate pace while maintaining proper Tajweed application',
+      },
+    ],
+  },
+  {
+    id: 'recitation_hadr',
+    nameArabic: 'حدر',
+    nameEnglish: 'Hadr (Swift)',
+    category: 'recitation_styles',
+    colorCode: TAJWEED_COLORS.recitation_hadr,
+    description:
+      'Hadr is the FASTEST style of recitation while STILL maintaining all Tajweed rules. Nothing is skipped or rushed incorrectly - the reciter simply moves quickly through the text. This requires mastery of Tajweed rules, as speed must not compromise accuracy. It is often used for completing the Quran quickly (like in Ramadan) or for personal review (muraja\'ah) by those who have memorized.',
+    descriptionArabic:
+      'الحدر هو أسرع أنواع التلاوة مع الحفاظ على أحكام التجويد. يتطلب إتقان القواعد حيث لا يجوز أن تؤثر السرعة على صحة النطق. يُستخدم لختم القرآن سريعاً أو للمراجعة',
+    examples: [
+      {
+        text: 'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
+        fullAyahText: 'قُلْ أَعُوذُ بِرَبِّ النَّاسِ',
+        highlightText: 'أَعُوذُ',
+        transliteration: "qul a'ūdhu bi rabbi an-nās",
+        surahNumber: 114,
+        surahName: 'An-Nas',
+        ayahNumber: 1,
+        explanation: 'Even in Hadr (fast recitation), all Tajweed rules must be observed correctly',
+      },
+    ],
+  },
 ];
 
 // Helper functions

@@ -32,6 +32,12 @@ export const TAJWEED_COLORS = {
   // Lam Rules
   lam_shamsiyyah: '#FFD700', // Gold - Sun letters (assimilation)
   lam_qamariyyah: '#E6E6FA', // Lavender - Moon letters (clear)
+
+  // Recitation Styles
+  recitation_tahqiq: '#9C27B0', // Purple - Very slow (learning)
+  recitation_tartil: '#673AB7', // Deep purple - Slow measured
+  recitation_tadwir: '#3F51B5', // Indigo - Medium pace
+  recitation_hadr: '#2196F3', // Blue - Fast pace
 } as const;
 
 export type TajweedColorKey = keyof typeof TAJWEED_COLORS;
@@ -44,5 +50,6 @@ export const TAJWEED_CATEGORY_COLORS = {
   qalqalah: '#00BCD4', // Cyan
   ghunnah: '#FF9800', // Orange
   lam_shamsiyyah: '#FFC107', // Amber
+  recitation_styles: '#9C27B0', // Purple
   other: '#9E9E9E', // Gray
 } as const;
