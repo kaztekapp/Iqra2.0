@@ -357,7 +357,12 @@ export default function SurahDetailScreen() {
                       <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>
                       <Text style={styles.reciterOptionArabic}>{reciter.nameArabic}</Text>
                       <View style={styles.reciterMeta}>
-                        <Text style={styles.reciterStyle}>{reciter.style}</Text>
+                        <View style={styles.styleBadge}>
+                          <Text style={styles.reciterStyle}>{reciter.style}</Text>
+                          <Text style={styles.styleDesc}>
+                            {reciter.style === 'murattal' ? '• steady pace, for learning' : '• melodic, artistic'}
+                          </Text>
+                        </View>
                         {reciter.recommended && (
                           <View style={styles.recommendedBadge}>
                             <Ionicons name="star" size={10} color="#f59e0b" />
@@ -731,10 +736,20 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 6,
   },
+  styleBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
   reciterStyle: {
     color: '#64748b',
     fontSize: 12,
     textTransform: 'capitalize',
+    fontWeight: '600',
+  },
+  styleDesc: {
+    color: '#4b5563',
+    fontSize: 11,
   },
   recommendedBadge: {
     flexDirection: 'row',
