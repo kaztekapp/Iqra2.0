@@ -1,5 +1,6 @@
 import { View, Text, Pressable, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRef } from 'react';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -8,21 +9,30 @@ interface ArabicKeyboardProps {
   onBackspace: () => void;
   onSpace: () => void;
   onSubmit: () => void;
+  onCursorLeft?: () => void;
+  onCursorRight?: () => void;
 }
 
-// Arabic numbers row
-const numbersRow = ['١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', '٠'];
-
-// Standard Arabic keyboard layout (matches native iOS/Android)
+// Modern Arabic keyboard layout (matches iOS/Android)
 const keyboardRows = [
   ['ض', 'ص', 'ث', 'ق', 'ف', 'غ', 'ع', 'ه', 'خ', 'ح', 'ج'],
-  ['ش', 'س', 'ي', 'ب', 'ل', 'ا', 'ت', 'ن', 'م', 'ك', 'ط'],
-  ['ظ', 'ز', 'و', 'ة', 'ى', 'لا', 'ر', 'ؤ', 'ء', 'ئ'],
-  ['ذ', 'د', 'ج', 'إ', 'أ', 'آ', 'ـ'],
+  ['ش', 'س', 'ي', 'ب', 'ل', 'ا', 'ت', 'ن', 'م', 'ك', 'ة'],
+  ['ء', 'ظ', 'ط', 'ذ', 'د', 'ز', 'ر', 'و', 'ى'],
 ];
 
-// Vowel marks (harakat)
-const vowelMarks = [
+// Quranic-specific marks (Uthmani script) - top row
+const quranicMarks = [
+  { key: 'ٓ', name: 'Maddah' },
+  { key: 'ٰ', name: 'Alef Khanjariyah' },
+  { key: 'ۡ', name: 'Sukun Qurani' },
+  { key: 'ۢ', name: 'Meem Iqlab' },
+  { key: 'ۥ', name: 'Small Waw' },
+  { key: 'ۦ', name: 'Small Ya' },
+  { key: 'ٱ', name: 'Alef Wasla', isLetter: true },
+];
+
+// Basic harakat (vowel marks)
+const basicHarakat = [
   { key: 'َ', name: 'Fatha' },
   { key: 'ُ', name: 'Damma' },
   { key: 'ِ', name: 'Kasra' },
@@ -38,34 +48,51 @@ export default function ArabicKeyboard({
   onBackspace,
   onSpace,
   onSubmit,
+  onCursorLeft,
+  onCursorRight,
 }: ArabicKeyboardProps) {
-  const keyWidth = (SCREEN_WIDTH - 32) / 11 - 4;
-  const smallKeyWidth = (SCREEN_WIDTH - 32) / 10 - 4;
+  const keyWidth = (SCREEN_WIDTH - 24) / 11 - 3;
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const handlePressIn = (handler: (() => void) | undefined) => {
+    if (!handler) return;
+    handler();
+    intervalRef.current = setInterval(handler, 100);
+  };
+
+  const handlePressOut = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* Numbers Row */}
-      <View style={styles.numbersRow}>
-        {numbersRow.map((num) => (
+      {/* Quranic Marks Row */}
+      <View style={styles.quranicRow}>
+        {quranicMarks.map((mark) => (
           <Pressable
-            key={num}
-            style={[styles.numberKey, { width: smallKeyWidth }]}
-            onPress={() => onKeyPress(num)}
+            key={mark.key}
+            style={styles.quranicKey}
+            onPress={() => onKeyPress(mark.key)}
           >
-            <Text style={styles.numberKeyText}>{num}</Text>
+            <Text style={styles.quranicKeyText}>
+              {mark.isLetter ? mark.key : `ـ${mark.key}`}
+            </Text>
           </Pressable>
         ))}
       </View>
 
-      {/* Vowel Marks Row */}
-      <View style={styles.vowelRow}>
-        {vowelMarks.map((vowel) => (
+      {/* Basic Harakat Row */}
+      <View style={styles.harakatRow}>
+        {basicHarakat.map((mark) => (
           <Pressable
-            key={vowel.key}
+            key={mark.key}
             style={styles.vowelKey}
-            onPress={() => onKeyPress(vowel.key)}
+            onPress={() => onKeyPress(mark.key)}
           >
-            <Text style={styles.vowelKeyText}>ـ{vowel.key}</Text>
+            <Text style={styles.vowelKeyText}>ـ{mark.key}</Text>
           </Pressable>
         ))}
       </View>
@@ -76,7 +103,7 @@ export default function ArabicKeyboard({
           {row.map((key, keyIndex) => (
             <Pressable
               key={`${key}-${keyIndex}`}
-              style={[styles.key, { width: keyWidth, height: keyWidth * 1.1 }]}
+              style={[styles.key, { width: keyWidth, height: keyWidth * 1.4 }]}
               onPress={() => onKeyPress(key)}
             >
               <Text style={styles.keyText}>{key}</Text>
@@ -92,6 +119,24 @@ export default function ArabicKeyboard({
 
       {/* Bottom Row */}
       <View style={styles.bottomRow}>
+        {onCursorLeft && (
+          <Pressable
+            style={styles.arrowKey}
+            onPressIn={() => handlePressIn(onCursorLeft)}
+            onPressOut={handlePressOut}
+          >
+            <Ionicons name="chevron-back" size={22} color="#ffffff" />
+          </Pressable>
+        )}
+        {onCursorRight && (
+          <Pressable
+            style={styles.arrowKey}
+            onPressIn={() => handlePressIn(onCursorRight)}
+            onPressOut={handlePressOut}
+          >
+            <Ionicons name="chevron-forward" size={22} color="#ffffff" />
+          </Pressable>
+        )}
         <Pressable style={styles.spaceKey} onPress={onSpace}>
           <Text style={styles.spaceKeyText}>مسافة</Text>
         </Pressable>
@@ -106,93 +151,105 @@ export default function ArabicKeyboard({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1e293b',
-    paddingHorizontal: 4,
-    paddingTop: 8,
-    paddingBottom: 0,
+    paddingHorizontal: 3,
+    paddingTop: 10,
+    paddingBottom: 4,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
-  numbersRow: {
+  quranicRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 6,
-    gap: 3,
+    marginBottom: 8,
+    gap: 8,
   },
-  numberKey: {
-    backgroundColor: '#475569',
-    paddingVertical: 8,
-    borderRadius: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
+  quranicKey: {
+    backgroundColor: '#1e3a5f',
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#10b98140',
   },
-  numberKeyText: {
-    fontSize: 18,
-    color: '#ffffff',
+  quranicKeyText: {
+    fontSize: 20,
+    color: '#10b981',
+    textAlign: 'center',
   },
-  vowelRow: {
+  harakatRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 6,
-    gap: 4,
+    marginBottom: 8,
+    gap: 8,
   },
   vowelKey: {
     backgroundColor: '#334155',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    borderRadius: 8,
   },
   vowelKeyText: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#D4AF37',
     textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 5,
-    gap: 3,
+    marginBottom: 8,
+    gap: 5,
   },
   key: {
     backgroundColor: '#334155',
-    borderRadius: 6,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   keyText: {
-    fontSize: 20,
+    fontSize: 24,
     color: '#ffffff',
   },
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 4,
+    marginTop: 6,
+    paddingHorizontal: 4,
     gap: 8,
+  },
+  arrowKey: {
+    backgroundColor: '#475569',
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backspaceKey: {
     backgroundColor: '#ef4444',
-    paddingHorizontal: 14,
-    borderRadius: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   spaceKey: {
     flex: 1,
     backgroundColor: '#334155',
-    marginHorizontal: 8,
-    paddingVertical: 12,
-    borderRadius: 6,
+    marginHorizontal: 4,
+    paddingVertical: 16,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   spaceKeyText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#94a3b8',
   },
   submitKey: {
     backgroundColor: '#22c55e',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 6,
+    paddingHorizontal: 28,
+    paddingVertical: 16,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },

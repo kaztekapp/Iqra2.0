@@ -101,8 +101,8 @@ export default function SurahDetailScreen() {
     router.push(`/quran/surah/${surahId}/practice` as any);
   }, [surahId]);
 
-  const handleTest = useCallback(() => {
-    router.push(`/quran/surah/${surahId}/test` as any);
+  const handleWrite = useCallback(() => {
+    router.push(`/quran/surah/${surahId}/write` as any);
   }, [surahId]);
 
   const handleAyahPress = useCallback((ayahId: string) => {
@@ -391,9 +391,9 @@ export default function SurahDetailScreen() {
             <Ionicons name="refresh" size={20} color="#10b981" />
             <Text style={styles.secondaryButtonText}>Practice</Text>
           </Pressable>
-          <Pressable style={styles.secondaryButton} onPress={handleTest}>
-            <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-            <Text style={styles.secondaryButtonText}>Test</Text>
+          <Pressable style={styles.secondaryButton} onPress={handleWrite}>
+            <Ionicons name="pencil" size={20} color="#10b981" />
+            <Text style={styles.secondaryButtonText}>Write</Text>
           </Pressable>
         </View>
 
