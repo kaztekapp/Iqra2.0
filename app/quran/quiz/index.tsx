@@ -42,6 +42,11 @@ export default function QuizCategoriesScreen() {
       router.push('/quran/surah-learn' as any);
       return;
     }
+    // Tajweed category has its own dedicated learning screen with Learn/Quiz tabs
+    if (categoryId === 'tajweed') {
+      router.push('/quran/tajweed-learn' as any);
+      return;
+    }
     router.push(`/quran/quiz/${categoryId}` as any);
   };
 
