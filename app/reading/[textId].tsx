@@ -115,6 +115,181 @@ const readingContent: Record<string, {
       },
     ],
   },
+  'at-school': {
+    title: 'At School',
+    titleArabic: 'فِي الْمَدْرَسَة',
+    paragraphs: [
+      {
+        arabic: 'أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْم.',
+        transliteration: 'Adhhabu ilā al-madrasa kulla yawm.',
+        english: 'I go to school every day.',
+      },
+      {
+        arabic: 'مَدْرَسَتِي كَبِيرَةٌ وَجَمِيلَة.',
+        transliteration: 'Madrasatī kabīra wa jamīla.',
+        english: 'My school is big and beautiful.',
+      },
+      {
+        arabic: 'عِنْدِي مُعَلِّمُونَ مُمْتَازُون.',
+        transliteration: 'ʿIndī muʿallimūn mumtāzūn.',
+        english: 'I have excellent teachers.',
+      },
+      {
+        arabic: 'أَدْرُسُ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُوم.',
+        transliteration: 'Adrusu al-ʿarabiyya wa ar-riyāḍiyyāt wa al-ʿulūm.',
+        english: 'I study Arabic, mathematics, and science.',
+      },
+      {
+        arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْكِتَابَة.',
+        transliteration: 'Uḥibbu al-qirāʾa wa al-kitāba.',
+        english: 'I love reading and writing.',
+      },
+      {
+        arabic: 'أَلْعَبُ مَعَ أَصْدِقَائِي فِي الاِسْتِرَاحَة.',
+        transliteration: 'Alʿabu maʿa aṣdiqāʾī fī al-istirāḥa.',
+        english: 'I play with my friends during break.',
+      },
+    ],
+  },
+  'at-market': {
+    title: 'At the Market',
+    titleArabic: 'فِي السُّوق',
+    paragraphs: [
+      {
+        arabic: 'أُحِبُّ الذَّهَابَ إِلَى السُّوقِ مَعَ أُمِّي.',
+        transliteration: 'Uḥibbu adh-dhahāb ilā as-sūq maʿa ummī.',
+        english: 'I love going to the market with my mother.',
+      },
+      {
+        arabic: 'السُّوقُ مَلِيءٌ بِالْفَوَاكِهِ وَالْخُضْرَاوَات.',
+        transliteration: 'As-sūq malīʾ bi-al-fawākih wa al-khuḍrāwāt.',
+        english: 'The market is full of fruits and vegetables.',
+      },
+      {
+        arabic: 'نَشْتَرِي الْخُبْزَ الطَّازَجَ مِنَ الْمَخْبَز.',
+        transliteration: 'Nashtarī al-khubz aṭ-ṭāzaj min al-makhbaz.',
+        english: 'We buy fresh bread from the bakery.',
+      },
+      {
+        arabic: 'أُحِبُّ التُّفَّاحَ الْأَحْمَرَ وَالْبُرْتُقَال.',
+        transliteration: 'Uḥibbu at-tuffāḥ al-aḥmar wa al-burtuqāl.',
+        english: 'I love red apples and oranges.',
+      },
+      {
+        arabic: 'الْبَائِعُ لَطِيفٌ وَيُسَاعِدُنَا.',
+        transliteration: 'Al-bāʾiʿ laṭīf wa yusāʿidunā.',
+        english: 'The seller is nice and helps us.',
+      },
+    ],
+  },
+  'weather': {
+    title: 'The Weather',
+    titleArabic: 'الطَّقْس',
+    paragraphs: [
+      {
+        arabic: 'الطَّقْسُ جَمِيلٌ الْيَوْم.',
+        transliteration: 'Aṭ-ṭaqs jamīl al-yawm.',
+        english: 'The weather is beautiful today.',
+      },
+      {
+        arabic: 'الشَّمْسُ مُشْرِقَةٌ وَالسَّمَاءُ زَرْقَاء.',
+        transliteration: 'Ash-shams mushriqa wa as-samāʾ zarqāʾ.',
+        english: 'The sun is shining and the sky is blue.',
+      },
+      {
+        arabic: 'فِي الصَّيْفِ يَكُونُ الطَّقْسُ حَارًّا.',
+        transliteration: 'Fī aṣ-ṣayf yakūnu aṭ-ṭaqs ḥārran.',
+        english: 'In summer, the weather is hot.',
+      },
+      {
+        arabic: 'فِي الشِّتَاءِ يَكُونُ الطَّقْسُ بَارِدًا.',
+        transliteration: 'Fī ash-shitāʾ yakūnu aṭ-ṭaqs bāridan.',
+        english: 'In winter, the weather is cold.',
+      },
+      {
+        arabic: 'أُحِبُّ الرَّبِيعَ لِأَنَّ الْأَزْهَارَ تَتَفَتَّح.',
+        transliteration: 'Uḥibbu ar-rabīʿ li-anna al-azhār tatafattaḥ.',
+        english: 'I love spring because the flowers bloom.',
+      },
+      {
+        arabic: 'أَحْيَانًا تُمْطِرُ السَّمَاء.',
+        transliteration: 'Aḥyānan tumṭiru as-samāʾ.',
+        english: 'Sometimes it rains.',
+      },
+    ],
+  },
+  'travel-story': {
+    title: 'A Travel Story',
+    titleArabic: 'قِصَّةُ سَفَر',
+    paragraphs: [
+      {
+        arabic: 'سَافَرْتُ إِلَى مِصْرَ فِي الصَّيْفِ الْمَاضِي.',
+        transliteration: 'Sāfartu ilā Miṣr fī aṣ-ṣayf al-māḍī.',
+        english: 'I traveled to Egypt last summer.',
+      },
+      {
+        arabic: 'زُرْتُ الْأَهْرَامَاتِ الْعَظِيمَةَ فِي الْجِيزَة.',
+        transliteration: 'Zurtu al-ahrāmāt al-ʿaẓīma fī al-Jīza.',
+        english: 'I visited the great pyramids in Giza.',
+      },
+      {
+        arabic: 'رَكِبْتُ الْجَمَلَ فِي الصَّحْرَاء.',
+        transliteration: 'Rakibtu al-jamal fī aṣ-ṣaḥrāʾ.',
+        english: 'I rode a camel in the desert.',
+      },
+      {
+        arabic: 'شَاهَدْتُ أَبُو الْهَوْلِ وَهُوَ رَائِع.',
+        transliteration: 'Shāhadtu Abū al-Hawl wa huwa rāʾiʿ.',
+        english: 'I saw the Sphinx and it was amazing.',
+      },
+      {
+        arabic: 'أَكَلْتُ الطَّعَامَ الْمِصْرِيَّ اللَّذِيذ.',
+        transliteration: 'Akaltu aṭ-ṭaʿām al-miṣrī al-ladhīdh.',
+        english: 'I ate delicious Egyptian food.',
+      },
+      {
+        arabic: 'كَانَتْ رِحْلَةً لَا تُنْسَى.',
+        transliteration: 'Kānat riḥla lā tunsā.',
+        english: 'It was an unforgettable trip.',
+      },
+    ],
+  },
+  'arab-culture': {
+    title: 'Arab Culture',
+    titleArabic: 'الثَّقَافَةُ الْعَرَبِيَّة',
+    paragraphs: [
+      {
+        arabic: 'الثَّقَافَةُ الْعَرَبِيَّةُ غَنِيَّةٌ وَمُتَنَوِّعَة.',
+        transliteration: 'Ath-thaqāfa al-ʿarabiyya ghaniyya wa mutanawwiʿa.',
+        english: 'Arab culture is rich and diverse.',
+      },
+      {
+        arabic: 'اللُّغَةُ الْعَرَبِيَّةُ مِنْ أَقْدَمِ اللُّغَاتِ فِي الْعَالَم.',
+        transliteration: 'Al-lugha al-ʿarabiyya min aqdami al-lughāt fī al-ʿālam.',
+        english: 'The Arabic language is one of the oldest languages in the world.',
+      },
+      {
+        arabic: 'الضِّيَافَةُ قِيمَةٌ مُهِمَّةٌ عِنْدَ الْعَرَب.',
+        transliteration: 'Aḍ-ḍiyāfa qīma muhimma ʿinda al-ʿarab.',
+        english: 'Hospitality is an important value among Arabs.',
+      },
+      {
+        arabic: 'الْقَهْوَةُ الْعَرَبِيَّةُ رَمْزٌ لِلْكَرَم.',
+        transliteration: 'Al-qahwa al-ʿarabiyya ramz li-al-karam.',
+        english: 'Arabic coffee is a symbol of generosity.',
+      },
+      {
+        arabic: 'الْخَطُّ الْعَرَبِيُّ فَنٌّ جَمِيل.',
+        transliteration: 'Al-khaṭṭ al-ʿarabī fann jamīl.',
+        english: 'Arabic calligraphy is a beautiful art.',
+      },
+      {
+        arabic: 'الْمُوسِيقَى الْعَرَبِيَّةُ مَشْهُورَةٌ فِي كُلِّ الْعَالَم.',
+        transliteration: 'Al-mūsīqā al-ʿarabiyya mashhūra fī kulli al-ʿālam.',
+        english: 'Arabic music is famous all over the world.',
+      },
+    ],
+  },
 };
 
 export default function ReadingDetailScreen() {
@@ -146,7 +321,7 @@ export default function ReadingDetailScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.comingSoonContent}>
-            <Ionicons name="book" size={64} color="#D4AF37" />
+            <Ionicons name="book" size={64} color="#10b981" />
             <Text style={styles.comingSoonTitle}>Coming Soon</Text>
             <Text style={styles.comingSoonText}>
               This reading passage is currently being developed. Check back soon!
@@ -239,12 +414,9 @@ export default function ReadingDetailScreen() {
                   style={styles.audioBtn}
                   onPress={() => speak(paragraph.arabic)}
                 >
-                  <Ionicons name="volume-medium" size={20} color="#D4AF37" />
+                  <Ionicons name="volume-medium" size={20} color="#10b981" />
                 </Pressable>
               </View>
-              {showVowels && (
-                <Text style={styles.translitText}>{paragraph.transliteration}</Text>
-              )}
               {showTranslation && (
                 <Text style={styles.englishText}>{paragraph.english}</Text>
               )}
@@ -297,19 +469,19 @@ const styles = StyleSheet.create({
   },
   titleArabic: {
     fontSize: 16,
-    color: '#D4AF37',
+    color: '#10b981',
     marginTop: 4,
   },
   playButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#6366f1',
+    backgroundColor: '#10b981',
     alignItems: 'center',
     justifyContent: 'center',
   },
   playButtonActive: {
-    backgroundColor: '#D4AF37',
+    backgroundColor: '#6366f1',
   },
   controls: {
     flexDirection: 'row',
@@ -327,7 +499,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   controlBtnActive: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#10b981',
   },
   controlText: {
     color: '#94a3b8',
@@ -345,6 +517,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: '#10b981',
   },
   arabicRow: {
     flexDirection: 'row',
@@ -363,7 +537,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#D4AF3720',
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 12,
@@ -384,7 +558,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   completeButton: {
-    backgroundColor: '#22c55e',
+    backgroundColor: '#10b981',
     borderRadius: 16,
     padding: 18,
     flexDirection: 'row',
