@@ -16,7 +16,7 @@ export function useArabicSpeech(): UseArabicSpeechReturn {
     setIsSpeaking(true);
     await audioService.speakArabic({
       text,
-      rate: 0.8,
+      rate: 0.6,
       onDone: () => setIsSpeaking(false),
       onError: () => setIsSpeaking(false),
     });
@@ -27,7 +27,7 @@ export function useArabicSpeech(): UseArabicSpeechReturn {
     setIsSpeaking(true);
     await audioService.speakArabic({
       text,
-      rate: 0.5,
+      rate: 0.4,
       onDone: () => setIsSpeaking(false),
       onError: () => setIsSpeaking(false),
     });

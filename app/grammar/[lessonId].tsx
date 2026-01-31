@@ -1424,7 +1424,7 @@ export default function GrammarLessonScreen() {
                     onPress={() => speak(example.arabic)}
                   >
                     <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
-                    <Text style={styles.exampleCardEnglish}>{example.english}</Text>
+                    <HighlightedText text={example.english} style={styles.exampleCardEnglish} />
                     <View style={styles.exampleCardAudioIcon}>
                       <Ionicons name="volume-medium" size={16} color="#10b981" />
                     </View>
@@ -1480,6 +1480,8 @@ export default function GrammarLessonScreen() {
                       )}
                     </View>
                   </View>
+                ) : section.itemType === 'text' && section.content ? (
+                  <Text style={styles.textSectionTitle}>{section.content}</Text>
                 ) : section.content ? (
                   <Text style={styles.sectionContent}>{section.content}</Text>
                 ) : null}
@@ -1618,6 +1620,13 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     lineHeight: 24,
     marginBottom: 16,
+  },
+  textSectionTitle: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 12,
+    marginTop: 8,
   },
   examplesBox: {
     backgroundColor: '#1e293b',

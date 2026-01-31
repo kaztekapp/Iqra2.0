@@ -88,6 +88,137 @@ class AudioService {
     }
   }
 
+  // Preprocess Arabic text to help TTS read diacritics correctly
+  private preprocessArabicText(text: string): string {
+    // Arabic diacritics (harakat)
+    const FATHA = '\u064E';      // ـَ
+    const KASRA = '\u0650';      // ـِ
+    const DAMMA = '\u064F';      // ـُ
+    const SUKUN = '\u0652';      // ـْ
+    const SHADDA = '\u0651';     // ـّ
+    const FATHATAN = '\u064B';   // ـً
+    const KASRATAN = '\u064D';   // ـٍ
+    const DAMMATAN = '\u064C';   // ـٌ
+
+    let trimmedText = text.trim();
+    if (!trimmedText) return text;
+
+    // Special handling for common words with shadda
+    // Replace الله variants with phonetic spelling for proper TTS pronunciation
+    // الله (Allah) - the doubled lam needs to be explicit
+    trimmedText = trimmedText.replace(/اللَّهِ/g, 'اَللاهِ');  // Allahi
+    trimmedText = trimmedText.replace(/اللَّهُ/g, 'اَللاهُ');  // Allahu
+    trimmedText = trimmedText.replace(/اللَّهَ/g, 'اَللاهَ');  // Allaha
+    trimmedText = trimmedText.replace(/الله/g, 'اَللاه');     // Allah (without diacritics)
+    trimmedText = trimmedText.replace(/لِلَّهِ/g, 'لِلَّاهِ');   // lillahi (lil-lahi)
+
+    // Get the last few characters to check ending
+    const lastChar = trimmedText[trimmedText.length - 1];
+    const lastTwoChars = trimmedText.slice(-2);
+
+    // Check if text is very short (1-3 characters including diacritics)
+    // This typically means it's a single letter with vowel marks
+    const withoutDiacritics = trimmedText.replace(/[\u064B-\u065F\u0670]/g, '');
+
+    if (withoutDiacritics.length <= 2) {
+      // For single letters with diacritics, add a helping structure
+      // This makes TTS engines pronounce the vowel properly
+
+      // Check what vowel is present
+      if (trimmedText.includes(FATHA) || trimmedText.includes(FATHATAN)) {
+        // Add alif to extend the 'a' sound: بَ becomes بَا (baa)
+        return trimmedText + 'ا';
+      } else if (trimmedText.includes(KASRA) || trimmedText.includes(KASRATAN)) {
+        // Add ya to extend the 'i' sound: بِ becomes بِي (bee)
+        return trimmedText + 'ي';
+      } else if (trimmedText.includes(DAMMA) || trimmedText.includes(DAMMATAN)) {
+        // Add waw to extend the 'u' sound: بُ becomes بُو (boo)
+        return trimmedText + 'و';
+      } else if (trimmedText.includes(SUKUN)) {
+        // For sukun, add a short vowel before to make it pronounceable
+        // بْ becomes اَبْ (ab)
+        return 'اَ' + trimmedText;
+      } else if (trimmedText.includes(SHADDA)) {
+        // For shadda alone, add fatha to make it clear
+        return trimmedText + FATHA + 'ا';
+      }
+    }
+
+    // For longer words: check if the word ends with a short vowel
+    // TTS engines often drop final short vowels (pausal form)
+    // We extend them to make the vowel audible
+
+    // Check if ends with fatha (most common case like كَتَبَ)
+    if (lastChar === FATHA) {
+      // Add a soft alif to extend: كَتَبَ becomes كَتَبَا (katabaa - but sounds like kataba)
+      return trimmedText + 'ا';
+    }
+
+    // Check if ends with kasra
+    if (lastChar === KASRA) {
+      // Add ya to extend the 'i' sound
+      return trimmedText + 'ي';
+    }
+
+    // Check if ends with damma
+    if (lastChar === DAMMA) {
+      // Add waw to extend the 'u' sound
+      return trimmedText + 'و';
+    }
+
+    // Check if ends with shadda + vowel (like حَقّ or رَبّ)
+    if (lastTwoChars[0] === SHADDA) {
+      if (lastChar === FATHA) {
+        return trimmedText + 'ا';
+      } else if (lastChar === KASRA) {
+        return trimmedText + 'ي';
+      } else if (lastChar === DAMMA) {
+        return trimmedText + 'و';
+      }
+    }
+
+    // Check if ends with ta marbuta (ة) + tanween
+    // Ta marbuta should be pronounced as "t" when followed by tanween
+    const TA_MARBUTA = '\u0629';  // ة
+    const lastThreeChars = trimmedText.slice(-3);
+
+    // Check for ta marbuta + tanween pattern
+    if (lastThreeChars.length >= 2) {
+      const secondToLast = trimmedText[trimmedText.length - 2];
+
+      if (secondToLast === TA_MARBUTA || lastTwoChars[0] === TA_MARBUTA) {
+        // Replace ة + tanween with ت + vowel + noon
+        if (lastChar === DAMMATAN) {
+          return trimmedText.slice(0, -2) + 'تُنْ';
+        } else if (lastChar === KASRATAN) {
+          return trimmedText.slice(0, -2) + 'تِنْ';
+        } else if (lastChar === FATHATAN) {
+          return trimmedText.slice(0, -2) + 'تَنْ';
+        }
+      }
+    }
+
+    // Check if ends with tanween (nunation) on regular letters
+    // Replace tanween with vowel + noon for proper pronunciation
+
+    // Dammatan (ـٌ) = "un" sound
+    if (lastChar === DAMMATAN) {
+      return trimmedText.slice(0, -1) + DAMMA + 'نْ';
+    }
+
+    // Kasratan (ـٍ) = "in" sound
+    if (lastChar === KASRATAN) {
+      return trimmedText.slice(0, -1) + KASRA + 'نْ';
+    }
+
+    // Fathatan (ـً) = "an" sound
+    if (lastChar === FATHATAN) {
+      return trimmedText.slice(0, -1) + FATHA + 'نْ';
+    }
+
+    return trimmedText;
+  }
+
   async speakArabic(options: SpeakOptions): Promise<void> {
     const { text, rate = 0.75, onDone, onError } = options;
 
@@ -104,11 +235,14 @@ class AudioService {
     try {
       this.isSpeaking = true;
 
+      // Preprocess text to handle single letters with diacritics
+      const processedText = this.preprocessArabicText(text);
+
       const speechOptions: Speech.SpeechOptions = {
         language: 'ar-SA',
         rate: rate,
         pitch: 1.0,
-        onStart: () => console.log('Speaking:', text),
+        onStart: () => console.log('Speaking:', text, '-> processed:', processedText),
         onDone: () => {
           this.isSpeaking = false;
           onDone?.();
@@ -125,7 +259,7 @@ class AudioService {
         speechOptions.voice = this.bestVoice;
       }
 
-      Speech.speak(text, speechOptions);
+      Speech.speak(processedText, speechOptions);
     } catch (error) {
       console.log('Speak error:', error);
       this.isSpeaking = false;
