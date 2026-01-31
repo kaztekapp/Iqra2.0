@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -9,6 +9,43 @@ import { getExercisesForGrammarLesson } from '../../src/data/arabic/exercises';
 import { Exercise, GrammarLesson, GrammarContent } from '../../src/types/arabic';
 import ArabicKeyboard from '../../src/components/arabic/ArabicKeyboard';
 import { getLessonById } from '../../src/data/arabic/grammar/lessons';
+
+// Helper component to render text with [[highlighted]] Arabic terms
+const HighlightedText = ({
+  text,
+  style,
+  highlightColor = '#10b981'
+}: {
+  text: string;
+  style?: TextStyle;
+  highlightColor?: string;
+}) => {
+  // Parse [[text]] patterns for highlighting
+  const parts = text.split(/(\[\[[^\]]+\]\])/g);
+
+  return (
+    <Text style={style}>
+      {parts.map((part, index) => {
+        if (part.startsWith('[[') && part.endsWith(']]')) {
+          const highlightedText = part.slice(2, -2);
+          return (
+            <Text
+              key={index}
+              style={{
+                color: highlightColor,
+                fontWeight: 'bold',
+                fontSize: style?.fontSize ? (style.fontSize as number) + 2 : 18,
+              }}
+            >
+              {highlightedText}
+            </Text>
+          );
+        }
+        return <Text key={index}>{part}</Text>;
+      })}
+    </Text>
+  );
+};
 
 // Comprehensive lesson content with many examples
 const lessonContent: Record<string, {
@@ -809,17 +846,53 @@ export default function GrammarLessonScreen() {
   const lesson = dataLesson ? {
     title: dataLesson.title,
     titleArabic: dataLesson.titleArabic,
+    contentItems: dataLesson.content, // Keep original GrammarContent for new rendering
     sections: dataLesson.content.reduce((acc: any[], item: GrammarContent, index: number) => {
       if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
         acc.push({
           title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
           content: item.content,
+          arabicDescription: item.arabicDescription,
           examples: [],
+          itemType: item.type,
+        });
+      } else if (item.type === 'description') {
+        acc.push({
+          title: '',
+          content: item.content,
+          arabicDescription: item.arabicDescription,
+          examples: [],
+          itemType: 'description',
+        });
+      } else if (item.type === 'letters_grid') {
+        acc.push({
+          title: item.content,
+          content: '',
+          examples: [],
+          letters: item.letters,
+          letterType: item.letterType,
+          itemType: 'letters_grid',
+        });
+      } else if (item.type === 'examples_grid') {
+        acc.push({
+          title: item.content,
+          content: '',
+          examples: item.examples || [],
+          itemType: 'examples_grid',
+        });
+      } else if (item.type === 'comparison_grid') {
+        acc.push({
+          title: item.content,
+          content: '',
+          comparisons: item.comparisons || [],
+          leftLabel: item.leftLabel,
+          rightLabel: item.rightLabel,
+          itemType: 'comparison_grid',
         });
       } else if (item.type === 'example') {
         // Add example to the last section or create a new one
         const lastSection = acc[acc.length - 1];
-        if (lastSection && lastSection.examples) {
+        if (lastSection && lastSection.examples && lastSection.itemType !== 'letters_grid' && lastSection.itemType !== 'examples_grid') {
           lastSection.examples.push({
             arabic: item.arabic || '',
             transliteration: item.transliteration || '',
@@ -834,6 +907,7 @@ export default function GrammarLessonScreen() {
               transliteration: item.transliteration || '',
               english: item.translation || '',
             }],
+            itemType: 'example',
           });
         }
       } else if (item.type === 'table' && item.tableData) {
@@ -847,6 +921,7 @@ export default function GrammarLessonScreen() {
           title: item.content || 'Reference',
           content: `Columns: ${item.tableData.headers.join(' | ')}`,
           examples,
+          itemType: 'table',
         });
       }
       return acc;
@@ -1252,32 +1327,199 @@ export default function GrammarLessonScreen() {
         </View>
 
         {/* Lesson Content */}
-        {lesson.sections.map((section, index) => (
+        {lesson.sections.map((section: any, index: number) => (
           <View key={index} style={styles.section}>
-            <Text style={styles.sectionTitle}>{section.title}</Text>
-            <Text style={styles.sectionContent}>{section.content}</Text>
+            {/* Section Title */}
+            {section.title ? <Text style={styles.sectionTitle}>{section.title}</Text> : null}
 
-            {section.examples && (
-              <View style={styles.examplesBox}>
-                {section.examples.map((example, exIndex) => (
-                  <View key={exIndex} style={[
-                    styles.exampleRow,
-                    exIndex === section.examples!.length - 1 && styles.exampleRowLast
-                  ]}>
-                    <View style={styles.exampleLeft}>
-                      <Text style={styles.exampleArabic}>{example.arabic}</Text>
-                      <Text style={styles.exampleTranslit}>{example.transliteration}</Text>
+            {/* Description with Arabic - highlighted */}
+            {section.itemType === 'description' ? (
+              <View style={styles.descriptionCard}>
+                <View style={styles.descriptionHighlight} />
+                <HighlightedText text={section.content} style={styles.descriptionText} />
+                {section.arabicDescription && (
+                  <Pressable
+                    style={styles.arabicDescriptionRow}
+                    onPress={() => speak(section.arabicDescription)}
+                  >
+                    <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
+                    <View style={styles.audioBtn}>
+                      <Ionicons name="volume-medium" size={18} color="#10b981" />
                     </View>
-                    <Text style={styles.exampleEnglish}>{example.english}</Text>
+                  </Pressable>
+                )}
+              </View>
+            ) : section.itemType === 'comparison_grid' ? (
+              /* Comparison Grid - indefinite vs definite */
+              <View style={styles.comparisonContainer}>
+                {/* Header labels */}
+                <View style={styles.comparisonHeader}>
+                  <View style={[styles.comparisonLabelBox, styles.comparisonLabelLeft]}>
+                    <Text style={styles.comparisonLabelText}>{section.leftLabel || 'Indefinite'}</Text>
+                  </View>
+                  <Ionicons name="arrow-forward" size={20} color="#64748b" />
+                  <View style={[styles.comparisonLabelBox, styles.comparisonLabelRight]}>
+                    <Text style={styles.comparisonLabelText}>{section.rightLabel || 'Definite'}</Text>
+                  </View>
+                </View>
+                {/* Comparison rows */}
+                {section.comparisons?.map((comp: any, compIndex: number) => (
+                  <View key={compIndex} style={styles.comparisonRow}>
                     <Pressable
-                      style={styles.audioBtn}
-                      onPress={() => speak(example.arabic)}
+                      style={[styles.comparisonCard, styles.comparisonCardLeft]}
+                      onPress={() => speak(comp.left.arabic)}
                     >
-                      <Ionicons name="volume-medium" size={18} color="#D4AF37" />
+                      <Text style={styles.comparisonArabic}>{comp.left.arabic}</Text>
+                      <Text style={styles.comparisonEnglish}>{comp.left.label}</Text>
+                    </Pressable>
+                    <Ionicons name="arrow-forward" size={16} color="#10b981" />
+                    <Pressable
+                      style={[styles.comparisonCard, styles.comparisonCardRight]}
+                      onPress={() => speak(comp.right.arabic)}
+                    >
+                      <Text style={styles.comparisonArabic}>{comp.right.arabic}</Text>
+                      <Text style={styles.comparisonEnglish}>{comp.right.label}</Text>
                     </Pressable>
                   </View>
                 ))}
               </View>
+            ) : section.itemType === 'letters_grid' ? (
+              /* Letters Grid for Sun/Moon letters */
+              <View style={[
+                styles.lettersGridCard,
+                { borderColor: section.letterType === 'sun' ? '#f59e0b' : '#3b82f6' }
+              ]}>
+                <View style={styles.lettersGridHeader}>
+                  <Ionicons
+                    name={section.letterType === 'sun' ? 'sunny' : 'moon'}
+                    size={24}
+                    color={section.letterType === 'sun' ? '#f59e0b' : '#3b82f6'}
+                  />
+                </View>
+                <View style={styles.lettersGrid}>
+                  {section.letters?.map((letter: string, letterIndex: number) => (
+                    <Pressable
+                      key={letterIndex}
+                      style={[
+                        styles.letterCell,
+                        { backgroundColor: section.letterType === 'sun' ? '#f59e0b20' : '#3b82f620' }
+                      ]}
+                      onPress={() => speak(letter)}
+                    >
+                      <Text style={[
+                        styles.letterText,
+                        { color: section.letterType === 'sun' ? '#f59e0b' : '#3b82f6' }
+                      ]}>{letter}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
+            ) : section.itemType === 'examples_grid' ? (
+              /* Examples Grid - multiple example cards */
+              <View style={styles.examplesGrid}>
+                {section.examples?.map((example: any, exIndex: number) => (
+                  <Pressable
+                    key={exIndex}
+                    style={styles.exampleCard}
+                    onPress={() => speak(example.arabic)}
+                  >
+                    <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
+                    <Text style={styles.exampleCardEnglish}>{example.english}</Text>
+                    <View style={styles.exampleCardAudioIcon}>
+                      <Ionicons name="volume-medium" size={16} color="#10b981" />
+                    </View>
+                  </Pressable>
+                ))}
+              </View>
+            ) : (
+              /* Default content rendering */
+              <>
+                {/* Rules and notes get highlighted cards */}
+                {(section.itemType === 'rule' || section.itemType === 'note') && section.content ? (
+                  <View style={[
+                    styles.highlightedCard,
+                    section.itemType === 'rule' ? styles.ruleCard : styles.noteCard
+                  ]}>
+                    <View style={[
+                      styles.highlightedCardBorder,
+                      { backgroundColor: section.itemType === 'rule' ? '#10b981' : '#f59e0b' }
+                    ]} />
+                    <View style={styles.highlightedCardContent}>
+                      <View style={styles.highlightedCardHeader}>
+                        <Ionicons
+                          name={section.itemType === 'rule' ? 'bookmark' : 'bulb'}
+                          size={20}
+                          color={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
+                        />
+                      </View>
+                      <HighlightedText
+                        text={section.content}
+                        style={styles.highlightedCardText}
+                        highlightColor={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
+                      />
+                      {section.arabicDescription && (
+                        <Pressable
+                          style={[
+                            styles.arabicDescriptionRow,
+                            { backgroundColor: section.itemType === 'rule' ? '#10b98110' : '#f59e0b10' }
+                          ]}
+                          onPress={() => speak(section.arabicDescription)}
+                        >
+                          <Text style={[
+                            styles.arabicDescriptionText,
+                            { color: section.itemType === 'rule' ? '#10b981' : '#f59e0b' }
+                          ]}>{section.arabicDescription}</Text>
+                          <View style={styles.audioBtn}>
+                            <Ionicons
+                              name="volume-medium"
+                              size={18}
+                              color={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
+                            />
+                          </View>
+                        </Pressable>
+                      )}
+                    </View>
+                  </View>
+                ) : section.content ? (
+                  <Text style={styles.sectionContent}>{section.content}</Text>
+                ) : null}
+
+                {/* Arabic description for other types (not rule/note) */}
+                {section.arabicDescription && section.itemType !== 'rule' && section.itemType !== 'note' && (
+                  <Pressable
+                    style={styles.arabicDescriptionRow}
+                    onPress={() => speak(section.arabicDescription)}
+                  >
+                    <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
+                    <View style={styles.audioBtn}>
+                      <Ionicons name="volume-medium" size={18} color="#10b981" />
+                    </View>
+                  </Pressable>
+                )}
+
+                {section.examples && section.examples.length > 0 && (
+                  <View style={styles.examplesBox}>
+                    {section.examples.map((example: any, exIndex: number) => (
+                      <Pressable
+                        key={exIndex}
+                        style={[
+                          styles.exampleRow,
+                          exIndex === section.examples!.length - 1 && styles.exampleRowLast
+                        ]}
+                        onPress={() => speak(example.arabic)}
+                      >
+                        <View style={styles.exampleLeft}>
+                          <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                        </View>
+                        <Text style={styles.exampleEnglish}>{example.english}</Text>
+                        <View style={styles.audioBtn}>
+                          <Ionicons name="volume-medium" size={18} color="#10b981" />
+                        </View>
+                      </Pressable>
+                    ))}
+                  </View>
+                )}
+              </>
             )}
           </View>
         ))}
@@ -1415,9 +1657,193 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#D4AF3720',
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  // Description card styles
+  descriptionCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 20,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  descriptionHighlight: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
+    backgroundColor: '#10b981',
+  },
+  descriptionText: {
+    fontSize: 16,
+    color: '#e2e8f0',
+    lineHeight: 26,
+    paddingLeft: 8,
+  },
+  // Highlighted card styles (for rules and notes)
+  highlightedCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    overflow: 'hidden',
+    flexDirection: 'row',
+  },
+  highlightedCardBorder: {
+    width: 4,
+  },
+  highlightedCardContent: {
+    flex: 1,
+    padding: 16,
+  },
+  highlightedCardHeader: {
+    marginBottom: 8,
+  },
+  highlightedCardText: {
+    fontSize: 15,
+    color: '#e2e8f0',
+    lineHeight: 24,
+  },
+  ruleCard: {
+    borderColor: '#10b981',
+  },
+  noteCard: {
+    borderColor: '#f59e0b',
+  },
+  // Comparison grid styles
+  comparisonContainer: {
+    gap: 12,
+  },
+  comparisonHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+    marginBottom: 8,
+  },
+  comparisonLabelBox: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  comparisonLabelLeft: {
+    backgroundColor: '#64748b30',
+  },
+  comparisonLabelRight: {
+    backgroundColor: '#10b98130',
+  },
+  comparisonLabelText: {
+    color: '#e2e8f0',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  comparisonRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  comparisonCard: {
+    flex: 1,
+    backgroundColor: '#1e293b',
+    borderRadius: 14,
+    padding: 14,
+    alignItems: 'center',
+  },
+  comparisonCardLeft: {
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  comparisonCardRight: {
+    borderWidth: 1,
+    borderColor: '#10b98140',
+    backgroundColor: '#10b98108',
+  },
+  comparisonArabic: {
+    fontSize: 22,
+    color: '#ffffff',
+    marginBottom: 4,
+  },
+  comparisonEnglish: {
+    fontSize: 12,
+    color: '#94a3b8',
+  },
+  arabicDescriptionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    backgroundColor: '#10b98110',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#10b98130',
+  },
+  arabicDescriptionText: {
+    fontSize: 20,
+    color: '#10b981',
+    flex: 1,
+    textAlign: 'right',
+    marginRight: 12,
+  },
+  // Letters grid styles
+  lettersGridCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 20,
+    borderWidth: 2,
+  },
+  lettersGridHeader: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  lettersGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  letterCell: {
+    width: 50,
+    height: 50,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  letterText: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  // Examples grid styles
+  examplesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  exampleCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 14,
+    padding: 16,
+    width: '47%',
+    minHeight: 90,
+    position: 'relative',
+  },
+  exampleCardArabic: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  exampleCardEnglish: {
+    fontSize: 13,
+    color: '#94a3b8',
+    textAlign: 'center',
+  },
+  exampleCardAudioIcon: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    opacity: 0.6,
   },
   practiceSection: {
     backgroundColor: '#1e293b',

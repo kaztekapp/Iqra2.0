@@ -103,54 +103,130 @@ export const grammarLessons: GrammarLesson[] = [
     id: 'grammar-3',
     title: 'The Definite Article (ال)',
     titleArabic: 'أَدَاةُ التَّعْرِيف',
-    description: 'Learn how to say "the" in Arabic and understand Sun/Moon letters',
+    description: 'Master the Arabic word for "the" and discover the beautiful system of Sun and Moon letters',
     level: 'beginner',
     category: 'articles',
     order: 3,
     exercises: ['ex-grammar-3-1', 'ex-grammar-3-2', 'ex-grammar-3-3'],
     content: [
+      // Introduction with bilingual description
+      {
+        type: 'description',
+        content: 'In Arabic, there is only ONE word for "the" — it\'s [[أَلْ]] and it attaches directly to the beginning of nouns. The beautiful part? Arabic has NO word for "a" or "an" — to say "a book," you simply say the word without [[أَلْ]]!',
+        arabicDescription: 'أَلْ هِيَ أَدَاةُ التَّعْرِيف فِي اللُّغَةِ الْعَرَبِيَّة',
+      },
+
+      // Comparison examples showing indefinite vs definite
+      {
+        type: 'comparison_grid',
+        content: 'Making Words Definite',
+        leftLabel: 'Indefinite',
+        rightLabel: 'Definite',
+        comparisons: [
+          { left: { arabic: 'كِتَاب', label: 'a book' }, right: { arabic: 'الْكِتَاب', label: 'the book' } },
+          { left: { arabic: 'بَيْت', label: 'a house' }, right: { arabic: 'الْبَيْت', label: 'the house' } },
+          { left: { arabic: 'قَلَم', label: 'a pen' }, right: { arabic: 'الْقَلَم', label: 'the pen' } },
+          { left: { arabic: 'بَاب', label: 'a door' }, right: { arabic: 'الْبَاب', label: 'the door' } },
+          { left: { arabic: 'وَلَد', label: 'a boy' }, right: { arabic: 'الْوَلَد', label: 'the boy' } },
+          { left: { arabic: 'بِنْت', label: 'a girl' }, right: { arabic: 'الْبِنْت', label: 'the girl' } },
+        ],
+      },
+
+      // Sun Letters Rule
+      {
+        type: 'rule',
+        content: 'The 14 Sun Letters are special — when [[أَلْ]] comes before them, the [[ل]] becomes silent and the letter is pronounced twice (doubled). This is shown with a [[شَدَّة]] (ـّ) mark.',
+        arabicDescription: 'الْحُرُوف الشَّمْسِيَّة: يُدْغَمُ فِيهَا اللَّام',
+      },
+
+      // Sun Letters Grid
+      {
+        type: 'letters_grid',
+        content: 'Sun Letters ☀️',
+        letters: ['ت', 'ث', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ن', 'ل'],
+        letterType: 'sun',
+      },
+
+      // Sun Letter Examples
       {
         type: 'text',
-        content: 'Arabic has ONE word for "the": أَلْ (al). It attaches to the beginning of nouns. Unlike English, Arabic has NO word for "a/an" - just leave it off!',
-      },
-      {
-        type: 'example',
-        content: 'Adding "the"',
-        arabic: 'كِتَاب → الْكِتَاب',
-        transliteration: 'kitāb → al-kitāb',
-        translation: 'a book → the book',
-      },
-      {
-        type: 'rule',
-        content: 'Sun Letters (الحروف الشمسية): When ال comes before these 14 letters, the ل sound disappears and the letter doubles!',
-      },
-      {
-        type: 'table',
-        content: 'Sun Letters',
-        tableData: {
-          headers: ['Letter', 'Example', 'Pronunciation'],
-          rows: [
-            ['ت، ث، د، ذ، ر، ز، س، ش، ص، ض، ط، ظ، ن، ل', 'الشَّمْس', 'ash-shams (not al-shams)'],
-          ],
-        },
-      },
-      {
-        type: 'example',
         content: 'Sun Letter Examples',
-        arabic: 'الشَّمْس - السَّلَام - النُّور',
-        transliteration: 'ash-shams - as-salām - an-nūr',
-        translation: 'the sun - the peace - the light',
       },
+      {
+        type: 'examples_grid',
+        content: 'Examples with Sun Letters',
+        examples: [
+          { arabic: 'الشَّمْس', english: 'the sun' },
+          { arabic: 'السَّلَام', english: 'the peace' },
+          { arabic: 'النُّور', english: 'the light' },
+          { arabic: 'الرَّجُل', english: 'the man' },
+          { arabic: 'الدَّرْس', english: 'the lesson' },
+          { arabic: 'التُّفَّاحَة', english: 'the apple' },
+          { arabic: 'الطَّعَام', english: 'the food' },
+          { arabic: 'الزَّهْرَة', english: 'the flower' },
+          { arabic: 'الصَّبَاح', english: 'the morning' },
+          { arabic: 'الثَّوْب', english: 'the garment' },
+        ],
+      },
+
+      // Moon Letters Rule
       {
         type: 'rule',
-        content: 'Moon Letters (الحروف القمرية): The remaining 14 letters keep the ل sound.',
+        content: 'The 14 Moon Letters keep the [[ل]] sound clear and unchanged. You pronounce the full [[أَلْ]] before these letters. The [[ل]] shows a [[سُكُون]] (ـْ) mark.',
+        arabicDescription: 'الْحُرُوف الْقَمَرِيَّة: يُظْهَرُ فِيهَا اللَّام',
+      },
+
+      // Moon Letters Grid
+      {
+        type: 'letters_grid',
+        content: 'Moon Letters 🌙',
+        letters: ['ا', 'ب', 'ج', 'ح', 'خ', 'ع', 'غ', 'ف', 'ق', 'ك', 'م', 'هـ', 'و', 'ي'],
+        letterType: 'moon',
+      },
+
+      // Moon Letter Examples
+      {
+        type: 'text',
+        content: 'Moon Letter Examples',
       },
       {
-        type: 'example',
-        content: 'Moon Letter Examples',
-        arabic: 'الْقَمَر - الْكِتَاب - الْبَيْت',
-        transliteration: 'al-qamar - al-kitāb - al-bayt',
-        translation: 'the moon - the book - the house',
+        type: 'examples_grid',
+        content: 'Examples with Moon Letters',
+        examples: [
+          { arabic: 'الْقَمَر', english: 'the moon' },
+          { arabic: 'الْكِتَاب', english: 'the book' },
+          { arabic: 'الْبَيْت', english: 'the house' },
+          { arabic: 'الْمَاء', english: 'the water' },
+          { arabic: 'الْوَلَد', english: 'the boy' },
+          { arabic: 'الْجَبَل', english: 'the mountain' },
+          { arabic: 'الْحَدِيقَة', english: 'the garden' },
+          { arabic: 'الْفِيل', english: 'the elephant' },
+          { arabic: 'الْعَيْن', english: 'the eye' },
+          { arabic: 'الْيَوْم', english: 'the day' },
+        ],
+      },
+
+      // Memory tip
+      {
+        type: 'note',
+        content: 'Memory Tip: The word [[الشَّمْس]] (the sun) starts with a sun letter, and [[الْقَمَر]] (the moon) starts with a moon letter! That\'s how these letter groups got their names.',
+        arabicDescription: 'نُسَمِّيهَا شَمْسِيَّة وَقَمَرِيَّة نِسْبَةً إِلَى الشَّمْس وَالْقَمَر',
+      },
+
+      // Practical examples in sentences
+      {
+        type: 'text',
+        content: 'Used in Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Practical Sentences',
+        examples: [
+          { arabic: 'الْكِتَابُ عَلَى الطَّاوِلَة', english: 'The book is on the table' },
+          { arabic: 'الشَّمْسُ جَمِيلَة', english: 'The sun is beautiful' },
+          { arabic: 'الْوَلَدُ فِي الْبَيْت', english: 'The boy is in the house' },
+          { arabic: 'الْمَاءُ بَارِد', english: 'The water is cold' },
+        ],
       },
     ],
   },

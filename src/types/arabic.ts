@@ -71,7 +71,7 @@ export interface GrammarLesson {
 }
 
 export interface GrammarContent {
-  type: 'text' | 'example' | 'table' | 'rule' | 'note';
+  type: 'text' | 'example' | 'table' | 'rule' | 'note' | 'letters_grid' | 'description' | 'examples_grid' | 'comparison_grid';
   content: string;
   arabic?: string;
   transliteration?: string;
@@ -80,6 +80,23 @@ export interface GrammarContent {
     headers: string[];
     rows: string[][];
   };
+  // For bilingual descriptions with audio
+  arabicDescription?: string;
+  // For letters grid display (sun/moon letters)
+  letters?: string[];
+  letterType?: 'sun' | 'moon';
+  // For examples grid (multiple example cards)
+  examples?: {
+    arabic: string;
+    english: string;
+  }[];
+  // For comparison grid (indefinite vs definite, etc.)
+  comparisons?: {
+    left: { arabic: string; label: string };
+    right: { arabic: string; label: string };
+  }[];
+  leftLabel?: string;
+  rightLabel?: string;
 }
 
 export interface VerbExample {
