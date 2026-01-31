@@ -103,6 +103,7 @@ class QuranAudioService {
   private stoppedByUser = false; // Track if playback was stopped by user
   private isAudioConfigured = false; // Track if audio session is configured
   private configurationInProgress = false; // Prevent concurrent configuration
+  private playCount = 0; // Track number of plays for periodic reset
 
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
@@ -213,6 +214,13 @@ class QuranAudioService {
       // Stop any current playback first
       await this.stop();
 
+      // Periodically reset audio configuration to prevent accumulating issues
+      this.playCount++;
+      if (this.playCount > 20) {
+        this.isAudioConfigured = false;
+        this.playCount = 0;
+      }
+
       // Configure audio session (only done once, failures are non-fatal)
       await this.configureAudio().catch(() => {
         // Audio config failure is non-fatal, playback may still work
@@ -254,11 +262,17 @@ class QuranAudioService {
             // Check if finished or just paused
             const isFinished = status.currentTime > 0 && status.currentTime >= (status.duration || 0) - 0.1;
             if (isFinished) {
+              // Store callback before cleanup
+              const completeCallback = this.onCompleteCallback;
+
+              // Release player resources immediately when finished
+              this.releasePlayer();
+
               this.audioState = 'idle';
               this.currentSurah = null;
               this.currentAyah = null;
               options?.onStateChange?.('idle');
-              this.onCompleteCallback?.();
+              completeCallback?.();
             }
           }
         }
@@ -280,8 +294,9 @@ class QuranAudioService {
       try {
         this.player.play();
       } catch (playError) {
-        // If play fails, try reconfiguring and playing again
+        // If play fails, clean up and retry
         if (retryCount < 2) {
+          this.releasePlayer();
           this.isTransitioning = false;
           await new Promise(resolve => setTimeout(resolve, 100));
           return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
@@ -291,6 +306,8 @@ class QuranAudioService {
 
       this.isTransitioning = false;
     } catch (error) {
+      // Clean up any partially created player
+      this.releasePlayer();
       this.isTransitioning = false;
 
       // Check if it's a session error and retry silently
@@ -386,34 +403,40 @@ class QuranAudioService {
   }
 
   /**
-   * Stop playback and release
+   * Release player resources without clearing all state
    */
-  async stop(): Promise<void> {
-    // Notify the current listener that audio was stopped
-    const stateCallback = this.onStateChangeCallback;
-
+  private releasePlayer(): void {
     // Remove subscription first to prevent any further updates
     if (this.statusSubscription) {
       this.statusSubscription.remove();
       this.statusSubscription = null;
     }
 
-    // Stop and release the player
+    // Release the player
     if (this.player) {
       try {
-        // Pause to stop audio playback
         this.player.pause();
-      } catch (error) {
+      } catch {
         // Ignore pause errors
       }
       try {
-        // Remove releases all resources and stops audio
         this.player.remove();
-      } catch (error) {
+      } catch {
         // Ignore remove errors
       }
       this.player = null;
     }
+  }
+
+  /**
+   * Stop playback and release
+   */
+  async stop(): Promise<void> {
+    // Notify the current listener that audio was stopped
+    const stateCallback = this.onStateChangeCallback;
+
+    // Release player resources
+    this.releasePlayer();
 
     // Reset all state
     this.audioState = 'idle';
@@ -425,6 +448,17 @@ class QuranAudioService {
 
     // Call the callback after clearing to notify UI
     stateCallback?.('idle');
+  }
+
+  /**
+   * Reset the audio service completely (use if audio stops working)
+   */
+  async reset(): Promise<void> {
+    await this.stop();
+    this.isAudioConfigured = false;
+    this.configurationInProgress = false;
+    // Re-configure audio session
+    await this.warmUp();
   }
 
   /**
