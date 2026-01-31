@@ -5,7 +5,7 @@ export const familyTheme: VocabularyTheme = {
   name: 'Family Members',
   nameArabic: 'الْعَائِلَة',
   icon: '👨‍👩‍👧‍👦',
-  color: '#ec4899',
+  color: '#f59e0b',
   description: 'Family relationships and relatives',
   wordCount: 20,
   level: 'beginner',

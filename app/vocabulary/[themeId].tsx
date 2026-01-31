@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -7,6 +7,53 @@ import { getWritingExercisesForVocabularyTheme } from '../../src/data/arabic/exe
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useEffect, useState } from 'react';
+import { VocabularyWord } from '../../src/types/arabic';
+
+// Helper component to render text with [[highlighted]] Arabic terms
+const HighlightedText = ({
+  text,
+  style,
+  highlightColor = '#10b981'
+}: {
+  text: string;
+  style?: TextStyle;
+  highlightColor?: string;
+}) => {
+  const parts = text.split(/(\[\[[^\]]+\]\])/g);
+
+  return (
+    <Text style={style}>
+      {parts.map((part, index) => {
+        if (part.startsWith('[[') && part.endsWith(']]')) {
+          const highlightedText = part.slice(2, -2);
+          return (
+            <Text
+              key={index}
+              style={{
+                color: highlightColor,
+                fontWeight: 'bold',
+              }}
+            >
+              {highlightedText}
+            </Text>
+          );
+        }
+        return <Text key={index}>{part}</Text>;
+      })}
+    </Text>
+  );
+};
+
+// Part of speech labels with colors
+const partOfSpeechConfig: Record<string, { label: string; labelArabic: string; color: string }> = {
+  noun: { label: 'Noun', labelArabic: 'اِسْم', color: '#10b981' },
+  verb: { label: 'Verb', labelArabic: 'فِعْل', color: '#6366f1' },
+  adjective: { label: 'Adjective', labelArabic: 'صِفَة', color: '#f59e0b' },
+  adverb: { label: 'Adverb', labelArabic: 'ظَرْف', color: '#ec4899' },
+  preposition: { label: 'Preposition', labelArabic: 'حَرْف جَرّ', color: '#8b5cf6' },
+  pronoun: { label: 'Pronoun', labelArabic: 'ضَمِير', color: '#14b8a6' },
+  other: { label: 'Phrase', labelArabic: 'عِبَارَة', color: '#64748b' },
+};
 
 export default function ThemeDetailScreen() {
   const { themeId } = useLocalSearchParams<{ themeId: string }>();
@@ -24,7 +71,8 @@ export default function ThemeDetailScreen() {
   } = useProgressStore();
 
   const [expandedWordId, setExpandedWordId] = useState<string | null>(null);
-  const { speak, isSpeaking } = useArabicSpeech();
+  const [viewMode, setViewMode] = useState<'all' | 'nouns' | 'verbs' | 'adjectives' | 'other'>('all');
+  const { speak } = useArabicSpeech();
 
   useEffect(() => {
     if (theme && !progress.vocabularyProgress.themesStarted.includes(theme.id)) {
@@ -69,6 +117,28 @@ export default function ThemeDetailScreen() {
     updateStreak();
   };
 
+  // Filter words by view mode
+  const filteredWords = words.filter(word => {
+    if (viewMode === 'all') return true;
+    if (viewMode === 'nouns') return word.partOfSpeech === 'noun';
+    if (viewMode === 'verbs') return word.partOfSpeech === 'verb';
+    if (viewMode === 'adjectives') return word.partOfSpeech === 'adjective';
+    return !['noun', 'verb', 'adjective'].includes(word.partOfSpeech);
+  });
+
+  // Group words by part of speech for stats
+  const wordsByType = {
+    nouns: words.filter(w => w.partOfSpeech === 'noun').length,
+    verbs: words.filter(w => w.partOfSpeech === 'verb').length,
+    adjectives: words.filter(w => w.partOfSpeech === 'adjective').length,
+    other: words.filter(w => !['noun', 'verb', 'adjective'].includes(w.partOfSpeech)).length,
+  };
+
+  // Get words with examples for showcase
+  const wordsWithExamples = words.filter(w => w.exampleSentence);
+
+  const writingExercises = getWritingExercisesForVocabularyTheme(theme.id);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -83,98 +153,293 @@ export default function ThemeDetailScreen() {
           </View>
         </View>
 
-        {/* Theme Info Card */}
-        <View style={[styles.infoCard, { borderLeftColor: theme.color }]}>
-          <View style={styles.infoLeft}>
-            <Text style={styles.themeIcon}>{theme.icon}</Text>
-          </View>
-          <View style={styles.infoRight}>
-            <Text style={styles.infoDesc}>{theme.description}</Text>
-            <View style={styles.infoStats}>
-              <Text style={styles.infoStat}>
-                {themeWordsLearned}/{words.length} words learned
-              </Text>
-              <Text style={styles.infoProgress}>{progressPercent}%</Text>
+        {/* Theme Introduction Card */}
+        <View style={[styles.introCard, { borderLeftColor: theme.color }]}>
+          <View style={styles.introCardContent}>
+            <View style={styles.introIconContainer}>
+              <Text style={styles.themeIcon}>{theme.icon}</Text>
             </View>
-            <View style={styles.progressBar}>
-              <View
-                style={[
-                  styles.progressFill,
-                  { width: `${progressPercent}%`, backgroundColor: theme.color },
-                ]}
-              />
+            <View style={styles.introTextContainer}>
+              <Text style={styles.introDesc}>{theme.description}</Text>
+              <View style={styles.introMeta}>
+                <View style={styles.introBadge}>
+                  <Text style={styles.introBadgeText}>{theme.level}</Text>
+                </View>
+                <Text style={styles.introWordCount}>{words.length} words</Text>
+              </View>
             </View>
           </View>
         </View>
 
+        {/* Progress Card */}
+        <View style={styles.progressCard}>
+          <View style={styles.progressHeader}>
+            <Ionicons name="stats-chart" size={20} color="#10b981" />
+            <Text style={styles.progressTitle}>Your Progress</Text>
+          </View>
+          <View style={styles.progressStats}>
+            <View style={styles.progressStat}>
+              <Text style={styles.progressStatValue}>{themeWordsLearned}</Text>
+              <Text style={styles.progressStatLabel}>Learned</Text>
+            </View>
+            <View style={styles.progressDivider} />
+            <View style={styles.progressStat}>
+              <Text style={styles.progressStatValue}>{words.filter(w => masteredWords.includes(w.id)).length}</Text>
+              <Text style={styles.progressStatLabel}>Mastered</Text>
+            </View>
+            <View style={styles.progressDivider} />
+            <View style={styles.progressStat}>
+              <Text style={[styles.progressStatValue, { color: '#10b981' }]}>{progressPercent}%</Text>
+              <Text style={styles.progressStatLabel}>Complete</Text>
+            </View>
+          </View>
+          <View style={styles.progressBar}>
+            <View
+              style={[
+                styles.progressFill,
+                { width: `${progressPercent}%`, backgroundColor: theme.color },
+              ]}
+            />
+          </View>
+        </View>
+
+        {/* Word Type Filter */}
+        <View style={styles.filterSection}>
+          <Text style={styles.filterTitle}>Filter by Type</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
+            <Pressable
+              style={[styles.filterChip, viewMode === 'all' && styles.filterChipActive]}
+              onPress={() => setViewMode('all')}
+            >
+              <Text style={[styles.filterChipText, viewMode === 'all' && styles.filterChipTextActive]}>
+                All ({words.length})
+              </Text>
+            </Pressable>
+            {wordsByType.nouns > 0 && (
+              <Pressable
+                style={[styles.filterChip, viewMode === 'nouns' && { backgroundColor: '#10b98130', borderColor: '#10b981' }]}
+                onPress={() => setViewMode('nouns')}
+              >
+                <Text style={[styles.filterChipText, viewMode === 'nouns' && { color: '#10b981' }]}>
+                  Nouns ({wordsByType.nouns})
+                </Text>
+              </Pressable>
+            )}
+            {wordsByType.adjectives > 0 && (
+              <Pressable
+                style={[styles.filterChip, viewMode === 'adjectives' && { backgroundColor: '#f59e0b30', borderColor: '#f59e0b' }]}
+                onPress={() => setViewMode('adjectives')}
+              >
+                <Text style={[styles.filterChipText, viewMode === 'adjectives' && { color: '#f59e0b' }]}>
+                  Adjectives ({wordsByType.adjectives})
+                </Text>
+              </Pressable>
+            )}
+            {wordsByType.other > 0 && (
+              <Pressable
+                style={[styles.filterChip, viewMode === 'other' && { backgroundColor: '#64748b30', borderColor: '#64748b' }]}
+                onPress={() => setViewMode('other')}
+              >
+                <Text style={[styles.filterChipText, viewMode === 'other' && { color: '#94a3b8' }]}>
+                  Phrases ({wordsByType.other})
+                </Text>
+              </Pressable>
+            )}
+          </ScrollView>
+        </View>
+
+        {/* Tip Card */}
+        <View style={styles.tipCard}>
+          <View style={styles.tipCardBorder} />
+          <View style={styles.tipCardContent}>
+            <View style={styles.tipCardHeader}>
+              <Ionicons name="bulb" size={20} color="#f59e0b" />
+              <Text style={styles.tipCardTitle}>Learning Tip</Text>
+            </View>
+            <Text style={styles.tipCardText}>
+              Tap any word to see its details and example sentence. Use the{' '}
+              <Text style={{ color: '#10b981', fontWeight: 'bold' }}>audio button</Text> to hear
+              the correct pronunciation. Mark words as learned, then mastered to track your progress!
+            </Text>
+          </View>
+        </View>
+
+        {/* Featured Examples Section */}
+        {wordsWithExamples.length > 0 && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Ionicons name="chatbubble-ellipses" size={20} color="#10b981" />
+              <Text style={styles.sectionTitle}>Example Sentences</Text>
+            </View>
+            <Text style={styles.sectionSubtitle}>
+              Learn vocabulary in context with these example sentences
+            </Text>
+            <View style={styles.examplesGrid}>
+              {wordsWithExamples.slice(0, 6).map((word) => (
+                <Pressable
+                  key={word.id}
+                  style={styles.exampleCard}
+                  onPress={() => speak(word.exampleSentence!.arabic)}
+                >
+                  <View style={styles.exampleCardHeader}>
+                    <Text style={styles.exampleCardWord}>{word.arabicWithVowels}</Text>
+                    <Text style={styles.exampleCardMeaning}>{word.english}</Text>
+                  </View>
+                  <View style={styles.exampleCardDivider} />
+                  <Text style={styles.exampleCardArabic}>{word.exampleSentence!.arabic}</Text>
+                  <Text style={styles.exampleCardEnglish}>{word.exampleSentence!.english}</Text>
+                  <View style={styles.exampleCardAudioIcon}>
+                    <Ionicons name="volume-medium" size={16} color="#10b981" />
+                  </View>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        )}
+
         {/* Word List */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Words ({words.length})</Text>
+          <View style={styles.sectionHeader}>
+            <Ionicons name="list" size={20} color="#10b981" />
+            <Text style={styles.sectionTitle}>
+              {viewMode === 'all' ? 'All Words' : `${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)}`} ({filteredWords.length})
+            </Text>
+          </View>
 
-          {words.map((word) => {
+          {filteredWords.map((word) => {
             const status = getWordStatus(word.id);
             const isExpanded = expandedWordId === word.id;
+            const posConfig = partOfSpeechConfig[word.partOfSpeech] || partOfSpeechConfig.other;
 
             return (
-              <Pressable
-                key={word.id}
-                style={styles.wordCard}
-                onPress={() => setExpandedWordId(isExpanded ? null : word.id)}
-              >
-                <View style={styles.wordMain}>
-                  <View style={styles.wordLeft}>
-                    <Text style={styles.wordArabic}>
-                      {showVowels ? word.arabicWithVowels : word.arabic}
-                    </Text>
-                    <Text style={styles.wordTranslit}>{word.transliteration}</Text>
+              <View key={word.id} style={styles.wordCard}>
+                {/* Word Header */}
+                <Pressable
+                  style={styles.wordHeader}
+                  onPress={() => setExpandedWordId(isExpanded ? null : word.id)}
+                >
+                  <View style={styles.wordMain}>
+                    {/* Arabic and Audio */}
+                    <Pressable
+                      style={styles.wordArabicContainer}
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        speak(word.arabicWithVowels || word.arabic);
+                      }}
+                    >
+                      <Text style={styles.wordArabic}>
+                        {showVowels ? word.arabicWithVowels : word.arabic}
+                      </Text>
+                      <View style={styles.wordAudioBtn}>
+                        <Ionicons name="volume-medium" size={16} color="#10b981" />
+                      </View>
+                    </Pressable>
+
                   </View>
+
                   <View style={styles.wordRight}>
-                    <Text style={styles.wordEnglish}>{word.english}</Text>
-                    <View style={styles.wordMeta}>
+                    {/* English meaning */}
+                    <Text style={styles.wordEnglish} numberOfLines={2}>{word.english}</Text>
+
+                    {/* Badges row */}
+                    <View style={styles.wordBadges}>
+                      {/* Part of speech badge */}
+                      <View style={[styles.posBadge, { backgroundColor: posConfig.color + '20' }]}>
+                        <Text style={[styles.posBadgeText, { color: posConfig.color }]}>
+                          {posConfig.label}
+                        </Text>
+                      </View>
+
+                      {/* Gender badge */}
                       {word.gender && (
-                        <View style={styles.genderBadge}>
-                          <Text style={styles.genderText}>
+                        <View style={[styles.genderBadge, {
+                          backgroundColor: word.gender === 'masculine' ? '#3b82f620' : '#ec489920'
+                        }]}>
+                          <Text style={[styles.genderBadgeText, {
+                            color: word.gender === 'masculine' ? '#3b82f6' : '#ec4899'
+                          }]}>
                             {word.gender === 'masculine' ? 'm' : 'f'}
                           </Text>
                         </View>
                       )}
+
+                      {/* Status indicator */}
                       {status !== 'new' && (
                         <Ionicons
                           name={status === 'mastered' ? 'star' : 'checkmark-circle'}
                           size={16}
-                          color={status === 'mastered' ? '#22c55e' : '#D4AF37'}
+                          color={status === 'mastered' ? '#10b981' : '#D4AF37'}
                         />
                       )}
                     </View>
                   </View>
-                  <Pressable
-                    style={styles.audioBtn}
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      speak(word.arabicWithVowels || word.arabic);
-                    }}
-                  >
-                    <Ionicons name="volume-medium" size={20} color="#D4AF37" />
-                  </Pressable>
-                </View>
 
+                  {/* Expand indicator */}
+                  <Ionicons
+                    name={isExpanded ? 'chevron-up' : 'chevron-down'}
+                    size={20}
+                    color="#64748b"
+                  />
+                </Pressable>
+
+                {/* Expanded Content */}
                 {isExpanded && (
                   <View style={styles.wordExpanded}>
+                    {/* Word details grid */}
+                    <View style={styles.wordDetailsGrid}>
+                      {word.plural && (
+                        <View style={styles.wordDetail}>
+                          <Text style={styles.wordDetailLabel}>Plural</Text>
+                          <Pressable
+                            style={styles.wordDetailValue}
+                            onPress={() => speak(word.plural!)}
+                          >
+                            <Text style={styles.wordDetailArabic}>{word.plural}</Text>
+                            <Ionicons name="volume-medium" size={14} color="#10b981" />
+                          </Pressable>
+                        </View>
+                      )}
+                      <View style={styles.wordDetail}>
+                        <Text style={styles.wordDetailLabel}>Type</Text>
+                        <View style={styles.wordDetailValue}>
+                          <Text style={[styles.wordDetailText, { color: posConfig.color }]}>
+                            {posConfig.labelArabic} ({posConfig.label})
+                          </Text>
+                        </View>
+                      </View>
+                      {word.gender && (
+                        <View style={styles.wordDetail}>
+                          <Text style={styles.wordDetailLabel}>Gender</Text>
+                          <View style={styles.wordDetailValue}>
+                            <Text style={styles.wordDetailText}>
+                              {word.gender === 'masculine' ? 'مُذَكَّر (Masculine)' : 'مُؤَنَّث (Feminine)'}
+                            </Text>
+                          </View>
+                        </View>
+                      )}
+                    </View>
+
+                    {/* Example sentence */}
                     {word.exampleSentence && (
-                      <View style={styles.exampleSection}>
-                        <Text style={styles.exampleLabel}>Example:</Text>
+                      <Pressable
+                        style={styles.exampleSection}
+                        onPress={() => speak(word.exampleSentence!.arabic)}
+                      >
+                        <View style={styles.exampleSectionHeader}>
+                          <Ionicons name="chatbubble-outline" size={16} color="#10b981" />
+                          <Text style={styles.exampleLabel}>Example Sentence</Text>
+                          <Ionicons name="volume-medium" size={16} color="#10b981" />
+                        </View>
                         <Text style={styles.exampleArabic}>
                           {word.exampleSentence.arabic}
-                        </Text>
-                        <Text style={styles.exampleTranslit}>
-                          {word.exampleSentence.transliteration}
                         </Text>
                         <Text style={styles.exampleEnglish}>
                           {word.exampleSentence.english}
                         </Text>
-                      </View>
+                      </Pressable>
                     )}
 
+                    {/* Action buttons */}
                     <View style={styles.actionButtons}>
                       {status === 'new' && (
                         <Pressable
@@ -198,30 +463,35 @@ export default function ThemeDetailScreen() {
                       )}
                       {status === 'mastered' && (
                         <View style={styles.masteredLabel}>
-                          <Ionicons name="star" size={16} color="#22c55e" />
+                          <Ionicons name="star" size={16} color="#10b981" />
                           <Text style={styles.masteredText}>Mastered!</Text>
                         </View>
                       )}
                     </View>
                   </View>
                 )}
-              </Pressable>
+              </View>
             );
           })}
         </View>
 
         {/* Practice Buttons */}
         <View style={[styles.section, { marginBottom: 100 }]}>
+          <View style={styles.sectionHeader}>
+            <Ionicons name="fitness" size={20} color="#10b981" />
+            <Text style={styles.sectionTitle}>Practice</Text>
+          </View>
+
           <Pressable
             style={[styles.practiceButton, { backgroundColor: theme.color }]}
             onPress={() => router.push(`/vocabulary/flashcards?themeId=${theme.id}`)}
           >
             <Ionicons name="layers" size={20} color="#ffffff" />
             <Text style={styles.practiceButtonText}>Practice with Flashcards</Text>
+            <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>
 
-          {/* Writing Practice Button */}
-          {getWritingExercisesForVocabularyTheme(theme.id).length > 0 && (
+          {writingExercises.length > 0 && (
             <Pressable
               style={[styles.practiceButton, styles.writingPracticeButton]}
               onPress={() => router.push(`/vocabulary/writing-practice?themeId=${theme.id}`)}
@@ -230,7 +500,7 @@ export default function ThemeDetailScreen() {
               <Text style={styles.practiceButtonText}>Writing Practice</Text>
               <View style={styles.exerciseCount}>
                 <Text style={styles.exerciseCountText}>
-                  {getWritingExercisesForVocabularyTheme(theme.id).length}
+                  {writingExercises.length}
                 </Text>
               </View>
             </Pressable>
@@ -260,7 +530,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   backLinkText: {
-    color: '#6366f1',
+    color: '#10b981',
     fontSize: 16,
   },
   header: {
@@ -289,46 +559,111 @@ const styles = StyleSheet.create({
   },
   titleArabic: {
     fontSize: 16,
-    color: '#D4AF37',
+    color: '#10b981',
     marginTop: 4,
   },
-  infoCard: {
+  // Introduction Card
+  introCard: {
     backgroundColor: '#1e293b',
     marginHorizontal: 20,
     borderRadius: 16,
     padding: 16,
-    marginBottom: 24,
-    flexDirection: 'row',
+    marginBottom: 16,
     borderLeftWidth: 4,
   },
-  infoLeft: {
+  introCardContent: {
+    flexDirection: 'row',
+  },
+  introIconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: 12,
+    backgroundColor: '#0f172a',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 16,
   },
   themeIcon: {
-    fontSize: 40,
+    fontSize: 28,
   },
-  infoRight: {
+  introTextContainer: {
     flex: 1,
   },
-  infoDesc: {
+  introTitle: {
     fontSize: 14,
+    fontWeight: '600',
     color: '#94a3b8',
-    lineHeight: 20,
-    marginBottom: 12,
+    marginBottom: 4,
   },
-  infoStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  introDesc: {
+    fontSize: 14,
+    color: '#ffffff',
+    lineHeight: 20,
     marginBottom: 8,
   },
-  infoStat: {
+  introMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  introBadge: {
+    backgroundColor: '#10b98120',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  introBadgeText: {
+    fontSize: 11,
+    color: '#10b981',
+    fontWeight: '600',
+    textTransform: 'capitalize',
+  },
+  introWordCount: {
     fontSize: 12,
     color: '#64748b',
   },
-  infoProgress: {
-    fontSize: 12,
+  // Progress Card
+  progressCard: {
+    backgroundColor: '#1e293b',
+    marginHorizontal: 20,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+  },
+  progressHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  progressTitle: {
+    fontSize: 14,
     fontWeight: '600',
     color: '#ffffff',
+  },
+  progressStats: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginBottom: 12,
+  },
+  progressStat: {
+    alignItems: 'center',
+  },
+  progressStatValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  progressStatLabel: {
+    fontSize: 11,
+    color: '#64748b',
+    marginTop: 2,
+  },
+  progressDivider: {
+    width: 1,
+    height: 32,
+    backgroundColor: '#334155',
   },
   progressBar: {
     height: 6,
@@ -340,87 +675,283 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 3,
   },
+  // Filter Section
+  filterSection: {
+    paddingHorizontal: 20,
+    marginBottom: 16,
+  },
+  filterTitle: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#64748b',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  filterScroll: {
+    flexDirection: 'row',
+  },
+  filterChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: '#1e293b',
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  filterChipActive: {
+    backgroundColor: '#10b98130',
+    borderColor: '#10b981',
+  },
+  filterChipText: {
+    fontSize: 13,
+    color: '#94a3b8',
+    fontWeight: '500',
+  },
+  filterChipTextActive: {
+    color: '#10b981',
+  },
+  // Tip Card
+  tipCard: {
+    backgroundColor: '#1e293b',
+    marginHorizontal: 20,
+    borderRadius: 12,
+    marginBottom: 20,
+    flexDirection: 'row',
+    overflow: 'hidden',
+  },
+  tipCardBorder: {
+    width: 4,
+    backgroundColor: '#f59e0b',
+  },
+  tipCardContent: {
+    flex: 1,
+    padding: 14,
+  },
+  tipCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 6,
+  },
+  tipCardTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#f59e0b',
+  },
+  tipCardText: {
+    fontSize: 13,
+    color: '#94a3b8',
+    lineHeight: 19,
+  },
+  // Section
   section: {
     paddingHorizontal: 20,
     marginBottom: 24,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
   },
   sectionTitle: {
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 16,
   },
+  sectionSubtitle: {
+    color: '#64748b',
+    fontSize: 13,
+    marginBottom: 12,
+  },
+  // Examples Grid
+  examplesGrid: {
+    gap: 10,
+  },
+  exampleCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 14,
+    position: 'relative',
+  },
+  exampleCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingRight: 44,
+  },
+  exampleCardWord: {
+    fontSize: 20,
+    color: '#10b981',
+    fontWeight: '600',
+  },
+  exampleCardMeaning: {
+    fontSize: 12,
+    color: '#64748b',
+  },
+  exampleCardDivider: {
+    height: 1,
+    backgroundColor: '#334155',
+    marginBottom: 10,
+  },
+  exampleCardArabic: {
+    fontSize: 18,
+    color: '#ffffff',
+    marginBottom: 4,
+    lineHeight: 28,
+  },
+  exampleCardTranslit: {
+    fontSize: 12,
+    color: '#10b981',
+    marginBottom: 4,
+  },
+  exampleCardEnglish: {
+    fontSize: 13,
+    color: '#94a3b8',
+  },
+  exampleCardAudioIcon: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#10b98120',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // Word Card
   wordCard: {
     backgroundColor: '#1e293b',
     borderRadius: 12,
     marginBottom: 10,
     overflow: 'hidden',
   },
-  wordMain: {
+  wordHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 14,
+    gap: 16,
   },
-  wordLeft: {
+  wordMain: {
     flex: 1,
+    maxWidth: '50%',
+  },
+  wordArabicContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 2,
   },
   wordArabic: {
     fontSize: 22,
     color: '#ffffff',
+    fontWeight: '500',
+  },
+  wordAudioBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#10b98120',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wordTranslit: {
     fontSize: 12,
-    color: '#6366f1',
-    marginTop: 2,
+    color: '#10b981',
   },
   wordRight: {
-    alignItems: 'flex-end',
-    marginRight: 12,
+    alignItems: 'flex-start',
+    marginLeft: 'auto',
+    maxWidth: '40%',
   },
   wordEnglish: {
     fontSize: 14,
     color: '#ffffff',
     fontWeight: '500',
-    textAlign: 'right',
+    textAlign: 'left',
+    marginBottom: 4,
   },
-  wordMeta: {
+  wordBadges: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
     gap: 6,
   },
-  genderBadge: {
-    backgroundColor: '#334155',
+  posBadge: {
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
   },
-  genderText: {
+  posBadgeText: {
     fontSize: 10,
-    color: '#94a3b8',
     fontWeight: '600',
   },
-  audioBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#D4AF3720',
-    alignItems: 'center',
-    justifyContent: 'center',
+  genderBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
+  genderBadgeText: {
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  // Word Expanded
   wordExpanded: {
     backgroundColor: '#0f172a',
     padding: 14,
     borderTopWidth: 1,
     borderTopColor: '#334155',
   },
+  wordDetailsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    marginBottom: 14,
+  },
+  wordDetail: {
+    minWidth: '45%',
+  },
+  wordDetailLabel: {
+    fontSize: 11,
+    color: '#64748b',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  wordDetailValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  wordDetailArabic: {
+    fontSize: 16,
+    color: '#ffffff',
+  },
+  wordDetailText: {
+    fontSize: 13,
+    color: '#94a3b8',
+  },
+  // Example Section in Word
   exampleSection: {
-    marginBottom: 16,
+    backgroundColor: '#1e293b',
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 14,
+  },
+  exampleSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 8,
   },
   exampleLabel: {
+    flex: 1,
     fontSize: 12,
-    color: '#64748b',
-    marginBottom: 8,
+    color: '#10b981',
+    fontWeight: '600',
   },
   exampleArabic: {
     fontSize: 18,
@@ -428,30 +959,32 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   exampleTranslit: {
-    fontSize: 13,
-    color: '#6366f1',
+    fontSize: 12,
+    color: '#10b981',
     marginBottom: 4,
   },
   exampleEnglish: {
     fontSize: 13,
     color: '#94a3b8',
   },
+  // Action Buttons
   actionButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
   learnButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#10b981',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 10,
+    gap: 6,
   },
   learnButtonText: {
     color: '#ffffff',
     fontWeight: '600',
-    marginLeft: 6,
+    fontSize: 14,
   },
   masterButton: {
     backgroundColor: '#D4AF37',
@@ -460,21 +993,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 10,
+    gap: 6,
   },
   masterButtonText: {
     color: '#0f172a',
     fontWeight: '600',
-    marginLeft: 6,
+    fontSize: 14,
   },
   masteredLabel: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 6,
   },
   masteredText: {
-    color: '#22c55e',
+    color: '#10b981',
     fontWeight: '600',
-    marginLeft: 6,
+    fontSize: 14,
   },
+  // Practice Buttons
   practiceButton: {
     borderRadius: 16,
     padding: 18,
@@ -482,6 +1018,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
+    gap: 10,
   },
   writingPracticeButton: {
     backgroundColor: '#D4AF37',
@@ -490,14 +1027,14 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: 8,
+    flex: 1,
+    textAlign: 'center',
   },
   exerciseCount: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
-    marginLeft: 8,
   },
   exerciseCountText: {
     color: '#ffffff',

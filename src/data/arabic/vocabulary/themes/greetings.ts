@@ -5,7 +5,7 @@ export const greetingsTheme: VocabularyTheme = {
   name: 'Greetings & Introductions',
   nameArabic: 'التَّحِيَّاتُ وَالتَّعَارُف',
   icon: '👋',
-  color: '#6366f1',
+  color: '#10b981',
   description: 'Essential greetings and introductions for everyday conversations',
   wordCount: 20,
   level: 'beginner',

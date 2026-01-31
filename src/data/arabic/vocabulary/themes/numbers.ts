@@ -36,6 +36,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'masculine',
     level: 'beginner',
     order: 2,
+    exampleSentence: {
+      arabic: 'عِنْدِي كِتَابٌ وَاحِدٌ',
+      transliteration: 'ʿindī kitābun wāḥid',
+      english: 'I have one book',
+    },
   },
   {
     id: 'number-2',
@@ -48,6 +53,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'masculine',
     level: 'beginner',
     order: 3,
+    exampleSentence: {
+      arabic: 'لِي أَخَوَانِ اثْنَانِ',
+      transliteration: 'lī akhawāni ithnān',
+      english: 'I have two brothers',
+    },
   },
   {
     id: 'number-3',
@@ -84,6 +94,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'masculine',
     level: 'beginner',
     order: 6,
+    exampleSentence: {
+      arabic: 'عِنْدِي خَمْسَةُ أَصْدِقَاءَ',
+      transliteration: 'ʿindī khamsatu aṣdiqāʾ',
+      english: 'I have five friends',
+    },
   },
   {
     id: 'number-6',
@@ -144,6 +159,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'masculine',
     level: 'beginner',
     order: 11,
+    exampleSentence: {
+      arabic: 'فِي الْفَصْلِ عَشَرَةُ طُلَّابٍ',
+      transliteration: 'fī al-faṣli ʿasharatu ṭullāb',
+      english: 'There are ten students in the class',
+    },
   },
   {
     id: 'number-11',
@@ -266,6 +286,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'feminine',
     level: 'beginner',
     order: 22,
+    exampleSentence: {
+      arabic: 'قَرَأْتُ مِئَةَ صَفْحَةٍ',
+      transliteration: 'qaraʾtu miʾata ṣafḥa',
+      english: 'I read one hundred pages',
+    },
   },
   {
     id: 'number-1000',
@@ -290,6 +315,11 @@ export const numbersWords: VocabularyWord[] = [
     gender: 'masculine',
     level: 'beginner',
     order: 24,
+    exampleSentence: {
+      arabic: 'هَذَا هُوَ الْيَوْمُ الْأَوَّلُ',
+      transliteration: 'hādhā huwa al-yawmu al-awwal',
+      english: 'This is the first day',
+    },
   },
   {
     id: 'number-last',

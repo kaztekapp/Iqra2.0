@@ -94,6 +94,68 @@ export default function VerbsScreen() {
           ))}
         </View>
 
+        {/* All Verbs */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>All Verbs ({arabicVerbs.length})</Text>
+          <Text style={styles.sectionSubtitle}>Tap any verb to see full conjugations</Text>
+          <View style={styles.verbsGrid}>
+            {arabicVerbs.map((verb) => (
+              <Pressable
+                key={verb.id}
+                style={styles.verbCard}
+                onPress={() => router.push(`/verbs/verb/${verb.id}` as any)}
+              >
+                <Pressable
+                  style={styles.verbAudioButton}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    speak(verb.pastTense);
+                  }}
+                >
+                  <Ionicons name="volume-high" size={16} color="#10b981" />
+                </Pressable>
+                <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
+                <Text style={styles.verbMeaningText}>{verb.meaning}</Text>
+                <Text style={styles.verbRootText}>{verb.root}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
+        {/* Key Concepts */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Key Concepts</Text>
+          <View style={styles.conceptsGrid}>
+            <View style={[styles.conceptCard, { borderLeftColor: '#10b981' }]}>
+              <Text style={[styles.conceptEmoji, { backgroundColor: '#10b98120' }]}>🔤</Text>
+              <View style={styles.conceptContent}>
+                <Text style={styles.conceptTitle}>Root System</Text>
+                <Text style={styles.conceptText}>
+                  Most verbs come from 3-letter roots (e.g., ك-ت-ب for writing)
+                </Text>
+              </View>
+            </View>
+            <View style={[styles.conceptCard, { borderLeftColor: '#6366f1' }]}>
+              <Text style={[styles.conceptEmoji, { backgroundColor: '#6366f120' }]}>👤</Text>
+              <View style={styles.conceptContent}>
+                <Text style={styles.conceptTitle}>Person</Text>
+                <Text style={styles.conceptText}>
+                  I, you, he, she, we, they - each has a different form
+                </Text>
+              </View>
+            </View>
+            <View style={[styles.conceptCard, { borderLeftColor: '#D4AF37' }]}>
+              <Text style={[styles.conceptEmoji, { backgroundColor: '#D4AF3720' }]}>⚥</Text>
+              <View style={styles.conceptContent}>
+                <Text style={styles.conceptTitle}>Gender</Text>
+                <Text style={styles.conceptText}>
+                  Arabic distinguishes masculine and feminine forms
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
         {/* Practice Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Practice</Text>
@@ -139,62 +201,6 @@ export default function VerbsScreen() {
               <Text style={styles.exerciseCountText}>{writingExercises.length}</Text>
             </View>
           </Pressable>
-        </View>
-
-        {/* All Verbs */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>All Verbs ({arabicVerbs.length})</Text>
-          <Text style={styles.sectionSubtitle}>Tap any verb to see full conjugations</Text>
-          <View style={styles.verbsGrid}>
-            {arabicVerbs.map((verb) => (
-              <Pressable
-                key={verb.id}
-                style={styles.verbCard}
-                onPress={() => router.push(`/verbs/verb/${verb.id}` as any)}
-              >
-                <Pressable
-                  style={styles.verbAudioButton}
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    speak(verb.pastTense);
-                  }}
-                >
-                  <Ionicons name="volume-high" size={16} color="#10b981" />
-                </Pressable>
-                <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
-                <Text style={styles.verbMeaningText}>{verb.meaning}</Text>
-                <Text style={styles.verbRootText}>{verb.root}</Text>
-              </Pressable>
-            ))}
-          </View>
-        </View>
-
-        {/* Key Concepts */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Concepts</Text>
-          <View style={styles.conceptsGrid}>
-            <View style={styles.conceptCard}>
-              <Text style={styles.conceptEmoji}>🔤</Text>
-              <Text style={styles.conceptTitle}>Root System</Text>
-              <Text style={styles.conceptText}>
-                Most verbs come from 3-letter roots (e.g., ك-ت-ب for writing)
-              </Text>
-            </View>
-            <View style={styles.conceptCard}>
-              <Text style={styles.conceptEmoji}>👤</Text>
-              <Text style={styles.conceptTitle}>Person</Text>
-              <Text style={styles.conceptText}>
-                I, you, he, she, we, they - each has a different form
-              </Text>
-            </View>
-            <View style={styles.conceptCard}>
-              <Text style={styles.conceptEmoji}>⚥</Text>
-              <Text style={styles.conceptTitle}>Gender</Text>
-              <Text style={styles.conceptText}>
-                Arabic distinguishes masculine and feminine forms
-              </Text>
-            </View>
-          </View>
         </View>
 
         <View style={{ height: 100 }} />
@@ -386,26 +392,40 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   conceptsGrid: {
-    gap: 12,
+    gap: 14,
   },
   conceptCard: {
     backgroundColor: '#1e293b',
     borderRadius: 16,
-    padding: 16,
+    padding: 18,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
+    borderLeftWidth: 4,
+    borderLeftColor: '#10b981',
   },
   conceptEmoji: {
-    fontSize: 24,
-    marginBottom: 8,
+    fontSize: 28,
+    width: 48,
+    height: 48,
+    backgroundColor: '#10b98120',
+    borderRadius: 12,
+    textAlign: 'center',
+    lineHeight: 48,
+    overflow: 'hidden',
+  },
+  conceptContent: {
+    flex: 1,
   },
   conceptTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
     color: '#ffffff',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   conceptText: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#94a3b8',
-    lineHeight: 18,
+    lineHeight: 20,
   },
 });

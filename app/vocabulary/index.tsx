@@ -82,7 +82,7 @@ export default function VocabularyScreen() {
                     <Text style={styles.themeWordCount}>{theme.wordCount} words</Text>
                     {status === 'completed' && (
                       <View style={styles.completedBadge}>
-                        <Ionicons name="checkmark-circle" size={14} color="#22c55e" />
+                        <Ionicons name="checkmark-circle" size={14} color="#10b981" />
                       </View>
                     )}
                     {status === 'in_progress' && (
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   titleArabic: {
     fontSize: 18,
-    color: '#D4AF37',
+    color: '#10b981',
     marginTop: 4,
   },
   progressCard: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   themeNameAr: {
     fontSize: 12,
-    color: '#D4AF37',
+    color: '#10b981',
     marginBottom: 8,
   },
   themeFooter: {
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: '#22c55e20',
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
   },

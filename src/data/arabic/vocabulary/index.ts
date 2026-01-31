@@ -5,6 +5,10 @@ import { familyTheme, familyWords } from './themes/family';
 import { colorsTheme, colorsWords } from './themes/colors';
 import { foodTheme, foodWords } from './themes/food';
 import { bodyTheme, bodyWords } from './themes/body';
+import { animalsTheme, animalsWords } from './themes/animals';
+import { timeTheme, timeWords } from './themes/time';
+import { placesTheme, placesWords } from './themes/places';
+import { objectsTheme, objectsWords } from './themes/objects';
 
 // Export all themes
 export const vocabularyThemes: VocabularyTheme[] = [
@@ -14,6 +18,10 @@ export const vocabularyThemes: VocabularyTheme[] = [
   colorsTheme,
   foodTheme,
   bodyTheme,
+  animalsTheme,
+  timeTheme,
+  placesTheme,
+  objectsTheme,
 ].sort((a, b) => a.order - b.order);
 
 // Export all words
@@ -24,6 +32,10 @@ export const vocabularyWords: VocabularyWord[] = [
   ...colorsWords,
   ...foodWords,
   ...bodyWords,
+  ...animalsWords,
+  ...timeWords,
+  ...placesWords,
+  ...objectsWords,
 ];
 
 // Helper functions
@@ -59,4 +71,12 @@ export {
   foodWords,
   bodyTheme,
   bodyWords,
+  animalsTheme,
+  animalsWords,
+  timeTheme,
+  timeWords,
+  placesTheme,
+  placesWords,
+  objectsTheme,
+  objectsWords,
 };
