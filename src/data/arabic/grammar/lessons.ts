@@ -3090,6 +3090,1741 @@ export const grammarLessons: GrammarLesson[] = [
       },
     ],
   },
+
+  // LESSON 21: Future Tense
+  {
+    id: 'grammar-21',
+    title: 'The Future Tense',
+    titleArabic: 'الْمُسْتَقْبَل',
+    description: 'Express future plans and predictions with سَـ and سَوْفَ',
+    level: 'intermediate',
+    category: 'verbs',
+    order: 21,
+    exercises: ['ex-grammar-21-1', 'ex-grammar-21-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Great news! Arabic future tense is incredibly simple. Just add [[سَـ]] (sa) or [[سَوْفَ]] (sawfa) before any present tense verb, and you\'re talking about the future! No conjugation changes needed.',
+        arabicDescription: 'لِلتَّعْبِير عَنِ الْمُسْتَقْبَل نُضِيف سَـ أَوْ سَوْفَ',
+      },
+      {
+        type: 'rule',
+        content: '[[سَـ]] (sa) is a prefix attached directly to the verb for [[near future]]. [[سَوْفَ]] (sawfa) is a separate word for [[distant future]] or more formal contexts. Both work the same way!',
+        arabicDescription: 'سَـ لِلْمُسْتَقْبَل الْقَرِيب، سَوْفَ لِلْمُسْتَقْبَل الْبَعِيد',
+      },
+      {
+        type: 'text',
+        content: 'Near Future with سَـ',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Quick, informal future',
+        examples: [
+          { arabic: 'سَأَذْهَبُ', english: 'I will go (soon)' },
+          { arabic: 'سَتَكْتُبُ', english: 'You will write' },
+          { arabic: 'سَيَدْرُسُ', english: 'He will study' },
+          { arabic: 'سَتَقْرَأُ', english: 'She will read' },
+          { arabic: 'سَنَأْكُلُ', english: 'We will eat' },
+          { arabic: 'سَيَعْمَلُونَ', english: 'They will work' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Distant Future with سَوْفَ',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Formal or distant future',
+        examples: [
+          { arabic: 'سَوْفَ أَذْهَبُ', english: 'I will go (eventually)' },
+          { arabic: 'سَوْفَ تَكْتُبُ', english: 'You will write' },
+          { arabic: 'سَوْفَ يَدْرُسُ', english: 'He will study' },
+          { arabic: 'سَوْفَ نَسَافِرُ', english: 'We will travel' },
+          { arabic: 'سَوْفَ تَنْجَحُ', english: 'She will succeed' },
+          { arabic: 'سَوْفَ يَفْهَمُونَ', english: 'They will understand' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Present vs Future',
+        leftLabel: 'Present',
+        rightLabel: 'Future',
+        comparisons: [
+          { left: { arabic: 'أَذْهَبُ', label: 'I go' }, right: { arabic: 'سَأَذْهَبُ', label: 'I will go' } },
+          { left: { arabic: 'يَكْتُبُ', label: 'He writes' }, right: { arabic: 'سَيَكْتُبُ', label: 'He will write' } },
+          { left: { arabic: 'نَدْرُسُ', label: 'We study' }, right: { arabic: 'سَنَدْرُسُ', label: 'We will study' } },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'In Everyday Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Natural future expressions',
+        examples: [
+          { arabic: 'سَأَتَّصِلُ بِكَ غَدًا', english: 'I will call you tomorrow' },
+          { arabic: 'سَوْفَ أَزُورُكَ قَرِيبًا', english: 'I will visit you soon' },
+          { arabic: 'سَيَصِلُ الْقِطَارُ بَعْدَ سَاعَة', english: 'The train will arrive in an hour' },
+          { arabic: 'سَنَلْتَقِي فِي الْمَطْعَم', english: 'We will meet at the restaurant' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'In spoken Arabic, [[سَـ]] is much more common. Use [[سَوْفَ]] for emphasis, promises, or formal writing. Both are correct!',
+        arabicDescription: 'سَـ أَكْثَر شُيُوعًا فِي الْكَلَام الْيَوْمِي',
+      },
+    ],
+  },
+
+  // LESSON 22: Imperative (Commands)
+  {
+    id: 'grammar-22',
+    title: 'Commands (Imperative)',
+    titleArabic: 'فِعْلُ الْأَمْر',
+    description: 'Give commands and make requests in Arabic',
+    level: 'intermediate',
+    category: 'verbs',
+    order: 22,
+    exercises: ['ex-grammar-22-1', 'ex-grammar-22-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Want to tell someone what to do? Arabic commands are formed from the present tense with some modifications. Commands exist for [[you (masculine)]], [[you (feminine)]], and [[you (plural)]].',
+        arabicDescription: 'نَسْتَخْدِم فِعْل الْأَمْر لِلطَّلَب وَالتَّوْجِيه',
+      },
+      {
+        type: 'rule',
+        content: 'To form a command: Take the present tense "you" form, [[remove the prefix]] (تَـ or يَـ), and [[adjust the beginning]] if needed. If the result starts with a consonant cluster, add [[اِ]] (i) at the start.',
+        arabicDescription: 'نَحْذِف حَرْف الْمُضَارَعَة وَنُضِيف هَمْزَة إِذَا لَزِم',
+      },
+      {
+        type: 'text',
+        content: 'Commands to One Male (أَنْتَ)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Masculine singular commands',
+        examples: [
+          { arabic: 'اُكْتُبْ!', english: 'Write!' },
+          { arabic: 'اِقْرَأْ!', english: 'Read!' },
+          { arabic: 'اِذْهَبْ!', english: 'Go!' },
+          { arabic: 'اُدْرُسْ!', english: 'Study!' },
+          { arabic: 'تَعَالَ!', english: 'Come!' },
+          { arabic: 'اِجْلِسْ!', english: 'Sit!' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Commands to One Female (أَنْتِ)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Feminine singular commands',
+        examples: [
+          { arabic: 'اُكْتُبِي!', english: 'Write! (f)' },
+          { arabic: 'اِقْرَئِي!', english: 'Read! (f)' },
+          { arabic: 'اِذْهَبِي!', english: 'Go! (f)' },
+          { arabic: 'اُدْرُسِي!', english: 'Study! (f)' },
+          { arabic: 'تَعَالَيْ!', english: 'Come! (f)' },
+          { arabic: 'اِجْلِسِي!', english: 'Sit! (f)' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Commands to a Group (أَنْتُم)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Plural commands',
+        examples: [
+          { arabic: 'اُكْتُبُوا!', english: 'Write! (pl)' },
+          { arabic: 'اِقْرَؤُوا!', english: 'Read! (pl)' },
+          { arabic: 'اِذْهَبُوا!', english: 'Go! (pl)' },
+          { arabic: 'اُدْرُسُوا!', english: 'Study! (pl)' },
+          { arabic: 'تَعَالَوْا!', english: 'Come! (pl)' },
+          { arabic: 'اِجْلِسُوا!', english: 'Sit! (pl)' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Polite Requests',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Soften commands with من فضلك',
+        examples: [
+          { arabic: 'مِنْ فَضْلِكَ اِجْلِسْ', english: 'Please sit down' },
+          { arabic: 'لَوْ سَمَحْتَ اُكْتُبْ', english: 'If you please, write' },
+          { arabic: 'أَرْجُوكَ اِنْتَظِرْ', english: 'Please wait' },
+          { arabic: 'مِنْ فَضْلِكِ سَاعِدِينِي', english: 'Please help me (f)' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Commands can sound harsh! Always add [[مِنْ فَضْلِكَ]] (please) or [[لَوْ سَمَحْتَ]] (if you permit) to be polite in formal situations.',
+        arabicDescription: 'أَضِفْ مِنْ فَضْلِكَ لِتَكُون مُهَذَّبًا',
+      },
+    ],
+  },
+
+  // LESSON 23: Relative Pronouns
+  {
+    id: 'grammar-23',
+    title: 'Relative Pronouns',
+    titleArabic: 'الْأَسْمَاء الْمَوْصُولَة',
+    description: 'Connect sentences with who, which, and that',
+    level: 'intermediate',
+    category: 'pronouns',
+    order: 23,
+    exercises: ['ex-grammar-23-1', 'ex-grammar-23-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Relative pronouns connect two ideas: "The man [[who]] came" or "The book [[that]] I read." Arabic has different relative pronouns depending on [[gender]] and [[number]] of what you\'re referring to.',
+        arabicDescription: 'الْأَسْمَاء الْمَوْصُولَة تَرْبِط بَيْنَ جُمْلَتَيْن',
+      },
+      {
+        type: 'rule',
+        content: 'The main relative pronoun is [[الَّذِي]] (who/which/that) for masculine singular. It changes based on gender and number: [[الَّتِي]] (feminine), [[الَّذِينَ]] (masculine plural), [[اللَّوَاتِي/اللَّائِي]] (feminine plural).',
+        arabicDescription: 'الَّذِي لِلْمُذَكَّر، الَّتِي لِلْمُؤَنَّث',
+      },
+      {
+        type: 'text',
+        content: 'Relative Pronouns Chart',
+      },
+      {
+        type: 'examples_grid',
+        content: 'All forms',
+        examples: [
+          { arabic: 'الَّذِي', english: 'who/which/that (m. sing.)' },
+          { arabic: 'الَّتِي', english: 'who/which/that (f. sing.)' },
+          { arabic: 'الَّذِينَ', english: 'who/which/that (m. pl.)' },
+          { arabic: 'اللَّوَاتِي', english: 'who/which/that (f. pl.)' },
+          { arabic: 'اللَّذَانِ', english: 'who/which (m. dual)' },
+          { arabic: 'اللَّتَانِ', english: 'who/which (f. dual)' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Masculine Singular الَّذِي',
+      },
+      {
+        type: 'examples_grid',
+        content: 'For one male or masculine noun',
+        examples: [
+          { arabic: 'الرَّجُلُ الَّذِي جَاءَ', english: 'The man who came' },
+          { arabic: 'الْكِتَابُ الَّذِي قَرَأْتُهُ', english: 'The book that I read' },
+          { arabic: 'الْبَيْتُ الَّذِي اِشْتَرَيْتُهُ', english: 'The house that I bought' },
+          { arabic: 'الْوَلَدُ الَّذِي يَلْعَبُ', english: 'The boy who is playing' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Feminine Singular الَّتِي',
+      },
+      {
+        type: 'examples_grid',
+        content: 'For one female or feminine noun',
+        examples: [
+          { arabic: 'الْمَرْأَةُ الَّتِي جَاءَتْ', english: 'The woman who came' },
+          { arabic: 'السَّيَّارَةُ الَّتِي اِشْتَرَيْتُهَا', english: 'The car that I bought' },
+          { arabic: 'الْمَدْرَسَةُ الَّتِي أَدْرُسُ فِيهَا', english: 'The school that I study in' },
+          { arabic: 'الْبِنْتُ الَّتِي تَكْتُبُ', english: 'The girl who is writing' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Plural Forms',
+      },
+      {
+        type: 'examples_grid',
+        content: 'For groups',
+        examples: [
+          { arabic: 'الرِّجَالُ الَّذِينَ جَاؤُوا', english: 'The men who came' },
+          { arabic: 'النِّسَاءُ اللَّوَاتِي ذَهَبْنَ', english: 'The women who went' },
+          { arabic: 'الطُّلَّابُ الَّذِينَ نَجَحُوا', english: 'The students who passed' },
+          { arabic: 'الْمُعَلِّمَاتُ اللَّوَاتِي يُدَرِّسْنَ', english: 'The teachers (f) who teach' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Important! When the relative pronoun is the object of the relative clause, you need a [[resumptive pronoun]]: الْكِتَابُ الَّذِي قَرَأْتُ[[هُ]] — "the book that I read [[it]]".',
+        arabicDescription: 'نُضِيف ضَمِيرًا عَائِدًا إِذَا كَانَ الاِسْم مَفْعُولًا بِهِ',
+      },
+    ],
+  },
+
+  // LESSON 24: Conjunctions
+  {
+    id: 'grammar-24',
+    title: 'Conjunctions',
+    titleArabic: 'حُرُوف الْعَطْف',
+    description: 'Connect words and sentences with and, or, but, then',
+    level: 'intermediate',
+    category: 'other',
+    order: 24,
+    exercises: ['ex-grammar-24-1', 'ex-grammar-24-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Conjunctions are the glue that holds sentences together! Arabic has several conjunctions to express different relationships: [[وَ]] (and), [[أَوْ]] (or), [[لَكِنْ]] (but), [[ثُمَّ]] (then), and more.',
+        arabicDescription: 'حُرُوف الْعَطْف تَرْبِط بَيْنَ الْكَلِمَات وَالْجُمَل',
+      },
+      {
+        type: 'text',
+        content: 'وَ (and) - The Most Common',
+      },
+      {
+        type: 'rule',
+        content: '[[وَ]] (wa) means "and" and is [[attached]] directly to the next word. It\'s the most common Arabic conjunction, used constantly to connect words, phrases, and sentences.',
+        arabicDescription: 'وَ تَعْنِي "and" وَتَتَّصِل بِالْكَلِمَة الَّتِي بَعْدَهَا',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Using وَ (and)',
+        examples: [
+          { arabic: 'أَحْمَدُ وَمُحَمَّد', english: 'Ahmad and Muhammad' },
+          { arabic: 'قَهْوَة وَشَاي', english: 'Coffee and tea' },
+          { arabic: 'جَاءَ وَجَلَسَ', english: 'He came and sat' },
+          { arabic: 'أَكَلْتُ وَشَرِبْتُ', english: 'I ate and drank' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'أَوْ (or)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Giving options',
+        examples: [
+          { arabic: 'قَهْوَة أَوْ شَاي؟', english: 'Coffee or tea?' },
+          { arabic: 'الْيَوْم أَوْ غَدًا', english: 'Today or tomorrow' },
+          { arabic: 'هَلْ تُرِيدُ هَذَا أَوْ ذَاكَ؟', english: 'Do you want this or that?' },
+          { arabic: 'اِقْرَأْ أَوْ اُكْتُبْ', english: 'Read or write' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'لَكِنْ / لَكِنَّ (but)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Showing contrast',
+        examples: [
+          { arabic: 'صَغِير لَكِنْ ذَكِي', english: 'Small but smart' },
+          { arabic: 'أُحِبُّهُ لَكِنَّهُ بَعِيد', english: 'I love him but he\'s far' },
+          { arabic: 'حَاوَلْتُ لَكِنْ فَشِلْتُ', english: 'I tried but failed' },
+          { arabic: 'غَنِيٌّ لَكِنَّهُ بَخِيل', english: 'Rich but stingy' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'ثُمَّ / فَـ (then)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Sequence of events',
+        examples: [
+          { arabic: 'جَاءَ ثُمَّ جَلَسَ', english: 'He came, then sat' },
+          { arabic: 'أَكَلْتُ ثُمَّ نِمْتُ', english: 'I ate, then slept' },
+          { arabic: 'اِسْتَيْقَظْتُ فَذَهَبْتُ', english: 'I woke up and (so) went' },
+          { arabic: 'دَرَسَ فَنَجَحَ', english: 'He studied and (so) passed' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'More Conjunctions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Additional connectors',
+        examples: [
+          { arabic: 'بَلْ', english: 'Rather, but rather' },
+          { arabic: 'أَمْ', english: 'Or (in questions)' },
+          { arabic: 'حَتَّى', english: 'Until, even' },
+          { arabic: 'لَا...وَلَا', english: 'Neither...nor' },
+        ],
+      },
+      {
+        type: 'note',
+        content: '[[فَـ]] (fa) implies [[immediate sequence]] or [[cause and effect]], while [[ثُمَّ]] (thumma) implies a [[delay]] between actions. Choose wisely!',
+        arabicDescription: 'فَـ لِلتَّرْتِيب الْفَوْرِي، ثُمَّ لِلتَّرْتِيب مَعَ تَرَاخٍ',
+      },
+    ],
+  },
+
+  // LESSON 25: Comparative & Superlative
+  {
+    id: 'grammar-25',
+    title: 'Comparative & Superlative',
+    titleArabic: 'أَفْعَل التَّفْضِيل',
+    description: 'Express bigger, smaller, best, and most in Arabic',
+    level: 'intermediate',
+    category: 'adjectives',
+    order: 25,
+    exercises: ['ex-grammar-25-1', 'ex-grammar-25-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'How do you say "bigger," "more beautiful," or "the best" in Arabic? Use the special [[أَفْعَل]] pattern! This single form works for both comparative (bigger) and superlative (biggest).',
+        arabicDescription: 'نَسْتَخْدِم وَزْن أَفْعَل لِلْمُقَارَنَة وَالتَّفْضِيل',
+      },
+      {
+        type: 'rule',
+        content: 'The comparative/superlative pattern is [[أَفْعَل]] (af\'al). Take the 3 root letters and put them in this pattern. For comparative, add [[مِنْ]] (than). For superlative, add [[ال]] or use with a noun.',
+        arabicDescription: 'أَفْعَل + مِنْ = أَكْبَر مِنْ (bigger than)',
+      },
+      {
+        type: 'text',
+        content: 'Common Comparatives',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Building the أَفْعَل pattern',
+        examples: [
+          { arabic: 'كَبِير ← أَكْبَر', english: 'big → bigger/biggest' },
+          { arabic: 'صَغِير ← أَصْغَر', english: 'small → smaller/smallest' },
+          { arabic: 'جَمِيل ← أَجْمَل', english: 'beautiful → more beautiful' },
+          { arabic: 'سَرِيع ← أَسْرَع', english: 'fast → faster/fastest' },
+          { arabic: 'طَوِيل ← أَطْوَل', english: 'tall → taller/tallest' },
+          { arabic: 'قَصِير ← أَقْصَر', english: 'short → shorter/shortest' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Comparative with مِنْ (than)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Comparing two things',
+        examples: [
+          { arabic: 'أَحْمَدُ أَكْبَرُ مِنْ عَلِي', english: 'Ahmad is bigger than Ali' },
+          { arabic: 'هِيَ أَجْمَلُ مِنْهَا', english: 'She is more beautiful than her' },
+          { arabic: 'السَّيَّارَةُ أَسْرَعُ مِنَ الْحِصَان', english: 'The car is faster than the horse' },
+          { arabic: 'الْفِيلُ أَكْبَرُ مِنَ الْأَسَد', english: 'The elephant is bigger than the lion' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Superlative (The Best)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Using ال for superlative',
+        examples: [
+          { arabic: 'الْأَكْبَر', english: 'The biggest' },
+          { arabic: 'الْأَفْضَل', english: 'The best' },
+          { arabic: 'الْأَجْمَل', english: 'The most beautiful' },
+          { arabic: 'الْأَسْرَع', english: 'The fastest' },
+          { arabic: 'هُوَ الْأَفْضَل', english: 'He is the best' },
+          { arabic: 'هَذَا أَكْبَر بَيْت', english: 'This is the biggest house' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'More Useful Comparatives',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Expand your vocabulary',
+        examples: [
+          { arabic: 'أَحْسَن', english: 'better/best' },
+          { arabic: 'أَسْوَأ', english: 'worse/worst' },
+          { arabic: 'أَكْثَر', english: 'more/most' },
+          { arabic: 'أَقَلّ', english: 'less/least' },
+          { arabic: 'أَهَمّ', english: 'more important' },
+          { arabic: 'أَسْهَل', english: 'easier/easiest' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'The أَفْعَل form is [[invariable]] for gender and number in comparative use. [[أَكْبَر]] stays the same whether talking about a man, woman, or group!',
+        arabicDescription: 'أَفْعَل التَّفْضِيل لَا يَتَغَيَّر لِلْمُذَكَّر وَالْمُؤَنَّث',
+      },
+    ],
+  },
+
+  // LESSON 26: Active Participles
+  {
+    id: 'grammar-26',
+    title: 'Active Participles',
+    titleArabic: 'اِسْم الْفَاعِل',
+    description: 'The doer form: writer, teacher, student',
+    level: 'intermediate',
+    category: 'nouns',
+    order: 26,
+    exercises: ['ex-grammar-26-1', 'ex-grammar-26-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'The Active Participle ([[اِسْم الْفَاعِل]]) describes the [[doer]] of an action. From "to write" you get "writer"; from "to teach" you get "teacher". Arabic has a pattern for this: [[فَاعِل]]!',
+        arabicDescription: 'اِسْم الْفَاعِل يَدُلّ عَلَى مَنْ يَقُوم بِالْفِعْل',
+      },
+      {
+        type: 'rule',
+        content: 'For Form I verbs (basic 3-letter verbs), the active participle follows the pattern [[فَاعِل]] (faa\'il). Take the root letters and apply the pattern. This works for most basic verbs!',
+        arabicDescription: 'وَزْن فَاعِل لِلْفِعْل الثُّلَاثِي الْمُجَرَّد',
+      },
+      {
+        type: 'text',
+        content: 'Basic Active Participles',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Following the فَاعِل pattern',
+        examples: [
+          { arabic: 'كَتَبَ ← كَاتِب', english: 'he wrote → writer' },
+          { arabic: 'دَرَسَ ← دَارِس', english: 'he studied → student' },
+          { arabic: 'عَمِلَ ← عَامِل', english: 'he worked → worker' },
+          { arabic: 'سَافَرَ ← مُسَافِر', english: 'he traveled → traveler' },
+          { arabic: 'لَعِبَ ← لَاعِب', english: 'he played → player' },
+          { arabic: 'قَرَأَ ← قَارِئ', english: 'he read → reader' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Common Professions & Roles',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Active participles as job titles',
+        examples: [
+          { arabic: 'مُعَلِّم', english: 'teacher (m)' },
+          { arabic: 'مُعَلِّمَة', english: 'teacher (f)' },
+          { arabic: 'طَالِب', english: 'student (m)' },
+          { arabic: 'طَالِبَة', english: 'student (f)' },
+          { arabic: 'سَائِق', english: 'driver' },
+          { arabic: 'طَبَّاخ', english: 'cook' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Masculine vs Feminine',
+        leftLabel: 'Masculine',
+        rightLabel: 'Feminine (add ة)',
+        comparisons: [
+          { left: { arabic: 'كَاتِب', label: 'writer (m)' }, right: { arabic: 'كَاتِبَة', label: 'writer (f)' } },
+          { left: { arabic: 'عَامِل', label: 'worker (m)' }, right: { arabic: 'عَامِلَة', label: 'worker (f)' } },
+          { left: { arabic: 'قَارِئ', label: 'reader (m)' }, right: { arabic: 'قَارِئَة', label: 'reader (f)' } },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Used as Adjectives',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Describing ongoing states',
+        examples: [
+          { arabic: 'رَجُل نَائِم', english: 'A sleeping man' },
+          { arabic: 'طِفْل بَاكٍ', english: 'A crying child' },
+          { arabic: 'مَاء جَارٍ', english: 'Running water' },
+          { arabic: 'شَمْس سَاطِعَة', english: 'Shining sun' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Active participles can function as [[nouns]] (a writer) or [[adjectives]] (a writing person). Context tells you which! Add [[ة]] for feminine.',
+        arabicDescription: 'اِسْم الْفَاعِل يَعْمَل كَاسْم أَوْ صِفَة',
+      },
+    ],
+  },
+
+  // LESSON 27: Passive Participles
+  {
+    id: 'grammar-27',
+    title: 'Passive Participles',
+    titleArabic: 'اِسْم الْمَفْعُول',
+    description: 'The receiver form: written, known, loved',
+    level: 'intermediate',
+    category: 'nouns',
+    order: 27,
+    exercises: ['ex-grammar-27-1', 'ex-grammar-27-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'While the Active Participle is the doer, the Passive Participle ([[اِسْم الْمَفْعُول]]) is the [[receiver]] of the action. From "to write" you get "written"; from "to know" you get "known".',
+        arabicDescription: 'اِسْم الْمَفْعُول يَدُلّ عَلَى مَنْ وَقَعَ عَلَيْهِ الْفِعْل',
+      },
+      {
+        type: 'rule',
+        content: 'For Form I verbs, the passive participle follows the pattern [[مَفْعُول]] (maf\'ool). The [[مَـ]] prefix is the key marker! This pattern produces words like "known," "beloved," "written."',
+        arabicDescription: 'وَزْن مَفْعُول لِلْفِعْل الثُّلَاثِي الْمُجَرَّد',
+      },
+      {
+        type: 'text',
+        content: 'Basic Passive Participles',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Following the مَفْعُول pattern',
+        examples: [
+          { arabic: 'كَتَبَ ← مَكْتُوب', english: 'wrote → written' },
+          { arabic: 'عَرَفَ ← مَعْرُوف', english: 'knew → known' },
+          { arabic: 'فَهِمَ ← مَفْهُوم', english: 'understood → understood' },
+          { arabic: 'سَمِعَ ← مَسْمُوع', english: 'heard → heard' },
+          { arabic: 'فَتَحَ ← مَفْتُوح', english: 'opened → open/opened' },
+          { arabic: 'كَسَرَ ← مَكْسُور', english: 'broke → broken' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Active vs Passive Participles',
+        leftLabel: 'Active (doer)',
+        rightLabel: 'Passive (receiver)',
+        comparisons: [
+          { left: { arabic: 'كَاتِب', label: 'writer' }, right: { arabic: 'مَكْتُوب', label: 'written' } },
+          { left: { arabic: 'فَاهِم', label: 'understander' }, right: { arabic: 'مَفْهُوم', label: 'understood' } },
+          { left: { arabic: 'فَاتِح', label: 'opener' }, right: { arabic: 'مَفْتُوح', label: 'opened' } },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Common Passive Participles',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Useful vocabulary',
+        examples: [
+          { arabic: 'مَشْهُور', english: 'famous (known widely)' },
+          { arabic: 'مَحْبُوب', english: 'beloved' },
+          { arabic: 'مَطْلُوب', english: 'wanted/required' },
+          { arabic: 'مَشْغُول', english: 'busy (occupied)' },
+          { arabic: 'مَمْنُوع', english: 'forbidden' },
+          { arabic: 'مَسْمُوح', english: 'allowed' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'In Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Using passive participles',
+        examples: [
+          { arabic: 'الْبَاب مَفْتُوح', english: 'The door is open' },
+          { arabic: 'الْكِتَاب مَكْتُوب بِالْعَرَبِيَّة', english: 'The book is written in Arabic' },
+          { arabic: 'هُوَ مَشْهُور جِدًّا', english: 'He is very famous' },
+          { arabic: 'التَّدْخِين مَمْنُوع هُنَا', english: 'Smoking is forbidden here' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Passive participles often become [[adjectives]] or [[nouns]] on their own. [[مَشْغُول]] (busy) and [[مَمْنُوع]] (forbidden) are used constantly in everyday Arabic!',
+        arabicDescription: 'كَثِير مِنْ أَسْمَاء الْمَفْعُول تُسْتَخْدَم كَصِفَات',
+      },
+    ],
+  },
+
+  // LESSON 28: The Verbal Noun (Masdar)
+  {
+    id: 'grammar-28',
+    title: 'The Verbal Noun (Masdar)',
+    titleArabic: 'الْمَصْدَر',
+    description: 'Turn verbs into nouns: writing, reading, studying',
+    level: 'intermediate',
+    category: 'nouns',
+    order: 28,
+    exercises: ['ex-grammar-28-1', 'ex-grammar-28-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'The [[مَصْدَر]] (Masdar) is the verbal noun — it turns an action into a concept. From "to write" you get "writing" (the act of writing). English uses "-ing" or "-tion"; Arabic has various patterns.',
+        arabicDescription: 'الْمَصْدَر هُوَ اسْم الْفِعْل الَّذِي يَدُلّ عَلَى الْحَدَث',
+      },
+      {
+        type: 'rule',
+        content: 'Unlike active/passive participles, Form I masdars have [[multiple patterns]] and must often be memorized. Common patterns include [[فَعْل]], [[فِعَالَة]], [[فُعُول]], and many more.',
+        arabicDescription: 'لِلْفِعْل الثُّلَاثِي أَوْزَان مُتَعَدِّدَة لِلْمَصْدَر',
+      },
+      {
+        type: 'text',
+        content: 'Common Masdar Patterns',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Various verbal noun forms',
+        examples: [
+          { arabic: 'كَتَبَ ← كِتَابَة', english: 'wrote → writing' },
+          { arabic: 'قَرَأَ ← قِرَاءَة', english: 'read → reading' },
+          { arabic: 'دَرَسَ ← دِرَاسَة', english: 'studied → studying' },
+          { arabic: 'عَمِلَ ← عَمَل', english: 'worked → work' },
+          { arabic: 'فَهِمَ ← فَهْم', english: 'understood → understanding' },
+          { arabic: 'ذَهَبَ ← ذَهَاب', english: 'went → going' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Derived Form Masdars (Predictable!)',
+      },
+      {
+        type: 'rule',
+        content: 'Good news! Derived verb forms (II-X) have [[predictable masdar patterns]]. Form II: [[تَفْعِيل]], Form III: [[مُفَاعَلَة]], Form V: [[تَفَعُّل]], and so on.',
+        arabicDescription: 'مَصَادِر الْأَفْعَال الْمَزِيدَة قِيَاسِيَّة',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Predictable patterns',
+        examples: [
+          { arabic: 'عَلَّمَ ← تَعْلِيم', english: 'taught → teaching (Form II)' },
+          { arabic: 'سَافَرَ ← مُسَافَرَة', english: 'traveled → traveling (Form III)' },
+          { arabic: 'تَكَلَّمَ ← تَكَلُّم', english: 'spoke → speaking (Form V)' },
+          { arabic: 'اِسْتَعْمَلَ ← اِسْتِعْمَال', english: 'used → usage (Form X)' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Using Masdars in Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Verbal nouns as subjects and objects',
+        examples: [
+          { arabic: 'الْقِرَاءَةُ مُفِيدَة', english: 'Reading is useful' },
+          { arabic: 'أُحِبُّ السِّبَاحَة', english: 'I love swimming' },
+          { arabic: 'التَّعْلِيم مُهِمّ', english: 'Education is important' },
+          { arabic: 'شُكْرًا عَلَى الْمُسَاعَدَة', english: 'Thanks for the help' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Masdars are essential for abstract concepts and are used as [[subjects]], [[objects]], and after [[prepositions]]. They\'re everywhere in formal Arabic!',
+        arabicDescription: 'الْمَصْدَر يُسْتَخْدَم كَفَاعِل وَمَفْعُول وَبَعْدَ حُرُوف الْجَرّ',
+      },
+    ],
+  },
+
+  // LESSON 29: Introduction to Verb Patterns
+  {
+    id: 'grammar-29',
+    title: 'Introduction to Verb Patterns',
+    titleArabic: 'مُقَدِّمَة فِي الْأَوْزَان',
+    description: 'Discover the 10 Arabic verb forms and their meanings',
+    level: 'intermediate',
+    category: 'verbs',
+    order: 29,
+    exercises: ['ex-grammar-29-1', 'ex-grammar-29-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Arabic has a brilliant system: from one 3-letter root, you can create up to [[10 different verb forms]], each with predictable meaning changes! This is the key to unlocking thousands of words.',
+        arabicDescription: 'الْأَوْزَان الْعَشَرَة تُنْتِج مَعَانِيَ مُخْتَلِفَة مِنْ جَذْر وَاحِد',
+      },
+      {
+        type: 'rule',
+        content: 'Arabic verbs are organized into [[10 forms]] (أَوْزَان). Form I is the basic 3-letter verb ([[فَعَلَ]]). Forms II-X add letters or modify the root to change meaning in predictable ways.',
+        arabicDescription: 'الْفِعْل الْعَرَبِي لَهُ عَشَرَة أَوْزَان',
+      },
+      {
+        type: 'text',
+        content: 'The 10 Verb Forms Overview',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Pattern and meaning',
+        examples: [
+          { arabic: 'فَعَلَ (I)', english: 'Basic verb (to do)' },
+          { arabic: 'فَعَّلَ (II)', english: 'Intensive/Causative' },
+          { arabic: 'فَاعَلَ (III)', english: 'Mutual action' },
+          { arabic: 'أَفْعَلَ (IV)', english: 'Causative' },
+          { arabic: 'تَفَعَّلَ (V)', english: 'Reflexive of II' },
+          { arabic: 'تَفَاعَلَ (VI)', english: 'Reciprocal' },
+          { arabic: 'اِنْفَعَلَ (VII)', english: 'Passive-like' },
+          { arabic: 'اِفْتَعَلَ (VIII)', english: 'Reflexive' },
+          { arabic: 'اِفْعَلَّ (IX)', english: 'Colors/Defects' },
+          { arabic: 'اِسْتَفْعَلَ (X)', english: 'Seeking/Asking' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Example: Root ع-ل-م (knowledge)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Different forms, related meanings',
+        examples: [
+          { arabic: 'عَلِمَ', english: 'I: he knew' },
+          { arabic: 'عَلَّمَ', english: 'II: he taught (made know)' },
+          { arabic: 'تَعَلَّمَ', english: 'V: he learned (taught himself)' },
+          { arabic: 'أَعْلَمَ', english: 'IV: he informed' },
+          { arabic: 'اِسْتَعْلَمَ', english: 'X: he inquired' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Example: Root ك-ت-ب (writing)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'From one root, many verbs',
+        examples: [
+          { arabic: 'كَتَبَ', english: 'I: he wrote' },
+          { arabic: 'كَاتَبَ', english: 'III: he corresponded with' },
+          { arabic: 'أَكْتَبَ', english: 'IV: he dictated' },
+          { arabic: 'تَكَاتَبَ', english: 'VI: they wrote to each other' },
+          { arabic: 'اِكْتَتَبَ', english: 'VIII: he subscribed' },
+          { arabic: 'اِسْتَكْتَبَ', english: 'X: he asked to write' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'You don\'t need to memorize all 10 forms now! Start with [[Form I]] (basic), [[Form II]] (intensive), and [[Form V]] (reflexive). These are the most common!',
+        arabicDescription: 'اِبْدَأْ بِالْأَوْزَان الْأَكْثَر شُيُوعًا: I, II, V',
+      },
+    ],
+  },
+
+  // LESSON 30: Conditional Sentences
+  {
+    id: 'grammar-30',
+    title: 'Conditional Sentences',
+    titleArabic: 'الْجُمْلَة الشَّرْطِيَّة',
+    description: 'Express if-then relationships in Arabic',
+    level: 'intermediate',
+    category: 'sentences',
+    order: 30,
+    exercises: ['ex-grammar-30-1', 'ex-grammar-30-2'],
+    content: [
+      {
+        type: 'description',
+        content: '"If you study, you will pass." Arabic conditional sentences use particles like [[إِذَا]] (if - likely) and [[لَوْ]] (if - unlikely/hypothetical) to express conditions and results.',
+        arabicDescription: 'الْجُمْلَة الشَّرْطِيَّة تُعَبِّر عَنْ عَلَاقَة الشَّرْط وَالْجَوَاب',
+      },
+      {
+        type: 'rule',
+        content: '[[إِذَا]] is used for [[likely or real]] conditions (If you come...). [[لَوْ]] is used for [[unlikely or hypothetical]] conditions (If I were rich...). [[إِنْ]] is also used for general conditions.',
+        arabicDescription: 'إِذَا لِلشَّرْط الْمُحْتَمَل، لَوْ لِلشَّرْط غَيْر الْمُحْتَمَل',
+      },
+      {
+        type: 'text',
+        content: 'إِذَا (If - Likely)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Real, possible conditions',
+        examples: [
+          { arabic: 'إِذَا دَرَسْتَ نَجَحْتَ', english: 'If you study, you will pass' },
+          { arabic: 'إِذَا جَاءَ سَأُخْبِرُهُ', english: 'If he comes, I will tell him' },
+          { arabic: 'إِذَا أَكَلْتَ شَبِعْتَ', english: 'If you eat, you will be full' },
+          { arabic: 'إِذَا سَأَلْتَ أَجَبْتُكَ', english: 'If you ask, I will answer you' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'لَوْ (If - Hypothetical)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Unreal or impossible conditions',
+        examples: [
+          { arabic: 'لَوْ كُنْتُ غَنِيًّا لَاشْتَرَيْتُ بَيْتًا', english: 'If I were rich, I would buy a house' },
+          { arabic: 'لَوْ عَرَفْتُ لَأَخْبَرْتُكَ', english: 'If I had known, I would have told you' },
+          { arabic: 'لَوْ كَانَ هُنَا لَسَاعَدَنَا', english: 'If he were here, he would help us' },
+          { arabic: 'لَوْ أَمْكَنَنِي لَفَعَلْتُ', english: 'If I could, I would do it' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'إِنْ (If - General)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'General conditional',
+        examples: [
+          { arabic: 'إِنْ تَدْرُسْ تَنْجَحْ', english: 'If you study, you pass' },
+          { arabic: 'إِنْ شَاءَ اللَّه', english: 'If God wills (God willing)' },
+          { arabic: 'إِنْ أَرَدْتَ فَاذْهَبْ', english: 'If you want, then go' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'إِذَا vs لَوْ',
+        leftLabel: 'إِذَا (Likely)',
+        rightLabel: 'لَوْ (Hypothetical)',
+        comparisons: [
+          { left: { arabic: 'إِذَا رَأَيْتُهُ', label: 'If I see him' }, right: { arabic: 'لَوْ رَأَيْتُهُ', label: 'If I saw/had seen him' } },
+          { left: { arabic: 'إِذَا جَاءَ', label: 'If he comes' }, right: { arabic: 'لَوْ جَاءَ', label: 'If he came/had come' } },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'The result clause after [[لَوْ]] often uses [[لَـ]] before the verb: لَوْ دَرَسْتُ [[لَـ]]نَجَحْتُ (If I had studied, I [[would have]] passed).',
+        arabicDescription: 'جَوَاب لَوْ غَالِبًا يَبْدَأ بِـ لَـ',
+      },
+    ],
+  },
+
+  // ============================================
+  // ADVANCED LESSONS (31-40)
+  // ============================================
+
+  // LESSON 31: Case Endings - Nominative
+  {
+    id: 'grammar-31',
+    title: 'Case Endings: Nominative',
+    titleArabic: 'الرَّفْع',
+    description: 'Master the nominative case for subjects and predicates',
+    level: 'advanced',
+    category: 'nouns',
+    order: 31,
+    exercises: ['ex-grammar-31-1', 'ex-grammar-31-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Arabic nouns change their endings based on their role in the sentence. The [[nominative case]] (الرَّفْع) marks [[subjects]] and [[predicates]]. This is the "default" case for main sentence elements.',
+        arabicDescription: 'الرَّفْع هُوَ حَالَة الْفَاعِل وَالْمُبْتَدَأ وَالْخَبَر',
+      },
+      {
+        type: 'rule',
+        content: 'Nominative endings: singular nouns add [[ـُ]] (damma) or [[ـٌ]] (tanwin). Dual nouns end in [[ـَانِ]]. Sound masculine plurals end in [[ـُونَ]]. Sound feminine plurals end in [[ـَاتٌ]].',
+        arabicDescription: 'عَلَامَات الرَّفْع: الضَّمَّة، الْأَلِف وَالنُّون، الْوَاو وَالنُّون',
+      },
+      {
+        type: 'text',
+        content: 'Singular Nominative',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Subjects with damma',
+        examples: [
+          { arabic: 'جَاءَ الْوَلَدُ', english: 'The boy came' },
+          { arabic: 'الْبَيْتُ كَبِيرٌ', english: 'The house is big' },
+          { arabic: 'هَذَا كِتَابٌ', english: 'This is a book' },
+          { arabic: 'الْمُعَلِّمُ ذَكِيٌّ', english: 'The teacher is smart' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Dual Nominative (-āni)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Two of something as subject',
+        examples: [
+          { arabic: 'جَاءَ الْوَلَدَانِ', english: 'The two boys came' },
+          { arabic: 'الْكِتَابَانِ جَدِيدَانِ', english: 'The two books are new' },
+          { arabic: 'الطَّالِبَتَانِ مُجْتَهِدَتَانِ', english: 'The two (f) students are hardworking' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Plural Nominative',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Plurals as subjects',
+        examples: [
+          { arabic: 'جَاءَ الْمُعَلِّمُونَ', english: 'The (male) teachers came' },
+          { arabic: 'الْمُسْلِمُونَ يُصَلُّونَ', english: 'The Muslims pray' },
+          { arabic: 'الطَّالِبَاتُ مُجْتَهِدَاتٌ', english: 'The (female) students are hardworking' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Nominative Endings Summary',
+        leftLabel: 'Definite',
+        rightLabel: 'Indefinite',
+        comparisons: [
+          { left: { arabic: 'الْكِتَابُ', label: 'the book' }, right: { arabic: 'كِتَابٌ', label: 'a book' } },
+          { left: { arabic: 'الْوَلَدَانِ', label: 'the two boys' }, right: { arabic: 'وَلَدَانِ', label: 'two boys' } },
+          { left: { arabic: 'الْمُعَلِّمُونَ', label: 'the teachers' }, right: { arabic: 'مُعَلِّمُونَ', label: 'teachers' } },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'The nominative is used for: [[subjects of verbal sentences]], [[subjects (مُبْتَدَأ) of nominal sentences]], [[predicates (خَبَر)]], and [[names of إِنَّ after its predicate]].',
+        arabicDescription: 'الرَّفْع لِلْفَاعِل وَالْمُبْتَدَأ وَالْخَبَر',
+      },
+    ],
+  },
+
+  // LESSON 32: Case Endings - Accusative
+  {
+    id: 'grammar-32',
+    title: 'Case Endings: Accusative',
+    titleArabic: 'النَّصْب',
+    description: 'Learn the accusative case for objects and adverbs',
+    level: 'advanced',
+    category: 'nouns',
+    order: 32,
+    exercises: ['ex-grammar-32-1', 'ex-grammar-32-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'The [[accusative case]] (النَّصْب) marks [[direct objects]], words after certain particles, and various adverbial expressions. It\'s essential for expressing "what" or "whom" receives the action.',
+        arabicDescription: 'النَّصْب هُوَ حَالَة الْمَفْعُول بِهِ وَالظَّرْف وَاسْم إِنَّ',
+      },
+      {
+        type: 'rule',
+        content: 'Accusative endings: singular nouns add [[ـَ]] (fatha) or [[ـً]] (tanwin fatha, written ـًا). Dual nouns end in [[ـَيْنِ]]. Sound masculine plurals end in [[ـِينَ]]. Sound feminine plurals end in [[ـَاتٍ]].',
+        arabicDescription: 'عَلَامَات النَّصْب: الْفَتْحَة، الْيَاء وَالنُّون، الْكَسْرَة',
+      },
+      {
+        type: 'text',
+        content: 'Direct Objects',
+      },
+      {
+        type: 'examples_grid',
+        content: 'What receives the action',
+        examples: [
+          { arabic: 'قَرَأْتُ الْكِتَابَ', english: 'I read the book' },
+          { arabic: 'رَأَيْتُ وَلَدًا', english: 'I saw a boy' },
+          { arabic: 'أَكَلْتُ تُفَّاحَةً', english: 'I ate an apple' },
+          { arabic: 'زُرْتُ الْمَدِينَةَ', english: 'I visited the city' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'After إِنَّ and its Sisters',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Subject takes accusative after إِنَّ',
+        examples: [
+          { arabic: 'إِنَّ الْعِلْمَ نُورٌ', english: 'Indeed, knowledge is light' },
+          { arabic: 'لَكِنَّ الْحَيَاةَ صَعْبَةٌ', english: 'But life is difficult' },
+          { arabic: 'لَعَلَّ الْجَوَّ جَمِيلٌ', english: 'Perhaps the weather is nice' },
+          { arabic: 'كَأَنَّ الْبَيْتَ قَصْرٌ', english: 'As if the house is a palace' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Time & Place Adverbs (ظَرْف)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Adverbial accusative',
+        examples: [
+          { arabic: 'سَافَرْتُ يَوْمًا', english: 'I traveled for a day' },
+          { arabic: 'جَلَسْتُ أَمَامَ الْبَابِ', english: 'I sat in front of the door' },
+          { arabic: 'دَرَسْتُ سَاعَةً', english: 'I studied for an hour' },
+          { arabic: 'مَشَيْتُ كَثِيرًا', english: 'I walked a lot' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Accusative Endings Summary',
+        leftLabel: 'Singular',
+        rightLabel: 'Plural',
+        comparisons: [
+          { left: { arabic: 'الْكِتَابَ', label: 'the book (obj)' }, right: { arabic: 'الْكُتُبَ', label: 'the books (obj)' } },
+          { left: { arabic: 'مُعَلِّمًا', label: 'a teacher (obj)' }, right: { arabic: 'مُعَلِّمِينَ', label: 'teachers (obj)' } },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Remember: [[إِنَّ، أَنَّ، لَكِنَّ، كَأَنَّ، لَيْتَ، لَعَلَّ]] all put their subject in the accusative! These are called "إِنَّ and her sisters" (إِنَّ وَأَخَوَاتُهَا).',
+        arabicDescription: 'إِنَّ وَأَخَوَاتُهَا تَنْصِب الْمُبْتَدَأ',
+      },
+    ],
+  },
+
+  // LESSON 33: Case Endings - Genitive
+  {
+    id: 'grammar-33',
+    title: 'Case Endings: Genitive',
+    titleArabic: 'الْجَرّ',
+    description: 'Understand the genitive case after prepositions',
+    level: 'advanced',
+    category: 'nouns',
+    order: 33,
+    exercises: ['ex-grammar-33-1', 'ex-grammar-33-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'The [[genitive case]] (الْجَرّ) appears after [[prepositions]] and in [[possessive constructions]] (إضافة). It indicates relationships like location, direction, possession, and more.',
+        arabicDescription: 'الْجَرّ يَأْتِي بَعْدَ حُرُوف الْجَرّ وَفِي الْإِضَافَة',
+      },
+      {
+        type: 'rule',
+        content: 'Genitive endings: singular nouns add [[ـِ]] (kasra) or [[ـٍ]] (tanwin kasra). Dual nouns end in [[ـَيْنِ]] (same as accusative). Sound masculine plurals end in [[ـِينَ]]. Sound feminine plurals end in [[ـَاتٍ]].',
+        arabicDescription: 'عَلَامَات الْجَرّ: الْكَسْرَة، الْيَاء وَالنُّون',
+      },
+      {
+        type: 'text',
+        content: 'After Prepositions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Common prepositions with genitive',
+        examples: [
+          { arabic: 'فِي الْبَيْتِ', english: 'in the house' },
+          { arabic: 'مِنَ الْمَدْرَسَةِ', english: 'from the school' },
+          { arabic: 'إِلَى السُّوقِ', english: 'to the market' },
+          { arabic: 'عَلَى الطَّاوِلَةِ', english: 'on the table' },
+          { arabic: 'بِالْقَلَمِ', english: 'with the pen' },
+          { arabic: 'لِلطَّالِبِ', english: 'for the student' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'In Possessive (إِضَافَة)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Second noun is always genitive',
+        examples: [
+          { arabic: 'كِتَابُ الطَّالِبِ', english: 'the student\'s book' },
+          { arabic: 'بَابُ الْمَدْرَسَةِ', english: 'the school\'s door' },
+          { arabic: 'مُعَلِّمُ اللُّغَةِ', english: 'the language teacher' },
+          { arabic: 'سَيَّارَةُ أَبِي', english: 'my father\'s car' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Common Prepositions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Essential prepositions',
+        examples: [
+          { arabic: 'فِي', english: 'in, at' },
+          { arabic: 'مِنْ', english: 'from' },
+          { arabic: 'إِلَى', english: 'to, toward' },
+          { arabic: 'عَلَى', english: 'on, upon' },
+          { arabic: 'عَنْ', english: 'about, from' },
+          { arabic: 'بِـ', english: 'with, by' },
+          { arabic: 'لِـ', english: 'for, to' },
+          { arabic: 'كَـ', english: 'like, as' },
+        ],
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Three Cases Summary',
+        leftLabel: 'Case',
+        rightLabel: 'الْكِتَاب',
+        comparisons: [
+          { left: { arabic: 'الرَّفْع', label: 'Nominative' }, right: { arabic: 'الْكِتَابُ', label: 'the book (subj)' } },
+          { left: { arabic: 'النَّصْب', label: 'Accusative' }, right: { arabic: 'الْكِتَابَ', label: 'the book (obj)' } },
+          { left: { arabic: 'الْجَرّ', label: 'Genitive' }, right: { arabic: 'الْكِتَابِ', label: 'the book (after prep)' } },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Diptotes (الْمَمْنُوع مِنَ الصَّرْف) like أَحْمَد، مَكَّة، صَحْرَاء take [[فَتْحَة]] instead of [[كَسْرَة]] in genitive when indefinite: فِي صَحْرَاءَ (in a desert).',
+        arabicDescription: 'الْمَمْنُوع مِنَ الصَّرْف يُجَرّ بِالْفَتْحَة',
+      },
+    ],
+  },
+
+  // LESSON 34: The Passive Voice
+  {
+    id: 'grammar-34',
+    title: 'The Passive Voice',
+    titleArabic: 'الْمَبْنِيّ لِلْمَجْهُول',
+    description: 'Express actions without naming the doer',
+    level: 'advanced',
+    category: 'verbs',
+    order: 34,
+    exercises: ['ex-grammar-34-1', 'ex-grammar-34-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'The [[passive voice]] shifts focus from who did the action to what was done. "The book was written" emphasizes the book, not the writer. Arabic has a built-in passive pattern!',
+        arabicDescription: 'الْمَبْنِيّ لِلْمَجْهُول يُرَكِّز عَلَى الْفِعْل لَا الْفَاعِل',
+      },
+      {
+        type: 'rule',
+        content: 'Past passive: change vowels to [[ُـِـ]] pattern. [[كَتَبَ]] (wrote) → [[كُتِبَ]] (was written). Present passive: change to [[ُـْـَـ]] pattern. [[يَكْتُبُ]] → [[يُكْتَبُ]] (is written).',
+        arabicDescription: 'الْمَاضِي: ضَمَّة ثُمَّ كَسْرَة. الْمُضَارِع: ضَمَّة ثُمَّ فَتْحَة',
+      },
+      {
+        type: 'text',
+        content: 'Past Tense Passive',
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Active to Passive',
+        leftLabel: 'Active (مَعْلُوم)',
+        rightLabel: 'Passive (مَجْهُول)',
+        comparisons: [
+          { left: { arabic: 'كَتَبَ', label: 'he wrote' }, right: { arabic: 'كُتِبَ', label: 'it was written' } },
+          { left: { arabic: 'فَتَحَ', label: 'he opened' }, right: { arabic: 'فُتِحَ', label: 'it was opened' } },
+          { left: { arabic: 'سَمِعَ', label: 'he heard' }, right: { arabic: 'سُمِعَ', label: 'it was heard' } },
+          { left: { arabic: 'عَلِمَ', label: 'he knew' }, right: { arabic: 'عُلِمَ', label: 'it was known' } },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Present Tense Passive',
+      },
+      {
+        type: 'comparison_grid',
+        content: 'Active to Passive',
+        leftLabel: 'Active',
+        rightLabel: 'Passive',
+        comparisons: [
+          { left: { arabic: 'يَكْتُبُ', label: 'he writes' }, right: { arabic: 'يُكْتَبُ', label: 'it is written' } },
+          { left: { arabic: 'يَفْتَحُ', label: 'he opens' }, right: { arabic: 'يُفْتَحُ', label: 'it is opened' } },
+          { left: { arabic: 'يَسْمَعُ', label: 'he hears' }, right: { arabic: 'يُسْمَعُ', label: 'it is heard' } },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Full Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Passive in context',
+        examples: [
+          { arabic: 'كُتِبَ الْكِتَابُ', english: 'The book was written' },
+          { arabic: 'فُتِحَ الْبَابُ', english: 'The door was opened' },
+          { arabic: 'يُدَرَّسُ الدَّرْسُ', english: 'The lesson is being taught' },
+          { arabic: 'أُكِلَ الطَّعَامُ', english: 'The food was eaten' },
+          { arabic: 'بُنِيَ الْمَسْجِدُ', english: 'The mosque was built' },
+          { arabic: 'قِيلَ إِنَّ...', english: 'It was said that...' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'The original object becomes the [[نَائِب الْفَاعِل]] (deputy subject) and takes [[nominative case]]: كَتَبَ الرَّجُلُ [[الْكِتَابَ]] → كُتِبَ [[الْكِتَابُ]]',
+        arabicDescription: 'الْمَفْعُول بِهِ يُصْبِح نَائِب فَاعِل مَرْفُوع',
+      },
+    ],
+  },
+
+  // LESSON 35: Verb Forms II-IV
+  {
+    id: 'grammar-35',
+    title: 'Verb Forms II, III, IV',
+    titleArabic: 'الْأَوْزَان II-III-IV',
+    description: 'Intensify, interact, and cause with verb forms',
+    level: 'advanced',
+    category: 'verbs',
+    order: 35,
+    exercises: ['ex-grammar-35-1', 'ex-grammar-35-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'These three forms transform basic verbs into more complex meanings. [[Form II]] intensifies or makes causative, [[Form III]] indicates interaction with someone, and [[Form IV]] is causative.',
+        arabicDescription: 'الْوَزْن الثَّانِي لِلتَّكْثِير، الثَّالِث لِلْمُشَارَكَة، الرَّابِع لِلتَّعْدِيَة',
+      },
+      {
+        type: 'text',
+        content: 'Form II: فَعَّلَ (Double Middle)',
+      },
+      {
+        type: 'rule',
+        content: 'Form II doubles the middle letter: [[فَعَّلَ]]. It often means: 1) [[Intensive]] - doing something a lot, 2) [[Causative]] - making someone do something, 3) [[Denominative]] - making a verb from a noun.',
+        arabicDescription: 'فَعَّلَ: تَشْدِيد الْعَيْن لِلتَّكْثِير وَالتَّعْدِيَة',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form II Examples',
+        examples: [
+          { arabic: 'عَلِمَ ← عَلَّمَ', english: 'knew → taught (made know)' },
+          { arabic: 'كَسَرَ ← كَسَّرَ', english: 'broke → smashed (broke into pieces)' },
+          { arabic: 'فَرِحَ ← فَرَّحَ', english: 'was happy → made happy' },
+          { arabic: 'نَظُفَ ← نَظَّفَ', english: 'was clean → cleaned' },
+          { arabic: 'صَوَّرَ', english: 'photographed (from صُورَة)' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form III: فَاعَلَ (Add Alif)',
+      },
+      {
+        type: 'rule',
+        content: 'Form III adds alif after first letter: [[فَاعَلَ]]. It usually means [[doing something with/to someone]] - reciprocal or attempted action toward another person.',
+        arabicDescription: 'فَاعَلَ: إِضَافَة أَلِف لِلْمُشَارَكَة',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form III Examples',
+        examples: [
+          { arabic: 'كَتَبَ ← كَاتَبَ', english: 'wrote → corresponded with' },
+          { arabic: 'قَتَلَ ← قَاتَلَ', english: 'killed → fought with' },
+          { arabic: 'سَافَرَ', english: 'traveled (went far)' },
+          { arabic: 'سَاعَدَ', english: 'helped' },
+          { arabic: 'حَاوَلَ', english: 'tried, attempted' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form IV: أَفْعَلَ (Add Hamza)',
+      },
+      {
+        type: 'rule',
+        content: 'Form IV adds hamza at the start: [[أَفْعَلَ]]. It\'s primarily [[causative]] - making someone/something do the action of Form I.',
+        arabicDescription: 'أَفْعَلَ: إِضَافَة هَمْزَة لِلتَّعْدِيَة',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form IV Examples',
+        examples: [
+          { arabic: 'خَرَجَ ← أَخْرَجَ', english: 'went out → took out' },
+          { arabic: 'جَلَسَ ← أَجْلَسَ', english: 'sat → seated (made sit)' },
+          { arabic: 'سْلَمَ ← أَسْلَمَ', english: 'was safe → submitted (to Islam)' },
+          { arabic: 'أَرْسَلَ', english: 'sent' },
+          { arabic: 'أَعْطَى', english: 'gave' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Form II and IV are both causative but differ: Form II often implies repetition or intensity, while Form IV is simpler causation. عَلَّمَ (II) = taught repeatedly; أَعْلَمَ (IV) = informed.',
+        arabicDescription: 'فَعَّلَ لِلتَّكْثِير، أَفْعَلَ لِلتَّعْدِيَة الْبَسِيطَة',
+      },
+    ],
+  },
+
+  // LESSON 36: Verb Forms V-VII
+  {
+    id: 'grammar-36',
+    title: 'Verb Forms V, VI, VII',
+    titleArabic: 'الْأَوْزَان V-VI-VII',
+    description: 'Reflexive, reciprocal, and passive-like forms',
+    level: 'advanced',
+    category: 'verbs',
+    order: 36,
+    exercises: ['ex-grammar-36-1', 'ex-grammar-36-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'These forms add [[تَـ]] or [[اِنْـ]] prefixes. [[Form V]] is reflexive of II, [[Form VI]] is reciprocal, and [[Form VII]] has a passive-like meaning. The action "happens to" the subject.',
+        arabicDescription: 'تَفَعَّلَ وَتَفَاعَلَ وَاِنْفَعَلَ: الْفِعْل يَقَع عَلَى الْفَاعِل',
+      },
+      {
+        type: 'text',
+        content: 'Form V: تَفَعَّلَ (Reflexive of II)',
+      },
+      {
+        type: 'rule',
+        content: 'Form V = تَـ + Form II: [[تَفَعَّلَ]]. It\'s the [[reflexive]] of Form II - you do the action to yourself. If عَلَّمَ means "taught," then تَعَلَّمَ means "learned (taught oneself)."',
+        arabicDescription: 'تَفَعَّلَ: مُطَاوِع فَعَّلَ، الْفِعْل يَرْجِع إِلَى الْفَاعِل',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form V Examples',
+        examples: [
+          { arabic: 'عَلَّمَ ← تَعَلَّمَ', english: 'taught → learned' },
+          { arabic: 'كَلَّمَ ← تَكَلَّمَ', english: 'spoke to → spoke, talked' },
+          { arabic: 'ذَكَّرَ ← تَذَكَّرَ', english: 'reminded → remembered' },
+          { arabic: 'تَوَقَّعَ', english: 'expected' },
+          { arabic: 'تَصَرَّفَ', english: 'behaved, acted' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form VI: تَفَاعَلَ (Reciprocal)',
+      },
+      {
+        type: 'rule',
+        content: 'Form VI = تَـ + Form III: [[تَفَاعَلَ]]. It means [[doing something with each other]] or [[pretending]] to do something.',
+        arabicDescription: 'تَفَاعَلَ: لِلْمُشَارَكَة الْمُتَبَادَلَة أَوْ التَّظَاهُر',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form VI Examples',
+        examples: [
+          { arabic: 'قَاتَلَ ← تَقَاتَلَ', english: 'fought → fought each other' },
+          { arabic: 'كَاتَبَ ← تَكَاتَبَ', english: 'wrote to → wrote to each other' },
+          { arabic: 'تَعَاوَنَ', english: 'cooperated' },
+          { arabic: 'تَبَادَلَ', english: 'exchanged' },
+          { arabic: 'تَظَاهَرَ', english: 'pretended' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form VII: اِنْفَعَلَ (Passive-like)',
+      },
+      {
+        type: 'rule',
+        content: 'Form VII adds اِنْـ: [[اِنْفَعَلَ]]. It has a [[passive or resultative]] meaning - the action happens to the subject. Often used for physical changes.',
+        arabicDescription: 'اِنْفَعَلَ: لِلْمُطَاوَعَة، الْفِعْل يَحْدُث لِلْفَاعِل',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form VII Examples',
+        examples: [
+          { arabic: 'كَسَرَ ← اِنْكَسَرَ', english: 'broke → got broken' },
+          { arabic: 'فَتَحَ ← اِنْفَتَحَ', english: 'opened → got opened' },
+          { arabic: 'قَطَعَ ← اِنْقَطَعَ', english: 'cut → got cut off' },
+          { arabic: 'اِنْطَلَقَ', english: 'set off, departed' },
+          { arabic: 'اِنْتَشَرَ', english: 'spread' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Form VII cannot take a direct object! كَسَرْتُ الزُّجَاجَ (I broke the glass) but اِنْكَسَرَ الزُّجَاجُ (The glass broke). The subject "receives" the action.',
+        arabicDescription: 'اِنْفَعَلَ لَا يَتَعَدَّى إِلَى مَفْعُول بِهِ',
+      },
+    ],
+  },
+
+  // LESSON 37: Verb Forms VIII-X
+  {
+    id: 'grammar-37',
+    title: 'Verb Forms VIII, IX, X',
+    titleArabic: 'الْأَوْزَان VIII-IX-X',
+    description: 'Reflexive, colors, and seeking with advanced forms',
+    level: 'advanced',
+    category: 'verbs',
+    order: 37,
+    exercises: ['ex-grammar-37-1', 'ex-grammar-37-2'],
+    content: [
+      {
+        type: 'description',
+        content: '[[Form VIII]] is reflexive with infixed ت, [[Form IX]] is rare and used for colors/defects, and [[Form X]] means "to seek, consider, or ask for" something.',
+        arabicDescription: 'اِفْتَعَلَ لِلاِكْتِسَاب، اِفْعَلَّ لِلْأَلْوَان، اِسْتَفْعَلَ لِلطَّلَب',
+      },
+      {
+        type: 'text',
+        content: 'Form VIII: اِفْتَعَلَ (Reflexive)',
+      },
+      {
+        type: 'rule',
+        content: 'Form VIII infixes ت after first radical: [[اِفْتَعَلَ]]. It often means [[doing something for oneself]], [[acquiring]], or has [[reflexive/middle]] sense.',
+        arabicDescription: 'اِفْتَعَلَ: إِضَافَة تَاء بَعْد الْفَاء لِلاِكْتِسَاب',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form VIII Examples',
+        examples: [
+          { arabic: 'جَمَعَ ← اِجْتَمَعَ', english: 'gathered → met, assembled' },
+          { arabic: 'قَرَبَ ← اِقْتَرَبَ', english: 'was near → approached' },
+          { arabic: 'اِخْتَارَ', english: 'chose (for oneself)' },
+          { arabic: 'اِشْتَرَى', english: 'bought' },
+          { arabic: 'اِكْتَشَفَ', english: 'discovered' },
+          { arabic: 'اِحْتَرَمَ', english: 'respected' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form IX: اِفْعَلَّ (Colors & Defects)',
+      },
+      {
+        type: 'rule',
+        content: 'Form IX doubles the final letter: [[اِفْعَلَّ]]. It\'s rare and only used for [[colors]] and [[physical defects]]. Very predictable!',
+        arabicDescription: 'اِفْعَلَّ: تَشْدِيد اللَّام لِلْأَلْوَان وَالْعُيُوب',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form IX Examples',
+        examples: [
+          { arabic: 'اِحْمَرَّ', english: 'became red, blushed' },
+          { arabic: 'اِصْفَرَّ', english: 'became yellow' },
+          { arabic: 'اِسْوَدَّ', english: 'became black' },
+          { arabic: 'اِبْيَضَّ', english: 'became white' },
+          { arabic: 'اِعْوَرَّ', english: 'became one-eyed' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Form X: اِسْتَفْعَلَ (Seeking)',
+      },
+      {
+        type: 'rule',
+        content: 'Form X adds اِسْتَـ: [[اِسْتَفْعَلَ]]. It primarily means [[seeking]], [[asking for]], or [[considering something to be]]. Very productive form!',
+        arabicDescription: 'اِسْتَفْعَلَ: إِضَافَة سِين وَتَاء لِلطَّلَب وَالاِعْتِبَار',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Form X Examples',
+        examples: [
+          { arabic: 'غَفَرَ ← اِسْتَغْفَرَ', english: 'forgave → sought forgiveness' },
+          { arabic: 'عَمَلَ ← اِسْتَعْمَلَ', english: 'worked → used, employed' },
+          { arabic: 'خْرَجَ ← اِسْتَخْرَجَ', english: 'went out → extracted' },
+          { arabic: 'اِسْتَطَاعَ', english: 'was able, could' },
+          { arabic: 'اِسْتَمَعَ', english: 'listened (sought to hear)' },
+          { arabic: 'اِسْتَحْسَنَ', english: 'approved, found good' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Form X has three main meanings: 1) [[To seek]]: اِسْتَغْفَرَ (seek forgiveness), 2) [[To consider as]]: اِسْتَحْسَنَ (consider good), 3) [[To ask for]]: اِسْتَأْذَنَ (ask permission).',
+        arabicDescription: 'اِسْتَفْعَلَ: لِلطَّلَب، الاِعْتِبَار، وَالسُّؤَال',
+      },
+    ],
+  },
+
+  // LESSON 38: Adverbs & Adverbial Expressions
+  {
+    id: 'grammar-38',
+    title: 'Adverbs & Adverbial Expressions',
+    titleArabic: 'الظُّرُوف وَالْأَحْوَال',
+    description: 'Modify verbs with time, place, and manner',
+    level: 'advanced',
+    category: 'sentences',
+    order: 38,
+    exercises: ['ex-grammar-38-1', 'ex-grammar-38-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Arabic modifies verbs using [[adverbs of time]] (ظَرْف الزَّمَان), [[adverbs of place]] (ظَرْف الْمَكَان), and [[حَال]] (the state/manner of the subject). These add rich detail to sentences.',
+        arabicDescription: 'الظُّرُوف تُضِيف مَعْلُومَات عَنِ الزَّمَان وَالْمَكَان وَالْحَال',
+      },
+      {
+        type: 'text',
+        content: 'Time Adverbs (ظَرْف الزَّمَان)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'When things happen',
+        examples: [
+          { arabic: 'الْيَوْمَ', english: 'today' },
+          { arabic: 'غَدًا', english: 'tomorrow' },
+          { arabic: 'أَمْسِ', english: 'yesterday' },
+          { arabic: 'الْآنَ', english: 'now' },
+          { arabic: 'دَائِمًا', english: 'always' },
+          { arabic: 'أَبَدًا', english: 'never, ever' },
+          { arabic: 'أَحْيَانًا', english: 'sometimes' },
+          { arabic: 'قَرِيبًا', english: 'soon' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Place Adverbs (ظَرْف الْمَكَان)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Where things happen',
+        examples: [
+          { arabic: 'هُنَا', english: 'here' },
+          { arabic: 'هُنَاكَ', english: 'there' },
+          { arabic: 'فَوْقَ', english: 'above' },
+          { arabic: 'تَحْتَ', english: 'below, under' },
+          { arabic: 'أَمَامَ', english: 'in front of' },
+          { arabic: 'خَلْفَ', english: 'behind' },
+          { arabic: 'بَيْنَ', english: 'between' },
+          { arabic: 'حَوْلَ', english: 'around' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Manner Adverbs (using الْحَال)',
+      },
+      {
+        type: 'rule',
+        content: 'The [[حَال]] describes [[how]] the subject does the action. It\'s an [[indefinite accusative]] adjective: جَاءَ [[مُبْتَسِمًا]] (He came [[smiling]]). The حَال agrees with what it describes.',
+        arabicDescription: 'الْحَال وَصْف لِلْفَاعِل فِي حَالَة الْفِعْل، مَنْصُوب وَنَكِرَة',
+      },
+      {
+        type: 'examples_grid',
+        content: 'حَال Examples',
+        examples: [
+          { arabic: 'جَاءَ مُسْرِعًا', english: 'He came quickly' },
+          { arabic: 'رَجَعَتْ سَعِيدَةً', english: 'She returned happy' },
+          { arabic: 'قَرَأْتُ الْكِتَابَ جَالِسًا', english: 'I read the book sitting' },
+          { arabic: 'دَخَلُوا صَامِتِينَ', english: 'They entered silently' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Common Manner Expressions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Useful adverbial phrases',
+        examples: [
+          { arabic: 'بِسُرْعَة', english: 'quickly' },
+          { arabic: 'بِبُطْء', english: 'slowly' },
+          { arabic: 'جِدًّا', english: 'very' },
+          { arabic: 'فَقَط', english: 'only' },
+          { arabic: 'أَيْضًا', english: 'also' },
+          { arabic: 'تَقْرِيبًا', english: 'approximately' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Time and place adverbs take the [[accusative case]] because they answer "when?" and "where?" implicitly: سَافَرْتُ [[يَوْمًا]] (I traveled [[for a day]]). They function as hidden objects.',
+        arabicDescription: 'ظَرْف الزَّمَان وَالْمَكَان مَنْصُوبَان دَائِمًا',
+      },
+    ],
+  },
+
+  // LESSON 39: Exception (الاِسْتِثْنَاء)
+  {
+    id: 'grammar-39',
+    title: 'Exception',
+    titleArabic: 'الاِسْتِثْنَاء',
+    description: 'Express "except," "but," and "only" in Arabic',
+    level: 'advanced',
+    category: 'sentences',
+    order: 39,
+    exercises: ['ex-grammar-39-1', 'ex-grammar-39-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Exception (الاِسْتِثْنَاء) excludes something from a general statement: "Everyone came [[except]] Ali." Arabic uses words like [[إِلَّا]], [[غَيْر]], [[سِوَى]] for this.',
+        arabicDescription: 'الاِسْتِثْنَاء يُخْرِج شَيْئًا مِنَ الْحُكْم الْعَامّ',
+      },
+      {
+        type: 'rule',
+        content: '[[إِلَّا]] is the main exception particle. In a complete affirmative sentence, the excepted noun (الْمُسْتَثْنَى) takes the [[accusative]]: حَضَرَ الطُّلَّابُ [[إِلَّا]] عَلِيًّا.',
+        arabicDescription: 'الْمُسْتَثْنَى بِإِلَّا مَنْصُوب فِي الْجُمْلَة التَّامَّة الْمُوجَبَة',
+      },
+      {
+        type: 'text',
+        content: 'Complete Affirmative (تَامّ مُوجَب)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Accusative after إِلَّا',
+        examples: [
+          { arabic: 'جَاءَ الطُّلَّابُ إِلَّا مُحَمَّدًا', english: 'The students came except Muhammad' },
+          { arabic: 'قَرَأْتُ الْكُتُبَ إِلَّا كِتَابًا', english: 'I read the books except one book' },
+          { arabic: 'أَكَلْتُ كُلَّ شَيْءٍ إِلَّا اللَّحْمَ', english: 'I ate everything except the meat' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Negative Sentence (تَامّ مَنْفِيّ)',
+      },
+      {
+        type: 'rule',
+        content: 'In negative sentences, the excepted noun can follow the case of what it refers to ([[بَدَل]]) OR be accusative: مَا جَاءَ أَحَدٌ إِلَّا عَلِيٌّ/عَلِيًّا.',
+        arabicDescription: 'فِي الْمَنْفِيّ: يَجُوز الْبَدَل أَوْ النَّصْب',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Exception in negative',
+        examples: [
+          { arabic: 'مَا حَضَرَ أَحَدٌ إِلَّا زَيْدٌ', english: 'No one came except Zaid (nominative)' },
+          { arabic: 'لَمْ أَرَ أَحَدًا إِلَّا أَخَاكَ', english: 'I didn\'t see anyone except your brother' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Using غَيْر and سِوَى',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Alternative exception words',
+        examples: [
+          { arabic: 'جَاءَ الطُّلَّابُ غَيْرَ مُحَمَّدٍ', english: 'The students came except Muhammad' },
+          { arabic: 'لَيْسَ لِي صَدِيقٌ سِوَاكَ', english: 'I have no friend but you' },
+          { arabic: 'لَا أُحِبُّ غَيْرَكَ', english: 'I love no one but you' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Common Expressions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Useful exception phrases',
+        examples: [
+          { arabic: 'لَا إِلَهَ إِلَّا اللَّه', english: 'There is no god but God' },
+          { arabic: 'لَيْسَ إِلَّا', english: 'nothing but, only' },
+          { arabic: 'مَا هُوَ إِلَّا...', english: 'It is nothing but...' },
+          { arabic: 'فَقَط/فَحَسْب', english: 'only (also used)' },
+        ],
+      },
+      {
+        type: 'note',
+        content: '[[غَيْر]] acts like a noun and takes the case required by its position. The word after غَيْر is always [[genitive]]: غَيْرِ مُحَمَّدٍ.',
+        arabicDescription: 'غَيْر تُعْرَب حَسَب مَوْقِعِهَا، وَمَا بَعْدَهَا مَجْرُور',
+      },
+    ],
+  },
+
+  // LESSON 40: Complex Sentences & Emphasis
+  {
+    id: 'grammar-40',
+    title: 'Complex Sentences & Emphasis',
+    titleArabic: 'الْجُمَل الْمُرَكَّبَة وَالتَّوْكِيد',
+    description: 'Build sophisticated sentences with emphasis particles',
+    level: 'advanced',
+    category: 'sentences',
+    order: 40,
+    exercises: ['ex-grammar-40-1', 'ex-grammar-40-2'],
+    content: [
+      {
+        type: 'description',
+        content: 'Master Arabic rhetoric with [[emphasis particles]], [[oath formulas]], and complex sentence structures. These tools make your Arabic more expressive, persuasive, and elegant.',
+        arabicDescription: 'أَدَوَات التَّوْكِيد وَالْقَسَم تُعَزِّز الْمَعْنَى وَتُضِيف قُوَّة',
+      },
+      {
+        type: 'text',
+        content: 'Emphasis with إِنَّ and لَـ',
+      },
+      {
+        type: 'rule',
+        content: '[[إِنَّ]] emphasizes a statement: "Indeed, verily." Adding [[لَـ]] to the predicate doubles the emphasis: إِنَّ الْعِلْمَ [[لَـ]]نُورٌ (Indeed, knowledge IS light!).',
+        arabicDescription: 'إِنَّ لِلتَّوْكِيد، وَلَام الاِبْتِدَاء تَزِيد التَّوْكِيد',
+      },
+      {
+        type: 'examples_grid',
+        content: 'إِنَّ with emphasis',
+        examples: [
+          { arabic: 'إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ', english: 'Indeed, God is Forgiving, Merciful' },
+          { arabic: 'إِنَّ الصَّبْرَ لَجَمِيلٌ', english: 'Indeed, patience IS beautiful' },
+          { arabic: 'إِنَّكَ لَعَلَى خُلُقٍ عَظِيم', english: 'Indeed, you ARE of great character' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Emphasis with قَدْ',
+      },
+      {
+        type: 'rule',
+        content: '[[قَدْ]] + past verb = "certainly, indeed" (emphasis). [[قَدْ]] + present verb = "may, might" (possibility). Context determines meaning.',
+        arabicDescription: 'قَدْ مَعَ الْمَاضِي لِلتَّحْقِيق، وَمَعَ الْمُضَارِع لِلاِحْتِمَال',
+      },
+      {
+        type: 'examples_grid',
+        content: 'قَدْ usage',
+        examples: [
+          { arabic: 'قَدْ نَجَحَ', english: 'He has certainly succeeded' },
+          { arabic: 'قَدْ فَهِمْتُ', english: 'I have (indeed) understood' },
+          { arabic: 'قَدْ يَأْتِي', english: 'He may come' },
+          { arabic: 'قَدْ أُسَافِرُ', english: 'I might travel' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Oaths (الْقَسَم)',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Swearing formulas',
+        examples: [
+          { arabic: 'وَاللَّهِ', english: 'By God (I swear)' },
+          { arabic: 'بِاللَّهِ', english: 'By God' },
+          { arabic: 'تَاللَّهِ', english: 'By God (emphatic)' },
+          { arabic: 'وَاللَّهِ لَأَفْعَلَنَّ', english: 'By God, I will certainly do it!' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Intensified Verbs (نُون التَّوْكِيد)',
+      },
+      {
+        type: 'rule',
+        content: 'Add [[ـَنَّ]] or [[ـَنْ]] to present verbs for strong emphasis, especially after oaths: لَأَذْهَبَ[[نَّ]] (I will DEFINITELY go!). The verb loses its final vowel.',
+        arabicDescription: 'نُون التَّوْكِيد الثَّقِيلَة وَالْخَفِيفَة تُؤَكِّد الْفِعْل',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Emphatic nun',
+        examples: [
+          { arabic: 'لَأَكْتُبَنَّ', english: 'I will definitely write!' },
+          { arabic: 'لَتَعْرِفَنَّ الْحَقِيقَةَ', english: 'You will surely know the truth!' },
+          { arabic: 'لَيُعَذِّبَنَّهُم', english: 'He will certainly punish them!' },
+        ],
+      },
+      {
+        type: 'text',
+        content: 'Other Emphasis Tools',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Additional emphatic particles',
+        examples: [
+          { arabic: 'نَفْس / عَيْن', english: 'self, very (الرَّجُلُ نَفْسُهُ - the man himself)' },
+          { arabic: 'كُلّ / جَمِيع', english: 'all, every (كُلُّهُم - all of them)' },
+          { arabic: 'لَا... إِلَّا', english: 'only, nothing but (restriction)' },
+          { arabic: 'إِنَّمَا', english: 'only, nothing but (restriction)' },
+        ],
+      },
+      {
+        type: 'note',
+        content: 'Combining tools creates powerful rhetoric: [[وَاللَّهِ إِنَّ الصَّبْرَ لَمِفْتَاحُ الْفَرَج]] (By God, indeed patience IS the key to relief!). Arabic loves layered emphasis!',
+        arabicDescription: 'الْجَمْع بَيْن أَدَوَات التَّوْكِيد يُقَوِّي الْمَعْنَى',
+      },
+    ],
+  },
 ];
 
 // Helper functions
