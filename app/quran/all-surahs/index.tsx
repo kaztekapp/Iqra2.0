@@ -5,17 +5,59 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { SURAHS } from '../../../src/data/arabic/quran/surahs';
 
+// Normalize text for better search matching
+const normalizeText = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/['-]/g, '') // Remove apostrophes and hyphens
+    .replace(/^(al|an|as|at|ash|adh|az)\s*/i, '') // Remove common prefixes
+    .trim();
+};
+
 export default function AllSurahsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSurahs = SURAHS.filter((surah) => {
-    return (
-      searchQuery === '' ||
-      surah.nameArabic.includes(searchQuery) ||
-      surah.nameEnglish.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      surah.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      surah.surahNumber.toString().includes(searchQuery)
-    );
+    if (searchQuery === '') return true;
+
+    const query = normalizeText(searchQuery);
+    const queryLower = searchQuery.toLowerCase();
+
+    // Check surah number (exact or starts with)
+    if (surah.surahNumber.toString() === searchQuery ||
+        surah.surahNumber.toString().startsWith(searchQuery)) {
+      return true;
+    }
+
+    // Check Arabic name
+    if (surah.nameArabic.includes(searchQuery)) {
+      return true;
+    }
+
+    // Check English name (normalized)
+    const normalizedEnglish = normalizeText(surah.nameEnglish);
+    if (normalizedEnglish.includes(query) || surah.nameEnglish.toLowerCase().includes(queryLower)) {
+      return true;
+    }
+
+    // Check transliteration (normalized)
+    const normalizedTranslit = normalizeText(surah.nameTransliteration);
+    if (normalizedTranslit.includes(query) || surah.nameTransliteration.toLowerCase().includes(queryLower)) {
+      return true;
+    }
+
+    // Check meaning
+    if (surah.meaning.toLowerCase().includes(queryLower)) {
+      return true;
+    }
+
+    // Check common alternative names (e.g., "fatiha" for "Al-Fatihah", "baqara" for "Al-Baqarah")
+    const simpleName = surah.nameEnglish.replace(/^(Al-|An-|As-|At-|Ash-|Adh-|Az-)/i, '').toLowerCase();
+    if (simpleName.startsWith(query) || simpleName.includes(query)) {
+      return true;
+    }
+
+    return false;
   });
 
   const handleSurahPress = (surahId: string) => {
@@ -44,7 +86,7 @@ export default function AllSurahsScreen() {
           <Ionicons name="search" size={20} color="#64748b" />
           <TextInput
             style={styles.searchInput}
-            placeholder="Search by name, number, or meaning..."
+            placeholder="Search: fatiha, baqara, 36, cow..."
             placeholderTextColor="#64748b"
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -125,7 +167,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     flex: 1,
-    marginLeft: 12,
+    alignItems: 'center',
   },
   title: {
     fontSize: 22,
