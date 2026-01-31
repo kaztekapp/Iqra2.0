@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
@@ -10,305 +10,243 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 const readingContent: Record<string, {
   title: string;
   titleArabic: string;
-  paragraphs: { arabic: string; transliteration: string; english: string }[];
+  level: 'beginner' | 'intermediate' | 'advanced';
+  icon: string;
+  color: string;
+  paragraphs: { arabic: string; english: string }[];
 }> = {
   'intro-1': {
     title: 'Introducing Yourself',
     titleArabic: 'التَّعْرِيفُ بِالنَّفْس',
+    level: 'beginner',
+    icon: '👋',
+    color: '#10b981',
     paragraphs: [
-      {
-        arabic: 'مَرْحَبًا، اِسْمِي أَحْمَد.',
-        transliteration: 'Marḥaban, ismī Aḥmad.',
-        english: 'Hello, my name is Ahmad.',
-      },
-      {
-        arabic: 'أَنَا مِنْ مِصْر.',
-        transliteration: 'Anā min Miṣr.',
-        english: 'I am from Egypt.',
-      },
-      {
-        arabic: 'أَنَا طَالِبٌ فِي الْجَامِعَة.',
-        transliteration: 'Anā ṭālibun fī al-jāmiʿa.',
-        english: 'I am a student at the university.',
-      },
-      {
-        arabic: 'أَدْرُسُ اللُّغَةَ الْعَرَبِيَّة.',
-        transliteration: 'Adrusu al-lughata al-ʿarabiyya.',
-        english: 'I study the Arabic language.',
-      },
-      {
-        arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْمُوسِيقَى.',
-        transliteration: 'Uḥibbu al-qirāʾa wa al-mūsīqā.',
-        english: 'I love reading and music.',
-      },
+      { arabic: 'مَرْحَبًا، اِسْمِي أَحْمَد.', english: 'Hello, my name is Ahmad.' },
+      { arabic: 'أَنَا مِنْ مِصْر.', english: 'I am from Egypt.' },
+      { arabic: 'أَنَا طَالِبٌ فِي الْجَامِعَة.', english: 'I am a student at the university.' },
+      { arabic: 'أَدْرُسُ اللُّغَةَ الْعَرَبِيَّة.', english: 'I study the Arabic language.' },
+      { arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْمُوسِيقَى.', english: 'I love reading and music.' },
     ],
   },
   'family-1': {
     title: 'My Family',
     titleArabic: 'عَائِلَتِي',
+    level: 'beginner',
+    icon: '👨‍👩‍👧‍👦',
+    color: '#6366f1',
     paragraphs: [
-      {
-        arabic: 'هَذِهِ عَائِلَتِي.',
-        transliteration: 'Hādhihi ʿāʾilatī.',
-        english: 'This is my family.',
-      },
-      {
-        arabic: 'أَبِي اِسْمُهُ مُحَمَّد وَأُمِّي اِسْمُهَا فَاطِمَة.',
-        transliteration: 'Abī ismuhu Muḥammad wa ummī ismuhā Fāṭima.',
-        english: 'My father\'s name is Muhammad and my mother\'s name is Fatima.',
-      },
-      {
-        arabic: 'عِنْدِي أَخٌ وَاحِدٌ وَأُخْتٌ وَاحِدَة.',
-        transliteration: 'ʿIndī akhun wāḥid wa ukhtun wāḥida.',
-        english: 'I have one brother and one sister.',
-      },
-      {
-        arabic: 'أَخِي اِسْمُهُ عَلِيّ وَهُوَ طَبِيب.',
-        transliteration: 'Akhī ismuhu ʿAlī wa huwa ṭabīb.',
-        english: 'My brother\'s name is Ali and he is a doctor.',
-      },
-      {
-        arabic: 'أُخْتِي اِسْمُهَا مَرْيَم وَهِيَ مُعَلِّمَة.',
-        transliteration: 'Ukhtī ismuhā Maryam wa hiya muʿallima.',
-        english: 'My sister\'s name is Maryam and she is a teacher.',
-      },
-      {
-        arabic: 'نَحْنُ عَائِلَةٌ سَعِيدَة.',
-        transliteration: 'Naḥnu ʿāʾilatun saʿīda.',
-        english: 'We are a happy family.',
-      },
+      { arabic: 'هَذِهِ عَائِلَتِي.', english: 'This is my family.' },
+      { arabic: 'أَبِي اِسْمُهُ مُحَمَّد وَأُمِّي اِسْمُهَا فَاطِمَة.', english: "My father's name is Muhammad and my mother's name is Fatima." },
+      { arabic: 'عِنْدِي أَخٌ وَاحِدٌ وَأُخْتٌ وَاحِدَة.', english: 'I have one brother and one sister.' },
+      { arabic: 'أَخِي اِسْمُهُ عَلِيّ وَهُوَ طَبِيب.', english: "My brother's name is Ali and he is a doctor." },
+      { arabic: 'أُخْتِي اِسْمُهَا مَرْيَم وَهِيَ مُعَلِّمَة.', english: "My sister's name is Maryam and she is a teacher." },
+      { arabic: 'نَحْنُ عَائِلَةٌ سَعِيدَة.', english: 'We are a happy family.' },
     ],
   },
   'daily-routine': {
     title: 'Daily Routine',
     titleArabic: 'الرُّوتِينُ الْيَوْمِي',
+    level: 'beginner',
+    icon: '☀️',
+    color: '#f59e0b',
     paragraphs: [
-      {
-        arabic: 'أَسْتَيْقِظُ فِي السَّاعَةِ السَّادِسَةِ صَبَاحًا.',
-        transliteration: 'Astayqiẓu fī as-sāʿa as-sādisa ṣabāḥan.',
-        english: 'I wake up at six o\'clock in the morning.',
-      },
-      {
-        arabic: 'أَغْسِلُ وَجْهِي وَأَتَنَاوَلُ الْفُطُور.',
-        transliteration: 'Aghsilu wajhī wa atanāwalu al-fuṭūr.',
-        english: 'I wash my face and have breakfast.',
-      },
-      {
-        arabic: 'أَذْهَبُ إِلَى الْعَمَلِ فِي السَّاعَةِ الثَّامِنَة.',
-        transliteration: 'Adhhabu ilā al-ʿamal fī as-sāʿa ath-thāmina.',
-        english: 'I go to work at eight o\'clock.',
-      },
-      {
-        arabic: 'أَعْمَلُ حَتَّى السَّاعَةِ الْخَامِسَة.',
-        transliteration: 'Aʿmalu ḥattā as-sāʿa al-khāmisa.',
-        english: 'I work until five o\'clock.',
-      },
-      {
-        arabic: 'أَرْجِعُ إِلَى الْبَيْتِ وَأَتَعَشَّى مَعَ عَائِلَتِي.',
-        transliteration: 'Arjiʿu ilā al-bayt wa ataʿashshā maʿa ʿāʾilatī.',
-        english: 'I return home and have dinner with my family.',
-      },
-      {
-        arabic: 'أَنَامُ فِي السَّاعَةِ الْعَاشِرَة.',
-        transliteration: 'Anāmu fī as-sāʿa al-ʿāshira.',
-        english: 'I sleep at ten o\'clock.',
-      },
+      { arabic: 'أَسْتَيْقِظُ فِي السَّاعَةِ السَّادِسَةِ صَبَاحًا.', english: "I wake up at six o'clock in the morning." },
+      { arabic: 'أَغْسِلُ وَجْهِي وَأَتَنَاوَلُ الْفُطُور.', english: 'I wash my face and have breakfast.' },
+      { arabic: 'أَذْهَبُ إِلَى الْعَمَلِ فِي السَّاعَةِ الثَّامِنَة.', english: "I go to work at eight o'clock." },
+      { arabic: 'أَعْمَلُ حَتَّى السَّاعَةِ الْخَامِسَة.', english: "I work until five o'clock." },
+      { arabic: 'أَرْجِعُ إِلَى الْبَيْتِ وَأَتَعَشَّى مَعَ عَائِلَتِي.', english: 'I return home and have dinner with my family.' },
+      { arabic: 'أَنَامُ فِي السَّاعَةِ الْعَاشِرَة.', english: "I sleep at ten o'clock." },
     ],
   },
   'at-school': {
     title: 'At School',
     titleArabic: 'فِي الْمَدْرَسَة',
+    level: 'intermediate',
+    icon: '🏫',
+    color: '#8b5cf6',
     paragraphs: [
-      {
-        arabic: 'أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْم.',
-        transliteration: 'Adhhabu ilā al-madrasa kulla yawm.',
-        english: 'I go to school every day.',
-      },
-      {
-        arabic: 'مَدْرَسَتِي كَبِيرَةٌ وَجَمِيلَة.',
-        transliteration: 'Madrasatī kabīra wa jamīla.',
-        english: 'My school is big and beautiful.',
-      },
-      {
-        arabic: 'عِنْدِي مُعَلِّمُونَ مُمْتَازُون.',
-        transliteration: 'ʿIndī muʿallimūn mumtāzūn.',
-        english: 'I have excellent teachers.',
-      },
-      {
-        arabic: 'أَدْرُسُ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُوم.',
-        transliteration: 'Adrusu al-ʿarabiyya wa ar-riyāḍiyyāt wa al-ʿulūm.',
-        english: 'I study Arabic, mathematics, and science.',
-      },
-      {
-        arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْكِتَابَة.',
-        transliteration: 'Uḥibbu al-qirāʾa wa al-kitāba.',
-        english: 'I love reading and writing.',
-      },
-      {
-        arabic: 'أَلْعَبُ مَعَ أَصْدِقَائِي فِي الاِسْتِرَاحَة.',
-        transliteration: 'Alʿabu maʿa aṣdiqāʾī fī al-istirāḥa.',
-        english: 'I play with my friends during break.',
-      },
+      { arabic: 'أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْم.', english: 'I go to school every day.' },
+      { arabic: 'مَدْرَسَتِي كَبِيرَةٌ وَجَمِيلَة.', english: 'My school is big and beautiful.' },
+      { arabic: 'عِنْدِي مُعَلِّمُونَ مُمْتَازُون.', english: 'I have excellent teachers.' },
+      { arabic: 'أَدْرُسُ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُوم.', english: 'I study Arabic, mathematics, and science.' },
+      { arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْكِتَابَة.', english: 'I love reading and writing.' },
+      { arabic: 'أَلْعَبُ مَعَ أَصْدِقَائِي فِي الاِسْتِرَاحَة.', english: 'I play with my friends during break.' },
     ],
   },
   'at-market': {
     title: 'At the Market',
     titleArabic: 'فِي السُّوق',
+    level: 'intermediate',
+    icon: '🛒',
+    color: '#ec4899',
     paragraphs: [
-      {
-        arabic: 'أُحِبُّ الذَّهَابَ إِلَى السُّوقِ مَعَ أُمِّي.',
-        transliteration: 'Uḥibbu adh-dhahāb ilā as-sūq maʿa ummī.',
-        english: 'I love going to the market with my mother.',
-      },
-      {
-        arabic: 'السُّوقُ مَلِيءٌ بِالْفَوَاكِهِ وَالْخُضْرَاوَات.',
-        transliteration: 'As-sūq malīʾ bi-al-fawākih wa al-khuḍrāwāt.',
-        english: 'The market is full of fruits and vegetables.',
-      },
-      {
-        arabic: 'نَشْتَرِي الْخُبْزَ الطَّازَجَ مِنَ الْمَخْبَز.',
-        transliteration: 'Nashtarī al-khubz aṭ-ṭāzaj min al-makhbaz.',
-        english: 'We buy fresh bread from the bakery.',
-      },
-      {
-        arabic: 'أُحِبُّ التُّفَّاحَ الْأَحْمَرَ وَالْبُرْتُقَال.',
-        transliteration: 'Uḥibbu at-tuffāḥ al-aḥmar wa al-burtuqāl.',
-        english: 'I love red apples and oranges.',
-      },
-      {
-        arabic: 'الْبَائِعُ لَطِيفٌ وَيُسَاعِدُنَا.',
-        transliteration: 'Al-bāʾiʿ laṭīf wa yusāʿidunā.',
-        english: 'The seller is nice and helps us.',
-      },
+      { arabic: 'أُحِبُّ الذَّهَابَ إِلَى السُّوقِ مَعَ أُمِّي.', english: 'I love going to the market with my mother.' },
+      { arabic: 'السُّوقُ مَلِيءٌ بِالْفَوَاكِهِ وَالْخُضْرَاوَات.', english: 'The market is full of fruits and vegetables.' },
+      { arabic: 'نَشْتَرِي الْخُبْزَ الطَّازَجَ مِنَ الْمَخْبَز.', english: 'We buy fresh bread from the bakery.' },
+      { arabic: 'أُحِبُّ التُّفَّاحَ الْأَحْمَرَ وَالْبُرْتُقَال.', english: 'I love red apples and oranges.' },
+      { arabic: 'الْبَائِعُ لَطِيفٌ وَيُسَاعِدُنَا.', english: 'The seller is nice and helps us.' },
     ],
   },
   'weather': {
     title: 'The Weather',
     titleArabic: 'الطَّقْس',
+    level: 'intermediate',
+    icon: '🌤️',
+    color: '#14b8a6',
     paragraphs: [
-      {
-        arabic: 'الطَّقْسُ جَمِيلٌ الْيَوْم.',
-        transliteration: 'Aṭ-ṭaqs jamīl al-yawm.',
-        english: 'The weather is beautiful today.',
-      },
-      {
-        arabic: 'الشَّمْسُ مُشْرِقَةٌ وَالسَّمَاءُ زَرْقَاء.',
-        transliteration: 'Ash-shams mushriqa wa as-samāʾ zarqāʾ.',
-        english: 'The sun is shining and the sky is blue.',
-      },
-      {
-        arabic: 'فِي الصَّيْفِ يَكُونُ الطَّقْسُ حَارًّا.',
-        transliteration: 'Fī aṣ-ṣayf yakūnu aṭ-ṭaqs ḥārran.',
-        english: 'In summer, the weather is hot.',
-      },
-      {
-        arabic: 'فِي الشِّتَاءِ يَكُونُ الطَّقْسُ بَارِدًا.',
-        transliteration: 'Fī ash-shitāʾ yakūnu aṭ-ṭaqs bāridan.',
-        english: 'In winter, the weather is cold.',
-      },
-      {
-        arabic: 'أُحِبُّ الرَّبِيعَ لِأَنَّ الْأَزْهَارَ تَتَفَتَّح.',
-        transliteration: 'Uḥibbu ar-rabīʿ li-anna al-azhār tatafattaḥ.',
-        english: 'I love spring because the flowers bloom.',
-      },
-      {
-        arabic: 'أَحْيَانًا تُمْطِرُ السَّمَاء.',
-        transliteration: 'Aḥyānan tumṭiru as-samāʾ.',
-        english: 'Sometimes it rains.',
-      },
+      { arabic: 'الطَّقْسُ جَمِيلٌ الْيَوْم.', english: 'The weather is beautiful today.' },
+      { arabic: 'الشَّمْسُ مُشْرِقَةٌ وَالسَّمَاءُ زَرْقَاء.', english: 'The sun is shining and the sky is blue.' },
+      { arabic: 'فِي الصَّيْفِ يَكُونُ الطَّقْسُ حَارًّا.', english: 'In summer, the weather is hot.' },
+      { arabic: 'فِي الشِّتَاءِ يَكُونُ الطَّقْسُ بَارِدًا.', english: 'In winter, the weather is cold.' },
+      { arabic: 'أُحِبُّ الرَّبِيعَ لِأَنَّ الْأَزْهَارَ تَتَفَتَّح.', english: 'I love spring because the flowers bloom.' },
+      { arabic: 'أَحْيَانًا تُمْطِرُ السَّمَاء.', english: 'Sometimes it rains.' },
     ],
   },
   'travel-story': {
     title: 'A Travel Story',
     titleArabic: 'قِصَّةُ سَفَر',
+    level: 'advanced',
+    icon: '✈️',
+    color: '#D4AF37',
     paragraphs: [
-      {
-        arabic: 'سَافَرْتُ إِلَى مِصْرَ فِي الصَّيْفِ الْمَاضِي.',
-        transliteration: 'Sāfartu ilā Miṣr fī aṣ-ṣayf al-māḍī.',
-        english: 'I traveled to Egypt last summer.',
-      },
-      {
-        arabic: 'زُرْتُ الْأَهْرَامَاتِ الْعَظِيمَةَ فِي الْجِيزَة.',
-        transliteration: 'Zurtu al-ahrāmāt al-ʿaẓīma fī al-Jīza.',
-        english: 'I visited the great pyramids in Giza.',
-      },
-      {
-        arabic: 'رَكِبْتُ الْجَمَلَ فِي الصَّحْرَاء.',
-        transliteration: 'Rakibtu al-jamal fī aṣ-ṣaḥrāʾ.',
-        english: 'I rode a camel in the desert.',
-      },
-      {
-        arabic: 'شَاهَدْتُ أَبُو الْهَوْلِ وَهُوَ رَائِع.',
-        transliteration: 'Shāhadtu Abū al-Hawl wa huwa rāʾiʿ.',
-        english: 'I saw the Sphinx and it was amazing.',
-      },
-      {
-        arabic: 'أَكَلْتُ الطَّعَامَ الْمِصْرِيَّ اللَّذِيذ.',
-        transliteration: 'Akaltu aṭ-ṭaʿām al-miṣrī al-ladhīdh.',
-        english: 'I ate delicious Egyptian food.',
-      },
-      {
-        arabic: 'كَانَتْ رِحْلَةً لَا تُنْسَى.',
-        transliteration: 'Kānat riḥla lā tunsā.',
-        english: 'It was an unforgettable trip.',
-      },
+      { arabic: 'سَافَرْتُ إِلَى مِصْرَ فِي الصَّيْفِ الْمَاضِي.', english: 'I traveled to Egypt last summer.' },
+      { arabic: 'زُرْتُ الْأَهْرَامَاتِ الْعَظِيمَةَ فِي الْجِيزَة.', english: 'I visited the great pyramids in Giza.' },
+      { arabic: 'رَكِبْتُ الْجَمَلَ فِي الصَّحْرَاء.', english: 'I rode a camel in the desert.' },
+      { arabic: 'شَاهَدْتُ أَبُو الْهَوْلِ وَهُوَ رَائِع.', english: 'I saw the Sphinx and it was amazing.' },
+      { arabic: 'أَكَلْتُ الطَّعَامَ الْمِصْرِيَّ اللَّذِيذ.', english: 'I ate delicious Egyptian food.' },
+      { arabic: 'كَانَتْ رِحْلَةً لَا تُنْسَى.', english: 'It was an unforgettable trip.' },
     ],
   },
   'arab-culture': {
     title: 'Arab Culture',
     titleArabic: 'الثَّقَافَةُ الْعَرَبِيَّة',
+    level: 'advanced',
+    icon: '🕌',
+    color: '#ef4444',
     paragraphs: [
-      {
-        arabic: 'الثَّقَافَةُ الْعَرَبِيَّةُ غَنِيَّةٌ وَمُتَنَوِّعَة.',
-        transliteration: 'Ath-thaqāfa al-ʿarabiyya ghaniyya wa mutanawwiʿa.',
-        english: 'Arab culture is rich and diverse.',
-      },
-      {
-        arabic: 'اللُّغَةُ الْعَرَبِيَّةُ مِنْ أَقْدَمِ اللُّغَاتِ فِي الْعَالَم.',
-        transliteration: 'Al-lugha al-ʿarabiyya min aqdami al-lughāt fī al-ʿālam.',
-        english: 'The Arabic language is one of the oldest languages in the world.',
-      },
-      {
-        arabic: 'الضِّيَافَةُ قِيمَةٌ مُهِمَّةٌ عِنْدَ الْعَرَب.',
-        transliteration: 'Aḍ-ḍiyāfa qīma muhimma ʿinda al-ʿarab.',
-        english: 'Hospitality is an important value among Arabs.',
-      },
-      {
-        arabic: 'الْقَهْوَةُ الْعَرَبِيَّةُ رَمْزٌ لِلْكَرَم.',
-        transliteration: 'Al-qahwa al-ʿarabiyya ramz li-al-karam.',
-        english: 'Arabic coffee is a symbol of generosity.',
-      },
-      {
-        arabic: 'الْخَطُّ الْعَرَبِيُّ فَنٌّ جَمِيل.',
-        transliteration: 'Al-khaṭṭ al-ʿarabī fann jamīl.',
-        english: 'Arabic calligraphy is a beautiful art.',
-      },
-      {
-        arabic: 'الْمُوسِيقَى الْعَرَبِيَّةُ مَشْهُورَةٌ فِي كُلِّ الْعَالَم.',
-        transliteration: 'Al-mūsīqā al-ʿarabiyya mashhūra fī kulli al-ʿālam.',
-        english: 'Arabic music is famous all over the world.',
-      },
+      { arabic: 'الثَّقَافَةُ الْعَرَبِيَّةُ غَنِيَّةٌ وَمُتَنَوِّعَة.', english: 'Arab culture is rich and diverse.' },
+      { arabic: 'اللُّغَةُ الْعَرَبِيَّةُ مِنْ أَقْدَمِ اللُّغَاتِ فِي الْعَالَم.', english: 'The Arabic language is one of the oldest languages in the world.' },
+      { arabic: 'الضِّيَافَةُ قِيمَةٌ مُهِمَّةٌ عِنْدَ الْعَرَب.', english: 'Hospitality is an important value among Arabs.' },
+      { arabic: 'الْقَهْوَةُ الْعَرَبِيَّةُ رَمْزٌ لِلْكَرَم.', english: 'Arabic coffee is a symbol of generosity.' },
+      { arabic: 'الْخَطُّ الْعَرَبِيُّ فَنٌّ جَمِيل.', english: 'Arabic calligraphy is a beautiful art.' },
+      { arabic: 'الْمُوسِيقَى الْعَرَبِيَّةُ مَشْهُورَةٌ فِي كُلِّ الْعَالَم.', english: 'Arabic music is famous all over the world.' },
     ],
   },
 };
 
+// Sentence Card Component (similar to AyahCard)
+interface SentenceCardProps {
+  index: number;
+  arabic: string;
+  english: string;
+  color: string;
+  isPlaying: boolean;
+  isLoading: boolean;
+  onPlay: () => void;
+}
+
+function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
+  return (
+    <View style={styles.sentenceCard}>
+      {/* Header with Number and Play Button */}
+      <View style={styles.sentenceHeader}>
+        <View style={[styles.sentenceNumber, { backgroundColor: color + '20' }]}>
+          <Text style={[styles.sentenceNumberText, { color }]}>{index + 1}</Text>
+        </View>
+        <Pressable
+          style={[
+            styles.playButton,
+            { backgroundColor: color },
+            isPlaying && styles.playButtonActive,
+          ]}
+          onPress={onPlay}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#ffffff" />
+          ) : (
+            <Ionicons name={isPlaying ? 'pause' : 'play'} size={18} color="#ffffff" />
+          )}
+        </Pressable>
+      </View>
+
+      {/* Arabic Text */}
+      <Text style={styles.sentenceArabic}>{arabic}</Text>
+
+      {/* English Translation */}
+      <Text style={styles.sentenceEnglish}>{english}</Text>
+    </View>
+  );
+}
+
 export default function ReadingDetailScreen() {
   const { textId } = useLocalSearchParams<{ textId: string }>();
-  const {
-    startReading,
-    completeReading,
-    addXp,
-    updateStreak,
-  } = useProgressStore();
+  const { startReading, completeReading, addXp, updateStreak } = useProgressStore();
 
-  const { speak, speakSlow, isSpeaking } = useArabicSpeech();
+  const { speak, isSpeaking } = useArabicSpeech();
   const text = readingContent[textId || ''];
+
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [currentPlayingIndex, setCurrentPlayingIndex] = useState<number | null>(null);
+  const isPlayingAllRef = useRef(false);
+  const currentIndexRef = useRef(0);
+  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     if (textId) {
       startReading(textId);
     }
   }, [textId]);
+
+  // Play a single sentence
+  const handlePlaySentence = useCallback((index: number) => {
+    if (!text) return;
+    setCurrentPlayingIndex(index);
+    speak(text.paragraphs[index].arabic);
+  }, [text, speak]);
+
+  // Play all sentences sequentially
+  const handlePlayAll = useCallback(async () => {
+    if (!text) return;
+
+    if (isPlayingAll) {
+      // Stop playback
+      isPlayingAllRef.current = false;
+      setIsPlayingAll(false);
+      setCurrentPlayingIndex(null);
+    } else {
+      // Start playing all
+      isPlayingAllRef.current = true;
+      setIsPlayingAll(true);
+
+      for (let i = 0; i < text.paragraphs.length; i++) {
+        if (!isPlayingAllRef.current) break;
+
+        currentIndexRef.current = i;
+        setCurrentPlayingIndex(i);
+
+        await new Promise<void>((resolve) => {
+          speak(text.paragraphs[i].arabic);
+          // Wait for speech to complete (approximate timing)
+          setTimeout(resolve, 2500);
+        });
+      }
+
+      isPlayingAllRef.current = false;
+      setIsPlayingAll(false);
+      setCurrentPlayingIndex(null);
+    }
+  }, [text, speak, isPlayingAll]);
+
+  const handleComplete = () => {
+    if (textId) {
+      completeReading(textId);
+      addXp(30);
+      updateStreak();
+      router.back();
+    }
+  };
 
   if (!text) {
     return (
@@ -329,74 +267,98 @@ export default function ReadingDetailScreen() {
     );
   }
 
-  const handleComplete = () => {
-    if (textId) {
-      completeReading(textId);
-      addXp(30);
-      updateStreak();
-      router.back();
-    }
+  const levelColors = {
+    beginner: '#10b981',
+    intermediate: '#6366f1',
+    advanced: '#D4AF37',
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
-          <View style={styles.headerText}>
-            <Text style={styles.title}>{text.title}</Text>
+          <View style={styles.headerTitle}>
             <Text style={styles.titleArabic}>{text.titleArabic}</Text>
+            <Text style={styles.title}>{text.title}</Text>
+          </View>
+          <View style={styles.headerIcon}>
+            <Text style={styles.iconText}>{text.icon}</Text>
           </View>
         </View>
 
-        {/* Play All Button */}
-        <View style={styles.controls}>
+        {/* Info Card */}
+        <View style={[styles.infoCard, { borderColor: text.color + '30' }]}>
+          <View style={styles.infoRow}>
+            <View style={styles.infoItem}>
+              <Ionicons name="list" size={16} color={text.color} />
+              <Text style={styles.infoText}>{text.paragraphs.length} Sentences</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons name="school" size={16} color={text.color} />
+              <Text style={[styles.infoText, { textTransform: 'capitalize' }]}>{text.level}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons name="time" size={16} color={text.color} />
+              <Text style={styles.infoText}>~{Math.ceil(text.paragraphs.length * 0.5)} min</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Sentences Header with Play All */}
+        <View style={styles.sentencesHeader}>
+          <Text style={styles.sectionTitle}>Sentences</Text>
           <Pressable
-            style={[styles.playAllButton, isSpeaking && styles.playAllButtonActive]}
-            onPress={() => {
-              const allText = text.paragraphs.map(p => p.arabic).join(' ');
-              speakSlow(allText);
-            }}
+            style={[
+              styles.playAllButton,
+              { backgroundColor: text.color },
+              isPlayingAll && styles.playAllButtonActive,
+            ]}
+            onPress={handlePlayAll}
           >
-            <Ionicons
-              name={isSpeaking ? 'pause' : 'play'}
-              size={20}
-              color="#ffffff"
-            />
-            <Text style={styles.playAllText}>
-              {isSpeaking ? 'Playing...' : 'Play All'}
-            </Text>
+            {isPlayingAll ? (
+              <>
+                <Ionicons name="stop" size={14} color="#ffffff" />
+                <Text style={styles.playAllText}>
+                  {currentPlayingIndex !== null ? `${currentPlayingIndex + 1}/${text.paragraphs.length}` : 'Stop'}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Ionicons name="play" size={14} color="#ffffff" />
+                <Text style={styles.playAllText}>Play All</Text>
+              </>
+            )}
           </Pressable>
         </View>
 
-        {/* Reading Content */}
-        <View style={styles.content}>
+        {/* Sentence Cards */}
+        <View style={styles.sentencesContainer}>
           {text.paragraphs.map((paragraph, index) => (
-            <View key={index} style={styles.paragraph}>
-              <View style={styles.arabicRow}>
-                <Text style={styles.arabicText}>{paragraph.arabic}</Text>
-                <Pressable
-                  style={styles.audioBtn}
-                  onPress={() => speak(paragraph.arabic)}
-                >
-                  <Ionicons name="volume-medium" size={20} color="#10b981" />
-                </Pressable>
-              </View>
-              <Text style={styles.englishText}>{paragraph.english}</Text>
-            </View>
+            <SentenceCard
+              key={index}
+              index={index}
+              arabic={paragraph.arabic}
+              english={paragraph.english}
+              color={text.color}
+              isPlaying={currentPlayingIndex === index}
+              isLoading={false}
+              onPlay={() => handlePlaySentence(index)}
+            />
           ))}
         </View>
 
         {/* Complete Button */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Pressable style={styles.completeButton} onPress={handleComplete}>
+          <Pressable
+            style={[styles.completeButton, { backgroundColor: text.color }]}
+            onPress={handleComplete}
+          >
             <Ionicons name="checkmark-circle" size={24} color="#ffffff" />
-            <Text style={styles.completeButtonText}>
-              Mark as Complete (+30 XP)
-            </Text>
+            <Text style={styles.completeButtonText}>Mark as Complete (+30 XP)</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -413,8 +375,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 20,
+    paddingVertical: 16,
   },
   backButton: {
     width: 40,
@@ -424,95 +385,128 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerText: {
+  headerTitle: {
     flex: 1,
-    marginLeft: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    alignItems: 'center',
   },
   titleArabic: {
-    fontSize: 16,
+    color: '#ffffff',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  title: {
     color: '#10b981',
+    fontSize: 14,
     marginTop: 4,
   },
-  playButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#10b981',
+  headerIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: '#1e293b',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  playButtonActive: {
-    backgroundColor: '#6366f1',
+  iconText: {
+    fontSize: 24,
   },
-  controls: {
+  infoCard: {
+    backgroundColor: '#1e293b',
+    marginHorizontal: 20,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,
+    borderWidth: 1,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  infoText: {
+    color: '#94a3b8',
+    fontSize: 13,
+  },
+  sentencesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 24,
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   playAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#10b981',
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: 12,
-    gap: 10,
+    borderRadius: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    gap: 6,
   },
   playAllButtonActive: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#ef4444',
   },
   playAllText: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: '600',
   },
-  content: {
+  sentencesContainer: {
     paddingHorizontal: 20,
   },
-  paragraph: {
+  // Sentence Card Styles
+  sentenceCard: {
     backgroundColor: '#1e293b',
     borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    borderLeftWidth: 4,
-    borderLeftColor: '#10b981',
+    padding: 16,
+    marginBottom: 12,
   },
-  arabicRow: {
+  sentenceHeader: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
   },
-  arabicText: {
-    fontSize: 26,
-    color: '#ffffff',
-    lineHeight: 44,
-    textAlign: 'right',
-    flex: 1,
-    writingDirection: 'rtl',
-  },
-  audioBtn: {
+  sentenceNumber: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 12,
   },
-  translitText: {
+  sentenceNumberText: {
     fontSize: 14,
-    color: '#6366f1',
-    marginTop: 12,
+    fontWeight: 'bold',
   },
-  englishText: {
-    fontSize: 15,
+  playButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  playButtonActive: {
+    backgroundColor: '#3b82f6',
+  },
+  sentenceArabic: {
+    fontSize: 24,
+    color: '#ffffff',
+    lineHeight: 40,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+    marginBottom: 12,
+  },
+  sentenceEnglish: {
+    fontSize: 14,
     color: '#94a3b8',
-    marginTop: 8,
     lineHeight: 22,
   },
   section: {
@@ -520,18 +514,17 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   completeButton: {
-    backgroundColor: '#10b981',
     borderRadius: 16,
     padding: 18,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 8,
   },
   completeButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: 8,
   },
   comingSoon: {
     flex: 1,
