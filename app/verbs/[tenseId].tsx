@@ -24,7 +24,7 @@ const tenseData: Record<TenseType, TenseInfo> = {
     title: 'Past Tense',
     titleArabic: 'الْمَاضِي',
     description: 'Actions that have been completed. The base form of Arabic verbs.',
-    color: '#6366f1',
+    color: '#10b981',
     icon: 'time-outline',
     personLabels: [
       { key: 'firstPersonSingular', label: 'I', labelArabic: 'أَنَا' },
@@ -41,7 +41,7 @@ const tenseData: Record<TenseType, TenseInfo> = {
     title: 'Present Tense',
     titleArabic: 'الْمُضَارِع',
     description: 'Ongoing actions or habits. Uses prefixes (أ، ت، ي، ن).',
-    color: '#22c55e',
+    color: '#6366f1',
     icon: 'reload-outline',
     personLabels: [
       { key: 'firstPersonSingular', label: 'I', labelArabic: 'أَنَا' },
@@ -75,7 +75,7 @@ const tenseData: Record<TenseType, TenseInfo> = {
     title: 'Commands',
     titleArabic: 'الْأَمْر',
     description: 'Direct orders or requests. Only for "you" forms.',
-    color: '#ec4899',
+    color: '#f59e0b',
     icon: 'megaphone-outline',
     personLabels: [
       { key: 'secondPersonMasculineSingular', label: 'You (m)', labelArabic: 'أَنْتَ' },
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   highlight: {
-    color: '#22c55e',
+    color: '#10b981',
     fontWeight: '600',
   },
   section: {

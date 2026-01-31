@@ -9,10 +9,10 @@ import { useState } from 'react';
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
 const tenseColors: Record<TenseType, string> = {
-  past: '#6366f1',
-  present: '#22c55e',
+  past: '#10b981',
+  present: '#6366f1',
   future: '#D4AF37',
-  imperative: '#ec4899',
+  imperative: '#f59e0b',
 };
 
 const tenseLabels: Record<TenseType, { en: string; ar: string }> = {
@@ -89,7 +89,7 @@ export default function VerbDetailScreen() {
               onPress={() => speak(verb.pastTense)}
             >
               <Text style={styles.verbTitle}>{verb.pastTense}</Text>
-              <Ionicons name="volume-high" size={20} color="#ec4899" />
+              <Ionicons name="volume-high" size={20} color="#10b981" />
             </Pressable>
             <Text style={styles.verbMeaning}>{verb.meaning}</Text>
           </View>

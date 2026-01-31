@@ -18,7 +18,7 @@ export default function VerbsScreen() {
       titleArabic: 'الْمَاضِي',
       description: 'He wrote, I studied, she went...',
       icon: 'time-outline' as const,
-      color: '#6366f1',
+      color: '#10b981',
     },
     {
       id: 'present',
@@ -26,7 +26,7 @@ export default function VerbsScreen() {
       titleArabic: 'الْمُضَارِع',
       description: 'He writes, I study, she goes...',
       icon: 'reload-outline' as const,
-      color: '#22c55e',
+      color: '#6366f1',
     },
     {
       id: 'future',
@@ -42,7 +42,7 @@ export default function VerbsScreen() {
       titleArabic: 'الْأَمْر',
       description: 'Write!, Read!, Go!...',
       icon: 'megaphone-outline' as const,
-      color: '#ec4899',
+      color: '#f59e0b',
     },
   ];
 
@@ -62,7 +62,7 @@ export default function VerbsScreen() {
 
         {/* Intro Card */}
         <View style={styles.introCard}>
-          <Ionicons name="information-circle" size={24} color="#ec4899" />
+          <Ionicons name="information-circle" size={24} color="#10b981" />
           <View style={styles.introContent}>
             <Text style={styles.introTitle}>Arabic Verb System</Text>
             <Text style={styles.introText}>
@@ -100,7 +100,7 @@ export default function VerbsScreen() {
 
           {/* Quiz Practice */}
           <Pressable
-            style={[styles.practiceButton, { backgroundColor: '#ec4899' }]}
+            style={[styles.practiceButton, { backgroundColor: '#10b981' }]}
             onPress={() =>
               router.push({
                 pathname: '/verbs/quiz-practice',
@@ -159,7 +159,7 @@ export default function VerbsScreen() {
                     speak(verb.pastTense);
                   }}
                 >
-                  <Ionicons name="volume-high" size={16} color="#ec4899" />
+                  <Ionicons name="volume-high" size={16} color="#10b981" />
                 </Pressable>
                 <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
                 <Text style={styles.verbMeaningText}>{verb.meaning}</Text>
@@ -234,18 +234,18 @@ const styles = StyleSheet.create({
   },
   titleArabic: {
     fontSize: 18,
-    color: '#ec4899',
+    color: '#10b981',
     marginTop: 4,
   },
   introCard: {
     flexDirection: 'row',
-    backgroundColor: '#ec489920',
+    backgroundColor: '#10b98120',
     marginHorizontal: 20,
     borderRadius: 16,
     padding: 16,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#ec489940',
+    borderColor: '#10b98140',
   },
   introContent: {
     flex: 1,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   introTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ec4899',
+    color: '#10b981',
     marginBottom: 4,
   },
   introText: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   },
   categoryTitleArabic: {
     fontSize: 14,
-    color: '#ec4899',
+    color: '#10b981',
     marginTop: 2,
   },
   categoryDescription: {
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#ec489920',
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
   },
