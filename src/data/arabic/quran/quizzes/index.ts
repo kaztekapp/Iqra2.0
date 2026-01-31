@@ -4,7 +4,6 @@
 import { QuizQuestion, QuizCategory, QuizCategoryInfo } from '../../../../types/quran';
 import { ALL_SURAH_STRUCTURE_QUESTIONS, SURAH_STRUCTURE_SETS, SURAH_STRUCTURE_SET_KEYS } from './surahStructure';
 import { ALL_JUZ_QUESTIONS, JUZ_SETS, JUZ_SET_KEYS, JUZ_SET_NAMES } from './juzQuestions';
-import { ALL_MEANING_QUESTIONS, MEANING_SETS, MEANING_SET_KEYS, MEANING_SET_NAMES } from './meaningQuestions';
 import { ALL_MAKKI_MADANI_QUESTIONS, MAKKI_MADANI_SETS, MAKKI_MADANI_SET_KEYS, MAKKI_MADANI_SET_NAMES } from './makkiMadaniQuestions';
 import { ALL_TAJWEED_QUESTIONS, TAJWEED_SETS, TAJWEED_SET_KEYS, TAJWEED_SET_NAMES } from './tajweedQuestions';
 
@@ -27,15 +26,6 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
     icon: 'layers',
     color: '#3b82f6',
     questionCount: 100,
-  },
-  {
-    id: 'meaning_tafsir',
-    nameEnglish: 'Meaning & Themes',
-    nameArabic: 'المعاني والمواضيع',
-    description: 'Understand the meanings and themes of Surahs',
-    icon: 'bulb',
-    color: '#f59e0b',
-    questionCount: 50,
   },
   {
     id: 'makki_madani',
@@ -64,8 +54,6 @@ export function getQuestionsByCategory(category: QuizCategory): QuizQuestion[] {
       return ALL_SURAH_STRUCTURE_QUESTIONS;
     case 'juz':
       return ALL_JUZ_QUESTIONS;
-    case 'meaning_tafsir':
-      return ALL_MEANING_QUESTIONS;
     case 'makki_madani':
       return ALL_MAKKI_MADANI_QUESTIONS;
     case 'tajweed':
@@ -113,8 +101,6 @@ export function getTotalSets(category: QuizCategory): number {
       return SURAH_STRUCTURE_SET_KEYS.length;
     case 'juz':
       return JUZ_SET_KEYS.length;
-    case 'meaning_tafsir':
-      return MEANING_SET_KEYS.length;
     case 'makki_madani':
       return MAKKI_MADANI_SET_KEYS.length;
     case 'tajweed':
@@ -134,10 +120,6 @@ export function getQuestionsBySet(category: QuizCategory, setIndex: number): Qui
     case 'juz': {
       const setKey = JUZ_SET_KEYS[setIndex];
       return setKey ? JUZ_SETS[setKey] : [];
-    }
-    case 'meaning_tafsir': {
-      const setKey = MEANING_SET_KEYS[setIndex];
-      return setKey ? MEANING_SETS[setKey] : [];
     }
     case 'makki_madani': {
       const setKey = MAKKI_MADANI_SET_KEYS[setIndex];
@@ -162,10 +144,6 @@ export function getSetName(category: QuizCategory, setIndex: number): string {
     case 'juz': {
       const setKey = JUZ_SET_KEYS[setIndex];
       return setKey ? (JUZ_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
-    }
-    case 'meaning_tafsir': {
-      const setKey = MEANING_SET_KEYS[setIndex];
-      return setKey ? (MEANING_SET_NAMES[setKey] || `Set ${setIndex + 1}`) : `Set ${setIndex + 1}`;
     }
     case 'makki_madani': {
       const setKey = MAKKI_MADANI_SET_KEYS[setIndex];

@@ -301,7 +301,6 @@ export interface QuranExercise {
 export type QuizCategory =
   | 'surah_structure'    // Surah names, numbers, order
   | 'juz'                // Juz-related questions
-  | 'meaning_tafsir'     // Meanings and themes
   | 'makki_madani'       // Revelation location
   | 'tajweed';           // Tajweed rules
 
