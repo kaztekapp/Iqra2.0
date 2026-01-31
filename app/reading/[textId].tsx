@@ -295,15 +295,12 @@ const readingContent: Record<string, {
 export default function ReadingDetailScreen() {
   const { textId } = useLocalSearchParams<{ textId: string }>();
   const {
-    showVowels,
-    setShowVowels,
     startReading,
     completeReading,
     addXp,
     updateStreak,
   } = useProgressStore();
 
-  const [showTranslation, setShowTranslation] = useState(true);
   const { speak, speakSlow, isSpeaking } = useArabicSpeech();
   const text = readingContent[textId || ''];
 
@@ -353,53 +350,24 @@ export default function ReadingDetailScreen() {
             <Text style={styles.title}>{text.title}</Text>
             <Text style={styles.titleArabic}>{text.titleArabic}</Text>
           </View>
+        </View>
+
+        {/* Play All Button */}
+        <View style={styles.controls}>
           <Pressable
-            style={[styles.playButton, isSpeaking && styles.playButtonActive]}
+            style={[styles.playAllButton, isSpeaking && styles.playAllButtonActive]}
             onPress={() => {
               const allText = text.paragraphs.map(p => p.arabic).join(' ');
               speakSlow(allText);
             }}
           >
-            <Ionicons name={isSpeaking ? "pause" : "play"} size={20} color="#ffffff" />
-          </Pressable>
-        </View>
-
-        {/* Controls */}
-        <View style={styles.controls}>
-          <Pressable
-            style={[styles.controlBtn, showVowels && styles.controlBtnActive]}
-            onPress={() => setShowVowels(!showVowels)}
-          >
             <Ionicons
-              name="text"
-              size={18}
-              color={showVowels ? '#ffffff' : '#94a3b8'}
+              name={isSpeaking ? 'pause' : 'play'}
+              size={20}
+              color="#ffffff"
             />
-            <Text
-              style={[
-                styles.controlText,
-                showVowels && styles.controlTextActive,
-              ]}
-            >
-              Vowels
-            </Text>
-          </Pressable>
-          <Pressable
-            style={[styles.controlBtn, showTranslation && styles.controlBtnActive]}
-            onPress={() => setShowTranslation(!showTranslation)}
-          >
-            <Ionicons
-              name="language"
-              size={18}
-              color={showTranslation ? '#ffffff' : '#94a3b8'}
-            />
-            <Text
-              style={[
-                styles.controlText,
-                showTranslation && styles.controlTextActive,
-              ]}
-            >
-              Translation
+            <Text style={styles.playAllText}>
+              {isSpeaking ? 'Playing...' : 'Play All'}
             </Text>
           </Pressable>
         </View>
@@ -417,9 +385,7 @@ export default function ReadingDetailScreen() {
                   <Ionicons name="volume-medium" size={20} color="#10b981" />
                 </Pressable>
               </View>
-              {showTranslation && (
-                <Text style={styles.englishText}>{paragraph.english}</Text>
-              )}
+              <Text style={styles.englishText}>{paragraph.english}</Text>
             </View>
           ))}
         </View>
@@ -484,30 +450,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#6366f1',
   },
   controls: {
-    flexDirection: 'row',
     paddingHorizontal: 20,
     marginBottom: 24,
-    gap: 12,
   },
-  controlBtn: {
+  playAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1e293b',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 20,
-    gap: 6,
-  },
-  controlBtnActive: {
+    justifyContent: 'center',
     backgroundColor: '#10b981',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+    gap: 10,
   },
-  controlText: {
-    color: '#94a3b8',
-    fontSize: 14,
-    fontWeight: '600',
+  playAllButtonActive: {
+    backgroundColor: '#6366f1',
   },
-  controlTextActive: {
+  playAllText: {
     color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   content: {
     paddingHorizontal: 20,
