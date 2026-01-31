@@ -3,8 +3,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { verbExercises } from '../../src/data/arabic/exercises/verbExercises';
+import { arabicVerbs } from '../../src/data/arabic/verbs/conjugations';
+import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
 export default function VerbsScreen() {
+  const { speak } = useArabicSpeech();
   const writingExercises = verbExercises.filter(ex => ex.type === 'writing');
   const quizExercises = verbExercises.filter(ex => ex.type !== 'writing');
 
@@ -76,7 +79,7 @@ export default function VerbsScreen() {
             <Pressable
               key={category.id}
               style={styles.categoryCard}
-              onPress={() => {/* TODO: Navigate to tense detail */}}
+              onPress={() => router.push(`/verbs/${category.id}` as any)}
             >
               <View style={[styles.categoryIcon, { backgroundColor: category.color + '20' }]}>
                 <Ionicons name={category.icon} size={24} color={category.color} />
@@ -136,6 +139,34 @@ export default function VerbsScreen() {
               <Text style={styles.exerciseCountText}>{writingExercises.length}</Text>
             </View>
           </Pressable>
+        </View>
+
+        {/* All Verbs */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>All Verbs ({arabicVerbs.length})</Text>
+          <Text style={styles.sectionSubtitle}>Tap any verb to see full conjugations</Text>
+          <View style={styles.verbsGrid}>
+            {arabicVerbs.map((verb) => (
+              <Pressable
+                key={verb.id}
+                style={styles.verbCard}
+                onPress={() => router.push(`/verbs/verb/${verb.id}` as any)}
+              >
+                <Pressable
+                  style={styles.verbAudioButton}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    speak(verb.pastTense);
+                  }}
+                >
+                  <Ionicons name="volume-high" size={16} color="#ec4899" />
+                </Pressable>
+                <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
+                <Text style={styles.verbMeaningText}>{verb.meaning}</Text>
+                <Text style={styles.verbRootText}>{verb.root}</Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
 
         {/* Key Concepts */}
@@ -306,6 +337,53 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  sectionSubtitle: {
+    fontSize: 13,
+    color: '#64748b',
+    marginBottom: 16,
+    marginTop: -8,
+  },
+  verbsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  verbCard: {
+    width: '31%',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 12,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  verbAudioButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#ec489920',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  verbArabicText: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: '600',
+    marginBottom: 4,
+    marginTop: 4,
+  },
+  verbMeaningText: {
+    fontSize: 11,
+    color: '#94a3b8',
+    textAlign: 'center',
+  },
+  verbRootText: {
+    fontSize: 10,
+    color: '#64748b',
+    marginTop: 4,
   },
   conceptsGrid: {
     gap: 12,

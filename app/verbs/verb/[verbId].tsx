@@ -1,0 +1,429 @@
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { router, useLocalSearchParams } from 'expo-router';
+import { arabicVerbs, getVerbById } from '../../../src/data/arabic/verbs/conjugations';
+import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
+import { useState } from 'react';
+
+type TenseType = 'past' | 'present' | 'future' | 'imperative';
+
+const tenseColors: Record<TenseType, string> = {
+  past: '#6366f1',
+  present: '#22c55e',
+  future: '#D4AF37',
+  imperative: '#ec4899',
+};
+
+const tenseLabels: Record<TenseType, { en: string; ar: string }> = {
+  past: { en: 'Past', ar: 'الْمَاضِي' },
+  present: { en: 'Present', ar: 'الْمُضَارِع' },
+  future: { en: 'Future', ar: 'الْمُسْتَقْبَل' },
+  imperative: { en: 'Command', ar: 'الْأَمْر' },
+};
+
+const personLabels = {
+  full: [
+    { key: 'firstPersonSingular', label: 'I', labelArabic: 'أَنَا' },
+    { key: 'secondPersonMasculineSingular', label: 'You (m)', labelArabic: 'أَنْتَ' },
+    { key: 'secondPersonFeminineSingular', label: 'You (f)', labelArabic: 'أَنْتِ' },
+    { key: 'thirdPersonMasculineSingular', label: 'He', labelArabic: 'هُوَ' },
+    { key: 'thirdPersonFeminineSingular', label: 'She', labelArabic: 'هِيَ' },
+    { key: 'secondPersonDual', label: 'You two', labelArabic: 'أَنْتُمَا' },
+    { key: 'thirdPersonMasculineDual', label: 'They two (m)', labelArabic: 'هُمَا' },
+    { key: 'thirdPersonFeminineDual', label: 'They two (f)', labelArabic: 'هُمَا' },
+    { key: 'firstPersonPlural', label: 'We', labelArabic: 'نَحْنُ' },
+    { key: 'secondPersonMasculinePlural', label: 'You all (m)', labelArabic: 'أَنْتُمْ' },
+    { key: 'secondPersonFemininePlural', label: 'You all (f)', labelArabic: 'أَنْتُنَّ' },
+    { key: 'thirdPersonMasculinePlural', label: 'They (m)', labelArabic: 'هُمْ' },
+    { key: 'thirdPersonFemininePlural', label: 'They (f)', labelArabic: 'هُنَّ' },
+  ],
+  imperative: [
+    { key: 'secondPersonMasculineSingular', label: 'You (m)', labelArabic: 'أَنْتَ' },
+    { key: 'secondPersonFeminineSingular', label: 'You (f)', labelArabic: 'أَنْتِ' },
+    { key: 'secondPersonDual', label: 'You two', labelArabic: 'أَنْتُمَا' },
+    { key: 'secondPersonMasculinePlural', label: 'You all (m)', labelArabic: 'أَنْتُمْ' },
+    { key: 'secondPersonFemininePlural', label: 'You all (f)', labelArabic: 'أَنْتُنَّ' },
+  ],
+};
+
+export default function VerbDetailScreen() {
+  const { verbId } = useLocalSearchParams<{ verbId: string }>();
+  const { speak, isSpeaking } = useArabicSpeech();
+  const [activeTense, setActiveTense] = useState<TenseType>('past');
+
+  const verb = getVerbById(verbId);
+
+  if (!verb) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>Verb not found</Text>
+      </SafeAreaView>
+    );
+  }
+
+  const getConjugation = (tense: TenseType, personKey: string): string => {
+    if (tense === 'imperative') {
+      return (verb.conjugations.imperative as any)?.[personKey] || '-';
+    }
+    return (verb.conjugations[tense] as any)?.[personKey] || '-';
+  };
+
+  const getExamplesForTense = (tense: TenseType) => {
+    return verb.examples?.filter(ex => ex.tense === tense) || [];
+  };
+
+  const currentLabels = activeTense === 'imperative' ? personLabels.imperative : personLabels.full;
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable style={styles.backButton} onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#ffffff" />
+          </Pressable>
+          <View style={styles.headerText}>
+            <Pressable
+              style={styles.verbTitleContainer}
+              onPress={() => speak(verb.pastTense)}
+            >
+              <Text style={styles.verbTitle}>{verb.pastTense}</Text>
+              <Ionicons name="volume-high" size={20} color="#ec4899" />
+            </Pressable>
+            <Text style={styles.verbMeaning}>{verb.meaning}</Text>
+          </View>
+        </View>
+
+        {/* Verb Info Card */}
+        <View style={styles.infoCard}>
+          <View style={styles.infoRow}>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Root</Text>
+              <Text style={styles.infoValue}>{verb.root}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Form</Text>
+              <Text style={styles.infoValue}>{verb.form}</Text>
+            </View>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoLabel}>Level</Text>
+              <Text style={styles.infoValue}>{verb.level}</Text>
+            </View>
+          </View>
+          <View style={styles.infoRow}>
+            <Pressable style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
+              <Text style={styles.tensePreviewLabel}>Past</Text>
+              <Text style={styles.tensePreviewValue}>{verb.pastTense}</Text>
+            </Pressable>
+            <Pressable style={styles.tensePreview} onPress={() => speak(verb.presentTense)}>
+              <Text style={styles.tensePreviewLabel}>Present</Text>
+              <Text style={styles.tensePreviewValue}>{verb.presentTense}</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {/* Tense Tabs */}
+        <View style={styles.tenseTabs}>
+          {(['past', 'present', 'future', 'imperative'] as TenseType[]).map((tense) => (
+            <Pressable
+              key={tense}
+              style={[
+                styles.tenseTab,
+                activeTense === tense && { backgroundColor: tenseColors[tense] + '30', borderColor: tenseColors[tense] },
+              ]}
+              onPress={() => setActiveTense(tense)}
+            >
+              <Text
+                style={[
+                  styles.tenseTabText,
+                  activeTense === tense && { color: tenseColors[tense] },
+                ]}
+              >
+                {tenseLabels[tense].en}
+              </Text>
+              <Text
+                style={[
+                  styles.tenseTabArabic,
+                  activeTense === tense && { color: tenseColors[tense] },
+                ]}
+              >
+                {tenseLabels[tense].ar}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+
+        {/* Conjugation Table */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: tenseColors[activeTense] }]}>
+            {tenseLabels[activeTense].en} Tense Conjugations
+          </Text>
+
+          <View style={styles.conjugationTable}>
+            {currentLabels.map((person) => {
+              const conjugation = getConjugation(activeTense, person.key);
+              return (
+                <Pressable
+                  key={person.key}
+                  style={styles.conjugationRow}
+                  onPress={() => speak(conjugation)}
+                >
+                  <View style={styles.personInfo}>
+                    <Text style={styles.personLabel}>{person.label}</Text>
+                    <Text style={styles.personArabic}>{person.labelArabic}</Text>
+                  </View>
+                  <View style={styles.conjugationValue}>
+                    <Text style={styles.conjugationText}>{conjugation}</Text>
+                    <Ionicons name="volume-high" size={16} color={tenseColors[activeTense]} />
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* Examples */}
+        {getExamplesForTense(activeTense).length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Examples</Text>
+            {getExamplesForTense(activeTense).map((example, idx) => (
+              <Pressable
+                key={idx}
+                style={styles.exampleCard}
+                onPress={() => speak(example.arabic)}
+              >
+                <View style={styles.exampleContent}>
+                  <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                  <Text style={styles.exampleEnglish}>{example.english}</Text>
+                </View>
+                <Ionicons name="volume-high" size={20} color={tenseColors[activeTense]} />
+              </Pressable>
+            ))}
+          </View>
+        )}
+
+        {/* All Examples Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>All Examples</Text>
+          {verb.examples?.map((example, idx) => (
+            <Pressable
+              key={idx}
+              style={styles.exampleCard}
+              onPress={() => speak(example.arabic)}
+            >
+              <View style={styles.exampleContent}>
+                <View style={[styles.tenseBadge, { backgroundColor: tenseColors[example.tense as TenseType] + '30' }]}>
+                  <Text style={[styles.tenseBadgeText, { color: tenseColors[example.tense as TenseType] }]}>
+                    {example.tense}
+                  </Text>
+                </View>
+                <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                <Text style={styles.exampleEnglish}>{example.english}</Text>
+              </View>
+              <Ionicons name="volume-high" size={20} color="#64748b" />
+            </Pressable>
+          ))}
+        </View>
+
+        <View style={{ height: 100 }} />
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0f172a',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#1e293b',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  headerText: {
+    flex: 1,
+  },
+  verbTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  verbTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  verbMeaning: {
+    fontSize: 16,
+    color: '#94a3b8',
+    marginTop: 4,
+  },
+  errorText: {
+    color: '#ef4444',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 40,
+  },
+  infoCard: {
+    marginHorizontal: 20,
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 12,
+  },
+  infoItem: {
+    alignItems: 'center',
+  },
+  infoLabel: {
+    fontSize: 12,
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  infoValue: {
+    fontSize: 16,
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  tensePreview: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#0f172a',
+    borderRadius: 8,
+    padding: 12,
+    marginHorizontal: 4,
+  },
+  tensePreviewLabel: {
+    fontSize: 11,
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  tensePreviewValue: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  tenseTabs: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    gap: 8,
+    marginBottom: 24,
+  },
+  tenseTab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: '#1e293b',
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  tenseTabText: {
+    fontSize: 12,
+    color: '#64748b',
+    fontWeight: '600',
+  },
+  tenseTabArabic: {
+    fontSize: 11,
+    color: '#64748b',
+    marginTop: 2,
+  },
+  section: {
+    paddingHorizontal: 20,
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 16,
+  },
+  conjugationTable: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 4,
+  },
+  conjugationRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#334155',
+  },
+  personInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  personLabel: {
+    fontSize: 13,
+    color: '#94a3b8',
+    width: 90,
+  },
+  personArabic: {
+    fontSize: 15,
+    color: '#64748b',
+  },
+  conjugationValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  conjugationText: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: '500',
+  },
+  exampleCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 8,
+  },
+  exampleContent: {
+    flex: 1,
+  },
+  exampleArabic: {
+    fontSize: 18,
+    color: '#ffffff',
+    marginBottom: 4,
+  },
+  exampleEnglish: {
+    fontSize: 13,
+    color: '#64748b',
+  },
+  tenseBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+    marginBottom: 6,
+  },
+  tenseBadgeText: {
+    fontSize: 10,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+  },
+});
