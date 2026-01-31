@@ -53,19 +53,14 @@ export default function QuranScreen() {
   const {
     getOverallCompletionPercent,
     getTotalAyahsLearned,
-    getTotalAyahsMemorized,
     getTotalSurahsCompleted,
     getSurahCompletionPercent,
     isSurahCompleted,
-    getDueReviews,
-    progress,
   } = useQuranStore();
 
   const overallProgress = getOverallCompletionPercent();
   const totalLearned = getTotalAyahsLearned();
-  const totalMemorized = getTotalAyahsMemorized();
   const surahsCompleted = getTotalSurahsCompleted();
-  const dueReviews = getDueReviews();
 
   const handleSurahPress = (surahId: string) => {
     router.push(`/quran/surah/${surahId}` as any);
@@ -75,8 +70,8 @@ export default function QuranScreen() {
     router.push('/quran/tajweed' as any);
   };
 
-  const handleMemorizationPress = () => {
-    router.push('/quran/memorization' as any);
+  const handleLearnQuranPress = () => {
+    router.push('/quran/all-surahs' as any);
   };
 
   const handleQuizPress = () => {
@@ -118,36 +113,21 @@ export default function QuranScreen() {
               <Text style={styles.statLabel}>Ayahs Learned</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#8b5cf6' }]}>{totalMemorized}</Text>
-              <Text style={styles.statLabel}>Memorized</Text>
-            </View>
-            <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#f59e0b' }]}>{surahsCompleted}</Text>
               <Text style={styles.statLabel}>Surahs Done</Text>
             </View>
           </View>
         </View>
 
-        {/* Due Reviews Alert */}
-        {dueReviews.length > 0 && (
-          <Pressable style={styles.reviewAlert} onPress={handleMemorizationPress}>
-            <View style={styles.reviewAlertIcon}>
-              <Ionicons name="refresh" size={24} color="#ffffff" />
-            </View>
-            <View style={styles.reviewAlertContent}>
-              <Text style={styles.reviewAlertTitle}>
-                {dueReviews.length} Review{dueReviews.length > 1 ? 's' : ''} Due
-              </Text>
-              <Text style={styles.reviewAlertDesc}>
-                Keep your memorization strong
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color="#ffffff" />
-          </Pressable>
-        )}
-
         {/* Quick Actions */}
         <View style={styles.quickActions}>
+          <Pressable style={styles.actionCard} onPress={handleLearnQuranPress}>
+            <View style={[styles.actionIcon, { backgroundColor: '#3b82f620' }]}>
+              <Ionicons name="book" size={24} color="#3b82f6" />
+            </View>
+            <Text style={styles.actionTitle}>Learn</Text>
+            <Text style={styles.actionDesc}>All 114 Surahs</Text>
+          </Pressable>
           <Pressable style={styles.actionCard} onPress={handleQuizPress}>
             <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
               <Ionicons name="help-circle" size={24} color="#f59e0b" />
@@ -161,13 +141,6 @@ export default function QuranScreen() {
             </View>
             <Text style={styles.actionTitle}>Tajweed</Text>
             <Text style={styles.actionDesc}>Pronunciation</Text>
-          </Pressable>
-          <Pressable style={styles.actionCard} onPress={handleMemorizationPress}>
-            <View style={[styles.actionIcon, { backgroundColor: '#8b5cf620' }]}>
-              <Ionicons name="heart" size={24} color="#8b5cf6" />
-            </View>
-            <Text style={styles.actionTitle}>Memorize</Text>
-            <Text style={styles.actionDesc}>Track progress</Text>
           </Pressable>
         </View>
 
@@ -269,37 +242,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginTop: 4,
     textAlign: 'center',
-  },
-  reviewAlert: {
-    backgroundColor: '#10b981',
-    marginHorizontal: 20,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  reviewAlertIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  reviewAlertContent: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  reviewAlertTitle: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  reviewAlertDesc: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: 12,
-    marginTop: 2,
   },
   quickActions: {
     flexDirection: 'row',
