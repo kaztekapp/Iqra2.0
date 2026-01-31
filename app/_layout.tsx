@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { quranAudioService } from '../src/services/quranAudioService';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -28,6 +29,8 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
+      // Pre-configure audio session silently
+      quranAudioService.warmUp();
     }
   }, [fontsLoaded]);
 

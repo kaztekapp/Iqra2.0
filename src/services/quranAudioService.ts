@@ -101,16 +101,32 @@ class QuranAudioService {
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
   private stoppedByUser = false; // Track if playback was stopped by user
+  private isAudioConfigured = false; // Track if audio session is configured
+  private configurationInProgress = false; // Prevent concurrent configuration
 
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
   private currentAyah: number | null = null;
 
   constructor() {
-    // Audio will be configured before each playback
+    // Audio will be configured on first use
   }
 
   private async configureAudio(): Promise<boolean> {
+    // Already configured successfully
+    if (this.isAudioConfigured) {
+      return true;
+    }
+
+    // Prevent concurrent configuration attempts
+    if (this.configurationInProgress) {
+      // Wait for ongoing configuration
+      await new Promise(resolve => setTimeout(resolve, 100));
+      return this.isAudioConfigured;
+    }
+
+    this.configurationInProgress = true;
+
     try {
       await setAudioModeAsync({
         playsInSilentMode: true,
@@ -118,9 +134,13 @@ class QuranAudioService {
       });
       // Small delay to let iOS audio session initialize
       await new Promise(resolve => setTimeout(resolve, 50));
+      this.isAudioConfigured = true;
+      this.configurationInProgress = false;
       return true;
-    } catch (error) {
-      console.error('Error configuring audio:', error);
+    } catch {
+      // Audio configuration can fail on simulators or when audio session is busy
+      // This is non-fatal - audio playback will likely still work
+      this.configurationInProgress = false;
       return false;
     }
   }
@@ -193,8 +213,10 @@ class QuranAudioService {
       // Stop any current playback first
       await this.stop();
 
-      // Configure audio session fresh before each playback
-      await this.configureAudio();
+      // Configure audio session (only done once, failures are non-fatal)
+      await this.configureAudio().catch(() => {
+        // Audio config failure is non-fatal, playback may still work
+      });
 
       // Update state to loading
       this.audioState = 'loading';
@@ -260,7 +282,6 @@ class QuranAudioService {
       } catch (playError) {
         // If play fails, try reconfiguring and playing again
         if (retryCount < 2) {
-          console.log('Play failed, retrying...', retryCount + 1);
           this.isTransitioning = false;
           await new Promise(resolve => setTimeout(resolve, 100));
           return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
@@ -270,15 +291,21 @@ class QuranAudioService {
 
       this.isTransitioning = false;
     } catch (error) {
-      console.error('Error playing ayah:', error);
       this.isTransitioning = false;
 
-      // Check if it's a session error and retry
+      // Check if it's a session error and retry silently
       const errorMessage = (error as Error)?.message || '';
-      if ((errorMessage.includes('Session') || errorMessage.includes('OSStatus')) && retryCount < 2) {
+      if ((errorMessage.includes('Session') || errorMessage.includes('OSStatus') || errorMessage.includes('UnexpectedException')) && retryCount < 3) {
+        // Reset audio configuration flag to force reconfiguration
+        this.isAudioConfigured = false;
         // Wait a bit and retry
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 300 * (retryCount + 1)));
         return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
+      }
+
+      // Only log error after all retries have failed
+      if (retryCount >= 3) {
+        console.error('Audio playback failed after retries:', errorMessage);
       }
 
       this.audioState = 'idle';
@@ -497,6 +524,17 @@ class QuranAudioService {
     if (this.player) {
       await this.player.seekTo(positionMillis / 1000);
     }
+  }
+
+  /**
+   * Initialize audio session silently (call on app start)
+   * This pre-configures the audio session to avoid delays on first play
+   */
+  async warmUp(): Promise<void> {
+    // Try to configure audio silently - failures are expected on simulators
+    await this.configureAudio().catch(() => {
+      // Silently ignore - audio will be configured on first play
+    });
   }
 }
 
