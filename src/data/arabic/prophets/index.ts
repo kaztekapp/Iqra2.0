@@ -8,6 +8,7 @@ export { adamStory, adamSubStories } from './stories/adam';
 export { idrisStory, idrisSubStories } from './stories/idris';
 export { nuhStory, nuhSubStories } from './stories/nuh';
 export { hudStory, hudSubStories } from './stories/hud';
+export { salihStory, salihSubStories } from './stories/salih';
 
 // Helper to get a prophet's full story data
 import { Prophet, SubStory } from '../../../types/prophetStories';
@@ -16,6 +17,7 @@ import { adamStory, adamSubStories } from './stories/adam';
 import { idrisStory, idrisSubStories } from './stories/idris';
 import { nuhStory, nuhSubStories } from './stories/nuh';
 import { hudStory, hudSubStories } from './stories/hud';
+import { salihStory, salihSubStories } from './stories/salih';
 
 // Map of prophet IDs to their story data
 const prophetStories: Record<string, { prophet: Prophet; subStories: SubStory[] }> = {
@@ -23,6 +25,7 @@ const prophetStories: Record<string, { prophet: Prophet; subStories: SubStory[] 
   idris: { prophet: idrisStory, subStories: idrisSubStories },
   nuh: { prophet: nuhStory, subStories: nuhSubStories },
   hud: { prophet: hudStory, subStories: hudSubStories },
+  salih: { prophet: salihStory, subStories: salihSubStories },
   // Add more prophets as their stories are created
 };
 
