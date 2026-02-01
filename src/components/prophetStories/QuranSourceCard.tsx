@@ -53,7 +53,9 @@ export function QuranSourceCard({
       </View>
 
       {/* Arabic Text */}
-      <Text style={styles.arabicText}>{source.arabicText}</Text>
+      <View style={styles.arabicContainer}>
+        <Text style={styles.arabicText}>{source.arabicText}</Text>
+      </View>
 
       {/* English Translation */}
       <Text style={styles.translation}>{source.translation}</Text>
@@ -103,13 +105,14 @@ const styles = StyleSheet.create({
   playButtonActive: {
     backgroundColor: '#3b82f6',
   },
+  arabicContainer: {
+    marginBottom: 12,
+  },
   arabicText: {
     color: '#ffffff',
     fontSize: 22,
-    lineHeight: 38,
+    lineHeight: 42,
     textAlign: 'right',
-    writingDirection: 'rtl',
-    marginBottom: 12,
     fontFamily: 'System',
   },
   translation: {

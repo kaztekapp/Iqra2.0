@@ -69,7 +69,9 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
 
       {/* Arabic Text (if available) */}
       {source.arabicText && (
-        <Text style={styles.arabicText}>{source.arabicText}</Text>
+        <View style={styles.arabicContainer}>
+          <Text style={styles.arabicText}>{source.arabicText}</Text>
+        </View>
       )}
 
       {/* English Translation */}
@@ -129,13 +131,14 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontStyle: 'italic',
   },
+  arabicContainer: {
+    marginBottom: 10,
+  },
   arabicText: {
     color: '#ffffff',
     fontSize: 18,
-    lineHeight: 32,
+    lineHeight: 36,
     textAlign: 'right',
-    writingDirection: 'rtl',
-    marginBottom: 10,
     fontFamily: 'System',
   },
   translation: {
