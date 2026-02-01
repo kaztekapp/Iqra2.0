@@ -1,0 +1,242 @@
+// Story of Prophet Yahya (يحيى) - The Pure and Devout
+// Single continuous narrative with Quran sources
+
+import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference } from '../../../../types/prophetStories';
+
+// Full prophet data with story details
+export const yahyaStory: Prophet = {
+  id: 'yahya',
+  nameEnglish: 'Yahya',
+  nameArabic: 'يحيى',
+  order: 23,
+  title: 'The Pure and Devout',
+  titleArabic: 'الطاهر التقي',
+  summary: "Prophet Yahya (John the Baptist) was the miraculous son of Prophet Zakariya, born to elderly parents in answer to sincere supplication. His very name was unique - 'a name We have not assigned to any before' as Allah declared. From childhood, he was given wisdom and commanded to take the Scripture with strength. He lived an ascetic life, calling people to repentance and purity. He confirmed 'a word from Allah' - recognizing Isa as the Messiah. Yahya was martyred for speaking truth to power, becoming one of the greatest prophets, upon whom Allah sent peace at birth, death, and resurrection.",
+  hasSubStories: false,
+  lessons: [
+    'True devotion often means living simply and purely',
+    'Speaking truth to power may cost everything',
+    'Recognizing and supporting other righteous people is noble',
+    'Wisdom can be granted even to the young',
+    'Being dutiful to parents is a prophetic quality',
+    'Peace from Allah at life\'s key moments is the ultimate honor',
+  ],
+  estimatedReadTime: 10,
+  quranMentions: 5,
+  icon: '🌿',
+};
+
+// Single continuous narrative
+const yahyaStoryContent: StoryContentBlock[] = [
+  {
+    id: 'yahya-1',
+    type: 'narrative',
+    order: 1,
+    content: "Prophet Yahya was the answer to years of prayer. His father Zakariya and mother (identified in tradition as Elizabeth, a relative of Maryam) had been childless into old age. When Allah granted their prayer for a righteous son, He gave him a name that no one before had ever carried: Yahya. This unique name marked him from birth as special in Allah's plan.",
+  },
+  {
+    id: 'yahya-2',
+    type: 'quran_source',
+    order: 2,
+    content: "Allah announced Yahya's birth with unique qualities.",
+    source: {
+      type: 'quran',
+      surahNumber: 19,
+      surahNameEnglish: 'Maryam',
+      surahNameArabic: 'مريم',
+      ayahStart: 7,
+      ayahEnd: 7,
+      arabicText: 'يَا زَكَرِيَّا إِنَّا نُبَشِّرُكَ بِغُلَامٍ اسْمُهُ يَحْيَىٰ لَمْ نَجْعَل لَّهُ مِن قَبْلُ سَمِيًّا',
+      translation: '[He was told], "O Zakariya, indeed We give you good tidings of a boy whose name will be Yahya. We have not assigned to any before [this] name."',
+    } as QuranReference,
+  },
+  {
+    id: 'yahya-3',
+    type: 'narrative',
+    order: 3,
+    content: "The name 'Yahya' comes from the Arabic root meaning 'to live.' Some scholars say it signifies that he would live a life of true spiritual vitality, or that he would bring spiritual life to people through his message. The uniqueness of his name indicated the uniqueness of his mission - he would be the bridge between the old prophetic tradition and the coming of Isa.",
+  },
+  {
+    id: 'yahya-4',
+    type: 'quran_source',
+    order: 4,
+    content: "Allah described Yahya's character and mission.",
+    source: {
+      type: 'quran',
+      surahNumber: 3,
+      surahNameEnglish: 'Ali Imran',
+      surahNameArabic: 'آل عمران',
+      ayahStart: 39,
+      ayahEnd: 39,
+      arabicText: 'فَنَادَتْهُ الْمَلَائِكَةُ وَهُوَ قَائِمٌ يُصَلِّي فِي الْمِحْرَابِ أَنَّ اللَّهَ يُبَشِّرُكَ بِيَحْيَىٰ مُصَدِّقًا بِكَلِمَةٍ مِّنَ اللَّهِ وَسَيِّدًا وَحَصُورًا وَنَبِيًّا مِّنَ الصَّالِحِينَ',
+      translation: 'So the angels called him while he was standing in prayer in the chamber, "Indeed, Allah gives you good tidings of Yahya, confirming a word from Allah and [who will be] honorable, chaste, and a prophet from among the righteous."',
+    } as QuranReference,
+  },
+  {
+    id: 'yahya-5',
+    type: 'narrative',
+    order: 5,
+    content: "Four qualities defined Yahya: he would confirm 'a word from Allah' (Isa, who was created by Allah's command 'Be'); he would be a 'sayyid' (leader, master, noble); he would be 'hasur' (chaste, abstaining from worldly desires); and he would be a prophet from among the righteous. Each quality shaped his mission and character.",
+  },
+  {
+    id: 'yahya-6',
+    type: 'narrative',
+    order: 6,
+    content: "Being 'hasur' meant that Yahya lived a life of asceticism. He had no interest in worldly pleasures, luxuries, or even marriage according to some accounts. His entire focus was on worship and calling people to Allah. He wore rough clothing, ate simply, and spent his time in the wilderness, away from the corruptions of society.",
+  },
+  {
+    id: 'yahya-7',
+    type: 'quran_source',
+    order: 7,
+    content: "From childhood, Yahya was given wisdom and commanded to take the Scripture seriously.",
+    source: {
+      type: 'quran',
+      surahNumber: 19,
+      surahNameEnglish: 'Maryam',
+      surahNameArabic: 'مريم',
+      ayahStart: 12,
+      ayahEnd: 13,
+      arabicText: 'يَا يَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ ۖ وَآتَيْنَاهُ الْحُكْمَ صَبِيًّا ۝ وَحَنَانًا مِّن لَّدُنَّا وَزَكَاةً ۖ وَكَانَ تَقِيًّا',
+      translation: '[Allah said], "O Yahya, take the Scripture with determination." And We gave him wisdom [while yet] a boy, and affection from Us and purity, and he was fearing of Allah.',
+    } as QuranReference,
+  },
+  {
+    id: 'yahya-8',
+    type: 'narrative',
+    order: 8,
+    content: "The command 'Take the Scripture with strength' meant that Yahya was to approach the Torah and divine guidance with seriousness, determination, and action - not casually or half-heartedly. Even as a child, he was granted 'hukm' (wisdom/judgment), along with compassion from Allah and spiritual purity. He was 'taqi' - conscious of Allah, careful to avoid sin.",
+  },
+  {
+    id: 'yahya-9',
+    type: 'quran_source',
+    order: 9,
+    content: "Yahya was dutiful to his parents and never arrogant.",
+    source: {
+      type: 'quran',
+      surahNumber: 19,
+      surahNameEnglish: 'Maryam',
+      surahNameArabic: 'مريم',
+      ayahStart: 14,
+      ayahEnd: 15,
+      arabicText: 'وَبَرًّا بِوَالِدَيْهِ وَلَمْ يَكُن جَبَّارًا عَصِيًّا ۝ وَسَلَامٌ عَلَيْهِ يَوْمَ وُلِدَ وَيَوْمَ يَمُوتُ وَيَوْمَ يُبْعَثُ حَيًّا',
+      translation: 'And [he was] dutiful to his parents, and he was not a disobedient tyrant. And peace be upon him the day he was born and the day he dies and the day he is raised alive.',
+    } as QuranReference,
+  },
+  {
+    id: 'yahya-10',
+    type: 'narrative',
+    order: 10,
+    content: "Despite his prophetic status and ascetic lifestyle, Yahya was 'barr' (kind and dutiful) to his parents. He was never 'jabbar' (tyrannical, arrogant) or 'asi' (disobedient). This combination - spiritual authority with humility, otherworldliness with family devotion - marked him as an ideal servant of Allah. And Allah sent salam (peace) upon him at the three most significant moments: birth, death, and resurrection.",
+  },
+  {
+    id: 'yahya-11',
+    type: 'narrative',
+    order: 11,
+    content: "Yahya's mission was to call the Israelites to repentance and to prepare the way for Isa. He preached by the Jordan River and elsewhere, urging people to purify themselves, seek forgiveness, and return to sincere worship of Allah. His message was intense and uncompromising - he did not soften the truth to please people.",
+  },
+  {
+    id: 'yahya-12',
+    type: 'hadith_source',
+    order: 12,
+    content: "The Prophet Muhammad ﷺ spoke of Yahya's tender heart.",
+    source: {
+      type: 'hadith',
+      collection: 'ahmad',
+      narrator: 'Abdullah ibn Abbas',
+      arabicText: 'ما من أحد من ولد آدم إلا قد أخطأ أو هم بخطيئة ليس يحيى بن زكريا',
+      translation: 'There is no one from the children of Adam except that they have sinned or intended to sin, except for Yahya ibn Zakariya.',
+      grade: 'hasan',
+    } as HadithReference,
+  },
+  {
+    id: 'yahya-13',
+    type: 'narrative',
+    order: 13,
+    content: "According to this narration, Yahya was protected from sin in a unique way. His pure heart never even inclined toward wrongdoing. This exceptional status explains his title 'hasur' and the special peace Allah sent upon him. Among the children of Adam, he stands out for complete spiritual purity.",
+  },
+  {
+    id: 'yahya-14',
+    type: 'narrative',
+    order: 14,
+    content: "When Isa began his mission, Yahya recognized and confirmed him. This is the meaning of 'confirming a word from Allah' mentioned in the Quran. Yahya testified to Isa's prophethood and the truth of his message. The two prophets, related through their mothers, worked together to guide the Israelites.",
+  },
+  {
+    id: 'yahya-15',
+    type: 'narrative',
+    order: 15,
+    content: "Yahya's uncompromising stance eventually led to his martyrdom. According to tradition, King Herod of Galilee desired to marry his brother's wife, which was forbidden by Jewish law. Yahya spoke out against this marriage, declaring it unlawful. The woman, angered by Yahya's opposition, manipulated the king into ordering Yahya's execution.",
+  },
+  {
+    id: 'yahya-16',
+    type: 'narrative',
+    order: 16,
+    content: "Yahya was beheaded, and his head was presented on a platter to the scheming woman. He died a martyr, killed for speaking truth to power. But as the Quran declares, 'Peace be upon him the day he dies' - even his death was covered by Allah's peace and blessing. Martyrdom for truth is not defeat but victory.",
+  },
+  {
+    id: 'yahya-17',
+    type: 'hadith_source',
+    order: 17,
+    content: "The Prophet Muhammad ﷺ met Yahya during the Night Journey.",
+    source: {
+      type: 'hadith',
+      collection: 'bukhari',
+      narrator: "Malik ibn Sa'sa'a",
+      arabicText: 'ثم عرج بي إلى السماء الثانية فاستفتح... قيل من معك قال محمد قيل وقد بعث إليه قال قد بعث إليه ففتح لنا فإذا أنا بابني الخالة عيسى ابن مريم ويحيى بن زكريا',
+      translation: 'Then I was taken up to the second heaven... When asked who was with me, it was said Muhammad. When asked if he had been sent for, it was said yes. So it was opened for us, and there I saw the two maternal cousins: Isa ibn Maryam and Yahya ibn Zakariya.',
+      grade: 'sahih',
+    } as HadithReference,
+  },
+  {
+    id: 'yahya-18',
+    type: 'narrative',
+    order: 18,
+    content: "During the miraculous Night Journey (Isra and Mi'raj), Prophet Muhammad ﷺ met Yahya and Isa together in the second heaven. The two cousins, united in life and mission, remained together in the heavens. They welcomed Muhammad ﷺ, acknowledging him as their brother in prophethood. This meeting confirmed the continuity of the prophetic message.",
+  },
+  {
+    id: 'yahya-19',
+    type: 'quran_source',
+    order: 19,
+    content: "Allah lists Yahya among the righteous prophets.",
+    source: {
+      type: 'quran',
+      surahNumber: 6,
+      surahNameEnglish: "Al-An'am",
+      surahNameArabic: 'الأنعام',
+      ayahStart: 85,
+      ayahEnd: 85,
+      arabicText: 'وَزَكَرِيَّا وَيَحْيَىٰ وَعِيسَىٰ وَإِلْيَاسَ ۖ كُلٌّ مِّنَ الصَّالِحِينَ',
+      translation: 'And Zakariya and Yahya and Isa and Ilyas - and all were of the righteous.',
+    } as QuranReference,
+  },
+  {
+    id: 'yahya-20',
+    type: 'narrative',
+    order: 20,
+    content: "Father (Zakariya), son (Yahya), and the one Yahya confirmed (Isa) are mentioned together among the righteous. This family of prophets - connected by blood, marriage, and mission - represents the final flowering of Israelite prophethood before the coming of Muhammad ﷺ.",
+  },
+  {
+    id: 'yahya-21',
+    type: 'narrative',
+    order: 21,
+    content: "The lessons from Yahya's life are profound. True spirituality often means simplicity and detachment from worldly concerns. Speaking truth may cost everything, even one's life, but it is worth the cost. Recognizing and supporting other righteous people is noble - as Yahya did with Isa. And being dutiful to parents remains important even for the most spiritual people.",
+  },
+  {
+    id: 'yahya-22',
+    type: 'narrative',
+    order: 22,
+    content: "Prophet Yahya, the Pure and Devout, was granted peace at birth, death, and resurrection. His short life was filled with devotion, his death was martyrdom for truth, and his resurrection will be in honor. When we remember him, we remember a prophet who never compromised, never sinned, and never wavered - a shining example of what a human being, with Allah's grace, can become.",
+  },
+];
+
+// Export as single continuous story
+export const yahyaSubStories: SubStory[] = [
+  {
+    id: 'yahya-complete',
+    prophetId: 'yahya',
+    title: 'The Story of Prophet Yahya',
+    titleArabic: 'قصة نبي الله يحيى',
+    order: 1,
+    estimatedReadTime: 10,
+    content: yahyaStoryContent,
+  },
+];
