@@ -7,12 +7,15 @@ import { getProphetStory, hasProphetStory } from '../../../src/data/arabic/proph
 import { SubStoryNav, StoryContentBlock } from '../../../src/components/prophetStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
 import { SubStory, QuranReference } from '../../../src/types/prophetStories';
+import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
 
 export default function ProphetStoryScreen() {
   const { prophetId } = useLocalSearchParams<{ prophetId: string }>();
   const scrollViewRef = useRef<ScrollView>(null);
 
   const [currentSubStoryId, setCurrentSubStoryId] = useState<string | null>(null);
+  const [playingSourceId, setPlayingSourceId] = useState<string | null>(null);
+  const [audioState, setAudioState] = useState<AudioState>('idle');
 
   const {
     startStory,
@@ -61,10 +64,56 @@ export default function ProphetStoryScreen() {
     }
   }, [prophetId, currentSubStoryId, markSubStoryCompleted]);
 
-  // Handle play Quran audio (placeholder for now)
-  const handlePlayQuranAudio = useCallback((source: QuranReference) => {
-    // This would integrate with quranAudioService to play the actual recitation
-    console.log('Play Quran audio:', source.surahNumber, source.ayahStart);
+  // Handle play Quran audio
+  const handlePlayQuranAudio = useCallback(async (source: QuranReference, blockId: string) => {
+    // If same source is playing, toggle pause/resume
+    if (playingSourceId === blockId) {
+      if (audioState === 'playing') {
+        await quranAudioService.pause();
+        setAudioState('paused');
+      } else if (audioState === 'paused') {
+        await quranAudioService.resume();
+        setAudioState('playing');
+      }
+      return;
+    }
+
+    // Stop any current playback
+    await quranAudioService.stop();
+
+    // Set the new playing source
+    setPlayingSourceId(blockId);
+    setAudioState('loading');
+
+    // Play the ayah range
+    await quranAudioService.playAyahRange(
+      source.surahNumber,
+      source.ayahStart,
+      source.ayahEnd,
+      {
+        onStateChange: (state) => {
+          setAudioState(state);
+          if (state === 'idle') {
+            setPlayingSourceId(null);
+          }
+        },
+        onComplete: () => {
+          setPlayingSourceId(null);
+          setAudioState('idle');
+        },
+        onError: () => {
+          setPlayingSourceId(null);
+          setAudioState('idle');
+        },
+      }
+    );
+  }, [playingSourceId, audioState]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      quranAudioService.stop();
+    };
   }, []);
 
   if (!prophet) {
@@ -171,8 +220,12 @@ export default function ProphetStoryScreen() {
                 key={block.id}
                 block={block}
                 onPlayQuranAudio={
-                  block.source?.type === 'quran' ? () => handlePlayQuranAudio(block.source as QuranReference) : undefined
+                  block.source?.type === 'quran'
+                    ? () => handlePlayQuranAudio(block.source as QuranReference, block.id)
+                    : undefined
                 }
+                isQuranPlaying={playingSourceId === block.id && audioState === 'playing'}
+                isQuranLoading={playingSourceId === block.id && audioState === 'loading'}
               />
             ))}
 
