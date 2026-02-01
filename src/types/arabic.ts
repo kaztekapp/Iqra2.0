@@ -267,3 +267,23 @@ export interface ExerciseResult {
   xpEarned: number;
   completedAt: string;
 }
+
+// Spaced Repetition System (SRS) Types
+export type ReviewRating = 0 | 1 | 2 | 3 | 4 | 5;
+// 0 - Complete blackout
+// 1 - Incorrect; serious difficulty
+// 2 - Incorrect; remembered with significant difficulty
+// 3 - Correct; significant difficulty
+// 4 - Correct; some hesitation
+// 5 - Perfect response
+
+export interface VocabularyReviewItem {
+  wordId: string;
+  themeId: string;
+  nextReviewDate: string; // ISO date string
+  easeFactor: number; // SM-2 ease factor (default 2.5, min 1.3)
+  interval: number; // Days until next review
+  repetitions: number; // Number of successful reviews
+  lastRating?: ReviewRating;
+  lastReviewedAt?: string;
+}

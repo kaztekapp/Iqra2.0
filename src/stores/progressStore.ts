@@ -1,11 +1,15 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ExerciseType, UserArabicProgress, ArabicLevel } from '../types/arabic';
+import { ExerciseType, UserArabicProgress, ArabicLevel, VocabularyReviewItem, ReviewRating } from '../types/arabic';
+import { ACHIEVEMENTS, Achievement } from '../data/achievements';
 
 interface ProgressState {
   progress: UserArabicProgress;
   showVowels: boolean; // Default true for beginners
+  unlockedAchievements: string[];
+  newAchievement: Achievement | null; // For showing achievement popup
+  vocabularyReviewSchedule: VocabularyReviewItem[]; // SRS review schedule
 
   // Settings
   setShowVowels: (show: boolean) => void;
@@ -13,6 +17,18 @@ interface ProgressState {
   // XP & Streaks
   addXp: (amount: number) => void;
   updateStreak: () => void;
+
+  // Achievements
+  checkAchievements: (quranSurahsCompleted?: number) => Achievement[];
+  clearNewAchievement: () => void;
+  getUnlockedAchievements: () => Achievement[];
+
+  // Vocabulary SRS
+  scheduleVocabularyReview: (wordId: string, themeId: string) => void;
+  updateVocabularyReviewItem: (wordId: string, rating: ReviewRating) => void;
+  getDueVocabularyReviews: () => VocabularyReviewItem[];
+  getVocabularyReviewItem: (wordId: string) => VocabularyReviewItem | undefined;
+  getVocabularyReviewStats: () => { dueToday: number; learned: number; mastered: number; newWords: number };
 
   // Alphabet progress
   markLetterLearned: (letterId: string) => void;
@@ -120,22 +136,104 @@ export const useProgressStore = create<ProgressState>()(
     (set, get) => ({
       progress: initialProgress,
       showVowels: true, // Always show vowels by default for beginners
+      unlockedAchievements: [],
+      newAchievement: null,
+      vocabularyReviewSchedule: [],
 
       setShowVowels: (show) => set({ showVowels: show }),
 
-      addXp: (amount) => set((state) => ({
-        progress: {
-          ...state.progress,
-          totalXp: state.progress.totalXp + amount,
-        },
-      })),
+      // Achievement Methods
+      checkAchievements: (quranSurahsCompleted = 0) => {
+        const state = get();
+        const { progress, unlockedAchievements } = state;
+        const newlyUnlocked: Achievement[] = [];
 
-      updateStreak: () => set((state) => {
+        for (const achievement of ACHIEVEMENTS) {
+          if (unlockedAchievements.includes(achievement.id)) continue;
+
+          let conditionMet = false;
+          const { type, value } = achievement.condition;
+
+          switch (type) {
+            case 'letters_learned':
+              conditionMet = progress.alphabetProgress.lettersLearned.length >= value;
+              break;
+            case 'words_learned':
+              conditionMet = progress.vocabularyProgress.wordsLearned.length >= value;
+              break;
+            case 'lessons_completed':
+              conditionMet = progress.grammarProgress.lessonsCompleted.length >= value;
+              break;
+            case 'streak_days':
+              conditionMet = progress.currentStreak >= value || progress.longestStreak >= value;
+              break;
+            case 'total_xp':
+              conditionMet = progress.totalXp >= value;
+              break;
+            case 'exercises_completed':
+              conditionMet = progress.exerciseResults.totalCompleted >= value;
+              break;
+            case 'accuracy':
+              const accuracy = progress.exerciseResults.totalCompleted > 0
+                ? (progress.exerciseResults.totalCorrect / progress.exerciseResults.totalCompleted) * 100
+                : 0;
+              conditionMet = accuracy >= value && progress.exerciseResults.totalCompleted >= 10;
+              break;
+            case 'surahs_completed':
+              conditionMet = quranSurahsCompleted >= value;
+              break;
+            case 'verbs_learned':
+              conditionMet = progress.verbProgress.verbsLearned.length >= value;
+              break;
+          }
+
+          if (conditionMet) {
+            newlyUnlocked.push(achievement);
+          }
+        }
+
+        if (newlyUnlocked.length > 0) {
+          const totalXpReward = newlyUnlocked.reduce((sum, a) => sum + a.xpReward, 0);
+          set((state) => ({
+            unlockedAchievements: [
+              ...state.unlockedAchievements,
+              ...newlyUnlocked.map((a) => a.id),
+            ],
+            newAchievement: newlyUnlocked[0], // Show the first new achievement
+            progress: {
+              ...state.progress,
+              totalXp: state.progress.totalXp + totalXpReward,
+            },
+          }));
+        }
+
+        return newlyUnlocked;
+      },
+
+      clearNewAchievement: () => set({ newAchievement: null }),
+
+      getUnlockedAchievements: () => {
+        const { unlockedAchievements } = get();
+        return ACHIEVEMENTS.filter((a) => unlockedAchievements.includes(a.id));
+      },
+
+      addXp: (amount) => {
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            totalXp: state.progress.totalXp + amount,
+          },
+        }));
+        get().checkAchievements();
+      },
+
+      updateStreak: () => {
+        const state = get();
         const today = new Date().toISOString().split('T')[0];
         const lastDate = state.progress.lastStudyDate;
 
         if (lastDate === today) {
-          return state;
+          return;
         }
 
         const yesterday = new Date();
@@ -147,21 +245,23 @@ export const useProgressStore = create<ProgressState>()(
           newStreak = state.progress.currentStreak + 1;
         }
 
-        return {
+        set({
           progress: {
             ...state.progress,
             currentStreak: newStreak,
             longestStreak: Math.max(newStreak, state.progress.longestStreak),
             lastStudyDate: today,
           },
-        };
-      }),
+        });
+        get().checkAchievements();
+      },
 
-      markLetterLearned: (letterId) => set((state) => {
+      markLetterLearned: (letterId) => {
+        const state = get();
         if (state.progress.alphabetProgress.lettersLearned.includes(letterId)) {
-          return state;
+          return;
         }
-        return {
+        set({
           progress: {
             ...state.progress,
             alphabetProgress: {
@@ -169,8 +269,9 @@ export const useProgressStore = create<ProgressState>()(
               lettersLearned: [...state.progress.alphabetProgress.lettersLearned, letterId],
             },
           },
-        };
-      }),
+        });
+        get().checkAchievements();
+      },
 
       markLetterPracticed: (letterId) => set((state) => {
         if (state.progress.alphabetProgress.writingPracticed.includes(letterId)) {
@@ -236,11 +337,12 @@ export const useProgressStore = create<ProgressState>()(
         };
       }),
 
-      markWordLearned: (wordId) => set((state) => {
+      markWordLearned: (wordId) => {
+        const state = get();
         if (state.progress.vocabularyProgress.wordsLearned.includes(wordId)) {
-          return state;
+          return;
         }
-        return {
+        set({
           progress: {
             ...state.progress,
             vocabularyProgress: {
@@ -248,8 +350,9 @@ export const useProgressStore = create<ProgressState>()(
               wordsLearned: [...state.progress.vocabularyProgress.wordsLearned, wordId],
             },
           },
-        };
-      }),
+        });
+        get().checkAchievements();
+      },
 
       markWordMastered: (wordId) => set((state) => {
         if (state.progress.vocabularyProgress.wordsMastered.includes(wordId)) {
@@ -285,11 +388,12 @@ export const useProgressStore = create<ProgressState>()(
         };
       }),
 
-      completeLesson: (lessonId) => set((state) => {
+      completeLesson: (lessonId) => {
+        const state = get();
         if (state.progress.grammarProgress.lessonsCompleted.includes(lessonId)) {
-          return state;
+          return;
         }
-        return {
+        set({
           progress: {
             ...state.progress,
             grammarProgress: {
@@ -297,14 +401,16 @@ export const useProgressStore = create<ProgressState>()(
               lessonsCompleted: [...state.progress.grammarProgress.lessonsCompleted, lessonId],
             },
           },
-        };
-      }),
+        });
+        get().checkAchievements();
+      },
 
-      markVerbLearned: (verbId) => set((state) => {
+      markVerbLearned: (verbId) => {
+        const state = get();
         if (state.progress.verbProgress.verbsLearned.includes(verbId)) {
-          return state;
+          return;
         }
-        return {
+        set({
           progress: {
             ...state.progress,
             verbProgress: {
@@ -312,8 +418,9 @@ export const useProgressStore = create<ProgressState>()(
               verbsLearned: [...state.progress.verbProgress.verbsLearned, verbId],
             },
           },
-        };
-      }),
+        });
+        get().checkAchievements();
+      },
 
       markVerbMastered: (verbId) => set((state) => {
         if (state.progress.verbProgress.verbsMastered.includes(verbId)) {
@@ -373,22 +480,130 @@ export const useProgressStore = create<ProgressState>()(
         };
       }),
 
-      recordExerciseResult: (exerciseType, isCorrect) => set((state) => ({
-        progress: {
-          ...state.progress,
-          exerciseResults: {
-            totalCompleted: state.progress.exerciseResults.totalCompleted + 1,
-            totalCorrect: state.progress.exerciseResults.totalCorrect + (isCorrect ? 1 : 0),
-            byType: {
-              ...state.progress.exerciseResults.byType,
-              [exerciseType]: {
-                completed: state.progress.exerciseResults.byType[exerciseType].completed + 1,
-                correct: state.progress.exerciseResults.byType[exerciseType].correct + (isCorrect ? 1 : 0),
+      recordExerciseResult: (exerciseType, isCorrect) => {
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            exerciseResults: {
+              totalCompleted: state.progress.exerciseResults.totalCompleted + 1,
+              totalCorrect: state.progress.exerciseResults.totalCorrect + (isCorrect ? 1 : 0),
+              byType: {
+                ...state.progress.exerciseResults.byType,
+                [exerciseType]: {
+                  completed: state.progress.exerciseResults.byType[exerciseType].completed + 1,
+                  correct: state.progress.exerciseResults.byType[exerciseType].correct + (isCorrect ? 1 : 0),
+                },
               },
             },
           },
-        },
-      })),
+        }));
+        // Check for new achievements after recording exercise result
+        get().checkAchievements();
+      },
+
+      // Vocabulary SRS Methods (SM-2 Algorithm)
+      scheduleVocabularyReview: (wordId, themeId) => {
+        const state = get();
+        const existing = state.vocabularyReviewSchedule.find((item) => item.wordId === wordId);
+
+        if (existing) return; // Already scheduled
+
+        const today = new Date().toISOString().split('T')[0];
+        const newItem: VocabularyReviewItem = {
+          wordId,
+          themeId,
+          nextReviewDate: today, // Due immediately for first review
+          easeFactor: 2.5, // Default SM-2 ease factor
+          interval: 0,
+          repetitions: 0,
+        };
+
+        set({
+          vocabularyReviewSchedule: [...state.vocabularyReviewSchedule, newItem],
+        });
+      },
+
+      updateVocabularyReviewItem: (wordId, rating) => {
+        const state = get();
+        const schedule = [...state.vocabularyReviewSchedule];
+        const index = schedule.findIndex((item) => item.wordId === wordId);
+
+        if (index === -1) return;
+
+        const item = { ...schedule[index] };
+        const today = new Date().toISOString().split('T')[0];
+
+        // SM-2 Algorithm implementation
+        if (rating < 3) {
+          // Failed review - reset
+          item.repetitions = 0;
+          item.interval = 1;
+        } else {
+          // Successful review
+          if (item.repetitions === 0) {
+            item.interval = 1;
+          } else if (item.repetitions === 1) {
+            item.interval = 6;
+          } else {
+            item.interval = Math.round(item.interval * item.easeFactor);
+          }
+          item.repetitions += 1;
+        }
+
+        // Update ease factor (minimum 1.3)
+        item.easeFactor = Math.max(
+          1.3,
+          item.easeFactor + (0.1 - (5 - rating) * (0.08 + (5 - rating) * 0.02))
+        );
+
+        // Calculate next review date
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + item.interval);
+        item.nextReviewDate = nextDate.toISOString().split('T')[0];
+        item.lastRating = rating;
+        item.lastReviewedAt = today;
+
+        schedule[index] = item;
+
+        set({ vocabularyReviewSchedule: schedule });
+
+        // Mark as learned if first successful review, mastered if interval >= 21 days
+        if (rating >= 3 && item.repetitions === 1) {
+          get().markWordLearned(wordId);
+        }
+        if (item.interval >= 21) {
+          get().markWordMastered(wordId);
+        }
+
+        get().checkAchievements();
+      },
+
+      getDueVocabularyReviews: () => {
+        const state = get();
+        const today = new Date().toISOString().split('T')[0];
+
+        return state.vocabularyReviewSchedule.filter(
+          (item) => item.nextReviewDate <= today
+        );
+      },
+
+      getVocabularyReviewItem: (wordId) => {
+        const state = get();
+        return state.vocabularyReviewSchedule.find((item) => item.wordId === wordId);
+      },
+
+      getVocabularyReviewStats: () => {
+        const state = get();
+        const today = new Date().toISOString().split('T')[0];
+        const schedule = state.vocabularyReviewSchedule;
+
+        const dueToday = schedule.filter((item) => item.nextReviewDate <= today).length;
+        const learned = schedule.filter((item) => item.repetitions >= 1 && item.interval < 21).length;
+        const mastered = schedule.filter((item) => item.interval >= 21).length;
+        const newWords = schedule.filter((item) => item.repetitions === 0).length;
+
+        return { dueToday, learned, mastered, newWords };
+      },
 
       getAlphabetCompletionPercent: () => {
         const state = get();
@@ -425,7 +640,7 @@ export const useProgressStore = create<ProgressState>()(
         return Math.round((totalCorrect / totalCompleted) * 100);
       },
 
-      resetProgress: () => set({ progress: initialProgress, showVowels: true }),
+      resetProgress: () => set({ progress: initialProgress, showVowels: true, unlockedAchievements: [], newAchievement: null, vocabularyReviewSchedule: [] }),
     }),
     {
       name: 'arabic-progress-storage',

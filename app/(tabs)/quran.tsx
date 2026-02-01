@@ -8,10 +8,14 @@ export default function QuranScreen() {
   const {
     getOverallCompletionPercent,
     getTotalSurahsCompleted,
+    getJuzCompleted,
+    getHizbCompleted,
   } = useQuranStore();
 
   const overallProgress = getOverallCompletionPercent();
   const surahsCompleted = getTotalSurahsCompleted();
+  const juzCompleted = getJuzCompleted();
+  const hizbCompleted = getHizbCompleted();
 
   const handleTajweedPress = () => {
     router.push('/quran/tajweed' as any);
@@ -62,11 +66,11 @@ export default function QuranScreen() {
               <Text style={styles.statLabel}>Surahs</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#3b82f6' }]}>0</Text>
+              <Text style={[styles.statValue, { color: '#3b82f6' }]}>{juzCompleted}</Text>
               <Text style={styles.statLabel}>Juz</Text>
             </View>
             <View style={styles.statItem}>
-              <Text style={[styles.statValue, { color: '#f59e0b' }]}>0</Text>
+              <Text style={[styles.statValue, { color: '#f59e0b' }]}>{hizbCompleted}</Text>
               <Text style={styles.statLabel}>Hizb</Text>
             </View>
           </View>

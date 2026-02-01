@@ -25,7 +25,7 @@ const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
 
 export default function FlashcardsScreen() {
   const { themeId } = useLocalSearchParams<{ themeId?: string }>();
-  const { showVowels, markWordLearned, addXp, updateStreak } = useProgressStore();
+  const { showVowels, markWordLearned, addXp, updateStreak, scheduleVocabularyReview } = useProgressStore();
 
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,9 +46,14 @@ export default function FlashcardsScreen() {
   const rotateY = useSharedValue(0);
 
   const handleNext = (known: boolean) => {
+    const currentWord = words[currentIndex];
+
+    // Always schedule word for SRS review
+    scheduleVocabularyReview(currentWord.id, currentWord.themeId);
+
     if (known) {
       setStats((prev) => ({ ...prev, known: prev.known + 1 }));
-      markWordLearned(words[currentIndex].id);
+      markWordLearned(currentWord.id);
       addXp(2);
     } else {
       setStats((prev) => ({ ...prev, learning: prev.learning + 1 }));

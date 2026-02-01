@@ -6,10 +6,11 @@ import { vocabularyThemes } from '../../src/data/arabic/vocabulary';
 import { useProgressStore } from '../../src/stores/progressStore';
 
 export default function VocabularyScreen() {
-  const { progress, getVocabularyCompletionPercent } = useProgressStore();
+  const { progress, getVocabularyCompletionPercent, getVocabularyReviewStats } = useProgressStore();
   const startedThemes = progress.vocabularyProgress.themesStarted;
   const completedThemes = progress.vocabularyProgress.themesCompleted;
   const wordsLearned = progress.vocabularyProgress.wordsLearned.length;
+  const reviewStats = getVocabularyReviewStats();
 
   const getThemeStatus = (themeId: string) => {
     if (completedThemes.includes(themeId)) return 'completed';
@@ -100,11 +101,74 @@ export default function VocabularyScreen() {
           </View>
         </View>
 
+        {/* Spaced Review */}
+        {reviewStats.dueToday > 0 && (
+          <View style={styles.section}>
+            <Pressable
+              style={styles.reviewCard}
+              onPress={() => router.push('/vocabulary/review' as any)}
+            >
+              <View style={styles.reviewContent}>
+                <View style={styles.reviewIcon}>
+                  <Ionicons name="timer" size={28} color="#6366f1" />
+                </View>
+                <View style={styles.reviewText}>
+                  <Text style={styles.reviewTitle}>Spaced Review</Text>
+                  <Text style={styles.reviewTitleArabic}>المراجعة المتكررة</Text>
+                  <Text style={styles.reviewDesc}>
+                    {reviewStats.dueToday} word{reviewStats.dueToday !== 1 ? 's' : ''} due for review
+                  </Text>
+                </View>
+                <View style={styles.reviewBadge}>
+                  <Text style={styles.reviewBadgeText}>{reviewStats.dueToday}</Text>
+                </View>
+              </View>
+              <View style={styles.reviewStats}>
+                <View style={styles.reviewStatItem}>
+                  <Text style={styles.reviewStatValue}>{reviewStats.learned}</Text>
+                  <Text style={styles.reviewStatLabel}>Learning</Text>
+                </View>
+                <View style={styles.reviewStatItem}>
+                  <Text style={[styles.reviewStatValue, { color: '#22c55e' }]}>{reviewStats.mastered}</Text>
+                  <Text style={styles.reviewStatLabel}>Mastered</Text>
+                </View>
+              </View>
+            </Pressable>
+          </View>
+        )}
+
         {/* Quick Practice */}
         <View style={[styles.section, { marginBottom: 100 }]}>
           <Text style={styles.sectionTitle}>Practice Mode</Text>
+
+          {/* SRS Review - always visible */}
           <Pressable
-            style={styles.practiceCard}
+            style={[styles.practiceCard, { marginBottom: 12, borderColor: reviewStats.dueToday > 0 ? '#6366f1' : 'transparent', borderWidth: reviewStats.dueToday > 0 ? 1 : 0 }]}
+            onPress={() => router.push('/vocabulary/review' as any)}
+          >
+            <View style={styles.practiceContent}>
+              <View style={[styles.practiceIcon, { backgroundColor: '#6366f120' }]}>
+                <Ionicons name="timer" size={28} color="#6366f1" />
+              </View>
+              <View style={styles.practiceText}>
+                <Text style={styles.practiceTitle}>Spaced Review</Text>
+                <Text style={styles.practiceDesc}>
+                  {reviewStats.dueToday > 0
+                    ? `${reviewStats.dueToday} word${reviewStats.dueToday !== 1 ? 's' : ''} due today`
+                    : 'No words due - all caught up!'}
+                </Text>
+              </View>
+              {reviewStats.dueToday > 0 && (
+                <View style={styles.dueBadge}>
+                  <Text style={styles.dueBadgeText}>{reviewStats.dueToday}</Text>
+                </View>
+              )}
+              <Ionicons name="chevron-forward" size={24} color="#64748b" />
+            </View>
+          </Pressable>
+
+          <Pressable
+            style={[styles.practiceCard, { marginBottom: 12 }]}
             onPress={() => router.push('/vocabulary/flashcards' as any)}
           >
             <View style={styles.practiceContent}>
@@ -115,6 +179,24 @@ export default function VocabularyScreen() {
                 <Text style={styles.practiceTitle}>Flashcards</Text>
                 <Text style={styles.practiceDesc}>
                   Review all vocabulary with interactive flashcards
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#64748b" />
+            </View>
+          </Pressable>
+
+          <Pressable
+            style={styles.practiceCard}
+            onPress={() => router.push('/vocabulary/speaking-practice' as any)}
+          >
+            <View style={styles.practiceContent}>
+              <View style={[styles.practiceIcon, { backgroundColor: '#10b98120' }]}>
+                <Ionicons name="mic" size={28} color="#10b981" />
+              </View>
+              <View style={styles.practiceText}>
+                <Text style={styles.practiceTitle}>Speaking Practice</Text>
+                <Text style={styles.practiceDesc}>
+                  Record yourself and improve pronunciation
                 </Text>
               </View>
               <Ionicons name="chevron-forward" size={24} color="#64748b" />
@@ -305,5 +387,89 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#94a3b8',
     marginTop: 4,
+  },
+  // SRS Review styles
+  reviewCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#6366f140',
+  },
+  reviewContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  reviewIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 14,
+    backgroundColor: '#6366f120',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reviewText: {
+    flex: 1,
+    marginLeft: 16,
+  },
+  reviewTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  reviewTitleArabic: {
+    fontSize: 13,
+    color: '#6366f1',
+    marginTop: 2,
+  },
+  reviewDesc: {
+    fontSize: 13,
+    color: '#94a3b8',
+    marginTop: 4,
+  },
+  reviewBadge: {
+    backgroundColor: '#6366f1',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  reviewBadgeText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  reviewStats: {
+    flexDirection: 'row',
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#334155',
+    gap: 24,
+  },
+  reviewStatItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  reviewStatValue: {
+    color: '#f59e0b',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  reviewStatLabel: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  dueBadge: {
+    backgroundColor: '#6366f1',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+    marginRight: 8,
+  },
+  dueBadgeText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });

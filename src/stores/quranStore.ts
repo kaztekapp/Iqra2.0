@@ -62,6 +62,12 @@ interface QuranState {
   isTajweedRuleLearned: (ruleId: TajweedRuleId) => boolean;
   isTajweedRuleMastered: (ruleId: TajweedRuleId) => boolean;
 
+  // Juz & Hizb Progress
+  getJuzCompleted: () => number;
+  getHizbCompleted: () => number;
+  getJuzProgress: (juzNumber: number) => number;
+  getHizbProgress: (hizbNumber: number) => number;
+
   // Reset
   resetProgress: () => void;
 }
@@ -681,6 +687,73 @@ export const useQuranStore = create<QuranState>()(
 
       isTajweedRuleMastered: (ruleId: TajweedRuleId) => {
         return get().progress.tajweedProgress.rulesMastered.includes(ruleId);
+      },
+
+      // Juz & Hizb Progress
+      getJuzCompleted: () => {
+        const { surahProgress } = get().progress;
+        const completedJuz = new Set<number>();
+
+        // Group surahs by Juz and check completion
+        for (let juz = 1; juz <= 30; juz++) {
+          const surahsInJuz = SURAHS.filter((s) => s.juz === juz);
+          const allCompleted = surahsInJuz.every((s) => {
+            const progress = surahProgress[s.id];
+            return progress?.status === 'completed';
+          });
+          if (allCompleted && surahsInJuz.length > 0) {
+            completedJuz.add(juz);
+          }
+        }
+
+        return completedJuz.size;
+      },
+
+      getHizbCompleted: () => {
+        const { surahProgress } = get().progress;
+        const completedHizb = new Set<number>();
+
+        // Group surahs by Hizb and check completion
+        for (let hizb = 1; hizb <= 60; hizb++) {
+          const surahsInHizb = SURAHS.filter((s) => s.hizb === hizb);
+          const allCompleted = surahsInHizb.every((s) => {
+            const progress = surahProgress[s.id];
+            return progress?.status === 'completed';
+          });
+          if (allCompleted && surahsInHizb.length > 0) {
+            completedHizb.add(hizb);
+          }
+        }
+
+        return completedHizb.size;
+      },
+
+      getJuzProgress: (juzNumber: number) => {
+        const { surahProgress } = get().progress;
+        const surahsInJuz = SURAHS.filter((s) => s.juz === juzNumber);
+
+        if (surahsInJuz.length === 0) return 0;
+
+        const totalProgress = surahsInJuz.reduce((total, s) => {
+          const progress = surahProgress[s.id];
+          return total + (progress?.completionPercent || 0);
+        }, 0);
+
+        return Math.round(totalProgress / surahsInJuz.length);
+      },
+
+      getHizbProgress: (hizbNumber: number) => {
+        const { surahProgress } = get().progress;
+        const surahsInHizb = SURAHS.filter((s) => s.hizb === hizbNumber);
+
+        if (surahsInHizb.length === 0) return 0;
+
+        const totalProgress = surahsInHizb.reduce((total, s) => {
+          const progress = surahProgress[s.id];
+          return total + (progress?.completionPercent || 0);
+        }, 0);
+
+        return Math.round(totalProgress / surahsInHizb.length);
       },
 
       // Reset
