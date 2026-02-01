@@ -5,15 +5,18 @@ export { PROPHETS, getProphetById, getProphetsByOrderRange, TOTAL_PROPHETS } fro
 
 // Story imports - Add as they are created
 export { adamStory, adamSubStories } from './stories/adam';
+export { idrisStory, idrisSubStories } from './stories/idris';
 
 // Helper to get a prophet's full story data
 import { Prophet, SubStory } from '../../../types/prophetStories';
 import { getProphetById } from './prophets';
 import { adamStory, adamSubStories } from './stories/adam';
+import { idrisStory, idrisSubStories } from './stories/idris';
 
 // Map of prophet IDs to their story data
 const prophetStories: Record<string, { prophet: Prophet; subStories: SubStory[] }> = {
   adam: { prophet: adamStory, subStories: adamSubStories },
+  idris: { prophet: idrisStory, subStories: idrisSubStories },
   // Add more prophets as their stories are created
 };
 
