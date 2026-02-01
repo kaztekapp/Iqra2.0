@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useQuranStore } from '../../src/stores/quranStore';
+import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
+import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
 
 export default function QuranScreen() {
   const {
@@ -12,10 +14,13 @@ export default function QuranScreen() {
     getHizbCompleted,
   } = useQuranStore();
 
+  const { getTotalStoriesCompleted } = useProphetStoriesStore();
+
   const overallProgress = getOverallCompletionPercent();
   const surahsCompleted = getTotalSurahsCompleted();
   const juzCompleted = getJuzCompleted();
   const hizbCompleted = getHizbCompleted();
+  const storiesCompleted = getTotalStoriesCompleted();
 
   const handleTajweedPress = () => {
     router.push('/quran/tajweed' as any);
@@ -27,6 +32,10 @@ export default function QuranScreen() {
 
   const handleQuizPress = () => {
     router.push('/quran/quiz' as any);
+  };
+
+  const handleStoriesPress = () => {
+    router.push('/quran/prophets' as any);
   };
 
   return (
@@ -76,29 +85,43 @@ export default function QuranScreen() {
           </View>
         </View>
 
-        {/* Quick Actions */}
-        <View style={styles.quickActions}>
-          <Pressable style={styles.actionCard} onPress={handleLearnQuranPress}>
-            <View style={[styles.actionIcon, { backgroundColor: '#3b82f620' }]}>
-              <Ionicons name="book" size={24} color="#3b82f6" />
-            </View>
-            <Text style={styles.actionTitle}>Quran</Text>
-            <Text style={styles.actionDesc}>All 114 Surahs</Text>
-          </Pressable>
-          <Pressable style={styles.actionCard} onPress={handleQuizPress}>
-            <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
-              <Ionicons name="help-circle" size={24} color="#f59e0b" />
-            </View>
-            <Text style={styles.actionTitle}>Quizzes</Text>
-            <Text style={styles.actionDesc}>Test knowledge</Text>
-          </Pressable>
-          <Pressable style={styles.actionCard} onPress={handleTajweedPress}>
-            <View style={[styles.actionIcon, { backgroundColor: '#10b98120' }]}>
-              <Ionicons name="musical-notes" size={24} color="#10b981" />
-            </View>
-            <Text style={styles.actionTitle}>Tajweed</Text>
-            <Text style={styles.actionDesc}>Pronunciation</Text>
-          </Pressable>
+        {/* Quick Actions - 2x2 Grid */}
+        <View style={styles.quickActionsGrid}>
+          <View style={styles.quickActionsRow}>
+            <Pressable style={styles.actionCardGrid} onPress={handleLearnQuranPress}>
+              <View style={[styles.actionIcon, { backgroundColor: '#3b82f620' }]}>
+                <Ionicons name="book" size={24} color="#3b82f6" />
+              </View>
+              <Text style={styles.actionTitle}>Quran</Text>
+              <Text style={styles.actionDesc}>All 114 Surahs</Text>
+            </Pressable>
+            <Pressable style={styles.actionCardGrid} onPress={handleStoriesPress}>
+              <View style={[styles.actionIcon, { backgroundColor: '#8b5cf620' }]}>
+                <Ionicons name="library" size={24} color="#8b5cf6" />
+              </View>
+              <View style={styles.actionBadge}>
+                <Text style={styles.actionBadgeText}>{storiesCompleted}/{TOTAL_PROPHETS}</Text>
+              </View>
+              <Text style={styles.actionTitle}>Stories</Text>
+              <Text style={styles.actionDesc}>25 Prophets</Text>
+            </Pressable>
+          </View>
+          <View style={styles.quickActionsRow}>
+            <Pressable style={styles.actionCardGrid} onPress={handleQuizPress}>
+              <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
+                <Ionicons name="help-circle" size={24} color="#f59e0b" />
+              </View>
+              <Text style={styles.actionTitle}>Quizzes</Text>
+              <Text style={styles.actionDesc}>Test knowledge</Text>
+            </Pressable>
+            <Pressable style={styles.actionCardGrid} onPress={handleTajweedPress}>
+              <View style={[styles.actionIcon, { backgroundColor: '#10b98120' }]}>
+                <Ionicons name="musical-notes" size={24} color="#10b981" />
+              </View>
+              <Text style={styles.actionTitle}>Tajweed</Text>
+              <Text style={styles.actionDesc}>Pronunciation</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={{ height: 100 }} />
@@ -209,18 +232,22 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textAlign: 'center',
   },
-  quickActions: {
-    flexDirection: 'row',
+  quickActionsGrid: {
     paddingHorizontal: 20,
-    gap: 12,
     marginBottom: 24,
+    gap: 12,
   },
-  actionCard: {
+  quickActionsRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  actionCardGrid: {
     flex: 1,
     backgroundColor: '#1e293b',
     borderRadius: 16,
     padding: 16,
     alignItems: 'center',
+    position: 'relative',
   },
   actionIcon: {
     width: 48,
@@ -229,6 +256,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
+  },
+  actionBadge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#8b5cf630',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 8,
+  },
+  actionBadgeText: {
+    color: '#a78bfa',
+    fontSize: 10,
+    fontWeight: '600',
   },
   actionTitle: {
     color: '#ffffff',

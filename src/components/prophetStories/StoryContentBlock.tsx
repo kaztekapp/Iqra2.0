@@ -1,0 +1,77 @@
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/prophetStories';
+import { QuranSourceCard } from './QuranSourceCard';
+import { HadithSourceCard } from './HadithSourceCard';
+
+interface StoryContentBlockProps {
+  block: ContentBlock;
+  isHighlighted?: boolean;
+  onPlayQuranAudio?: (source: QuranReference) => void;
+  isQuranPlaying?: boolean;
+  isQuranLoading?: boolean;
+}
+
+export function StoryContentBlock({
+  block,
+  isHighlighted = false,
+  onPlayQuranAudio,
+  isQuranPlaying = false,
+  isQuranLoading = false,
+}: StoryContentBlockProps) {
+  if (block.type === 'narrative') {
+    return (
+      <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
+        <Text style={styles.narrativeText}>{block.content}</Text>
+      </View>
+    );
+  }
+
+  if (block.type === 'quran_source' && block.source?.type === 'quran') {
+    return (
+      <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+        <QuranSourceCard
+          source={block.source as QuranReference}
+          onPlayArabic={onPlayQuranAudio ? () => onPlayQuranAudio(block.source as QuranReference) : undefined}
+          isPlaying={isQuranPlaying}
+          isLoading={isQuranLoading}
+        />
+      </View>
+    );
+  }
+
+  if (block.type === 'hadith_source' && block.source?.type === 'hadith') {
+    return (
+      <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+        <HadithSourceCard source={block.source as HadithReference} />
+      </View>
+    );
+  }
+
+  return null;
+}
+
+const styles = StyleSheet.create({
+  narrativeContainer: {
+    marginVertical: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 2,
+    borderRadius: 8,
+  },
+  narrativeText: {
+    color: '#e2e8f0',
+    fontSize: 16,
+    lineHeight: 26,
+  },
+  sourceContainer: {
+    borderRadius: 8,
+  },
+  highlighted: {
+    backgroundColor: '#3b82f620',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    marginHorizontal: -8,
+  },
+});
+
+export default StoryContentBlock;
