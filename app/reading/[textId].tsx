@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
@@ -209,7 +209,7 @@ interface SentenceCardProps {
   onPlay: () => void;
 }
 
-function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
+const SentenceCard = memo(function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
   return (
     <View style={styles.sentenceCard}>
       {/* Header with Number and Play Button */}
@@ -241,7 +241,7 @@ function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onP
       <Text style={styles.sentenceEnglish}>{english}</Text>
     </View>
   );
-}
+});
 
 export default function ReadingDetailScreen() {
   const { textId } = useLocalSearchParams<{ textId: string }>();

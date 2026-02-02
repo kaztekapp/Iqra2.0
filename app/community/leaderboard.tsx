@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,13 +13,14 @@ const TAB_OPTIONS: { type: LeaderboardType; label: string; icon: string }[] = [
   { type: 'allTime', label: 'All-Time', icon: 'trophy' },
 ];
 
-const LeaderboardRow = ({
+// Memoized row component to prevent unnecessary re-renders
+const LeaderboardRow = memo(function LeaderboardRow({
   entry,
   type,
 }: {
   entry: LeaderboardEntry;
   type: LeaderboardType;
-}) => {
+}) {
   const getRankDisplay = (rank: number) => {
     if (rank === 1) return { emoji: '🥇', color: '#FFD700' };
     if (rank === 2) return { emoji: '🥈', color: '#C0C0C0' };
@@ -61,7 +62,7 @@ const LeaderboardRow = ({
       </View>
     </View>
   );
-};
+});
 
 export default function LeaderboardScreen() {
   const [currentType, setCurrentType] = useState<LeaderboardType>('weekly');

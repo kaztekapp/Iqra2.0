@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, TextStyle } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -6,43 +6,9 @@ import { getThemeById, getWordsByTheme } from '../../src/data/arabic/vocabulary'
 import { getWritingExercisesForVocabularyTheme } from '../../src/data/arabic/exercises';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import { VocabularyWord } from '../../src/types/arabic';
-
-// Helper component to render text with [[highlighted]] Arabic terms
-const HighlightedText = ({
-  text,
-  style,
-  highlightColor = '#10b981'
-}: {
-  text: string;
-  style?: TextStyle;
-  highlightColor?: string;
-}) => {
-  const parts = text.split(/(\[\[[^\]]+\]\])/g);
-
-  return (
-    <Text style={style}>
-      {parts.map((part, index) => {
-        if (part.startsWith('[[') && part.endsWith(']]')) {
-          const highlightedText = part.slice(2, -2);
-          return (
-            <Text
-              key={index}
-              style={{
-                color: highlightColor,
-                fontWeight: 'bold',
-              }}
-            >
-              {highlightedText}
-            </Text>
-          );
-        }
-        return <Text key={index}>{part}</Text>;
-      })}
-    </Text>
-  );
-};
+import HighlightedText from '../../src/components/ui/HighlightedText';
 
 // Part of speech labels with colors
 const partOfSpeechConfig: Record<string, { label: string; labelArabic: string; color: string }> = {
