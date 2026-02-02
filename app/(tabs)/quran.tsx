@@ -4,7 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useQuranStore } from '../../src/stores/quranStore';
 import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
+import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
 import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
+import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
 
 export default function QuranScreen() {
   const {
@@ -14,13 +16,17 @@ export default function QuranScreen() {
     getHizbCompleted,
   } = useQuranStore();
 
-  const { getTotalStoriesCompleted } = useProphetStoriesStore();
+  const { getTotalStoriesCompleted: getProphetStoriesCompleted } = useProphetStoriesStore();
+  const { getTotalStoriesCompleted: getQuranStoriesCompleted } = useQuranStoriesStore();
 
   const overallProgress = getOverallCompletionPercent();
   const surahsCompleted = getTotalSurahsCompleted();
   const juzCompleted = getJuzCompleted();
   const hizbCompleted = getHizbCompleted();
-  const storiesCompleted = getTotalStoriesCompleted();
+  const prophetStoriesCompleted = getProphetStoriesCompleted();
+  const quranStoriesCompleted = getQuranStoriesCompleted();
+  const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
+  const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
 
   const handleTajweedPress = () => {
     router.push('/quran/tajweed' as any);
@@ -35,7 +41,7 @@ export default function QuranScreen() {
   };
 
   const handleStoriesPress = () => {
-    router.push('/quran/prophets' as any);
+    router.push('/quran/stories' as any);
   };
 
   return (
@@ -100,10 +106,10 @@ export default function QuranScreen() {
                 <Ionicons name="library" size={24} color="#8b5cf6" />
               </View>
               <View style={styles.actionBadge}>
-                <Text style={styles.actionBadgeText}>{storiesCompleted}/{TOTAL_PROPHETS}</Text>
+                <Text style={styles.actionBadgeText}>{totalStoriesCompleted}/{totalStories}</Text>
               </View>
               <Text style={styles.actionTitle}>Stories</Text>
-              <Text style={styles.actionDesc}>25 Prophets</Text>
+              <Text style={styles.actionDesc}>Prophets & More</Text>
             </Pressable>
           </View>
           <View style={styles.quickActionsRow}>
