@@ -67,10 +67,12 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
         </View>
       )}
 
-      {/* Arabic Text (if available) */}
+      {/* Arabic Text (if available) - render words separately to avoid RTL wrapping bug */}
       {source.arabicText && (
         <View style={styles.arabicContainer}>
-          <Text style={styles.arabicText}>{source.arabicText}</Text>
+          {source.arabicText.split(' ').map((word, index) => (
+            <Text key={index} style={styles.arabicWord}>{word}</Text>
+          ))}
         </View>
       )}
 
@@ -132,14 +134,16 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   arabicContainer: {
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     marginBottom: 10,
+    gap: 6,
   },
-  arabicText: {
+  arabicWord: {
     color: '#ffffff',
     fontSize: 18,
     lineHeight: 36,
-    textAlign: 'right',
-    fontFamily: 'System',
   },
   translation: {
     color: '#cbd5e1',

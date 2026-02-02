@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ArabicMaster",
-    "slug": "arabic-master",
+    "name": "Iqra2.0",
+    "slug": "iqra2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "arabicmaster",
+    "scheme": "iqra2",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.arabicmaster.app",
+      "bundleIdentifier": "com.iqra2.app",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#4f46e5"
       },
-      "package": "com.arabicmaster.app",
+      "package": "com.iqra2.app",
       "edgeToEdgeEnabled": true
     },
     "web": {

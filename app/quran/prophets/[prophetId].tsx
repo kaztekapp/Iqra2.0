@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   blocksContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   comingSoonContainer: {
     padding: 24,

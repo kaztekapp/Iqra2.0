@@ -1,4 +1,4 @@
-// Quran Types for ArabicMaster App
+// Quran Types for Iqra2.0 App
 // Comprehensive types for Quran learning, Tajweed, and memorization
 
 import { ArabicLevel } from './arabic';

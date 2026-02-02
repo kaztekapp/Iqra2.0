@@ -52,9 +52,11 @@ export function QuranSourceCard({
         )}
       </View>
 
-      {/* Arabic Text */}
+      {/* Arabic Text - render words separately to avoid RTL wrapping bug */}
       <View style={styles.arabicContainer}>
-        <Text style={styles.arabicText}>{source.arabicText}</Text>
+        {source.arabicText.split(' ').map((word, index) => (
+          <Text key={index} style={styles.arabicWord}>{word}</Text>
+        ))}
       </View>
 
       {/* English Translation */}
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#10b98110',
     borderRadius: 12,
-    padding: 14,
+    padding: 12,
     marginVertical: 8,
     borderLeftWidth: 3,
     borderLeftColor: '#10b981',
@@ -106,14 +108,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b82f6',
   },
   arabicContainer: {
-    marginBottom: 12,
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    marginBottom: 14,
+    gap: 8,
   },
-  arabicText: {
+  arabicWord: {
     color: '#ffffff',
     fontSize: 22,
-    lineHeight: 42,
-    textAlign: 'right',
-    fontFamily: 'System',
+    lineHeight: 44,
   },
   translation: {
     color: '#cbd5e1',
