@@ -108,8 +108,9 @@ class AudioService {
     // الله (Allah) - the doubled lam needs to be explicit
 
     // اللهم (Allahumma) - must be processed BEFORE الله to avoid partial replacement
-    trimmedText = trimmedText.replace(/اللَّهُمَّ/g, 'اَللّاهُمَّ');  // Allahumma (with diacritics)
-    trimmedText = trimmedText.replace(/اللهم/g, 'اَللّاهُمَّ');       // Allahumma (without diacritics)
+    // Use two explicit lam letters to force double-L pronunciation
+    trimmedText = trimmedText.replace(/اللَّهُمَّ/g, 'أَلْلَهُمَّ');  // Allahumma (with diacritics)
+    trimmedText = trimmedText.replace(/اللهم/g, 'أَلْلَهُمَّ');       // Allahumma (without diacritics)
 
     // الله (Allah) variants
     trimmedText = trimmedText.replace(/اللَّهِ/g, 'اَللاهِ');  // Allahi
