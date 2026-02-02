@@ -106,6 +106,12 @@ class AudioService {
     // Special handling for common words with shadda
     // Replace الله variants with phonetic spelling for proper TTS pronunciation
     // الله (Allah) - the doubled lam needs to be explicit
+
+    // اللهم (Allahumma) - must be processed BEFORE الله to avoid partial replacement
+    trimmedText = trimmedText.replace(/اللَّهُمَّ/g, 'اَللّاهُمَّ');  // Allahumma (with diacritics)
+    trimmedText = trimmedText.replace(/اللهم/g, 'اَللّاهُمَّ');       // Allahumma (without diacritics)
+
+    // الله (Allah) variants
     trimmedText = trimmedText.replace(/اللَّهِ/g, 'اَللاهِ');  // Allahi
     trimmedText = trimmedText.replace(/اللَّهُ/g, 'اَللاهُ');  // Allahu
     trimmedText = trimmedText.replace(/اللَّهَ/g, 'اَللاهَ');  // Allaha
