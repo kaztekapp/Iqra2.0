@@ -82,67 +82,7 @@ export default function AlphabetScreen() {
           </View>
         </View>
 
-        {/* Sun & Moon Letters Card */}
-        <View style={styles.specialSection}>
-          <Pressable
-            style={styles.sunMoonCard}
-            onPress={() => router.push('/alphabet/sun-moon-letters' as any)}
-          >
-            <View style={styles.sunMoonIcons}>
-              <View style={styles.sunIcon}>
-                <Ionicons name="sunny" size={24} color="#f59e0b" />
-              </View>
-              <View style={styles.moonIcon}>
-                <Ionicons name="moon" size={24} color="#a5b4fc" />
-              </View>
-            </View>
-            <View style={styles.sunMoonContent}>
-              <Text style={styles.sunMoonTitle}>Sun & Moon Letters</Text>
-              <Text style={styles.sunMoonTitleAr}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
-              <Text style={styles.sunMoonDesc}>Learn how "ال" pronunciation changes</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={24} color="#64748b" />
-          </Pressable>
-        </View>
-
-        {/* Writing Practice Section */}
-        <View style={styles.writingSection}>
-          <Text style={styles.writingSectionTitle}>Writing Practice</Text>
-
-          {/* Handwriting Practice */}
-          <Pressable
-            style={styles.writingCard}
-            onPress={() => router.push('/alphabet/writing-practice' as any)}
-          >
-            <View style={styles.writingIcon}>
-              <Ionicons name="pencil" size={28} color="#ec4899" />
-            </View>
-            <View style={styles.writingContent}>
-              <Text style={styles.writingTitle}>Handwriting Practice</Text>
-              <Text style={styles.writingTitleAr}>الْخَطُّ الْيَدَوِي</Text>
-              <Text style={styles.writingDesc}>Draw Arabic letters by hand</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={24} color="#64748b" />
-          </Pressable>
-
-          {/* Keyboard Typing Practice */}
-          <Pressable
-            style={[styles.writingCard, { marginTop: 12, borderColor: '#14b8a640' }]}
-            onPress={() => router.push('/exercise/typing-practice' as any)}
-          >
-            <View style={[styles.writingIcon, { backgroundColor: '#14b8a620' }]}>
-              <Ionicons name="keypad" size={28} color="#14b8a6" />
-            </View>
-            <View style={styles.writingContent}>
-              <Text style={styles.writingTitle}>Keyboard Typing</Text>
-              <Text style={styles.writingTitleAr}>الْكِتَابَةُ بِالْمِفْتَاح</Text>
-              <Text style={styles.writingDesc}>Type Arabic words using keyboard</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={24} color="#64748b" />
-          </Pressable>
-        </View>
-
-        {/* Letter Grid */}
+        {/* Letter Grid - 28 Letters */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>28 Letters</Text>
           <View style={styles.letterGrid}>
@@ -181,6 +121,30 @@ export default function AlphabetScreen() {
             })}
           </View>
         </View>
+
+        {/* Sun & Moon Letters Card */}
+        <View style={styles.specialSection}>
+          <Pressable
+            style={styles.sunMoonCard}
+            onPress={() => router.push('/alphabet/sun-moon-letters' as any)}
+          >
+            <View style={styles.sunMoonIcons}>
+              <View style={styles.sunIcon}>
+                <Ionicons name="sunny" size={24} color="#f59e0b" />
+              </View>
+              <View style={styles.moonIcon}>
+                <Ionicons name="moon" size={24} color="#a5b4fc" />
+              </View>
+            </View>
+            <View style={styles.sunMoonContent}>
+              <Text style={styles.sunMoonTitle}>Sun & Moon Letters</Text>
+              <Text style={styles.sunMoonTitleAr}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
+              <Text style={styles.sunMoonDesc}>Learn how "ال" pronunciation changes</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={24} color="#64748b" />
+          </Pressable>
+        </View>
+
 
         {/* Study Tips */}
         <View style={[styles.section, { marginBottom: 100 }]}>
@@ -446,52 +410,6 @@ const styles = StyleSheet.create({
   sunMoonDesc: {
     color: '#94a3b8',
     fontSize: 12,
-    marginTop: 4,
-  },
-  writingSection: {
-    paddingHorizontal: 20,
-    marginBottom: 24,
-  },
-  writingSectionTitle: {
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  writingCard: {
-    backgroundColor: '#1e293b',
-    borderRadius: 16,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#ec489940',
-  },
-  writingIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 14,
-    backgroundColor: '#ec489920',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  writingContent: {
-    flex: 1,
-    marginLeft: 16,
-  },
-  writingTitle: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  writingTitleAr: {
-    color: '#D4AF37',
-    fontSize: 14,
-    marginTop: 2,
-  },
-  writingDesc: {
-    color: '#94a3b8',
-    fontSize: 13,
     marginTop: 4,
   },
 });

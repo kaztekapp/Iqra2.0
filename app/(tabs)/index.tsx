@@ -28,9 +28,9 @@ export default function HomeScreen() {
       id: 'practice',
       title: 'Practice',
       titleArabic: 'تَدْرِيب',
-      icon: 'fitness' as const,
-      color: '#22c55e',
-      route: '/(tabs)/practice',
+      icon: 'pencil' as const,
+      color: '#ec4899',
+      route: '/practice',
     },
   ];
 
@@ -41,7 +41,7 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <View>
             <Text style={styles.greeting}>مَرْحَبًا</Text>
-            <Text style={styles.greetingEnglish}>Welcome to ArabicMaster</Text>
+            <Text style={styles.greetingEnglish}>Welcome to Iqra2.0</Text>
           </View>
           <View style={styles.streakBadge}>
             <Ionicons name="flame" size={20} color="#f59e0b" />

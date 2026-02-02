@@ -123,6 +123,17 @@ export default function LearnScreen() {
       route: '/reading',
       locked: false,
     },
+    {
+      id: 'practice',
+      title: 'Practice',
+      titleArabic: 'التَّدْرِيب',
+      description: 'Handwriting practice, typing exercises, and more',
+      icon: 'pencil' as const,
+      color: '#ec4899',
+      progress: 0,
+      route: '/practice',
+      locked: false,
+    },
   ];
 
   return (
