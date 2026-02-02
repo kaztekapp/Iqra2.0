@@ -5,8 +5,10 @@ import { router } from 'expo-router';
 import { useQuranStore } from '../../src/stores/quranStore';
 import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
 import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
+import { useDuasStore } from '../../src/stores/duasStore';
 import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
 import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
+import { TOTAL_DUAS } from '../../src/types/duas';
 
 export default function QuranScreen() {
   const {
@@ -18,8 +20,10 @@ export default function QuranScreen() {
 
   const { getTotalStoriesCompleted: getProphetStoriesCompleted } = useProphetStoriesStore();
   const { getTotalStoriesCompleted: getQuranStoriesCompleted } = useQuranStoriesStore();
+  const { getMemorizedCount } = useDuasStore();
 
   const overallProgress = getOverallCompletionPercent();
+  const duasMemorized = getMemorizedCount();
   const surahsCompleted = getTotalSurahsCompleted();
   const juzCompleted = getJuzCompleted();
   const hizbCompleted = getHizbCompleted();
@@ -42,6 +46,10 @@ export default function QuranScreen() {
 
   const handleStoriesPress = () => {
     router.push('/quran/stories' as any);
+  };
+
+  const handleDuasPress = () => {
+    router.push('/quran/duas' as any);
   };
 
   return (
@@ -113,19 +121,22 @@ export default function QuranScreen() {
             </Pressable>
           </View>
           <View style={styles.quickActionsRow}>
-            <Pressable style={styles.actionCardGrid} onPress={handleQuizPress}>
+            <Pressable style={styles.actionCardGrid} onPress={handleDuasPress}>
               <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
-                <Ionicons name="help-circle" size={24} color="#f59e0b" />
+                <Ionicons name="hand-left" size={24} color="#f59e0b" />
+              </View>
+              <View style={[styles.actionBadge, { backgroundColor: '#f59e0b30' }]}>
+                <Text style={[styles.actionBadgeText, { color: '#fbbf24' }]}>{duasMemorized}/{TOTAL_DUAS}</Text>
+              </View>
+              <Text style={styles.actionTitle}>Duas</Text>
+              <Text style={styles.actionDesc}>Prophetic prayers</Text>
+            </Pressable>
+            <Pressable style={styles.actionCardGrid} onPress={handleQuizPress}>
+              <View style={[styles.actionIcon, { backgroundColor: '#06b6d420' }]}>
+                <Ionicons name="help-circle" size={24} color="#06b6d4" />
               </View>
               <Text style={styles.actionTitle}>Quizzes</Text>
               <Text style={styles.actionDesc}>Test knowledge</Text>
-            </Pressable>
-            <Pressable style={styles.actionCardGrid} onPress={handleTajweedPress}>
-              <View style={[styles.actionIcon, { backgroundColor: '#10b98120' }]}>
-                <Ionicons name="musical-notes" size={24} color="#10b981" />
-              </View>
-              <Text style={styles.actionTitle}>Tajweed</Text>
-              <Text style={styles.actionDesc}>Pronunciation</Text>
             </Pressable>
           </View>
         </View>
