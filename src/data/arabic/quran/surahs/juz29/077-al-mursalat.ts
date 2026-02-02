@@ -1,0 +1,1876 @@
+// Surah Al-Mursalat (77) - The Emissaries
+// Auto-generated from Quran.com API - DO NOT EDIT MANUALLY
+
+import { Ayah } from '../../../../../types/quran';
+
+export const AL_MURSALAT_AYAHS: Ayah[] = [
+  {
+    "id": "al-mursalat-1",
+    "surahId": "al-mursalat",
+    "ayahNumber": 1,
+    "textUthmani": " وَٱلْمُرْسَلَـٰتِ عُرْفًا",
+    "textSimple": " وٱلمرسلـت عرفا",
+    "transliteration": "wal-mur'salāti ʿur'fan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-1-1",
+        "text": "وَٱلْمُرْسَلَـٰتِ",
+        "transliteration": "wal-mur'salāti",
+        "translation": "By the ones sent forth",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-1-2",
+        "text": "عُرْفًۭا",
+        "transliteration": "ʿur'fan",
+        "translation": "one after another",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-2",
+    "surahId": "al-mursalat",
+    "ayahNumber": 2,
+    "textUthmani": "فَٱلْعَـٰصِفَـٰتِ عَصْفًا",
+    "textSimple": "فٱلعـصفـت عصفا",
+    "transliteration": "fal-ʿāṣifāti ʿaṣfan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-2-1",
+        "text": "فَٱلْعَـٰصِفَـٰتِ",
+        "transliteration": "fal-ʿāṣifāti",
+        "translation": "And the winds that blow",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-2-2",
+        "text": "عَصْفًۭا",
+        "transliteration": "ʿaṣfan",
+        "translation": "violently",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-3",
+    "surahId": "al-mursalat",
+    "ayahNumber": 3,
+    "textUthmani": "وَٱلنَّـٰشِرَٰتِ نَشْرًا",
+    "textSimple": "وٱلنـشرت نشرا",
+    "transliteration": "wal-nāshirāti nashran",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-3-1",
+        "text": "وَٱلنَّـٰشِرَٰتِ",
+        "transliteration": "wal-nāshirāti",
+        "translation": "And the ones that scatter",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-3-2",
+        "text": "نَشْرًۭا",
+        "transliteration": "nashran",
+        "translation": "far and wide",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-4",
+    "surahId": "al-mursalat",
+    "ayahNumber": 4,
+    "textUthmani": "فَٱلْفَـٰرِقَـٰتِ فَرْقًا",
+    "textSimple": "فٱلفـرقـت فرقا",
+    "transliteration": "fal-fāriqāti farqan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-4-1",
+        "text": "فَٱلْفَـٰرِقَـٰتِ",
+        "transliteration": "fal-fāriqāti",
+        "translation": "And those who separate",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-4-2",
+        "text": "فَرْقًۭا",
+        "transliteration": "farqan",
+        "translation": "(by the) Criterion",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-5",
+    "surahId": "al-mursalat",
+    "ayahNumber": 5,
+    "textUthmani": "فَٱلْمُلْقِيَـٰتِ ذِكْرًا",
+    "textSimple": "فٱلملقيـت ذكرا",
+    "transliteration": "fal-mul'qiyāti dhik'ran",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-5-1",
+        "text": "فَٱلْمُلْقِيَـٰتِ",
+        "transliteration": "fal-mul'qiyāti",
+        "translation": "And those who bring down",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-5-2",
+        "text": "ذِكْرًا",
+        "transliteration": "dhik'ran",
+        "translation": "(the) Reminder",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-6",
+    "surahId": "al-mursalat",
+    "ayahNumber": 6,
+    "textUthmani": "عُذْرًا أَوْ نُذْرًا",
+    "textSimple": "عذرا أو نذرا",
+    "transliteration": "ʿudh'ran aw nudh'ran",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-6-1",
+        "text": "عُذْرًا",
+        "transliteration": "ʿudh'ran",
+        "translation": "(As) justification",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-6-2",
+        "text": "أَوْ",
+        "transliteration": "aw",
+        "translation": "or",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-6-3",
+        "text": "نُذْرًا",
+        "transliteration": "nudh'ran",
+        "translation": "warning",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-7",
+    "surahId": "al-mursalat",
+    "ayahNumber": 7,
+    "textUthmani": "إِنَّمَا تُوعَدُونَ لَوَٰقِعٌ",
+    "textSimple": "إنما توعدون لوقع",
+    "transliteration": "innamā tūʿadūna lawāqiʿun",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-7-1",
+        "text": "إِنَّمَا",
+        "transliteration": "innamā",
+        "translation": "Indeed, what",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-7-2",
+        "text": "تُوعَدُونَ",
+        "transliteration": "tūʿadūna",
+        "translation": "you are promised",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-7-3",
+        "text": "لَوَٰقِعٌۭ",
+        "transliteration": "lawāqiʿun",
+        "translation": "will surely occur",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-8",
+    "surahId": "al-mursalat",
+    "ayahNumber": 8,
+    "textUthmani": "فَإِذَا ٱلنُّجُومُ طُمِسَتْ",
+    "textSimple": "فإذا ٱلنجوم طمست",
+    "transliteration": "fa-idhā l-nujūmu ṭumisat",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-8-1",
+        "text": "فَإِذَا",
+        "transliteration": "fa-idhā",
+        "translation": "So when",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-8-2",
+        "text": "ٱلنُّجُومُ",
+        "transliteration": "l-nujūmu",
+        "translation": "the stars",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-8-3",
+        "text": "طُمِسَتْ",
+        "transliteration": "ṭumisat",
+        "translation": "are obliterated",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-9",
+    "surahId": "al-mursalat",
+    "ayahNumber": 9,
+    "textUthmani": "وَإِذَا ٱلسَّمَآءُ فُرِجَتْ",
+    "textSimple": "وإذا ٱلسمآء فرجت",
+    "transliteration": "wa-idhā l-samāu furijat",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-9-1",
+        "text": "وَإِذَا",
+        "transliteration": "wa-idhā",
+        "translation": "And when",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-9-2",
+        "text": "ٱلسَّمَآءُ",
+        "transliteration": "l-samāu",
+        "translation": "the heaven",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-9-3",
+        "text": "فُرِجَتْ",
+        "transliteration": "furijat",
+        "translation": "is cleft asunder",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-10",
+    "surahId": "al-mursalat",
+    "ayahNumber": 10,
+    "textUthmani": "وَإِذَا ٱلْجِبَالُ نُسِفَتْ",
+    "textSimple": "وإذا ٱلجبال نسفت",
+    "transliteration": "wa-idhā l-jibālu nusifat",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-10-1",
+        "text": "وَإِذَا",
+        "transliteration": "wa-idhā",
+        "translation": "And when",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-10-2",
+        "text": "ٱلْجِبَالُ",
+        "transliteration": "l-jibālu",
+        "translation": "the mountains",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-10-3",
+        "text": "نُسِفَتْ",
+        "transliteration": "nusifat",
+        "translation": "are blown away",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-11",
+    "surahId": "al-mursalat",
+    "ayahNumber": 11,
+    "textUthmani": "وَإِذَا ٱلرُّسُلُ أُقِّتَتْ",
+    "textSimple": "وإذا ٱلرسل أقتت",
+    "transliteration": "wa-idhā l-rusulu uqqitat",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-11-1",
+        "text": "وَإِذَا",
+        "transliteration": "wa-idhā",
+        "translation": "And when",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-11-2",
+        "text": "ٱلرُّسُلُ",
+        "transliteration": "l-rusulu",
+        "translation": "the Messengers",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-11-3",
+        "text": "أُقِّتَتْ",
+        "transliteration": "uqqitat",
+        "translation": "are gathered to their appointed time",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-12",
+    "surahId": "al-mursalat",
+    "ayahNumber": 12,
+    "textUthmani": "لِأَىِّ يَوْمٍ أُجِّلَتْ",
+    "textSimple": "لأى يوم أجلت",
+    "transliteration": "li-ayyi yawmin ujjilat",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-12-1",
+        "text": "لِأَىِّ",
+        "transliteration": "li-ayyi",
+        "translation": "For what",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-12-2",
+        "text": "يَوْمٍ",
+        "transliteration": "yawmin",
+        "translation": "Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-12-3",
+        "text": "أُجِّلَتْ",
+        "transliteration": "ujjilat",
+        "translation": "are (these) postponed",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-13",
+    "surahId": "al-mursalat",
+    "ayahNumber": 13,
+    "textUthmani": "لِيَوْمِ ٱلْفَصْلِ",
+    "textSimple": "ليوم ٱلفصل",
+    "transliteration": "liyawmi l-faṣli",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-13-1",
+        "text": "لِيَوْمِ",
+        "transliteration": "liyawmi",
+        "translation": "For (the) Day",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-13-2",
+        "text": "ٱلْفَصْلِ",
+        "transliteration": "l-faṣli",
+        "translation": "(of) Judgment",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-14",
+    "surahId": "al-mursalat",
+    "ayahNumber": 14,
+    "textUthmani": "وَمَآ أَدْرَىٰكَ مَا يَوْمُ ٱلْفَصْلِ",
+    "textSimple": "ومآ أدرىك ما يوم ٱلفصل",
+    "transliteration": "wamā adrāka mā yawmu l-faṣli",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-14-1",
+        "text": "وَمَآ",
+        "transliteration": "wamā",
+        "translation": "And what",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-14-2",
+        "text": "أَدْرَىٰكَ",
+        "transliteration": "adrāka",
+        "translation": "will make you know",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-14-3",
+        "text": "مَا",
+        "transliteration": "mā",
+        "translation": "what",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-14-4",
+        "text": "يَوْمُ",
+        "transliteration": "yawmu",
+        "translation": "(is the) Day",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-14-5",
+        "text": "ٱلْفَصْلِ",
+        "transliteration": "l-faṣli",
+        "translation": "(of) the Judgment",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-15",
+    "surahId": "al-mursalat",
+    "ayahNumber": 15,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-15-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-15-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-15-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-16",
+    "surahId": "al-mursalat",
+    "ayahNumber": 16,
+    "textUthmani": "أَلَمْ نُهْلِكِ ٱلْأَوَّلِينَ",
+    "textSimple": "ألم نهلك ٱلأولين",
+    "transliteration": "alam nuh'liki l-awalīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-16-1",
+        "text": "أَلَمْ",
+        "transliteration": "alam",
+        "translation": "Did not",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-16-2",
+        "text": "نُهْلِكِ",
+        "transliteration": "nuh'liki",
+        "translation": "We destroy",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-16-3",
+        "text": "ٱلْأَوَّلِينَ",
+        "transliteration": "l-awalīna",
+        "translation": "the former (people)",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-17",
+    "surahId": "al-mursalat",
+    "ayahNumber": 17,
+    "textUthmani": "ثُمَّ نُتْبِعُهُمُ ٱلْـَٔاخِرِينَ",
+    "textSimple": "ثم نتبعهم ٱلـٔاخرين",
+    "transliteration": "thumma nut'biʿuhumu l-ākhirīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-17-1",
+        "text": "ثُمَّ",
+        "transliteration": "thumma",
+        "translation": "Then",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-17-2",
+        "text": "نُتْبِعُهُمُ",
+        "transliteration": "nut'biʿuhumu",
+        "translation": "We follow them up",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-17-3",
+        "text": "ٱلْـَٔاخِرِينَ",
+        "transliteration": "l-ākhirīna",
+        "translation": "(with) the later ones",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-18",
+    "surahId": "al-mursalat",
+    "ayahNumber": 18,
+    "textUthmani": "كَذَٰلِكَ نَفْعَلُ بِٱلْمُجْرِمِينَ",
+    "textSimple": "كذلك نفعل بٱلمجرمين",
+    "transliteration": "kadhālika nafʿalu bil-muj'rimīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-18-1",
+        "text": "كَذَٰلِكَ",
+        "transliteration": "kadhālika",
+        "translation": "Thus",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-18-2",
+        "text": "نَفْعَلُ",
+        "transliteration": "nafʿalu",
+        "translation": "We deal",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-18-3",
+        "text": "بِٱلْمُجْرِمِينَ",
+        "transliteration": "bil-muj'rimīna",
+        "translation": "with the criminals",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-19",
+    "surahId": "al-mursalat",
+    "ayahNumber": 19,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-19-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-19-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-19-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-20",
+    "surahId": "al-mursalat",
+    "ayahNumber": 20,
+    "textUthmani": "أَلَمْ نَخْلُقكُّم مِّن مَّآءٍ مَّهِينٍ",
+    "textSimple": "ألم نخلقكم من مآء مهين",
+    "transliteration": "alam nakhluqkkum min māin mahīnin",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-20-1",
+        "text": "أَلَمْ",
+        "transliteration": "alam",
+        "translation": "Did not",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-20-2",
+        "text": "نَخْلُقكُّم",
+        "transliteration": "nakhluqkkum",
+        "translation": "We create you",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-20-3",
+        "text": "مِّن",
+        "transliteration": "min",
+        "translation": "from",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-20-4",
+        "text": "مَّآءٍۢ",
+        "transliteration": "māin",
+        "translation": "a water",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-20-5",
+        "text": "مَّهِينٍۢ",
+        "transliteration": "mahīnin",
+        "translation": "despicable",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-21",
+    "surahId": "al-mursalat",
+    "ayahNumber": 21,
+    "textUthmani": "فَجَعَلْنَـٰهُ فِى قَرَارٍ مَّكِينٍ",
+    "textSimple": "فجعلنـه فى قرار مكين",
+    "transliteration": "fajaʿalnāhu fī qarārin makīnin",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-21-1",
+        "text": "فَجَعَلْنَـٰهُ",
+        "transliteration": "fajaʿalnāhu",
+        "translation": "Then We placed it",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-21-2",
+        "text": "فِى",
+        "transliteration": "fī",
+        "translation": "in",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-21-3",
+        "text": "قَرَارٍۢ",
+        "transliteration": "qarārin",
+        "translation": "an abode",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-21-4",
+        "text": "مَّكِينٍ",
+        "transliteration": "makīnin",
+        "translation": "safe",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-22",
+    "surahId": "al-mursalat",
+    "ayahNumber": 22,
+    "textUthmani": "إِلَىٰ قَدَرٍ مَّعْلُومٍ",
+    "textSimple": "إلى قدر معلوم",
+    "transliteration": "ilā qadarin maʿlūmin",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-22-1",
+        "text": "إِلَىٰ",
+        "transliteration": "ilā",
+        "translation": "For",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-22-2",
+        "text": "قَدَرٍۢ",
+        "transliteration": "qadarin",
+        "translation": "a period",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-22-3",
+        "text": "مَّعْلُومٍۢ",
+        "transliteration": "maʿlūmin",
+        "translation": "known",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-23",
+    "surahId": "al-mursalat",
+    "ayahNumber": 23,
+    "textUthmani": "فَقَدَرْنَا فَنِعْمَ ٱلْقَـٰدِرُونَ",
+    "textSimple": "فقدرنا فنعم ٱلقـدرون",
+    "transliteration": "faqadarnā faniʿ'ma l-qādirūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-23-1",
+        "text": "فَقَدَرْنَا",
+        "transliteration": "faqadarnā",
+        "translation": "So We measured",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-23-2",
+        "text": "فَنِعْمَ",
+        "transliteration": "faniʿ'ma",
+        "translation": "and Best",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-23-3",
+        "text": "ٱلْقَـٰدِرُونَ",
+        "transliteration": "l-qādirūna",
+        "translation": "(are We to) measure",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-24",
+    "surahId": "al-mursalat",
+    "ayahNumber": 24,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-24-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-24-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-24-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-25",
+    "surahId": "al-mursalat",
+    "ayahNumber": 25,
+    "textUthmani": "أَلَمْ نَجْعَلِ ٱلْأَرْضَ كِفَاتًا",
+    "textSimple": "ألم نجعل ٱلأرض كفاتا",
+    "transliteration": "alam najʿali l-arḍa kifātan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-25-1",
+        "text": "أَلَمْ",
+        "transliteration": "alam",
+        "translation": "Have not",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-25-2",
+        "text": "نَجْعَلِ",
+        "transliteration": "najʿali",
+        "translation": "We made",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-25-3",
+        "text": "ٱلْأَرْضَ",
+        "transliteration": "l-arḍa",
+        "translation": "the earth",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-25-4",
+        "text": "كِفَاتًا",
+        "transliteration": "kifātan",
+        "translation": "a receptacle",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-26",
+    "surahId": "al-mursalat",
+    "ayahNumber": 26,
+    "textUthmani": "أَحْيَآءً وَأَمْوَٰتًا",
+    "textSimple": "أحيآء وأموتا",
+    "transliteration": "aḥyāan wa-amwātan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-26-1",
+        "text": "أَحْيَآءًۭ",
+        "transliteration": "aḥyāan",
+        "translation": "(For the) living",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-26-2",
+        "text": "وَأَمْوَٰتًۭا",
+        "transliteration": "wa-amwātan",
+        "translation": "and (the) dead",
+        "position": 1
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-27",
+    "surahId": "al-mursalat",
+    "ayahNumber": 27,
+    "textUthmani": "وَجَعَلْنَا فِيهَا رَوَٰسِىَ شَـٰمِخَـٰتٍ وَأَسْقَيْنَـٰكُم مَّآءً فُرَاتًا",
+    "textSimple": "وجعلنا فيها روسى شـمخـت وأسقينـكم مآء فراتا",
+    "transliteration": "wajaʿalnā fīhā rawāsiya shāmikhātin wa-asqaynākum māan furātan",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-27-1",
+        "text": "وَجَعَلْنَا",
+        "transliteration": "wajaʿalnā",
+        "translation": "And We made",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-27-2",
+        "text": "فِيهَا",
+        "transliteration": "fīhā",
+        "translation": "therein",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-27-3",
+        "text": "رَوَٰسِىَ",
+        "transliteration": "rawāsiya",
+        "translation": "firmly set mountains",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-27-4",
+        "text": "شَـٰمِخَـٰتٍۢ",
+        "transliteration": "shāmikhātin",
+        "translation": "lofty",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-27-5",
+        "text": "وَأَسْقَيْنَـٰكُم",
+        "transliteration": "wa-asqaynākum",
+        "translation": "and We gave you to drink",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-27-6",
+        "text": "مَّآءًۭ",
+        "transliteration": "māan",
+        "translation": "water ",
+        "position": 5
+      },
+      {
+        "id": "al-mursalat-27-7",
+        "text": "فُرَاتًۭا",
+        "transliteration": "furātan",
+        "translation": "sweet",
+        "position": 6
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-28",
+    "surahId": "al-mursalat",
+    "ayahNumber": 28,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-28-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-28-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-28-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-29",
+    "surahId": "al-mursalat",
+    "ayahNumber": 29,
+    "textUthmani": "ٱنطَلِقُوٓا۟ إِلَىٰ مَا كُنتُم بِهِۦ تُكَذِّبُونَ",
+    "textSimple": "ٱنطلقوٓا إلى ما كنتم به تكذبون",
+    "transliteration": "inṭaliqū ilā mā kuntum bihi tukadhibūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-29-1",
+        "text": "ٱنطَلِقُوٓا۟",
+        "transliteration": "inṭaliqū",
+        "translation": "Proceed",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-29-2",
+        "text": "إِلَىٰ",
+        "transliteration": "ilā",
+        "translation": "to",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-29-3",
+        "text": "مَا",
+        "transliteration": "mā",
+        "translation": "what",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-29-4",
+        "text": "كُنتُم",
+        "transliteration": "kuntum",
+        "translation": "you used to",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-29-5",
+        "text": "بِهِۦ",
+        "transliteration": "bihi",
+        "translation": "in it",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-29-6",
+        "text": "تُكَذِّبُونَ",
+        "transliteration": "tukadhibūna",
+        "translation": "deny",
+        "position": 5
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-30",
+    "surahId": "al-mursalat",
+    "ayahNumber": 30,
+    "textUthmani": "ٱنطَلِقُوٓا۟ إِلَىٰ ظِلٍّ ذِى ثَلَـٰثِ شُعَبٍ",
+    "textSimple": "ٱنطلقوٓا إلى ظل ذى ثلـث شعب",
+    "transliteration": "inṭaliqū ilā ẓillin dhī thalāthi shuʿabin",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-30-1",
+        "text": "ٱنطَلِقُوٓا۟",
+        "transliteration": "inṭaliqū",
+        "translation": "Proceed",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-30-2",
+        "text": "إِلَىٰ",
+        "transliteration": "ilā",
+        "translation": "to",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-30-3",
+        "text": "ظِلٍّۢ",
+        "transliteration": "ẓillin",
+        "translation": "a shadow",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-30-4",
+        "text": "ذِى",
+        "transliteration": "dhī",
+        "translation": "having",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-30-5",
+        "text": "ثَلَـٰثِ",
+        "transliteration": "thalāthi",
+        "translation": "three",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-30-6",
+        "text": "شُعَبٍۢ",
+        "transliteration": "shuʿabin",
+        "translation": "columns",
+        "position": 5
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-31",
+    "surahId": "al-mursalat",
+    "ayahNumber": 31,
+    "textUthmani": "لَّا ظَلِيلٍ وَلَا يُغْنِى مِنَ ٱللَّهَبِ",
+    "textSimple": "لا ظليل ولا يغنى من ٱللهب",
+    "transliteration": "lā ẓalīlin walā yugh'nī mina l-lahabi",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-31-1",
+        "text": "لَّا",
+        "transliteration": "lā",
+        "translation": "No",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-31-2",
+        "text": "ظَلِيلٍۢ",
+        "transliteration": "ẓalīlin",
+        "translation": "cool shade",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-31-3",
+        "text": "وَلَا",
+        "transliteration": "walā",
+        "translation": "and not",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-31-4",
+        "text": "يُغْنِى",
+        "transliteration": "yugh'nī",
+        "translation": "availing",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-31-5",
+        "text": "مِنَ",
+        "transliteration": "mina",
+        "translation": "against",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-31-6",
+        "text": "ٱللَّهَبِ",
+        "transliteration": "l-lahabi",
+        "translation": "the flame",
+        "position": 5
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-32",
+    "surahId": "al-mursalat",
+    "ayahNumber": 32,
+    "textUthmani": "إِنَّهَا تَرْمِى بِشَرَرٍ كَٱلْقَصْرِ",
+    "textSimple": "إنها ترمى بشرر كٱلقصر",
+    "transliteration": "innahā tarmī bishararin kal-qaṣri",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-32-1",
+        "text": "إِنَّهَا",
+        "transliteration": "innahā",
+        "translation": "Indeed, it",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-32-2",
+        "text": "تَرْمِى",
+        "transliteration": "tarmī",
+        "translation": "throws up",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-32-3",
+        "text": "بِشَرَرٍۢ",
+        "transliteration": "bishararin",
+        "translation": "sparks",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-32-4",
+        "text": "كَٱلْقَصْرِ",
+        "transliteration": "kal-qaṣri",
+        "translation": "as the fortress",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-33",
+    "surahId": "al-mursalat",
+    "ayahNumber": 33,
+    "textUthmani": "كَأَنَّهُۥ جِمَـٰلَتٌ صُفْرٌ",
+    "textSimple": "كأنه جمـلت صفر",
+    "transliteration": "ka-annahu jimālatun ṣuf'run",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-33-1",
+        "text": "كَأَنَّهُۥ",
+        "transliteration": "ka-annahu",
+        "translation": "As if they (were)",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-33-2",
+        "text": "جِمَـٰلَتٌۭ",
+        "transliteration": "jimālatun",
+        "translation": "camels",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-33-3",
+        "text": "صُفْرٌۭ",
+        "transliteration": "ṣuf'run",
+        "translation": "yellow",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-34",
+    "surahId": "al-mursalat",
+    "ayahNumber": 34,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-34-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-34-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-34-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-35",
+    "surahId": "al-mursalat",
+    "ayahNumber": 35,
+    "textUthmani": "هَـٰذَا يَوْمُ لَا يَنطِقُونَ",
+    "textSimple": "هـذا يوم لا ينطقون",
+    "transliteration": "hādhā yawmu lā yanṭiqūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-35-1",
+        "text": "هَـٰذَا",
+        "transliteration": "hādhā",
+        "translation": "This",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-35-2",
+        "text": "يَوْمُ",
+        "transliteration": "yawmu",
+        "translation": "(is) a Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-35-3",
+        "text": "لَا",
+        "transliteration": "lā",
+        "translation": "not",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-35-4",
+        "text": "يَنطِقُونَ",
+        "transliteration": "yanṭiqūna",
+        "translation": "they will speak",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-36",
+    "surahId": "al-mursalat",
+    "ayahNumber": 36,
+    "textUthmani": "وَلَا يُؤْذَنُ لَهُمْ فَيَعْتَذِرُونَ",
+    "textSimple": "ولا يؤذن لهم فيعتذرون",
+    "transliteration": "walā yu'dhanu lahum fayaʿtadhirūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-36-1",
+        "text": "وَلَا",
+        "transliteration": "walā",
+        "translation": "And not",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-36-2",
+        "text": "يُؤْذَنُ",
+        "transliteration": "yu'dhanu",
+        "translation": "will it be permitted",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-36-3",
+        "text": "لَهُمْ",
+        "transliteration": "lahum",
+        "translation": "for them",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-36-4",
+        "text": "فَيَعْتَذِرُونَ",
+        "transliteration": "fayaʿtadhirūna",
+        "translation": "to make excuses",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-37",
+    "surahId": "al-mursalat",
+    "ayahNumber": 37,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-37-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-37-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-37-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-38",
+    "surahId": "al-mursalat",
+    "ayahNumber": 38,
+    "textUthmani": "هَـٰذَا يَوْمُ ٱلْفَصْلِ ۖ جَمَعْنَـٰكُمْ وَٱلْأَوَّلِينَ",
+    "textSimple": "هـذا يوم ٱلفصل  جمعنـكم وٱلأولين",
+    "transliteration": "hādhā yawmu l-faṣli jamaʿnākum wal-awalīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-38-1",
+        "text": "هَـٰذَا",
+        "transliteration": "hādhā",
+        "translation": "This",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-38-2",
+        "text": "يَوْمُ",
+        "transliteration": "yawmu",
+        "translation": "(is the) Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-38-3",
+        "text": "ٱلْفَصْلِ ۖ",
+        "transliteration": "l-faṣli",
+        "translation": "(of) Judgment",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-38-4",
+        "text": "جَمَعْنَـٰكُمْ",
+        "transliteration": "jamaʿnākum",
+        "translation": "We have gathered you",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-38-5",
+        "text": "وَٱلْأَوَّلِينَ",
+        "transliteration": "wal-awalīna",
+        "translation": "and the former (people)",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-39",
+    "surahId": "al-mursalat",
+    "ayahNumber": 39,
+    "textUthmani": "فَإِن كَانَ لَكُمْ كَيْدٌ فَكِيدُونِ",
+    "textSimple": "فإن كان لكم كيد فكيدون",
+    "transliteration": "fa-in kāna lakum kaydun fakīdūni",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-39-1",
+        "text": "فَإِن",
+        "transliteration": "fa-in",
+        "translation": "So if",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-39-2",
+        "text": "كَانَ",
+        "transliteration": "kāna",
+        "translation": "is",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-39-3",
+        "text": "لَكُمْ",
+        "transliteration": "lakum",
+        "translation": "for you",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-39-4",
+        "text": "كَيْدٌۭ",
+        "transliteration": "kaydun",
+        "translation": "a plan",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-39-5",
+        "text": "فَكِيدُونِ",
+        "transliteration": "fakīdūni",
+        "translation": "then plan against Me",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-40",
+    "surahId": "al-mursalat",
+    "ayahNumber": 40,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-40-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-40-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-40-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-41",
+    "surahId": "al-mursalat",
+    "ayahNumber": 41,
+    "textUthmani": "إِنَّ ٱلْمُتَّقِينَ فِى ظِلَـٰلٍ وَعُيُونٍ",
+    "textSimple": "إن ٱلمتقين فى ظلـل وعيون",
+    "transliteration": "inna l-mutaqīna fī ẓilālin waʿuyūnin",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-41-1",
+        "text": "إِنَّ",
+        "transliteration": "inna",
+        "translation": "Indeed",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-41-2",
+        "text": "ٱلْمُتَّقِينَ",
+        "transliteration": "l-mutaqīna",
+        "translation": "the righteous",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-41-3",
+        "text": "فِى",
+        "transliteration": "fī",
+        "translation": "(will be) in",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-41-4",
+        "text": "ظِلَـٰلٍۢ",
+        "transliteration": "ẓilālin",
+        "translation": "shades",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-41-5",
+        "text": "وَعُيُونٍۢ",
+        "transliteration": "waʿuyūnin",
+        "translation": "and springs",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-42",
+    "surahId": "al-mursalat",
+    "ayahNumber": 42,
+    "textUthmani": "وَفَوَٰكِهَ مِمَّا يَشْتَهُونَ",
+    "textSimple": "وفوكه مما يشتهون",
+    "transliteration": "wafawākiha mimmā yashtahūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-42-1",
+        "text": "وَفَوَٰكِهَ",
+        "transliteration": "wafawākiha",
+        "translation": "And fruits",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-42-2",
+        "text": "مِمَّا",
+        "transliteration": "mimmā",
+        "translation": "from what",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-42-3",
+        "text": "يَشْتَهُونَ",
+        "transliteration": "yashtahūna",
+        "translation": "they desire",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-43",
+    "surahId": "al-mursalat",
+    "ayahNumber": 43,
+    "textUthmani": "كُلُوا۟ وَٱشْرَبُوا۟ هَنِيٓـًٔۢا بِمَا كُنتُمْ تَعْمَلُونَ",
+    "textSimple": "كلوا وٱشربوا هنيٓـٔا بما كنتم تعملون",
+    "transliteration": "kulū wa-ish'rabū hanīan bimā kuntum taʿmalūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-43-1",
+        "text": "كُلُوا۟",
+        "transliteration": "kulū",
+        "translation": "Eat",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-43-2",
+        "text": "وَٱشْرَبُوا۟",
+        "transliteration": "wa-ish'rabū",
+        "translation": "and drink",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-43-3",
+        "text": "هَنِيٓـًٔۢا",
+        "transliteration": "hanīan",
+        "translation": "(in) satisfaction",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-43-4",
+        "text": "بِمَا",
+        "transliteration": "bimā",
+        "translation": "for what",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-43-5",
+        "text": "كُنتُمْ",
+        "transliteration": "kuntum",
+        "translation": "you used to",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-43-6",
+        "text": "تَعْمَلُونَ",
+        "transliteration": "taʿmalūna",
+        "translation": "do",
+        "position": 5
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-44",
+    "surahId": "al-mursalat",
+    "ayahNumber": 44,
+    "textUthmani": "إِنَّا كَذَٰلِكَ نَجْزِى ٱلْمُحْسِنِينَ",
+    "textSimple": "إنا كذلك نجزى ٱلمحسنين",
+    "transliteration": "innā kadhālika najzī l-muḥ'sinīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-44-1",
+        "text": "إِنَّا",
+        "transliteration": "innā",
+        "translation": "Indeed, We",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-44-2",
+        "text": "كَذَٰلِكَ",
+        "transliteration": "kadhālika",
+        "translation": "thus",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-44-3",
+        "text": "نَجْزِى",
+        "transliteration": "najzī",
+        "translation": "reward",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-44-4",
+        "text": "ٱلْمُحْسِنِينَ",
+        "transliteration": "l-muḥ'sinīna",
+        "translation": "the good-doers",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-45",
+    "surahId": "al-mursalat",
+    "ayahNumber": 45,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-45-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-45-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-45-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-46",
+    "surahId": "al-mursalat",
+    "ayahNumber": 46,
+    "textUthmani": "كُلُوا۟ وَتَمَتَّعُوا۟ قَلِيلًا إِنَّكُم مُّجْرِمُونَ",
+    "textSimple": "كلوا وتمتعوا قليلا إنكم مجرمون",
+    "transliteration": "kulū watamattaʿū qalīlan innakum muj'rimūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-46-1",
+        "text": "كُلُوا۟",
+        "transliteration": "kulū",
+        "translation": "Eat",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-46-2",
+        "text": "وَتَمَتَّعُوا۟",
+        "transliteration": "watamattaʿū",
+        "translation": "and enjoy yourselves",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-46-3",
+        "text": "قَلِيلًا",
+        "transliteration": "qalīlan",
+        "translation": "a little",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-46-4",
+        "text": "إِنَّكُم",
+        "transliteration": "innakum",
+        "translation": "indeed, you",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-46-5",
+        "text": "مُّجْرِمُونَ",
+        "transliteration": "muj'rimūna",
+        "translation": "(are) criminals",
+        "position": 4
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-47",
+    "surahId": "al-mursalat",
+    "ayahNumber": 47,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-47-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-47-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-47-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-48",
+    "surahId": "al-mursalat",
+    "ayahNumber": 48,
+    "textUthmani": "وَإِذَا قِيلَ لَهُمُ ٱرْكَعُوا۟ لَا يَرْكَعُونَ",
+    "textSimple": "وإذا قيل لهم ٱركعوا لا يركعون",
+    "transliteration": "wa-idhā qīla lahumu ir'kaʿū lā yarkaʿūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-48-1",
+        "text": "وَإِذَا",
+        "transliteration": "wa-idhā",
+        "translation": "And when",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-48-2",
+        "text": "قِيلَ",
+        "transliteration": "qīla",
+        "translation": "it is said",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-48-3",
+        "text": "لَهُمُ",
+        "transliteration": "lahumu",
+        "translation": "to them",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-48-4",
+        "text": "ٱرْكَعُوا۟",
+        "transliteration": "ir'kaʿū",
+        "translation": "Bow",
+        "position": 3
+      },
+      {
+        "id": "al-mursalat-48-5",
+        "text": "لَا",
+        "transliteration": "lā",
+        "translation": "not",
+        "position": 4
+      },
+      {
+        "id": "al-mursalat-48-6",
+        "text": "يَرْكَعُونَ",
+        "transliteration": "yarkaʿūna",
+        "translation": "they bow",
+        "position": 5
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-49",
+    "surahId": "al-mursalat",
+    "ayahNumber": 49,
+    "textUthmani": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+    "textSimple": "ويل يومئذ للمكذبين",
+    "transliteration": "waylun yawma-idhin lil'mukadhibīna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-49-1",
+        "text": "وَيْلٌۭ",
+        "transliteration": "waylun",
+        "translation": "Woe",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-49-2",
+        "text": "يَوْمَئِذٍۢ",
+        "transliteration": "yawma-idhin",
+        "translation": "that Day",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-49-3",
+        "text": "لِّلْمُكَذِّبِينَ",
+        "transliteration": "lil'mukadhibīna",
+        "translation": "to the deniers",
+        "position": 2
+      }
+    ],
+    "tajweedRules": []
+  },
+  {
+    "id": "al-mursalat-50",
+    "surahId": "al-mursalat",
+    "ayahNumber": 50,
+    "textUthmani": "فَبِأَىِّ حَدِيثٍۭ بَعْدَهُۥ يُؤْمِنُونَ",
+    "textSimple": "فبأى حديث بعده يؤمنون",
+    "transliteration": "fabi-ayyi ḥadīthin baʿdahu yu'minūna",
+    "translation": "",
+    "words": [
+      {
+        "id": "al-mursalat-50-1",
+        "text": "فَبِأَىِّ",
+        "transliteration": "fabi-ayyi",
+        "translation": "Then in what",
+        "position": 0
+      },
+      {
+        "id": "al-mursalat-50-2",
+        "text": "حَدِيثٍۭ",
+        "transliteration": "ḥadīthin",
+        "translation": "statement",
+        "position": 1
+      },
+      {
+        "id": "al-mursalat-50-3",
+        "text": "بَعْدَهُۥ",
+        "transliteration": "baʿdahu",
+        "translation": "after it",
+        "position": 2
+      },
+      {
+        "id": "al-mursalat-50-4",
+        "text": "يُؤْمِنُونَ",
+        "transliteration": "yu'minūna",
+        "translation": "will they believe",
+        "position": 3
+      }
+    ],
+    "tajweedRules": []
+  }
+];
+
+export default AL_MURSALAT_AYAHS;

@@ -12,7 +12,7 @@ import {
   TajweedRuleId,
   LearningStatus,
 } from '../types/quran';
-import { SURAHS, getAyahsBySurahId } from '../data/arabic/quran';
+import { SURAHS } from '../data/arabic/quran';
 import { DEFAULT_RECITER_ID } from '../data/arabic/quran/reciters';
 
 interface QuranState {
@@ -220,9 +220,10 @@ export const useQuranStore = create<QuranState>()(
             return state;
           }
 
-          const ayahs = getAyahsBySurahId(surahId);
+          const surahMeta = SURAHS.find(s => s.id === surahId);
+          const totalAyahs = surahMeta?.ayahCount || 1;
           const newAyahsLearned = [...surahProgress.ayahsLearned, ayahId];
-          const completionPercent = Math.round((newAyahsLearned.length / ayahs.length) * 100);
+          const completionPercent = Math.round((newAyahsLearned.length / totalAyahs) * 100);
 
           return {
             progress: {
@@ -256,8 +257,9 @@ export const useQuranStore = create<QuranState>()(
             ? surahProgress.ayahsLearned
             : [...surahProgress.ayahsLearned, ayahId];
 
-          const ayahs = getAyahsBySurahId(surahId);
-          const completionPercent = Math.round((newAyahsLearned.length / ayahs.length) * 100);
+          const surahMeta = SURAHS.find(s => s.id === surahId);
+          const totalAyahs = surahMeta?.ayahCount || 1;
+          const completionPercent = Math.round((newAyahsLearned.length / totalAyahs) * 100);
 
           // Update memorization progress
           const totalMemorized = Object.values(state.progress.surahProgress).reduce(

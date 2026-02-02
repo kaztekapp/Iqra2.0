@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, Modal } from 'react-native';
+import { View, Text, FlatList, Pressable, StyleSheet, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -21,7 +21,7 @@ export default function SurahDetailScreen() {
   // Refs to track state in callbacks (avoids stale closures)
   const isPlayingAllRef = useRef(false);
   const currentPlayingIndexRef = useRef(0);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const flatListRef = useRef<FlatList>(null);
   const ayahPositions = useRef<{ [key: string]: number }>({});
   const ayahsContainerOffset = useRef(0);
 
@@ -124,12 +124,11 @@ export default function SurahDetailScreen() {
 
   // Scroll to a specific ayah
   const scrollToAyah = useCallback((ayahId: string) => {
-    const position = ayahPositions.current[ayahId];
-    if (position !== undefined && scrollViewRef.current) {
-      const scrollY = ayahsContainerOffset.current + position - 100;
-      scrollViewRef.current.scrollTo({ y: scrollY, animated: true });
+    const index = ayahs.findIndex(a => a.id === ayahId);
+    if (index !== -1 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({ index, animated: true, viewPosition: 0.3 });
     }
-  }, []);
+  }, [ayahs]);
 
   // Play a specific ayah by index and chain to next on completion
   const playAyahAtIndex = useCallback(async (index: number) => {
@@ -252,264 +251,267 @@ export default function SurahDetailScreen() {
     );
   }
 
+  // Render item for FlatList
+  const renderAyahItem = useCallback(({ item: ayah }: { item: typeof ayahs[0] }) => {
+    if (viewMode === 'cards') {
+      return (
+        <AyahCard
+          ayah={ayah}
+          showTransliteration={progress.settings.showTransliteration}
+          showTranslation={progress.settings.showTranslation}
+          showTajweed={progress.settings.showTajweedColors}
+          isLearned={isAyahLearned(surahId, ayah.id)}
+          isMemorized={isAyahMemorized(surahId, ayah.id)}
+          isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
+          isLoading={activeAyahId === ayah.id && audioState === 'loading'}
+          isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
+          isPaused={activeAyahId === ayah.id && audioState === 'paused'}
+          playbackSpeed={progress.settings.playbackSpeed}
+          onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
+          onBookmark={() => handleBookmark(ayah.id)}
+          onPress={() => handleAyahPress(ayah.id)}
+          onSpeedChange={handleSpeedChange}
+        />
+      );
+    }
+    return (
+      <AyahListItem
+        ayah={ayah}
+        isLearned={isAyahLearned(surahId, ayah.id)}
+        isMemorized={isAyahMemorized(surahId, ayah.id)}
+        onPress={() => handleAyahPress(ayah.id)}
+      />
+    );
+  }, [viewMode, progress.settings, surahId, surahProgress.bookmarkedAyahs, activeAyahId, audioState, isAyahLearned, isAyahMemorized, handlePlayAyah, handleBookmark, handleAyahPress, handleSpeedChange]);
+
+  // List header component
+  const ListHeader = useCallback(() => (
+    <>
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#ffffff" />
+        </Pressable>
+        <View style={styles.headerTitle}>
+          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
+        </View>
+        <View style={styles.headerNav}>
+          <Pressable
+            style={[styles.navButton, surah.surahNumber <= 1 && styles.navButtonDisabled]}
+            onPress={handlePreviousSurah}
+            disabled={surah.surahNumber <= 1}
+          >
+            <Ionicons
+              name="chevron-back"
+              size={20}
+              color={surah.surahNumber <= 1 ? '#334155' : '#10b981'}
+            />
+          </Pressable>
+          <Text style={styles.surahNumber}>#{surah.surahNumber}</Text>
+          <Pressable
+            style={[styles.navButton, surah.surahNumber >= 114 && styles.navButtonDisabled]}
+            onPress={handleNextSurah}
+            disabled={surah.surahNumber >= 114}
+          >
+            <Ionicons
+              name="chevron-forward"
+              size={20}
+              color={surah.surahNumber >= 114 ? '#334155' : '#10b981'}
+            />
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Surah Info Card */}
+      <View style={styles.infoCard}>
+        <Text style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
+        <View style={styles.infoRow}>
+          <View style={styles.infoItem}>
+            <Ionicons name="list" size={16} color="#10b981" />
+            <Text style={styles.infoText}>{surah.ayahCount} Verses</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Ionicons name="location" size={16} color="#10b981" />
+            <Text style={styles.infoText}>{surah.revelationType}</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Ionicons name="book" size={16} color="#10b981" />
+            <Text style={styles.infoText}>Juz {surah.juz}</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Reciter Selector */}
+      <Pressable style={styles.reciterCard} onPress={() => setShowReciterModal(true)}>
+        <View style={styles.reciterInfo}>
+          <View style={styles.reciterIcon}>
+            <Ionicons name="mic" size={20} color="#10b981" />
+          </View>
+          <View style={styles.reciterDetails}>
+            <Text style={styles.reciterLabel}>Reciter</Text>
+            <Text style={styles.reciterName}>{currentReciter.nameEnglish}</Text>
+            <Text style={styles.reciterNameArabic}>{currentReciter.nameArabic}</Text>
+          </View>
+        </View>
+        <View style={styles.reciterAction}>
+          <Text style={styles.changeText}>Change</Text>
+          <Ionicons name="chevron-forward" size={18} color="#64748b" />
+        </View>
+      </Pressable>
+
+      {/* Action Buttons */}
+      <View style={styles.actionButtons}>
+        <Pressable style={styles.primaryButton} onPress={handleStartLearning}>
+          <Ionicons name="school" size={20} color="#ffffff" />
+          <Text style={styles.primaryButtonText}>Learn</Text>
+        </Pressable>
+        <Pressable style={styles.secondaryButton} onPress={handlePractice}>
+          <Ionicons name="refresh" size={20} color="#10b981" />
+          <Text style={styles.secondaryButtonText}>Practice</Text>
+        </Pressable>
+        <Pressable style={styles.secondaryButton} onPress={handleWrite}>
+          <Ionicons name="pencil" size={20} color="#10b981" />
+          <Text style={styles.secondaryButtonText}>Write</Text>
+        </Pressable>
+      </View>
+
+      {/* View Toggle */}
+      <View style={styles.viewToggle}>
+        <Text style={styles.sectionTitle}>Verses</Text>
+        <Pressable
+          style={[
+            styles.playAllButton,
+            (isPlayingAll || audioState === 'playing') && styles.playAllButtonActive,
+          ]}
+          onPress={handlePlayAllToggle}
+        >
+          {audioState === 'loading' && isPlayingAll ? (
+            <ActivityIndicator size="small" color="#ffffff" />
+          ) : (
+            <Ionicons
+              name={isPlayingAll || audioState === 'playing' ? 'stop' : 'play'}
+              size={14}
+              color="#ffffff"
+            />
+          )}
+          <Text style={styles.playAllButtonText}>
+            {isPlayingAll || audioState === 'playing'
+              ? currentPlayingAyah
+                ? `${currentPlayingAyah}/${surah.ayahCount}`
+                : 'Stop'
+              : 'Play All'}
+          </Text>
+        </Pressable>
+        <View style={styles.toggleButtons}>
+          <Pressable
+            style={[styles.toggleButton, viewMode === 'cards' && styles.toggleButtonActive]}
+            onPress={() => setViewMode('cards')}
+          >
+            <Ionicons
+              name="grid"
+              size={18}
+              color={viewMode === 'cards' ? '#ffffff' : '#64748b'}
+            />
+          </Pressable>
+          <Pressable
+            style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
+            onPress={() => setViewMode('list')}
+          >
+            <Ionicons
+              name="list"
+              size={18}
+              color={viewMode === 'list' ? '#ffffff' : '#64748b'}
+            />
+          </Pressable>
+        </View>
+      </View>
+    </>
+  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleStartLearning, handlePractice, handleWrite, handlePlayAllToggle]);
+
+  // List footer component
+  const ListFooter = useCallback(() => (
+    <Pressable
+      style={styles.backToTopButton}
+      onPress={() => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })}
+    >
+      <Ionicons name="arrow-up" size={18} color="#10b981" />
+      <Text style={styles.backToTopText}>Back to Top</Text>
+    </Pressable>
+  ), []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          </Pressable>
-          <View style={styles.headerTitle}>
-            <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
-            <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
-          </View>
-          <View style={styles.headerNav}>
-            <Pressable
-              style={[styles.navButton, surah.surahNumber <= 1 && styles.navButtonDisabled]}
-              onPress={handlePreviousSurah}
-              disabled={surah.surahNumber <= 1}
-            >
-              <Ionicons
-                name="chevron-back"
-                size={20}
-                color={surah.surahNumber <= 1 ? '#334155' : '#10b981'}
-              />
-            </Pressable>
-            <Text style={styles.surahNumber}>#{surah.surahNumber}</Text>
-            <Pressable
-              style={[styles.navButton, surah.surahNumber >= 114 && styles.navButtonDisabled]}
-              onPress={handleNextSurah}
-              disabled={surah.surahNumber >= 114}
-            >
-              <Ionicons
-                name="chevron-forward"
-                size={20}
-                color={surah.surahNumber >= 114 ? '#334155' : '#10b981'}
-              />
-            </Pressable>
-          </View>
-        </View>
-
-        {/* Surah Info Card */}
-        <View style={styles.infoCard}>
-          <Text style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
-          <View style={styles.infoRow}>
-            <View style={styles.infoItem}>
-              <Ionicons name="list" size={16} color="#10b981" />
-              <Text style={styles.infoText}>{surah.ayahCount} Verses</Text>
+      {/* Reciter Selection Modal */}
+      <Modal
+        visible={showReciterModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowReciterModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Select Reciter</Text>
+              <Pressable onPress={() => setShowReciterModal(false)}>
+                <Ionicons name="close" size={24} color="#ffffff" />
+              </Pressable>
             </View>
-            <View style={styles.infoItem}>
-              <Ionicons name="location" size={16} color="#10b981" />
-              <Text style={styles.infoText}>{surah.revelationType}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Ionicons name="book" size={16} color="#10b981" />
-              <Text style={styles.infoText}>Juz {surah.juz}</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Reciter Selector */}
-        <Pressable style={styles.reciterCard} onPress={() => setShowReciterModal(true)}>
-          <View style={styles.reciterInfo}>
-            <View style={styles.reciterIcon}>
-              <Ionicons name="mic" size={20} color="#10b981" />
-            </View>
-            <View style={styles.reciterDetails}>
-              <Text style={styles.reciterLabel}>Reciter</Text>
-              <Text style={styles.reciterName}>{currentReciter.nameEnglish}</Text>
-              <Text style={styles.reciterNameArabic}>{currentReciter.nameArabic}</Text>
-            </View>
-          </View>
-          <View style={styles.reciterAction}>
-            <Text style={styles.changeText}>Change</Text>
-            <Ionicons name="chevron-forward" size={18} color="#64748b" />
-          </View>
-        </Pressable>
-
-        {/* Reciter Selection Modal */}
-        <Modal
-          visible={showReciterModal}
-          animationType="slide"
-          transparent={true}
-          onRequestClose={() => setShowReciterModal(false)}
-        >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>Select Reciter</Text>
-                <Pressable onPress={() => setShowReciterModal(false)}>
-                  <Ionicons name="close" size={24} color="#ffffff" />
-                </Pressable>
-              </View>
-              <ScrollView style={styles.reciterList}>
-                {Object.values(QURAN_RECITERS).map((reciter) => (
-                  <Pressable
-                    key={reciter.id}
-                    style={[
-                      styles.reciterOption,
-                      currentReciterId === reciter.id && styles.reciterOptionActive,
-                    ]}
-                    onPress={() => handleReciterChange(reciter.id as ReciterId)}
-                  >
-                    <View style={styles.reciterOptionInfo}>
-                      <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>
-                      <Text style={styles.reciterOptionArabic}>{reciter.nameArabic}</Text>
-                      <View style={styles.reciterMeta}>
-                        <View style={styles.styleBadge}>
-                          <Text style={styles.reciterStyle}>{reciter.style}</Text>
-                          <Text style={styles.styleDesc}>
-                            {reciter.style === 'murattal' ? '• steady pace, for learning' : '• melodic, artistic'}
-                          </Text>
-                        </View>
-                        {reciter.recommended && (
-                          <View style={styles.recommendedBadge}>
-                            <Ionicons name="star" size={10} color="#f59e0b" />
-                            <Text style={styles.recommendedText}>Recommended</Text>
-                          </View>
-                        )}
+            <ScrollView style={styles.reciterList}>
+              {Object.values(QURAN_RECITERS).map((reciter) => (
+                <Pressable
+                  key={reciter.id}
+                  style={[
+                    styles.reciterOption,
+                    currentReciterId === reciter.id && styles.reciterOptionActive,
+                  ]}
+                  onPress={() => handleReciterChange(reciter.id as ReciterId)}
+                >
+                  <View style={styles.reciterOptionInfo}>
+                    <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>
+                    <Text style={styles.reciterOptionArabic}>{reciter.nameArabic}</Text>
+                    <View style={styles.reciterMeta}>
+                      <View style={styles.styleBadge}>
+                        <Text style={styles.reciterStyle}>{reciter.style}</Text>
+                        <Text style={styles.styleDesc}>
+                          {reciter.style === 'murattal' ? '• steady pace, for learning' : '• melodic, artistic'}
+                        </Text>
                       </View>
+                      {reciter.recommended && (
+                        <View style={styles.recommendedBadge}>
+                          <Ionicons name="star" size={10} color="#f59e0b" />
+                          <Text style={styles.recommendedText}>Recommended</Text>
+                        </View>
+                      )}
                     </View>
-                    {currentReciterId === reciter.id && (
-                      <Ionicons name="checkmark-circle" size={24} color="#10b981" />
-                    )}
-                  </Pressable>
-                ))}
-              </ScrollView>
-            </View>
-          </View>
-        </Modal>
-
-        {/* Action Buttons */}
-        <View style={styles.actionButtons}>
-          <Pressable style={styles.primaryButton} onPress={handleStartLearning}>
-            <Ionicons name="school" size={20} color="#ffffff" />
-            <Text style={styles.primaryButtonText}>Learn</Text>
-          </Pressable>
-          <Pressable style={styles.secondaryButton} onPress={handlePractice}>
-            <Ionicons name="refresh" size={20} color="#10b981" />
-            <Text style={styles.secondaryButtonText}>Practice</Text>
-          </Pressable>
-          <Pressable style={styles.secondaryButton} onPress={handleWrite}>
-            <Ionicons name="pencil" size={20} color="#10b981" />
-            <Text style={styles.secondaryButtonText}>Write</Text>
-          </Pressable>
-        </View>
-
-        {/* View Toggle */}
-        <View style={styles.viewToggle}>
-          <Text style={styles.sectionTitle}>Verses</Text>
-          <Pressable
-            style={[
-              styles.playAllButton,
-              (isPlayingAll || audioState === 'playing') && styles.playAllButtonActive,
-            ]}
-            onPress={handlePlayAllToggle}
-          >
-            {audioState === 'loading' && isPlayingAll ? (
-              <ActivityIndicator size="small" color="#ffffff" />
-            ) : (
-              <Ionicons
-                name={isPlayingAll || audioState === 'playing' ? 'stop' : 'play'}
-                size={14}
-                color="#ffffff"
-              />
-            )}
-            <Text style={styles.playAllButtonText}>
-              {isPlayingAll || audioState === 'playing'
-                ? currentPlayingAyah
-                  ? `${currentPlayingAyah}/${surah.ayahCount}`
-                  : 'Stop'
-                : 'Play All'}
-            </Text>
-          </Pressable>
-          <View style={styles.toggleButtons}>
-            <Pressable
-              style={[styles.toggleButton, viewMode === 'cards' && styles.toggleButtonActive]}
-              onPress={() => setViewMode('cards')}
-            >
-              <Ionicons
-                name="grid"
-                size={18}
-                color={viewMode === 'cards' ? '#ffffff' : '#64748b'}
-              />
-            </Pressable>
-            <Pressable
-              style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
-              onPress={() => setViewMode('list')}
-            >
-              <Ionicons
-                name="list"
-                size={18}
-                color={viewMode === 'list' ? '#ffffff' : '#64748b'}
-              />
-            </Pressable>
+                  </View>
+                  {currentReciterId === reciter.id && (
+                    <Ionicons name="checkmark-circle" size={24} color="#10b981" />
+                  )}
+                </Pressable>
+              ))}
+            </ScrollView>
           </View>
         </View>
+      </Modal>
 
-        {/* Ayahs */}
-        <View
-          style={[styles.ayahsContainer, { marginBottom: 100 }]}
-          onLayout={(event) => {
-            ayahsContainerOffset.current = event.nativeEvent.layout.y;
-          }}
-        >
-          {viewMode === 'cards' ? (
-            ayahs.map((ayah) => (
-              <View
-                key={ayah.id}
-                onLayout={(event) => {
-                  ayahPositions.current[ayah.id] = event.nativeEvent.layout.y;
-                }}
-              >
-                <AyahCard
-                  ayah={ayah}
-                  showTransliteration={progress.settings.showTransliteration}
-                  showTranslation={progress.settings.showTranslation}
-                  showTajweed={progress.settings.showTajweedColors}
-                  isLearned={isAyahLearned(surahId, ayah.id)}
-                  isMemorized={isAyahMemorized(surahId, ayah.id)}
-                  isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
-                  isLoading={activeAyahId === ayah.id && audioState === 'loading'}
-                  isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
-                  isPaused={activeAyahId === ayah.id && audioState === 'paused'}
-                  playbackSpeed={progress.settings.playbackSpeed}
-                  onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
-                  onBookmark={() => handleBookmark(ayah.id)}
-                  onPress={() => handleAyahPress(ayah.id)}
-                  onSpeedChange={handleSpeedChange}
-                />
-              </View>
-            ))
-          ) : (
-            ayahs.map((ayah) => (
-              <View
-                key={ayah.id}
-                onLayout={(event) => {
-                  ayahPositions.current[ayah.id] = event.nativeEvent.layout.y;
-                }}
-              >
-                <AyahListItem
-                  ayah={ayah}
-                  isLearned={isAyahLearned(surahId, ayah.id)}
-                  isMemorized={isAyahMemorized(surahId, ayah.id)}
-                  onPress={() => handleAyahPress(ayah.id)}
-                />
-              </View>
-            ))
-          )}
-
-          {/* Back to Top Button */}
-          <Pressable
-            style={styles.backToTopButton}
-            onPress={() => scrollViewRef.current?.scrollTo({ y: 0, animated: true })}
-          >
-            <Ionicons name="arrow-up" size={18} color="#10b981" />
-            <Text style={styles.backToTopText}>Back to Top</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+      <FlatList
+        ref={flatListRef}
+        data={ayahs}
+        renderItem={renderAyahItem}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={ListHeader}
+        ListFooterComponent={ListFooter}
+        contentContainerStyle={styles.ayahsContainer}
+        showsVerticalScrollIndicator={false}
+        initialNumToRender={5}
+        maxToRenderPerBatch={10}
+        windowSize={10}
+        removeClippedSubviews={true}
+        onScrollToIndexFailed={(info) => {
+          flatListRef.current?.scrollToOffset({ offset: info.averageItemLength * info.index, animated: true });
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -600,12 +602,9 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     backgroundColor: '#1e293b',
-    marginHorizontal: 20,
     borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#10b98130',
+    padding: 16,
+    marginBottom: 12,
   },
   bismillah: {
     color: '#10b981',
@@ -628,10 +627,9 @@ const styles = StyleSheet.create({
   },
   reciterCard: {
     backgroundColor: '#1e293b',
-    marginHorizontal: 20,
     borderRadius: 16,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -767,9 +765,11 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
     gap: 10,
-    marginBottom: 24,
+    marginBottom: 12,
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
   },
   primaryButton: {
     flex: 1,
@@ -822,8 +822,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 16,
+    marginBottom: 12,
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
   },
   sectionTitle: {
     color: '#ffffff',
@@ -851,10 +853,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 8,
     backgroundColor: '#1e293b',
-    borderRadius: 12,
-    paddingVertical: 14,
-    marginTop: 16,
-    marginHorizontal: 8,
+    borderRadius: 16,
+    padding: 16,
+    marginTop: 12,
   },
   backToTopText: {
     color: '#10b981',

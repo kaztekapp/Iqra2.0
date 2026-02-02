@@ -1,10 +1,12 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useMemo } from 'react';
-import { getSurahById, getAyahsBySurahId } from '../../../../src/data/arabic/quran';
+import { useState, useMemo, useEffect } from 'react';
+import { getSurahById } from '../../../../src/data/arabic/quran';
+import { fetchSurahAyahsById } from '../../../../src/services/staticQuranService';
 import { useQuranStore } from '../../../../src/stores/quranStore';
+import { Ayah } from '../../../../src/types/quran';
 
 type TestType = 'fill_blank' | 'continue_from' | 'what_next';
 
@@ -20,9 +22,17 @@ export default function TestModeScreen() {
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
 
   const surah = getSurahById(surahId);
-  const ayahs = getAyahsBySurahId(surahId);
+  const [ayahs, setAyahs] = useState<Ayah[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { markAyahMemorized, scheduleReview } = useQuranStore();
+
+  useEffect(() => {
+    fetchSurahAyahsById(surahId).then((data) => {
+      setAyahs(data);
+      setLoading(false);
+    });
+  }, [surahId]);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -77,6 +87,17 @@ export default function TestModeScreen() {
   }, [ayahs]);
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#8b5cf6" />
+          <Text style={styles.loadingText}>Loading questions...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   if (!surah || !currentQuestion) {
     if (isComplete) {
@@ -280,6 +301,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f172a',
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    color: '#94a3b8',
+    fontSize: 16,
+    marginTop: 16,
   },
   errorText: {
     color: '#ef4444',
