@@ -1,10 +1,11 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { getDuaById } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
+import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import {
   DUA_CATEGORY_LABELS,
   HADITH_COLLECTION_NAMES,
@@ -20,6 +21,10 @@ export default function DuaDetailScreen() {
     toggleMemorized,
     setLastViewed,
   } = useDuasStore();
+
+  // Audio/Speech functionality
+  const { speak, speakSlow, stop, isSpeaking } = useArabicSpeech();
+  const [isSlowMode, setIsSlowMode] = useState(true);
 
   // Get dua data
   const dua = duaId ? getDuaById(duaId) : undefined;
@@ -42,6 +47,33 @@ export default function DuaDetailScreen() {
       toggleMemorized(duaId);
     }
   }, [duaId, toggleMemorized]);
+
+  // Handle playing the Arabic text
+  const handlePlayDua = useCallback(async () => {
+    if (!dua) return;
+
+    if (isSpeaking) {
+      await stop();
+    } else {
+      if (isSlowMode) {
+        await speakSlow(dua.arabicText);
+      } else {
+        await speak(dua.arabicText);
+      }
+    }
+  }, [dua, isSpeaking, isSlowMode, speak, speakSlow, stop]);
+
+  // Toggle speed mode
+  const handleToggleSpeed = useCallback(() => {
+    setIsSlowMode(prev => !prev);
+  }, []);
+
+  // Stop speech when leaving screen
+  useEffect(() => {
+    return () => {
+      stop();
+    };
+  }, [stop]);
 
   if (!dua) {
     return (
@@ -100,6 +132,37 @@ export default function DuaDetailScreen() {
         {/* Arabic Text */}
         <View style={styles.arabicCard}>
           <Text style={styles.arabicText}>{dua.arabicText}</Text>
+
+          {/* Audio Controls */}
+          <View style={styles.audioControls}>
+            <Pressable
+              style={styles.speedButton}
+              onPress={handleToggleSpeed}
+            >
+              <Ionicons
+                name="speedometer-outline"
+                size={18}
+                color={isSlowMode ? '#f59e0b' : '#94a3b8'}
+              />
+              <Text style={[styles.speedText, isSlowMode && styles.speedTextActive]}>
+                {isSlowMode ? 'Slow' : 'Normal'}
+              </Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.playButton, isSpeaking && styles.playButtonActive]}
+              onPress={handlePlayDua}
+            >
+              <Ionicons
+                name={isSpeaking ? 'stop' : 'play'}
+                size={24}
+                color="#ffffff"
+              />
+              <Text style={styles.playButtonText}>
+                {isSpeaking ? 'Stop' : 'Listen'}
+              </Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* Transliteration */}
@@ -301,6 +364,47 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: 'center',
     writingDirection: 'rtl',
+  },
+  audioControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    gap: 12,
+  },
+  speedButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#334155',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
+    gap: 6,
+  },
+  speedText: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  speedTextActive: {
+    color: '#f59e0b',
+  },
+  playButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f59e0b',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    gap: 8,
+  },
+  playButtonActive: {
+    backgroundColor: '#ef4444',
+  },
+  playButtonText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
   },
   section: {
     paddingHorizontal: 20,
