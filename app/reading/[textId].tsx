@@ -24,9 +24,16 @@ const readingContent: Record<string, {
     paragraphs: [
       { arabic: 'مَرْحَبًا، اِسْمِي أَحْمَد.', english: 'Hello, my name is Ahmad.' },
       { arabic: 'أَنَا مِنْ مِصْر.', english: 'I am from Egypt.' },
+      { arabic: 'عُمْرِي عِشْرُونَ سَنَة.', english: 'I am twenty years old.' },
       { arabic: 'أَنَا طَالِبٌ فِي الْجَامِعَة.', english: 'I am a student at the university.' },
-      { arabic: 'أَدْرُسُ اللُّغَةَ الْعَرَبِيَّة.', english: 'I study the Arabic language.' },
+      { arabic: 'أَدْرُسُ اللُّغَةَ الْعَرَبِيَّة وَالتَّارِيخ.', english: 'I study the Arabic language and history.' },
+      { arabic: 'أَسْكُنُ فِي شَقَّةٍ صَغِيرَةٍ مَعَ صَدِيقِي.', english: 'I live in a small apartment with my friend.' },
       { arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْمُوسِيقَى.', english: 'I love reading and music.' },
+      { arabic: 'أَقْرَأُ كِتَابًا كُلَّ أُسْبُوع.', english: 'I read a book every week.' },
+      { arabic: 'أَلْعَبُ كُرَةَ الْقَدَمِ يَوْمَ الْجُمُعَة.', english: 'I play football on Friday.' },
+      { arabic: 'أُرِيدُ أَنْ أَكُونَ مُعَلِّمًا فِي الْمُسْتَقْبَل.', english: 'I want to be a teacher in the future.' },
+      { arabic: 'أُحِبُّ مُسَاعَدَةَ النَّاس.', english: 'I love helping people.' },
+      { arabic: 'تَشَرَّفْتُ بِمَعْرِفَتِكُمْ!', english: 'Pleased to meet you!' },
     ],
   },
   'family-1': {
@@ -37,11 +44,19 @@ const readingContent: Record<string, {
     color: '#6366f1',
     paragraphs: [
       { arabic: 'هَذِهِ عَائِلَتِي.', english: 'This is my family.' },
-      { arabic: 'أَبِي اِسْمُهُ مُحَمَّد وَأُمِّي اِسْمُهَا فَاطِمَة.', english: "My father's name is Muhammad and my mother's name is Fatima." },
-      { arabic: 'عِنْدِي أَخٌ وَاحِدٌ وَأُخْتٌ وَاحِدَة.', english: 'I have one brother and one sister.' },
+      { arabic: 'عَائِلَتِي كَبِيرَةٌ وَسَعِيدَة.', english: 'My family is big and happy.' },
+      { arabic: 'أَبِي اِسْمُهُ مُحَمَّد وَهُوَ مُهَنْدِس.', english: "My father's name is Muhammad and he is an engineer." },
+      { arabic: 'أَبِي رَجُلٌ طَيِّبٌ وَكَرِيم.', english: 'My father is a kind and generous man.' },
+      { arabic: 'أُمِّي اِسْمُهَا فَاطِمَة وَهِيَ مُعَلِّمَة.', english: "My mother's name is Fatima and she is a teacher." },
+      { arabic: 'أُمِّي تَطْبُخُ طَعَامًا لَذِيذًا كُلَّ يَوْم.', english: 'My mother cooks delicious food every day.' },
+      { arabic: 'عِنْدِي أَخٌ وَاحِدٌ وَأُخْتَان.', english: 'I have one brother and two sisters.' },
       { arabic: 'أَخِي اِسْمُهُ عَلِيّ وَهُوَ طَبِيب.', english: "My brother's name is Ali and he is a doctor." },
-      { arabic: 'أُخْتِي اِسْمُهَا مَرْيَم وَهِيَ مُعَلِّمَة.', english: "My sister's name is Maryam and she is a teacher." },
-      { arabic: 'نَحْنُ عَائِلَةٌ سَعِيدَة.', english: 'We are a happy family.' },
+      { arabic: 'أُخْتِي الْكَبِيرَة اِسْمُهَا مَرْيَم وَهِيَ مُحَامِيَة.', english: "My older sister's name is Maryam and she is a lawyer." },
+      { arabic: 'أُخْتِي الصَّغِيرَة اِسْمُهَا سَارَة وَهِيَ طَالِبَة.', english: "My younger sister's name is Sara and she is a student." },
+      { arabic: 'عِنْدَنَا قِطَّةٌ جَمِيلَةٌ اِسْمُهَا لُولُو.', english: 'We have a beautiful cat named Lulu.' },
+      { arabic: 'نَجْتَمِعُ كُلَّ يَوْمِ جُمُعَةٍ لِتَنَاوُلِ الْغَدَاء.', english: 'We gather every Friday for lunch.' },
+      { arabic: 'نَأْكُلُ وَنَتَحَدَّثُ وَنَضْحَك.', english: 'We eat, talk, and laugh.' },
+      { arabic: 'أُحِبُّ عَائِلَتِي كَثِيرًا.', english: 'I love my family very much.' },
     ],
   },
   'daily-routine': {
@@ -52,11 +67,18 @@ const readingContent: Record<string, {
     color: '#f59e0b',
     paragraphs: [
       { arabic: 'أَسْتَيْقِظُ فِي السَّاعَةِ السَّادِسَةِ صَبَاحًا.', english: "I wake up at six o'clock in the morning." },
-      { arabic: 'أَغْسِلُ وَجْهِي وَأَتَنَاوَلُ الْفُطُور.', english: 'I wash my face and have breakfast.' },
+      { arabic: 'أَغْسِلُ وَجْهِي وَأُنَظِّفُ أَسْنَانِي.', english: 'I wash my face and brush my teeth.' },
+      { arabic: 'أُصَلِّي صَلَاةَ الْفَجْر.', english: 'I pray the Fajr prayer.' },
+      { arabic: 'أَتَنَاوَلُ الْفُطُورَ مَعَ عَائِلَتِي.', english: 'I have breakfast with my family.' },
+      { arabic: 'آكُلُ الْخُبْزَ وَالْجُبْنَ وَأَشْرَبُ الْحَلِيب.', english: 'I eat bread and cheese and drink milk.' },
       { arabic: 'أَذْهَبُ إِلَى الْعَمَلِ فِي السَّاعَةِ الثَّامِنَة.', english: "I go to work at eight o'clock." },
+      { arabic: 'أَرْكَبُ الْحَافِلَةَ كُلَّ يَوْم.', english: 'I take the bus every day.' },
+      { arabic: 'أَعْمَلُ فِي مَكْتَبٍ كَبِير.', english: 'I work in a big office.' },
       { arabic: 'أَعْمَلُ حَتَّى السَّاعَةِ الْخَامِسَة.', english: "I work until five o'clock." },
-      { arabic: 'أَرْجِعُ إِلَى الْبَيْتِ وَأَتَعَشَّى مَعَ عَائِلَتِي.', english: 'I return home and have dinner with my family.' },
-      { arabic: 'أَنَامُ فِي السَّاعَةِ الْعَاشِرَة.', english: "I sleep at ten o'clock." },
+      { arabic: 'أَرْجِعُ إِلَى الْبَيْتِ وَأَسْتَرِيح.', english: 'I return home and rest.' },
+      { arabic: 'أَتَعَشَّى مَعَ عَائِلَتِي فِي السَّاعَةِ السَّابِعَة.', english: "I have dinner with my family at seven o'clock." },
+      { arabic: 'أُشَاهِدُ التِّلْفَازَ أَوْ أَقْرَأُ كِتَابًا.', english: 'I watch TV or read a book.' },
+      { arabic: 'أَنَامُ فِي السَّاعَةِ الْعَاشِرَةِ مَسَاءً.', english: "I sleep at ten o'clock in the evening." },
     ],
   },
   'at-school': {
@@ -68,10 +90,18 @@ const readingContent: Record<string, {
     paragraphs: [
       { arabic: 'أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْم.', english: 'I go to school every day.' },
       { arabic: 'مَدْرَسَتِي كَبِيرَةٌ وَجَمِيلَة.', english: 'My school is big and beautiful.' },
-      { arabic: 'عِنْدِي مُعَلِّمُونَ مُمْتَازُون.', english: 'I have excellent teachers.' },
+      { arabic: 'فِيهَا حَدِيقَةٌ خَضْرَاءُ وَمَلْعَب.', english: 'It has a green garden and a playground.' },
+      { arabic: 'عِنْدِي مُعَلِّمُونَ مُمْتَازُونَ وَلَطِيفُون.', english: 'I have excellent and kind teachers.' },
+      { arabic: 'مُعَلِّمَةُ الْعَرَبِيَّةِ اِسْمُهَا أُسْتَاذَة نُورَة.', english: "The Arabic teacher's name is teacher Noura." },
       { arabic: 'أَدْرُسُ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُوم.', english: 'I study Arabic, mathematics, and science.' },
-      { arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْكِتَابَة.', english: 'I love reading and writing.' },
-      { arabic: 'أَلْعَبُ مَعَ أَصْدِقَائِي فِي الاِسْتِرَاحَة.', english: 'I play with my friends during break.' },
+      { arabic: 'أُحِبُّ حِصَّةَ الْعُلُومِ كَثِيرًا.', english: 'I love the science class very much.' },
+      { arabic: 'نَتَعَلَّمُ عَنِ النَّبَاتَاتِ وَالْحَيَوَانَات.', english: 'We learn about plants and animals.' },
+      { arabic: 'أُحِبُّ الْقِرَاءَةَ وَالْكِتَابَةَ فِي الْعَرَبِيَّة.', english: 'I love reading and writing in Arabic.' },
+      { arabic: 'فِي الاِسْتِرَاحَةِ أَلْعَبُ مَعَ أَصْدِقَائِي.', english: 'During break, I play with my friends.' },
+      { arabic: 'نَلْعَبُ كُرَةَ الْقَدَمِ فِي الْمَلْعَب.', english: 'We play football on the playground.' },
+      { arabic: 'نَأْكُلُ السَّنْدَوِيتْشَاتِ وَنَشْرَبُ الْعَصِير.', english: 'We eat sandwiches and drink juice.' },
+      { arabic: 'تَنْتَهِي الْمَدْرَسَةُ فِي السَّاعَةِ الثَّانِيَة.', english: "School ends at two o'clock." },
+      { arabic: 'أَرْجِعُ إِلَى الْبَيْتِ سَعِيدًا.', english: 'I return home happy.' },
     ],
   },
   'at-market': {
@@ -82,10 +112,19 @@ const readingContent: Record<string, {
     color: '#ec4899',
     paragraphs: [
       { arabic: 'أُحِبُّ الذَّهَابَ إِلَى السُّوقِ مَعَ أُمِّي.', english: 'I love going to the market with my mother.' },
-      { arabic: 'السُّوقُ مَلِيءٌ بِالْفَوَاكِهِ وَالْخُضْرَاوَات.', english: 'The market is full of fruits and vegetables.' },
+      { arabic: 'نَذْهَبُ كُلَّ يَوْمِ سَبْتٍ صَبَاحًا.', english: 'We go every Saturday morning.' },
+      { arabic: 'السُّوقُ كَبِيرٌ وَمَلِيءٌ بِالنَّاس.', english: 'The market is big and full of people.' },
+      { arabic: 'هُنَاكَ مَحَلَّاتٌ كَثِيرَةٌ وَمُخْتَلِفَة.', english: 'There are many different shops.' },
+      { arabic: 'نَشْتَرِي الْفَوَاكِهَ وَالْخُضْرَاوَاتِ الطَّازَجَة.', english: 'We buy fresh fruits and vegetables.' },
+      { arabic: 'أُحِبُّ التُّفَّاحَ الْأَحْمَرَ وَالْمَوْزَ الْأَصْفَر.', english: 'I love red apples and yellow bananas.' },
+      { arabic: 'نَشْتَرِي الْبُرْتُقَالَ وَالْعِنَبَ أَيْضًا.', english: 'We also buy oranges and grapes.' },
       { arabic: 'نَشْتَرِي الْخُبْزَ الطَّازَجَ مِنَ الْمَخْبَز.', english: 'We buy fresh bread from the bakery.' },
-      { arabic: 'أُحِبُّ التُّفَّاحَ الْأَحْمَرَ وَالْبُرْتُقَال.', english: 'I love red apples and oranges.' },
-      { arabic: 'الْبَائِعُ لَطِيفٌ وَيُسَاعِدُنَا.', english: 'The seller is nice and helps us.' },
+      { arabic: 'رَائِحَةُ الْخُبْزِ لَذِيذَةٌ جِدًّا.', english: 'The smell of bread is very delicious.' },
+      { arabic: 'الْبَائِعُ لَطِيفٌ وَيُسَاعِدُنَا فِي الاِخْتِيَار.', english: 'The seller is nice and helps us choose.' },
+      { arabic: 'نَسْأَلُهُ عَنِ الْأَسْعَار.', english: 'We ask him about the prices.' },
+      { arabic: 'أَحْيَانًا نُسَاوِمُ عَلَى الثَّمَن.', english: 'Sometimes we bargain for the price.' },
+      { arabic: 'نَدْفَعُ وَنَشْكُرُ الْبَائِعَ.', english: 'We pay and thank the seller.' },
+      { arabic: 'نَرْجِعُ إِلَى الْبَيْتِ وَنَطْبُخُ طَعَامًا لَذِيذًا.', english: 'We return home and cook delicious food.' },
     ],
   },
   'weather': {
@@ -97,10 +136,18 @@ const readingContent: Record<string, {
     paragraphs: [
       { arabic: 'الطَّقْسُ جَمِيلٌ الْيَوْم.', english: 'The weather is beautiful today.' },
       { arabic: 'الشَّمْسُ مُشْرِقَةٌ وَالسَّمَاءُ زَرْقَاء.', english: 'The sun is shining and the sky is blue.' },
-      { arabic: 'فِي الصَّيْفِ يَكُونُ الطَّقْسُ حَارًّا.', english: 'In summer, the weather is hot.' },
-      { arabic: 'فِي الشِّتَاءِ يَكُونُ الطَّقْسُ بَارِدًا.', english: 'In winter, the weather is cold.' },
-      { arabic: 'أُحِبُّ الرَّبِيعَ لِأَنَّ الْأَزْهَارَ تَتَفَتَّح.', english: 'I love spring because the flowers bloom.' },
-      { arabic: 'أَحْيَانًا تُمْطِرُ السَّمَاء.', english: 'Sometimes it rains.' },
+      { arabic: 'الْجَوُّ دَافِئٌ وَلَطِيف.', english: 'The air is warm and pleasant.' },
+      { arabic: 'فِي الرَّبِيعِ تَتَفَتَّحُ الْأَزْهَارُ الْمُلَوَّنَة.', english: 'In spring, colorful flowers bloom.' },
+      { arabic: 'الْأَشْجَارُ تُصْبِحُ خَضْرَاءَ وَجَمِيلَة.', english: 'The trees become green and beautiful.' },
+      { arabic: 'فِي الصَّيْفِ يَكُونُ الطَّقْسُ حَارًّا جِدًّا.', english: 'In summer, the weather is very hot.' },
+      { arabic: 'أُحِبُّ السِّبَاحَةَ فِي الْبَحْرِ فِي الصَّيْف.', english: 'I love swimming in the sea in summer.' },
+      { arabic: 'نَأْكُلُ الْمُثَلَّجَاتِ لِنُبَرِّدَ أَجْسَامَنَا.', english: 'We eat ice cream to cool our bodies.' },
+      { arabic: 'فِي الْخَرِيفِ تَسْقُطُ الْأَوْرَاقُ مِنَ الشَّجَر.', english: 'In autumn, the leaves fall from the trees.' },
+      { arabic: 'الْأَوْرَاقُ تُصْبِحُ صَفْرَاءَ وَبُرْتُقَالِيَّة.', english: 'The leaves become yellow and orange.' },
+      { arabic: 'فِي الشِّتَاءِ يَكُونُ الطَّقْسُ بَارِدًا جِدًّا.', english: 'In winter, the weather is very cold.' },
+      { arabic: 'أَحْيَانًا يَنْزِلُ الْمَطَرُ أَوِ الثَّلْج.', english: 'Sometimes it rains or snows.' },
+      { arabic: 'أَلْبَسُ مِعْطَفًا ثَقِيلًا وَقُفَّازَات.', english: 'I wear a heavy coat and gloves.' },
+      { arabic: 'أُحِبُّ الْجُلُوسَ قُرْبَ الْمِدْفَأَة.', english: 'I love sitting near the fireplace.' },
     ],
   },
   'travel-story': {
@@ -111,11 +158,19 @@ const readingContent: Record<string, {
     color: '#D4AF37',
     paragraphs: [
       { arabic: 'سَافَرْتُ إِلَى مِصْرَ فِي الصَّيْفِ الْمَاضِي.', english: 'I traveled to Egypt last summer.' },
+      { arabic: 'كَانَتْ أَوَّلَ رِحْلَةٍ لِي خَارِجَ بَلَدِي.', english: 'It was my first trip outside my country.' },
+      { arabic: 'رَكِبْتُ الطَّائِرَةَ لِمُدَّةِ ثَلَاثِ سَاعَات.', english: 'I flew on the plane for three hours.' },
+      { arabic: 'وَصَلْتُ إِلَى مَطَارِ الْقَاهِرَةِ الدَّوْلِي.', english: 'I arrived at Cairo International Airport.' },
       { arabic: 'زُرْتُ الْأَهْرَامَاتِ الْعَظِيمَةَ فِي الْجِيزَة.', english: 'I visited the great pyramids in Giza.' },
-      { arabic: 'رَكِبْتُ الْجَمَلَ فِي الصَّحْرَاء.', english: 'I rode a camel in the desert.' },
-      { arabic: 'شَاهَدْتُ أَبُو الْهَوْلِ وَهُوَ رَائِع.', english: 'I saw the Sphinx and it was amazing.' },
-      { arabic: 'أَكَلْتُ الطَّعَامَ الْمِصْرِيَّ اللَّذِيذ.', english: 'I ate delicious Egyptian food.' },
-      { arabic: 'كَانَتْ رِحْلَةً لَا تُنْسَى.', english: 'It was an unforgettable trip.' },
+      { arabic: 'الْأَهْرَامَاتُ ضَخْمَةٌ وَمُذْهِلَة.', english: 'The pyramids are huge and amazing.' },
+      { arabic: 'رَكِبْتُ الْجَمَلَ فِي الصَّحْرَاءِ حَوْلَ الْأَهْرَامَات.', english: 'I rode a camel in the desert around the pyramids.' },
+      { arabic: 'شَاهَدْتُ أَبُو الْهَوْلِ وَالتَقَطْتُ صُوَرًا كَثِيرَة.', english: 'I saw the Sphinx and took many pictures.' },
+      { arabic: 'زُرْتُ الْمَتْحَفَ الْمِصْرِيَّ وَرَأَيْتُ الْآثَارَ الْقَدِيمَة.', english: 'I visited the Egyptian Museum and saw ancient artifacts.' },
+      { arabic: 'أَكَلْتُ الطَّعَامَ الْمِصْرِيَّ اللَّذِيذَ كَالْكُشَرِي وَالْفُول.', english: 'I ate delicious Egyptian food like koshari and foul.' },
+      { arabic: 'شَرِبْتُ الشَّايَ الْمِصْرِيَّ فِي مَقْهًى قَدِيم.', english: 'I drank Egyptian tea in an old cafe.' },
+      { arabic: 'تَعَرَّفْتُ عَلَى نَاسٍ لَطِيفِينَ وَكَرِيمِين.', english: 'I met nice and generous people.' },
+      { arabic: 'النَّاسُ فِي مِصْرَ وَدُودُونَ جِدًّا.', english: 'The people in Egypt are very friendly.' },
+      { arabic: 'كَانَتْ رِحْلَةً لَا تُنْسَى وَأُرِيدُ الْعَوْدَةَ قَرِيبًا.', english: 'It was an unforgettable trip and I want to return soon.' },
     ],
   },
   'arab-culture': {
@@ -126,11 +181,19 @@ const readingContent: Record<string, {
     color: '#ef4444',
     paragraphs: [
       { arabic: 'الثَّقَافَةُ الْعَرَبِيَّةُ غَنِيَّةٌ وَمُتَنَوِّعَة.', english: 'Arab culture is rich and diverse.' },
+      { arabic: 'يَمْتَدُّ تَارِيخُهَا لِآلَافِ السِّنِين.', english: 'Its history extends for thousands of years.' },
       { arabic: 'اللُّغَةُ الْعَرَبِيَّةُ مِنْ أَقْدَمِ اللُّغَاتِ فِي الْعَالَم.', english: 'The Arabic language is one of the oldest languages in the world.' },
-      { arabic: 'الضِّيَافَةُ قِيمَةٌ مُهِمَّةٌ عِنْدَ الْعَرَب.', english: 'Hospitality is an important value among Arabs.' },
-      { arabic: 'الْقَهْوَةُ الْعَرَبِيَّةُ رَمْزٌ لِلْكَرَم.', english: 'Arabic coffee is a symbol of generosity.' },
-      { arabic: 'الْخَطُّ الْعَرَبِيُّ فَنٌّ جَمِيل.', english: 'Arabic calligraphy is a beautiful art.' },
+      { arabic: 'يَتَكَلَّمُهَا أَكْثَرُ مِنْ أَرْبَعِمِئَةِ مِلْيُونِ شَخْص.', english: 'More than four hundred million people speak it.' },
+      { arabic: 'الْقُرْآنُ الْكَرِيمُ نَزَلَ بِاللُّغَةِ الْعَرَبِيَّة.', english: 'The Holy Quran was revealed in Arabic.' },
+      { arabic: 'الضِّيَافَةُ قِيمَةٌ مُهِمَّةٌ جِدًّا عِنْدَ الْعَرَب.', english: 'Hospitality is a very important value among Arabs.' },
+      { arabic: 'يُرَحِّبُ الْعَرَبُ بِالضُّيُوفِ بِحَرَارَة.', english: 'Arabs welcome guests warmly.' },
+      { arabic: 'الْقَهْوَةُ الْعَرَبِيَّةُ رَمْزٌ لِلْكَرَمِ وَالتَّرْحِيب.', english: 'Arabic coffee is a symbol of generosity and welcome.' },
+      { arabic: 'تُقَدَّمُ مَعَ التَّمْرِ لِلضُّيُوف.', english: 'It is served with dates to guests.' },
+      { arabic: 'الْخَطُّ الْعَرَبِيُّ فَنٌّ جَمِيلٌ وَفَرِيد.', english: 'Arabic calligraphy is a beautiful and unique art.' },
+      { arabic: 'يُزَيِّنُ الْمَسَاجِدَ وَالْقُصُورَ وَالْكُتُب.', english: 'It decorates mosques, palaces, and books.' },
       { arabic: 'الْمُوسِيقَى الْعَرَبِيَّةُ مَشْهُورَةٌ فِي كُلِّ الْعَالَم.', english: 'Arabic music is famous all over the world.' },
+      { arabic: 'تَسْتَخْدِمُ آلَاتٍ مِثْلَ الْعُودِ وَالنَّاي.', english: 'It uses instruments like the oud and the ney.' },
+      { arabic: 'الشِّعْرُ الْعَرَبِيُّ لَهُ مَكَانَةٌ خَاصَّةٌ فِي الثَّقَافَة.', english: 'Arabic poetry has a special place in the culture.' },
     ],
   },
 };
@@ -184,11 +247,12 @@ export default function ReadingDetailScreen() {
   const { textId } = useLocalSearchParams<{ textId: string }>();
   const { startReading, completeReading, addXp, updateStreak } = useProgressStore();
 
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak, speakSlow, isSpeaking } = useArabicSpeech();
   const text = readingContent[textId || ''];
 
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState<number | null>(null);
+  const [isSlowMode, setIsSlowMode] = useState(true); // Default to slow for better learning
   const isPlayingAllRef = useRef(false);
   const currentIndexRef = useRef(0);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -203,8 +267,12 @@ export default function ReadingDetailScreen() {
   const handlePlaySentence = useCallback((index: number) => {
     if (!text) return;
     setCurrentPlayingIndex(index);
-    speak(text.paragraphs[index].arabic);
-  }, [text, speak]);
+    if (isSlowMode) {
+      speakSlow(text.paragraphs[index].arabic);
+    } else {
+      speak(text.paragraphs[index].arabic);
+    }
+  }, [text, speak, speakSlow, isSlowMode]);
 
   // Play all sentences sequentially
   const handlePlayAll = useCallback(async () => {
@@ -227,9 +295,15 @@ export default function ReadingDetailScreen() {
         setCurrentPlayingIndex(i);
 
         await new Promise<void>((resolve) => {
-          speak(text.paragraphs[i].arabic);
-          // Wait for speech to complete (approximate timing)
-          setTimeout(resolve, 2500);
+          if (isSlowMode) {
+            speakSlow(text.paragraphs[i].arabic);
+            // Wait for speech to complete (slow mode needs more time)
+            setTimeout(resolve, 5000);
+          } else {
+            speak(text.paragraphs[i].arabic);
+            // Wait for speech to complete
+            setTimeout(resolve, 4000);
+          }
         });
       }
 
@@ -237,7 +311,7 @@ export default function ReadingDetailScreen() {
       setIsPlayingAll(false);
       setCurrentPlayingIndex(null);
     }
-  }, [text, speak, isPlayingAll]);
+  }, [text, speak, speakSlow, isPlayingAll, isSlowMode]);
 
   const handleComplete = () => {
     if (textId) {
@@ -311,28 +385,44 @@ export default function ReadingDetailScreen() {
         {/* Sentences Header with Play All */}
         <View style={styles.sentencesHeader}>
           <Text style={styles.sectionTitle}>Sentences</Text>
-          <Pressable
-            style={[
-              styles.playAllButton,
-              { backgroundColor: text.color },
-              isPlayingAll && styles.playAllButtonActive,
-            ]}
-            onPress={handlePlayAll}
-          >
-            {isPlayingAll ? (
-              <>
-                <Ionicons name="stop" size={14} color="#ffffff" />
-                <Text style={styles.playAllText}>
-                  {currentPlayingIndex !== null ? `${currentPlayingIndex + 1}/${text.paragraphs.length}` : 'Stop'}
-                </Text>
-              </>
-            ) : (
-              <>
-                <Ionicons name="play" size={14} color="#ffffff" />
-                <Text style={styles.playAllText}>Play All</Text>
-              </>
-            )}
-          </Pressable>
+          <View style={styles.headerButtons}>
+            {/* Speed Toggle */}
+            <Pressable
+              style={[
+                styles.speedToggle,
+                isSlowMode && styles.speedToggleActive,
+              ]}
+              onPress={() => setIsSlowMode(!isSlowMode)}
+            >
+              <Ionicons name="speedometer" size={14} color={isSlowMode ? '#ffffff' : '#94a3b8'} />
+              <Text style={[styles.speedToggleText, isSlowMode && styles.speedToggleTextActive]}>
+                {isSlowMode ? 'Slow' : 'Normal'}
+              </Text>
+            </Pressable>
+            {/* Play All Button */}
+            <Pressable
+              style={[
+                styles.playAllButton,
+                { backgroundColor: text.color },
+                isPlayingAll && styles.playAllButtonActive,
+              ]}
+              onPress={handlePlayAll}
+            >
+              {isPlayingAll ? (
+                <>
+                  <Ionicons name="stop" size={14} color="#ffffff" />
+                  <Text style={styles.playAllText}>
+                    {currentPlayingIndex !== null ? `${currentPlayingIndex + 1}/${text.paragraphs.length}` : 'Stop'}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Ionicons name="play" size={14} color="#ffffff" />
+                  <Text style={styles.playAllText}>Play All</Text>
+                </>
+              )}
+            </Pressable>
+          </View>
         </View>
 
         {/* Sentence Cards */}
@@ -442,6 +532,34 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  speedToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    gap: 4,
+    backgroundColor: '#1e293b',
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  speedToggleActive: {
+    backgroundColor: '#6366f1',
+    borderColor: '#6366f1',
+  },
+  speedToggleText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  speedToggleTextActive: {
+    color: '#ffffff',
   },
   playAllButton: {
     flexDirection: 'row',
