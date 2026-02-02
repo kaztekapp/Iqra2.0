@@ -42,12 +42,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="voice"
+        name="community"
         options={{
           title: '',
           tabBarIcon: ({ focused }) => (
-            <View style={[styles.voiceButton, focused && styles.voiceButtonFocused]}>
-              <Ionicons name="mic" size={28} color="#ffffff" />
+            <View style={[styles.communityButton, focused && styles.communityButtonFocused]}>
+              <Ionicons name="people" size={28} color="#ffffff" />
             </View>
           ),
         }}
@@ -75,7 +75,7 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
-  voiceButton: {
+  communityButton: {
     width: 56,
     height: 56,
     borderRadius: 28,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
-  voiceButtonFocused: {
+  communityButtonFocused: {
     backgroundColor: '#6366f1',
     shadowColor: '#6366f1',
   },
