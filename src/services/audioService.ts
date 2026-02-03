@@ -108,9 +108,9 @@ class AudioService {
     // الله (Allah) - the doubled lam needs to be explicit
 
     // اللهم (Allahumma) - must be processed BEFORE الله to avoid partial replacement
-    // Use two explicit lam letters to force double-L pronunciation
-    trimmedText = trimmedText.replace(/اللَّهُمَّ/g, 'أَلْلَهُمَّ');  // Allahumma (with diacritics)
-    trimmedText = trimmedText.replace(/اللهم/g, 'أَلْلَهُمَّ');       // Allahumma (without diacritics)
+    // Insert space to force TTS to pronounce "Al" then "lahumma" separately
+    trimmedText = trimmedText.replace(/اللَّهُمَّ/g, 'أَلْ لَهُمَّ');  // Allahumma (with diacritics)
+    trimmedText = trimmedText.replace(/اللهم/g, 'أَلْ لَهُمَّ');       // Allahumma (without diacritics)
 
     // الله (Allah) variants
     trimmedText = trimmedText.replace(/اللَّهِ/g, 'اَللاهِ');  // Allahi
@@ -118,6 +118,14 @@ class AudioService {
     trimmedText = trimmedText.replace(/اللَّهَ/g, 'اَللاهَ');  // Allaha
     trimmedText = trimmedText.replace(/الله/g, 'اَللاه');     // Allah (without diacritics)
     trimmedText = trimmedText.replace(/لِلَّهِ/g, 'لِلَّاهِ');   // lillahi (lil-lahi)
+
+    // Fix عَلَىٰ عَهْدِكَ ('ala 'ahdika) - TTS adds extra "kha" sound
+    // Replace entire phrase with phonetically cleaner version
+    trimmedText = trimmedText.replace(/عَلَىٰ عَهْدِكَ/g, 'عَلا أَهْدِكَ');
+    trimmedText = trimmedText.replace(/عَلَى عَهْدِكَ/g, 'عَلا أَهْدِكَ');
+    // Also fix standalone عَهْدِكَ
+    trimmedText = trimmedText.replace(/عَهْدِكَ/g, 'أَهْدِكَ');
+    trimmedText = trimmedText.replace(/عَهْدِك/g, 'أَهْدِك');
 
     // Get the last few characters to check ending
     const lastChar = trimmedText[trimmedText.length - 1];

@@ -92,14 +92,10 @@ export default function SurahDetailScreen() {
     : { bookmarkedAyahs: [] as string[], ayahsLearned: [] as string[], ayahsMemorized: [] as string[], completionPercent: 0 };
 
   // Handler functions
-  const handleStartLearning = useCallback(() => {
+  const handleLearn = useCallback(() => {
     startSurah(surahId);
     router.push(`/quran/surah/${surahId}/learn` as any);
   }, [surahId, startSurah]);
-
-  const handlePractice = useCallback(() => {
-    router.push(`/quran/surah/${surahId}/practice` as any);
-  }, [surahId]);
 
   const handleWrite = useCallback(() => {
     router.push(`/quran/surah/${surahId}/write` as any);
@@ -362,13 +358,9 @@ export default function SurahDetailScreen() {
 
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
-        <Pressable style={styles.primaryButton} onPress={handleStartLearning}>
-          <Ionicons name="school" size={20} color="#ffffff" />
+        <Pressable style={styles.primaryButton} onPress={handleLearn}>
+          <Ionicons name="school" size={20} color="#10b981" />
           <Text style={styles.primaryButtonText}>Learn</Text>
-        </Pressable>
-        <Pressable style={styles.secondaryButton} onPress={handlePractice}>
-          <Ionicons name="refresh" size={20} color="#10b981" />
-          <Text style={styles.secondaryButtonText}>Practice</Text>
         </Pressable>
         <Pressable style={styles.secondaryButton} onPress={handleWrite}>
           <Ionicons name="pencil" size={20} color="#10b981" />
@@ -427,7 +419,7 @@ export default function SurahDetailScreen() {
         </View>
       </View>
     </>
-  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleStartLearning, handlePractice, handleWrite, handlePlayAllToggle]);
+  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle]);
 
   // List footer component
   const ListFooter = useCallback(() => (
@@ -773,7 +765,7 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     flex: 1,
-    backgroundColor: '#10b981',
+    backgroundColor: '#10b98120',
     borderRadius: 12,
     paddingVertical: 14,
     flexDirection: 'row',
@@ -782,7 +774,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   primaryButtonText: {
-    color: '#ffffff',
+    color: '#10b981',
     fontSize: 15,
     fontWeight: '600',
   },

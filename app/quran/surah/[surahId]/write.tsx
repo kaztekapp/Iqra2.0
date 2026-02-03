@@ -362,7 +362,7 @@ export default function WritingExerciseScreen() {
             <Text style={styles.subtitle}>Writing Practice</Text>
           </View>
           <View style={styles.headerRight}>
-            <Ionicons name="pencil" size={20} color="#f59e0b" />
+            <Ionicons name="pencil" size={20} color="#10b981" />
           </View>
         </View>
 
@@ -618,7 +618,7 @@ export default function WritingExerciseScreen() {
             ) : (
               <View style={styles.postSubmitButtons}>
                 <Pressable style={styles.tryAgainButton} onPress={handleReset}>
-                  <Ionicons name="refresh" size={18} color="#f59e0b" />
+                  <Ionicons name="refresh" size={18} color="#10b981" />
                   <Text style={styles.tryAgainText}>Try Again</Text>
                 </Pressable>
                 {selectedAyahIndex < ayahs.length - 1 && (
@@ -735,7 +735,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subtitle: {
-    color: '#f59e0b',
+    color: '#10b981',
     fontSize: 12,
     marginTop: 2,
   },
@@ -765,12 +765,12 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: '#f59e0b20',
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
   },
   ayahNumberText: {
-    color: '#f59e0b',
+    color: '#10b981',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -800,7 +800,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   selectBtn: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#10b981',
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
@@ -829,8 +829,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   modeButtonActive: {
-    borderColor: '#f59e0b',
-    backgroundColor: '#f59e0b20',
+    borderColor: '#10b981',
+    backgroundColor: '#10b98120',
   },
   modeText: {
     color: '#64748b',
@@ -838,7 +838,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   modeTextActive: {
-    color: '#f59e0b',
+    color: '#10b981',
   },
   // Reference Card
   referenceCard: {
@@ -900,7 +900,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   textDisplayFocused: {
-    borderColor: '#f59e0b',
+    borderColor: '#10b981',
   },
   textDisplayText: {
     color: '#ffffff',
@@ -917,7 +917,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cursorText: {
-    color: '#f59e0b',
+    color: '#10b981',
     fontWeight: '300',
   },
   // Result Card
@@ -943,7 +943,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#22c55e',
   },
   accuracyMedium: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#10b981',
   },
   accuracyLow: {
     backgroundColor: '#ef4444',
@@ -979,7 +979,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   mistakeMissing: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#10b981',
   },
   mistakeExtra: {
     backgroundColor: '#8b5cf6',
@@ -1138,12 +1138,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#10b981',
     paddingVertical: 18,
     borderRadius: 16,
   },
   submitButtonDisabled: {
-    backgroundColor: '#f59e0b50',
+    backgroundColor: '#10b98150',
   },
   submitButtonText: {
     color: '#ffffff',
@@ -1160,12 +1160,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: '#f59e0b20',
+    backgroundColor: '#10b98120',
     paddingVertical: 16,
     borderRadius: 14,
   },
   tryAgainText: {
-    color: '#f59e0b',
+    color: '#10b981',
     fontSize: 15,
     fontWeight: '600',
   },

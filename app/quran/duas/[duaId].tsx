@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { getDuaById } from '../../../src/data/arabic/duas';
+import { getDuaById, getAllDuas } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import {
@@ -28,6 +28,10 @@ export default function DuaDetailScreen() {
 
   // Get dua data
   const dua = duaId ? getDuaById(duaId) : undefined;
+  const allDuas = getAllDuas();
+  const currentIndex = dua ? allDuas.findIndex(d => d.id === dua.id) : -1;
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentIndex < allDuas.length - 1;
 
   // Track view
   useEffect(() => {
@@ -75,6 +79,23 @@ export default function DuaDetailScreen() {
     };
   }, [stop]);
 
+  // Navigation handlers
+  const handlePrevious = useCallback(async () => {
+    if (hasPrevious) {
+      await stop();
+      const prevDua = allDuas[currentIndex - 1];
+      router.replace(`/quran/duas/${prevDua.id}` as any);
+    }
+  }, [hasPrevious, currentIndex, allDuas, stop]);
+
+  const handleNext = useCallback(async () => {
+    if (hasNext) {
+      await stop();
+      const nextDua = allDuas[currentIndex + 1];
+      router.replace(`/quran/duas/${nextDua.id}` as any);
+    }
+  }, [hasNext, currentIndex, allDuas, stop]);
+
   if (!dua) {
     return (
       <SafeAreaView style={styles.container}>
@@ -102,27 +123,41 @@ export default function DuaDetailScreen() {
           <Text style={styles.duaNameArabic}>{dua.titleArabic}</Text>
           <Text style={styles.duaNameEnglish}>{dua.titleEnglish}</Text>
         </View>
-        <View style={styles.headerActions}>
-          <Pressable style={styles.actionButton} onPress={handleToggleFavorite}>
-            <Ionicons
-              name={favorite ? 'heart' : 'heart-outline'}
-              size={22}
-              color={favorite ? '#f59e0b' : '#94a3b8'}
-            />
-          </Pressable>
-        </View>
       </View>
 
-      {/* Category Badge */}
+      {/* Category Badge + Navigation */}
       <View style={styles.subHeader}>
         <View style={styles.categoryBadge}>
           <Text style={styles.categoryText}>{categoryLabel.english}</Text>
           <Text style={styles.categoryTextArabic}>{categoryLabel.arabic}</Text>
         </View>
-        <View style={styles.orderBadge}>
-          <Text style={styles.orderText}>#{dua.order}</Text>
+        <View style={{ flex: 1 }} />
+        <View style={styles.headerNav}>
+          <Pressable
+            style={[styles.navButton, !hasPrevious && styles.navButtonDisabled]}
+            onPress={handlePrevious}
+            disabled={!hasPrevious}
+          >
+            <Ionicons
+              name="chevron-back"
+              size={20}
+              color={hasPrevious ? '#f59e0b' : '#334155'}
+            />
+          </Pressable>
+          <Text style={styles.duaNumber}>{dua.order}/{allDuas.length}</Text>
+          <Pressable
+            style={[styles.navButton, !hasNext && styles.navButtonDisabled]}
+            onPress={handleNext}
+            disabled={!hasNext}
+          >
+            <Ionicons
+              name="chevron-forward"
+              size={20}
+              color={hasNext ? '#f59e0b' : '#334155'}
+            />
+          </Pressable>
         </View>
-      </View>
+        </View>
 
       {/* Content */}
       <ScrollView
@@ -300,14 +335,27 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     marginTop: 2,
   },
-  headerActions: {
+  headerNav: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
-  actionButton: {
-    padding: 8,
+  navButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     backgroundColor: '#1e293b',
-    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonDisabled: {
+    opacity: 0.4,
+  },
+  duaNumber: {
+    color: '#64748b',
+    fontSize: 13,
+    minWidth: 44,
+    textAlign: 'center',
   },
   subHeader: {
     flexDirection: 'row',
@@ -336,16 +384,10 @@ const styles = StyleSheet.create({
     color: '#f59e0b',
     fontSize: 12,
   },
-  orderBadge: {
+  favoriteButton: {
+    padding: 8,
     backgroundColor: '#1e293b',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
-  },
-  orderText: {
-    color: '#64748b',
-    fontSize: 12,
-    fontWeight: '600',
+    borderRadius: 10,
   },
   contentContainer: {
     flex: 1,
