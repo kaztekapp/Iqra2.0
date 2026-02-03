@@ -32,10 +32,6 @@ export default function QuranScreen() {
   const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
   const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
 
-  const handleTajweedPress = () => {
-    router.push('/quran/tajweed' as any);
-  };
-
   const handleLearnQuranPress = () => {
     router.push('/quran/all-surahs' as any);
   };
@@ -57,13 +53,8 @@ export default function QuranScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <View>
-            <Text style={styles.title}>Quran</Text>
-            <Text style={styles.titleArabic}>القرآن الكريم</Text>
-          </View>
-          <Pressable style={styles.settingsButton} onPress={handleTajweedPress}>
-            <Ionicons name="color-palette-outline" size={24} color="#10b981" />
-          </Pressable>
+          <Text style={styles.title}>Quran</Text>
+          <Text style={styles.titleArabic}>القرآن الكريم</Text>
         </View>
 
         {/* Bismillah */}
@@ -155,7 +146,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 20,
@@ -168,12 +159,6 @@ const styles = StyleSheet.create({
   titleArabic: {
     fontSize: 22,
     color: '#10b981',
-    marginTop: 4,
-  },
-  settingsButton: {
-    padding: 8,
-    backgroundColor: '#1e293b',
-    borderRadius: 12,
   },
   bismillahCard: {
     backgroundColor: '#1e293b',

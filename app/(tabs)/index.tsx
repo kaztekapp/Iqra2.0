@@ -2,10 +2,103 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useProgressStore } from '../../src/stores/progressStore';
+import { useProgressStore, ModuleType, LastAccessedInfo } from '../../src/stores/progressStore';
+
+// Module configuration data
+const MODULES: Record<ModuleType, {
+  title: string;
+  titleArabic: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
+  route: string;
+  arabicChar: string;
+}> = {
+  alphabet: {
+    title: 'Arabic Alphabet',
+    titleArabic: 'الْحُرُوف',
+    icon: 'text',
+    color: '#6366f1',
+    route: '/alphabet',
+    arabicChar: 'أ',
+  },
+  vocabulary: {
+    title: 'Vocabulary',
+    titleArabic: 'الْمُفْرَدَات',
+    icon: 'library',
+    color: '#D4AF37',
+    route: '/vocabulary',
+    arabicChar: 'ك',
+  },
+  grammar: {
+    title: 'Grammar',
+    titleArabic: 'الْقَوَاعِد',
+    icon: 'git-branch',
+    color: '#22c55e',
+    route: '/grammar',
+    arabicChar: 'ق',
+  },
+  verbs: {
+    title: 'Verb Conjugations',
+    titleArabic: 'تَصْرِيفُ الْأَفْعَال',
+    icon: 'swap-horizontal',
+    color: '#ec4899',
+    route: '/verbs',
+    arabicChar: 'ف',
+  },
+  reading: {
+    title: 'Reading',
+    titleArabic: 'الْقِرَاءَة',
+    icon: 'document-text',
+    color: '#f59e0b',
+    route: '/reading',
+    arabicChar: 'ر',
+  },
+  practice: {
+    title: 'Practice',
+    titleArabic: 'التَّدْرِيب',
+    icon: 'pencil',
+    color: '#ec4899',
+    route: '/practice',
+    arabicChar: 'د',
+  },
+};
 
 export default function HomeScreen() {
-  const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, getAccuracy } = useProgressStore();
+  const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, getAccuracy, lastAccessed } = useProgressStore();
+
+  // Get the module to display in Continue Learning
+  const currentModule = MODULES[lastAccessed?.module || 'alphabet'];
+
+  // Get the module name (English only)
+  const getModuleName = () => {
+    if (lastAccessed?.moduleName) {
+      return lastAccessed.moduleName;
+    }
+    return currentModule.title;
+  };
+
+  // Check if there's a specific lesson to display
+  const hasLesson = lastAccessed?.lessonTitle && lastAccessed?.lessonTitleArabic;
+
+  // Get the subtitle to display (progress info)
+  const getDisplaySubtitle = () => {
+    switch (lastAccessed?.module) {
+      case 'alphabet':
+        return `${progress.alphabetProgress.lettersLearned.length}/28 letters learned`;
+      case 'vocabulary':
+        return `${progress.vocabularyProgress.themesCompleted.length} themes completed`;
+      case 'grammar':
+        return `${progress.grammarProgress.lessonsCompleted.length} lessons completed`;
+      case 'verbs':
+        return `${progress.verbProgress.verbsLearned.length} verbs learned`;
+      case 'reading':
+        return `${progress.readingProgress.textsCompleted.length} texts completed`;
+      case 'practice':
+        return 'Continue practicing';
+      default:
+        return `${progress.alphabetProgress.lettersLearned.length}/28 letters learned`;
+    }
+  };
 
   const quickActions = [
     {
@@ -41,11 +134,15 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <View>
             <Text style={styles.greeting}>مَرْحَبًا</Text>
-            <Text style={styles.greetingEnglish}>Welcome to Iqra2.0</Text>
+            <Text style={styles.greetingEnglish}>Welcome to Iqra</Text>
           </View>
-          <View style={styles.streakBadge}>
-            <Ionicons name="flame" size={20} color="#f59e0b" />
-            <Text style={styles.streakText}>{progress.currentStreak}</Text>
+          <View style={styles.logoBadge}>
+            <View style={styles.logoBadgeInner}>
+              <Text style={styles.logoArabic}>اقْرَأ</Text>
+            </View>
+            <View style={styles.logoVersionBadge}>
+              <Text style={styles.logoVersion}>2.0</Text>
+            </View>
           </View>
         </View>
 
@@ -77,17 +174,21 @@ export default function HomeScreen() {
           <Text style={styles.sectionTitle}>Continue Learning</Text>
           <Pressable
             style={styles.continueCard}
-            onPress={() => router.push('/alphabet')}
+            onPress={() => router.push(currentModule.route as any)}
           >
             <View style={styles.continueContent}>
-              <View style={styles.continueIcon}>
-                <Text style={styles.continueArabic}>أ</Text>
+              <View style={[styles.continueIcon, { backgroundColor: currentModule.color + '20' }]}>
+                <Ionicons name={currentModule.icon} size={28} color={currentModule.color} />
               </View>
               <View style={styles.continueText}>
-                <Text style={styles.continueTitle}>Arabic Alphabet</Text>
-                <Text style={styles.continueSubtitle}>
-                  {progress.alphabetProgress.lettersLearned.length}/28 letters learned
-                </Text>
+                <Text style={styles.continueModuleName}>{getModuleName()}</Text>
+                <Text style={styles.continueModuleNameArabic}>{currentModule.titleArabic}</Text>
+                {hasLesson && lastAccessed.lessonTitle !== getModuleName() && (
+                  <>
+                    <Text style={styles.continueLesson}>{lastAccessed.lessonTitle}</Text>
+                    <Text style={styles.continueLessonArabic}>{lastAccessed.lessonTitleArabic}</Text>
+                  </>
+                )}
               </View>
             </View>
             <Ionicons name="chevron-forward" size={24} color="#64748b" />
@@ -175,19 +276,44 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     marginTop: 4,
   },
-  streakBadge: {
-    flexDirection: 'row',
+  logoBadge: {
+    position: 'relative',
     alignItems: 'center',
-    backgroundColor: '#1e293b',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
+    justifyContent: 'center',
   },
-  streakText: {
-    color: '#f59e0b',
+  logoBadgeInner: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#D4AF37',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#D4AF37',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  logoArabic: {
+    color: '#ffffff',
+    fontSize: 20,
     fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: 4,
+  },
+  logoVersionBadge: {
+    position: 'absolute',
+    bottom: -4,
+    right: -4,
+    backgroundColor: '#1e293b',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#D4AF37',
+  },
+  logoVersion: {
+    color: '#ffffff',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
   statsCard: {
     backgroundColor: '#1e293b',
@@ -243,27 +369,32 @@ const styles = StyleSheet.create({
   continueIcon: {
     width: 56,
     height: 56,
-    borderRadius: 12,
-    backgroundColor: '#6366f1',
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  continueArabic: {
-    fontSize: 28,
-    color: '#ffffff',
   },
   continueText: {
     marginLeft: 16,
   },
-  continueTitle: {
+  continueModuleName: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
   },
-  continueSubtitle: {
+  continueModuleNameArabic: {
+    color: '#D4AF37',
+    fontSize: 14,
+    marginTop: 2,
+  },
+  continueLesson: {
     color: '#94a3b8',
     fontSize: 14,
     marginTop: 4,
+  },
+  continueLessonArabic: {
+    color: '#D4AF37',
+    fontSize: 14,
+    marginTop: 2,
   },
   actionsGrid: {
     flexDirection: 'row',

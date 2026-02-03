@@ -2,9 +2,10 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useProgressStore } from '../../src/stores/progressStore';
+import { useProgressStore, ModuleType, LastAccessedInfo } from '../../src/stores/progressStore';
 
 interface ModuleCardProps {
+  moduleId: ModuleType;
   title: string;
   titleArabic: string;
   description: string;
@@ -13,9 +14,11 @@ interface ModuleCardProps {
   progress: number;
   route: string;
   locked?: boolean;
+  onPress: (moduleId: ModuleType, title: string) => void;
 }
 
 function ModuleCard({
+  moduleId,
   title,
   titleArabic,
   description,
@@ -24,11 +27,19 @@ function ModuleCard({
   progress,
   route,
   locked = false,
+  onPress,
 }: ModuleCardProps) {
+  const handlePress = () => {
+    if (!locked) {
+      onPress(moduleId, title);
+      router.push(route as any);
+    }
+  };
+
   return (
     <Pressable
       style={[styles.moduleCard, locked && styles.moduleCardLocked]}
-      onPress={() => !locked && router.push(route as any)}
+      onPress={handlePress}
       disabled={locked}
     >
       <View style={styles.moduleHeader}>
@@ -65,7 +76,17 @@ function ModuleCard({
 }
 
 export default function LearnScreen() {
-  const { getAlphabetCompletionPercent, getVocabularyCompletionPercent, getGrammarCompletionPercent } = useProgressStore();
+  const { getAlphabetCompletionPercent, getVocabularyCompletionPercent, getGrammarCompletionPercent, setLastAccessed } = useProgressStore();
+
+  const handleModulePress = (moduleId: ModuleType, title: string) => {
+    setLastAccessed({
+      module: moduleId,
+      moduleName: title,
+      lessonId: undefined,
+      lessonTitle: undefined,
+      lessonTitleArabic: undefined,
+    });
+  };
 
   const modules = [
     {
@@ -140,25 +161,14 @@ export default function LearnScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View style={styles.header}>
+        <View style={styles.headerRow}>
           <Text style={styles.title}>Learn Arabic</Text>
           <Text style={styles.titleArabic}>تَعَلَّمِ الْعَرَبِيَّة</Text>
+        </View>
+        <View style={styles.subtitleContainer}>
           <Text style={styles.subtitle}>
             Master Modern Standard Arabic (Fusha) step by step
           </Text>
-        </View>
-
-        {/* Level Indicator */}
-        <View style={styles.levelCard}>
-          <View style={styles.levelContent}>
-            <View style={styles.levelBadge}>
-              <Ionicons name="school" size={24} color="#D4AF37" />
-            </View>
-            <View>
-              <Text style={styles.levelLabel}>Current Level</Text>
-              <Text style={styles.levelValue}>الْمُبْتَدِئ - Beginner</Text>
-            </View>
-          </View>
         </View>
 
         {/* Modules */}
@@ -167,6 +177,7 @@ export default function LearnScreen() {
           {modules.map((module) => (
             <ModuleCard
               key={module.id}
+              moduleId={module.id as ModuleType}
               title={module.title}
               titleArabic={module.titleArabic}
               description={module.description}
@@ -175,6 +186,7 @@ export default function LearnScreen() {
               progress={module.progress}
               route={module.route}
               locked={module.locked}
+              onPress={handleModulePress}
             />
           ))}
         </View>
@@ -199,10 +211,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0f172a',
   },
-  header: {
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 10,
-    paddingBottom: 20,
   },
   title: {
     fontSize: 28,
@@ -210,44 +224,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   titleArabic: {
-    fontSize: 24,
+    fontSize: 22,
     color: '#D4AF37',
-    marginTop: 4,
+  },
+  subtitleContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   subtitle: {
     fontSize: 14,
     color: '#94a3b8',
     marginTop: 8,
-  },
-  levelCard: {
-    backgroundColor: '#1e293b',
-    marginHorizontal: 20,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 24,
-  },
-  levelContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  levelBadge: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    backgroundColor: '#D4AF3720',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-  },
-  levelLabel: {
-    fontSize: 12,
-    color: '#94a3b8',
-  },
-  levelValue: {
-    fontSize: 18,
-    color: '#ffffff',
-    fontWeight: '600',
-    marginTop: 2,
   },
   modulesSection: {
     paddingHorizontal: 20,

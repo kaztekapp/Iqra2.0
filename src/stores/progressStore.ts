@@ -4,15 +4,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ExerciseType, UserArabicProgress, ArabicLevel, VocabularyReviewItem, ReviewRating } from '../types/arabic';
 import { ACHIEVEMENTS, Achievement } from '../data/achievements';
 
+export type ModuleType = 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading' | 'practice';
+
+export interface LastAccessedInfo {
+  module: ModuleType;
+  moduleName: string;
+  lessonId?: string;
+  lessonTitle?: string;
+  lessonTitleArabic?: string;
+}
+
 interface ProgressState {
   progress: UserArabicProgress;
   showVowels: boolean; // Default true for beginners
   unlockedAchievements: string[];
   newAchievement: Achievement | null; // For showing achievement popup
   vocabularyReviewSchedule: VocabularyReviewItem[]; // SRS review schedule
+  lastAccessedModule: ModuleType | null; // Track last accessed module
+  lastAccessed: LastAccessedInfo | null; // Track last accessed module with lesson details
 
   // Settings
   setShowVowels: (show: boolean) => void;
+  setLastAccessedModule: (module: ModuleType) => void;
+  setLastAccessed: (info: LastAccessedInfo) => void;
 
   // XP & Streaks
   addXp: (amount: number) => void;
@@ -139,8 +153,12 @@ export const useProgressStore = create<ProgressState>()(
       unlockedAchievements: [],
       newAchievement: null,
       vocabularyReviewSchedule: [],
+      lastAccessedModule: null,
+      lastAccessed: null,
 
       setShowVowels: (show) => set({ showVowels: show }),
+      setLastAccessedModule: (module) => set({ lastAccessedModule: module }),
+      setLastAccessed: (info) => set({ lastAccessed: info, lastAccessedModule: info.module }),
 
       // Achievement Methods
       checkAchievements: (quranSurahsCompleted = 0) => {

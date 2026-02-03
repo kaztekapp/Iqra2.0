@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { View, StyleSheet, Platform } from 'react-native';
+import { Platform } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -44,11 +44,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="community"
         options={{
-          title: '',
-          tabBarIcon: ({ focused }) => (
-            <View style={[styles.communityButton, focused && styles.communityButtonFocused]}>
-              <Ionicons name="people" size={28} color="#ffffff" />
-            </View>
+          title: 'Community',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="people" size={size} color={color} />
           ),
         }}
       />
@@ -74,23 +72,3 @@ export default function TabLayout() {
   );
 }
 
-const styles = StyleSheet.create({
-  communityButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#D4AF37',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: -20,
-    shadowColor: '#D4AF37',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  communityButtonFocused: {
-    backgroundColor: '#6366f1',
-    shadowColor: '#6366f1',
-  },
-});
