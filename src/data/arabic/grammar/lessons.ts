@@ -17,6 +17,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Welcome to the Arabic writing system! Arabic is one of the world\'s most beautiful scripts, written from [[right to left]] with [[28 letters]] that flow together like water. Unlike English print, Arabic letters connect to each other, creating elegant, flowing words.',
         arabicDescription: 'مَرْحَباً بِكَ فِي نِظَامِ الْكِتَابَةِ الْعَرَبِيَّة',
+        arabicTranslation: 'Welcome to the Arabic writing system',
       },
 
       // The 28 Letters
@@ -24,6 +25,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'The Arabic alphabet has exactly [[28 letters]]. All letters are consonants — vowels are shown as small marks above or below letters, or sometimes not written at all!',
         arabicDescription: 'الْأَبْجَدِيَّة الْعَرَبِيَّة فِيهَا ثَمَانِيَة وَعِشْرُون حَرْفاً',
+        arabicTranslation: 'The Arabic alphabet has twenty-eight letters',
       },
 
       // Full Alphabet Grid
@@ -39,6 +41,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Arabic is written and read from [[right to left]] — the opposite of English! Books open from what English readers would consider the "back." Numbers, however, are written left to right.',
         arabicDescription: 'نَكْتُبُ مِنَ الْيَمِين إِلَى الْيَسَار',
+        arabicTranslation: 'We write from right to left',
       },
 
       // Direction comparison
@@ -58,6 +61,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Most Arabic letters have [[4 different shapes]] depending on their position in a word: [[isolated]] (alone), [[initial]] (beginning), [[medial]] (middle), and [[final]] (end). Don\'t worry — the changes follow patterns!',
         arabicDescription: 'لِكُلِّ حَرْفٍ أَرْبَعَة أَشْكَال',
+        arabicTranslation: 'Each letter has four shapes',
       },
 
       // Letter Ba example
@@ -113,6 +117,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Six special letters [[NEVER connect]] to the letter after them. They only have 2 forms (isolated and final). These are called [[non-connectors]] — they always "lift the pen."',
         arabicDescription: 'سِتَّة حُرُوف لَا تَتَّصِل بِمَا بَعْدَهَا',
+        arabicTranslation: 'Six letters do not connect to what follows them',
       },
 
       // Non-connector grid
@@ -166,6 +171,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Many Arabic letters share the same base shape and are distinguished only by [[dots]]. For example: [[ب]] (ba) has 1 dot below, [[ت]] (ta) has 2 dots above, [[ث]] (tha) has 3 dots above — same base shape!',
         arabicDescription: 'النُّقَط تُمَيِّز الْحُرُوف',
+        arabicTranslation: 'Dots distinguish the letters',
       },
 
       // Dot families
@@ -284,6 +290,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Practice Tip: Think of Arabic like cursive handwriting — letters flow together naturally. Start by recognizing letter shapes, then practice connecting them. The more you read, the faster you\'ll recognize words!',
         arabicDescription: 'كُلَّمَا قَرَأْتَ أَكْثَر، تَعَلَّمْتَ أَسْرَع',
+        arabicTranslation: 'The more you read, the faster you learn',
       },
     ],
   },
@@ -771,6 +778,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'In Arabic, there is only ONE word for "the" — it\'s [[أَلْ]] and it attaches directly to the beginning of nouns. The beautiful part? Arabic has NO word for "a" or "an" — to say "a book," you simply say the word without [[أَلْ]]!',
         arabicDescription: 'أَلْ هِيَ أَدَاةُ التَّعْرِيف فِي اللُّغَةِ الْعَرَبِيَّة',
+        arabicTranslation: 'Al is the definite article in the Arabic language',
       },
 
       // Comparison examples showing indefinite vs definite
@@ -794,6 +802,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'The 14 Sun Letters are special — when [[أَلْ]] comes before them, the [[ل]] becomes silent and the letter is pronounced twice (doubled). This is shown with a [[شَدَّة]] (ـّ) mark.',
         arabicDescription: 'الْحُرُوف الشَّمْسِيَّة: يُدْغَمُ فِيهَا اللَّام',
+        arabicTranslation: 'Sun letters: the Lam assimilates into them',
       },
 
       // Sun Letters Grid
@@ -831,6 +840,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'The 14 Moon Letters keep the [[ل]] sound clear and unchanged. You pronounce the full [[أَلْ]] before these letters. The [[ل]] shows a [[سُكُون]] (ـْ) mark.',
         arabicDescription: 'الْحُرُوف الْقَمَرِيَّة: يُظْهَرُ فِيهَا اللَّام',
+        arabicTranslation: 'Moon letters: the Lam is pronounced clearly',
       },
 
       // Moon Letters Grid
@@ -868,6 +878,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Memory Tip: The word [[الشَّمْس]] (the sun) starts with a sun letter, and [[الْقَمَر]] (the moon) starts with a moon letter! That\'s how these letter groups got their names.',
         arabicDescription: 'نُسَمِّيهَا شَمْسِيَّة وَقَمَرِيَّة نِسْبَةً إِلَى الشَّمْس وَالْقَمَر',
+        arabicTranslation: 'We call them sun and moon letters in reference to the sun and moon',
       },
 
       // Practical examples in sentences
@@ -1101,11 +1112,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic pronouns are fascinating! Unlike English, they distinguish between [[masculine]] and [[feminine]], and have special forms for [[singular]], [[dual]] (exactly two), and [[plural]]. Mastering pronouns is your key to building sentences!',
         arabicDescription: 'الضَّمَائِر أَسَاس بِنَاء الْجُمَل',
+        arabicTranslation: 'Pronouns are the foundation of building sentences',
       },
       {
         type: 'rule',
         content: 'The pronoun [[أَنَا]] (I) is gender-neutral — the same for men and women. But "you" and "they" have [[separate masculine and feminine]] forms!',
         arabicDescription: 'أَنَا لِلْمُذَكَّر وَالْمُؤَنَّث',
+        arabicTranslation: '"I" is for both masculine and feminine',
       },
 
       {
@@ -1219,6 +1232,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'In everyday spoken Arabic, [[أَنْتُنَّ]] (you all - fem) and [[هُنَّ]] (they - fem) are rarely used. Most people use [[أَنْتُمْ]] and [[هُمْ]] for everyone!',
         arabicDescription: 'فِي الْعَامِّيَّة نَسْتَخْدِم أَنْتُمْ وَهُمْ لِلْجَمِيع',
+        arabicTranslation: 'In colloquial Arabic, we use antum and hum for everyone',
       },
     ],
   },
@@ -1238,11 +1252,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'In Arabic, every noun has a gender — either [[masculine]] (مُذَكَّر) or [[feminine]] (مُؤَنَّث). This is crucial because adjectives, verbs, and pronouns must all match the gender of the noun!',
         arabicDescription: 'كُلّ اسْم إِمَّا مُذَكَّر أَوْ مُؤَنَّث',
+        arabicTranslation: 'Every noun is either masculine or feminine',
       },
       {
         type: 'rule',
         content: 'The magic letter [[ة]] (Ta Marbuta) is the key sign of feminine nouns! Most feminine words end with this special letter. It sounds like "a" at the end of a word, or "at" when followed by another word.',
         arabicDescription: 'التَّاء الْمَرْبُوطَة عَلَامَة التَّأْنِيث',
+        arabicTranslation: 'Ta Marbuta is the sign of femininity',
       },
 
       {
@@ -1308,6 +1324,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Some nouns are [[naturally feminine]] without [[ة]]: body parts in pairs ([[يَد]] hand, [[عَيْن]] eye, [[أُذُن]] ear), and special words like [[شَمْس]] (sun), [[أَرْض]] (earth), [[نَار]] (fire).',
         arabicDescription: 'بَعْض الْأَسْمَاء مُؤَنَّثَة بِلَا تَاء',
+        arabicTranslation: 'Some nouns are feminine without Ta Marbuta',
       },
 
       {
@@ -1331,6 +1348,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Remember: When describing a feminine noun, the adjective MUST also be feminine! [[وَلَدٌ كَبِيرٌ]] (big boy) but [[بِنْتٌ كَبِيرَةٌ]] (big girl).',
         arabicDescription: 'الصِّفَة تَتْبَع الْمَوْصُوف فِي التَّذْكِير وَالتَّأْنِيث',
+        arabicTranslation: 'The adjective follows the noun in gender',
       },
     ],
   },
@@ -1350,11 +1368,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Great news for beginners! Arabic has [[nominal sentences]] that don\'t need the verb "to be"! In English you say "I am a student" — in Arabic you simply say [[أَنَا طَالِبٌ]] (I student). No "am" needed!',
         arabicDescription: 'الْجُمْلَة الاِسْمِيَّة لَا تَحْتَاج فِعْلًا',
+        arabicTranslation: 'The nominal sentence does not need a verb',
       },
       {
         type: 'rule',
         content: 'A nominal sentence has two parts: [[المُبْتَدَأ]] (subject - what you\'re talking about) + [[الخَبَر]] (predicate - what you\'re saying about it). Together they make a complete sentence!',
         arabicDescription: 'مُبْتَدَأ + خَبَر = جُمْلَة كَامِلَة',
+        arabicTranslation: 'Subject + predicate = complete sentence',
       },
 
       {
@@ -1446,6 +1466,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Notice there\'s [[no verb "is"]] in any of these sentences! Arabic nominal sentences are simpler than English. Just put two words together and you have a sentence: [[الْبَيْتُ كَبِيرٌ]] = The-house big = The house is big!',
         arabicDescription: 'لَا نَحْتَاج فِعْل "يَكُون" فِي الْجُمْلَة الاِسْمِيَّة',
+        arabicTranslation: 'We do not need the verb "to be" in nominal sentences',
       },
     ],
   },
@@ -1465,6 +1486,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Asking questions is essential for conversations! Arabic question words come at the [[beginning]] of the sentence, just like English. Master these words and you can ask about anything!',
         arabicDescription: 'أَدَوَات الاِسْتِفْهَام تَأْتِي فِي بِدَايَة الْجُمْلَة',
+        arabicTranslation: 'Question words come at the beginning of the sentence',
       },
 
       {
@@ -1491,6 +1513,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[مَا]] and [[مَاذَا]] both mean "what" — [[مَا]] is shorter and more common in questions like "What is...?" while [[مَاذَا]] is used with verbs "What did you...?"',
         arabicDescription: 'مَا وَمَاذَا كِلَاهُمَا بِمَعْنَى what',
+        arabicTranslation: 'Ma and Madha both mean "what"',
       },
 
       {
@@ -1576,6 +1599,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[هَلْ]] turns any statement into a yes/no question! Just add it at the beginning. Statement: أَنْتَ طَالِبٌ (You are a student) → Question: [[هَلْ]] أَنْتَ طَالِبٌ؟ (Are you a student?)',
         arabicDescription: 'هَلْ تُحَوِّل الْجُمْلَة إِلَى سُؤَال',
+        arabicTranslation: 'Hal transforms the sentence into a question',
       },
       {
         type: 'examples_grid',
@@ -1607,6 +1631,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'To answer yes/no questions: [[نَعَمْ]] = Yes, [[لَا]] = No. For "How are you?" reply with [[بِخَيْرٍ الْحَمْدُ لِلَّهِ]] (Fine, praise be to God)!',
         arabicDescription: 'نَعَمْ = Yes ، لَا = No',
+        arabicTranslation: 'Naam = Yes, La = No',
       },
     ],
   },
@@ -1626,6 +1651,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Pointing words like "this" and "that" are called [[demonstrative pronouns]]. In Arabic, they must match the [[gender]] of the noun — masculine or feminine. Let\'s learn to point like an Arab!',
         arabicDescription: 'أَسْمَاء الْإِشَارَة تُطَابِق الاِسْم',
+        arabicTranslation: 'Demonstrative pronouns match the noun',
       },
 
       {
@@ -1707,6 +1733,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'When pointing to a definite noun (with [[ال]]), the demonstrative comes [[BEFORE]] the noun: [[هَذَا الْكِتَابُ]] (this book), [[تِلْكَ السَّيَّارَةُ]] (that car).',
         arabicDescription: 'اسْم الْإِشَارَة يَأْتِي قَبْل الاِسْم الْمُعَرَّف',
+        arabicTranslation: 'The demonstrative comes before the definite noun',
       },
 
       {
@@ -1724,6 +1751,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Remember: [[هَذَا/ذَلِكَ]] for masculine nouns, [[هَذِهِ/تِلْكَ]] for feminine nouns. The plural forms [[هَؤُلَاءِ/أُولَئِكَ]] are used for people only!',
         arabicDescription: 'هَؤُلَاءِ وَأُولَئِكَ لِلْعُقَلَاء فَقَط',
+        arabicTranslation: 'Ha\'ulai and Ulaika are for people only',
       },
     ],
   },
@@ -1743,12 +1771,14 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'In Arabic, possessive pronouns are [[suffixes]] — they attach to the end of nouns! Instead of saying "my book", you say [[كِتَابِي]] (book-my). This is one of Arabic\'s elegant features!',
         arabicDescription: 'ضَمَائِر الْمِلْكِيَّة تَتَّصِل بِآخِر الاِسْم',
+        arabicTranslation: 'Possessive pronouns attach to the end of nouns',
       },
 
       {
         type: 'rule',
         content: 'When adding a possessive suffix, you [[remove]] the [[ال]] if present. So [[الْكِتَابُ]] (the book) becomes [[كِتَابِي]] (my book), NOT الْكِتَابِي.',
         arabicDescription: 'نَحْذِف ال عِنْد إِضَافَة ضَمِير الْمِلْكِيَّة',
+        arabicTranslation: 'We remove Al when adding a possessive pronoun',
       },
 
       {
@@ -1840,6 +1870,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'All possessive suffixes summary: [[ـِي]] (my), [[ـكَ]] (your-m), [[ـكِ]] (your-f), [[ـهُ]] (his), [[ـهَا]] (her), [[ـنَا]] (our), [[ـكُمْ]] (your-pl), [[ـهُمْ]] (their).',
         arabicDescription: 'ي - كَ - كِ - هُ - هَا - نَا - كُمْ - هُمْ',
+        arabicTranslation: 'My - Your(m) - Your(f) - His - Her - Our - Your(pl) - Their',
       },
     ],
   },
@@ -1859,6 +1890,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Prepositions are essential connecting words! They tell us [[where]], [[when]], and [[how]] things relate to each other. In Arabic, they\'re called [[حُرُوف الْجَرّ]] (particles of pulling) because they "pull" the noun into the genitive case.',
         arabicDescription: 'حُرُوف الْجَرّ تَرْبِط الْكَلِمَات',
+        arabicTranslation: 'Prepositions connect words',
       },
 
       {
@@ -1961,6 +1993,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[عِنْدَ]] is special — it means "at" but is also used for [[possession]]: عِنْدِي = "at me" = "I have". This is how you say "I have" in Arabic!',
         arabicDescription: 'عِنْدِي تَعْنِي "أَمْلِكُ"',
+        arabicTranslation: '"I have" means "I possess"',
       },
       {
         type: 'examples_grid',
@@ -1979,6 +2012,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The attached prepositions [[بِـ]] (with/by) and [[لِـ]] (for/to) connect directly to the next word: [[بِسْمِ اللهِ]] (in the name of Allah), [[لِلَّهِ]] (for/to Allah).',
         arabicDescription: 'بِـ وَلِـ تَتَّصِل بِالْكَلِمَة',
+        arabicTranslation: 'Bi and Li attach to the word',
       },
     ],
   },
@@ -1998,12 +2032,14 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic adjectives are loyal followers — they [[match]] their nouns in everything! Gender, definiteness, number, and case. The adjective always comes [[AFTER]] the noun it describes.',
         arabicDescription: 'الصِّفَة تَتْبَع الْمَوْصُوف',
+        arabicTranslation: 'The adjective follows the described noun',
       },
 
       {
         type: 'rule',
         content: 'Two main rules: 1) If noun is [[feminine]], adjective gets [[ة]]. 2) If noun has [[ال]], adjective gets [[ال]] too!',
         arabicDescription: 'الصِّفَة تُطَابِق الْمَوْصُوف فِي التَّذْكِير وَالتَّعْرِيف',
+        arabicTranslation: 'The adjective matches the noun in gender and definiteness',
       },
 
       {
@@ -2091,6 +2127,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Warning: If only the noun has [[ال]] but not the adjective, it becomes a [[sentence]]! [[الْبَيْتُ كَبِيرٌ]] = The house IS big (a sentence). [[الْبَيْتُ الْكَبِيرُ]] = The big house (a phrase).',
         arabicDescription: 'إِذَا كَانَ الْمَوْصُوف مُعَرَّفًا وَالصِّفَة نَكِرَة = جُمْلَة',
+        arabicTranslation: 'If the noun is definite and the adjective is indefinite = a sentence',
       },
     ],
   },
@@ -2110,6 +2147,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Counting in Arabic has unique rules that might seem strange at first! The noun form changes based on the number, and sometimes the number\'s gender is [[opposite]] to the noun. Let\'s master the basics!',
         arabicDescription: 'الْأَعْدَاد لَهَا قَوَاعِد خَاصَّة',
+        arabicTranslation: 'Numbers have special rules',
       },
 
       {
@@ -2137,6 +2175,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Numbers [[1-2]]: Come AFTER the noun and match its gender. [[كِتَابٌ وَاحِدٌ]] (one book - masc.), [[سَيَّارَةٌ وَاحِدَةٌ]] (one car - fem.).',
         arabicDescription: 'وَاحِد وَاثْنَان يَتْبَعَان الاِسْم',
+        arabicTranslation: 'One and two follow the noun',
       },
       {
         type: 'examples_grid',
@@ -2153,6 +2192,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Numbers [[3-10]]: The number has [[OPPOSITE gender]] from the noun, and the noun is [[PLURAL]]! This is the famous "reverse gender" rule.',
         arabicDescription: 'الْأَعْدَاد ٣-١٠ تُخَالِف الْمَعْدُود',
+        arabicTranslation: 'Numbers 3-10 have opposite gender from the counted noun',
       },
       {
         type: 'examples_grid',
@@ -2171,6 +2211,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Numbers [[11-99]]: The noun is [[SINGULAR]]! This is easier. [[عِشْرُونَ كِتَابًا]] (20 books), [[خَمْسَةَ عَشَرَ طَالِبًا]] (15 students).',
         arabicDescription: 'مِنْ ١١ وَمَا فَوْق الْمَعْدُود مُفْرَد',
+        arabicTranslation: 'From 11 and above, the counted noun is singular',
       },
       {
         type: 'examples_grid',
@@ -2187,6 +2228,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Quick tip: For everyday use, just remember [[3-10 use plural noun]], and [[11+ use singular noun]]. The gender rules take practice!',
         arabicDescription: 'الْمُمَارَسَة تُسَهِّل التَّعَلُّم',
+        arabicTranslation: 'Practice makes learning easier',
       },
     ],
   },
@@ -2206,11 +2248,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic has two sentence types! You already know [[nominal sentences]] (starts with noun). Now meet [[verbal sentences]] — they start with a [[VERB]] and are super common in storytelling and action descriptions!',
         arabicDescription: 'الْجُمْلَة الْفِعْلِيَّة تَبْدَأُ بِفِعْل',
+        arabicTranslation: 'The verbal sentence starts with a verb',
       },
       {
         type: 'rule',
         content: 'The magic formula: [[فِعْل]] (Verb) + [[فَاعِل]] (Subject) + [[مَفْعُول]] (Object). The verb comes [[FIRST]], then who did it, then what they did it to!',
         arabicDescription: 'فِعْل + فَاعِل + مَفْعُول بِهِ',
+        arabicTranslation: 'Verb + Subject + Object',
       },
 
       {
@@ -2268,6 +2312,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Special rule: In verbal sentences, the verb only matches [[gender]], not number! [[جَاءَ الطُّلَّابُ]] uses singular verb even though "students" is plural. In nominal sentences, both gender AND number must match.',
         arabicDescription: 'الْفِعْل يُطَابِق الْفَاعِل فِي الْجِنْس فَقَط',
+        arabicTranslation: 'The verb matches the subject in gender only',
       },
 
       {
@@ -2306,6 +2351,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Use [[verbal sentences]] when emphasizing the action: "Wrote the student..." Use [[nominal sentences]] when emphasizing the doer: "The student, he wrote..."',
         arabicDescription: 'الْجُمْلَة الْفِعْلِيَّة تُرَكِّز عَلَى الْفِعْل',
+        arabicTranslation: 'The verbal sentence focuses on the action',
       },
     ],
   },
@@ -2325,11 +2371,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The past tense [[الْمَاضِي]] tells stories! It describes actions that are [[done and completed]]. Arabic verbs are built from a [[3-letter root]], and the past tense is the simplest form to learn.',
         arabicDescription: 'الْمَاضِي يَدُلُّ عَلَى حَدَثٍ انْتَهَى',
+        arabicTranslation: 'The past tense indicates a completed event',
       },
       {
         type: 'rule',
         content: 'The [[هُوَ]] (he) form is the dictionary form! All conjugations are built by changing the [[ending]] of this base form. The root stays the same, only suffixes change.',
         arabicDescription: 'صِيغَة "هُوَ" هِيَ الْأَصْل',
+        arabicTranslation: 'The "he" form is the base form',
       },
 
       {
@@ -2410,6 +2458,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Pattern: [[ـتُ]] = I, [[ـتَ]] = you (m), [[ـتِ]] = you (f), [[ـنَا]] = we, [[ـتْ]] = she, [[ـوا]] = they. The vowel on ت tells you who!',
         arabicDescription: 'الضَّمَّة لِلْمُتَكَلِّم وَالْفَتْحَة لِلْمُخَاطَب',
+        arabicTranslation: 'Damma for the speaker and Fatha for the addressee',
       },
 
       {
@@ -2448,6 +2497,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'No pronoun needed! The ending tells you who did it. [[كَتَبْتُ]] alone means "I wrote" — no need to add [[أَنَا]].',
         arabicDescription: 'الضَّمِير مَفْهُوم مِنَ الْفِعْل',
+        arabicTranslation: 'The pronoun is understood from the verb',
       },
     ],
   },
@@ -2467,11 +2517,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The present tense [[الْمُضَارِع]] describes what\'s happening [[now]] or what you [[usually do]]! Unlike past tense (endings only), present tense uses [[prefixes]] at the beginning of the verb.',
         arabicDescription: 'الْمُضَارِع يَدُلُّ عَلَى الْحَاضِر أَوِ الْمُسْتَقْبَل',
+        arabicTranslation: 'The present tense indicates present or future',
       },
       {
         type: 'rule',
         content: 'Magic prefixes: [[أَ]] = I, [[تَ]] = you/she, [[يَ]] = he/they, [[نَ]] = we. Remember: "[[أَتَيْنَ]]" — I, you, he, we!',
         arabicDescription: 'حُرُوف الْمُضَارَعَة: أ ت ي ن',
+        arabicTranslation: 'Present tense prefixes: A, T, Y, N',
       },
 
       {
@@ -2552,6 +2604,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Notice: [[تَكْتُبُ]] means both "you write (m)" AND "she writes"! Context tells you which. The feminine "you" adds [[ـينَ]]: [[تَكْتُبِينَ]].',
         arabicDescription: 'تَكْتُبُ لِلْمُخَاطَب وَلِلْغَائِبَة',
+        arabicTranslation: 'Taktub is for "you (m)" and "she"',
       },
 
       {
@@ -2588,6 +2641,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The present tense can also express [[future]]! [[سَأَذْهَبُ غَدًا]] (I will go tomorrow) — just add [[سَـ]] or [[سَوْفَ]] before the verb.',
         arabicDescription: 'الْمُضَارِع قَدْ يَدُلُّ عَلَى الْمُسْتَقْبَل',
+        arabicTranslation: 'The present tense can also indicate the future',
       },
     ],
   },
@@ -2607,6 +2661,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Saying "no" and "not" is essential! Arabic uses different negation words depending on [[when]] the action happens. Three main words: [[لَا]] for present, [[مَا]] for past, and [[لَيْسَ]] for "is not".',
         arabicDescription: 'أَدَوَات النَّفْي: لَا، مَا، لَيْسَ',
+        arabicTranslation: 'Negation words: La, Ma, Laysa',
       },
 
       {
@@ -2617,6 +2672,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[لَا]] is the most common! Use it for "don\'t" (present actions) and "Don\'t!" (commands). Just put [[لَا]] before the verb.',
         arabicDescription: 'لَا تَنْفِي الْمُضَارِعَ وَالْأَمْر',
+        arabicTranslation: 'La negates the present tense and commands',
       },
       {
         type: 'examples_grid',
@@ -2656,6 +2712,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[مَا]] negates the past — "didn\'t." Put [[مَا]] before the past tense verb.',
         arabicDescription: 'مَا تَنْفِي الْمَاضِي',
+        arabicTranslation: 'Ma negates the past',
       },
       {
         type: 'examples_grid',
@@ -2678,6 +2735,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[لَيْسَ]] is special! It negates sentences with NO verb (nominal sentences). It [[conjugates]] to match the subject, like a verb!',
         arabicDescription: 'لَيْسَ تَنْفِي الْجُمْلَة الاِسْمِيَّة',
+        arabicTranslation: 'Laysa negates the nominal sentence',
       },
       {
         type: 'examples_grid',
@@ -2731,6 +2789,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Memory trick: [[لَا]] for NOW (present), [[مَا]] for THEN (past), [[لَيْسَ]] for "IS NOT" (no verb).',
         arabicDescription: 'لَا لِلْحَاضِر، مَا لِلْمَاضِي، لَيْسَ لِلْجُمْلَة الاِسْمِيَّة',
+        arabicTranslation: 'La for present, Ma for past, Laysa for nominal sentences',
       },
     ],
   },
@@ -2750,11 +2809,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'How do you say "the student\'s book" in Arabic? You use [[الْإِضَافَة]] (Idafa)! It\'s elegant: just put two nouns [[side by side]] — no "of" needed! [[كِتَابُ الطَّالِبِ]] = book (of) the-student.',
         arabicDescription: 'الْإِضَافَة: نِسْبَة اسْم إِلَى آخَر',
+        arabicTranslation: 'Idafa: attributing one noun to another',
       },
       {
         type: 'rule',
         content: 'Golden rule: The [[first noun]] NEVER takes [[ال]]! The second noun determines if the phrase is definite. [[كِتَابُ الطَّالِبِ]] = THE book (definite because الطالب has ال).',
         arabicDescription: 'الْمُضَاف لَا يَقْبَل أَل',
+        arabicTranslation: 'The first noun does not take Al',
       },
 
       {
@@ -2858,6 +2919,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Idafa is everywhere in Arabic! Once you master it, you\'ll understand compound words, titles, and everyday expressions. Remember: [[First noun = no ال]], second noun = add ال for "the".',
         arabicDescription: 'الْإِضَافَة أَسَاسِيَّة جِدًّا فِي الْعَرَبِيَّة',
+        arabicTranslation: 'Idafa is very fundamental in Arabic',
       },
     ],
   },
@@ -2877,6 +2939,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic plurals are unique! There are [[sound plurals]] (add endings like English -s) and [[broken plurals]] (internal pattern changes). Broken plurals are more common and give Arabic its distinctive sound!',
         arabicDescription: 'الْجَمْع السَّالِم وَجَمْع التَّكْسِير',
+        arabicTranslation: 'Sound plurals and broken plurals',
       },
 
       {
@@ -2887,6 +2950,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'For [[male humans]]: add [[ـونَ]] (nominative) or [[ـينَ]] (accusative/genitive). Simple and predictable!',
         arabicDescription: 'جَمْع الْمُذَكَّر السَّالِم لِلْعَاقِل',
+        arabicTranslation: 'Sound masculine plural for rational beings',
       },
       {
         type: 'comparison_grid',
@@ -2910,6 +2974,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'For [[feminine nouns]] (especially ending in [[ة]]): remove ة and add [[ـات]]. Also works for foreign words!',
         arabicDescription: 'جَمْع الْمُؤَنَّث السَّالِم',
+        arabicTranslation: 'Sound feminine plural',
       },
       {
         type: 'comparison_grid',
@@ -2933,6 +2998,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Broken plurals change the [[internal vowels]] of the word! They follow patterns. The most common: [[فُعُول]], [[أَفْعَال]], [[فِعَال]].',
         arabicDescription: 'جَمْع التَّكْسِير يُغَيِّر بِنَاء الْكَلِمَة',
+        arabicTranslation: 'Broken plural changes the word structure',
       },
 
       {
@@ -3007,6 +3073,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Important: [[Non-human plurals]] are treated as [[feminine singular]] for adjective agreement! [[الْكُتُبُ الْجَدِيدَةُ]] (the new books) NOT الجديدون.',
         arabicDescription: 'جَمْع غَيْر الْعَاقِل يُعَامَل مُعَامَلَة الْمُفْرَد الْمُؤَنَّث',
+        arabicTranslation: 'Non-human plurals are treated as feminine singular',
       },
 
       {
@@ -3024,6 +3091,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Broken plurals need memorization, but patterns help! When you learn a new noun, learn its plural too. Soon you\'ll start recognizing patterns automatically!',
         arabicDescription: 'تَعَلَّم الْجَمْع مَعَ الْمُفْرَد',
+        arabicTranslation: 'Learn the plural with the singular',
       },
     ],
   },
@@ -3043,11 +3111,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic has something special that English doesn\'t: the [[dual]] form! When you have [[exactly two]] of something, you use a special ending instead of the plural. It\'s used for nouns, verbs, pronouns, and adjectives!',
         arabicDescription: 'الْمُثَنَّى لِلتَّعْبِير عَنْ اثْنَيْنِ',
+        arabicTranslation: 'The dual is for expressing two',
       },
       {
         type: 'rule',
         content: 'Add [[ـانِ]] to the singular noun. For words ending in [[ة]], first change ة to ت, then add انِ: [[طَالِبَة]] → [[طَالِبَتَانِ]].',
         arabicDescription: 'أَضِف ـانِ لِلْمَرْفُوع وَـيْنِ لِلْمَنْصُوب وَالْمَجْرُور',
+        arabicTranslation: 'Add -aan for nominative and -ayn for accusative and genitive',
       },
 
       {
@@ -3094,6 +3164,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Two special pronouns: [[هُمَا]] (they two) and [[أَنْتُمَا]] (you two). Both work for masculine AND feminine!',
         arabicDescription: 'هُمَا وَأَنْتُمَا لِلْمُذَكَّر وَالْمُؤَنَّث',
+        arabicTranslation: 'Huma and Antuma are for both masculine and feminine',
       },
       {
         type: 'examples_grid',
@@ -3157,6 +3228,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The dual is elegant! Instead of saying [[كِتَابَانِ اثْنَانِ]] (two books - redundant), just say [[كِتَابَانِ]]. The ending already tells you it\'s two!',
         arabicDescription: 'الْمُثَنَّى يُغْنِي عَنْ ذِكْر الْعَدَد',
+        arabicTranslation: 'The dual makes mentioning the number unnecessary',
       },
     ],
   },
@@ -3176,11 +3248,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'How do you say "he saw [[me]]" or "I love [[her]]"? In Arabic, object pronouns are [[attached directly]] to the verb as suffixes! No separate word needed — they become part of the verb!',
         arabicDescription: 'الضَّمَائِر الْمُتَّصِلَة تُضَاف إِلَى آخِر الْفِعْل',
+        arabicTranslation: 'Attached pronouns are added to the end of the verb',
       },
       {
         type: 'rule',
         content: 'These suffixes are the [[same]] as possessive suffixes on nouns! [[كِتَابِي]] (my book) uses the same [[ـي]] as [[رَآنِي]] (he saw me).',
         arabicDescription: 'نَفْس ضَمَائِر الْمِلْكِيَّة',
+        arabicTranslation: 'Same as possessive pronouns',
       },
 
       {
@@ -3307,6 +3381,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'With two objects (give, show, teach), [[person comes first]], then thing: [[أَعْطَيْتُهُ الْمَالَ]] (I gave [[him]] the-money) — not the other way around!',
         arabicDescription: 'الْمَفْعُول الْأَوَّل لِلشَّخْص وَالثَّانِي لِلشَّيْء',
+        arabicTranslation: 'First object for the person, second for the thing',
       },
 
       {
@@ -3324,6 +3399,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Object pronouns make Arabic flow beautifully! Instead of "I saw him yesterday" (3 words), Arabic says [[رَأَيْتُهُ أَمْسِ]] — the verb and object become one smooth word!',
         arabicDescription: 'الضَّمِير الْمُتَّصِل يَجْعَل الْكَلَام أَكْثَر سَلَاسَة',
+        arabicTranslation: 'The attached pronoun makes speech smoother',
       },
     ],
   },
@@ -3343,11 +3419,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Great news! Arabic future tense is incredibly simple. Just add [[سَـ]] (sa) or [[سَوْفَ]] (sawfa) before any present tense verb, and you\'re talking about the future! No conjugation changes needed.',
         arabicDescription: 'لِلتَّعْبِير عَنِ الْمُسْتَقْبَل نُضِيف سَـ أَوْ سَوْفَ',
+        arabicTranslation: 'To express the future, we add Sa or Sawfa',
       },
       {
         type: 'rule',
         content: '[[سَـ]] (sa) is a prefix attached directly to the verb for [[near future]]. [[سَوْفَ]] (sawfa) is a separate word for [[distant future]] or more formal contexts. Both work the same way!',
         arabicDescription: 'سَـ لِلْمُسْتَقْبَل الْقَرِيب، سَوْفَ لِلْمُسْتَقْبَل الْبَعِيد',
+        arabicTranslation: 'Sa for near future, Sawfa for distant future',
       },
       {
         type: 'text',
@@ -3410,6 +3488,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'In spoken Arabic, [[سَـ]] is much more common. Use [[سَوْفَ]] for emphasis, promises, or formal writing. Both are correct!',
         arabicDescription: 'سَـ أَكْثَر شُيُوعًا فِي الْكَلَام الْيَوْمِي',
+        arabicTranslation: 'Sa is more common in everyday speech',
       },
     ],
   },
@@ -3429,11 +3508,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Want to tell someone what to do? Arabic commands are formed from the present tense with some modifications. Commands exist for [[you (masculine)]], [[you (feminine)]], and [[you (plural)]].',
         arabicDescription: 'نَسْتَخْدِم فِعْل الْأَمْر لِلطَّلَب وَالتَّوْجِيه',
+        arabicTranslation: 'We use the imperative verb for requests and directions',
       },
       {
         type: 'rule',
         content: 'To form a command: Take the present tense "you" form, [[remove the prefix]] (تَـ or يَـ), and [[adjust the beginning]] if needed. If the result starts with a consonant cluster, add [[اِ]] (i) at the start.',
         arabicDescription: 'نَحْذِف حَرْف الْمُضَارَعَة وَنُضِيف هَمْزَة إِذَا لَزِم',
+        arabicTranslation: 'We remove the present tense prefix and add hamza if needed',
       },
       {
         type: 'text',
@@ -3501,6 +3582,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Commands can sound harsh! Always add [[مِنْ فَضْلِكَ]] (please) or [[لَوْ سَمَحْتَ]] (if you permit) to be polite in formal situations.',
         arabicDescription: 'أَضِفْ مِنْ فَضْلِكَ لِتَكُون مُهَذَّبًا',
+        arabicTranslation: 'Add "please" to be polite',
       },
     ],
   },
@@ -3520,11 +3602,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Relative pronouns connect two ideas: "The man [[who]] came" or "The book [[that]] I read." Arabic has different relative pronouns depending on [[gender]] and [[number]] of what you\'re referring to.',
         arabicDescription: 'الْأَسْمَاء الْمَوْصُولَة تَرْبِط بَيْنَ جُمْلَتَيْن',
+        arabicTranslation: 'Relative pronouns connect two sentences',
       },
       {
         type: 'rule',
         content: 'The main relative pronoun is [[الَّذِي]] (who/which/that) for masculine singular. It changes based on gender and number: [[الَّتِي]] (feminine), [[الَّذِينَ]] (masculine plural), [[اللَّوَاتِي/اللَّائِي]] (feminine plural).',
         arabicDescription: 'الَّذِي لِلْمُذَكَّر، الَّتِي لِلْمُؤَنَّث',
+        arabicTranslation: 'Alladhi for masculine, Allati for feminine',
       },
       {
         type: 'text',
@@ -3588,6 +3672,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Important! When the relative pronoun is the object of the relative clause, you need a [[resumptive pronoun]]: الْكِتَابُ الَّذِي قَرَأْتُ[[هُ]] — "the book that I read [[it]]".',
         arabicDescription: 'نُضِيف ضَمِيرًا عَائِدًا إِذَا كَانَ الاِسْم مَفْعُولًا بِهِ',
+        arabicTranslation: 'We add a resumptive pronoun if the noun is an object',
       },
     ],
   },
@@ -3607,6 +3692,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Conjunctions are the glue that holds sentences together! Arabic has several conjunctions to express different relationships: [[وَ]] (and), [[أَوْ]] (or), [[لَكِنْ]] (but), [[ثُمَّ]] (then), and more.',
         arabicDescription: 'حُرُوف الْعَطْف تَرْبِط بَيْنَ الْكَلِمَات وَالْجُمَل',
+        arabicTranslation: 'Conjunctions connect words and sentences',
       },
       {
         type: 'text',
@@ -3616,6 +3702,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[وَ]] (wa) means "and" and is [[attached]] directly to the next word. It\'s the most common Arabic conjunction, used constantly to connect words, phrases, and sentences.',
         arabicDescription: 'وَ تَعْنِي "and" وَتَتَّصِل بِالْكَلِمَة الَّتِي بَعْدَهَا',
+        arabicTranslation: 'Wa means "and" and attaches to the following word',
       },
       {
         type: 'examples_grid',
@@ -3687,6 +3774,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: '[[فَـ]] (fa) implies [[immediate sequence]] or [[cause and effect]], while [[ثُمَّ]] (thumma) implies a [[delay]] between actions. Choose wisely!',
         arabicDescription: 'فَـ لِلتَّرْتِيب الْفَوْرِي، ثُمَّ لِلتَّرْتِيب مَعَ تَرَاخٍ',
+        arabicTranslation: 'Fa for immediate sequence, Thumma for delayed sequence',
       },
     ],
   },
@@ -3706,11 +3794,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'How do you say "bigger," "more beautiful," or "the best" in Arabic? Use the special [[أَفْعَل]] pattern! This single form works for both comparative (bigger) and superlative (biggest).',
         arabicDescription: 'نَسْتَخْدِم وَزْن أَفْعَل لِلْمُقَارَنَة وَالتَّفْضِيل',
+        arabicTranslation: 'We use the Af\'al pattern for comparison and preference',
       },
       {
         type: 'rule',
         content: 'The comparative/superlative pattern is [[أَفْعَل]] (af\'al). Take the 3 root letters and put them in this pattern. For comparative, add [[مِنْ]] (than). For superlative, add [[ال]] or use with a noun.',
         arabicDescription: 'أَفْعَل + مِنْ = أَكْبَر مِنْ (bigger than)',
+        arabicTranslation: 'Af\'al + Min = Akbar min (bigger than)',
       },
       {
         type: 'text',
@@ -3778,6 +3868,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The أَفْعَل form is [[invariable]] for gender and number in comparative use. [[أَكْبَر]] stays the same whether talking about a man, woman, or group!',
         arabicDescription: 'أَفْعَل التَّفْضِيل لَا يَتَغَيَّر لِلْمُذَكَّر وَالْمُؤَنَّث',
+        arabicTranslation: 'The comparative form does not change for masculine and feminine',
       },
     ],
   },
@@ -3797,11 +3888,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The Active Participle ([[اِسْم الْفَاعِل]]) describes the [[doer]] of an action. From "to write" you get "writer"; from "to teach" you get "teacher". Arabic has a pattern for this: [[فَاعِل]]!',
         arabicDescription: 'اِسْم الْفَاعِل يَدُلّ عَلَى مَنْ يَقُوم بِالْفِعْل',
+        arabicTranslation: 'The active participle indicates the one who does the action',
       },
       {
         type: 'rule',
         content: 'For Form I verbs (basic 3-letter verbs), the active participle follows the pattern [[فَاعِل]] (faa\'il). Take the root letters and apply the pattern. This works for most basic verbs!',
         arabicDescription: 'وَزْن فَاعِل لِلْفِعْل الثُّلَاثِي الْمُجَرَّد',
+        arabicTranslation: 'The Faa\'il pattern for the basic triliteral verb',
       },
       {
         type: 'text',
@@ -3864,6 +3957,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Active participles can function as [[nouns]] (a writer) or [[adjectives]] (a writing person). Context tells you which! Add [[ة]] for feminine.',
         arabicDescription: 'اِسْم الْفَاعِل يَعْمَل كَاسْم أَوْ صِفَة',
+        arabicTranslation: 'The active participle works as a noun or adjective',
       },
     ],
   },
@@ -3883,11 +3977,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'While the Active Participle is the doer, the Passive Participle ([[اِسْم الْمَفْعُول]]) is the [[receiver]] of the action. From "to write" you get "written"; from "to know" you get "known".',
         arabicDescription: 'اِسْم الْمَفْعُول يَدُلّ عَلَى مَنْ وَقَعَ عَلَيْهِ الْفِعْل',
+        arabicTranslation: 'The passive participle indicates the one upon whom the action fell',
       },
       {
         type: 'rule',
         content: 'For Form I verbs, the passive participle follows the pattern [[مَفْعُول]] (maf\'ool). The [[مَـ]] prefix is the key marker! This pattern produces words like "known," "beloved," "written."',
         arabicDescription: 'وَزْن مَفْعُول لِلْفِعْل الثُّلَاثِي الْمُجَرَّد',
+        arabicTranslation: 'The Maf\'ool pattern for the basic triliteral verb',
       },
       {
         type: 'text',
@@ -3950,6 +4046,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Passive participles often become [[adjectives]] or [[nouns]] on their own. [[مَشْغُول]] (busy) and [[مَمْنُوع]] (forbidden) are used constantly in everyday Arabic!',
         arabicDescription: 'كَثِير مِنْ أَسْمَاء الْمَفْعُول تُسْتَخْدَم كَصِفَات',
+        arabicTranslation: 'Many passive participles are used as adjectives',
       },
     ],
   },
@@ -3969,11 +4066,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The [[مَصْدَر]] (Masdar) is the verbal noun — it turns an action into a concept. From "to write" you get "writing" (the act of writing). English uses "-ing" or "-tion"; Arabic has various patterns.',
         arabicDescription: 'الْمَصْدَر هُوَ اسْم الْفِعْل الَّذِي يَدُلّ عَلَى الْحَدَث',
+        arabicTranslation: 'The masdar is the noun of the verb that indicates the event',
       },
       {
         type: 'rule',
         content: 'Unlike active/passive participles, Form I masdars have [[multiple patterns]] and must often be memorized. Common patterns include [[فَعْل]], [[فِعَالَة]], [[فُعُول]], and many more.',
         arabicDescription: 'لِلْفِعْل الثُّلَاثِي أَوْزَان مُتَعَدِّدَة لِلْمَصْدَر',
+        arabicTranslation: 'The triliteral verb has multiple patterns for the masdar',
       },
       {
         type: 'text',
@@ -3999,6 +4098,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Good news! Derived verb forms (II-X) have [[predictable masdar patterns]]. Form II: [[تَفْعِيل]], Form III: [[مُفَاعَلَة]], Form V: [[تَفَعُّل]], and so on.',
         arabicDescription: 'مَصَادِر الْأَفْعَال الْمَزِيدَة قِيَاسِيَّة',
+        arabicTranslation: 'The masdars of derived verbs are regular',
       },
       {
         type: 'examples_grid',
@@ -4028,6 +4128,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Masdars are essential for abstract concepts and are used as [[subjects]], [[objects]], and after [[prepositions]]. They\'re everywhere in formal Arabic!',
         arabicDescription: 'الْمَصْدَر يُسْتَخْدَم كَفَاعِل وَمَفْعُول وَبَعْدَ حُرُوف الْجَرّ',
+        arabicTranslation: 'The masdar is used as subject, object, and after prepositions',
       },
     ],
   },
@@ -4047,11 +4148,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic has a brilliant system: from one 3-letter root, you can create up to [[10 different verb forms]], each with predictable meaning changes! This is the key to unlocking thousands of words.',
         arabicDescription: 'الْأَوْزَان الْعَشَرَة تُنْتِج مَعَانِيَ مُخْتَلِفَة مِنْ جَذْر وَاحِد',
+        arabicTranslation: 'The ten patterns produce different meanings from one root',
       },
       {
         type: 'rule',
         content: 'Arabic verbs are organized into [[10 forms]] (أَوْزَان). Form I is the basic 3-letter verb ([[فَعَلَ]]). Forms II-X add letters or modify the root to change meaning in predictable ways.',
         arabicDescription: 'الْفِعْل الْعَرَبِي لَهُ عَشَرَة أَوْزَان',
+        arabicTranslation: 'The Arabic verb has ten patterns',
       },
       {
         type: 'text',
@@ -4108,6 +4211,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'You don\'t need to memorize all 10 forms now! Start with [[Form I]] (basic), [[Form II]] (intensive), and [[Form V]] (reflexive). These are the most common!',
         arabicDescription: 'اِبْدَأْ بِالْأَوْزَان الْأَكْثَر شُيُوعًا: I, II, V',
+        arabicTranslation: 'Start with the most common patterns: I, II, V',
       },
     ],
   },
@@ -4127,11 +4231,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: '"If you study, you will pass." Arabic conditional sentences use particles like [[إِذَا]] (if - likely) and [[لَوْ]] (if - unlikely/hypothetical) to express conditions and results.',
         arabicDescription: 'الْجُمْلَة الشَّرْطِيَّة تُعَبِّر عَنْ عَلَاقَة الشَّرْط وَالْجَوَاب',
+        arabicTranslation: 'The conditional sentence expresses the relationship of condition and answer',
       },
       {
         type: 'rule',
         content: '[[إِذَا]] is used for [[likely or real]] conditions (If you come...). [[لَوْ]] is used for [[unlikely or hypothetical]] conditions (If I were rich...). [[إِنْ]] is also used for general conditions.',
         arabicDescription: 'إِذَا لِلشَّرْط الْمُحْتَمَل، لَوْ لِلشَّرْط غَيْر الْمُحْتَمَل',
+        arabicTranslation: 'Idha for likely conditions, Law for unlikely conditions',
       },
       {
         type: 'text',
@@ -4188,6 +4294,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The result clause after [[لَوْ]] often uses [[لَـ]] before the verb: لَوْ دَرَسْتُ [[لَـ]]نَجَحْتُ (If I had studied, I [[would have]] passed).',
         arabicDescription: 'جَوَاب لَوْ غَالِبًا يَبْدَأ بِـ لَـ',
+        arabicTranslation: 'The answer to Law usually starts with La',
       },
     ],
   },
@@ -4211,11 +4318,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic nouns change their endings based on their role in the sentence. The [[nominative case]] (الرَّفْع) marks [[subjects]] and [[predicates]]. This is the "default" case for main sentence elements.',
         arabicDescription: 'الرَّفْع هُوَ حَالَة الْفَاعِل وَالْمُبْتَدَأ وَالْخَبَر',
+        arabicTranslation: 'Nominative is the case of the subject and predicate',
       },
       {
         type: 'rule',
         content: 'Nominative endings: singular nouns add [[ـُ]] (damma) or [[ـٌ]] (tanwin). Dual nouns end in [[ـَانِ]]. Sound masculine plurals end in [[ـُونَ]]. Sound feminine plurals end in [[ـَاتٌ]].',
         arabicDescription: 'عَلَامَات الرَّفْع: الضَّمَّة، الْأَلِف وَالنُّون، الْوَاو وَالنُّون',
+        arabicTranslation: 'Signs of nominative: damma, alif and nun, waw and nun',
       },
       {
         type: 'text',
@@ -4272,6 +4381,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The nominative is used for: [[subjects of verbal sentences]], [[subjects (مُبْتَدَأ) of nominal sentences]], [[predicates (خَبَر)]], and [[names of إِنَّ after its predicate]].',
         arabicDescription: 'الرَّفْع لِلْفَاعِل وَالْمُبْتَدَأ وَالْخَبَر',
+        arabicTranslation: 'Nominative is for the subject and predicate',
       },
     ],
   },
@@ -4291,11 +4401,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The [[accusative case]] (النَّصْب) marks [[direct objects]], words after certain particles, and various adverbial expressions. It\'s essential for expressing "what" or "whom" receives the action.',
         arabicDescription: 'النَّصْب هُوَ حَالَة الْمَفْعُول بِهِ وَالظَّرْف وَاسْم إِنَّ',
+        arabicTranslation: 'Accusative is the case of the object, adverb, and subject of Inna',
       },
       {
         type: 'rule',
         content: 'Accusative endings: singular nouns add [[ـَ]] (fatha) or [[ـً]] (tanwin fatha, written ـًا). Dual nouns end in [[ـَيْنِ]]. Sound masculine plurals end in [[ـِينَ]]. Sound feminine plurals end in [[ـَاتٍ]].',
         arabicDescription: 'عَلَامَات النَّصْب: الْفَتْحَة، الْيَاء وَالنُّون، الْكَسْرَة',
+        arabicTranslation: 'Signs of accusative: fatha, ya and nun, kasra',
       },
       {
         type: 'text',
@@ -4353,6 +4465,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Remember: [[إِنَّ، أَنَّ، لَكِنَّ، كَأَنَّ، لَيْتَ، لَعَلَّ]] all put their subject in the accusative! These are called "إِنَّ and her sisters" (إِنَّ وَأَخَوَاتُهَا).',
         arabicDescription: 'إِنَّ وَأَخَوَاتُهَا تَنْصِب الْمُبْتَدَأ',
+        arabicTranslation: 'Inna and its sisters put the subject in accusative',
       },
     ],
   },
@@ -4372,11 +4485,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The [[genitive case]] (الْجَرّ) appears after [[prepositions]] and in [[possessive constructions]] (إضافة). It indicates relationships like location, direction, possession, and more.',
         arabicDescription: 'الْجَرّ يَأْتِي بَعْدَ حُرُوف الْجَرّ وَفِي الْإِضَافَة',
+        arabicTranslation: 'Genitive comes after prepositions and in possessive constructions',
       },
       {
         type: 'rule',
         content: 'Genitive endings: singular nouns add [[ـِ]] (kasra) or [[ـٍ]] (tanwin kasra). Dual nouns end in [[ـَيْنِ]] (same as accusative). Sound masculine plurals end in [[ـِينَ]]. Sound feminine plurals end in [[ـَاتٍ]].',
         arabicDescription: 'عَلَامَات الْجَرّ: الْكَسْرَة، الْيَاء وَالنُّون',
+        arabicTranslation: 'Signs of genitive: kasra, ya and nun',
       },
       {
         type: 'text',
@@ -4441,6 +4556,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Diptotes (الْمَمْنُوع مِنَ الصَّرْف) like أَحْمَد، مَكَّة، صَحْرَاء take [[فَتْحَة]] instead of [[كَسْرَة]] in genitive when indefinite: فِي صَحْرَاءَ (in a desert).',
         arabicDescription: 'الْمَمْنُوع مِنَ الصَّرْف يُجَرّ بِالْفَتْحَة',
+        arabicTranslation: 'Diptotes take fatha in genitive',
       },
     ],
   },
@@ -4460,11 +4576,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'The [[passive voice]] shifts focus from who did the action to what was done. "The book was written" emphasizes the book, not the writer. Arabic has a built-in passive pattern!',
         arabicDescription: 'الْمَبْنِيّ لِلْمَجْهُول يُرَكِّز عَلَى الْفِعْل لَا الْفَاعِل',
+        arabicTranslation: 'The passive voice focuses on the action not the doer',
       },
       {
         type: 'rule',
         content: 'Past passive: change vowels to [[ُـِـ]] pattern. [[كَتَبَ]] (wrote) → [[كُتِبَ]] (was written). Present passive: change to [[ُـْـَـ]] pattern. [[يَكْتُبُ]] → [[يُكْتَبُ]] (is written).',
         arabicDescription: 'الْمَاضِي: ضَمَّة ثُمَّ كَسْرَة. الْمُضَارِع: ضَمَّة ثُمَّ فَتْحَة',
+        arabicTranslation: 'Past: damma then kasra. Present: damma then fatha',
       },
       {
         type: 'text',
@@ -4517,6 +4635,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'The original object becomes the [[نَائِب الْفَاعِل]] (deputy subject) and takes [[nominative case]]: كَتَبَ الرَّجُلُ [[الْكِتَابَ]] → كُتِبَ [[الْكِتَابُ]]',
         arabicDescription: 'الْمَفْعُول بِهِ يُصْبِح نَائِب فَاعِل مَرْفُوع',
+        arabicTranslation: 'The object becomes deputy subject in nominative',
       },
     ],
   },
@@ -4536,6 +4655,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'These three forms transform basic verbs into more complex meanings. [[Form II]] intensifies or makes causative, [[Form III]] indicates interaction with someone, and [[Form IV]] is causative.',
         arabicDescription: 'الْوَزْن الثَّانِي لِلتَّكْثِير، الثَّالِث لِلْمُشَارَكَة، الرَّابِع لِلتَّعْدِيَة',
+        arabicTranslation: 'Form II for intensifying, Form III for reciprocal, Form IV for causative',
       },
       {
         type: 'text',
@@ -4545,6 +4665,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form II doubles the middle letter: [[فَعَّلَ]]. It often means: 1) [[Intensive]] - doing something a lot, 2) [[Causative]] - making someone do something, 3) [[Denominative]] - making a verb from a noun.',
         arabicDescription: 'فَعَّلَ: تَشْدِيد الْعَيْن لِلتَّكْثِير وَالتَّعْدِيَة',
+        arabicTranslation: 'Fa33ala: doubling the middle letter for intensifying and causative',
       },
       {
         type: 'examples_grid',
@@ -4565,6 +4686,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form III adds alif after first letter: [[فَاعَلَ]]. It usually means [[doing something with/to someone]] - reciprocal or attempted action toward another person.',
         arabicDescription: 'فَاعَلَ: إِضَافَة أَلِف لِلْمُشَارَكَة',
+        arabicTranslation: 'Faa3ala: adding alif for reciprocal action',
       },
       {
         type: 'examples_grid',
@@ -4585,6 +4707,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form IV adds hamza at the start: [[أَفْعَلَ]]. It\'s primarily [[causative]] - making someone/something do the action of Form I.',
         arabicDescription: 'أَفْعَلَ: إِضَافَة هَمْزَة لِلتَّعْدِيَة',
+        arabicTranslation: 'Af3ala: adding hamza for causative',
       },
       {
         type: 'examples_grid',
@@ -4601,6 +4724,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Form II and IV are both causative but differ: Form II often implies repetition or intensity, while Form IV is simpler causation. عَلَّمَ (II) = taught repeatedly; أَعْلَمَ (IV) = informed.',
         arabicDescription: 'فَعَّلَ لِلتَّكْثِير، أَفْعَلَ لِلتَّعْدِيَة الْبَسِيطَة',
+        arabicTranslation: 'Fa33ala for intensifying, Af3ala for simple causative',
       },
     ],
   },
@@ -4620,6 +4744,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'These forms add [[تَـ]] or [[اِنْـ]] prefixes. [[Form V]] is reflexive of II, [[Form VI]] is reciprocal, and [[Form VII]] has a passive-like meaning. The action "happens to" the subject.',
         arabicDescription: 'تَفَعَّلَ وَتَفَاعَلَ وَاِنْفَعَلَ: الْفِعْل يَقَع عَلَى الْفَاعِل',
+        arabicTranslation: 'Tafa33ala, Tafaa3ala, Infa3ala: the action falls on the subject',
       },
       {
         type: 'text',
@@ -4629,6 +4754,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form V = تَـ + Form II: [[تَفَعَّلَ]]. It\'s the [[reflexive]] of Form II - you do the action to yourself. If عَلَّمَ means "taught," then تَعَلَّمَ means "learned (taught oneself)."',
         arabicDescription: 'تَفَعَّلَ: مُطَاوِع فَعَّلَ، الْفِعْل يَرْجِع إِلَى الْفَاعِل',
+        arabicTranslation: 'Tafa33ala: reflexive of Fa33ala, the action returns to the subject',
       },
       {
         type: 'examples_grid',
@@ -4649,6 +4775,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form VI = تَـ + Form III: [[تَفَاعَلَ]]. It means [[doing something with each other]] or [[pretending]] to do something.',
         arabicDescription: 'تَفَاعَلَ: لِلْمُشَارَكَة الْمُتَبَادَلَة أَوْ التَّظَاهُر',
+        arabicTranslation: 'Tafaa3ala: for mutual action or pretending',
       },
       {
         type: 'examples_grid',
@@ -4669,6 +4796,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form VII adds اِنْـ: [[اِنْفَعَلَ]]. It has a [[passive or resultative]] meaning - the action happens to the subject. Often used for physical changes.',
         arabicDescription: 'اِنْفَعَلَ: لِلْمُطَاوَعَة، الْفِعْل يَحْدُث لِلْفَاعِل',
+        arabicTranslation: 'Infa3ala: for passive-like meaning, the action happens to the subject',
       },
       {
         type: 'examples_grid',
@@ -4685,6 +4813,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Form VII cannot take a direct object! كَسَرْتُ الزُّجَاجَ (I broke the glass) but اِنْكَسَرَ الزُّجَاجُ (The glass broke). The subject "receives" the action.',
         arabicDescription: 'اِنْفَعَلَ لَا يَتَعَدَّى إِلَى مَفْعُول بِهِ',
+        arabicTranslation: 'Infa3ala does not take a direct object',
       },
     ],
   },
@@ -4704,6 +4833,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: '[[Form VIII]] is reflexive with infixed ت, [[Form IX]] is rare and used for colors/defects, and [[Form X]] means "to seek, consider, or ask for" something.',
         arabicDescription: 'اِفْتَعَلَ لِلاِكْتِسَاب، اِفْعَلَّ لِلْأَلْوَان، اِسْتَفْعَلَ لِلطَّلَب',
+        arabicTranslation: 'Ifta3ala for acquiring, If3alla for colors, Istaf3ala for seeking',
       },
       {
         type: 'text',
@@ -4713,6 +4843,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form VIII infixes ت after first radical: [[اِفْتَعَلَ]]. It often means [[doing something for oneself]], [[acquiring]], or has [[reflexive/middle]] sense.',
         arabicDescription: 'اِفْتَعَلَ: إِضَافَة تَاء بَعْد الْفَاء لِلاِكْتِسَاب',
+        arabicTranslation: 'Ifta3ala: adding ta after the first letter for acquiring',
       },
       {
         type: 'examples_grid',
@@ -4734,6 +4865,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form IX doubles the final letter: [[اِفْعَلَّ]]. It\'s rare and only used for [[colors]] and [[physical defects]]. Very predictable!',
         arabicDescription: 'اِفْعَلَّ: تَشْدِيد اللَّام لِلْأَلْوَان وَالْعُيُوب',
+        arabicTranslation: 'If3alla: doubling the last letter for colors and defects',
       },
       {
         type: 'examples_grid',
@@ -4754,6 +4886,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Form X adds اِسْتَـ: [[اِسْتَفْعَلَ]]. It primarily means [[seeking]], [[asking for]], or [[considering something to be]]. Very productive form!',
         arabicDescription: 'اِسْتَفْعَلَ: إِضَافَة سِين وَتَاء لِلطَّلَب وَالاِعْتِبَار',
+        arabicTranslation: 'Istaf3ala: adding sin and ta for seeking and considering',
       },
       {
         type: 'examples_grid',
@@ -4771,6 +4904,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Form X has three main meanings: 1) [[To seek]]: اِسْتَغْفَرَ (seek forgiveness), 2) [[To consider as]]: اِسْتَحْسَنَ (consider good), 3) [[To ask for]]: اِسْتَأْذَنَ (ask permission).',
         arabicDescription: 'اِسْتَفْعَلَ: لِلطَّلَب، الاِعْتِبَار، وَالسُّؤَال',
+        arabicTranslation: 'Istaf3ala: for seeking, considering, and asking',
       },
     ],
   },
@@ -4790,6 +4924,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic modifies verbs using [[adverbs of time]] (ظَرْف الزَّمَان), [[adverbs of place]] (ظَرْف الْمَكَان), and [[حَال]] (the state/manner of the subject). These add rich detail to sentences.',
         arabicDescription: 'الظُّرُوف تُضِيف مَعْلُومَات عَنِ الزَّمَان وَالْمَكَان وَالْحَال',
+        arabicTranslation: 'Adverbs add information about time, place, and state',
       },
       {
         type: 'text',
@@ -4835,6 +4970,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'The [[حَال]] describes [[how]] the subject does the action. It\'s an [[indefinite accusative]] adjective: جَاءَ [[مُبْتَسِمًا]] (He came [[smiling]]). The حَال agrees with what it describes.',
         arabicDescription: 'الْحَال وَصْف لِلْفَاعِل فِي حَالَة الْفِعْل، مَنْصُوب وَنَكِرَة',
+        arabicTranslation: 'Hal describes the subject during the action, accusative and indefinite',
       },
       {
         type: 'examples_grid',
@@ -4866,6 +5002,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Time and place adverbs take the [[accusative case]] because they answer "when?" and "where?" implicitly: سَافَرْتُ [[يَوْمًا]] (I traveled [[for a day]]). They function as hidden objects.',
         arabicDescription: 'ظَرْف الزَّمَان وَالْمَكَان مَنْصُوبَان دَائِمًا',
+        arabicTranslation: 'Time and place adverbs are always accusative',
       },
     ],
   },
@@ -4885,11 +5022,13 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Exception (الاِسْتِثْنَاء) excludes something from a general statement: "Everyone came [[except]] Ali." Arabic uses words like [[إِلَّا]], [[غَيْر]], [[سِوَى]] for this.',
         arabicDescription: 'الاِسْتِثْنَاء يُخْرِج شَيْئًا مِنَ الْحُكْم الْعَامّ',
+        arabicTranslation: 'Exception excludes something from the general rule',
       },
       {
         type: 'rule',
         content: '[[إِلَّا]] is the main exception particle. In a complete affirmative sentence, the excepted noun (الْمُسْتَثْنَى) takes the [[accusative]]: حَضَرَ الطُّلَّابُ [[إِلَّا]] عَلِيًّا.',
         arabicDescription: 'الْمُسْتَثْنَى بِإِلَّا مَنْصُوب فِي الْجُمْلَة التَّامَّة الْمُوجَبَة',
+        arabicTranslation: 'The excepted noun with illa is accusative in complete affirmative sentences',
       },
       {
         type: 'text',
@@ -4912,6 +5051,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'In negative sentences, the excepted noun can follow the case of what it refers to ([[بَدَل]]) OR be accusative: مَا جَاءَ أَحَدٌ إِلَّا عَلِيٌّ/عَلِيًّا.',
         arabicDescription: 'فِي الْمَنْفِيّ: يَجُوز الْبَدَل أَوْ النَّصْب',
+        arabicTranslation: 'In negative sentences: substitution or accusative is allowed',
       },
       {
         type: 'examples_grid',
@@ -4952,6 +5092,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: '[[غَيْر]] acts like a noun and takes the case required by its position. The word after غَيْر is always [[genitive]]: غَيْرِ مُحَمَّدٍ.',
         arabicDescription: 'غَيْر تُعْرَب حَسَب مَوْقِعِهَا، وَمَا بَعْدَهَا مَجْرُور',
+        arabicTranslation: 'Ghayr takes case based on its position, and what follows is genitive',
       },
     ],
   },
@@ -4971,6 +5112,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Master Arabic rhetoric with [[emphasis particles]], [[oath formulas]], and complex sentence structures. These tools make your Arabic more expressive, persuasive, and elegant.',
         arabicDescription: 'أَدَوَات التَّوْكِيد وَالْقَسَم تُعَزِّز الْمَعْنَى وَتُضِيف قُوَّة',
+        arabicTranslation: 'Emphasis and oath tools strengthen meaning and add power',
       },
       {
         type: 'text',
@@ -4980,6 +5122,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[إِنَّ]] emphasizes a statement: "Indeed, verily." Adding [[لَـ]] to the predicate doubles the emphasis: إِنَّ الْعِلْمَ [[لَـ]]نُورٌ (Indeed, knowledge IS light!).',
         arabicDescription: 'إِنَّ لِلتَّوْكِيد، وَلَام الاِبْتِدَاء تَزِيد التَّوْكِيد',
+        arabicTranslation: 'Inna for emphasis, and lam al-ibtida increases emphasis',
       },
       {
         type: 'examples_grid',
@@ -4998,6 +5141,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[قَدْ]] + past verb = "certainly, indeed" (emphasis). [[قَدْ]] + present verb = "may, might" (possibility). Context determines meaning.',
         arabicDescription: 'قَدْ مَعَ الْمَاضِي لِلتَّحْقِيق، وَمَعَ الْمُضَارِع لِلاِحْتِمَال',
+        arabicTranslation: 'Qad with past for certainty, with present for possibility',
       },
       {
         type: 'examples_grid',
@@ -5031,6 +5175,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Add [[ـَنَّ]] or [[ـَنْ]] to present verbs for strong emphasis, especially after oaths: لَأَذْهَبَ[[نَّ]] (I will DEFINITELY go!). The verb loses its final vowel.',
         arabicDescription: 'نُون التَّوْكِيد الثَّقِيلَة وَالْخَفِيفَة تُؤَكِّد الْفِعْل',
+        arabicTranslation: 'Heavy and light emphatic nun emphasize the verb',
       },
       {
         type: 'examples_grid',
@@ -5059,6 +5204,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Combining tools creates powerful rhetoric: [[وَاللَّهِ إِنَّ الصَّبْرَ لَمِفْتَاحُ الْفَرَج]] (By God, indeed patience IS the key to relief!). Arabic loves layered emphasis!',
         arabicDescription: 'الْجَمْع بَيْن أَدَوَات التَّوْكِيد يُقَوِّي الْمَعْنَى',
+        arabicTranslation: 'Combining emphasis tools strengthens the meaning',
       },
     ],
   },
