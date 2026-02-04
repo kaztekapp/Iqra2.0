@@ -8,6 +8,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getExercisesForGrammarLesson } from '../../src/data/arabic/exercises';
 import { Exercise, GrammarLesson, GrammarContent } from '../../src/types/arabic';
 import ArabicKeyboard from '../../src/components/arabic/ArabicKeyboard';
+import ArabicVowelText from '../../src/components/arabic/ArabicVowelText';
 import { getLessonById } from '../../src/data/arabic/grammar/lessons';
 import HighlightedText from '../../src/components/ui/HighlightedText';
 import { lessonContent, getGrammarId } from '../../src/data/arabic/grammar/lessonContent';
@@ -45,6 +46,7 @@ export default function GrammarLessonScreen() {
           title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
           content: item.content,
           arabicDescription: item.arabicDescription,
+          arabicTranslation: item.arabicTranslation,
           examples: [],
           itemType: item.type,
         });
@@ -53,6 +55,7 @@ export default function GrammarLessonScreen() {
           title: '',
           content: item.content,
           arabicDescription: item.arabicDescription,
+          arabicTranslation: item.arabicTranslation,
           examples: [],
           itemType: 'description',
         });
@@ -122,6 +125,9 @@ export default function GrammarLessonScreen() {
 
   const grammarId = getGrammarId(lessonId || '');
   const allExercises = grammarId ? getExercisesForGrammarLesson(grammarId) : [];
+
+  // Check if this is the vowels lesson to enable vowel highlighting
+  const isVowelsLesson = lessonId === 'grammar-2' || lessonId === 'arabic-vowels';
 
   // Separate exercises by type
   const regularExercises = allExercises.filter(ex => ex.type !== 'writing');
@@ -530,15 +536,20 @@ export default function GrammarLessonScreen() {
                 <View style={styles.descriptionHighlight} />
                 <HighlightedText text={section.content} style={styles.descriptionText} />
                 {section.arabicDescription && (
-                  <Pressable
-                    style={styles.arabicDescriptionRow}
-                    onPress={() => speak(section.arabicDescription)}
-                  >
-                    <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
-                    <View style={styles.audioBtn}>
-                      <Ionicons name="volume-medium" size={18} color="#10b981" />
-                    </View>
-                  </Pressable>
+                  <View>
+                    <Pressable
+                      style={styles.arabicDescriptionRow}
+                      onPress={() => speak(section.arabicDescription)}
+                    >
+                      <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
+                      <View style={styles.audioBtn}>
+                        <Ionicons name="volume-medium" size={18} color="#10b981" />
+                      </View>
+                    </Pressable>
+                    {section.arabicTranslation && (
+                      <Text style={styles.arabicTranslationText}>{section.arabicTranslation}</Text>
+                    )}
+                  </View>
                 )}
               </View>
             ) : section.itemType === 'comparison_grid' ? (
@@ -561,7 +572,11 @@ export default function GrammarLessonScreen() {
                       style={[styles.comparisonCard, styles.comparisonCardLeft]}
                       onPress={() => speak(comp.left.arabic)}
                     >
-                      <Text style={styles.comparisonArabic}>{comp.left.arabic}</Text>
+                      {isVowelsLesson ? (
+                        <ArabicVowelText text={comp.left.arabic} style={styles.comparisonArabic} />
+                      ) : (
+                        <Text style={styles.comparisonArabic}>{comp.left.arabic}</Text>
+                      )}
                       <Text style={styles.comparisonEnglish}>{comp.left.label}</Text>
                     </Pressable>
                     <Ionicons name="arrow-forward" size={16} color="#10b981" />
@@ -569,7 +584,11 @@ export default function GrammarLessonScreen() {
                       style={[styles.comparisonCard, styles.comparisonCardRight]}
                       onPress={() => speak(comp.right.arabic)}
                     >
-                      <Text style={styles.comparisonArabic}>{comp.right.arabic}</Text>
+                      {isVowelsLesson ? (
+                        <ArabicVowelText text={comp.right.arabic} style={styles.comparisonArabic} />
+                      ) : (
+                        <Text style={styles.comparisonArabic}>{comp.right.arabic}</Text>
+                      )}
                       <Text style={styles.comparisonEnglish}>{comp.right.label}</Text>
                     </Pressable>
                   </View>
@@ -615,7 +634,11 @@ export default function GrammarLessonScreen() {
                     style={styles.exampleCard}
                     onPress={() => speak(example.arabic)}
                   >
-                    <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
+                    {isVowelsLesson ? (
+                      <ArabicVowelText text={example.arabic} style={styles.exampleCardArabic} />
+                    ) : (
+                      <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
+                    )}
                     <HighlightedText text={example.english} style={styles.exampleCardEnglish} />
                     <View style={styles.exampleCardAudioIcon}>
                       <Ionicons name="volume-medium" size={16} color="#10b981" />
@@ -650,25 +673,33 @@ export default function GrammarLessonScreen() {
                         highlightColor={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
                       />
                       {section.arabicDescription && (
-                        <Pressable
-                          style={[
-                            styles.arabicDescriptionRow,
-                            { backgroundColor: section.itemType === 'rule' ? '#10b98110' : '#f59e0b10' }
-                          ]}
-                          onPress={() => speak(section.arabicDescription)}
-                        >
-                          <Text style={[
-                            styles.arabicDescriptionText,
-                            { color: section.itemType === 'rule' ? '#10b981' : '#f59e0b' }
-                          ]}>{section.arabicDescription}</Text>
-                          <View style={styles.audioBtn}>
-                            <Ionicons
-                              name="volume-medium"
-                              size={18}
-                              color={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
-                            />
-                          </View>
-                        </Pressable>
+                        <View>
+                          <Pressable
+                            style={[
+                              styles.arabicDescriptionRow,
+                              { backgroundColor: section.itemType === 'rule' ? '#10b98110' : '#f59e0b10' }
+                            ]}
+                            onPress={() => speak(section.arabicDescription)}
+                          >
+                            <Text style={[
+                              styles.arabicDescriptionText,
+                              { color: section.itemType === 'rule' ? '#10b981' : '#f59e0b' }
+                            ]}>{section.arabicDescription}</Text>
+                            <View style={styles.audioBtn}>
+                              <Ionicons
+                                name="volume-medium"
+                                size={18}
+                                color={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
+                              />
+                            </View>
+                          </Pressable>
+                          {section.arabicTranslation && (
+                            <Text style={[
+                              styles.arabicTranslationText,
+                              { color: section.itemType === 'rule' ? '#10b98199' : '#f59e0b99' }
+                            ]}>{section.arabicTranslation}</Text>
+                          )}
+                        </View>
                       )}
                     </View>
                   </View>
@@ -703,7 +734,11 @@ export default function GrammarLessonScreen() {
                         onPress={() => speak(example.arabic)}
                       >
                         <View style={styles.exampleLeft}>
-                          <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                          {isVowelsLesson ? (
+                            <ArabicVowelText text={example.arabic} style={styles.exampleArabic} />
+                          ) : (
+                            <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                          )}
                         </View>
                         <Text style={styles.exampleEnglish}>{example.english}</Text>
                         <View style={styles.audioBtn}>
@@ -986,6 +1021,14 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     marginRight: 12,
+  },
+  arabicTranslationText: {
+    fontSize: 11,
+    color: '#64748b',
+    textAlign: 'right',
+    marginTop: 4,
+    marginRight: 44,
+    fontStyle: 'italic',
   },
   // Letters grid styles
   lettersGridCard: {

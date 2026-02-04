@@ -82,6 +82,7 @@ export interface GrammarContent {
   };
   // For bilingual descriptions with audio
   arabicDescription?: string;
+  arabicTranslation?: string; // English translation of arabicDescription
   // For letters grid display (sun/moon letters)
   letters?: string[];
   letterType?: 'sun' | 'moon';

@@ -304,6 +304,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'description',
         content: 'Arabic vowels are the soul of pronunciation! Unlike English where vowels are letters, Arabic uses [[small marks]] called [[حَرَكَات]] (harakat) placed above or below consonants. These marks tell you exactly how to pronounce each letter. In everyday writing, these marks are often omitted — but in the Quran and learning materials, they\'re always shown.',
         arabicDescription: 'الْحَرَكَات هِيَ رُوحُ النُّطْق',
+        arabicTranslation: 'The vowel marks are the soul of pronunciation',
       },
 
       // Short Vowels Introduction
@@ -311,6 +312,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Arabic has [[3 short vowels]] — tiny marks that create the sounds "a", "i", and "u". They are called [[فَتْحَة]] (fatha), [[كَسْرَة]] (kasra), and [[ضَمَّة]] (damma). Master these three and you can read any Arabic word!',
         arabicDescription: 'ثَلَاث حَرَكَات قَصِيرَة',
+        arabicTranslation: 'Three short vowels',
       },
 
       // FATHA Section
@@ -322,6 +324,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Fatha]] is a small diagonal line [[ـَ]] placed ABOVE the letter. It makes the "a" sound as in "cat" or "father". The name [[فَتْحَة]] means "opening" because you open your mouth to say it!',
         arabicDescription: 'الْفَتْحَة فَوْقَ الْحَرْف',
+        arabicTranslation: 'Fatha is above the letter',
       },
       {
         type: 'examples_grid',
@@ -357,6 +360,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Kasra]] is a small diagonal line [[ـِ]] placed BELOW the letter. It makes the "i" sound as in "sit" or "bit". The name [[كَسْرَة]] means "breaking" — think of it as breaking downward!',
         arabicDescription: 'الْكَسْرَة تَحْتَ الْحَرْف',
+        arabicTranslation: 'Kasra is below the letter',
       },
       {
         type: 'examples_grid',
@@ -392,6 +396,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Damma]] looks like a tiny [[و]] (waw) [[ـُ]] placed ABOVE the letter. It makes the "u" sound as in "put" or "book". The name [[ضَمَّة]] means "joining" — your lips come together!',
         arabicDescription: 'الضَّمَّة فَوْقَ الْحَرْف',
+        arabicTranslation: 'Damma is above the letter',
       },
       {
         type: 'examples_grid',
@@ -440,6 +445,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'Arabic also has [[3 long vowels]] — they\'re like short vowels but held for twice as long! Long vowels are formed by adding a [[letter]] after a short vowel: [[ا]] (alif) for "aa", [[ي]] (ya) for "ee", [[و]] (waw) for "oo".',
         arabicDescription: 'ثَلَاث حَرَكَات طَوِيلَة',
+        arabicTranslation: 'Three long vowels',
       },
 
       // Long A (Alif)
@@ -451,6 +457,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'When [[فَتْحَة]] is followed by [[ا]] (alif), the "a" sound is stretched long: "aa" as in "father". This combination [[ـَا]] creates the long "aa" sound.',
         arabicDescription: 'فَتْحَة + أَلِف = آ طَوِيلَة',
+        arabicTranslation: 'Fatha + Alif = long AA',
       },
       {
         type: 'examples_grid',
@@ -476,6 +483,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'When [[كَسْرَة]] is followed by [[ي]] (ya), the "i" sound is stretched long: "ee" as in "see". This combination [[ـِي]] creates the long "ee" sound.',
         arabicDescription: 'كَسْرَة + يَاء = إِي طَوِيلَة',
+        arabicTranslation: 'Kasra + Ya = long EE',
       },
       {
         type: 'examples_grid',
@@ -501,6 +509,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: 'When [[ضَمَّة]] is followed by [[و]] (waw), the "u" sound is stretched long: "oo" as in "moon". This combination [[ـُو]] creates the long "oo" sound.',
         arabicDescription: 'ضَمَّة + وَاو = أُو طَوِيلَة',
+        arabicTranslation: 'Damma + Waw = long OO',
       },
       {
         type: 'examples_grid',
@@ -539,6 +548,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Sukun]] is a small circle [[ـْ]] placed ABOVE a letter. It means "silence" — the letter has [[NO vowel]] and stops abruptly. The name [[سُكُون]] means "stillness" or "rest".',
         arabicDescription: 'السُّكُون يَعْنِي لَا حَرَكَة',
+        arabicTranslation: 'Sukun means no vowel',
       },
       {
         type: 'examples_grid',
@@ -576,6 +586,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Shadda]] looks like a tiny "w" [[ـّ]] placed ABOVE a letter. It means the letter is [[DOUBLED]] — pronounced twice but written once! The name [[شَدَّة]] means "strength" or "emphasis".',
         arabicDescription: 'الشَّدَّة تُضَاعِف الْحَرْف',
+        arabicTranslation: 'Shadda doubles the letter',
       },
       {
         type: 'examples_grid',
@@ -605,8 +616,21 @@ export const grammarLessons: GrammarLesson[] = [
       },
       {
         type: 'note',
-        content: 'Shadda can combine with vowels! [[ـَّ]] = doubled letter + fatha, [[ـِّ]] = doubled letter + kasra, [[ـُّ]] = doubled letter + damma. The vowel appears above or below the shadda.',
+        content: 'Shadda combines with vowels! The vowel mark sits on top of (or below) the shadda: [[ـَّ]] (shadda + fatha = "bba"), [[ـِّ]] (shadda + kasra = "bbi"), [[ـُّ]] (shadda + damma = "bbu"). Look for these combinations in words!',
         arabicDescription: 'الشَّدَّة تَجْتَمِع مَعَ الْحَرَكَات',
+        arabicTranslation: 'Shadda combines with vowels',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Shadda + Vowel Combinations',
+        examples: [
+          { arabic: 'رَبَّنَا', english: 'Rabbana (Our Lord) - شَدَّة + فَتْحَة' },
+          { arabic: 'رَبِّي', english: 'Rabbi (My Lord) - شَدَّة + كَسْرَة' },
+          { arabic: 'أُمِّي', english: 'Ummi (My mother) - شَدَّة + كَسْرَة' },
+          { arabic: 'مُحَمَّدٌ', english: 'Muhammad - شَدَّة + فَتْحَة' },
+          { arabic: 'عَلَّمَ', english: '\'Allama (He taught) - شَدَّة + فَتْحَة' },
+          { arabic: 'يُسَبِّحُ', english: 'Yusabbihu (He glorifies) - شَدَّة + كَسْرَة' },
+        ],
       },
 
       // TANWEEN Section
@@ -618,34 +642,48 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'rule',
         content: '[[Tanween]] adds an "n" sound to the end of a word. It\'s shown by [[doubling the vowel mark]]: [[ـً]] (an), [[ـٍ]] (in), [[ـٌ]] (un). Tanween indicates an indefinite noun — like "a/an" in English!',
         arabicDescription: 'التَّنْوِين يُضِيف صَوْت النُّون',
+        arabicTranslation: 'Tanween adds the "N" sound',
       },
       {
         type: 'examples_grid',
         content: 'The Three Tanween',
         examples: [
-          { arabic: 'ـً', english: 'an (fathatan)' },
-          { arabic: 'ـٍ', english: 'in (kasratan)' },
-          { arabic: 'ـٌ', english: 'un (dammatan)' },
+          { arabic: 'ـًا', english: 'an - فَتْحَتَان (fathatan)' },
+          { arabic: 'ـٍ', english: 'in - كَسْرَتَان (kasratan)' },
+          { arabic: 'ـٌ', english: 'un - ضَمَّتَان (dammatan)' },
         ],
       },
       {
         type: 'examples_grid',
         content: 'Words with Tanween',
         examples: [
-          { arabic: 'كِتَابًا', english: 'a book (accusative)' },
-          { arabic: 'كِتَابٍ', english: 'a book (genitive)' },
-          { arabic: 'كِتَابٌ', english: 'a book (nominative)' },
-          { arabic: 'بَيْتًا', english: 'a house' },
-          { arabic: 'رَجُلٌ', english: 'a man' },
-          { arabic: 'بِنْتٌ', english: 'a girl' },
-          { arabic: 'جَمِيلَةٌ', english: 'beautiful (fem)' },
-          { arabic: 'كَبِيرٌ', english: 'big' },
+          { arabic: 'كِتَابًا', english: 'Kitaaban (a book) - فَتْحَتَان' },
+          { arabic: 'بَيْتًا', english: 'Baytan (a house) - فَتْحَتَان' },
+          { arabic: 'قَلَمًا', english: 'Qalaman (a pen) - فَتْحَتَان' },
+          { arabic: 'وَقْتٍ', english: 'Waqtin (a time) - كَسْرَتَان' },
+          { arabic: 'بَيْتٍ', english: 'Baytin (a house) - كَسْرَتَان' },
+          { arabic: 'رَجُلٍ', english: 'Rajulin (a man) - كَسْرَتَان' },
+          { arabic: 'كِتَابٌ', english: 'Kitaabun (a book) - ضَمَّتَان' },
+          { arabic: 'رَجُلٌ', english: 'Rajulun (a man) - ضَمَّتَان' },
         ],
       },
       {
         type: 'note',
-        content: 'Fathatan [[ـً]] usually requires an extra [[ا]] (alif) at the end: [[ـًا]]. Exception: words ending in [[ة]] (ta marbuta) or [[ء]] (hamza). Example: [[كِتَابًا]] (a book), but [[جَمِيلَةً]] (beautiful).',
+        content: 'Fathatan [[ـً]] usually requires an extra [[ا]] (alif) at the end: [[ـًا]]. Exception: words ending in [[ة]] (ta marbuta) or [[ء]] (hamza).',
         arabicDescription: 'الْفَتْحَتَان تَحْتَاج أَلِفًا',
+        arabicTranslation: 'Fathatan needs an Alif',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Fathatan Examples',
+        examples: [
+          { arabic: 'كِتَابًا', english: 'Kitaaban (a book) - with alif' },
+          { arabic: 'بَيْتًا', english: 'Baytan (a house) - with alif' },
+          { arabic: 'قَلَمًا', english: 'Qalaman (a pen) - with alif' },
+          { arabic: 'جَمِيلَةً', english: 'Jamilatan (beautiful) - ة exception' },
+          { arabic: 'مَدْرَسَةً', english: 'Madrasatan (a school) - ة exception' },
+          { arabic: 'سَمَاءً', english: "Samaa'an (a sky) - ء exception" },
+        ],
       },
 
       // Complete Vowel Chart with Examples
@@ -684,7 +722,7 @@ export const grammarLessons: GrammarLesson[] = [
         content: 'Tanween (Nunation)',
         examples: [
           { arabic: 'كِتَابًا', english: 'Fathatan - [[an]]' },
-          { arabic: 'كِتَابٍ', english: 'Kasratan - [[in]]' },
+          { arabic: 'وَقْتٍ', english: 'Kasratan - [[in]]' },
           { arabic: 'كِتَابٌ', english: 'Dammatan - [[un]]' },
         ],
       },
@@ -712,6 +750,7 @@ export const grammarLessons: GrammarLesson[] = [
         type: 'note',
         content: 'Reading Tip: In most Arabic texts (newspapers, books, signs), vowel marks are [[NOT written]] — only consonants appear! Readers use context and knowledge to pronounce words correctly. The Quran, children\'s books, and learning materials always include full vowel marks.',
         arabicDescription: 'الْقُرْآن دَائِمًا مُشَكَّل بِالْكَامِل',
+        arabicTranslation: 'The Quran is always fully vowelized',
       },
     ],
   },
