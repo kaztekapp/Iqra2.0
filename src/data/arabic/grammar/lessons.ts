@@ -888,6 +888,204 @@ export const grammarLessons: GrammarLesson[] = [
     ],
   },
 
+  // LESSON: Indefinite Articles & Tanween
+  {
+    id: 'grammar-indefinite',
+    title: 'Indefinite Articles & Tanween',
+    titleArabic: 'النَّكِرَة وَالتَّنْوِين',
+    description: 'Learn how Arabic expresses "a/an" through the absence of ال and the beautiful system of Tanween',
+    level: 'beginner',
+    category: 'articles',
+    order: 3.5,
+    exercises: ['ex-grammar-indef-1', 'ex-grammar-indef-2', 'ex-grammar-indef-3'],
+    content: [
+      // Introduction with bilingual description
+      {
+        type: 'description',
+        content: 'Unlike English, Arabic has [[NO separate word]] for "a" or "an"! Instead, a noun is indefinite simply by [[not having]] [[أَلْ]] (the). To emphasize indefiniteness, Arabic uses [[Tanween]] — a special "n" sound added to the end of words.',
+        arabicDescription: 'النَّكِرَة هِيَ الاسْم بِدُون أَلْ',
+        arabicTranslation: 'Indefinite is a noun without Al',
+      },
+
+      // Basic concept
+      {
+        type: 'rule',
+        content: 'Simple rule: [[Without أَلْ]] = indefinite (a/an). [[With أَلْ]] = definite (the). When you see a bare noun without أَلْ, it means "a" or "an" in English!',
+        arabicDescription: 'بِدُون أَلْ = نَكِرَة، مَعَ أَلْ = مَعْرِفَة',
+        arabicTranslation: 'Without Al = indefinite, With Al = definite',
+      },
+
+      // Comparison examples showing indefinite vs definite
+      {
+        type: 'comparison_grid',
+        content: 'Indefinite vs Definite',
+        leftLabel: 'Indefinite (a/an)',
+        rightLabel: 'Definite (the)',
+        comparisons: [
+          { left: { arabic: 'كِتَاب', label: 'a book' }, right: { arabic: 'الْكِتَاب', label: 'the book' } },
+          { left: { arabic: 'بَيْت', label: 'a house' }, right: { arabic: 'الْبَيْت', label: 'the house' } },
+          { left: { arabic: 'وَلَد', label: 'a boy' }, right: { arabic: 'الْوَلَد', label: 'the boy' } },
+          { left: { arabic: 'بِنْت', label: 'a girl' }, right: { arabic: 'الْبِنْت', label: 'the girl' } },
+          { left: { arabic: 'سَيَّارَة', label: 'a car' }, right: { arabic: 'السَّيَّارَة', label: 'the car' } },
+          { left: { arabic: 'مَدْرَسَة', label: 'a school' }, right: { arabic: 'الْمَدْرَسَة', label: 'the school' } },
+        ],
+      },
+
+      // Tanween Introduction
+      {
+        type: 'text',
+        content: 'What is Tanween?',
+      },
+      {
+        type: 'description',
+        content: '[[Tanween]] (تَنْوِين) means "nunation" — adding an "n" sound to the end of a word. It\'s written by [[doubling]] the short vowel mark. Tanween is a clear marker that a noun is [[indefinite]].',
+        arabicDescription: 'التَّنْوِين هُوَ نُون سَاكِنَة تُضَاف آخِر الاسْم',
+        arabicTranslation: 'Tanween is a silent noon added to the end of a noun',
+      },
+
+      // Three Types of Tanween
+      {
+        type: 'rule',
+        content: 'There are [[THREE]] types of Tanween, each with a different sound: [[ـً]] (an), [[ـٍ]] (in), and [[ـٌ]] (un). Which one you use depends on the [[grammatical case]] of the noun.',
+        arabicDescription: 'ثَلَاثَة أَنْوَاع: فَتْحَتَان، كَسْرَتَان، ضَمَّتَان',
+        arabicTranslation: 'Three types: Fathatan, Kasratan, Dammatan',
+      },
+
+      // Tanween Chart
+      {
+        type: 'table',
+        content: 'Tanween Types',
+        tableData: {
+          headers: ['Tanween', 'Sound', 'Written', 'Case'],
+          rows: [
+            ['فَتْحَتَان', '-an', 'ـًا / ـً', 'Accusative (Object)'],
+            ['كَسْرَتَان', '-in', 'ـٍ', 'Genitive (After preposition)'],
+            ['ضَمَّتَان', '-un', 'ـٌ', 'Nominative (Subject)'],
+          ],
+        },
+      },
+
+      // Reassuring note about grammatical cases
+      {
+        type: 'note',
+        content: "Don't worry if \"Nominative\", \"Accusative\", and \"Genitive\" sound confusing right now! These are grammatical cases that will be explained in detail later in the course (Lessons 31-33). For now, just focus on [[recognizing]] the three Tanween sounds and knowing they mark indefinite nouns.",
+        arabicDescription: 'لَا تَقْلَق! سَتَتَعَلَّم الإِعْرَاب لَاحِقًا',
+        arabicTranslation: "Don't worry! You will learn grammatical cases later",
+      },
+
+      // Dammatan - Subject case
+      {
+        type: 'text',
+        content: 'Dammatan (ـٌ) — Subject Case',
+      },
+      {
+        type: 'note',
+        content: 'Use [[Dammatan]] ([[ـٌ]] = "un") when the indefinite noun is the [[subject]] of the sentence — the one doing the action.',
+        arabicDescription: 'الضَّمَّتَان لِلْفَاعِل وَالْمُبْتَدَأ',
+        arabicTranslation: 'Dammatan for the doer and subject',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Dammatan Examples',
+        examples: [
+          { arabic: 'وَلَدٌ', english: 'a boy (subject)' },
+          { arabic: 'كِتَابٌ', english: 'a book (subject)' },
+          { arabic: 'بَيْتٌ', english: 'a house (subject)' },
+          { arabic: 'سَيَّارَةٌ', english: 'a car (subject)' },
+        ],
+      },
+
+      // Fathatan - Object case
+      {
+        type: 'text',
+        content: 'Fathatan (ـًا) — Object Case',
+      },
+      {
+        type: 'note',
+        content: 'Use [[Fathatan]] ([[ـً]] = "an") when the indefinite noun is the [[object]] — receiving the action. Note: Fathatan usually needs an extra [[ا]] (alif) unless the word ends in [[ة]] or [[ء]].',
+        arabicDescription: 'الْفَتْحَتَان لِلْمَفْعُول بِه',
+        arabicTranslation: 'Fathatan for the object',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Fathatan Examples',
+        examples: [
+          { arabic: 'كِتَابًا', english: 'a book (object)' },
+          { arabic: 'بَيْتًا', english: 'a house (object)' },
+          { arabic: 'قَلَمًا', english: 'a pen (object)' },
+          { arabic: 'سَيَّارَةً', english: 'a car (object) - no alif with ة' },
+        ],
+      },
+
+      // Kasratan - After prepositions
+      {
+        type: 'text',
+        content: 'Kasratan (ـٍ) — Genitive Case',
+      },
+      {
+        type: 'note',
+        content: 'Use [[Kasratan]] ([[ـٍ]] = "in") when the indefinite noun comes [[after a preposition]] (في، مِن، إلى، على، etc.) or is the second part of an [[Idafa]] (possession).',
+        arabicDescription: 'الْكَسْرَتَان لِلاسْم الْمَجْرُور',
+        arabicTranslation: 'Kasratan for nouns after prepositions',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Kasratan Examples',
+        examples: [
+          { arabic: 'فِي بَيْتٍ', english: 'in a house' },
+          { arabic: 'مِنْ كِتَابٍ', english: 'from a book' },
+          { arabic: 'إِلَى مَدْرَسَةٍ', english: 'to a school' },
+          { arabic: 'عَلَى طَاوِلَةٍ', english: 'on a table' },
+        ],
+      },
+
+      // Comparison of all three
+      {
+        type: 'text',
+        content: 'Same Word, Different Tanween',
+      },
+      {
+        type: 'description',
+        content: 'Watch how the SAME word changes its Tanween based on its role in the sentence:',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Tanween in Action',
+        examples: [
+          { arabic: 'وَلَدٌ جَاءَ', english: 'A boy came (subject = ـٌ)' },
+          { arabic: 'رَأَيْتُ وَلَدًا', english: 'I saw a boy (object = ـًا)' },
+          { arabic: 'سَلَّمْتُ عَلَى وَلَدٍ', english: 'I greeted a boy (after prep = ـٍ)' },
+        ],
+      },
+
+      // Practical sentences
+      {
+        type: 'text',
+        content: 'Indefinite Nouns in Sentences',
+      },
+      {
+        type: 'examples_grid',
+        content: 'Practical Sentences',
+        examples: [
+          { arabic: 'هَذَا كِتَابٌ', english: 'This is a book' },
+          { arabic: 'قَرَأْتُ كِتَابًا', english: 'I read a book' },
+          { arabic: 'أَنَا فِي غُرْفَةٍ', english: 'I am in a room' },
+          { arabic: 'عِنْدِي سُؤَالٌ', english: 'I have a question' },
+          { arabic: 'رَأَيْتُ رَجُلًا', english: 'I saw a man' },
+          { arabic: 'ذَهَبْتُ إِلَى سُوقٍ', english: 'I went to a market' },
+        ],
+      },
+
+      // Memory tip
+      {
+        type: 'note',
+        content: 'Memory Tip: Think of Tanween as saying the word with an "n" at the end — [[كِتَابٌ]] sounds like "kitaab-UN", [[كِتَابًا]] like "kitaab-AN", and [[كِتَابٍ]] like "kitaab-IN". The doubled marks show this "n" sound!',
+        arabicDescription: 'التَّنْوِين صَوْت النُّون فِي آخِر الْكَلِمَة',
+        arabicTranslation: 'Tanween is the sound of Noon at the end of the word',
+      },
+    ],
+  },
+
   // LESSON 4: Personal Pronouns
   {
     id: 'grammar-4',
