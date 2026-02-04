@@ -91,4 +91,4 @@ export interface DuaListItem {
   isMemorized: boolean;
 }
 
-export const TOTAL_DUAS = 50;
+export const TOTAL_DUAS = 70;

@@ -1,9 +1,12 @@
 import * as Speech from 'expo-speech';
 import { setAudioModeAsync } from 'expo-audio';
 
+export type VoiceGender = 'female' | 'male';
+
 interface SpeakOptions {
   text: string;
   rate?: number;
+  gender?: VoiceGender;
   onDone?: () => void;
   onError?: (error: any) => void;
 }
@@ -11,8 +14,11 @@ interface SpeakOptions {
 class AudioService {
   private isSpeaking: boolean = false;
   private audioConfigured: boolean = false;
-  private bestVoice: string | null = null;
+  private femaleVoice: string | null = null;
+  private maleVoice: string | null = null;
   private voiceInitialized: boolean = false;
+  private preferredGender: VoiceGender = 'female'; // Default to female
+  private hasMultipleVoices: boolean = false; // Track if different male/female voices exist
 
   private async configureAudio(): Promise<void> {
     if (this.audioConfigured) return;
@@ -28,7 +34,7 @@ class AudioService {
     }
   }
 
-  // Find the best Arabic voice available
+  // Find the best Arabic voices (male and female) available
   private async findBestVoice(): Promise<void> {
     if (this.voiceInitialized) return;
 
@@ -40,45 +46,119 @@ class AudioService {
         v.language.startsWith('ar') || v.language.includes('Arab')
       );
 
-      console.log('Arabic voices found:', arabicVoices.length);
+      console.log('=== Arabic voices found:', arabicVoices.length, '===');
       arabicVoices.forEach(v => {
-        console.log(`  - ${v.identifier} (${v.language}) quality: ${v.quality}`);
+        console.log(`  Voice: ${v.identifier}`);
+        console.log(`    Name: ${v.name || 'N/A'}`);
+        console.log(`    Language: ${v.language}`);
+        console.log(`    Quality: ${v.quality}`);
       });
 
-      // Priority order for voice selection:
-      // 1. Enhanced quality voices (downloaded high-quality voices)
-      // 2. Default quality voices
-      // 3. Compact voices (avoid if possible)
-      // 4. Super-compact voices (last resort)
+      // iOS Arabic voice names (case-insensitive matching)
+      // Female Arabic names: Laila, Maryam, Amira, Hoda, Salma, Zeina, Lana, Sara, Fatima, Samira
+      // Male Arabic names: Maged, Tarik, Omar, Khaled, Ahmed, Hassan, Majed
+      const femaleNames = ['laila', 'maryam', 'amira', 'hoda', 'salma', 'zeina', 'lana', 'sara', 'fatima', 'samira', 'female'];
+      const maleNames = ['maged', 'majed', 'tarik', 'omar', 'khaled', 'ahmed', 'hassan', 'male'];
 
-      const enhancedVoice = arabicVoices.find(v =>
-        v.quality === 'Enhanced' ||
-        v.identifier.includes('premium') ||
-        v.identifier.includes('enhanced')
-      );
+      // Helper function to check if voice is female
+      const isFemaleVoice = (v: Speech.Voice) => {
+        const id = v.identifier.toLowerCase();
+        const name = (v.name || '').toLowerCase();
+        const combined = id + ' ' + name;
+        return femaleNames.some(f => combined.includes(f));
+      };
 
-      const defaultVoice = arabicVoices.find(v =>
-        v.quality === 'Default' &&
-        !v.identifier.includes('compact')
-      );
+      // Helper function to check if voice is male
+      const isMaleVoice = (v: Speech.Voice) => {
+        const id = v.identifier.toLowerCase();
+        const name = (v.name || '').toLowerCase();
+        const combined = id + ' ' + name;
+        return maleNames.some(m => combined.includes(m));
+      };
 
-      const anyNonCompact = arabicVoices.find(v =>
-        !v.identifier.includes('compact')
-      );
+      // Helper to select best voice from a filtered list
+      const selectBest = (voiceList: Speech.Voice[]) => {
+        const enhanced = voiceList.find(v =>
+          v.quality === 'Enhanced' ||
+          v.identifier.includes('premium') ||
+          v.identifier.includes('enhanced')
+        );
+        const defaultQ = voiceList.find(v =>
+          v.quality === 'Default' &&
+          !v.identifier.includes('compact')
+        );
+        const nonCompact = voiceList.find(v =>
+          !v.identifier.includes('compact')
+        );
+        const compact = voiceList.find(v =>
+          v.identifier.includes('compact') &&
+          !v.identifier.includes('super-compact')
+        );
+        return enhanced || defaultQ || nonCompact || compact || voiceList[0];
+      };
 
-      const compactVoice = arabicVoices.find(v =>
-        v.identifier.includes('compact') &&
-        !v.identifier.includes('super-compact')
-      );
+      // Separate voices by gender
+      const femaleVoices = arabicVoices.filter(isFemaleVoice);
+      const maleVoices = arabicVoices.filter(isMaleVoice);
+      const unidentifiedVoices = arabicVoices.filter(v => !isFemaleVoice(v) && !isMaleVoice(v));
 
-      // Select best available
-      const selected = enhancedVoice || defaultVoice || anyNonCompact || compactVoice || arabicVoices[0];
+      console.log('Female voices:', femaleVoices.map(v => v.identifier));
+      console.log('Male voices:', maleVoices.map(v => v.identifier));
+      console.log('Unidentified voices:', unidentifiedVoices.map(v => v.identifier));
 
-      if (selected) {
-        this.bestVoice = selected.identifier;
-        console.log('Selected voice:', selected.identifier, 'Quality:', selected.quality);
-      } else {
-        console.log('No Arabic voice found, using system default');
+      // Assign female voice
+      if (femaleVoices.length > 0) {
+        const selected = selectBest(femaleVoices);
+        if (selected) {
+          this.femaleVoice = selected.identifier;
+          console.log('✓ Selected FEMALE voice:', selected.identifier);
+        }
+      }
+
+      // Assign male voice
+      if (maleVoices.length > 0) {
+        const selected = selectBest(maleVoices);
+        if (selected) {
+          this.maleVoice = selected.identifier;
+          console.log('✓ Selected MALE voice:', selected.identifier);
+        }
+      }
+
+      // If we couldn't identify genders but have voices, assign them
+      if (!this.femaleVoice && !this.maleVoice && arabicVoices.length > 0) {
+        // If only one voice available, use it for both
+        if (arabicVoices.length === 1) {
+          this.femaleVoice = arabicVoices[0].identifier;
+          this.maleVoice = arabicVoices[0].identifier;
+          this.hasMultipleVoices = false;
+          console.log('Only one voice available, using for both:', arabicVoices[0].identifier);
+        } else {
+          // Use first for female, second for male (arbitrary assignment)
+          const sorted = [...arabicVoices].sort((a, b) => a.identifier.localeCompare(b.identifier));
+          this.femaleVoice = sorted[0].identifier;
+          this.maleVoice = sorted[1].identifier;
+          this.hasMultipleVoices = true;
+          console.log('Assigned first voice as female:', this.femaleVoice);
+          console.log('Assigned second voice as male:', this.maleVoice);
+        }
+      } else if (!this.femaleVoice && this.maleVoice) {
+        // Only found male, use it for female too
+        this.femaleVoice = this.maleVoice;
+        this.hasMultipleVoices = false;
+        console.log('No female voice found, using male for both');
+      } else if (this.femaleVoice && !this.maleVoice) {
+        // Only found female, use it for male too
+        this.maleVoice = this.femaleVoice;
+        this.hasMultipleVoices = false;
+        console.log('No male voice found, using female for both');
+      } else if (this.femaleVoice && this.maleVoice) {
+        // Both found
+        this.hasMultipleVoices = this.femaleVoice !== this.maleVoice;
+        console.log('Both voices found, different:', this.hasMultipleVoices);
+      }
+
+      if (!this.femaleVoice && !this.maleVoice) {
+        console.log('⚠ No Arabic voice found, using system default');
       }
 
       this.voiceInitialized = true;
@@ -86,6 +166,55 @@ class AudioService {
       console.log('Voice search error:', error);
       this.voiceInitialized = true;
     }
+  }
+
+  // Set preferred voice gender
+  setVoiceGender(gender: VoiceGender): void {
+    this.preferredGender = gender;
+    console.log('Voice gender set to:', gender);
+  }
+
+  // Get current voice gender preference
+  getVoiceGender(): VoiceGender {
+    return this.preferredGender;
+  }
+
+  // Swap male and female voices (in case detection was wrong)
+  swapVoices(): void {
+    const temp = this.femaleVoice;
+    this.femaleVoice = this.maleVoice;
+    this.maleVoice = temp;
+    console.log('Voices swapped!');
+    console.log('  Female voice now:', this.femaleVoice);
+    console.log('  Male voice now:', this.maleVoice);
+  }
+
+  // Reset voice initialization to re-detect voices
+  resetVoices(): void {
+    this.voiceInitialized = false;
+    this.femaleVoice = null;
+    this.maleVoice = null;
+    console.log('Voice initialization reset');
+  }
+
+  // Get current voice assignments for debugging
+  getVoiceInfo(): { female: string | null; male: string | null; hasMultipleVoices: boolean } {
+    return {
+      female: this.femaleVoice,
+      male: this.maleVoice,
+      hasMultipleVoices: this.hasMultipleVoices,
+    };
+  }
+
+  // Check if multiple Arabic voices are available
+  hasMultipleArabicVoices(): boolean {
+    return this.hasMultipleVoices;
+  }
+
+  // Initialize voices and return info (useful for UI to show status)
+  async initializeAndGetVoiceInfo(): Promise<{ female: string | null; male: string | null; hasMultipleVoices: boolean }> {
+    await this.findBestVoice();
+    return this.getVoiceInfo();
   }
 
   // Preprocess Arabic text to help TTS read diacritics correctly
@@ -235,7 +364,7 @@ class AudioService {
   }
 
   async speakArabic(options: SpeakOptions): Promise<void> {
-    const { text, rate = 0.75, onDone, onError } = options;
+    const { text, rate = 0.75, gender, onDone, onError } = options;
 
     if (!text || text.trim() === '') return;
 
@@ -269,9 +398,13 @@ class AudioService {
         },
       };
 
-      // Use the best voice if found
-      if (this.bestVoice) {
-        speechOptions.voice = this.bestVoice;
+      // Use the appropriate voice based on gender preference
+      const useGender = gender || this.preferredGender;
+      const selectedVoice = useGender === 'female' ? this.femaleVoice : this.maleVoice;
+
+      if (selectedVoice) {
+        speechOptions.voice = selectedVoice;
+        console.log('Using', useGender, 'voice:', selectedVoice);
       }
 
       Speech.speak(processedText, speechOptions);

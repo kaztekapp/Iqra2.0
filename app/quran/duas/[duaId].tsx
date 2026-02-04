@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -23,8 +23,9 @@ export default function DuaDetailScreen() {
   } = useDuasStore();
 
   // Audio/Speech functionality
-  const { speak, speakSlow, stop, isSpeaking } = useArabicSpeech();
+  const { speak, speakSlow, stop, isSpeaking, voiceGender, setVoiceGender, swapVoices, hasMultipleVoices } = useArabicSpeech();
   const [isSlowMode, setIsSlowMode] = useState(true);
+  const [showVoiceHelp, setShowVoiceHelp] = useState(false);
 
   // Get dua data
   const dua = duaId ? getDuaById(duaId) : undefined;
@@ -71,6 +72,47 @@ export default function DuaDetailScreen() {
   const handleToggleSpeed = useCallback(() => {
     setIsSlowMode(prev => !prev);
   }, []);
+
+  // Toggle voice gender
+  const handleToggleVoice = useCallback(() => {
+    if (!hasMultipleVoices) {
+      // Only one voice available, show help
+      Alert.alert(
+        'Download More Voices',
+        'Your device only has one Arabic voice installed. To get both male and female voices:\n\n' +
+        '1. Open Settings app\n' +
+        '2. Go to Accessibility\n' +
+        '3. Tap "Spoken Content"\n' +
+        '4. Tap "Voices"\n' +
+        '5. Tap "Arabic"\n' +
+        '6. Download "Laila" (female) or other voices\n\n' +
+        'After downloading, restart the app.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+    setVoiceGender(voiceGender === 'female' ? 'male' : 'female');
+  }, [voiceGender, setVoiceGender, hasMultipleVoices]);
+
+  // Swap voices if detection was wrong (long-press)
+  const handleSwapVoices = useCallback(() => {
+    if (!hasMultipleVoices) {
+      // Only one voice available, show help
+      Alert.alert(
+        'Only One Voice Available',
+        'Your device only has one Arabic voice. Download more voices from:\n\n' +
+        'Settings > Accessibility > Spoken Content > Voices > Arabic',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+    swapVoices();
+    Alert.alert(
+      'Voices Swapped',
+      'Male and female voices have been swapped. Try playing the audio again.',
+      [{ text: 'OK' }]
+    );
+  }, [swapVoices, hasMultipleVoices]);
 
   // Stop speech when leaving screen
   useEffect(() => {
@@ -170,6 +212,31 @@ export default function DuaDetailScreen() {
 
           {/* Audio Controls */}
           <View style={styles.audioControls}>
+            <Pressable
+              style={[styles.voiceButton, !hasMultipleVoices && styles.voiceButtonDisabled]}
+              onPress={handleToggleVoice}
+              onLongPress={handleSwapVoices}
+              delayLongPress={500}
+            >
+              {!hasMultipleVoices ? (
+                <>
+                  <Ionicons name="alert-circle" size={18} color="#f59e0b" />
+                  <Text style={styles.voiceTextWarning}>1 Voice</Text>
+                </>
+              ) : (
+                <>
+                  <Ionicons
+                    name={voiceGender === 'female' ? 'woman' : 'man'}
+                    size={18}
+                    color={voiceGender === 'female' ? '#ec4899' : '#3b82f6'}
+                  />
+                  <Text style={[styles.voiceText, voiceGender === 'female' ? styles.voiceTextFemale : styles.voiceTextMale]}>
+                    {voiceGender === 'female' ? 'Female' : 'Male'}
+                  </Text>
+                </>
+              )}
+            </Pressable>
+
             <Pressable
               style={styles.speedButton}
               onPress={handleToggleSpeed}
@@ -413,6 +480,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     gap: 12,
+  },
+  voiceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#334155',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 10,
+    gap: 6,
+  },
+  voiceText: {
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  voiceTextFemale: {
+    color: '#ec4899',
+  },
+  voiceTextMale: {
+    color: '#3b82f6',
+  },
+  voiceButtonDisabled: {
+    borderWidth: 1,
+    borderColor: '#f59e0b40',
+  },
+  voiceTextWarning: {
+    color: '#f59e0b',
+    fontSize: 13,
+    fontWeight: '600',
   },
   speedButton: {
     flexDirection: 'row',
