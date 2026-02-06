@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured } from '../src/lib/supabase';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -31,12 +30,6 @@ export default function RootLayout() {
   const setSession = useSettingsStore((s) => s.setSession);
 
   const [authReady, setAuthReady] = useState(false);
-
-  // TODO: Remove this once Supabase database is set up
-  useEffect(() => {
-    AsyncStorage.removeItem('iqra-settings');
-    useSettingsStore.setState({ hasCompletedOnboarding: false, learningGoals: [] });
-  }, []);
 
   const [fontsLoaded, fontError] = useFonts({
     // Add Amiri fonts here when available
