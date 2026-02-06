@@ -2,13 +2,19 @@ import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { ACHIEVEMENTS, Achievement } from '../../src/data/achievements';
 import { useOfflineStore } from '../../src/stores/offlineStore';
 import { audioCacheService } from '../../src/services/audioCacheService';
 import { useNetworkStatus } from '../../src/hooks/useNetworkStatus';
+import { useSettingsStore } from '../../src/stores/settingsStore';
+import { signOut } from '../../src/services/authService';
 
 export default function ProfileScreen() {
+  const { t, i18n } = useTranslation();
+  const { language, setLanguage, isAuthenticated } = useSettingsStore();
+
   const {
     progress,
     showVowels,
@@ -43,15 +49,37 @@ export default function ProfileScreen() {
 
   const handleClearCache = () => {
     Alert.alert(
-      'Clear Downloaded Content',
-      'This will delete all downloaded audio files. Your learning progress will not be affected.',
+      t('profile.clearDownloadedTitle'),
+      t('profile.clearDownloadedMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Clear',
+          text: t('profile.clear'),
           style: 'destructive',
           onPress: async () => {
             await clearAllDownloads();
+          },
+        },
+      ]
+    );
+  };
+
+  const handleLanguageChange = (lang: 'en' | 'fr') => {
+    setLanguage(lang);
+    i18n.changeLanguage(lang);
+  };
+
+  const handleLogOut = () => {
+    Alert.alert(
+      t('profile.logOutConfirmTitle'),
+      t('profile.logOutConfirmMessage'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('profile.logOut'),
+          style: 'destructive',
+          onPress: async () => {
+            await signOut();
           },
         },
       ]
@@ -106,9 +134,9 @@ export default function ProfileScreen() {
   };
 
   const levelLabels = {
-    beginner: { en: 'Beginner', ar: 'الْمُبْتَدِئ' },
-    intermediate: { en: 'Intermediate', ar: 'الْمُتَوَسِّط' },
-    advanced: { en: 'Advanced', ar: 'الْمُتَقَدِّم' },
+    beginner: { key: 'profile.beginner', ar: 'الْمُبْتَدِئ' },
+    intermediate: { key: 'profile.intermediate', ar: 'الْمُتَوَسِّط' },
+    advanced: { key: 'profile.advanced', ar: 'الْمُتَقَدِّم' },
   };
 
   const currentLevel = getOverallLevel();
@@ -119,7 +147,7 @@ export default function ProfileScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Profile</Text>
+          <Text style={styles.title}>{t('profile.title')}</Text>
           <Text style={styles.titleArabic}>الْمَلَفُّ الشَّخْصِي</Text>
         </View>
 
@@ -129,8 +157,8 @@ export default function ProfileScreen() {
             <Ionicons name="school" size={32} color="#D4AF37" />
           </View>
           <View style={styles.levelInfo}>
-            <Text style={styles.levelLabel}>Current Level</Text>
-            <Text style={styles.levelValue}>{levelInfo.en}</Text>
+            <Text style={styles.levelLabel}>{t('profile.currentLevel')}</Text>
+            <Text style={styles.levelValue}>{t(levelInfo.key)}</Text>
             <Text style={styles.levelArabic}>{levelInfo.ar}</Text>
           </View>
           <View style={styles.xpBadge}>
@@ -141,13 +169,13 @@ export default function ProfileScreen() {
 
         {/* Progress Overview */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Learning Progress</Text>
+          <Text style={styles.sectionTitle}>{t('profile.learningProgress')}</Text>
 
           <View style={styles.progressCard}>
             <View style={styles.progressItem}>
               <View style={styles.progressHeader}>
                 <Ionicons name="text" size={20} color="#6366f1" />
-                <Text style={styles.progressLabel}>Alphabet</Text>
+                <Text style={styles.progressLabel}>{t('profile.alphabet')}</Text>
               </View>
               <View style={styles.progressBarContainer}>
                 <View style={styles.progressBarBg}>
@@ -160,7 +188,7 @@ export default function ProfileScreen() {
             <View style={styles.progressItem}>
               <View style={styles.progressHeader}>
                 <Ionicons name="library" size={20} color="#D4AF37" />
-                <Text style={styles.progressLabel}>Vocabulary</Text>
+                <Text style={styles.progressLabel}>{t('profile.vocabulary')}</Text>
               </View>
               <View style={styles.progressBarContainer}>
                 <View style={styles.progressBarBg}>
@@ -173,7 +201,7 @@ export default function ProfileScreen() {
             <View style={styles.progressItem}>
               <View style={styles.progressHeader}>
                 <Ionicons name="git-branch" size={20} color="#22c55e" />
-                <Text style={styles.progressLabel}>Grammar</Text>
+                <Text style={styles.progressLabel}>{t('profile.grammar')}</Text>
               </View>
               <View style={styles.progressBarContainer}>
                 <View style={styles.progressBarBg}>
@@ -187,27 +215,27 @@ export default function ProfileScreen() {
 
         {/* Statistics */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Statistics</Text>
+          <Text style={styles.sectionTitle}>{t('profile.statistics')}</Text>
           <View style={styles.statsGrid}>
             <View style={styles.statCard}>
               <Ionicons name="flame" size={24} color="#f59e0b" />
               <Text style={styles.statValue}>{progress.currentStreak}</Text>
-              <Text style={styles.statLabel}>Day Streak</Text>
+              <Text style={styles.statLabel}>{t('profile.dayStreak')}</Text>
             </View>
             <View style={styles.statCard}>
               <Ionicons name="trophy" size={24} color="#D4AF37" />
               <Text style={styles.statValue}>{progress.longestStreak}</Text>
-              <Text style={styles.statLabel}>Best Streak</Text>
+              <Text style={styles.statLabel}>{t('profile.bestStreak')}</Text>
             </View>
             <View style={styles.statCard}>
               <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
               <Text style={styles.statValue}>{progress.exerciseResults.totalCompleted}</Text>
-              <Text style={styles.statLabel}>Exercises</Text>
+              <Text style={styles.statLabel}>{t('profile.exercises')}</Text>
             </View>
             <View style={styles.statCard}>
               <Ionicons name="analytics" size={24} color="#6366f1" />
               <Text style={styles.statValue}>{getAccuracy()}%</Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
+              <Text style={styles.statLabel}>{t('profile.accuracy')}</Text>
             </View>
           </View>
         </View>
@@ -215,7 +243,7 @@ export default function ProfileScreen() {
         {/* Achievements */}
         <View style={styles.section}>
           <View style={styles.achievementHeader}>
-            <Text style={styles.sectionTitle}>Achievements</Text>
+            <Text style={styles.sectionTitle}>{t('profile.achievements')}</Text>
             <View style={styles.achievementCount}>
               <Ionicons name="trophy" size={14} color="#D4AF37" />
               <Text style={styles.achievementCountText}>
@@ -227,7 +255,7 @@ export default function ProfileScreen() {
           {/* Unlocked Achievements */}
           {unlockedList.length > 0 && (
             <View style={styles.achievementsContainer}>
-              <Text style={styles.achievementSubtitle}>Unlocked</Text>
+              <Text style={styles.achievementSubtitle}>{t('profile.unlocked')}</Text>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -266,7 +294,7 @@ export default function ProfileScreen() {
           {/* Locked Achievements (show next 4) */}
           {lockedList.length > 0 && (
             <View style={styles.achievementsContainer}>
-              <Text style={styles.achievementSubtitle}>Next Up</Text>
+              <Text style={styles.achievementSubtitle}>{t('profile.nextUp')}</Text>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -311,33 +339,33 @@ export default function ProfileScreen() {
 
         {/* Offline Storage */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Offline Storage</Text>
+          <Text style={styles.sectionTitle}>{t('profile.offlineStorage')}</Text>
           <View style={styles.storageCard}>
             <View style={styles.storageHeader}>
               <View style={styles.storageIcon}>
                 <Ionicons name="cloud-download" size={24} color="#6366f1" />
               </View>
               <View style={styles.storageInfo}>
-                <Text style={styles.storageTitle}>Downloaded Content</Text>
-                <Text style={styles.storageSize}>{cacheSize} used</Text>
+                <Text style={styles.storageTitle}>{t('profile.downloadedContent')}</Text>
+                <Text style={styles.storageSize}>{t('profile.used', { size: cacheSize })}</Text>
               </View>
               {!isConnected && (
                 <View style={styles.offlineBadge}>
                   <Ionicons name="cloud-offline" size={14} color="#ef4444" />
-                  <Text style={styles.offlineBadgeText}>Offline</Text>
+                  <Text style={styles.offlineBadgeText}>{t('profile.offline')}</Text>
                 </View>
               )}
             </View>
             <View style={styles.storageStats}>
               <View style={styles.storageStat}>
                 <Text style={styles.storageStatValue}>{downloadedSurahsCount}</Text>
-                <Text style={styles.storageStatLabel}>Surahs Saved</Text>
+                <Text style={styles.storageStatLabel}>{t('profile.surahsSaved')}</Text>
               </View>
             </View>
             {downloadedSurahsCount > 0 && (
               <Pressable style={styles.clearCacheButton} onPress={handleClearCache}>
                 <Ionicons name="trash-outline" size={18} color="#f59e0b" />
-                <Text style={styles.clearCacheText}>Clear Downloaded Audio</Text>
+                <Text style={styles.clearCacheText}>{t('profile.clearDownloadedAudio')}</Text>
               </Pressable>
             )}
           </View>
@@ -345,16 +373,15 @@ export default function ProfileScreen() {
 
         {/* Settings */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Settings</Text>
+          <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
           <View style={styles.settingsCard}>
+            {/* Vowel Marks */}
             <View style={styles.settingItem}>
               <View style={styles.settingLeft}>
                 <Ionicons name="text-outline" size={22} color="#94a3b8" />
                 <View style={styles.settingText}>
-                  <Text style={styles.settingTitle}>Show Vowel Marks</Text>
-                  <Text style={styles.settingDesc}>
-                    Display harakat on Arabic text (recommended for beginners)
-                  </Text>
+                  <Text style={styles.settingTitle}>{t('profile.showVowelMarks')}</Text>
+                  <Text style={styles.settingDesc}>{t('profile.showVowelMarksDesc')}</Text>
                 </View>
               </View>
               <Switch
@@ -364,20 +391,61 @@ export default function ProfileScreen() {
                 thumbColor={showVowels ? '#ffffff' : '#94a3b8'}
               />
             </View>
+
+            {/* Language Selector */}
+            <View style={styles.settingDivider} />
+            <View style={styles.settingItem}>
+              <View style={styles.settingLeft}>
+                <Ionicons name="language-outline" size={22} color="#94a3b8" />
+                <View style={styles.settingText}>
+                  <Text style={styles.settingTitle}>{t('profile.language')}</Text>
+                  <Text style={styles.settingDesc}>{t('profile.languageDesc')}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.languageOptions}>
+              <Pressable
+                style={[styles.languageOption, language === 'en' && styles.languageOptionActive]}
+                onPress={() => handleLanguageChange('en')}
+              >
+                <Text style={[styles.languageOptionText, language === 'en' && styles.languageOptionTextActive]}>
+                  {t('profile.english')}
+                </Text>
+                {language === 'en' && <Ionicons name="checkmark" size={18} color="#818cf8" />}
+              </Pressable>
+              <Pressable
+                style={[styles.languageOption, language === 'fr' && styles.languageOptionActive]}
+                onPress={() => handleLanguageChange('fr')}
+              >
+                <Text style={[styles.languageOptionText, language === 'fr' && styles.languageOptionTextActive]}>
+                  {t('profile.french')}
+                </Text>
+                {language === 'fr' && <Ionicons name="checkmark" size={18} color="#818cf8" />}
+              </Pressable>
+            </View>
           </View>
         </View>
+
+        {/* Log Out */}
+        {isAuthenticated && (
+          <View style={styles.section}>
+            <Pressable style={styles.logOutButton} onPress={handleLogOut}>
+              <Ionicons name="log-out-outline" size={20} color="#f59e0b" />
+              <Text style={styles.logOutButtonText}>{t('profile.logOut')}</Text>
+            </Pressable>
+          </View>
+        )}
 
         {/* Reset Progress */}
         <View style={[styles.section, { marginBottom: 100 }]}>
           <Pressable
             style={styles.resetButton}
             onPress={() => {
-              // Add confirmation dialog in production
               resetProgress();
             }}
           >
             <Ionicons name="refresh" size={20} color="#ef4444" />
-            <Text style={styles.resetButtonText}>Reset All Progress</Text>
+            <Text style={styles.resetButtonText}>{t('profile.resetAllProgress')}</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -392,7 +460,7 @@ export default function ProfileScreen() {
         <View style={styles.modalOverlay}>
           <View style={styles.achievementPopup}>
             <View style={styles.popupGlow} />
-            <Text style={styles.popupTitle}>Achievement Unlocked!</Text>
+            <Text style={styles.popupTitle}>{t('profile.achievementUnlocked')}</Text>
             <Text style={styles.popupTitleArabic}>إنجاز جديد!</Text>
             {newAchievement && (
               <>
@@ -416,7 +484,7 @@ export default function ProfileScreen() {
               </>
             )}
             <Pressable style={styles.popupButton} onPress={clearNewAchievement}>
-              <Text style={styles.popupButtonText}>Continue</Text>
+              <Text style={styles.popupButtonText}>{t('common.continue')}</Text>
             </Pressable>
           </View>
         </View>
@@ -599,6 +667,57 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#94a3b8',
     marginTop: 2,
+  },
+  settingDivider: {
+    height: 1,
+    backgroundColor: '#334155',
+    marginVertical: 14,
+  },
+  languageOptions: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 12,
+    paddingLeft: 34,
+  },
+  languageOption: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: '#0f172a',
+    gap: 6,
+  },
+  languageOptionActive: {
+    backgroundColor: '#818cf820',
+    borderWidth: 1,
+    borderColor: '#818cf840',
+  },
+  languageOptionText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  languageOptionTextActive: {
+    color: '#818cf8',
+    fontWeight: '600',
+  },
+  logOutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#f59e0b40',
+    gap: 8,
+  },
+  logOutButtonText: {
+    color: '#f59e0b',
+    fontSize: 15,
+    fontWeight: '600',
   },
   resetButton: {
     flexDirection: 'row',

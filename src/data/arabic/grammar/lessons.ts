@@ -1,4 +1,5 @@
 import { GrammarLesson, GrammarContent } from '../../../types/arabic';
+import { verbLessons } from '../verbs/verbLessons';
 
 export const grammarLessons: GrammarLesson[] = [
   // LESSON 1: The Arabic Alphabet Overview
@@ -5212,7 +5213,7 @@ export const grammarLessons: GrammarLesson[] = [
 
 // Helper functions
 export const getLessonById = (id: string): GrammarLesson | undefined => {
-  return grammarLessons.find(lesson => lesson.id === id);
+  return grammarLessons.find(lesson => lesson.id === id) || verbLessons.find(lesson => lesson.id === id);
 };
 
 export const getLessonsByLevel = (level: 'beginner' | 'intermediate' | 'advanced'): GrammarLesson[] => {
@@ -5222,3 +5223,6 @@ export const getLessonsByLevel = (level: 'beginner' | 'intermediate' | 'advanced
 export const getLessonsByCategory = (category: GrammarLesson['category']): GrammarLesson[] => {
   return grammarLessons.filter(lesson => lesson.category === category).sort((a, b) => a.order - b.order);
 };
+
+// Re-export verbLessons for easy access
+export { verbLessons };

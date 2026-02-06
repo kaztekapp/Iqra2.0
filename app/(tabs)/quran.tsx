@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useQuranStore } from '../../src/stores/quranStore';
 import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
 import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
@@ -13,6 +14,7 @@ import { TOTAL_DUAS } from '../../src/types/duas';
 import { TOTAL_PRAYER_LESSONS } from '../../src/types/prayer';
 
 export default function QuranScreen() {
+  const { t } = useTranslation();
   const {
     getOverallCompletionPercent,
     getTotalSurahsCompleted,
@@ -61,14 +63,14 @@ export default function QuranScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Quran</Text>
+          <Text style={styles.title}>{t('quran.title')}</Text>
           <Text style={styles.titleArabic}>القرآن الكريم</Text>
         </View>
 
         {/* Progress Overview */}
         <View style={styles.statsCard}>
           <View style={styles.progressHeader}>
-            <Text style={styles.statsTitle}>Your Progress</Text>
+            <Text style={styles.statsTitle}>{t('quran.yourProgress')}</Text>
             <Text style={styles.progressPercent}>{overallProgress}%</Text>
           </View>
           <View style={styles.progressBarContainer}>
@@ -77,15 +79,15 @@ export default function QuranScreen() {
           <View style={styles.statsGrid}>
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#10b981' }]}>{surahsCompleted}</Text>
-              <Text style={styles.statLabel}>Surahs</Text>
+              <Text style={styles.statLabel}>{t('quran.surahs')}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#3b82f6' }]}>{juzCompleted}</Text>
-              <Text style={styles.statLabel}>Juz</Text>
+              <Text style={styles.statLabel}>{t('quran.juz')}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#f59e0b' }]}>{hizbCompleted}</Text>
-              <Text style={styles.statLabel}>Hizb</Text>
+              <Text style={styles.statLabel}>{t('quran.hizb')}</Text>
             </View>
           </View>
         </View>
@@ -97,8 +99,8 @@ export default function QuranScreen() {
               <View style={[styles.actionIcon, { backgroundColor: '#3b82f620' }]}>
                 <Ionicons name="book" size={24} color="#3b82f6" />
               </View>
-              <Text style={styles.actionTitle}>Quran</Text>
-              <Text style={styles.actionDesc}>All 114 Surahs</Text>
+              <Text style={styles.actionTitle}>{t('quran.quranTitle')}</Text>
+              <Text style={styles.actionDesc}>{t('quran.allSurahs')}</Text>
             </Pressable>
             <Pressable style={styles.actionCardGrid} onPress={handleStoriesPress}>
               <View style={[styles.actionIcon, { backgroundColor: '#8b5cf620' }]}>
@@ -107,8 +109,8 @@ export default function QuranScreen() {
               <View style={styles.actionBadge}>
                 <Text style={styles.actionBadgeText}>{totalStoriesCompleted}/{totalStories}</Text>
               </View>
-              <Text style={styles.actionTitle}>Stories</Text>
-              <Text style={styles.actionDesc}>Prophets & More</Text>
+              <Text style={styles.actionTitle}>{t('quran.stories')}</Text>
+              <Text style={styles.actionDesc}>{t('quran.prophetsAndMore')}</Text>
             </Pressable>
           </View>
           <View style={styles.quickActionsRow}>
@@ -119,15 +121,15 @@ export default function QuranScreen() {
               <View style={[styles.actionBadge, { backgroundColor: '#f59e0b30' }]}>
                 <Text style={[styles.actionBadgeText, { color: '#fbbf24' }]}>{duasMemorized}/{TOTAL_DUAS}</Text>
               </View>
-              <Text style={styles.actionTitle}>Duas</Text>
-              <Text style={styles.actionDesc}>Prophetic prayers</Text>
+              <Text style={styles.actionTitle}>{t('quran.duas')}</Text>
+              <Text style={styles.actionDesc}>{t('quran.propheticPrayers')}</Text>
             </Pressable>
             <Pressable style={styles.actionCardGrid} onPress={handleQuizPress}>
               <View style={[styles.actionIcon, { backgroundColor: '#06b6d420' }]}>
                 <Ionicons name="help-circle" size={24} color="#06b6d4" />
               </View>
-              <Text style={styles.actionTitle}>Quizzes</Text>
-              <Text style={styles.actionDesc}>Test knowledge</Text>
+              <Text style={styles.actionTitle}>{t('quran.quizzes')}</Text>
+              <Text style={styles.actionDesc}>{t('quran.testKnowledge')}</Text>
             </Pressable>
           </View>
         </View>
@@ -137,7 +139,7 @@ export default function QuranScreen() {
           <View style={styles.practiceSectionHeader}>
             <View style={styles.practiceSectionTitleRow}>
               <Ionicons name="moon" size={18} color="#10b981" />
-              <Text style={styles.practiceSectionTitle}>Islamic Practice</Text>
+              <Text style={styles.practiceSectionTitle}>{t('quran.islamicPractice')}</Text>
             </View>
             <Text style={styles.practiceSectionTitleArabic}>العبادات</Text>
           </View>
@@ -146,9 +148,9 @@ export default function QuranScreen() {
               <Ionicons name="body" size={24} color="#10b981" />
             </View>
             <View style={styles.practiceCardContent}>
-              <Text style={styles.practiceCardTitle}>Prayer Practice</Text>
+              <Text style={styles.practiceCardTitle}>{t('quran.prayerPractice')}</Text>
               <Text style={styles.practiceCardArabic}>تعلم الصلاة</Text>
-              <Text style={styles.practiceCardDesc}>{TOTAL_PRAYER_LESSONS} lessons</Text>
+              <Text style={styles.practiceCardDesc}>{t('quran.lessonsCount', { count: TOTAL_PRAYER_LESSONS })}</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color="#64748b" />
           </Pressable>

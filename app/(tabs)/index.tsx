@@ -2,11 +2,12 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useProgressStore, ModuleType, LastAccessedInfo } from '../../src/stores/progressStore';
 
 // Module configuration data
 const MODULES: Record<ModuleType, {
-  title: string;
+  titleKey: string;
   titleArabic: string;
   icon: keyof typeof Ionicons.glyphMap;
   color: string;
@@ -14,7 +15,7 @@ const MODULES: Record<ModuleType, {
   arabicChar: string;
 }> = {
   alphabet: {
-    title: 'Arabic Alphabet',
+    titleKey: 'home.alphabet',
     titleArabic: 'الْحُرُوف',
     icon: 'text',
     color: '#6366f1',
@@ -22,7 +23,7 @@ const MODULES: Record<ModuleType, {
     arabicChar: 'أ',
   },
   vocabulary: {
-    title: 'Vocabulary',
+    titleKey: 'home.vocabulary',
     titleArabic: 'الْمُفْرَدَات',
     icon: 'library',
     color: '#D4AF37',
@@ -30,7 +31,7 @@ const MODULES: Record<ModuleType, {
     arabicChar: 'ك',
   },
   grammar: {
-    title: 'Grammar',
+    titleKey: 'learn.grammar',
     titleArabic: 'الْقَوَاعِد',
     icon: 'git-branch',
     color: '#22c55e',
@@ -38,7 +39,7 @@ const MODULES: Record<ModuleType, {
     arabicChar: 'ق',
   },
   verbs: {
-    title: 'Verb Conjugations',
+    titleKey: 'learn.verbConjugations',
     titleArabic: 'تَصْرِيفُ الْأَفْعَال',
     icon: 'swap-horizontal',
     color: '#ec4899',
@@ -46,7 +47,7 @@ const MODULES: Record<ModuleType, {
     arabicChar: 'ف',
   },
   reading: {
-    title: 'Reading',
+    titleKey: 'learn.reading',
     titleArabic: 'الْقِرَاءَة',
     icon: 'document-text',
     color: '#f59e0b',
@@ -54,7 +55,7 @@ const MODULES: Record<ModuleType, {
     arabicChar: 'ر',
   },
   practice: {
-    title: 'Practice',
+    titleKey: 'home.practice',
     titleArabic: 'التَّدْرِيب',
     icon: 'pencil',
     color: '#ec4899',
@@ -64,17 +65,18 @@ const MODULES: Record<ModuleType, {
 };
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
   const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, getAccuracy, lastAccessed } = useProgressStore();
 
   // Get the module to display in Continue Learning
   const currentModule = MODULES[lastAccessed?.module || 'alphabet'];
 
-  // Get the module name (English only)
+  // Get the module name
   const getModuleName = () => {
     if (lastAccessed?.moduleName) {
       return lastAccessed.moduleName;
     }
-    return currentModule.title;
+    return t(currentModule.titleKey);
   };
 
   // Check if there's a specific lesson to display
@@ -84,26 +86,26 @@ export default function HomeScreen() {
   const getDisplaySubtitle = () => {
     switch (lastAccessed?.module) {
       case 'alphabet':
-        return `${progress.alphabetProgress.lettersLearned.length}/28 letters learned`;
+        return t('home.lettersLearned', { count: progress.alphabetProgress.lettersLearned.length });
       case 'vocabulary':
-        return `${progress.vocabularyProgress.themesCompleted.length} themes completed`;
+        return t('home.themesCompleted', { count: progress.vocabularyProgress.themesCompleted.length });
       case 'grammar':
-        return `${progress.grammarProgress.lessonsCompleted.length} lessons completed`;
+        return t('home.lessonsCompletedCount', { count: progress.grammarProgress.lessonsCompleted.length });
       case 'verbs':
-        return `${progress.verbProgress.verbsLearned.length} verbs learned`;
+        return t('home.verbsLearned', { count: progress.verbProgress.verbsLearned.length });
       case 'reading':
-        return `${progress.readingProgress.textsCompleted.length} texts completed`;
+        return t('home.textsCompleted', { count: progress.readingProgress.textsCompleted.length });
       case 'practice':
-        return 'Continue practicing';
+        return t('home.continuePracticing');
       default:
-        return `${progress.alphabetProgress.lettersLearned.length}/28 letters learned`;
+        return t('home.lettersLearned', { count: progress.alphabetProgress.lettersLearned.length });
     }
   };
 
   const quickActions = [
     {
       id: 'alphabet',
-      title: 'Alphabet',
+      title: t('home.alphabet'),
       titleArabic: 'الْحُرُوف',
       icon: 'text' as const,
       color: '#6366f1',
@@ -111,7 +113,7 @@ export default function HomeScreen() {
     },
     {
       id: 'vocabulary',
-      title: 'Vocabulary',
+      title: t('home.vocabulary'),
       titleArabic: 'الْمُفْرَدَات',
       icon: 'library' as const,
       color: '#D4AF37',
@@ -119,7 +121,7 @@ export default function HomeScreen() {
     },
     {
       id: 'practice',
-      title: 'Practice',
+      title: t('home.practice'),
       titleArabic: 'تَدْرِيب',
       icon: 'pencil' as const,
       color: '#ec4899',
@@ -133,8 +135,8 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>مَرْحَبًا</Text>
-            <Text style={styles.greetingEnglish}>Welcome to Iqra</Text>
+            <Text style={styles.greeting}>{t('home.greeting')}</Text>
+            <Text style={styles.greetingEnglish}>{t('home.greetingEnglish')}</Text>
           </View>
           <View style={styles.logoBadge}>
             <View style={styles.logoBadgeInner}>
@@ -148,30 +150,30 @@ export default function HomeScreen() {
 
         {/* Stats Overview */}
         <View style={styles.statsCard}>
-          <Text style={styles.statsTitle}>Your Progress</Text>
+          <Text style={styles.statsTitle}>{t('home.yourProgress')}</Text>
           <View style={styles.statsGrid}>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{progress.totalXp}</Text>
-              <Text style={styles.statLabel}>Total XP</Text>
+              <Text style={styles.statLabel}>{t('home.totalXp')}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{getAlphabetCompletionPercent()}%</Text>
-              <Text style={styles.statLabel}>Alphabet</Text>
+              <Text style={styles.statLabel}>{t('home.alphabet')}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{getVocabularyCompletionPercent()}%</Text>
-              <Text style={styles.statLabel}>Vocabulary</Text>
+              <Text style={styles.statLabel}>{t('home.vocabulary')}</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{getAccuracy()}%</Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
+              <Text style={styles.statLabel}>{t('home.accuracy')}</Text>
             </View>
           </View>
         </View>
 
         {/* Continue Learning */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Continue Learning</Text>
+          <Text style={styles.sectionTitle}>{t('home.continueLearning')}</Text>
           <Pressable
             style={styles.continueCard}
             onPress={() => router.push(currentModule.route as any)}
@@ -197,7 +199,7 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
+          <Text style={styles.sectionTitle}>{t('home.quickActions')}</Text>
           <View style={styles.actionsGrid}>
             {quickActions.map((action) => (
               <Pressable
@@ -217,13 +219,13 @@ export default function HomeScreen() {
 
         {/* Daily Goal */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Daily Goal</Text>
+          <Text style={styles.sectionTitle}>{t('home.dailyGoal')}</Text>
           <View style={styles.goalCard}>
             <View style={styles.goalContent}>
               <Ionicons name="trophy" size={32} color="#D4AF37" />
               <View style={styles.goalText}>
-                <Text style={styles.goalTitle}>Complete 5 lessons today</Text>
-                <Text style={styles.goalProgress}>0/5 completed</Text>
+                <Text style={styles.goalTitle}>{t('home.completeLessonsToday')}</Text>
+                <Text style={styles.goalProgress}>{t('home.lessonsCompleted', { done: 0, total: 5 })}</Text>
               </View>
             </View>
             <View style={styles.progressBar}>
@@ -234,17 +236,14 @@ export default function HomeScreen() {
 
         {/* Tips Section */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Text style={styles.sectionTitle}>Tip of the Day</Text>
+          <Text style={styles.sectionTitle}>{t('home.tipOfTheDay')}</Text>
           <View style={styles.tipCard}>
             <View style={styles.tipIcon}>
               <Ionicons name="bulb" size={24} color="#D4AF37" />
             </View>
             <View style={styles.tipContent}>
-              <Text style={styles.tipTitle}>Reading Arabic</Text>
-              <Text style={styles.tipText}>
-                Arabic is read from right to left. The vowel marks (harakat)
-                above and below letters help you pronounce words correctly!
-              </Text>
+              <Text style={styles.tipTitle}>{t('home.tipTitle')}</Text>
+              <Text style={styles.tipText}>{t('home.tipText')}</Text>
             </View>
           </View>
         </View>

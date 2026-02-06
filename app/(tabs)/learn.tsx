@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useProgressStore, ModuleType, LastAccessedInfo } from '../../src/stores/progressStore';
 
 interface ModuleCardProps {
@@ -76,6 +77,7 @@ function ModuleCard({
 }
 
 export default function LearnScreen() {
+  const { t } = useTranslation();
   const { getAlphabetCompletionPercent, getVocabularyCompletionPercent, getGrammarCompletionPercent, setLastAccessed } = useProgressStore();
 
   const handleModulePress = (moduleId: ModuleType, title: string) => {
@@ -91,9 +93,9 @@ export default function LearnScreen() {
   const modules = [
     {
       id: 'alphabet',
-      title: 'Alphabet & Writing',
+      title: t('learn.alphabetWriting'),
       titleArabic: 'الْحُرُوفُ وَالْكِتَابَة',
-      description: 'Learn the 28 Arabic letters, their forms, and how to write them',
+      description: t('learn.alphabetWritingDesc'),
       icon: 'text' as const,
       color: '#6366f1',
       progress: getAlphabetCompletionPercent(),
@@ -102,9 +104,9 @@ export default function LearnScreen() {
     },
     {
       id: 'grammar',
-      title: 'Grammar',
+      title: t('learn.grammar'),
       titleArabic: 'الْقَوَاعِد',
-      description: 'Master Arabic sentence structure, articles, and pronouns',
+      description: t('learn.grammarDesc'),
       icon: 'git-branch' as const,
       color: '#22c55e',
       progress: getGrammarCompletionPercent(),
@@ -113,9 +115,9 @@ export default function LearnScreen() {
     },
     {
       id: 'verbs',
-      title: 'Verb Conjugations',
+      title: t('learn.verbConjugations'),
       titleArabic: 'تَصْرِيفُ الْأَفْعَال',
-      description: 'Learn verb patterns and conjugations in all tenses',
+      description: t('learn.verbConjugationsDesc'),
       icon: 'swap-horizontal' as const,
       color: '#ec4899',
       progress: 0,
@@ -124,9 +126,9 @@ export default function LearnScreen() {
     },
     {
       id: 'vocabulary',
-      title: 'Vocabulary',
+      title: t('learn.vocabulary'),
       titleArabic: 'الْمُفْرَدَات',
-      description: 'Build your Arabic vocabulary with themed word lists',
+      description: t('learn.vocabularyDesc'),
       icon: 'library' as const,
       color: '#D4AF37',
       progress: getVocabularyCompletionPercent(),
@@ -135,9 +137,9 @@ export default function LearnScreen() {
     },
     {
       id: 'reading',
-      title: 'Reading',
+      title: t('learn.reading'),
       titleArabic: 'الْقِرَاءَة',
-      description: 'Practice reading Arabic texts with and without vowels',
+      description: t('learn.readingDesc'),
       icon: 'document-text' as const,
       color: '#f59e0b',
       progress: 0,
@@ -146,9 +148,9 @@ export default function LearnScreen() {
     },
     {
       id: 'practice',
-      title: 'Practice',
+      title: t('learn.practice'),
       titleArabic: 'التَّدْرِيب',
-      description: 'Handwriting practice, typing exercises, and more',
+      description: t('learn.practiceDesc'),
       icon: 'pencil' as const,
       color: '#ec4899',
       progress: 0,
@@ -162,18 +164,16 @@ export default function LearnScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.headerRow}>
-          <Text style={styles.title}>Learn Arabic</Text>
+          <Text style={styles.title}>{t('learn.title')}</Text>
           <Text style={styles.titleArabic}>تَعَلَّمِ الْعَرَبِيَّة</Text>
         </View>
         <View style={styles.subtitleContainer}>
-          <Text style={styles.subtitle}>
-            Master Modern Standard Arabic (Fusha) step by step
-          </Text>
+          <Text style={styles.subtitle}>{t('learn.subtitle')}</Text>
         </View>
 
         {/* Modules */}
         <View style={styles.modulesSection}>
-          <Text style={styles.sectionTitle}>Learning Modules</Text>
+          <Text style={styles.sectionTitle}>{t('learn.learningModules')}</Text>
           {modules.map((module) => (
             <ModuleCard
               key={module.id}
@@ -194,10 +194,7 @@ export default function LearnScreen() {
         {/* Vowels Toggle Info */}
         <View style={styles.vowelsInfo}>
           <Ionicons name="information-circle" size={20} color="#6366f1" />
-          <Text style={styles.vowelsInfoText}>
-            Vowel marks (harakat) are shown on all Arabic text to help you learn proper pronunciation.
-            You can toggle this off in settings once you advance.
-          </Text>
+          <Text style={styles.vowelsInfoText}>{t('learn.vowelsInfo')}</Text>
         </View>
 
         <View style={{ height: 100 }} />

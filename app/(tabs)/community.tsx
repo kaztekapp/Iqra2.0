@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet, Pressable, RefreshControl } from 'r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 
@@ -36,6 +37,7 @@ const ShortcutCard = ({
 );
 
 export default function CommunityScreen() {
+  const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
 
   const { dailyChallenge, initializeChallenges, getCommunityStats } = useCommunityStore();
@@ -71,20 +73,20 @@ export default function CommunityScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerTitleRow}>
-            <Text style={styles.headerTitle}>Community</Text>
+            <Text style={styles.headerTitle}>{t('community.title')}</Text>
             <Text style={styles.headerTitleArabic}>المجتمع</Text>
           </View>
           <View style={styles.statsRow}>
             <View style={styles.statItem}>
               <Ionicons name="people" size={18} color="#22c55e" />
               <Text style={styles.statValue}>{communityStats.activeLearnersTodayCount.toLocaleString()}</Text>
-              <Text style={styles.statLabel}>active</Text>
+              <Text style={styles.statLabel}>{t('community.active')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Ionicons name="flame" size={18} color="#f97316" />
               <Text style={styles.statValue}>{communityStats.activeStreaksCount.toLocaleString()}</Text>
-              <Text style={styles.statLabel}>streaks</Text>
+              <Text style={styles.statLabel}>{t('community.streaks')}</Text>
             </View>
           </View>
         </View>
@@ -92,20 +94,20 @@ export default function CommunityScreen() {
         {/* Shortcut Cards */}
         <View style={styles.cardsContainer}>
           <ShortcutCard
-            title="Leaderboard"
+            title={t('community.leaderboard')}
             titleArabic="الترتيب"
             icon="trophy"
             color="#D4AF37"
-            subtitle="See top learners"
+            subtitle={t('community.seeTopLearners')}
             onPress={() => router.push('/community/leaderboard')}
           />
 
           <ShortcutCard
-            title="Challenges"
+            title={t('community.challenges')}
             titleArabic="التحديات"
             icon="flag"
             color="#6366f1"
-            subtitle={dailyChallenge ? `${dailyChallenge.currentValue}/${dailyChallenge.targetValue} today` : undefined}
+            subtitle={dailyChallenge ? t('community.todayProgress', { current: dailyChallenge.currentValue, target: dailyChallenge.targetValue }) : undefined}
             onPress={() => router.push('/community/challenges')}
           />
         </View>

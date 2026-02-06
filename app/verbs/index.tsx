@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { verbExercises } from '../../src/data/arabic/exercises/verbExercises';
 import { arabicVerbs } from '../../src/data/arabic/verbs/conjugations';
+import { verbLessons } from '../../src/data/arabic/verbs/verbLessons';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
 export default function VerbsScreen() {
@@ -69,6 +70,40 @@ export default function VerbsScreen() {
               Arabic verbs change based on who is doing the action (person),
               when it happens (tense), and gender. Master the patterns!
             </Text>
+          </View>
+        </View>
+
+        {/* Verb Lessons */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Verb Lessons</Text>
+          <Text style={styles.sectionSubtitle}>Learn verb conjugation step by step</Text>
+          <View style={styles.lessonsGrid}>
+            {verbLessons.map((lesson, index) => (
+              <Pressable
+                key={lesson.id}
+                style={styles.lessonCard}
+                onPress={() => router.push(`/grammar/${lesson.id}` as any)}
+              >
+                <View style={[styles.lessonNumber, { backgroundColor: index < 4 ? '#10b98130' : '#6366f130' }]}>
+                  <Text style={[styles.lessonNumberText, { color: index < 4 ? '#10b981' : '#6366f1' }]}>{index + 1}</Text>
+                </View>
+                <View style={styles.lessonContent}>
+                  <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                  <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
+                  <Text style={styles.lessonDescription} numberOfLines={2}>
+                    {lesson.description}
+                  </Text>
+                  <View style={styles.lessonMeta}>
+                    <View style={[styles.levelBadge, { backgroundColor: lesson.level === 'beginner' ? '#10b98130' : '#6366f130' }]}>
+                      <Text style={[styles.levelText, { color: lesson.level === 'beginner' ? '#10b981' : '#6366f1' }]}>
+                        {lesson.level}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#64748b" />
+              </Pressable>
+            ))}
           </View>
         </View>
 
@@ -427,5 +462,61 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#94a3b8',
     lineHeight: 20,
+  },
+  // Verb Lessons styles
+  lessonsGrid: {
+    gap: 12,
+  },
+  lessonCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+  },
+  lessonNumber: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lessonNumberText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  lessonContent: {
+    flex: 1,
+    marginLeft: 14,
+  },
+  lessonTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  lessonTitleArabic: {
+    fontSize: 13,
+    color: '#10b981',
+    marginTop: 2,
+  },
+  lessonDescription: {
+    fontSize: 12,
+    color: '#94a3b8',
+    marginTop: 4,
+    lineHeight: 18,
+  },
+  lessonMeta: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+  levelBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  levelText: {
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'capitalize',
   },
 });
