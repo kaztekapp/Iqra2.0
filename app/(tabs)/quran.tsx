@@ -6,9 +6,11 @@ import { useQuranStore } from '../../src/stores/quranStore';
 import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
 import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
 import { useDuasStore } from '../../src/stores/duasStore';
+import { usePrayerStore } from '../../src/stores/prayerStore';
 import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
 import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
 import { TOTAL_DUAS } from '../../src/types/duas';
+import { TOTAL_PRAYER_LESSONS } from '../../src/types/prayer';
 
 export default function QuranScreen() {
   const {
@@ -21,6 +23,7 @@ export default function QuranScreen() {
   const { getTotalStoriesCompleted: getProphetStoriesCompleted } = useProphetStoriesStore();
   const { getTotalStoriesCompleted: getQuranStoriesCompleted } = useQuranStoriesStore();
   const { getMemorizedCount } = useDuasStore();
+  const { getCompletedCount: getPrayerCompletedCount } = usePrayerStore();
 
   const overallProgress = getOverallCompletionPercent();
   const duasMemorized = getMemorizedCount();
@@ -31,6 +34,7 @@ export default function QuranScreen() {
   const quranStoriesCompleted = getQuranStoriesCompleted();
   const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
   const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
+  const prayerCompleted = getPrayerCompletedCount();
 
   const handleLearnQuranPress = () => {
     router.push('/quran/all-surahs' as any);
@@ -48,6 +52,10 @@ export default function QuranScreen() {
     router.push('/quran/duas' as any);
   };
 
+  const handlePrayerPress = () => {
+    router.push('/quran/prayer' as any);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -55,14 +63,6 @@ export default function QuranScreen() {
         <View style={styles.header}>
           <Text style={styles.title}>Quran</Text>
           <Text style={styles.titleArabic}>القرآن الكريم</Text>
-        </View>
-
-        {/* Bismillah */}
-        <View style={styles.bismillahCard}>
-          <Text style={styles.bismillahText}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
-          <Text style={styles.bismillahTranslation}>
-            In the name of Allah, the Most Gracious, the Most Merciful
-          </Text>
         </View>
 
         {/* Progress Overview */}
@@ -132,6 +132,28 @@ export default function QuranScreen() {
           </View>
         </View>
 
+        {/* Islamic Practice Section */}
+        <View style={styles.practiceSection}>
+          <View style={styles.practiceSectionHeader}>
+            <View style={styles.practiceSectionTitleRow}>
+              <Ionicons name="moon" size={18} color="#10b981" />
+              <Text style={styles.practiceSectionTitle}>Islamic Practice</Text>
+            </View>
+            <Text style={styles.practiceSectionTitleArabic}>العبادات</Text>
+          </View>
+          <Pressable style={styles.practiceCardWide} onPress={handlePrayerPress}>
+            <View style={[styles.practiceCardIcon, { backgroundColor: '#10b98120' }]}>
+              <Ionicons name="body" size={24} color="#10b981" />
+            </View>
+            <View style={styles.practiceCardContent}>
+              <Text style={styles.practiceCardTitle}>Prayer Practice</Text>
+              <Text style={styles.practiceCardArabic}>تعلم الصلاة</Text>
+              <Text style={styles.practiceCardDesc}>{TOTAL_PRAYER_LESSONS} lessons</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#64748b" />
+          </Pressable>
+        </View>
+
         <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
@@ -159,28 +181,6 @@ const styles = StyleSheet.create({
   titleArabic: {
     fontSize: 22,
     color: '#10b981',
-  },
-  bismillahCard: {
-    backgroundColor: '#1e293b',
-    marginHorizontal: 20,
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#10b98130',
-  },
-  bismillahText: {
-    fontSize: 24,
-    color: '#10b981',
-    textAlign: 'center',
-    lineHeight: 40,
-  },
-  bismillahTranslation: {
-    fontSize: 12,
-    color: '#94a3b8',
-    marginTop: 8,
-    textAlign: 'center',
   },
   statsCard: {
     backgroundColor: '#1e293b',
@@ -279,6 +279,63 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   actionDesc: {
+    color: '#64748b',
+    fontSize: 11,
+    marginTop: 2,
+  },
+  practiceSection: {
+    paddingHorizontal: 20,
+    marginBottom: 24,
+  },
+  practiceSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  practiceSectionTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  practiceSectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#ffffff',
+  },
+  practiceSectionTitleArabic: {
+    fontSize: 14,
+    color: '#10b981',
+  },
+  practiceCardWide: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+    gap: 14,
+  },
+  practiceCardIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  practiceCardContent: {
+    flex: 1,
+  },
+  practiceCardTitle: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  practiceCardArabic: {
+    color: '#D4AF37',
+    fontSize: 13,
+    marginTop: 2,
+  },
+  practiceCardDesc: {
     color: '#64748b',
     fontSize: 11,
     marginTop: 2,
