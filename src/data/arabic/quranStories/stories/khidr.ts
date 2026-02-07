@@ -6,11 +6,14 @@ import { QuranStory, StoryContentBlock, QuranReference } from '../../../../types
 export const khidrStory: QuranStory = {
   id: 'khidr',
   titleEnglish: 'Khidr - The Wise Servant',
+  titleFrench: 'Al-Khidr - Le Sage Serviteur',
   titleArabic: 'الخضر',
   order: 2,
   category: 'righteous_people',
   description: 'The mysterious guide who taught Prophet Musa profound lessons',
+  descriptionFr: 'Le guide mysterieux qui enseigna de profondes lecons au Prophete Moussa',
   summary: "Khidr was a righteous servant whom Allah blessed with special knowledge. When Prophet Musa wanted to learn from him, Khidr warned that Musa would not have patience for things he could not comprehend. Their journey together involved three seemingly unjust acts - damaging a boat, killing a boy, and repairing a wall without payment - each of which Khidr later revealed had divine wisdom behind it. This story teaches that Allah's wisdom often exceeds human understanding, and what appears harmful may be beneficial.",
+  summaryFr: "Al-Khidr etait un serviteur pieux qu'Allah a beni d'un savoir special. Lorsque le Prophete Moussa voulut apprendre de lui, Al-Khidr l'avertit qu'il n'aurait pas la patience pour des choses qu'il ne pouvait comprendre. Leur voyage ensemble impliqua trois actes apparemment injustes - endommager un bateau, tuer un garcon et reparer un mur sans paiement - dont Al-Khidr revela plus tard la sagesse divine derriere chacun. Cette histoire enseigne que la sagesse d'Allah depasse souvent la comprehension humaine, et ce qui semble nuisible peut etre benefique.",
   lessons: [
     "Allah's wisdom surpasses human understanding",
     'Patience is required when learning from those with more knowledge',
@@ -18,6 +21,14 @@ export const khidrStory: QuranStory = {
     'True knowledge comes from Allah alone',
     'Even prophets have much to learn',
     'Divine decree operates beyond our perception',
+  ],
+  lessonsFr: [
+    'La sagesse d\'Allah depasse la comprehension humaine',
+    'La patience est necessaire lorsqu\'on apprend de ceux qui ont plus de savoir',
+    'Ce qui semble nuisible peut etre une benediction cachee',
+    'Le vrai savoir vient d\'Allah seul',
+    'Meme les prophetes ont beaucoup a apprendre',
+    'Le decret divin opere au-dela de notre perception',
   ],
   estimatedReadTime: 15,
   quranMentions: 1,
@@ -33,12 +44,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 1,
       content: "Prophet Musa, having received the Torah and spoken directly with Allah, was once asked by his people who the most knowledgeable person on earth was. He replied that it was himself. Allah then revealed to him that there was a servant at the junction of two seas who possessed knowledge that Musa did not have. Eager to learn, Musa set out to find this mysterious figure.",
+      contentFr: "Le Prophete Moussa, ayant recu la Torah et parle directement avec Allah, fut un jour interroge par son peuple sur la personne la plus savante sur terre. Il repondit que c'etait lui-meme. Allah lui revela alors qu'il y avait un serviteur au confluent des deux mers qui possedait un savoir que Moussa n'avait pas. Desireux d'apprendre, Moussa se mit en route pour trouver cette figure mysterieuse.",
     },
     {
       id: 'khidr-2',
       type: 'quran_source',
       order: 2,
       content: "Musa expressed his determination to find this learned servant.",
+      contentFr: "Moussa exprima sa determination a trouver ce serviteur savant.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -48,6 +61,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 61,
         arabicText: 'وَإِذْ قَالَ مُوسَىٰ لِفَتَاهُ لَا أَبْرَحُ حَتَّىٰ أَبْلُغَ مَجْمَعَ الْبَحْرَيْنِ أَوْ أَمْضِيَ حُقُبًا ۝ فَلَمَّا بَلَغَا مَجْمَعَ بَيْنِهِمَا نَسِيَا حُوتَهُمَا فَاتَّخَذَ سَبِيلَهُ فِي الْبَحْرِ سَرَبًا',
         translation: 'And when Moses said to his young assistant, "I will not cease traveling until I reach the junction of the two seas or continue for a long period." But when they reached the junction between them, they forgot their fish, and it took its course into the sea, slipping away.',
+        translationFr: 'Et quand Moussa dit a son jeune serviteur : "Je ne cesserai de marcher jusqu\'a ce que j\'atteigne le confluent des deux mers, dusse-je marcher durant des annees." Puis lorsqu\'ils eurent atteint le confluent, ils oublierent leur poisson, et celui-ci prit son chemin dans la mer en s\'echappant.',
       } as QuranReference,
     },
     {
@@ -55,12 +69,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 3,
       content: "Musa traveled with his young companion Yusha ibn Nun (Joshua), carrying a salted fish as provision. They were told that where the fish came back to life, they would find the one they sought. When they reached the junction of the two seas, they rested. Miraculously, the fish revived and slipped into the water, leaving a tunnel-like path - but they were asleep and did not notice.",
+      contentFr: "Moussa voyagea avec son jeune compagnon Yusha ibn Noun (Josue), portant un poisson sale comme provision. On leur avait dit que la ou le poisson reviendrait a la vie, ils trouveraient celui qu'ils cherchaient. Lorsqu'ils atteignirent le confluent des deux mers, ils se reposerent. Miraculeusement, le poisson se ranima et glissa dans l'eau, laissant un chemin semblable a un tunnel - mais ils dormaient et ne le remarquerent pas.",
     },
     {
       id: 'khidr-4',
       type: 'quran_source',
       order: 4,
       content: "They realized the fish had escaped and retraced their steps.",
+      contentFr: "Ils realiserent que le poisson s'etait echappe et retracerent leurs pas.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -70,6 +86,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 64,
         arabicText: 'فَلَمَّا جَاوَزَا قَالَ لِفَتَاهُ آتِنَا غَدَاءَنَا لَقَدْ لَقِينَا مِن سَفَرِنَا هَٰذَا نَصَبًا ۝ قَالَ أَرَأَيْتَ إِذْ أَوَيْنَا إِلَى الصَّخْرَةِ فَإِنِّي نَسِيتُ الْحُوتَ وَمَا أَنسَانِيهُ إِلَّا الشَّيْطَانُ أَنْ أَذْكُرَهُ ۚ وَاتَّخَذَ سَبِيلَهُ فِي الْبَحْرِ عَجَبًا ۝ قَالَ ذَٰلِكَ مَا كُنَّا نَبْغِ ۚ فَارْتَدَّا عَلَىٰ آثَارِهِمَا قَصَصًا',
         translation: 'So when they had passed beyond [that point], he said to his boy, "Bring us our morning meal. We have certainly suffered in this, our journey, fatigue." He said, "Did you see when we retired to the rock? Indeed, I forgot the fish. And none made me forget it except Satan - that I should mention it. And it took its course into the sea amazingly." [Moses] said, "That is what we were seeking." So they returned, following their footprints.',
+        translationFr: 'Puis lorsqu\'ils eurent depasse [cet endroit], il dit a son serviteur : "Apporte-nous notre dejeuner. Nous avons certainement souffert de la fatigue dans ce voyage." Il dit : "Vois-tu, quand nous nous sommes abrites pres du rocher, j\'ai oublie le poisson. Et seul Satan m\'a fait oublier de le mentionner. Et il a pris son chemin dans la mer de facon etonnante." [Moussa] dit : "C\'est ce que nous cherchions." Ils revinrent alors sur leurs pas.',
       } as QuranReference,
     },
     {
@@ -77,12 +94,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 5,
       content: "Musa realized that the place where the fish escaped was exactly what they were seeking. They retraced their steps and found a man covered in a green garment, reclining by the rock. This was Khidr - the one blessed with divine knowledge. Musa greeted him and asked to follow him to learn from the knowledge Allah had given him.",
+      contentFr: "Moussa comprit que l'endroit ou le poisson s'etait echappe etait exactement ce qu'ils cherchaient. Ils revinrent sur leurs pas et trouverent un homme recouvert d'un vetement vert, allonge pres du rocher. C'etait Al-Khidr - celui qui etait beni d'un savoir divin. Moussa le salua et demanda a le suivre pour apprendre du savoir qu'Allah lui avait accorde.",
     },
     {
       id: 'khidr-6',
       type: 'quran_source',
       order: 6,
       content: "Khidr warned Musa that he would not have patience.",
+      contentFr: "Al-Khidr avertit Moussa qu'il n'aurait pas la patience.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -92,6 +111,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 68,
         arabicText: 'فَوَجَدَا عَبْدًا مِّنْ عِبَادِنَا آتَيْنَاهُ رَحْمَةً مِّنْ عِندِنَا وَعَلَّمْنَاهُ مِن لَّدُنَّا عِلْمًا ۝ قَالَ لَهُ مُوسَىٰ هَلْ أَتَّبِعُكَ عَلَىٰ أَن تُعَلِّمَنِ مِمَّا عُلِّمْتَ رُشْدًا ۝ قَالَ إِنَّكَ لَن تَسْتَطِيعَ مَعِيَ صَبْرًا ۝ وَكَيْفَ تَصْبِرُ عَلَىٰ مَا لَمْ تُحِطْ بِهِ خُبْرًا',
         translation: 'And they found a servant from among Our servants to whom We had given mercy from Us and had taught him from Us a [certain] knowledge. Moses said to him, "May I follow you on [the condition] that you teach me from what you have been taught of sound judgment?" He said, "Indeed, with me you will never be able to have patience. And how can you have patience for what you do not encompass in knowledge?"',
+        translationFr: 'Ils trouverent alors un de Nos serviteurs a qui Nous avions accorde une misericorde de Notre part et a qui Nous avions enseigne un savoir venant de Nous. Moussa lui dit : "Puis-je te suivre, a condition que tu m\'enseignes de ce qu\'on t\'a enseigne de la bonne direction ?" Il dit : "Tu ne pourras jamais etre patient avec moi. Et comment pourrais-tu etre patient envers ce dont tu n\'as pas une connaissance approfondie ?"',
       } as QuranReference,
     },
     {
@@ -99,12 +119,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 7,
       content: "Khidr recognized Musa and said: 'O Musa, I have knowledge from Allah that you do not have, and you have knowledge from Allah that I do not have.' He warned Musa that he would not be able to bear witnessing actions whose wisdom he could not understand. But Musa promised to be patient and not question anything.",
+      contentFr: "Al-Khidr reconnut Moussa et dit : 'O Moussa, j'ai un savoir d'Allah que tu n'as pas, et tu as un savoir d'Allah que je n'ai pas.' Il avertit Moussa qu'il ne pourrait supporter d'etre temoin d'actions dont il ne comprendrait pas la sagesse. Mais Moussa promit d'etre patient et de ne rien questionner.",
     },
     {
       id: 'khidr-8',
       type: 'quran_source',
       order: 8,
       content: "Musa promised patience, and Khidr set conditions.",
+      contentFr: "Moussa promit la patience, et Al-Khidr posa ses conditions.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -114,6 +136,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 70,
         arabicText: 'قَالَ سَتَجِدُنِي إِن شَاءَ اللَّهُ صَابِرًا وَلَا أَعْصِي لَكَ أَمْرًا ۝ قَالَ فَإِنِ اتَّبَعْتَنِي فَلَا تَسْأَلْنِي عَن شَيْءٍ حَتَّىٰ أُحْدِثَ لَكَ مِنْهُ ذِكْرًا',
         translation: '[Moses] said, "You will find me, if Allah wills, patient, and I will not disobey you in any order." [Khidr] said, "Then if you follow me, do not ask me about anything until I make to you about it mention."',
+        translationFr: '[Moussa] dit : "Tu me trouveras, si Allah le veut, patient, et je ne desobeirai a aucun de tes ordres." [Al-Khidr] dit : "Si tu me suis, ne me questionne sur rien tant que je ne t\'en aurai pas fait mention."',
       } as QuranReference,
     },
     {
@@ -121,12 +144,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 9,
       content: "And so they set off together. Soon they came upon a boat, and its owners - recognizing Khidr as a righteous man - allowed them to board without charge. Once aboard, Khidr took an axe and deliberately damaged the boat, making a hole in its hull. Musa was shocked.",
+      contentFr: "Et ainsi ils partirent ensemble. Bientot ils trouverent un bateau, et ses proprietaires - reconnaissant Al-Khidr comme un homme pieux - les laisserent monter a bord gratuitement. Une fois a bord, Al-Khidr prit une hache et endommagea deliberement le bateau, faisant un trou dans sa coque. Moussa fut choque.",
     },
     {
       id: 'khidr-10',
       type: 'quran_source',
       order: 10,
       content: "Khidr damaged the boat, and Musa objected.",
+      contentFr: "Al-Khidr endommagea le bateau, et Moussa s'y opposa.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -136,6 +161,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 72,
         arabicText: 'فَانطَلَقَا حَتَّىٰ إِذَا رَكِبَا فِي السَّفِينَةِ خَرَقَهَا ۖ قَالَ أَخَرَقْتَهَا لِتُغْرِقَ أَهْلَهَا لَقَدْ جِئْتَ شَيْئًا إِمْرًا ۝ قَالَ أَلَمْ أَقُلْ إِنَّكَ لَن تَسْتَطِيعَ مَعِيَ صَبْرًا',
         translation: 'So they set out, until when they had embarked on the ship, he [Khidr] tore it open. [Moses] said, "Have you torn it open to drown its people? You have certainly done a grave thing." [Khidr] said, "Did I not say that with me you would never be able to have patience?"',
+        translationFr: 'Ils partirent donc, jusqu\'a ce que, lorsqu\'ils furent montes sur le navire, il [Al-Khidr] y fit un trou. [Moussa] dit : "L\'as-tu perce pour noyer ses passagers ? Tu as certainement fait une chose grave." [Al-Khidr] dit : "N\'ai-je pas dit que tu ne pourrais jamais etre patient avec moi ?"',
       } as QuranReference,
     },
     {
@@ -143,12 +169,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 11,
       content: "Musa had forgotten his promise. He apologized, asking Khidr not to hold him accountable for his forgetfulness. Khidr accepted the apology, and they continued. They came upon a group of boys playing, and Khidr approached one of them - a handsome youth - and killed him. Musa was horrified.",
+      contentFr: "Moussa avait oublie sa promesse. Il s'excusa, demandant a Al-Khidr de ne pas lui tenir rigueur de son oubli. Al-Khidr accepta l'excuse, et ils continuerent. Ils rencontrerent un groupe de garcons qui jouaient, et Al-Khidr s'approcha de l'un d'eux - un beau jeune homme - et le tua. Moussa fut horrifie.",
     },
     {
       id: 'khidr-12',
       type: 'quran_source',
       order: 12,
       content: "Khidr killed a boy, and Musa objected again.",
+      contentFr: "Al-Khidr tua un garcon, et Moussa s'y opposa a nouveau.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -158,6 +186,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 76,
         arabicText: 'فَانطَلَقَا حَتَّىٰ إِذَا لَقِيَا غُلَامًا فَقَتَلَهُ قَالَ أَقَتَلْتَ نَفْسًا زَكِيَّةً بِغَيْرِ نَفْسٍ لَّقَدْ جِئْتَ شَيْئًا نُّكْرًا ۝ قَالَ أَلَمْ أَقُل لَّكَ إِنَّكَ لَن تَسْتَطِيعَ مَعِيَ صَبْرًا ۝ قَالَ إِن سَأَلْتُكَ عَن شَيْءٍ بَعْدَهَا فَلَا تُصَاحِبْنِي ۖ قَدْ بَلَغْتَ مِن لَّدُنِّي عُذْرًا',
         translation: 'So they set out, until when they met a boy, he [Khidr] killed him. [Moses] said, "Have you killed a pure soul for other than [having killed] a soul? You have certainly done a deplorable thing." [Khidr] said, "Did I not tell you that with me you would never be able to have patience?" [Moses] said, "If I should ask you about anything after this, then do not keep me as a companion. You have obtained from me an excuse."',
+        translationFr: 'Ils partirent donc, jusqu\'a ce que, lorsqu\'ils rencontrerent un garcon, il [Al-Khidr] le tua. [Moussa] dit : "As-tu tue une ame pure sans qu\'elle ait tue personne ? Tu as certainement commis une chose abominable." [Al-Khidr] dit : "Ne t\'ai-je pas dit que tu ne pourrais jamais etre patient avec moi ?" [Moussa] dit : "Si je t\'interroge sur quoi que ce soit apres cela, alors ne me garde plus comme compagnon. Tu as obtenu de ma part une excuse."',
       } as QuranReference,
     },
     {
@@ -165,12 +194,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 13,
       content: "Musa now set his own condition: if he questioned Khidr one more time, their companionship would end. They traveled on until they reached a town. Hungry and tired, they asked the townspeople for food, but were refused hospitality. Despite this rudeness, when Khidr saw a wall about to collapse, he stopped and repaired it without asking for payment.",
+      contentFr: "Moussa posa maintenant sa propre condition : s'il questionnait Al-Khidr encore une fois, leur compagnonnage prendrait fin. Ils poursuivirent leur route jusqu'a atteindre une ville. Affames et fatigues, ils demanderent de la nourriture aux habitants, mais l'hospitalite leur fut refusee. Malgre cette impolitesse, quand Al-Khidr vit un mur sur le point de s'effondrer, il s'arreta et le repara sans demander de paiement.",
     },
     {
       id: 'khidr-14',
       type: 'quran_source',
       order: 14,
       content: "Khidr repaired a wall for hostile people without payment.",
+      contentFr: "Al-Khidr repara un mur pour des gens hostiles sans paiement.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -180,6 +211,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 78,
         arabicText: 'فَانطَلَقَا حَتَّىٰ إِذَا أَتَيَا أَهْلَ قَرْيَةٍ اسْتَطْعَمَا أَهْلَهَا فَأَبَوْا أَن يُضَيِّفُوهُمَا فَوَجَدَا فِيهَا جِدَارًا يُرِيدُ أَن يَنقَضَّ فَأَقَامَهُ ۖ قَالَ لَوْ شِئْتَ لَاتَّخَذْتَ عَلَيْهِ أَجْرًا ۝ قَالَ هَٰذَا فِرَاقُ بَيْنِي وَبَيْنِكَ ۚ سَأُنَبِّئُكَ بِتَأْوِيلِ مَا لَمْ تَسْتَطِع عَّلَيْهِ صَبْرًا',
         translation: 'So they set out, until when they came to the people of a town, they asked its people for food, but they refused to offer them hospitality. And they found therein a wall about to collapse, so he [Khidr] restored it. [Moses] said, "If you wished, you could have taken for it a payment." [Khidr] said, "This is parting between me and you. I will inform you of the interpretation of that about which you could not have patience."',
+        translationFr: 'Ils partirent donc, jusqu\'a ce que, lorsqu\'ils arriverent aupres des habitants d\'une cite, ils demanderent a manger a ses habitants, mais ceux-ci refuserent de les accueillir. Ils y trouverent un mur sur le point de s\'ecrouler, et il [Al-Khidr] le redressa. [Moussa] dit : "Si tu avais voulu, tu aurais pu demander un salaire pour cela." [Al-Khidr] dit : "Ceci marque la separation entre toi et moi. Je vais t\'informer de l\'interpretation de ce sur quoi tu n\'as pas pu etre patient."',
       } as QuranReference,
     },
     {
@@ -187,12 +219,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 15,
       content: "With this third question, the journey ended. But before they parted, Khidr fulfilled his promise to explain everything. He revealed the divine wisdom behind each seemingly unjust act, showing Musa how limited human perception is compared to Allah's infinite knowledge.",
+      contentFr: "Avec cette troisieme question, le voyage prit fin. Mais avant de se separer, Al-Khidr tint sa promesse d'expliquer chaque chose. Il revela la sagesse divine derriere chaque acte apparemment injuste, montrant a Moussa combien la perception humaine est limitee comparee a la connaissance infinie d'Allah.",
     },
     {
       id: 'khidr-16',
       type: 'quran_source',
       order: 16,
       content: "Khidr explained why he damaged the boat.",
+      contentFr: "Al-Khidr expliqua pourquoi il avait endommage le bateau.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -202,6 +236,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 79,
         arabicText: 'أَمَّا السَّفِينَةُ فَكَانَتْ لِمَسَاكِينَ يَعْمَلُونَ فِي الْبَحْرِ فَأَرَدتُّ أَنْ أَعِيبَهَا وَكَانَ وَرَاءَهُم مَّلِكٌ يَأْخُذُ كُلَّ سَفِينَةٍ غَصْبًا',
         translation: 'As for the ship, it belonged to poor people working at sea. So I intended to cause defect in it as there was after them a king who seized every [good] ship by force.',
+        translationFr: 'Quant au navire, il appartenait a des pauvres qui travaillaient en mer. J\'ai voulu l\'endommager car il y avait derriere eux un roi qui saisissait de force tout navire [en bon etat].',
       } as QuranReference,
     },
     {
@@ -209,12 +244,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 17,
       content: "The boat belonged to poor fishermen who depended on it for their livelihood. Behind them was a tyrannical king who was seizing all good ships by force. By damaging the boat, Khidr made it appear defective and undesirable - the king's men passed it over. After the danger passed, the owners could easily repair it. What seemed like destruction was actually salvation.",
+      contentFr: "Le bateau appartenait a de pauvres pecheurs qui en dependaient pour leur subsistance. Derriere eux se trouvait un roi tyrannique qui saisissait tous les bons navires de force. En endommageant le bateau, Al-Khidr le fit paraitre defectueux et indesirable - les hommes du roi le laisserent passer. Une fois le danger passe, les proprietaires purent facilement le reparer. Ce qui semblait etre de la destruction etait en realite du salut.",
     },
     {
       id: 'khidr-18',
       type: 'quran_source',
       order: 18,
       content: "Khidr explained why he killed the boy.",
+      contentFr: "Al-Khidr expliqua pourquoi il avait tue le garcon.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -224,6 +261,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 81,
         arabicText: 'وَأَمَّا الْغُلَامُ فَكَانَ أَبَوَاهُ مُؤْمِنَيْنِ فَخَشِينَا أَن يُرْهِقَهُمَا طُغْيَانًا وَكُفْرًا ۝ فَأَرَدْنَا أَن يُبْدِلَهُمَا رَبُّهُمَا خَيْرًا مِّنْهُ زَكَاةً وَأَقْرَبَ رُحْمًا',
         translation: 'And as for the boy, his parents were believers, and we feared that he would overburden them by transgression and disbelief. So we intended that their Lord should substitute for them one better than him in purity and nearer to mercy.',
+        translationFr: 'Quant au garcon, ses parents etaient des croyants, et nous craignions qu\'il ne les accable par la transgression et la mecreance. Nous avons donc voulu que leur Seigneur leur donne en echange un enfant meilleur en purete et plus proche de la misericorde.',
       } as QuranReference,
     },
     {
@@ -231,12 +269,14 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 19,
       content: "The boy, though appearing innocent, was destined to grow into a tyrant who would lead his believing parents into disbelief through his wickedness. His death, while tragic, protected his parents' faith and their eternal destiny. Allah would replace him with a child better in purity and closer to them in affection. What seemed like cruelty was actually mercy.",
+      contentFr: "Le garcon, bien qu'apparemment innocent, etait destine a devenir un tyran qui menerait ses parents croyants vers la mecreance par sa perversite. Sa mort, bien que tragique, protegea la foi de ses parents et leur destinee eternelle. Allah le remplacerait par un enfant meilleur en purete et plus proche d'eux en affection. Ce qui semblait etre de la cruaute etait en realite de la misericorde.",
     },
     {
       id: 'khidr-20',
       type: 'quran_source',
       order: 20,
       content: "Khidr explained why he repaired the wall.",
+      contentFr: "Al-Khidr expliqua pourquoi il avait repare le mur.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -246,6 +286,7 @@ export const khidrStory: QuranStory = {
         ayahEnd: 82,
         arabicText: 'وَأَمَّا الْجِدَارُ فَكَانَ لِغُلَامَيْنِ يَتِيمَيْنِ فِي الْمَدِينَةِ وَكَانَ تَحْتَهُ كَنزٌ لَّهُمَا وَكَانَ أَبُوهُمَا صَالِحًا فَأَرَادَ رَبُّكَ أَن يَبْلُغَا أَشُدَّهُمَا وَيَسْتَخْرِجَا كَنزَهُمَا رَحْمَةً مِّن رَّبِّكَ ۚ وَمَا فَعَلْتُهُ عَنْ أَمْرِي ۚ ذَٰلِكَ تَأْوِيلُ مَا لَمْ تَسْطِع عَّلَيْهِ صَبْرًا',
         translation: 'And as for the wall, it belonged to two orphan boys in the city, and there was beneath it a treasure for them, and their father had been righteous. So your Lord intended that they reach maturity and extract their treasure, as a mercy from your Lord. And I did not do it of my own accord. That is the interpretation of that about which you could not have patience.',
+        translationFr: 'Quant au mur, il appartenait a deux garcons orphelins de la ville, et il y avait en dessous un tresor qui leur appartenait, et leur pere etait un homme vertueux. Ton Seigneur a voulu qu\'ils atteignent leur maturite et qu\'ils extraient leur tresor, par misericorde de ton Seigneur. Et je ne l\'ai pas fait de mon propre chef. Voila l\'interpretation de ce sur quoi tu n\'as pas pu etre patient.',
       } as QuranReference,
     },
     {
@@ -253,24 +294,28 @@ export const khidrStory: QuranStory = {
       type: 'narrative',
       order: 21,
       content: "Beneath the wall lay a treasure belonging to two orphan boys. Their father had been a righteous man. If the wall had collapsed, the treasure would have been discovered and stolen by the hostile townspeople. By repairing it, Khidr ensured the treasure would remain hidden until the orphans were old enough to claim it. The kindness of a righteous father extended protection to his children even after his death.",
+      contentFr: "Sous le mur se trouvait un tresor appartenant a deux garcons orphelins. Leur pere avait ete un homme vertueux. Si le mur s'etait effondre, le tresor aurait ete decouvert et vole par les habitants hostiles. En le reparant, Al-Khidr s'assura que le tresor resterait cache jusqu'a ce que les orphelins soient assez ages pour le reclamer. La bonte d'un pere vertueux etendit sa protection a ses enfants meme apres sa mort.",
     },
     {
       id: 'khidr-22',
       type: 'narrative',
       order: 22,
       content: "Khidr's final words were profound: 'I did not do it of my own accord.' Every action was by Allah's command, not personal whim. This is the key lesson: what appears as injustice, tragedy, or inexplicable hardship in this world often carries hidden wisdom that only Allah fully comprehends. Our limited vision sees fragments; Allah sees the whole.",
+      contentFr: "Les dernieres paroles d'Al-Khidr furent profondes : 'Je ne l'ai pas fait de mon propre chef.' Chaque action etait par le commandement d'Allah, non par caprice personnel. C'est la lecon cle : ce qui apparait comme injustice, tragedie ou epreuve inexplicable dans ce monde porte souvent une sagesse cachee que seul Allah comprend pleinement. Notre vision limitee voit des fragments ; Allah voit l'ensemble.",
     },
     {
       id: 'khidr-23',
       type: 'narrative',
       order: 23,
       content: "The story of Musa and Khidr teaches humility in the face of divine wisdom. Even a prophet of Musa's stature could not grasp the full picture. How then can ordinary humans claim to understand every trial and blessing? The story invites us to trust Allah's decree, knowing that behind every apparent hardship may lie protection, and behind every loss may lie gain.",
+      contentFr: "L'histoire de Moussa et Al-Khidr enseigne l'humilite face a la sagesse divine. Meme un prophete de la stature de Moussa ne pouvait saisir l'image complete. Comment alors les humains ordinaires peuvent-ils pretendre comprendre chaque epreuve et benediction ? L'histoire nous invite a faire confiance au decret d'Allah, sachant que derriere chaque epreuve apparente peut se cacher une protection, et derriere chaque perte peut se cacher un gain.",
     },
     {
       id: 'khidr-24',
       type: 'narrative',
       order: 24,
       content: "Who was Khidr? Scholars have differed on whether he was a prophet, a saint (wali), or an angel in human form. Most agree he was a righteous servant given special knowledge for a special purpose. His green name ('Khidr' means 'green') is said to come from wherever he sat, the land would turn green. He remains one of the most mysterious figures in Islamic tradition, appearing in various narrations throughout history.",
+      contentFr: "Qui etait Al-Khidr ? Les savants ont diverge sur le fait qu'il etait un prophete, un saint (wali) ou un ange sous forme humaine. La plupart s'accordent a dire qu'il etait un serviteur pieux dote d'un savoir special pour un dessein special. Son nom vert ('Khidr' signifie 'vert') viendrait du fait que partout ou il s'asseyait, la terre devenait verte. Il reste l'une des figures les plus mysterieuses de la tradition islamique, apparaissant dans diverses narrations a travers l'histoire.",
     },
   ],
 };

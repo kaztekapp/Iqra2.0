@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -18,6 +20,8 @@ import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 export default function TypingPracticeScreen() {
   const { showVowels, recordExerciseResult, addXp, updateStreak } = useProgressStore();
   const { speak, isSpeaking } = useArabicSpeech();
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
 
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -118,7 +122,7 @@ export default function TypingPracticeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -147,36 +151,36 @@ export default function TypingPracticeScreen() {
             />
           </View>
           <Text style={styles.completeTitle}>
-            {accuracy >= 80 ? 'Excellent!' : accuracy >= 50 ? 'Good Job!' : 'Keep Practicing!'}
+            {accuracy >= 80 ? t('exercise.excellent') : accuracy >= 50 ? t('exercise.goodJob') : t('exercise.keepPracticing')}
           </Text>
-          <Text style={styles.completeSubtitle}>Typing Practice</Text>
+          <Text style={styles.completeSubtitle}>{t('exercise.typingPractice')}</Text>
 
           <View style={styles.resultsCard}>
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.correct}</Text>
-              <Text style={styles.resultLabel}>Correct</Text>
+              <Text style={styles.resultLabel}>{t('common.correct')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.total - score.correct}</Text>
-              <Text style={styles.resultLabel}>Wrong</Text>
+              <Text style={styles.resultLabel}>{t('common.wrong')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={[styles.resultValue, { color: '#6366f1' }]}>{accuracy}%</Text>
-              <Text style={styles.resultLabel}>Accuracy</Text>
+              <Text style={styles.resultLabel}>{t('common.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{xpEarned} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
             <Pressable style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color="#6366f1" />
-              <Text style={styles.retryButtonText}>Try Again</Text>
+              <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
             <Pressable style={styles.doneButton} onPress={() => router.back()}>
-              <Text style={styles.doneButtonText}>Done</Text>
+              <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
         </View>
@@ -192,7 +196,7 @@ export default function TypingPracticeScreen() {
           <Ionicons name="close" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Typing Practice</Text>
+          <Text style={styles.headerTitle}>{t('exercise.typingPractice')}</Text>
           <Text style={styles.headerProgress}>
             {currentIndex + 1} / {words.length}
           </Text>
@@ -218,8 +222,8 @@ export default function TypingPracticeScreen() {
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Question */}
         <Animated.View style={[styles.questionContainer, shakeStyle, fadeStyle]}>
-          <Text style={styles.instructionText}>Type in Arabic:</Text>
-          <Text style={styles.questionText}>{currentWord.english}</Text>
+          <Text style={styles.instructionText}>{t('exercise.typeInArabic')}</Text>
+          <Text style={styles.questionText}>{lc(currentWord.english, (currentWord as any).french)}</Text>
           <View style={styles.questionArabicRow}>
             <Text style={styles.transliteration}>({currentWord.transliteration})</Text>
             <Pressable
@@ -235,7 +239,7 @@ export default function TypingPracticeScreen() {
         {!showHint && !isAnswered && (
           <Pressable style={styles.hintButton} onPress={() => setShowHint(true)}>
             <Ionicons name="eye-outline" size={18} color="#6366f1" />
-            <Text style={styles.hintButtonText}>Show Answer</Text>
+            <Text style={styles.hintButtonText}>{t('exercise.showAnswer')}</Text>
           </Pressable>
         )}
 
@@ -258,13 +262,13 @@ export default function TypingPracticeScreen() {
                 color={isCorrect ? '#22c55e' : '#ef4444'}
               />
               <Text style={[styles.feedbackTitle, isCorrect ? styles.feedbackTitleCorrect : styles.feedbackTitleWrong]}>
-                {isCorrect ? 'Correct!' : 'Not quite...'}
+                {isCorrect ? t('exercise.correctFeedback') : t('exercise.notQuite')}
               </Text>
             </View>
 
             {!isCorrect && (
               <View style={styles.correctAnswerBox}>
-                <Text style={styles.correctAnswerLabel}>Correct answer:</Text>
+                <Text style={styles.correctAnswerLabel}>{t('exercise.correctAnswerLabel')}</Text>
                 <Pressable
                   style={styles.correctAnswerRow}
                   onPress={() => speak(currentWord.arabicWithVowels || currentWord.arabic)}
@@ -296,7 +300,7 @@ export default function TypingPracticeScreen() {
         <View style={styles.actionContainer}>
           <Pressable style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
-              {currentIndex < words.length - 1 ? 'Next Word' : 'See Results'}
+              {currentIndex < words.length - 1 ? t('exercise.nextWord') : t('exercise.seeResults')}
             </Text>
             <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>

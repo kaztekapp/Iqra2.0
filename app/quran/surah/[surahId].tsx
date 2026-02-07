@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getSurahById, getSurahByNumber } from '../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
@@ -10,6 +11,7 @@ import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
 
 export default function SurahDetailScreen() {
+  const { t } = useTranslation();
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [activeAyahId, setActiveAyahId] = useState<string | null>(null);
@@ -217,7 +219,7 @@ export default function SurahDetailScreen() {
   if (!surah) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Surah not found</Text>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -227,7 +229,7 @@ export default function SurahDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#10b981" />
-          <Text style={styles.loadingText}>Loading {surah.nameEnglish}...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -240,7 +242,7 @@ export default function SurahDetailScreen() {
           <Ionicons name="cloud-offline" size={48} color="#64748b" />
           <Text style={styles.errorText}>{error}</Text>
           <Pressable style={styles.retryButton} onPress={refetch}>
-            <Text style={styles.retryButtonText}>Retry</Text>
+            <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -325,15 +327,15 @@ export default function SurahDetailScreen() {
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
             <Ionicons name="list" size={16} color="#10b981" />
-            <Text style={styles.infoText}>{surah.ayahCount} Verses</Text>
+            <Text style={styles.infoText}>{surah.ayahCount} {t('surahFeature.verses')}</Text>
           </View>
           <View style={styles.infoItem}>
             <Ionicons name="location" size={16} color="#10b981" />
-            <Text style={styles.infoText}>{surah.revelationType}</Text>
+            <Text style={styles.infoText}>{surah.revelationType === 'Meccan' ? t('surahFeature.meccan') : t('surahFeature.medinan')}</Text>
           </View>
           <View style={styles.infoItem}>
             <Ionicons name="book" size={16} color="#10b981" />
-            <Text style={styles.infoText}>Juz {surah.juz}</Text>
+            <Text style={styles.infoText}>{t('juzFeature.juz')} {surah.juz}</Text>
           </View>
         </View>
       </View>
@@ -345,13 +347,13 @@ export default function SurahDetailScreen() {
             <Ionicons name="mic" size={20} color="#10b981" />
           </View>
           <View style={styles.reciterDetails}>
-            <Text style={styles.reciterLabel}>Reciter</Text>
+            <Text style={styles.reciterLabel}>{t('surahFeature.reciter')}</Text>
             <Text style={styles.reciterName}>{currentReciter.nameEnglish}</Text>
             <Text style={styles.reciterNameArabic}>{currentReciter.nameArabic}</Text>
           </View>
         </View>
         <View style={styles.reciterAction}>
-          <Text style={styles.changeText}>Change</Text>
+          <Text style={styles.changeText}>{t('surahFeature.change')}</Text>
           <Ionicons name="chevron-forward" size={18} color="#64748b" />
         </View>
       </Pressable>
@@ -360,17 +362,17 @@ export default function SurahDetailScreen() {
       <View style={styles.actionButtons}>
         <Pressable style={styles.primaryButton} onPress={handleLearn}>
           <Ionicons name="school" size={20} color="#10b981" />
-          <Text style={styles.primaryButtonText}>Learn</Text>
+          <Text style={styles.primaryButtonText}>{t('surahFeature.learn')}</Text>
         </Pressable>
         <Pressable style={styles.secondaryButton} onPress={handleWrite}>
           <Ionicons name="pencil" size={20} color="#10b981" />
-          <Text style={styles.secondaryButtonText}>Write</Text>
+          <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
         </Pressable>
       </View>
 
       {/* View Toggle */}
       <View style={styles.viewToggle}>
-        <Text style={styles.sectionTitle}>Verses</Text>
+        <Text style={styles.sectionTitle}>{t('surahFeature.verses')}</Text>
         <Pressable
           style={[
             styles.playAllButton,
@@ -391,8 +393,8 @@ export default function SurahDetailScreen() {
             {isPlayingAll || audioState === 'playing'
               ? currentPlayingAyah
                 ? `${currentPlayingAyah}/${surah.ayahCount}`
-                : 'Stop'
-              : 'Play All'}
+                : t('surahFeature.stop')
+              : t('surahFeature.playAll')}
           </Text>
         </Pressable>
         <View style={styles.toggleButtons}>
@@ -419,7 +421,7 @@ export default function SurahDetailScreen() {
         </View>
       </View>
     </>
-  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle]);
+  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, t]);
 
   // List footer component
   const ListFooter = useCallback(() => (
@@ -428,9 +430,9 @@ export default function SurahDetailScreen() {
       onPress={() => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })}
     >
       <Ionicons name="arrow-up" size={18} color="#10b981" />
-      <Text style={styles.backToTopText}>Back to Top</Text>
+      <Text style={styles.backToTopText}>{t('surahFeature.backToTop')}</Text>
     </Pressable>
-  ), []);
+  ), [t]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -444,7 +446,7 @@ export default function SurahDetailScreen() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select Reciter</Text>
+              <Text style={styles.modalTitle}>{t('surahFeature.selectReciter')}</Text>
               <Pressable onPress={() => setShowReciterModal(false)}>
                 <Ionicons name="close" size={24} color="#ffffff" />
               </Pressable>
@@ -466,13 +468,13 @@ export default function SurahDetailScreen() {
                       <View style={styles.styleBadge}>
                         <Text style={styles.reciterStyle}>{reciter.style}</Text>
                         <Text style={styles.styleDesc}>
-                          {reciter.style === 'murattal' ? '• steady pace, for learning' : '• melodic, artistic'}
+                          {reciter.style === 'murattal' ? `• ${t('surahFeature.steadyPaceForLearning')}` : `• ${t('surahFeature.melodicArtistic')}`}
                         </Text>
                       </View>
                       {reciter.recommended && (
                         <View style={styles.recommendedBadge}>
                           <Ionicons name="star" size={10} color="#f59e0b" />
-                          <Text style={styles.recommendedText}>Recommended</Text>
+                          <Text style={styles.recommendedText}>{t('surahFeature.recommended')}</Text>
                         </View>
                       )}
                     </View>

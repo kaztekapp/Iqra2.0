@@ -2,12 +2,16 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { verbExercises } from '../../src/data/arabic/exercises/verbExercises';
 import { arabicVerbs } from '../../src/data/arabic/verbs/conjugations';
 import { verbLessons } from '../../src/data/arabic/verbs/verbLessons';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
 export default function VerbsScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { speak } = useArabicSpeech();
   const writingExercises = verbExercises.filter(ex => ex.type === 'writing');
   const quizExercises = verbExercises.filter(ex => ex.type !== 'writing');
@@ -15,33 +19,33 @@ export default function VerbsScreen() {
   const tenseCategories = [
     {
       id: 'past',
-      title: 'Past Tense',
+      title: t('verbs.pastTense'),
       titleArabic: 'الْمَاضِي',
-      description: 'He wrote, I studied, she went...',
+      description: t('verbs.pastTenseDesc'),
       icon: 'time-outline' as const,
       color: '#10b981',
     },
     {
       id: 'present',
-      title: 'Present Tense',
+      title: t('verbs.presentTense'),
       titleArabic: 'الْمُضَارِع',
-      description: 'He writes, I study, she goes...',
+      description: t('verbs.presentTenseDesc'),
       icon: 'reload-outline' as const,
       color: '#6366f1',
     },
     {
       id: 'future',
-      title: 'Future Tense',
+      title: t('verbs.futureTense'),
       titleArabic: 'الْمُسْتَقْبَل',
-      description: 'He will write, I will study...',
+      description: t('verbs.futureTenseDesc'),
       icon: 'arrow-forward-outline' as const,
       color: '#D4AF37',
     },
     {
       id: 'imperative',
-      title: 'Commands',
+      title: t('verbs.commands'),
       titleArabic: 'الْأَمْر',
-      description: 'Write!, Read!, Go!...',
+      description: t('verbs.commandsDesc'),
       icon: 'megaphone-outline' as const,
       color: '#f59e0b',
     },
@@ -56,7 +60,7 @@ export default function VerbsScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Verb Conjugations</Text>
+            <Text style={styles.title}>{t('verbs.title')}</Text>
             <Text style={styles.titleArabic}>تَصْرِيفُ الْأَفْعَال</Text>
           </View>
         </View>
@@ -65,18 +69,17 @@ export default function VerbsScreen() {
         <View style={styles.introCard}>
           <Ionicons name="information-circle" size={24} color="#10b981" />
           <View style={styles.introContent}>
-            <Text style={styles.introTitle}>Arabic Verb System</Text>
+            <Text style={styles.introTitle}>{t('verbs.introTitle')}</Text>
             <Text style={styles.introText}>
-              Arabic verbs change based on who is doing the action (person),
-              when it happens (tense), and gender. Master the patterns!
+              {t('verbs.introText')}
             </Text>
           </View>
         </View>
 
         {/* Verb Lessons */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Verb Lessons</Text>
-          <Text style={styles.sectionSubtitle}>Learn verb conjugation step by step</Text>
+          <Text style={styles.sectionTitle}>{t('verbs.verbLessons')}</Text>
+          <Text style={styles.sectionSubtitle}>{t('verbs.verbLessonsDesc')}</Text>
           <View style={styles.lessonsGrid}>
             {verbLessons.map((lesson, index) => (
               <Pressable
@@ -88,10 +91,10 @@ export default function VerbsScreen() {
                   <Text style={[styles.lessonNumberText, { color: index < 4 ? '#10b981' : '#6366f1' }]}>{index + 1}</Text>
                 </View>
                 <View style={styles.lessonContent}>
-                  <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                  <Text style={styles.lessonTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
                   <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
                   <Text style={styles.lessonDescription} numberOfLines={2}>
-                    {lesson.description}
+                    {lc(lesson.description, (lesson as any).descriptionFr)}
                   </Text>
                   <View style={styles.lessonMeta}>
                     <View style={[styles.levelBadge, { backgroundColor: lesson.level === 'beginner' ? '#10b98130' : '#6366f130' }]}>
@@ -109,7 +112,7 @@ export default function VerbsScreen() {
 
         {/* Tense Categories */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tenses & Moods</Text>
+          <Text style={styles.sectionTitle}>{t('verbs.tensesAndMoods')}</Text>
           {tenseCategories.map((category) => (
             <Pressable
               key={category.id}
@@ -131,8 +134,8 @@ export default function VerbsScreen() {
 
         {/* All Verbs */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>All Verbs ({arabicVerbs.length})</Text>
-          <Text style={styles.sectionSubtitle}>Tap any verb to see full conjugations</Text>
+          <Text style={styles.sectionTitle}>{t('verbs.allVerbs', { count: arabicVerbs.length })}</Text>
+          <Text style={styles.sectionSubtitle}>{t('verbs.allVerbsDesc')}</Text>
           <View style={styles.verbsGrid}>
             {arabicVerbs.map((verb) => (
               <Pressable
@@ -150,7 +153,7 @@ export default function VerbsScreen() {
                   <Ionicons name="volume-high" size={16} color="#10b981" />
                 </Pressable>
                 <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
-                <Text style={styles.verbMeaningText}>{verb.meaning}</Text>
+                <Text style={styles.verbMeaningText}>{lc(verb.meaning, (verb as any).meaningFr)}</Text>
                 <Text style={styles.verbRootText}>{verb.root}</Text>
               </Pressable>
             ))}
@@ -159,32 +162,32 @@ export default function VerbsScreen() {
 
         {/* Key Concepts */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Concepts</Text>
+          <Text style={styles.sectionTitle}>{t('verbs.keyConcepts')}</Text>
           <View style={styles.conceptsGrid}>
             <View style={[styles.conceptCard, { borderLeftColor: '#10b981' }]}>
               <Text style={[styles.conceptEmoji, { backgroundColor: '#10b98120' }]}>🔤</Text>
               <View style={styles.conceptContent}>
-                <Text style={styles.conceptTitle}>Root System</Text>
+                <Text style={styles.conceptTitle}>{t('verbs.rootSystem')}</Text>
                 <Text style={styles.conceptText}>
-                  Most verbs come from 3-letter roots (e.g., ك-ت-ب for writing)
+                  {t('verbs.rootSystemDesc')}
                 </Text>
               </View>
             </View>
             <View style={[styles.conceptCard, { borderLeftColor: '#6366f1' }]}>
               <Text style={[styles.conceptEmoji, { backgroundColor: '#6366f120' }]}>👤</Text>
               <View style={styles.conceptContent}>
-                <Text style={styles.conceptTitle}>Person</Text>
+                <Text style={styles.conceptTitle}>{t('verbs.person')}</Text>
                 <Text style={styles.conceptText}>
-                  I, you, he, she, we, they - each has a different form
+                  {t('verbs.personDesc')}
                 </Text>
               </View>
             </View>
             <View style={[styles.conceptCard, { borderLeftColor: '#D4AF37' }]}>
               <Text style={[styles.conceptEmoji, { backgroundColor: '#D4AF3720' }]}>⚥</Text>
               <View style={styles.conceptContent}>
-                <Text style={styles.conceptTitle}>Gender</Text>
+                <Text style={styles.conceptTitle}>{t('verbs.genderConcept')}</Text>
                 <Text style={styles.conceptText}>
-                  Arabic distinguishes masculine and feminine forms
+                  {t('verbs.genderDesc')}
                 </Text>
               </View>
             </View>
@@ -193,7 +196,7 @@ export default function VerbsScreen() {
 
         {/* Practice Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Practice</Text>
+          <Text style={styles.sectionTitle}>{t('common.practice')}</Text>
 
           {/* Quiz Practice */}
           <Pressable
@@ -206,9 +209,9 @@ export default function VerbsScreen() {
           >
             <Ionicons name="help-circle" size={24} color="#ffffff" />
             <View style={styles.practiceButtonContent}>
-              <Text style={styles.practiceButtonText}>Quiz Practice</Text>
+              <Text style={styles.practiceButtonText}>{t('verbs.quizPractice')}</Text>
               <Text style={styles.practiceButtonSubtext}>
-                Multiple choice & fill-in-the-blank
+                {t('verbs.quizPracticeDesc')}
               </Text>
             </View>
             <View style={styles.exerciseCount}>
@@ -227,9 +230,9 @@ export default function VerbsScreen() {
           >
             <Ionicons name="pencil" size={24} color="#ffffff" />
             <View style={styles.practiceButtonContent}>
-              <Text style={styles.practiceButtonText}>Writing Practice</Text>
+              <Text style={styles.practiceButtonText}>{t('verbs.writingPractice')}</Text>
               <Text style={styles.practiceButtonSubtext}>
-                Write verb conjugations in Arabic
+                {t('verbs.writingPracticeDesc')}
               </Text>
             </View>
             <View style={styles.exerciseCount}>

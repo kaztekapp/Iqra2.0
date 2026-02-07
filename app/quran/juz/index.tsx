@@ -11,6 +11,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   JUZ_LESSONS,
@@ -30,6 +32,7 @@ type TabType = 'learn' | 'quiz';
 
 // Intro Card Component
 function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () => void }) {
+  const { lc } = useLocalizedContent();
   const iconMap: Record<string, string> = {
     intro_what_is_juz: 'help-circle',
     intro_structure: 'layers',
@@ -50,10 +53,10 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
           <Ionicons name={iconMap[lesson.id] as any || 'book'} size={24} color="#ffffff" />
         </View>
         <View style={styles.introCardContent}>
-          <Text style={styles.introCardTitle}>{lesson.title}</Text>
+          <Text style={styles.introCardTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
           <Text style={styles.introCardTitleArabic}>{lesson.titleArabic}</Text>
           <Text style={styles.introCardDesc} numberOfLines={2}>
-            {lesson.description}
+            {lc(lesson.description, (lesson as any).descriptionFr)}
           </Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color="#ffffff80" />
@@ -64,6 +67,7 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
 
 // Juz Card Component
 function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
+  const { t } = useTranslation();
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'easy':
@@ -99,7 +103,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
               { color: getDifficultyColor(juz.memorization.difficulty) },
             ]}
           >
-            {juz.memorization.difficulty}
+            {t(`juzFeature.${juz.memorization.difficulty}`)}
           </Text>
         </View>
       </View>
@@ -113,7 +117,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
         </View>
         <View style={styles.detailItem}>
           <Ionicons name="layers-outline" size={14} color="#64748b" />
-          <Text style={styles.detailText}>{juz.totalSurahs} Surah(s)</Text>
+          <Text style={styles.detailText}>{juz.totalSurahs} {t('juzFeature.surahs')}</Text>
         </View>
       </View>
 
@@ -126,7 +130,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
           </View>
         ))}
         {juz.keyThemes.length > 2 && (
-          <Text style={styles.moreThemes}>+{juz.keyThemes.length - 2} more</Text>
+          <Text style={styles.moreThemes}>{t('common.more', { count: juz.keyThemes.length - 2 })}</Text>
         )}
       </View>
 
@@ -134,11 +138,11 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
         <View style={styles.memorizeInfo}>
           <Ionicons name="time-outline" size={14} color="#3b82f6" />
           <Text style={styles.memorizeText}>
-            ~{juz.memorization.estimatedDays} days to memorize
+            {t('juzFeature.daysToMemorize', { days: juz.memorization.estimatedDays })}
           </Text>
         </View>
         <Pressable style={styles.viewButton} onPress={onPress}>
-          <Text style={styles.viewButtonText}>View</Text>
+          <Text style={styles.viewButtonText}>{t('juzFeature.view')}</Text>
           <Ionicons name="arrow-forward" size={16} color="#ffffff" />
         </Pressable>
       </View>
@@ -158,6 +162,7 @@ function QuizSetCard({
   questionCount: number;
   onPress: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Pressable style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
@@ -165,7 +170,7 @@ function QuizSetCard({
       </View>
       <View style={styles.quizSetInfo}>
         <Text style={styles.quizSetName}>{setName}</Text>
-        <Text style={styles.quizSetCount}>{questionCount} questions</Text>
+        <Text style={styles.quizSetCount}>{questionCount} {t('juzFeature.questions')}</Text>
       </View>
       <Ionicons name="play-circle" size={28} color="#3b82f6" />
     </Pressable>
@@ -173,6 +178,7 @@ function QuizSetCard({
 }
 
 export default function JuzMainScreen() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>('learn');
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -207,7 +213,7 @@ export default function JuzMainScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Juz (Ajza')</Text>
+          <Text style={styles.title}>{t('juzFeature.title')} (Ajza')</Text>
           <Text style={styles.titleArabic}>الأجزاء</Text>
         </View>
         <View style={{ width: 40 }} />
@@ -246,7 +252,7 @@ export default function JuzMainScreen() {
                 activeTab === 'learn' && styles.tabTextActive,
               ]}
             >
-              Learn
+              {t('juzFeature.learn')}
             </Text>
           </Pressable>
           <Pressable
@@ -264,7 +270,7 @@ export default function JuzMainScreen() {
                 activeTab === 'quiz' && styles.tabTextActive,
               ]}
             >
-              Quiz
+              {t('juzFeature.quiz')}
             </Text>
           </Pressable>
         </View>
@@ -278,10 +284,10 @@ export default function JuzMainScreen() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Ionicons name="information-circle" size={20} color="#3b82f6" />
-                <Text style={styles.sectionTitle}>Introduction</Text>
+                <Text style={styles.sectionTitle}>{t('juzFeature.introLessons')}</Text>
               </View>
               <Text style={styles.sectionSubtitle}>
-                Start here to understand the Juz system
+                {t('juzFeature.startHereToUnderstand')}
               </Text>
               {JUZ_INTRO_LESSONS.map((lesson) => (
                 <IntroCard
@@ -296,27 +302,27 @@ export default function JuzMainScreen() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Ionicons name="library" size={20} color="#3b82f6" />
-                <Text style={styles.sectionTitle}>All 30 Juz</Text>
+                <Text style={styles.sectionTitle}>{t('juzFeature.juzLessons')}</Text>
               </View>
               <Text style={styles.sectionSubtitle}>
-                Explore each Juz in detail
+                {t('juzFeature.exploreEachJuz')}
               </Text>
 
               {/* Quick Stats */}
               <View style={styles.statsContainer}>
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>30</Text>
-                  <Text style={styles.statLabel}>Juz</Text>
+                  <Text style={styles.statLabel}>{t('juzFeature.juz')}</Text>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>60</Text>
-                  <Text style={styles.statLabel}>Hizb</Text>
+                  <Text style={styles.statLabel}>{t('juzFeature.hizb')}</Text>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>240</Text>
-                  <Text style={styles.statLabel}>Quarters</Text>
+                  <Text style={styles.statLabel}>{t('juzFeature.quarters')}</Text>
                 </View>
               </View>
 
@@ -337,9 +343,9 @@ export default function JuzMainScreen() {
               <View style={styles.quizHeaderIcon}>
                 <Ionicons name="trophy" size={40} color="#f59e0b" />
               </View>
-              <Text style={styles.quizHeaderTitle}>Test Your Knowledge</Text>
+              <Text style={styles.quizHeaderTitle}>{t('juzFeature.testYourKnowledge')}</Text>
               <Text style={styles.quizHeaderSubtitle}>
-                Challenge yourself with {totalSets} sets of questions about the 30 Juz
+                {t('juzFeature.challengeDescription', { count: totalSets })}
               </Text>
             </View>
 
@@ -347,10 +353,10 @@ export default function JuzMainScreen() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Ionicons name="list" size={20} color="#3b82f6" />
-                <Text style={styles.sectionTitle}>Quiz Sets</Text>
+                <Text style={styles.sectionTitle}>{t('juzFeature.quizSets')}</Text>
               </View>
               <Text style={styles.sectionSubtitle}>
-                Complete each set to master Juz knowledge
+                {t('juzFeature.completeEachSet')}
               </Text>
 
               {Array.from({ length: totalSets }).map((_, index) => {
@@ -380,9 +386,9 @@ export default function JuzMainScreen() {
               >
                 <Ionicons name="shuffle" size={24} color="#ffffff" />
                 <View style={styles.randomQuizText}>
-                  <Text style={styles.randomQuizTitle}>Random Quiz</Text>
+                  <Text style={styles.randomQuizTitle}>{t('juzFeature.randomQuiz')}</Text>
                   <Text style={styles.randomQuizSubtitle}>
-                    Mix of all questions
+                    {t('juzFeature.mixOfAll')}
                   </Text>
                 </View>
                 <Ionicons name="arrow-forward" size={24} color="#ffffff" />

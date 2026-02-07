@@ -3,10 +3,14 @@ import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { Challenge } from '../../src/types/community';
 
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const progress = Math.min(challenge.currentValue / challenge.targetValue, 1);
   const progressPercent = Math.round(progress * 100);
 
@@ -21,19 +25,19 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
 
   const getTypeLabel = () => {
     switch (challenge.type) {
-      case 'daily': return 'Daily Challenge';
-      case 'weekly': return 'Weekly Challenge';
-      case 'weekend': return 'Weekend Sprint';
-      default: return 'Challenge';
+      case 'daily': return t('community.dailyChallenge');
+      case 'weekly': return t('community.weeklyChallenge');
+      case 'weekend': return t('community.weekendSprint');
+      default: return t('community.challenge');
     }
   };
 
   const getTargetLabel = () => {
     switch (challenge.targetType) {
-      case 'words': return 'words';
-      case 'lessons': return 'lessons';
+      case 'words': return t('community.words');
+      case 'lessons': return t('community.lessons');
       case 'xp': return 'XP';
-      case 'exercises': return 'exercises';
+      case 'exercises': return t('community.exercises');
       default: return '';
     }
   };
@@ -50,14 +54,14 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
         {challenge.isCompleted && (
           <View style={styles.completedBadge}>
             <Ionicons name="checkmark-circle" size={16} color="#22c55e" />
-            <Text style={styles.completedText}>Done!</Text>
+            <Text style={styles.completedText}>{t('community.done')}</Text>
           </View>
         )}
       </View>
 
-      <Text style={styles.challengeTitle}>{challenge.title}</Text>
+      <Text style={styles.challengeTitle}>{lc(challenge.title, challenge.titleFr)}</Text>
       <Text style={styles.challengeTitleArabic}>{challenge.titleArabic}</Text>
-      <Text style={styles.challengeDescription}>{challenge.description}</Text>
+      <Text style={styles.challengeDescription}>{lc(challenge.description, challenge.descriptionFr)}</Text>
 
       <View style={styles.progressSection}>
         <View style={styles.progressBar}>
@@ -81,7 +85,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
         <View style={styles.contributionBox}>
           <Ionicons name="person" size={14} color="#818cf8" />
           <Text style={styles.contributionText}>
-            Your contribution: {challenge.userContribution} {getTargetLabel()}
+            {t('community.yourContribution', { value: challenge.userContribution, label: getTargetLabel() })}
           </Text>
         </View>
         <View style={styles.rewardBox}>
@@ -97,14 +101,14 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
             onPress={() => router.push('/quiz/arabic-quiz')}
           >
             <Ionicons name="book" size={18} color="#ffffff" />
-            <Text style={styles.actionButtonText}>Vocabulary</Text>
+            <Text style={styles.actionButtonText}>{t('community.vocabulary')}</Text>
           </Pressable>
           <Pressable
             style={[styles.actionButton, styles.actionButtonSecondary]}
             onPress={() => router.push('/quiz/grammar-quiz')}
           >
             <Ionicons name="school" size={18} color="#D4AF37" />
-            <Text style={[styles.actionButtonText, styles.actionButtonTextSecondary]}>Grammar</Text>
+            <Text style={[styles.actionButtonText, styles.actionButtonTextSecondary]}>{t('community.grammar')}</Text>
           </Pressable>
         </View>
       )}
@@ -113,6 +117,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
 };
 
 export default function ChallengesScreen() {
+  const { t } = useTranslation();
   const { dailyChallenge, weeklyChallenge, initializeChallenges } = useCommunityStore();
 
   useEffect(() => {
@@ -127,7 +132,7 @@ export default function ChallengesScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitles}>
-          <Text style={styles.headerTitle}>Challenges</Text>
+          <Text style={styles.headerTitle}>{t('community.challenges')}</Text>
           <Text style={styles.headerTitleArabic}>التحديات</Text>
         </View>
         <View style={styles.headerSpacer} />
@@ -144,7 +149,7 @@ export default function ChallengesScreen() {
         {!dailyChallenge && !weeklyChallenge && (
           <View style={styles.emptyState}>
             <Ionicons name="flag-outline" size={48} color="#64748b" />
-            <Text style={styles.emptyText}>No challenges available</Text>
+            <Text style={styles.emptyText}>{t('community.noChallenges')}</Text>
           </View>
         )}
       </ScrollView>

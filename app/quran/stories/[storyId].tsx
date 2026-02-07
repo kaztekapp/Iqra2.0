@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getQuranStoryById } from '../../../src/data/arabic/quranStories';
 import { StoryContentBlock } from '../../../src/components/quranStories';
 import { useQuranStoriesStore } from '../../../src/stores/quranStoriesStore';
@@ -10,6 +12,8 @@ import { QuranReference, STORY_CATEGORY_LABELS } from '../../../src/types/quranS
 import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
 
 export default function QuranStoryDetailScreen() {
+  const { t } = useTranslation();
+  const { lc, lcArray } = useLocalizedContent();
   const { storyId } = useLocalSearchParams<{ storyId: string }>();
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -101,7 +105,7 @@ export default function QuranStoryDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#6366f1" />
-          <Text style={styles.loadingText}>Loading story...</Text>
+          <Text style={styles.loadingText}>{t('storiesFeature.loadingStory')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -122,12 +126,12 @@ export default function QuranStoryDetailScreen() {
             <Text style={styles.storyIcon}>{story.icon}</Text>
             <Text style={styles.storyNameArabic}>{story.titleArabic}</Text>
           </View>
-          <Text style={styles.storyNameEnglish}>{story.titleEnglish}</Text>
+          <Text style={styles.storyNameEnglish}>{lc(story.titleEnglish, story.titleFrench)}</Text>
         </View>
         <View style={styles.headerMeta}>
           <View style={styles.metaItem}>
             <Ionicons name="time-outline" size={14} color="#64748b" />
-            <Text style={styles.metaText}>{story.estimatedReadTime} min</Text>
+            <Text style={styles.metaText}>{story.estimatedReadTime} {t('common.min')}</Text>
           </View>
         </View>
       </View>
@@ -135,19 +139,19 @@ export default function QuranStoryDetailScreen() {
       {/* Category Badge and Main Surah */}
       <View style={styles.subHeader}>
         <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{categoryLabel.english}</Text>
+          <Text style={styles.categoryText}>{lc(categoryLabel.english, categoryLabel.french)}</Text>
         </View>
         {story.mainSurah && (
           <View style={styles.surahBadge}>
             <Ionicons name="book-outline" size={12} color="#818cf8" />
             <Text style={styles.surahText}>
-              Surah {story.mainSurah.name} ({story.mainSurah.nameArabic})
+              {t('storiesFeature.surah')} {story.mainSurah.name} ({story.mainSurah.nameArabic})
             </Text>
           </View>
         )}
         <View style={styles.sourceCountBadge}>
           <Ionicons name="library-outline" size={12} color="#64748b" />
-          <Text style={styles.sourceCountText}>{sourceCount} sources</Text>
+          <Text style={styles.sourceCountText}>{sourceCount} {t('prophetsFeature.sources')}</Text>
         </View>
       </View>
 
@@ -159,15 +163,15 @@ export default function QuranStoryDetailScreen() {
       >
         {/* Summary Card */}
         <View style={styles.summaryCard}>
-          <Text style={styles.summaryTitle}>Summary</Text>
-          <Text style={styles.summaryText}>{story.summary}</Text>
+          <Text style={styles.summaryTitle}>{t('storiesFeature.summary')}</Text>
+          <Text style={styles.summaryText}>{lc(story.summary, story.summaryFr)}</Text>
         </View>
 
         {/* Key Lessons */}
         {story.lessons.length > 0 && (
           <View style={styles.lessonsCard}>
-            <Text style={styles.lessonsTitle}>Key Lessons</Text>
-            {story.lessons.map((lesson, index) => (
+            <Text style={styles.lessonsTitle}>{t('storiesFeature.keyLessons')}</Text>
+            {lcArray(story.lessons, story.lessonsFr).map((lesson, index) => (
               <View key={index} style={styles.lessonItem}>
                 <Ionicons name="checkmark-circle" size={16} color="#10b981" />
                 <Text style={styles.lessonText}>{lesson}</Text>
@@ -178,7 +182,7 @@ export default function QuranStoryDetailScreen() {
 
         {/* Story Narrative Section Header */}
         <View style={styles.narrativeHeader}>
-          <Text style={styles.narrativeHeaderTitle}>The Story</Text>
+          <Text style={styles.narrativeHeaderTitle}>{t('storiesFeature.theStory')}</Text>
           <View style={styles.divider} />
         </View>
 
@@ -202,14 +206,14 @@ export default function QuranStoryDetailScreen() {
           {story.content.length > 0 && !isCompleted && (
             <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
               <Ionicons name="checkmark-circle-outline" size={20} color="#10b981" />
-              <Text style={styles.completeButtonText}>Mark as Complete</Text>
+              <Text style={styles.completeButtonText}>{t('storiesFeature.markComplete')}</Text>
             </Pressable>
           )}
 
           {isCompleted && (
             <View style={styles.completedBadge}>
               <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-              <Text style={styles.completedText}>Story Completed</Text>
+              <Text style={styles.completedText}>{t('storiesFeature.storyCompleted')}</Text>
             </View>
           )}
         </View>

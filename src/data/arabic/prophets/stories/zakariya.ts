@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../.
 export const zakariyaStory: Prophet = {
   id: 'zakariya',
   nameEnglish: 'Zakariya',
+  nameFrench: 'Zakariya',
   nameArabic: 'زكريا',
   order: 22,
   title: 'The Guardian of Maryam',
+  titleFr: 'Le Gardien de Maryam',
   titleArabic: 'كافل مريم',
   summary: "Prophet Zakariya (Zechariah) served as a priest in the Temple of Jerusalem and was chosen to be the guardian of Maryam (Mary), the mother of Isa. Despite his old age and his wife's barrenness, he never lost hope in Allah's mercy. When he saw how Allah miraculously provided for Maryam, he was inspired to pray for a child of his own. Allah answered his supplication and granted him a son, Yahya (John), a prophet who would prepare the way for Isa. Zakariya's story is one of unwavering faith and the power of sincere supplication.",
+  summaryFr: "Le Prophète Zakariya (Zacharie) servit comme prêtre dans le Temple de Jérusalem et fut choisi pour être le gardien de Maryam (Marie), la mère d'Issa. Malgré son âge avancé et la stérilité de son épouse, il ne perdit jamais espoir en la miséricorde d'Allah. Quand il vit comment Allah pourvoyait miraculeusement aux besoins de Maryam, il fut inspiré à prier pour un enfant. Allah répondit à sa supplication et lui accorda un fils, Yahya (Jean), un prophète qui préparerait la voie pour Issa. L'histoire de Zakariya est celle d'une foi inébranlable et du pouvoir de la supplication sincère.",
   hasSubStories: false,
   lessons: [
     'Never despair of Allah\'s mercy regardless of circumstances',
@@ -20,6 +23,14 @@ export const zakariyaStory: Prophet = {
     'Serving Allah\'s cause leads to personal blessings',
     'Parents should desire righteous offspring',
     'Trust in Allah\'s plan even when it seems impossible',
+  ],
+  lessonsFr: [
+    'Ne jamais désespérer de la miséricorde d\'Allah quelles que soient les circonstances',
+    'L\'âge n\'est pas un obstacle à la capacité d\'Allah d\'accorder des bénédictions',
+    'Les prières des vertueux sont exaucées',
+    'Servir la cause d\'Allah mène à des bénédictions personnelles',
+    'Les parents devraient désirer une progéniture vertueuse',
+    'Faire confiance au plan d\'Allah même quand cela semble impossible',
   ],
   estimatedReadTime: 10,
   quranMentions: 7,
@@ -33,18 +44,21 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "Prophet Zakariya lived during a crucial period in Israelite history, serving as a priest in the Temple of Jerusalem (Bayt al-Maqdis). He was a descendant of Prophet Sulayman and was known for his piety, devotion, and service to Allah. Though blessed in many ways, he carried a deep sorrow: he and his wife had no children, and both had reached an advanced age.",
+    contentFr: "Le Prophète Zakariya vécut durant une période cruciale de l'histoire israélite, servant comme prêtre dans le Temple de Jérusalem (Bayt al-Maqdis). Il était un descendant du Prophète Soulayman et était connu pour sa piété, sa dévotion et son service à Allah. Bien que béni de bien des façons, il portait un profond chagrin : lui et son épouse n'avaient pas d'enfants, et tous deux avaient atteint un âge avancé.",
   },
   {
     id: 'zakariya-2',
     type: 'narrative',
     order: 2,
     content: "The family of Imran was honored among the Israelites. When Imran's wife gave birth to a daughter, Maryam, she dedicated the child to the service of the Temple. The priests cast lots to determine who would be Maryam's guardian, and Zakariya was chosen. He built for her a special chamber (mihrab) in the Temple where she could worship in seclusion.",
+    contentFr: "La famille d'Imran était honorée parmi les Israélites. Quand l'épouse d'Imran donna naissance à une fille, Maryam, elle consacra l'enfant au service du Temple. Les prêtres tirèrent au sort pour déterminer qui serait le gardien de Maryam, et Zakariya fut choisi. Il lui construisit une chambre spéciale (mihrab) dans le Temple où elle pouvait adorer en réclusion.",
   },
   {
     id: 'zakariya-3',
     type: 'quran_source',
     order: 3,
     content: "Zakariya witnessed Allah's miraculous provision for Maryam.",
+    contentFr: "Zakariya fut témoin de la provision miraculeuse d'Allah pour Maryam.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -54,6 +68,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'فَتَقَبَّلَهَا رَبُّهَا بِقَبُولٍ حَسَنٍ وَأَنبَتَهَا نَبَاتًا حَسَنًا وَكَفَّلَهَا زَكَرِيَّا ۖ كُلَّمَا دَخَلَ عَلَيْهَا زَكَرِيَّا الْمِحْرَابَ وَجَدَ عِندَهَا رِزْقًا ۖ قَالَ يَا مَرْيَمُ أَنَّىٰ لَكِ هَٰذَا ۖ قَالَتْ هُوَ مِنْ عِندِ اللَّهِ ۖ إِنَّ اللَّهَ يَرْزُقُ مَن يَشَاءُ بِغَيْرِ حِسَابٍ',
       translation: 'So her Lord accepted her with good acceptance and caused her to grow in a good manner and put her in the care of Zakariya. Every time Zakariya entered upon her in the prayer chamber, he found with her provision. He said, "O Maryam, from where is this [coming] to you?" She said, "It is from Allah. Indeed, Allah provides for whom He wills without account."',
+      translationFr: 'Son Seigneur l\'agréa alors d\'un bon agrément, la fit croître en belle croissance et la confia à Zakariya. Chaque fois que Zakariya entrait auprès d\'elle dans le mihrab, il trouvait auprès d\'elle de la nourriture. Il dit : « Ô Maryam, d\'où te vient cela ? » Elle dit : « Cela vient d\'Allah. Allah pourvoit à qui Il veut sans compter. »',
     } as QuranReference,
   },
   {
@@ -61,12 +76,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: "Every time Zakariya visited Maryam's chamber, he found her with food - fruits out of season, provisions she could not have obtained naturally. When he asked her about it, she simply replied: 'It is from Allah. Allah provides for whom He wills without account.' These words struck Zakariya deeply. If Allah could provide for Maryam in such miraculous ways, could He not also grant Zakariya a child despite his circumstances?",
+    contentFr: "Chaque fois que Zakariya visitait la chambre de Maryam, il trouvait auprès d'elle de la nourriture — des fruits hors saison, des provisions qu'elle n'aurait pu obtenir naturellement. Quand il l'interrogea à ce sujet, elle répondit simplement : « Cela vient d'Allah. Allah pourvoit à qui Il veut sans compter. » Ces mots touchèrent profondément Zakariya. Si Allah pouvait pourvoir aux besoins de Maryam de manière si miraculeuse, ne pouvait-Il pas aussi accorder un enfant à Zakariya malgré ses circonstances ?",
   },
   {
     id: 'zakariya-5',
     type: 'quran_source',
     order: 5,
     content: "Inspired by what he witnessed, Zakariya called upon his Lord.",
+    contentFr: "Inspiré par ce dont il fut témoin, Zakariya invoqua son Seigneur.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -76,6 +93,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 38,
       arabicText: 'هُنَالِكَ دَعَا زَكَرِيَّا رَبَّهُ ۖ قَالَ رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ',
       translation: 'At that, Zakariya called upon his Lord, saying, "My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication."',
+      translationFr: 'C\'est alors que Zakariya invoqua son Seigneur et dit : « Ô mon Seigneur, accorde-moi de Ta part une descendance bonne. Tu es certes Celui qui entend la prière. »',
     } as QuranReference,
   },
   {
@@ -83,12 +101,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: "Right there, at that moment, inspired by Maryam's faith and Allah's provision, Zakariya made his prayer. He asked for 'dhurriyyatan tayyibah' - good, pure offspring. He didn't just want any child; he wanted a righteous child who would carry on the prophetic legacy. He affirmed his belief that Allah is 'Sami' ad-Du'a' - the Hearer of Supplication.",
+    contentFr: "C'est là, à ce moment précis, inspiré par la foi de Maryam et la provision d'Allah, que Zakariya fit sa prière. Il demanda « dhurriyyatan tayyibah » — une descendance bonne et pure. Il ne voulait pas n'importe quel enfant ; il voulait un enfant vertueux qui perpétuerait l'héritage prophétique. Il affirma sa croyance qu'Allah est « Sami' ad-Du'a' » — Celui qui entend la supplication.",
   },
   {
     id: 'zakariya-7',
     type: 'quran_source',
     order: 7,
     content: "In Surah Maryam, more details of Zakariya's supplication are revealed.",
+    contentFr: "Dans la sourate Maryam, plus de détails sur la supplication de Zakariya sont révélés.",
     source: {
       type: 'quran',
       surahNumber: 19,
@@ -98,6 +118,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 6,
       arabicText: 'ذِكْرُ رَحْمَتِ رَبِّكَ عَبْدَهُ زَكَرِيَّا ۝ إِذْ نَادَىٰ رَبَّهُ نِدَاءً خَفِيًّا ۝ قَالَ رَبِّ إِنِّي وَهَنَ الْعَظْمُ مِنِّي وَاشْتَعَلَ الرَّأْسُ شَيْبًا وَلَمْ أَكُن بِدُعَائِكَ رَبِّ شَقِيًّا ۝ وَإِنِّي خِفْتُ الْمَوَالِيَ مِن وَرَائِي وَكَانَتِ امْرَأَتِي عَاقِرًا فَهَبْ لِي مِن لَّدُنكَ وَلِيًّا ۝ يَرِثُنِي وَيَرِثُ مِنْ آلِ يَعْقُوبَ ۖ وَاجْعَلْهُ رَبِّ رَضِيًّا',
       translation: '[This is] a mention of the mercy of your Lord to His servant Zakariya when he called to his Lord a private supplication. He said, "My Lord, indeed my bones have weakened, and my head has filled with white, and never have I been in my supplication to You, my Lord, unhappy. And indeed, I fear the successors after me, and my wife has been barren, so give me from Yourself an heir who will inherit me and inherit from the family of Yaqub. And make him, my Lord, pleasing [to You]."',
+      translationFr: '[Ceci est] un rappel de la miséricorde de ton Seigneur envers Son serviteur Zakariya, lorsqu\'il invoqua son Seigneur d\'une invocation secrète. Il dit : « Ô mon Seigneur, mes os se sont affaiblis, ma tête s\'est enflammée de cheveux blancs, et je n\'ai jamais été malheureux dans mon invocation envers Toi, Seigneur. Je crains les héritiers après moi, et ma femme est stérile. Accorde-moi de Ta part un successeur qui héritera de moi et héritera de la famille de Yacoub. Et fais qu\'il Te soit agréable, Seigneur. »',
     } as QuranReference,
   },
   {
@@ -105,12 +126,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 8,
     content: "This expanded supplication reveals Zakariya's humility and wisdom. He called Allah privately (nida'an khafiyya), not making a public show of his prayer. He acknowledged his physical weakness - bones weakened, head white with age - yet expressed confidence that Allah had never disappointed him in prayer. His concern was for the future of faith: he feared that his relatives after him would not be righteous, and he wanted an heir to continue the prophetic mission.",
+    contentFr: "Cette supplication détaillée révèle l'humilité et la sagesse de Zakariya. Il invoqua Allah en privé (nida'an khafiyya), ne faisant pas de sa prière un spectacle public. Il reconnut sa faiblesse physique — os affaiblis, tête blanchie par l'âge — tout en exprimant sa confiance qu'Allah ne l'avait jamais déçu dans sa prière. Son souci était pour l'avenir de la foi : il craignait que ses proches après lui ne soient pas vertueux, et il voulait un héritier pour poursuivre la mission prophétique.",
   },
   {
     id: 'zakariya-9',
     type: 'quran_source',
     order: 9,
     content: "The angels gave Zakariya glad tidings of a son.",
+    contentFr: "Les anges donnèrent à Zakariya la bonne nouvelle d'un fils.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -120,6 +143,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 39,
       arabicText: 'فَنَادَتْهُ الْمَلَائِكَةُ وَهُوَ قَائِمٌ يُصَلِّي فِي الْمِحْرَابِ أَنَّ اللَّهَ يُبَشِّرُكَ بِيَحْيَىٰ مُصَدِّقًا بِكَلِمَةٍ مِّنَ اللَّهِ وَسَيِّدًا وَحَصُورًا وَنَبِيًّا مِّنَ الصَّالِحِينَ',
       translation: 'So the angels called him while he was standing in prayer in the chamber, "Indeed, Allah gives you good tidings of Yahya, confirming a word from Allah and [who will be] honorable, chaste, and a prophet from among the righteous."',
+      translationFr: 'Les anges l\'appelèrent alors qu\'il se tenait en prière dans le mihrab : « Allah t\'annonce la bonne nouvelle de Yahya, confirmant une parole d\'Allah, un chef, un chaste, un prophète d\'entre les vertueux. »',
     } as QuranReference,
   },
   {
@@ -127,12 +151,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 10,
     content: "While Zakariya stood in prayer in the very chamber where he had witnessed Allah's provision for Maryam, the angels came with the answer to his supplication. His son would be named Yahya - a name never given before. Yahya would confirm 'a word from Allah' (referring to Isa), be a leader among his people, be chaste and pure, and be a prophet from the righteous.",
+    contentFr: "Alors que Zakariya se tenait en prière dans la chambre même où il avait été témoin de la provision d'Allah pour Maryam, les anges vinrent avec la réponse à sa supplication. Son fils serait nommé Yahya — un nom jamais donné auparavant. Yahya confirmerait « une parole d'Allah » (en référence à Issa), serait un chef parmi son peuple, serait chaste et pur, et serait un prophète parmi les vertueux.",
   },
   {
     id: 'zakariya-11',
     type: 'quran_source',
     order: 11,
     content: "Zakariya was amazed at the news given his circumstances.",
+    contentFr: "Zakariya fut émerveillé par la nouvelle compte tenu de ses circonstances.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -142,6 +168,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 40,
       arabicText: 'قَالَ رَبِّ أَنَّىٰ يَكُونُ لِي غُلَامٌ وَقَدْ بَلَغَنِيَ الْكِبَرُ وَامْرَأَتِي عَاقِرٌ ۖ قَالَ كَذَٰلِكَ اللَّهُ يَفْعَلُ مَا يَشَاءُ',
       translation: 'He said, "My Lord, how will I have a boy when I have reached old age and my wife is barren?" [The angel] said, "Such is Allah; He does what He wills."',
+      translationFr: 'Il dit : « Ô mon Seigneur, comment aurais-je un garçon alors que la vieillesse m\'a atteint et que ma femme est stérile ? » [L\'ange] dit : « C\'est ainsi ! Allah fait ce qu\'Il veut. »',
     } as QuranReference,
   },
   {
@@ -149,12 +176,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 12,
     content: "Zakariya's question was not from doubt but from wonder. How could this happen when he was old and his wife was barren? The answer was simple yet profound: 'Such is Allah; He does what He wills.' Allah is not limited by natural causes. The same power that created the universe from nothing can certainly grant a child to elderly parents.",
+    contentFr: "La question de Zakariya ne venait pas du doute mais de l'émerveillement. Comment cela pouvait-il arriver alors qu'il était vieux et sa femme stérile ? La réponse était simple mais profonde : « C'est ainsi ! Allah fait ce qu'Il veut. » Allah n'est pas limité par les causes naturelles. La même puissance qui créa l'univers à partir de rien peut certainement accorder un enfant à des parents âgés.",
   },
   {
     id: 'zakariya-13',
     type: 'quran_source',
     order: 13,
     content: "Zakariya asked for a sign to confirm this miracle.",
+    contentFr: "Zakariya demanda un signe pour confirmer ce miracle.",
     source: {
       type: 'quran',
       surahNumber: 19,
@@ -164,6 +193,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 11,
       arabicText: 'قَالَ رَبِّ اجْعَل لِّي آيَةً ۚ قَالَ آيَتُكَ أَلَّا تُكَلِّمَ النَّاسَ ثَلَاثَ لَيَالٍ سَوِيًّا ۝ فَخَرَجَ عَلَىٰ قَوْمِهِ مِنَ الْمِحْرَابِ فَأَوْحَىٰ إِلَيْهِمْ أَن سَبِّحُوا بُكْرَةً وَعَشِيًّا',
       translation: '[Zakariya] said, "My Lord, make for me a sign." He said, "Your sign is that you will not speak to the people for three nights, [being] sound." So he came out to his people from the prayer chamber and signaled to them to exalt [Allah] in the morning and afternoon.',
+      translationFr: '[Zakariya] dit : « Ô mon Seigneur, donne-moi un signe. » Il dit : « Ton signe sera que tu ne pourras pas parler aux gens pendant trois nuits, tout en étant bien portant. » Il sortit alors vers son peuple du mihrab et leur fit signe de glorifier [Allah] matin et soir.',
     } as QuranReference,
   },
   {
@@ -171,12 +201,14 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 14,
     content: "The sign given to Zakariya was that he would be unable to speak to people for three days, though he was physically healthy. During this time, he could only communicate through gestures and could use his tongue only for glorifying Allah. This enforced silence was both a sign and a preparation - it turned him inward to contemplation and gratitude.",
+    contentFr: "Le signe donné à Zakariya fut qu'il serait incapable de parler aux gens pendant trois jours, bien qu'il soit physiquement en bonne santé. Pendant ce temps, il ne pouvait communiquer que par gestes et ne pouvait utiliser sa langue que pour glorifier Allah. Ce silence imposé était à la fois un signe et une préparation — il le tourna vers l'intérieur pour la contemplation et la gratitude.",
   },
   {
     id: 'zakariya-15',
     type: 'quran_source',
     order: 15,
     content: "Allah's command to Yahya came even in childhood.",
+    contentFr: "Le commandement d'Allah à Yahya vint dès l'enfance.",
     source: {
       type: 'quran',
       surahNumber: 19,
@@ -186,6 +218,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 15,
       arabicText: 'يَا يَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ ۖ وَآتَيْنَاهُ الْحُكْمَ صَبِيًّا ۝ وَحَنَانًا مِّن لَّدُنَّا وَزَكَاةً ۖ وَكَانَ تَقِيًّا ۝ وَبَرًّا بِوَالِدَيْهِ وَلَمْ يَكُن جَبَّارًا عَصِيًّا ۝ وَسَلَامٌ عَلَيْهِ يَوْمَ وُلِدَ وَيَوْمَ يَمُوتُ وَيَوْمَ يُبْعَثُ حَيًّا',
       translation: '"O Yahya, take the Scripture with determination." And We gave him wisdom [while yet] a boy, and affection from Us and purity, and he was fearing of Allah, and dutiful to his parents, and he was not a disobedient tyrant. And peace be upon him the day he was born and the day he dies and the day he is raised alive.',
+      translationFr: '« Ô Yahya, prends le Livre avec force. » Et Nous lui donnâmes la sagesse alors qu\'il était encore enfant, ainsi que la tendresse de Notre part et la pureté, et il était pieux, et dévoué envers ses parents, et il n\'était ni violent ni désobéissant. Que la paix soit sur lui le jour où il naquit, le jour où il mourra et le jour où il sera ressuscité vivant.',
     } as QuranReference,
   },
   {
@@ -193,24 +226,28 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 16,
     content: "Yahya grew to fulfill every hope his father had. Even as a child, he was given wisdom and the command to hold fast to the Scripture. He was filled with compassion, purity, and consciousness of Allah. He was dutiful to his parents - including Zakariya, who had prayed so earnestly for him. Allah sent peace upon Yahya at his birth, at his death, and at his resurrection.",
+    contentFr: "Yahya grandit pour accomplir chaque espoir que son père avait nourri. Même enfant, il reçut la sagesse et le commandement de s'attacher fermement aux Écritures. Il était rempli de compassion, de pureté et de conscience d'Allah. Il était dévoué envers ses parents — y compris Zakariya, qui avait si ardemment prié pour lui. Allah envoya la paix sur Yahya à sa naissance, à sa mort et à sa résurrection.",
   },
   {
     id: 'zakariya-17',
     type: 'narrative',
     order: 17,
     content: "According to various accounts, Zakariya lived to see his son grow into a righteous prophet. Yahya would go on to call people to repentance, living an ascetic life of devotion. He was the one who would recognize and confirm Isa when he began his mission. Zakariya's prayer had been answered beyond his imaginings.",
+    contentFr: "Selon divers récits, Zakariya vécut assez longtemps pour voir son fils devenir un prophète vertueux. Yahya allait appeler les gens au repentir, menant une vie ascétique de dévotion. Il serait celui qui reconnaîtrait et confirmerait Issa quand celui-ci commencerait sa mission. La prière de Zakariya avait été exaucée au-delà de ses espérances.",
   },
   {
     id: 'zakariya-18',
     type: 'narrative',
     order: 18,
     content: "Traditions vary regarding Zakariya's death. Some narrations suggest he was killed by his own people, martyred for his faith like many prophets before him. Others say he died naturally after a long life of service. Whatever the case, his legacy lived on through his son and through the example of faith he left behind.",
+    contentFr: "Les traditions varient concernant la mort de Zakariya. Certaines narrations suggèrent qu'il fut tué par son propre peuple, martyrisé pour sa foi comme beaucoup de prophètes avant lui. D'autres disent qu'il mourut naturellement après une longue vie de service. Quoi qu'il en soit, son héritage perdura à travers son fils et à travers l'exemple de foi qu'il laissa derrière lui.",
   },
   {
     id: 'zakariya-19',
     type: 'quran_source',
     order: 19,
     content: "Allah lists Zakariya among the righteous prophets.",
+    contentFr: "Allah cite Zakariya parmi les prophètes vertueux.",
     source: {
       type: 'quran',
       surahNumber: 6,
@@ -220,6 +257,7 @@ const zakariyaStoryContent: StoryContentBlock[] = [
       ayahEnd: 85,
       arabicText: 'وَزَكَرِيَّا وَيَحْيَىٰ وَعِيسَىٰ وَإِلْيَاسَ ۖ كُلٌّ مِّنَ الصَّالِحِينَ',
       translation: 'And Zakariya and Yahya and Isa and Ilyas - and all were of the righteous.',
+      translationFr: 'Et Zakariya, Yahya, Issa et Ilyas : tous font partie des vertueux.',
     } as QuranReference,
   },
   {
@@ -227,18 +265,21 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: "In this verse, Zakariya is mentioned alongside his son Yahya and the prophet Isa whom he helped raise through his guardianship of Maryam. All are counted among the righteous. Zakariya's story is thus intimately connected to the stories of Maryam, Yahya, and Isa - forming a blessed family unit in the closing chapters of Israelite prophethood.",
+    contentFr: "Dans ce verset, Zakariya est mentionné aux côtés de son fils Yahya et du prophète Issa qu'il aida à élever par sa tutelle de Maryam. Tous sont comptés parmi les vertueux. L'histoire de Zakariya est ainsi intimement liée aux histoires de Maryam, Yahya et Issa — formant une unité familiale bénie dans les derniers chapitres de la prophétie israélite.",
   },
   {
     id: 'zakariya-21',
     type: 'narrative',
     order: 21,
     content: "The lessons from Zakariya's life are timeless. Never despair of Allah's mercy, no matter how impossible your situation seems. Make sincere, private supplications, acknowledging both your weakness and Allah's power. Ask for righteous offspring who will carry on goodness after you. And recognize that serving Allah's cause - as Zakariya did in caring for Maryam - brings unexpected blessings.",
+    contentFr: "Les leçons de la vie de Zakariya sont intemporelles. Ne jamais désespérer de la miséricorde d'Allah, peu importe à quel point votre situation semble impossible. Faites des supplications sincères et privées, reconnaissant à la fois votre faiblesse et la puissance d'Allah. Demandez une progéniture vertueuse qui perpétuera le bien après vous. Et reconnaissez que servir la cause d'Allah — comme Zakariya le fit en prenant soin de Maryam — apporte des bénédictions inattendues.",
   },
   {
     id: 'zakariya-22',
     type: 'narrative',
     order: 22,
     content: "Prophet Zakariya, the Guardian of Maryam and father of Yahya, remains an inspiration for all who pray for that which seems impossible. His supplication, 'Rabbi hab li min ladunka dhurriyyatan tayyibah, innaka sami' ad-du'a' (My Lord, grant me from Yourself good offspring; indeed You are the Hearer of supplication), echoes through the ages as a model of hopeful, humble prayer.",
+    contentFr: "Le Prophète Zakariya, le Gardien de Maryam et père de Yahya, reste une inspiration pour tous ceux qui prient pour ce qui semble impossible. Sa supplication, « Rabbi hab li min ladunka dhurriyyatan tayyibah, innaka sami' ad-du'a' » (Mon Seigneur, accorde-moi de Ta part une descendance bonne ; Tu es certes Celui qui entend la supplication), résonne à travers les âges comme un modèle de prière pleine d'espoir et d'humilité.",
   },
 ];
 

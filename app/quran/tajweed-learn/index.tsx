@@ -12,6 +12,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import {
   TAJWEED_RULES,
   getAllTajweedCategories,
@@ -30,15 +32,26 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 type TabType = 'learn' | 'quiz';
 
-const CATEGORY_NAMES: Record<string, { english: string; arabic: string }> = {
-  noon_sakinah: { english: 'Noon Sakinah & Tanween', arabic: 'النون الساكنة والتنوين' },
-  meem_sakinah: { english: 'Meem Sakinah', arabic: 'الميم الساكنة' },
-  madd: { english: 'Madd (Elongation)', arabic: 'المد' },
-  qalqalah: { english: 'Qalqalah (Echo)', arabic: 'القلقلة' },
-  ghunnah: { english: 'Ghunnah (Nasal)', arabic: 'الغنة' },
-  lam_shamsiyyah: { english: 'Lam Rules', arabic: 'اللام' },
-  recitation_styles: { english: 'Recitation Styles', arabic: 'أساليب التلاوة' },
-  other: { english: 'Other Rules', arabic: 'قواعد أخرى' },
+const CATEGORY_ARABIC: Record<string, string> = {
+  noon_sakinah: 'النون الساكنة والتنوين',
+  meem_sakinah: 'الميم الساكنة',
+  madd: 'المد',
+  qalqalah: 'القلقلة',
+  ghunnah: 'الغنة',
+  lam_shamsiyyah: 'اللام',
+  recitation_styles: 'أساليب التلاوة',
+  other: 'قواعد أخرى',
+};
+
+const CATEGORY_I18N_KEYS: Record<string, string> = {
+  noon_sakinah: 'tajweedFeature.noonSakinah',
+  meem_sakinah: 'tajweedFeature.meemSakinah',
+  madd: 'tajweedFeature.madd',
+  qalqalah: 'tajweedFeature.qalqalah',
+  ghunnah: 'tajweedFeature.ghunnah',
+  lam_shamsiyyah: 'tajweedFeature.lamRules',
+  recitation_styles: 'tajweedFeature.recitationStyles',
+  other: 'tajweedFeature.otherRules',
 };
 
 // Quiz Set Card Component
@@ -53,6 +66,7 @@ function QuizSetCard({
   questionCount: number;
   onPress: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Pressable style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
@@ -60,7 +74,7 @@ function QuizSetCard({
       </View>
       <View style={styles.quizSetInfo}>
         <Text style={styles.quizSetName}>{setName}</Text>
-        <Text style={styles.quizSetCount}>{questionCount} questions</Text>
+        <Text style={styles.quizSetCount}>{questionCount} {t('quranQuiz.questions')}</Text>
       </View>
       <Ionicons name="play-circle" size={28} color="#14b8a6" />
     </Pressable>
@@ -68,6 +82,8 @@ function QuizSetCard({
 }
 
 export default function TajweedLearnScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [activeTab, setActiveTab] = useState<TabType>('learn');
   const slideAnim = useRef(new Animated.Value(0)).current;
   const { isTajweedRuleLearned, isTajweedRuleMastered, progress } = useQuranStore();
@@ -107,7 +123,7 @@ export default function TajweedLearnScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Tajweed Rules</Text>
+          <Text style={styles.title}>{t('tajweedFeature.title')}</Text>
           <Text style={styles.titleArabic}>أحكام التجويد</Text>
         </View>
         <View style={{ width: 40 }} />
@@ -146,7 +162,7 @@ export default function TajweedLearnScreen() {
                 activeTab === 'learn' && styles.tabTextActive,
               ]}
             >
-              Learn
+              {t('tajweedFeature.learn')}
             </Text>
           </Pressable>
           <Pressable
@@ -164,7 +180,7 @@ export default function TajweedLearnScreen() {
                 activeTab === 'quiz' && styles.tabTextActive,
               ]}
             >
-              Quiz
+              {t('tajweedFeature.quiz')}
             </Text>
           </Pressable>
         </View>
@@ -177,7 +193,7 @@ export default function TajweedLearnScreen() {
             {/* Progress Overview */}
             <View style={styles.progressCard}>
               <View style={styles.progressHeader}>
-                <Text style={styles.progressTitle}>Your Progress</Text>
+                <Text style={styles.progressTitle}>{t('common.yourProgress')}</Text>
                 <Text style={styles.progressPercent}>{getTotalProgress()}%</Text>
               </View>
               <View style={styles.progressBar}>
@@ -188,19 +204,19 @@ export default function TajweedLearnScreen() {
                   <Text style={styles.progressStatValue}>
                     {progress.tajweedProgress.rulesLearned.length}
                   </Text>
-                  <Text style={styles.progressStatLabel}>Learned</Text>
+                  <Text style={styles.progressStatLabel}>{t('common.learned')}</Text>
                 </View>
                 <View style={styles.progressStat}>
                   <Text style={[styles.progressStatValue, { color: '#f59e0b' }]}>
                     {progress.tajweedProgress.rulesMastered.length}
                   </Text>
-                  <Text style={styles.progressStatLabel}>Mastered</Text>
+                  <Text style={styles.progressStatLabel}>{t('common.mastered')}</Text>
                 </View>
                 <View style={styles.progressStat}>
                   <Text style={[styles.progressStatValue, { color: '#8b5cf6' }]}>
                     {TAJWEED_RULES.length}
                   </Text>
-                  <Text style={styles.progressStatLabel}>Total</Text>
+                  <Text style={styles.progressStatLabel}>{t('tajweedFeature.total')}</Text>
                 </View>
               </View>
             </View>
@@ -209,7 +225,8 @@ export default function TajweedLearnScreen() {
             <View style={styles.categoriesContainer}>
               {categories.map((category) => {
                 const rules = getTajweedRulesByCategory(category);
-                const categoryInfo = CATEGORY_NAMES[category] || { english: category, arabic: '' };
+                const categoryArabic = CATEGORY_ARABIC[category] || '';
+                const categoryI18nKey = CATEGORY_I18N_KEYS[category];
                 const categoryColor = TAJWEED_CATEGORY_COLORS[category as keyof typeof TAJWEED_CATEGORY_COLORS] || '#64748b';
 
                 return (
@@ -219,9 +236,9 @@ export default function TajweedLearnScreen() {
                         <View style={[styles.categoryDot, { backgroundColor: categoryColor }]} />
                       </View>
                       <View style={styles.categoryTitles}>
-                        <Text style={styles.categoryTitle}>{categoryInfo.english}</Text>
+                        <Text style={styles.categoryTitle}>{categoryI18nKey ? t(categoryI18nKey) : category}</Text>
                         <Text style={[styles.categoryArabic, { color: categoryColor }]}>
-                          {categoryInfo.arabic}
+                          {categoryArabic}
                         </Text>
                       </View>
                     </View>
@@ -240,11 +257,11 @@ export default function TajweedLearnScreen() {
                           <View style={[styles.ruleColor, { backgroundColor: rule.colorCode }]} />
                           <View style={styles.ruleContent}>
                             <View style={styles.ruleHeader}>
-                              <Text style={styles.ruleName}>{rule.nameEnglish}</Text>
+                              <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
                               <Text style={styles.ruleArabic}>{rule.nameArabic}</Text>
                             </View>
                             <Text style={styles.ruleDesc} numberOfLines={2}>
-                              {rule.description}
+                              {lc(rule.description, rule.descriptionFr)}
                             </Text>
                           </View>
                           <View style={styles.ruleStatus}>
@@ -272,9 +289,9 @@ export default function TajweedLearnScreen() {
               <View style={styles.quizHeaderIcon}>
                 <Ionicons name="trophy" size={40} color="#f59e0b" />
               </View>
-              <Text style={styles.quizHeaderTitle}>Test Your Tajweed</Text>
+              <Text style={styles.quizHeaderTitle}>{t('tajweedFeature.testYourTajweed')}</Text>
               <Text style={styles.quizHeaderSubtitle}>
-                Challenge yourself with {totalSets} sets of questions about Tajweed rules
+                {t('tajweedFeature.challengeWith')} {totalSets} {t('tajweedFeature.setsOfQuestions')}
               </Text>
             </View>
 
@@ -282,10 +299,10 @@ export default function TajweedLearnScreen() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Ionicons name="list" size={20} color="#14b8a6" />
-                <Text style={styles.sectionTitle}>Quiz Sets</Text>
+                <Text style={styles.sectionTitle}>{t('tajweedFeature.quizSets')}</Text>
               </View>
               <Text style={styles.sectionSubtitle}>
-                Complete each set to master Tajweed rules
+                {t('tajweedFeature.completeEachSet')}
               </Text>
 
               {Array.from({ length: totalSets }).map((_, index) => {
@@ -315,9 +332,9 @@ export default function TajweedLearnScreen() {
               >
                 <Ionicons name="shuffle" size={24} color="#ffffff" />
                 <View style={styles.randomQuizText}>
-                  <Text style={styles.randomQuizTitle}>Random Quiz</Text>
+                  <Text style={styles.randomQuizTitle}>{t('quranQuiz.randomQuiz')}</Text>
                   <Text style={styles.randomQuizSubtitle}>
-                    Mix of all Tajweed questions
+                    {t('quranQuiz.mixOfAll')}
                   </Text>
                 </View>
                 <Ionicons name="arrow-forward" size={24} color="#ffffff" />

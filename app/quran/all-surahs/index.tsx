@@ -3,7 +3,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SURAHS } from '../../../src/data/arabic/quran/surahs';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 
 // Normalize text for better search matching
 const normalizeText = (text: string): string => {
@@ -15,6 +17,8 @@ const normalizeText = (text: string): string => {
 };
 
 export default function AllSurahsScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSurahs = SURAHS.filter((surah) => {
@@ -72,11 +76,11 @@ export default function AllSurahsScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>All Surahs</Text>
+          <Text style={styles.title}>{t('allSurahsFeature.title')}</Text>
           <Text style={styles.titleArabic}>جَمِيع السُّوَر</Text>
         </View>
         <View style={styles.countBadge}>
-          <Text style={styles.countText}>114</Text>
+          <Text style={styles.countText}>{t('allSurahsFeature.count')}</Text>
         </View>
       </View>
 
@@ -86,7 +90,7 @@ export default function AllSurahsScreen() {
           <Ionicons name="search" size={20} color="#64748b" />
           <TextInput
             style={styles.searchInput}
-            placeholder="Search: fatiha, baqara, 36, cow..."
+            placeholder={t('allSurahsFeature.searchPlaceholder')}
             placeholderTextColor="#64748b"
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -116,7 +120,7 @@ export default function AllSurahsScreen() {
                 <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
                 <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
               </View>
-              <Text style={styles.surahMeaning}>{surah.meaning}</Text>
+              <Text style={styles.surahMeaning}>{lc(surah.meaning, surah.meaningFr)}</Text>
               <View style={styles.surahMeta}>
                 <View style={[
                   styles.typeBadge,
@@ -126,14 +130,14 @@ export default function AllSurahsScreen() {
                     styles.typeBadgeText,
                     { color: surah.revelationType === 'Meccan' ? '#10b981' : '#3b82f6' }
                   ]}>
-                    {surah.revelationType === 'Meccan' ? 'Meccan' : 'Medinan'}
+                    {surah.revelationType === 'Meccan' ? t('surahFeature.meccan') : t('surahFeature.medinan')}
                   </Text>
                 </View>
                 <Text style={styles.surahMetaText}>
-                  {surah.ayahCount} verses
+                  {surah.ayahCount} {t('surahFeature.verses')}
                 </Text>
                 <Text style={styles.surahMetaText}>
-                  Juz {surah.juz}
+                  {t('juzFeature.juz')} {surah.juz}
                 </Text>
               </View>
             </View>

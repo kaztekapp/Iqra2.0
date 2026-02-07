@@ -6,6 +6,7 @@ export interface ArabicLetter {
   id: string;
   letter: string;
   name: string;
+  nameFr?: string;
   nameArabic: string;
   transliteration: string;
   audioUrl?: string;
@@ -16,10 +17,12 @@ export interface ArabicLetter {
     final: string;
   };
   soundDescription: string;
+  soundDescriptionFr?: string;
   examples: {
     word: string;
     transliteration: string;
     meaning: string;
+    meaningFr?: string;
     position: 'initial' | 'medial' | 'final';
   }[];
   order: number;
@@ -29,10 +32,12 @@ export interface ArabicLetter {
 export interface VocabularyTheme {
   id: string;
   name: string;
+  nameFr?: string;
   nameArabic: string;
   icon: string;
   color: string;
   description: string;
+  descriptionFr?: string;
   wordCount: number;
   level: ArabicLevel;
   order: number;
@@ -45,6 +50,7 @@ export interface VocabularyWord {
   arabicWithVowels: string;
   transliteration: string;
   english: string;
+  french?: string;
   partOfSpeech: 'noun' | 'verb' | 'adjective' | 'adverb' | 'preposition' | 'pronoun' | 'other';
   gender?: 'masculine' | 'feminine';
   plural?: string;
@@ -53,6 +59,7 @@ export interface VocabularyWord {
     arabic: string;
     transliteration: string;
     english: string;
+    french?: string;
   };
   level: ArabicLevel;
   order: number;
@@ -61,8 +68,10 @@ export interface VocabularyWord {
 export interface GrammarLesson {
   id: string;
   title: string;
+  titleFr?: string;
   titleArabic: string;
   description: string;
+  descriptionFr?: string;
   level: ArabicLevel;
   category: 'articles' | 'pronouns' | 'verbs' | 'nouns' | 'adjectives' | 'sentences' | 'other';
   content: GrammarContent[];
@@ -73,16 +82,23 @@ export interface GrammarLesson {
 export interface GrammarContent {
   type: 'text' | 'example' | 'table' | 'rule' | 'note' | 'letters_grid' | 'description' | 'examples_grid' | 'comparison_grid';
   content: string;
+  contentFr?: string;
   arabic?: string;
   transliteration?: string;
   translation?: string;
+  translationFr?: string;
   tableData?: {
+    headers: string[];
+    rows: string[][];
+  };
+  tableDataFr?: {
     headers: string[];
     rows: string[][];
   };
   // For bilingual descriptions with audio
   arabicDescription?: string;
   arabicTranslation?: string; // English translation of arabicDescription
+  arabicTranslationFr?: string;
   // For letters grid display (sun/moon letters)
   letters?: string[];
   letterType?: 'sun' | 'moon';
@@ -90,20 +106,24 @@ export interface GrammarContent {
   examples?: {
     arabic: string;
     english: string;
+    french?: string;
   }[];
   // For comparison grid (indefinite vs definite, etc.)
   comparisons?: {
-    left: { arabic: string; label: string };
-    right: { arabic: string; label: string };
+    left: { arabic: string; label: string; labelFr?: string };
+    right: { arabic: string; label: string; labelFr?: string };
   }[];
   leftLabel?: string;
+  leftLabelFr?: string;
   rightLabel?: string;
+  rightLabelFr?: string;
 }
 
 export interface VerbExample {
   arabic: string;
   transliteration: string;
   english: string;
+  french?: string;
   tense: 'past' | 'present' | 'future' | 'imperative';
 }
 
@@ -115,6 +135,7 @@ export interface ArabicVerb {
   pastTense: string;
   presentTense: string;
   meaning: string;
+  meaningFr?: string;
   level: ArabicLevel;
   conjugations: VerbConjugation;
   examples?: VerbExample[];
@@ -155,12 +176,14 @@ export interface ImperativeTable {
 export interface ReadingText {
   id: string;
   title: string;
+  titleFr?: string;
   titleArabic: string;
   level: ArabicLevel;
   textWithVowels: string;
   textWithoutVowels: string;
   transliteration: string;
   translation: string;
+  translationFr?: string;
   audioUrl?: string;
   vocabulary: string[];
   comprehensionQuestions: ComprehensionQuestion[];
@@ -171,9 +194,11 @@ export interface ComprehensionQuestion {
   id: string;
   questionArabic: string;
   questionEnglish: string;
+  questionFrench?: string;
   options: {
     arabic: string;
     english: string;
+    french?: string;
     isCorrect: boolean;
   }[];
 }
@@ -194,18 +219,22 @@ export interface Exercise {
   moduleType: 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading';
   level: ArabicLevel;
   question: string;
+  questionFr?: string;
   questionArabic?: string;
   audioUrl?: string;
   options?: ExerciseOption[];
   correctAnswer: string | string[];
   hint?: string;
+  hintFr?: string;
   explanation?: string;
+  explanationFr?: string;
   xpReward: number;
 }
 
 export interface ExerciseOption {
   id: string;
   text: string;
+  textFr?: string;
   textArabic?: string;
   isCorrect: boolean;
 }

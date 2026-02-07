@@ -2,12 +2,15 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 
 const readingTexts = [
   {
     id: 'intro-1',
     title: 'Introducing Yourself',
+    titleFr: 'Se presenter',
     titleArabic: 'التَّعْرِيفُ بِالنَّفْس',
     level: 'beginner',
     wordCount: 25,
@@ -18,6 +21,7 @@ const readingTexts = [
   {
     id: 'family-1',
     title: 'My Family',
+    titleFr: 'Ma famille',
     titleArabic: 'عَائِلَتِي',
     level: 'beginner',
     wordCount: 40,
@@ -28,6 +32,7 @@ const readingTexts = [
   {
     id: 'daily-routine',
     title: 'Daily Routine',
+    titleFr: 'Routine quotidienne',
     titleArabic: 'الرُّوتِينُ الْيَوْمِي',
     level: 'beginner',
     wordCount: 50,
@@ -38,6 +43,7 @@ const readingTexts = [
   {
     id: 'at-school',
     title: 'At School',
+    titleFr: "A l'ecole",
     titleArabic: 'فِي الْمَدْرَسَة',
     level: 'intermediate',
     wordCount: 75,
@@ -48,6 +54,7 @@ const readingTexts = [
   {
     id: 'at-market',
     title: 'At the Market',
+    titleFr: 'Au marche',
     titleArabic: 'فِي السُّوق',
     level: 'intermediate',
     wordCount: 80,
@@ -58,6 +65,7 @@ const readingTexts = [
   {
     id: 'weather',
     title: 'The Weather',
+    titleFr: 'La meteo',
     titleArabic: 'الطَّقْس',
     level: 'intermediate',
     wordCount: 60,
@@ -68,6 +76,7 @@ const readingTexts = [
   {
     id: 'travel-story',
     title: 'A Travel Story',
+    titleFr: 'Une histoire de voyage',
     titleArabic: 'قِصَّةُ سَفَر',
     level: 'advanced',
     wordCount: 150,
@@ -78,6 +87,7 @@ const readingTexts = [
   {
     id: 'arab-culture',
     title: 'Arab Culture',
+    titleFr: 'Culture arabe',
     titleArabic: 'الثَّقَافَةُ الْعَرَبِيَّة',
     level: 'advanced',
     wordCount: 120,
@@ -88,13 +98,15 @@ const readingTexts = [
 ];
 
 export default function ReadingScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { progress, showVowels, setShowVowels } = useProgressStore();
   const completedTexts = progress.readingProgress.textsCompleted;
   const startedTexts = progress.readingProgress.textsStarted;
 
-  const beginnerTexts = readingTexts.filter((t) => t.level === 'beginner');
-  const intermediateTexts = readingTexts.filter((t) => t.level === 'intermediate');
-  const advancedTexts = readingTexts.filter((t) => t.level === 'advanced');
+  const beginnerTexts = readingTexts.filter((item) => item.level === 'beginner');
+  const intermediateTexts = readingTexts.filter((item) => item.level === 'intermediate');
+  const advancedTexts = readingTexts.filter((item) => item.level === 'advanced');
 
   const getTextStatus = (textId: string) => {
     if (completedTexts.includes(textId)) return 'completed';
@@ -111,7 +123,7 @@ export default function ReadingScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Reading</Text>
+            <Text style={styles.title}>{t('reading.title')}</Text>
             <Text style={styles.titleArabic}>الْقِرَاءَة</Text>
           </View>
         </View>
@@ -122,9 +134,9 @@ export default function ReadingScreen() {
           <View style={styles.introCardContent}>
             <Ionicons name="book" size={24} color="#10b981" />
             <View style={styles.introTextContent}>
-              <Text style={styles.introTitle}>Arabic Reading Practice</Text>
+              <Text style={styles.introTitle}>{t('reading.introTitle')}</Text>
               <Text style={styles.introText}>
-                Improve your reading skills with authentic Arabic texts. Start with beginner passages and progress to advanced stories.
+                {t('reading.introText')}
               </Text>
             </View>
           </View>
@@ -142,11 +154,11 @@ export default function ReadingScreen() {
               color="#10b981"
             />
             <View style={styles.vowelText}>
-              <Text style={styles.vowelTitle}>Vowel Marks (Harakat)</Text>
+              <Text style={styles.vowelTitle}>{t('reading.vowelMarks')}</Text>
               <Text style={styles.vowelDesc}>
                 {showVowels
-                  ? 'Showing vowels - recommended for beginners'
-                  : 'Hiding vowels - advanced reading mode'}
+                  ? t('reading.vowelsShowing')
+                  : t('reading.vowelsHidden')}
               </Text>
             </View>
           </View>
@@ -159,24 +171,24 @@ export default function ReadingScreen() {
         <View style={styles.progressCard}>
           <View style={styles.progressHeader}>
             <Ionicons name="stats-chart" size={20} color="#10b981" />
-            <Text style={styles.progressTitle}>Your Progress</Text>
+            <Text style={styles.progressTitle}>{t('common.yourProgress')}</Text>
           </View>
           <View style={styles.progressStats}>
             <View style={styles.progressStat}>
               <Text style={[styles.progressValue, { color: '#10b981' }]}>{completedTexts.length}</Text>
-              <Text style={styles.progressLabel}>Completed</Text>
+              <Text style={styles.progressLabel}>{t('common.completed')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={[styles.progressValue, { color: '#D4AF37' }]}>{startedTexts.length}</Text>
-              <Text style={styles.progressLabel}>In Progress</Text>
+              <Text style={styles.progressLabel}>{t('common.inProgress')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={styles.progressValue}>
                 {readingTexts.length - completedTexts.length - startedTexts.length}
               </Text>
-              <Text style={styles.progressLabel}>Remaining</Text>
+              <Text style={styles.progressLabel}>{t('common.remaining')}</Text>
             </View>
           </View>
         </View>
@@ -188,10 +200,10 @@ export default function ReadingScreen() {
               <View style={[styles.levelBadge, { backgroundColor: '#10b98120' }]}>
                 <Ionicons name="leaf" size={16} color="#10b981" />
               </View>
-              <Text style={styles.sectionTitle}>Beginner</Text>
+              <Text style={styles.sectionTitle}>{t('common.beginner')}</Text>
               <Text style={styles.sectionTitleAr}>الْمُبْتَدِئ</Text>
             </View>
-            <Text style={styles.sectionCount}>{beginnerTexts.length} texts</Text>
+            <Text style={styles.sectionCount}>{t('reading.textsCount', { count: beginnerTexts.length })}</Text>
           </View>
 
           {beginnerTexts.map((text) => {
@@ -207,7 +219,7 @@ export default function ReadingScreen() {
                 </View>
                 <View style={styles.textContent}>
                   <View style={styles.textHeader}>
-                    <Text style={styles.textTitle}>{text.title}</Text>
+                    <Text style={styles.textTitle}>{lc(text.title, text.titleFr)}</Text>
                     {status === 'completed' && (
                       <Ionicons name="checkmark-circle" size={20} color="#10b981" />
                     )}
@@ -220,7 +232,7 @@ export default function ReadingScreen() {
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>
                       <Ionicons name="document-text-outline" size={12} color="#64748b" />
-                      <Text style={styles.textMeta}>{text.wordCount} words</Text>
+                      <Text style={styles.textMeta}>{text.wordCount} {t('common.words')}</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={18} color="#64748b" />
                   </View>
@@ -237,10 +249,10 @@ export default function ReadingScreen() {
               <View style={[styles.levelBadge, { backgroundColor: '#6366f120' }]}>
                 <Ionicons name="trending-up" size={16} color="#6366f1" />
               </View>
-              <Text style={styles.sectionTitle}>Intermediate</Text>
+              <Text style={styles.sectionTitle}>{t('common.intermediate')}</Text>
               <Text style={styles.sectionTitleAr}>الْمُتَوَسِّط</Text>
             </View>
-            <Text style={styles.sectionCount}>{intermediateTexts.length} texts</Text>
+            <Text style={styles.sectionCount}>{t('reading.textsCount', { count: intermediateTexts.length })}</Text>
           </View>
 
           {intermediateTexts.map((text) => {
@@ -256,7 +268,7 @@ export default function ReadingScreen() {
                 </View>
                 <View style={styles.textContent}>
                   <View style={styles.textHeader}>
-                    <Text style={styles.textTitle}>{text.title}</Text>
+                    <Text style={styles.textTitle}>{lc(text.title, text.titleFr)}</Text>
                     {status === 'completed' && (
                       <Ionicons name="checkmark-circle" size={20} color="#10b981" />
                     )}
@@ -269,7 +281,7 @@ export default function ReadingScreen() {
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>
                       <Ionicons name="document-text-outline" size={12} color="#64748b" />
-                      <Text style={styles.textMeta}>{text.wordCount} words</Text>
+                      <Text style={styles.textMeta}>{text.wordCount} {t('common.words')}</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={18} color="#64748b" />
                   </View>
@@ -286,10 +298,10 @@ export default function ReadingScreen() {
               <View style={[styles.levelBadge, { backgroundColor: '#D4AF3720' }]}>
                 <Ionicons name="trophy" size={16} color="#D4AF37" />
               </View>
-              <Text style={styles.sectionTitle}>Advanced</Text>
+              <Text style={styles.sectionTitle}>{t('common.advanced')}</Text>
               <Text style={styles.sectionTitleAr}>الْمُتَقَدِّم</Text>
             </View>
-            <Text style={styles.sectionCount}>{advancedTexts.length} texts</Text>
+            <Text style={styles.sectionCount}>{t('reading.textsCount', { count: advancedTexts.length })}</Text>
           </View>
 
           {advancedTexts.map((text) => {
@@ -305,7 +317,7 @@ export default function ReadingScreen() {
                 </View>
                 <View style={styles.textContent}>
                   <View style={styles.textHeader}>
-                    <Text style={styles.textTitle}>{text.title}</Text>
+                    <Text style={styles.textTitle}>{lc(text.title, text.titleFr)}</Text>
                     {status === 'completed' && (
                       <Ionicons name="checkmark-circle" size={20} color="#10b981" />
                     )}
@@ -318,7 +330,7 @@ export default function ReadingScreen() {
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>
                       <Ionicons name="document-text-outline" size={12} color="#64748b" />
-                      <Text style={styles.textMeta}>{text.wordCount} words</Text>
+                      <Text style={styles.textMeta}>{text.wordCount} {t('common.words')}</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={18} color="#64748b" />
                   </View>

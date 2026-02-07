@@ -6,11 +6,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../.
 export const ibrahimStory: Prophet = {
   id: 'ibrahim',
   nameEnglish: 'Ibrahim',
+  nameFrench: 'Ibrahim',
   nameArabic: 'إبراهيم',
   order: 6,
   title: 'The Friend of Allah',
+  titleFr: 'L\'ami d\'Allah',
   titleArabic: 'خليل الله',
   summary: 'Prophet Ibrahim is one of the greatest prophets, honored as Khalilullah - the Friend of Allah. His life spans from questioning idol worship, being thrown into fire, to building the Kaaba with his son Ismail. He is the father of Prophets Ismail and Ishaq, ancestor of Prophet Muhammad ﷺ.',
+  summaryFr: 'Le prophète Ibrahim est l\'un des plus grands prophètes, honoré du titre de Khalilullah - l\'Ami d\'Allah. Sa vie s\'étend de la remise en question de l\'idolâtrie, à son jet dans le feu, jusqu\'à la construction de la Kaaba avec son fils Ismail. Il est le père des prophètes Ismail et Ishaq, ancêtre du prophète Muhammad ﷺ.',
   hasSubStories: false,
   lessons: [
     'True faith requires complete submission to Allah',
@@ -18,6 +21,13 @@ export const ibrahimStory: Prophet = {
     'Standing firm for truth even when alone',
     'Trust in Allah transforms trials into blessings',
     'The greatest sacrifices bring the greatest rewards',
+  ],
+  lessonsFr: [
+    'La vraie foi exige une soumission complète à Allah',
+    'La réflexion rationnelle mène à la reconnaissance du Créateur',
+    'Rester ferme pour la vérité même quand on est seul',
+    'La confiance en Allah transforme les épreuves en bénédictions',
+    'Les plus grands sacrifices apportent les plus grandes récompenses',
   ],
   estimatedReadTime: 35,
   quranMentions: 69,
@@ -30,18 +40,21 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: 'Ibrahim was born in the ancient city of Ur in Mesopotamia (modern-day Iraq), during a time of deep idol worship. His father Azar was a craftsman who carved idols for people to worship. From a young age, Ibrahim\'s pure heart questioned the worship of these lifeless statues.',
+    contentFr: 'Ibrahim naquit dans l\'ancienne ville d\'Ur en Mésopotamie (l\'Irak actuel), à une époque de profonde idolâtrie. Son père Azar était un artisan qui sculptait des idoles pour que les gens les adorent. Dès son plus jeune âge, le cœur pur d\'Ibrahim remit en question l\'adoration de ces statues sans vie.',
   },
   {
     id: 'ibrahim-2',
     type: 'narrative',
     order: 2,
     content: 'While the people bowed to statues of wood and stone, Ibrahim\'s mind sought the truth. He could not understand how beings that could not see, hear, or benefit anyone could be worthy of worship. Allah guided his heart towards reflection.',
+    contentFr: 'Alors que les gens s\'inclinaient devant des statues de bois et de pierre, l\'esprit d\'Ibrahim cherchait la vérité. Il ne pouvait comprendre comment des êtres incapables de voir, d\'entendre ou de profiter à quiconque pouvaient être dignes d\'adoration. Allah guida son cœur vers la réflexion.',
   },
   {
     id: 'ibrahim-3',
     type: 'quran_source',
     order: 3,
     content: 'Allah granted Ibrahim deep understanding from a young age.',
+    contentFr: 'Allah accorda à Ibrahim une compréhension profonde dès son jeune âge.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -51,6 +64,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 51,
       arabicText: 'وَلَقَدْ آتَيْنَا إِبْرَاهِيمَ رُشْدَهُ مِن قَبْلُ وَكُنَّا بِهِ عَالِمِينَ ﴿٥١﴾',
       translation: 'And We had certainly given Ibrahim his sound judgement before, and We were of him well-Knowing.',
+      translationFr: 'Et Nous avions certes donné auparavant à Ibrahim sa rectitude. Et Nous le connaissions bien.',
     } as QuranReference,
   },
   {
@@ -58,12 +72,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: 'One night, Ibrahim observed the heavens, using reason to demonstrate the falsehood of worshipping celestial bodies. When he saw a star, he pondered if this could be his Lord. But when it set, he knew it could not be. He then saw the moon, bright and beautiful, but it too set. Finally, the sun rose in all its glory, yet even the mighty sun disappeared at dusk.',
+    contentFr: 'Une nuit, Ibrahim observa les cieux, utilisant la raison pour démontrer la fausseté de l\'adoration des corps célestes. Lorsqu\'il vit une étoile, il se demanda si cela pouvait être son Seigneur. Mais quand elle disparut, il sut que ce ne pouvait l\'être. Puis il vit la lune, brillante et belle, mais elle aussi disparut. Enfin, le soleil se leva dans toute sa gloire, mais même le puissant soleil disparut au crépuscule.',
   },
   {
     id: 'ibrahim-5',
     type: 'quran_source',
     order: 5,
     content: 'Ibrahim\'s logical reasoning led him to the truth.',
+    contentFr: 'Le raisonnement logique d\'Ibrahim le mena à la vérité.',
     source: {
       type: 'quran',
       surahNumber: 6,
@@ -73,6 +89,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 79,
       arabicText: 'فَلَمَّا جَنَّ عَلَيْهِ اللَّيْلُ رَأَىٰ كَوْكَبًا ۖ قَالَ هَٰذَا رَبِّي ۖ فَلَمَّا أَفَلَ قَالَ لَا أُحِبُّ الْآفِلِينَ ﴿٧٦﴾ فَلَمَّا رَأَى الْقَمَرَ بَازِغًا قَالَ هَٰذَا رَبِّي ۖ فَلَمَّا أَفَلَ قَالَ لَئِن لَّمْ يَهْدِنِي رَبِّي لَأَكُونَنَّ مِنَ الْقَوْمِ الضَّالِّينَ ﴿٧٧﴾ فَلَمَّا رَأَى الشَّمْسَ بَازِغَةً قَالَ هَٰذَا رَبِّي هَٰذَا أَكْبَرُ ۖ فَلَمَّا أَفَلَتْ قَالَ يَا قَوْمِ إِنِّي بَرِيءٌ مِّمَّا تُشْرِكُونَ ﴿٧٨﴾ إِنِّي وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا ۖ وَمَا أَنَا مِنَ الْمُشْرِكِينَ ﴿٧٩﴾',
       translation: 'So when the night covered him, he saw a star. He said, "This is my lord." But when it set, he said, "I like not those that disappear." And when he saw the moon rising, he said, "This is my lord." But when it set, he said, "Unless my Lord guides me, I will surely be among the people gone astray." And when he saw the sun rising, he said, "This is my lord; this is greater." But when it set, he said, "O my people, indeed I am free from what you associate with Allah. Indeed, I have turned my face toward He who created the heavens and the earth, inclining toward truth, and I am not of those who associate others with Allah."',
+      translationFr: 'Quand la nuit l\'enveloppa, il vit une étoile. Il dit : « Voilà mon Seigneur ! » Puis quand elle disparut, il dit : « Je n\'aime pas les choses qui disparaissent. » Lorsqu\'il vit la lune se levant, il dit : « Voilà mon Seigneur ! » Puis quand elle disparut, il dit : « Si mon Seigneur ne me guide pas, je serai certes du nombre des gens égarés. » Lorsqu\'il vit le soleil levant, il dit : « Voilà mon Seigneur ! C\'est le plus grand. » Puis quand il disparut, il dit : « Ô mon peuple, je suis innocent de ce que vous associez à Allah. Je tourne mon visage vers Celui qui a créé les cieux et la terre, en monothéiste pur, et je ne suis point du nombre des associateurs. »',
     } as QuranReference,
   },
   {
@@ -80,12 +97,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: 'Ibrahim confronted his father about idol worship, speaking to him with respect but firmness. He tried to make his father understand that the idols he carved and worshipped had no power whatsoever.',
+    contentFr: 'Ibrahim confronta son père au sujet de l\'idolâtrie, lui parlant avec respect mais fermeté. Il essaya de faire comprendre à son père que les idoles qu\'il sculptait et adorait n\'avaient aucun pouvoir.',
   },
   {
     id: 'ibrahim-7',
     type: 'quran_source',
     order: 7,
     content: 'Ibrahim\'s gentle dialogue with his father.',
+    contentFr: 'Le dialogue doux d\'Ibrahim avec son père.',
     source: {
       type: 'quran',
       surahNumber: 19,
@@ -95,6 +114,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 45,
       arabicText: 'إِذْ قَالَ لِأَبِيهِ يَا أَبَتِ لِمَ تَعْبُدُ مَا لَا يَسْمَعُ وَلَا يُبْصِرُ وَلَا يُغْنِي عَنكَ شَيْئًا ﴿٤٢﴾ يَا أَبَتِ إِنِّي قَدْ جَاءَنِي مِنَ الْعِلْمِ مَا لَمْ يَأْتِكَ فَاتَّبِعْنِي أَهْدِكَ صِرَاطًا سَوِيًّا ﴿٤٣﴾ يَا أَبَتِ لَا تَعْبُدِ الشَّيْطَانَ ۖ إِنَّ الشَّيْطَانَ كَانَ لِلرَّحْمَٰنِ عَصِيًّا ﴿٤٤﴾ يَا أَبَتِ إِنِّي أَخَافُ أَن يَمَسَّكَ عَذَابٌ مِّنَ الرَّحْمَٰنِ فَتَكُونَ لِلشَّيْطَانِ وَلِيًّا ﴿٤٥﴾',
       translation: 'When he said to his father, "O my father, why do you worship that which does not hear and does not see and will not benefit you at all? O my father, indeed there has come to me of knowledge that which has not come to you, so follow me; I will guide you to an even path. O my father, do not worship Satan. Indeed Satan has ever been, to the Most Merciful, disobedient. O my father, indeed I fear that there will touch you a punishment from the Most Merciful so you would be to Satan a companion."',
+      translationFr: 'Quand il dit à son père : « Ô mon père, pourquoi adores-tu ce qui n\'entend ni ne voit, et ne te profite en rien ? Ô mon père, il m\'est parvenu de la science ce qui ne t\'est pas parvenu ; suis-moi donc, je te guiderai sur un droit chemin. Ô mon père, n\'adore pas le Diable, car le Diable désobéit au Tout Miséricordieux. Ô mon père, je crains qu\'un châtiment venant du Tout Miséricordieux ne te touche et que tu ne deviennes un allié du Diable. »',
     } as QuranReference,
   },
   {
@@ -102,18 +122,21 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 8,
     content: 'His father\'s response was harsh and threatening. He warned Ibrahim to stop or face being stoned. Despite this painful rejection, Ibrahim remained respectful and promised to pray for his father\'s forgiveness, though he could not remain with those who worshipped idols.',
+    contentFr: 'La réponse de son père fut dure et menaçante. Il avertit Ibrahim d\'arrêter sous peine d\'être lapidé. Malgré ce rejet douloureux, Ibrahim resta respectueux et promit de prier pour le pardon de son père, bien qu\'il ne pût rester avec ceux qui adoraient les idoles.',
   },
   {
     id: 'ibrahim-9',
     type: 'narrative',
     order: 9,
     content: 'Ibrahim devised a plan to show his people the helplessness of their idols. During a festival when everyone left the city, he stayed behind, claiming illness. Once alone, he approached the idol temple.',
+    contentFr: 'Ibrahim conçut un plan pour montrer à son peuple l\'impuissance de leurs idoles. Pendant un festival où tout le monde quitta la ville, il resta en arrière, prétextant une maladie. Une fois seul, il se rendit au temple des idoles.',
   },
   {
     id: 'ibrahim-10',
     type: 'quran_source',
     order: 10,
     content: 'Ibrahim destroyed the idols, leaving only the largest one.',
+    contentFr: 'Ibrahim détruisit les idoles, ne laissant que la plus grande.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -123,6 +146,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 58,
       arabicText: 'وَتَاللَّهِ لَأَكِيدَنَّ أَصْنَامَكُم بَعْدَ أَن تُوَلُّوا مُدْبِرِينَ ﴿٥٧﴾ فَجَعَلَهُمْ جُذَاذًا إِلَّا كَبِيرًا لَّهُمْ لَعَلَّهُمْ إِلَيْهِ يَرْجِعُونَ ﴿٥٨﴾',
       translation: '"And [I swear] by Allah, I will surely plan against your idols after you have turned and gone away." So he made them into fragments, except a large one among them, that they might return to it [and question].',
+      translationFr: '« Par Allah, je ruserai certes contre vos idoles une fois que vous aurez tourné le dos. » Il les mit en pièces, sauf la plus grande d\'entre elles, afin qu\'ils reviennent vers elle [et s\'interrogent].',
     } as QuranReference,
   },
   {
@@ -130,12 +154,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 11,
     content: 'When the people returned and found their idols destroyed, they were furious. They immediately suspected Ibrahim and brought him for questioning. In a brilliant response, Ibrahim pointed to the largest idol, suggesting they ask it what happened - since they believed it had power.',
+    contentFr: 'Quand le peuple revint et trouva ses idoles détruites, il fut furieux. Ils soupçonnèrent immédiatement Ibrahim et le firent venir pour l\'interroger. Dans une réponse brillante, Ibrahim désigna la plus grande idole, suggérant qu\'ils lui demandent ce qui s\'était passé - puisqu\'ils croyaient qu\'elle avait du pouvoir.',
   },
   {
     id: 'ibrahim-12',
     type: 'quran_source',
     order: 12,
     content: 'Ibrahim\'s clever response exposed their foolishness.',
+    contentFr: 'La réponse ingénieuse d\'Ibrahim exposa leur sottise.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -145,6 +171,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 67,
       arabicText: 'قَالُوا أَأَنتَ فَعَلْتَ هَٰذَا بِآلِهَتِنَا يَا إِبْرَاهِيمُ ﴿٦٢﴾ قَالَ بَلْ فَعَلَهُ كَبِيرُهُمْ هَٰذَا فَاسْأَلُوهُمْ إِن كَانُوا يَنطِقُونَ ﴿٦٣﴾ فَرَجَعُوا إِلَىٰ أَنفُسِهِمْ فَقَالُوا إِنَّكُمْ أَنتُمُ الظَّالِمُونَ ﴿٦٤﴾ ثُمَّ نُكِسُوا عَلَىٰ رُءُوسِهِمْ لَقَدْ عَلِمْتَ مَا هَٰؤُلَاءِ يَنطِقُونَ ﴿٦٥﴾ قَالَ أَفَتَعْبُدُونَ مِن دُونِ اللَّهِ مَا لَا يَنفَعُكُمْ شَيْئًا وَلَا يَضُرُّكُمْ ﴿٦٦﴾ أُفٍّ لَّكُمْ وَلِمَا تَعْبُدُونَ مِن دُونِ اللَّهِ ۖ أَفَلَا تَعْقِلُونَ ﴿٦٧﴾',
       translation: 'They said, "Have you done this to our gods, O Ibrahim?" He said, "Rather, this - the largest of them - did it, so ask them, if they should [be able to] speak." So they returned to [blaming] themselves and said [to each other], "Indeed, you are the wrongdoers." Then they reversed themselves, [saying], "You have already known that these do not speak!" He said, "Then do you worship instead of Allah that which does not benefit you at all or harm you? Uff to you and to what you worship instead of Allah. Then will you not use reason?"',
+      translationFr: 'Ils dirent : « Est-ce toi qui as fait cela à nos divinités, ô Ibrahim ? » Il dit : « C\'est plutôt la plus grande d\'entre elles qui l\'a fait. Demandez-leur donc, si elles peuvent parler. » Alors ils se consultèrent entre eux et dirent : « C\'est vous qui êtes les injustes. » Puis ils baissèrent la tête : « Tu sais bien que celles-ci ne parlent pas ! » Il dit : « Adorez-vous donc, en dehors d\'Allah, ce qui ne vous profite en rien et ne vous nuit point ? Fi de vous et de ce que vous adorez en dehors d\'Allah ! Ne raisonnez-vous donc pas ? »',
     } as QuranReference,
   },
   {
@@ -152,12 +179,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: 'Humiliated by Ibrahim\'s logic, the people decided to punish him in the most severe way. They built a massive fire, so large that they had to use a catapult to throw him into it, as no one could approach due to the intense heat.',
+    contentFr: 'Humiliés par la logique d\'Ibrahim, le peuple décida de le punir de la manière la plus sévère. Ils construisirent un feu massif, si grand qu\'ils durent utiliser une catapulte pour l\'y jeter, car personne ne pouvait s\'en approcher à cause de la chaleur intense.',
   },
   {
     id: 'ibrahim-14',
     type: 'quran_source',
     order: 14,
     content: 'They decided to burn Ibrahim alive.',
+    contentFr: 'Ils décidèrent de brûler Ibrahim vif.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -167,6 +196,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 69,
       arabicText: 'قَالُوا حَرِّقُوهُ وَانصُرُوا آلِهَتَكُمْ إِن كُنتُمْ فَاعِلِينَ ﴿٦٨﴾ قُلْنَا يَا نَارُ كُونِي بَرْدًا وَسَلَامًا عَلَىٰ إِبْرَاهِيمَ ﴿٦٩﴾',
       translation: 'They said, "Burn him and support your gods - if you are to act." We said, "O fire, be coolness and safety upon Ibrahim."',
+      translationFr: 'Ils dirent : « Brûlez-le et secourez vos divinités, si vous voulez agir. » Nous dîmes : « Ô feu, sois fraîcheur et paix pour Ibrahim. »',
     } as QuranReference,
   },
   {
@@ -174,12 +204,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 15,
     content: 'As Ibrahim was hurled into the flames, he remained calm and placed his complete trust in Allah. By Allah\'s command, the fire became cool and peaceful - it did not harm Ibrahim at all. He emerged unscathed, and this miracle was witnessed by everyone, yet most still refused to believe.',
+    contentFr: 'Alors qu\'Ibrahim fut projeté dans les flammes, il resta calme et plaça sa confiance totale en Allah. Par le commandement d\'Allah, le feu devint frais et paisible - il ne fit aucun mal à Ibrahim. Il en sortit indemne, et ce miracle fut observé par tous, mais la plupart refusèrent encore de croire.',
   },
   {
     id: 'ibrahim-16',
     type: 'quran_source',
     order: 16,
     content: 'Their plan to harm Ibrahim completely failed.',
+    contentFr: 'Leur plan de nuire à Ibrahim échoua complètement.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -189,6 +221,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 70,
       arabicText: 'وَأَرَادُوا بِهِ كَيْدًا فَجَعَلْنَاهُمُ الْأَخْسَرِينَ ﴿٧٠﴾',
       translation: 'And they intended for him a plan, but We made them the greatest losers.',
+      translationFr: 'Ils voulurent ruser contre lui, mais ce sont eux que Nous rendîmes les plus grands perdants.',
     } as QuranReference,
   },
   {
@@ -196,12 +229,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 17,
     content: 'After the failed attempt to kill him, Ibrahim decided to leave his homeland. He migrated with his wife Sarah and his nephew Lut, traveling to various lands including Egypt and eventually settling in the blessed land of Canaan (Palestine).',
+    contentFr: 'Après la tentative échouée de le tuer, Ibrahim décida de quitter sa patrie. Il émigra avec sa femme Sarah et son neveu Lut, voyageant à travers diverses contrées dont l\'Égypte, et s\'installa finalement dans la terre bénie de Canaan (Palestine).',
   },
   {
     id: 'ibrahim-18',
     type: 'quran_source',
     order: 18,
     content: 'Allah blessed Ibrahim\'s migration.',
+    contentFr: 'Allah bénit l\'émigration d\'Ibrahim.',
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -211,6 +246,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 71,
       arabicText: 'وَنَجَّيْنَاهُ وَلُوطًا إِلَى الْأَرْضِ الَّتِي بَارَكْنَا فِيهَا لِلْعَالَمِينَ ﴿٧١﴾',
       translation: 'And We delivered him and Lut to the land which We had blessed for the worlds.',
+      translationFr: 'Et Nous le sauvâmes, ainsi que Lut, [en les menant] vers la terre que Nous avions bénie pour les mondes.',
     } as QuranReference,
   },
   {
@@ -218,12 +254,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 19,
     content: 'Ibrahim longed for a child. He was growing old, and Sarah had been unable to have children. He prayed earnestly to Allah for righteous offspring who would continue his mission of calling people to the worship of One God.',
+    contentFr: 'Ibrahim désirait ardemment un enfant. Il vieillissait, et Sarah n\'avait pu avoir d\'enfants. Il pria Allah avec ferveur pour une descendance vertueuse qui poursuivrait sa mission d\'appeler les gens à l\'adoration d\'un Dieu unique.',
   },
   {
     id: 'ibrahim-20',
     type: 'quran_source',
     order: 20,
     content: 'Ibrahim\'s prayer for a righteous son was answered.',
+    contentFr: 'La prière d\'Ibrahim pour un fils vertueux fut exaucée.',
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -233,6 +271,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 101,
       arabicText: 'رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ ﴿١٠٠﴾ فَبَشَّرْنَاهُ بِغُلَامٍ حَلِيمٍ ﴿١٠١﴾',
       translation: '"My Lord, grant me [a child] from among the righteous." So We gave him good tidings of a forbearing boy.',
+      translationFr: '« Mon Seigneur, accorde-moi [un enfant] parmi les vertueux. » Nous lui annonçâmes donc la bonne nouvelle d\'un garçon longanime.',
     } as QuranReference,
   },
   {
@@ -240,18 +279,21 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 21,
     content: 'Sarah, seeing Ibrahim\'s longing for a child, gave him her servant Hajar as a wife. Through Hajar, Ibrahim was blessed with his first son, Ismail. But divine wisdom had decreed that Ibrahim would face another great test.',
+    contentFr: 'Sarah, voyant le désir ardent d\'Ibrahim pour un enfant, lui donna sa servante Hajar comme épouse. Par Hajar, Ibrahim fut béni de son premier fils, Ismail. Mais la sagesse divine avait décrété qu\'Ibrahim ferait face à une autre grande épreuve.',
   },
   {
     id: 'ibrahim-22',
     type: 'narrative',
     order: 22,
     content: 'Allah commanded Ibrahim to take Hajar and the infant Ismail to a barren valley in Arabia - the place that would become Makkah. Ibrahim obeyed, leaving them with only some dates and water, trusting completely in Allah\'s plan.',
+    contentFr: 'Allah ordonna à Ibrahim d\'emmener Hajar et le nourrisson Ismail dans une vallée aride d\'Arabie - le lieu qui deviendrait La Mecque. Ibrahim obéit, les laissant avec seulement quelques dattes et de l\'eau, faisant entièrement confiance au plan d\'Allah.',
   },
   {
     id: 'ibrahim-23',
     type: 'quran_source',
     order: 23,
     content: 'Ibrahim\'s prayer when leaving his family in Makkah.',
+    contentFr: 'La prière d\'Ibrahim en quittant sa famille à La Mecque.',
     source: {
       type: 'quran',
       surahNumber: 14,
@@ -261,6 +303,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'رَّبَّنَا إِنِّي أَسْكَنتُ مِن ذُرِّيَّتِي بِوَادٍ غَيْرِ ذِي زَرْعٍ عِندَ بَيْتِكَ الْمُحَرَّمِ رَبَّنَا لِيُقِيمُوا الصَّلَاةَ فَاجْعَلْ أَفْئِدَةً مِّنَ النَّاسِ تَهْوِي إِلَيْهِمْ وَارْزُقْهُم مِّنَ الثَّمَرَاتِ لَعَلَّهُمْ يَشْكُرُونَ ﴿٣٧﴾',
       translation: '"Our Lord, I have settled some of my descendants in an uncultivated valley near Your sacred House, our Lord, that they may establish prayer. So make hearts among the people incline toward them and provide for them from the fruits that they might be grateful."',
+      translationFr: '« Notre Seigneur, j\'ai établi une partie de ma descendance dans une vallée sans culture, près de Ta Maison sacrée, notre Seigneur, afin qu\'ils accomplissent la prière. Fais donc que les cœurs des gens s\'inclinent vers eux et pourvois-les de fruits afin qu\'ils soient reconnaissants. »',
     } as QuranReference,
   },
   {
@@ -268,18 +311,21 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 24,
     content: 'When the water ran out and baby Ismail cried from thirst, Hajar ran desperately between the hills of Safa and Marwa seven times, searching for water. Allah then caused the miraculous spring of Zamzam to gush forth near Ismail\'s feet - a spring that flows to this day.',
+    contentFr: 'Quand l\'eau s\'épuisa et que le bébé Ismail pleura de soif, Hajar courut désespérément entre les collines de Safa et Marwa sept fois, cherchant de l\'eau. Allah fit alors jaillir la source miraculeuse de Zamzam près des pieds d\'Ismail - une source qui coule encore aujourd\'hui.',
   },
   {
     id: 'ibrahim-25',
     type: 'narrative',
     order: 25,
     content: 'Years later, when Ismail had grown into a young man, Ibrahim received his greatest test. In a dream - which for prophets is revelation - he was commanded to sacrifice his beloved son.',
+    contentFr: 'Des années plus tard, quand Ismail fut devenu un jeune homme, Ibrahim reçut sa plus grande épreuve. Dans un rêve - qui pour les prophètes est une révélation - il lui fut ordonné de sacrifier son fils bien-aimé.',
   },
   {
     id: 'ibrahim-26',
     type: 'quran_source',
     order: 26,
     content: 'Ibrahim shared the vision with his son, and Ismail\'s response was remarkable.',
+    contentFr: 'Ibrahim partagea la vision avec son fils, et la réponse d\'Ismail fut remarquable.',
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -289,6 +335,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 102,
       arabicText: 'فَلَمَّا بَلَغَ مَعَهُ السَّعْيَ قَالَ يَا بُنَيَّ إِنِّي أَرَىٰ فِي الْمَنَامِ أَنِّي أَذْبَحُكَ فَانظُرْ مَاذَا تَرَىٰ ۚ قَالَ يَا أَبَتِ افْعَلْ مَا تُؤْمَرُ ۖ سَتَجِدُنِي إِن شَاءَ اللَّهُ مِنَ الصَّابِرِينَ ﴿١٠٢﴾',
       translation: 'And when he reached with him [the age of] exertion, he said, "O my son, indeed I have seen in a dream that I [must] sacrifice you, so see what you think." He said, "O my father, do as you are commanded. You will find me, if Allah wills, of the steadfast."',
+      translationFr: 'Puis quand celui-ci fut en âge de l\'accompagner, [Ibrahim] dit : « Ô mon fils, je me vois en songe en train de t\'immoler. Vois donc ce que tu en penses. » Il dit : « Ô mon cher père, fais ce qui t\'est commandé. Tu me trouveras, si Allah le veut, du nombre des endurants. »',
     } as QuranReference,
   },
   {
@@ -296,12 +343,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 27,
     content: 'Both father and son submitted completely to Allah\'s will. Ibrahim laid Ismail down and was about to fulfill the sacrifice when Allah called out to him. He had passed the test - his willingness to sacrifice what he loved most for Allah\'s sake was what mattered.',
+    contentFr: 'Père et fils se soumirent complètement à la volonté d\'Allah. Ibrahim coucha Ismail et s\'apprêtait à accomplir le sacrifice quand Allah l\'appela. Il avait réussi l\'épreuve - sa volonté de sacrifier ce qu\'il aimait le plus pour l\'amour d\'Allah était ce qui comptait.',
   },
   {
     id: 'ibrahim-28',
     type: 'quran_source',
     order: 28,
     content: 'Allah accepted their submission and ransomed Ismail.',
+    contentFr: 'Allah accepta leur soumission et racheta Ismail.',
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -311,6 +360,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 107,
       arabicText: 'فَلَمَّا أَسْلَمَا وَتَلَّهُ لِلْجَبِينِ ﴿١٠٣﴾ وَنَادَيْنَاهُ أَن يَا إِبْرَاهِيمُ ﴿١٠٤﴾ قَدْ صَدَّقْتَ الرُّؤْيَا ۚ إِنَّا كَذَٰلِكَ نَجْزِي الْمُحْسِنِينَ ﴿١٠٥﴾ إِنَّ هَٰذَا لَهُوَ الْبَلَاءُ الْمُبِينُ ﴿١٠٦﴾ وَفَدَيْنَاهُ بِذِبْحٍ عَظِيمٍ ﴿١٠٧﴾',
       translation: 'And when they had both submitted and he put him down upon his forehead, We called to him, "O Ibrahim, you have fulfilled the vision." Indeed, We thus reward the doers of good. Indeed, this was the clear trial. And We ransomed him with a great sacrifice.',
+      translationFr: 'Puis quand tous deux se furent soumis et qu\'il l\'eut jeté sur le front, Nous l\'appelâmes : « Ô Ibrahim, tu as confirmé la vision. » C\'est ainsi que Nous récompensons les bienfaisants. C\'était là certes l\'épreuve manifeste. Et Nous le rachetâmes par un sacrifice solennel.',
     } as QuranReference,
   },
   {
@@ -318,18 +368,21 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 29,
     content: 'Allah sent a ram from Paradise to be sacrificed in Ismail\'s place. This event is commemorated every year during Eid al-Adha, when Muslims around the world sacrifice animals in remembrance of Ibrahim\'s ultimate submission to Allah.',
+    contentFr: 'Allah envoya un bélier du Paradis pour être sacrifié à la place d\'Ismail. Cet événement est commémoré chaque année lors de l\'Aïd al-Adha, quand les musulmans du monde entier sacrifient des animaux en souvenir de la soumission ultime d\'Ibrahim à Allah.',
   },
   {
     id: 'ibrahim-30',
     type: 'narrative',
     order: 30,
     content: 'After this great trial, Allah commanded Ibrahim and Ismail to build the Kaaba - the first house of worship for humanity. Together, father and son raised its walls, making beautiful supplications as they worked.',
+    contentFr: 'Après cette grande épreuve, Allah ordonna à Ibrahim et Ismail de construire la Kaaba - la première maison d\'adoration pour l\'humanité. Ensemble, père et fils élevèrent ses murs, formulant de belles invocations pendant qu\'ils travaillaient.',
   },
   {
     id: 'ibrahim-31',
     type: 'quran_source',
     order: 31,
     content: 'Ibrahim and Ismail built the Kaaba together.',
+    contentFr: 'Ibrahim et Ismail construisirent la Kaaba ensemble.',
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -339,6 +392,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 128,
       arabicText: 'وَإِذْ يَرْفَعُ إِبْرَاهِيمُ الْقَوَاعِدَ مِنَ الْبَيْتِ وَإِسْمَاعِيلُ رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ ﴿١٢٧﴾ رَبَّنَا وَاجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِن ذُرِّيَّتِنَا أُمَّةً مُّسْلِمَةً لَّكَ وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَا ۖ إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ ﴿١٢٨﴾',
       translation: 'And [mention] when Ibrahim was raising the foundations of the House and [with him] Ismail, [saying], "Our Lord, accept [this] from us. Indeed You are the Hearing, the Knowing. Our Lord, and make us Muslims [in submission] to You and from our descendants a Muslim nation [in submission] to You. And show us our rites and accept our repentance. Indeed, You are the Accepting of repentance, the Merciful."',
+      translationFr: 'Et quand Ibrahim et Ismail élevaient les assises de la Maison : « Notre Seigneur, accepte ceci de notre part. Tu es certes l\'Audient, l\'Omniscient. Notre Seigneur, fais de nous des soumis à Toi et de notre descendance une communauté soumise à Toi. Montre-nous nos rites et accepte notre repentir. Tu es certes l\'Accueillant au repentir, le Miséricordieux. »',
     } as QuranReference,
   },
   {
@@ -346,12 +400,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 32,
     content: 'Meanwhile, angels visited Ibrahim with news of both mercy and punishment. They brought glad tidings of another son, Ishaq, to be born to his elderly wife Sarah. They also informed him of the impending destruction of the people of Lut due to their wickedness.',
+    contentFr: 'Entre-temps, des anges visitèrent Ibrahim avec des nouvelles de miséricorde et de châtiment. Ils apportèrent la bonne nouvelle d\'un autre fils, Ishaq, qui naîtrait de sa femme âgée Sarah. Ils l\'informèrent aussi de la destruction imminente du peuple de Lut en raison de leur perversité.',
   },
   {
     id: 'ibrahim-33',
     type: 'quran_source',
     order: 33,
     content: 'The angels brought news of Ishaq.',
+    contentFr: 'Les anges apportèrent la nouvelle d\'Ishaq.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -361,6 +417,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 71,
       arabicText: 'وَامْرَأَتُهُ قَائِمَةٌ فَضَحِكَتْ فَبَشَّرْنَاهَا بِإِسْحَاقَ وَمِن وَرَاءِ إِسْحَاقَ يَعْقُوبَ ﴿٧١﴾',
       translation: 'And his wife was standing, and she smiled. Then We gave her good tidings of Ishaq, and after Ishaq, Yaqub.',
+      translationFr: 'Et sa femme était debout ; elle rit alors. Nous lui annonçâmes donc [la bonne nouvelle de la naissance d\'] Ishaq, et après Ishaq, de Yaqub.',
     } as QuranReference,
   },
   {
@@ -368,12 +425,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 34,
     content: 'Allah honored Ibrahim with the unique title "Khalilullah" - the Friend of Allah. This is the highest status of closeness to Allah, granted to no other prophet in this specific way.',
+    contentFr: 'Allah honora Ibrahim du titre unique de « Khalilullah » - l\'Ami d\'Allah. C\'est le plus haut statut de proximité avec Allah, accordé à aucun autre prophète de cette manière spécifique.',
   },
   {
     id: 'ibrahim-35',
     type: 'quran_source',
     order: 35,
     content: 'Allah took Ibrahim as a close friend.',
+    contentFr: 'Allah prit Ibrahim comme ami intime.',
     source: {
       type: 'quran',
       surahNumber: 4,
@@ -383,6 +442,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 125,
       arabicText: 'وَمَنْ أَحْسَنُ دِينًا مِّمَّنْ أَسْلَمَ وَجْهَهُ لِلَّهِ وَهُوَ مُحْسِنٌ وَاتَّبَعَ مِلَّةَ إِبْرَاهِيمَ حَنِيفًا ۗ وَاتَّخَذَ اللَّهُ إِبْرَاهِيمَ خَلِيلًا ﴿١٢٥﴾',
       translation: 'And who is better in religion than one who submits himself to Allah while being a doer of good and follows the religion of Ibrahim, inclining toward truth? And Allah took Ibrahim as an intimate friend.',
+      translationFr: 'Qui est meilleur en religion que celui qui soumet son visage à Allah, tout en faisant le bien, et qui suit la voie d\'Ibrahim en monothéiste pur ? Et Allah a pris Ibrahim pour ami intime.',
     } as QuranReference,
   },
   {
@@ -390,12 +450,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 36,
     content: 'Ibrahim was an entire nation in himself - a model of pure faith, gratitude, and submission to Allah. He turned away from all falsehood and devoted himself entirely to his Lord.',
+    contentFr: 'Ibrahim était à lui seul une nation entière - un modèle de foi pure, de gratitude et de soumission à Allah. Il se détourna de toute fausseté et se consacra entièrement à son Seigneur.',
   },
   {
     id: 'ibrahim-37',
     type: 'quran_source',
     order: 37,
     content: 'Ibrahim was an exemplary leader in himself.',
+    contentFr: 'Ibrahim était un leader exemplaire à lui seul.',
     source: {
       type: 'quran',
       surahNumber: 16,
@@ -405,6 +467,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 121,
       arabicText: 'إِنَّ إِبْرَاهِيمَ كَانَ أُمَّةً قَانِتًا لِّلَّهِ حَنِيفًا وَلَمْ يَكُ مِنَ الْمُشْرِكِينَ ﴿١٢٠﴾ شَاكِرًا لِّأَنْعُمِهِ ۚ اجْتَبَاهُ وَهَدَاهُ إِلَىٰ صِرَاطٍ مُّسْتَقِيمٍ ﴿١٢١﴾',
       translation: 'Indeed, Ibrahim was a [comprehensive] leader, devoutly obedient to Allah, inclining toward truth, and he was not of those who associate others with Allah. [He was] grateful for His favors. Allah chose him and guided him to a straight path.',
+      translationFr: 'Ibrahim était certes un guide [une communauté à lui seul], dévotement obéissant à Allah, monothéiste pur, et il n\'était point du nombre des associateurs. Il était reconnaissant pour Ses bienfaits. Allah l\'avait élu et guidé vers un droit chemin.',
     } as QuranReference,
   },
   {
@@ -412,12 +475,14 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 38,
     content: 'Ibrahim\'s legacy continues through his descendants. From Ismail came the Arab nation and ultimately Prophet Muhammad ﷺ. From Ishaq came Yaqub (Israel) and the long line of Israelite prophets including Yusuf, Musa, Dawud, Sulayman, and Isa.',
+    contentFr: 'L\'héritage d\'Ibrahim se poursuit à travers ses descendants. D\'Ismail est venue la nation arabe et finalement le Prophète Muhammad ﷺ. D\'Ishaq est venu Yaqub (Israël) et la longue lignée de prophètes israélites incluant Yusuf, Musa, Dawud, Sulayman et Isa.',
   },
   {
     id: 'ibrahim-39',
     type: 'quran_source',
     order: 39,
     content: 'Allah blessed Ibrahim\'s offspring with prophethood and scripture.',
+    contentFr: 'Allah bénit la descendance d\'Ibrahim de la prophétie et des écritures.',
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -427,6 +492,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'وَوَهَبْنَا لَهُ إِسْحَاقَ وَيَعْقُوبَ وَجَعَلْنَا فِي ذُرِّيَّتِهِ النُّبُوَّةَ وَالْكِتَابَ وَآتَيْنَاهُ أَجْرَهُ فِي الدُّنْيَا ۖ وَإِنَّهُ فِي الْآخِرَةِ لَمِنَ الصَّالِحِينَ ﴿٢٧﴾',
       translation: 'And We gave to him Ishaq and Yaqub and placed in his descendants prophethood and scripture. And We gave him his reward in this world, and indeed, he is in the Hereafter among the righteous.',
+      translationFr: 'Et Nous lui donnâmes Ishaq et Yaqub, et Nous plaçâmes dans sa descendance la prophétie et le Livre. Nous lui donnâmes sa récompense ici-bas, et il sera certes dans l\'au-delà parmi les vertueux.',
     } as QuranReference,
   },
   {
@@ -434,6 +500,7 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 40,
     content: 'May Allah grant us the faith of Ibrahim, his complete trust in Allah, and his willingness to sacrifice everything for the sake of his Lord. May we follow his way of pure monotheism and be gathered with him in the highest levels of Paradise. And may peace and blessings be upon Ibrahim, the Friend of Allah, and upon all the prophets.',
+    contentFr: 'Qu\'Allah nous accorde la foi d\'Ibrahim, sa confiance totale en Allah et sa volonté de tout sacrifier pour l\'amour de son Seigneur. Puissions-nous suivre sa voie de monothéisme pur et être rassemblés avec lui aux plus hauts niveaux du Paradis. Et que la paix et les bénédictions soient sur Ibrahim, l\'Ami d\'Allah, et sur tous les prophètes.',
   },
 ];
 

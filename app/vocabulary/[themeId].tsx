@@ -2,6 +2,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { getThemeById, getWordsByTheme } from '../../src/data/arabic/vocabulary';
 import { getWritingExercisesForVocabularyTheme } from '../../src/data/arabic/exercises';
 import { useProgressStore } from '../../src/stores/progressStore';
@@ -22,6 +24,8 @@ const partOfSpeechConfig: Record<string, { label: string; labelArabic: string; c
 };
 
 export default function ThemeDetailScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId: string }>();
   const theme = getThemeById(themeId || '');
   const words = getWordsByTheme(themeId || '');
@@ -50,9 +54,9 @@ export default function ThemeDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Theme not found</Text>
+          <Text style={styles.errorText}>{t('common.notFound')}</Text>
           <Pressable style={styles.backLink} onPress={() => router.back()}>
-            <Text style={styles.backLinkText}>Go back</Text>
+            <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -114,7 +118,7 @@ export default function ThemeDetailScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>{theme.name}</Text>
+            <Text style={styles.title}>{lc(theme.name, theme.nameFr)}</Text>
             <Text style={styles.titleArabic}>{theme.nameArabic}</Text>
           </View>
         </View>
@@ -131,7 +135,7 @@ export default function ThemeDetailScreen() {
                 <View style={styles.introBadge}>
                   <Text style={styles.introBadgeText}>{theme.level}</Text>
                 </View>
-                <Text style={styles.introWordCount}>{words.length} words</Text>
+                <Text style={styles.introWordCount}>{t('vocabulary.wordsCount', { count: words.length })}</Text>
               </View>
             </View>
           </View>
@@ -141,22 +145,22 @@ export default function ThemeDetailScreen() {
         <View style={styles.progressCard}>
           <View style={styles.progressHeader}>
             <Ionicons name="stats-chart" size={20} color="#10b981" />
-            <Text style={styles.progressTitle}>Your Progress</Text>
+            <Text style={styles.progressTitle}>{t('common.yourProgress')}</Text>
           </View>
           <View style={styles.progressStats}>
             <View style={styles.progressStat}>
               <Text style={styles.progressStatValue}>{themeWordsLearned}</Text>
-              <Text style={styles.progressStatLabel}>Learned</Text>
+              <Text style={styles.progressStatLabel}>{t('common.learned')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={styles.progressStatValue}>{words.filter(w => masteredWords.includes(w.id)).length}</Text>
-              <Text style={styles.progressStatLabel}>Mastered</Text>
+              <Text style={styles.progressStatLabel}>{t('common.mastered')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={[styles.progressStatValue, { color: '#10b981' }]}>{progressPercent}%</Text>
-              <Text style={styles.progressStatLabel}>Complete</Text>
+              <Text style={styles.progressStatLabel}>{t('common.complete')}</Text>
             </View>
           </View>
           <View style={styles.progressBar}>
@@ -171,14 +175,14 @@ export default function ThemeDetailScreen() {
 
         {/* Word Type Filter */}
         <View style={styles.filterSection}>
-          <Text style={styles.filterTitle}>Filter by Type</Text>
+          <Text style={styles.filterTitle}>{t('vocabulary.filterByType')}</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
             <Pressable
               style={[styles.filterChip, viewMode === 'all' && styles.filterChipActive]}
               onPress={() => setViewMode('all')}
             >
               <Text style={[styles.filterChipText, viewMode === 'all' && styles.filterChipTextActive]}>
-                All ({words.length})
+                {t('common.all')} ({words.length})
               </Text>
             </Pressable>
             {wordsByType.nouns > 0 && (
@@ -187,7 +191,7 @@ export default function ThemeDetailScreen() {
                 onPress={() => setViewMode('nouns')}
               >
                 <Text style={[styles.filterChipText, viewMode === 'nouns' && { color: '#10b981' }]}>
-                  Nouns ({wordsByType.nouns})
+                  {t('vocabulary.nouns')} ({wordsByType.nouns})
                 </Text>
               </Pressable>
             )}
@@ -197,7 +201,7 @@ export default function ThemeDetailScreen() {
                 onPress={() => setViewMode('adjectives')}
               >
                 <Text style={[styles.filterChipText, viewMode === 'adjectives' && { color: '#f59e0b' }]}>
-                  Adjectives ({wordsByType.adjectives})
+                  {t('vocabulary.adjectives')} ({wordsByType.adjectives})
                 </Text>
               </Pressable>
             )}
@@ -207,7 +211,7 @@ export default function ThemeDetailScreen() {
                 onPress={() => setViewMode('other')}
               >
                 <Text style={[styles.filterChipText, viewMode === 'other' && { color: '#94a3b8' }]}>
-                  Phrases ({wordsByType.other})
+                  {t('vocabulary.phrases')} ({wordsByType.other})
                 </Text>
               </Pressable>
             )}
@@ -220,12 +224,10 @@ export default function ThemeDetailScreen() {
           <View style={styles.tipCardContent}>
             <View style={styles.tipCardHeader}>
               <Ionicons name="bulb" size={20} color="#f59e0b" />
-              <Text style={styles.tipCardTitle}>Learning Tip</Text>
+              <Text style={styles.tipCardTitle}>{t('vocabulary.learningTip')}</Text>
             </View>
             <Text style={styles.tipCardText}>
-              Tap any word to see its details and example sentence. Use the{' '}
-              <Text style={{ color: '#10b981', fontWeight: 'bold' }}>audio button</Text> to hear
-              the correct pronunciation. Mark words as learned, then mastered to track your progress!
+              {t('vocabulary.learningTipText')}
             </Text>
           </View>
         </View>
@@ -235,10 +237,10 @@ export default function ThemeDetailScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Ionicons name="chatbubble-ellipses" size={20} color="#10b981" />
-              <Text style={styles.sectionTitle}>Example Sentences</Text>
+              <Text style={styles.sectionTitle}>{t('vocabulary.exampleSentences')}</Text>
             </View>
             <Text style={styles.sectionSubtitle}>
-              Learn vocabulary in context with these example sentences
+              {t('vocabulary.exampleSentencesDesc')}
             </Text>
             <View style={styles.examplesGrid}>
               {wordsWithExamples.slice(0, 6).map((word) => (
@@ -249,11 +251,11 @@ export default function ThemeDetailScreen() {
                 >
                   <View style={styles.exampleCardHeader}>
                     <Text style={styles.exampleCardWord}>{word.arabicWithVowels}</Text>
-                    <Text style={styles.exampleCardMeaning}>{word.english}</Text>
+                    <Text style={styles.exampleCardMeaning}>{lc(word.english, word.french)}</Text>
                   </View>
                   <View style={styles.exampleCardDivider} />
                   <Text style={styles.exampleCardArabic}>{word.exampleSentence!.arabic}</Text>
-                  <Text style={styles.exampleCardEnglish}>{word.exampleSentence!.english}</Text>
+                  <Text style={styles.exampleCardEnglish}>{lc(word.exampleSentence!.english, word.exampleSentence!.french)}</Text>
                   <View style={styles.exampleCardAudioIcon}>
                     <Ionicons name="volume-medium" size={16} color="#10b981" />
                   </View>
@@ -268,7 +270,7 @@ export default function ThemeDetailScreen() {
           <View style={styles.sectionHeader}>
             <Ionicons name="list" size={20} color="#10b981" />
             <Text style={styles.sectionTitle}>
-              {viewMode === 'all' ? 'All Words' : `${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)}`} ({filteredWords.length})
+              {viewMode === 'all' ? t('vocabulary.allWords') : `${viewMode.charAt(0).toUpperCase() + viewMode.slice(1)}`} ({filteredWords.length})
             </Text>
           </View>
 
@@ -305,7 +307,7 @@ export default function ThemeDetailScreen() {
 
                   <View style={styles.wordRight}>
                     {/* English meaning */}
-                    <Text style={styles.wordEnglish} numberOfLines={2}>{word.english}</Text>
+                    <Text style={styles.wordEnglish} numberOfLines={2}>{lc(word.english, word.french)}</Text>
 
                     {/* Badges row */}
                     <View style={styles.wordBadges}>
@@ -355,7 +357,7 @@ export default function ThemeDetailScreen() {
                     <View style={styles.wordDetailsGrid}>
                       {word.plural && (
                         <View style={styles.wordDetail}>
-                          <Text style={styles.wordDetailLabel}>Plural</Text>
+                          <Text style={styles.wordDetailLabel}>{t('vocabulary.plural')}</Text>
                           <Pressable
                             style={styles.wordDetailValue}
                             onPress={() => speak(word.plural!)}
@@ -366,7 +368,7 @@ export default function ThemeDetailScreen() {
                         </View>
                       )}
                       <View style={styles.wordDetail}>
-                        <Text style={styles.wordDetailLabel}>Type</Text>
+                        <Text style={styles.wordDetailLabel}>{t('vocabulary.type')}</Text>
                         <View style={styles.wordDetailValue}>
                           <Text style={[styles.wordDetailText, { color: posConfig.color }]}>
                             {posConfig.labelArabic} ({posConfig.label})
@@ -375,10 +377,10 @@ export default function ThemeDetailScreen() {
                       </View>
                       {word.gender && (
                         <View style={styles.wordDetail}>
-                          <Text style={styles.wordDetailLabel}>Gender</Text>
+                          <Text style={styles.wordDetailLabel}>{t('vocabulary.gender')}</Text>
                           <View style={styles.wordDetailValue}>
                             <Text style={styles.wordDetailText}>
-                              {word.gender === 'masculine' ? 'مُذَكَّر (Masculine)' : 'مُؤَنَّث (Feminine)'}
+                              {word.gender === 'masculine' ? `مُذَكَّر (${t('vocabulary.masculine')})` : `مُؤَنَّث (${t('vocabulary.feminine')})`}
                             </Text>
                           </View>
                         </View>
@@ -393,14 +395,14 @@ export default function ThemeDetailScreen() {
                       >
                         <View style={styles.exampleSectionHeader}>
                           <Ionicons name="chatbubble-outline" size={16} color="#10b981" />
-                          <Text style={styles.exampleLabel}>Example Sentence</Text>
+                          <Text style={styles.exampleLabel}>{t('vocabulary.exampleSentence')}</Text>
                           <Ionicons name="volume-medium" size={16} color="#10b981" />
                         </View>
                         <Text style={styles.exampleArabic}>
                           {word.exampleSentence.arabic}
                         </Text>
                         <Text style={styles.exampleEnglish}>
-                          {word.exampleSentence.english}
+                          {lc(word.exampleSentence.english, word.exampleSentence.french)}
                         </Text>
                       </Pressable>
                     )}
@@ -413,7 +415,7 @@ export default function ThemeDetailScreen() {
                           onPress={() => handleMarkLearned(word.id)}
                         >
                           <Ionicons name="checkmark" size={18} color="#ffffff" />
-                          <Text style={styles.learnButtonText}>Mark Learned (+5 XP)</Text>
+                          <Text style={styles.learnButtonText}>{t('vocabulary.markLearned')}</Text>
                         </Pressable>
                       )}
                       {status === 'learned' && (
@@ -423,14 +425,14 @@ export default function ThemeDetailScreen() {
                         >
                           <Ionicons name="star" size={18} color="#0f172a" />
                           <Text style={styles.masterButtonText}>
-                            Mark Mastered (+15 XP)
+                            {t('vocabulary.markMastered')}
                           </Text>
                         </Pressable>
                       )}
                       {status === 'mastered' && (
                         <View style={styles.masteredLabel}>
                           <Ionicons name="star" size={16} color="#10b981" />
-                          <Text style={styles.masteredText}>Mastered!</Text>
+                          <Text style={styles.masteredText}>{t('vocabulary.masteredBadge')}</Text>
                         </View>
                       )}
                     </View>
@@ -445,7 +447,7 @@ export default function ThemeDetailScreen() {
         <View style={[styles.section, { marginBottom: 100 }]}>
           <View style={styles.sectionHeader}>
             <Ionicons name="fitness" size={20} color="#10b981" />
-            <Text style={styles.sectionTitle}>Practice</Text>
+            <Text style={styles.sectionTitle}>{t('common.practice')}</Text>
           </View>
 
           <Pressable
@@ -453,7 +455,7 @@ export default function ThemeDetailScreen() {
             onPress={() => router.push(`/vocabulary/flashcards?themeId=${theme.id}`)}
           >
             <Ionicons name="layers" size={20} color="#ffffff" />
-            <Text style={styles.practiceButtonText}>Practice with Flashcards</Text>
+            <Text style={styles.practiceButtonText}>{t('vocabulary.practiceFlashcards')}</Text>
             <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>
 
@@ -463,7 +465,7 @@ export default function ThemeDetailScreen() {
               onPress={() => router.push(`/vocabulary/writing-practice?themeId=${theme.id}`)}
             >
               <Ionicons name="pencil" size={20} color="#ffffff" />
-              <Text style={styles.practiceButtonText}>Writing Practice</Text>
+              <Text style={styles.practiceButtonText}>{t('vocabulary.writingPractice')}</Text>
               <View style={styles.exerciseCount}>
                 <Text style={styles.exerciseCountText}>
                   {writingExercises.length}

@@ -6,14 +6,18 @@
 export interface Prophet {
   id: string;
   nameEnglish: string;
+  nameFrench?: string;
   nameArabic: string;
   order: number; // 1-25 chronological order
   title?: string; // e.g., "Father of Mankind"
+  titleFr?: string;
   titleArabic?: string;
   summary: string; // Brief description of the prophet
+  summaryFr?: string;
   hasSubStories: boolean;
   subStories?: SubStory[];
   lessons: string[]; // Key lessons from the prophet's story
+  lessonsFr?: string[];
   estimatedReadTime: number; // in minutes
   quranMentions: number; // Number of times mentioned in Quran
   icon?: string; // Emoji or icon identifier
@@ -25,6 +29,7 @@ export interface SubStory {
   id: string;
   prophetId: string;
   title: string;
+  titleFr?: string;
   titleArabic?: string;
   order: number;
   content: StoryContentBlock[];
@@ -40,6 +45,7 @@ export interface StoryContentBlock {
   type: ContentBlockType;
   order: number;
   content: string; // The narrative text in English
+  contentFr?: string;
   source?: QuranReference | HadithReference;
 }
 
@@ -54,6 +60,7 @@ export interface QuranReference {
   ayahEnd: number;
   arabicText: string; // The Arabic text of the verse(s)
   translation: string; // English translation
+  translationFr?: string;
 }
 
 export interface HadithReference {
@@ -64,6 +71,7 @@ export interface HadithReference {
   narrator?: string;
   arabicText?: string;
   translation: string;
+  translationFr?: string;
   grade?: HadithGrade;
 }
 
@@ -128,10 +136,13 @@ export interface StoryAudioState {
 export interface ProphetListItem {
   id: string;
   nameEnglish: string;
+  nameFrench?: string;
   nameArabic: string;
   order: number;
   title?: string;
+  titleFr?: string;
   summary: string;
+  summaryFr?: string;
   isCompleted: boolean;
   progress: number; // 0-100 percentage
   estimatedReadTime: number;

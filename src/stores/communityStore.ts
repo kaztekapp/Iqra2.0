@@ -53,8 +53,10 @@ const getWeekString = () => {
 const templateToChallenge = (template: ChallengeTemplate, startDate: string, endDate: string): Challenge => ({
   id: template.id,
   title: template.title,
+  titleFr: template.titleFr,
   titleArabic: template.titleArabic,
   description: template.description,
+  descriptionFr: template.descriptionFr,
   descriptionArabic: template.descriptionArabic,
   type: template.type,
   targetType: template.targetType,

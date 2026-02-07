@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../.
 export const shuaybStory: Prophet = {
   id: 'shuayb',
   nameEnglish: "Shu'ayb",
+  nameFrench: "Chou'ayb",
   nameArabic: 'شعيب',
   order: 13,
   title: 'The Orator of the Prophets',
+  titleFr: "L'Orateur des Prophètes",
   titleArabic: 'خطيب الأنبياء',
   summary: "Prophet Shu'ayb was sent to the people of Madyan (Midian), a prosperous trading community near the Gulf of Aqaba. They were known for cheating in business, giving short measure, and highway robbery. Shu'ayb, known for his eloquent preaching, called them to worship Allah alone and to deal justly in commerce. Despite his powerful arguments, they rejected him and were destroyed by an earthquake and a scorching day. Shu'ayb later welcomed Musa when he fled Egypt, and Musa married one of his daughters.",
+  summaryFr: "Le prophète Chou'ayb fut envoyé au peuple de Madyan (Madian), une communauté commerçante prospère près du golfe d'Aqaba. Ils étaient connus pour leur malhonnêteté dans le commerce, leurs mesures frauduleuses et le brigandage. Chou'ayb, réputé pour son éloquence dans la prédication, les appela à adorer Allah seul et à pratiquer l'équité dans le commerce. Malgré ses arguments puissants, ils le rejetèrent et furent détruits par un tremblement de terre et un jour brûlant. Chou'ayb accueillit plus tard Moussa lorsqu'il fuit l'Égypte, et Moussa épousa l'une de ses filles.",
   hasSubStories: false,
   lessons: [
     'Honesty in trade and commerce is a religious obligation',
@@ -20,6 +23,14 @@ export const shuaybStory: Prophet = {
     'Eloquent preaching is a powerful tool for da\'wah',
     'Allah punishes those who corrupt the economy and society',
     'Righteous people provide refuge for those fleeing oppression',
+  ],
+  lessonsFr: [
+    'L\'honnêteté dans le commerce est une obligation religieuse',
+    'La fraude dans les poids et mesures est un péché grave',
+    'La justice économique fait partie de la vraie foi',
+    'La prédication éloquente est un outil puissant pour la da\'wah',
+    'Allah punit ceux qui corrompent l\'économie et la société',
+    'Les gens vertueux offrent refuge à ceux qui fuient l\'oppression',
   ],
   estimatedReadTime: 18,
   quranMentions: 11,
@@ -33,24 +44,28 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "In the land of Madyan, near the Gulf of Aqaba and the borders of modern-day Jordan and Saudi Arabia, there lived a prosperous people engaged in trade. Caravans passed through their territory, and they controlled important trade routes. Allah had blessed them with wealth and abundance, but instead of being grateful, they became corrupt and greedy.",
+    contentFr: "Dans la terre de Madyan, près du golfe d'Aqaba et aux frontières de l'actuelle Jordanie et Arabie Saoudite, vivait un peuple prospère engagé dans le commerce. Les caravanes traversaient leur territoire, et ils contrôlaient d'importantes routes commerciales. Allah les avait bénis de richesse et d'abondance, mais au lieu d'être reconnaissants, ils devinrent corrompus et avides.",
   },
   {
     id: 'shuayb-2',
     type: 'narrative',
     order: 2,
     content: "The people of Madyan had abandoned the worship of the One God and taken to idol worship. But their corruption went beyond false beliefs - it infected their economic life. They were notorious for cheating in business. When they bought, they demanded full measure. When they sold, they gave less than what was due. They manipulated weights and scales to defraud others.",
+    contentFr: "Le peuple de Madyan avait abandonné l'adoration du Dieu Unique et s'était adonné à l'idolâtrie. Mais leur corruption allait au-delà des fausses croyances - elle infectait leur vie économique. Ils étaient notoires pour leur malhonnêteté dans le commerce. Quand ils achetaient, ils exigeaient la pleine mesure. Quand ils vendaient, ils donnaient moins que ce qui était dû. Ils manipulaient les poids et les balances pour frauder les autres.",
   },
   {
     id: 'shuayb-3',
     type: 'narrative',
     order: 3,
     content: "To this corrupt community, Allah sent Shu'ayb, a descendant of Prophet Ibrahim. Shu'ayb was blessed with exceptional eloquence and was known as 'Khatib al-Anbiya' - the Orator of the Prophets. His words were powerful, his arguments compelling, and his speech touched hearts.",
+    contentFr: "À cette communauté corrompue, Allah envoya Chou'ayb, un descendant du prophète Ibrahim. Chou'ayb était doué d'une éloquence exceptionnelle et était connu comme 'Khatib al-Anbiya' - l'Orateur des Prophètes. Ses mots étaient puissants, ses arguments convaincants et son discours touchait les coeurs.",
   },
   {
     id: 'shuayb-4',
     type: 'quran_source',
     order: 4,
     content: "Shu'ayb called his people to worship Allah and deal justly in commerce.",
+    contentFr: "Chou'ayb appela son peuple à adorer Allah et à pratiquer l'équité dans le commerce.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -60,6 +75,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 85,
       arabicText: 'وَإِلَىٰ مَدْيَنَ أَخَاهُمْ شُعَيْبًا ۗ قَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُم مِّنْ إِلَٰهٍ غَيْرُهُ ۖ قَدْ جَاءَتْكُم بَيِّنَةٌ مِّن رَّبِّكُمْ ۖ فَأَوْفُوا الْكَيْلَ وَالْمِيزَانَ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا ۚ ذَٰلِكُمْ خَيْرٌ لَّكُمْ إِن كُنتُم مُّؤْمِنِينَ',
       translation: 'And to Madyan [We sent] their brother Shu\'ayb. He said, "O my people, worship Allah; you have no deity other than Him. There has come to you clear evidence from your Lord. So give full measure and weight and do not deprive people of their due and cause not corruption upon the earth after its reformation. That is better for you, if you should be believers."',
+      translationFr: 'Et vers Madyan [Nous envoyâmes] leur frère Chou\'ayb. Il dit : "Ô mon peuple, adorez Allah ; vous n\'avez pas d\'autre divinité que Lui. Une preuve évidente vous est venue de votre Seigneur. Donnez donc la pleine mesure et le plein poids, ne diminuez pas aux gens ce qui leur est dû et ne semez pas la corruption sur la terre après sa réforme. C\'est mieux pour vous, si vous êtes croyants."',
     } as QuranReference,
   },
   {
@@ -67,12 +83,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 5,
     content: "Notice how Shu'ayb connected worship of Allah with economic justice. In Islam, faith is not merely private devotion - it must manifest in honest dealings with people. Cheating others is not just bad ethics; it is a rejection of faith. Shu'ayb made this connection explicit, showing that true belief requires integrity in all aspects of life.",
+    contentFr: "Remarquez comment Chou'ayb relia l'adoration d'Allah à la justice économique. En Islam, la foi n'est pas simplement une dévotion privée - elle doit se manifester dans des relations honnêtes avec les gens. Tromper les autres n'est pas seulement une mauvaise éthique ; c'est un rejet de la foi. Chou'ayb rendit ce lien explicite, montrant que la vraie croyance exige l'intégrité dans tous les aspects de la vie.",
   },
   {
     id: 'shuayb-6',
     type: 'quran_source',
     order: 6,
     content: "Shu'ayb warned them not to ambush travelers and obstruct the path of Allah.",
+    contentFr: "Chou'ayb les avertit de ne pas attaquer les voyageurs et de ne pas obstruer le chemin d'Allah.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -82,6 +100,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 86,
       arabicText: 'وَلَا تَقْعُدُوا بِكُلِّ صِرَاطٍ تُوعِدُونَ وَتَصُدُّونَ عَن سَبِيلِ اللَّهِ مَنْ آمَنَ بِهِ وَتَبْغُونَهَا عِوَجًا ۚ وَاذْكُرُوا إِذْ كُنتُمْ قَلِيلًا فَكَثَّرَكُمْ ۖ وَانظُرُوا كَيْفَ كَانَ عَاقِبَةُ الْمُفْسِدِينَ',
       translation: '"And do not sit on every path, threatening and averting from the way of Allah those who believe in Him, seeking to make it [seem] deviant. And remember when you were few and He increased you. And see how was the end of the corrupters."',
+      translationFr: '"Et ne vous asseyez pas sur chaque chemin, menaçant et détournant du chemin d\'Allah ceux qui croient en Lui, cherchant à le rendre tortueux. Et rappelez-vous quand vous étiez peu nombreux et qu\'Il vous a multipliés. Et voyez quelle fut la fin des corrupteurs."',
     } as QuranReference,
   },
   {
@@ -89,12 +108,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 7,
     content: "The people of Madyan had become highway robbers as well as cheaters. They would waylay caravans and travelers, robbing them of their goods. They would also intimidate anyone who showed interest in Shu'ayb's message, threatening them and blocking them from accepting faith. Their corruption was comprehensive - religious, economic, and social.",
+    contentFr: "Le peuple de Madyan était devenu des brigands de grand chemin en plus d'être des fraudeurs. Ils tendaient des embuscades aux caravanes et aux voyageurs, les dépouillant de leurs biens. Ils intimidaient aussi quiconque montrait de l'intérêt pour le message de Chou'ayb, les menaçant et les empêchant d'accepter la foi. Leur corruption était totale - religieuse, économique et sociale.",
   },
   {
     id: 'shuayb-8',
     type: 'quran_source',
     order: 8,
     content: "In Surah Hud, Shu'ayb's message is repeated with additional emphasis on fair dealing.",
+    contentFr: "Dans la sourate Houd, le message de Chou'ayb est répété avec un accent supplémentaire sur l'équité commerciale.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -104,6 +125,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 85,
       arabicText: 'وَإِلَىٰ مَدْيَنَ أَخَاهُمْ شُعَيْبًا ۚ قَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُم مِّنْ إِلَٰهٍ غَيْرُهُ ۖ وَلَا تَنقُصُوا الْمِكْيَالَ وَالْمِيزَانَ ۚ إِنِّي أَرَاكُم بِخَيْرٍ وَإِنِّي أَخَافُ عَلَيْكُمْ عَذَابَ يَوْمٍ مُّحِيطٍ ۝ وَيَا قَوْمِ أَوْفُوا الْمِكْيَالَ وَالْمِيزَانَ بِالْقِسْطِ ۖ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ وَلَا تَعْثَوْا فِي الْأَرْضِ مُفْسِدِينَ',
       translation: 'And to Madyan [We sent] their brother Shu\'ayb. He said, "O my people, worship Allah; you have no deity other than Him. And do not decrease from the measure and the scale. Indeed, I see you in prosperity, but indeed, I fear for you the punishment of an all-encompassing Day. And O my people, give full measure and weight in justice and do not deprive the people of their due and do not commit abuse on the earth, spreading corruption."',
+      translationFr: 'Et vers Madyan [Nous envoyâmes] leur frère Chou\'ayb. Il dit : "Ô mon peuple, adorez Allah ; vous n\'avez pas d\'autre divinité que Lui. Et ne diminuez pas la mesure et le poids. En vérité, je vous vois dans la prospérité, mais en vérité, je crains pour vous le châtiment d\'un Jour qui tout englobe. Et ô mon peuple, donnez la pleine mesure et le plein poids avec justice, ne diminuez pas aux gens ce qui leur est dû et ne commettez pas d\'abus sur la terre en y semant la corruption."',
     } as QuranReference,
   },
   {
@@ -111,12 +133,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 9,
     content: "Shu'ayb appealed to their self-interest as well. He noted that they were prosperous - Allah had blessed them with wealth. He warned that their corruption would lead to the loss of these blessings. He feared for them a day when punishment would encompass them from all sides, leaving no escape.",
+    contentFr: "Chou'ayb fit aussi appel à leur intérêt personnel. Il nota qu'ils étaient prospères - Allah les avait bénis de richesse. Il les avertit que leur corruption mènerait à la perte de ces bienfaits. Il craignait pour eux un jour où le châtiment les engloberait de tous les côtés, ne laissant aucune échappatoire.",
   },
   {
     id: 'shuayb-10',
     type: 'quran_source',
     order: 10,
     content: "Shu'ayb emphasized that the little that remains after honest dealing is better than abundant ill-gotten gains.",
+    contentFr: "Chou'ayb souligna que le peu qui reste après un commerce honnête est meilleur que des gains abondants mal acquis.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -126,6 +150,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 86,
       arabicText: 'بَقِيَّتُ اللَّهِ خَيْرٌ لَّكُمْ إِن كُنتُم مُّؤْمِنِينَ ۚ وَمَا أَنَا عَلَيْكُم بِحَفِيظٍ',
       translation: '"What remains [lawful] from Allah is best for you, if you would be believers. And I am not a guardian over you."',
+      translationFr: '"Ce qui reste [licite] d\'Allah est meilleur pour vous, si vous êtes croyants. Et je ne suis pas un gardien sur vous."',
     } as QuranReference,
   },
   {
@@ -133,12 +158,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 11,
     content: "This profound statement - 'What remains from Allah is best for you' - contains a fundamental principle. The small profit earned honestly is more blessed than large gains obtained through fraud. Blessed wealth brings contentment and benefit, while ill-gotten wealth brings anxiety and eventual loss. Shu'ayb was teaching them that true prosperity comes from honesty, not cheating.",
+    contentFr: "Cette déclaration profonde - 'Ce qui reste d'Allah est meilleur pour vous' - contient un principe fondamental. Le petit profit gagné honnêtement est plus béni que les grands gains obtenus par la fraude. La richesse bénie apporte le contentement et le bénéfice, tandis que la richesse mal acquise apporte l'anxiété et la perte éventuelle. Chou'ayb leur enseignait que la vraie prospérité vient de l'honnêteté, pas de la triche.",
   },
   {
     id: 'shuayb-12',
     type: 'quran_source',
     order: 12,
     content: "The people responded with mockery and ridicule.",
+    contentFr: "Le peuple répondit par la moquerie et le ridicule.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -148,6 +175,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 87,
       arabicText: 'قَالُوا يَا شُعَيْبُ أَصَلَاتُكَ تَأْمُرُكَ أَن نَّتْرُكَ مَا يَعْبُدُ آبَاؤُنَا أَوْ أَن نَّفْعَلَ فِي أَمْوَالِنَا مَا نَشَاءُ ۖ إِنَّكَ لَأَنتَ الْحَلِيمُ الرَّشِيدُ',
       translation: 'They said, "O Shu\'ayb, does your prayer command you that we should leave what our fathers worship or not do with our wealth what we please? Indeed, you are the forbearing, the right-minded!"',
+      translationFr: 'Ils dirent : "Ô Chou\'ayb, est-ce ta prière qui t\'ordonne de nous faire abandonner ce que nos pères adoraient ou de ne pas faire de nos biens ce que nous voulons ? En vérité, tu es le magnanime, le bien guidé !"',
     } as QuranReference,
   },
   {
@@ -155,12 +183,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: "Their response reveals their mentality. They mocked his prayers, suggesting sarcastically that his worship made him interfere in their business. They claimed absolute freedom to do whatever they wanted with their wealth - a concept Islam rejects. Wealth is a trust from Allah, and its use is governed by His laws. Their final words - calling him 'forbearing and right-minded' - were said in mockery, meaning the opposite.",
+    contentFr: "Leur réponse révèle leur mentalité. Ils se moquèrent de ses prières, suggérant sarcastiquement que son adoration le faisait s'immiscer dans leurs affaires. Ils revendiquèrent une liberté absolue de faire ce qu'ils voulaient de leur richesse - un concept que l'Islam rejette. La richesse est un dépôt d'Allah, et son usage est régi par Ses lois. Leurs derniers mots - le qualifiant de 'magnanime et bien guidé' - furent dits par moquerie, signifiant le contraire.",
   },
   {
     id: 'shuayb-14',
     type: 'quran_source',
     order: 14,
     content: "Shu'ayb defended his position with eloquence.",
+    contentFr: "Chou'ayb défendit sa position avec éloquence.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -170,6 +200,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 88,
       arabicText: 'قَالَ يَا قَوْمِ أَرَأَيْتُمْ إِن كُنتُ عَلَىٰ بَيِّنَةٍ مِّن رَّبِّي وَرَزَقَنِي مِنْهُ رِزْقًا حَسَنًا ۚ وَمَا أُرِيدُ أَنْ أُخَالِفَكُمْ إِلَىٰ مَا أَنْهَاكُمْ عَنْهُ ۚ إِنْ أُرِيدُ إِلَّا الْإِصْلَاحَ مَا اسْتَطَعْتُ ۚ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ۚ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ',
       translation: 'He said, "O my people, have you considered: if I am upon clear evidence from my Lord and He has provided me with a good provision from Him...? And I do not intend to differ from you in that which I have forbidden to you; I only intend reform as much as I am able. And my success is not but through Allah. Upon Him I have relied, and to Him I return."',
+      translationFr: 'Il dit : "Ô mon peuple, avez-vous réfléchi : si je me base sur une preuve évidente de mon Seigneur et qu\'Il m\'a accordé de Sa part une bonne subsistance... ? Et je ne veux pas vous contredire en faisant ce que je vous interdis ; je ne veux que la réforme autant que je le peux. Et ma réussite ne dépend que d\'Allah. En Lui je place ma confiance et vers Lui je me repens."',
     } as QuranReference,
   },
   {
@@ -177,12 +208,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 15,
     content: "Shu'ayb's response was masterful. He pointed out that he himself practiced what he preached - he did not engage in the fraud he forbade them. His only goal was reform and improvement of society. And he attributed all success to Allah alone, showing his humility despite his eloquence. This is the mark of a true prophet: practicing what he preaches and attributing all good to Allah.",
+    contentFr: "La réponse de Chou'ayb fut magistrale. Il souligna qu'il pratiquait lui-même ce qu'il prêchait - il ne s'adonnait pas à la fraude qu'il leur interdisait. Son seul objectif était la réforme et l'amélioration de la société. Et il attribuait tout succès à Allah seul, montrant son humilité malgré son éloquence. C'est la marque d'un vrai prophète : pratiquer ce qu'il prêche et attribuer tout bien à Allah.",
   },
   {
     id: 'shuayb-16',
     type: 'quran_source',
     order: 16,
     content: "Shu'ayb reminded them of the fate of previous nations.",
+    contentFr: "Chou'ayb leur rappela le sort des nations précédentes.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -192,6 +225,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 89,
       arabicText: 'وَيَا قَوْمِ لَا يَجْرِمَنَّكُمْ شِقَاقِي أَن يُصِيبَكُم مِّثْلُ مَا أَصَابَ قَوْمَ نُوحٍ أَوْ قَوْمَ هُودٍ أَوْ قَوْمَ صَالِحٍ ۚ وَمَا قَوْمُ لُوطٍ مِّنكُم بِبَعِيدٍ',
       translation: '"And O my people, let not [your] dissension from me cause you to be struck by that similar to what struck the people of Nuh or the people of Hud or the people of Salih. And the people of Lut are not from you far away."',
+      translationFr: '"Et ô mon peuple, que votre opposition à moi ne vous attire pas un malheur semblable à celui qui frappa le peuple de Nouh ou le peuple de Houd ou le peuple de Salih. Et le peuple de Lout n\'est pas loin de vous."',
     } as QuranReference,
   },
   {
@@ -199,12 +233,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 17,
     content: "Shu'ayb reminded them of the destruction that befell previous nations - the flood of Nuh, the wind that destroyed 'Ad, the earthquake that killed Thamud, and the stones that rained on Lut's people. The people of Lut, he noted, were not far from them in time or place. Their destroyed cities were nearby, a visible reminder of Allah's punishment. Would they not take heed?",
+    contentFr: "Chou'ayb leur rappela la destruction qui s'abattit sur les nations précédentes - le déluge de Nouh, le vent qui détruisit 'Ad, le tremblement de terre qui tua Thamoud et les pierres qui plurent sur le peuple de Lout. Le peuple de Lout, nota-t-il, n'était pas loin d'eux dans le temps ou l'espace. Leurs villes détruites étaient proches, un rappel visible du châtiment d'Allah. N'allaient-ils pas méditer ?",
   },
   {
     id: 'shuayb-18',
     type: 'quran_source',
     order: 18,
     content: "Shu'ayb urged them to seek forgiveness before it was too late.",
+    contentFr: "Chou'ayb les exhorta à demander pardon avant qu'il ne soit trop tard.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -214,6 +250,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 90,
       arabicText: 'وَاسْتَغْفِرُوا رَبَّكُمْ ثُمَّ تُوبُوا إِلَيْهِ ۚ إِنَّ رَبِّي رَحِيمٌ وَدُودٌ',
       translation: '"And ask forgiveness of your Lord and then repent to Him. Indeed, my Lord is Merciful and Loving."',
+      translationFr: '"Et implorez le pardon de votre Seigneur puis repentez-vous à Lui. En vérité, mon Seigneur est Miséricordieux et Aimant."',
     } as QuranReference,
   },
   {
@@ -221,12 +258,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 19,
     content: "Despite their hostility, Shu'ayb offered them hope. Allah's door of mercy was still open. If they sought forgiveness and turned back to Him, they would find Him Merciful and Loving. The name 'Al-Wadud' (The Loving) appears here - Allah not only forgives but actively loves those who repent. What a beautiful invitation! Yet they rejected it.",
+    contentFr: "Malgré leur hostilité, Chou'ayb leur offrit de l'espoir. La porte de la miséricorde d'Allah était encore ouverte. S'ils imploraient le pardon et se tournaient vers Lui, ils Le trouveraient Miséricordieux et Aimant. Le nom 'Al-Wadoud' (Le Très Aimant) apparaît ici - Allah ne se contente pas de pardonner mais aime activement ceux qui se repentent. Quelle belle invitation ! Pourtant ils la rejetèrent.",
   },
   {
     id: 'shuayb-20',
     type: 'quran_source',
     order: 20,
     content: "The people of Madyan responded with threats.",
+    contentFr: "Le peuple de Madyan répondit par des menaces.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -236,6 +275,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 91,
       arabicText: 'قَالُوا يَا شُعَيْبُ مَا نَفْقَهُ كَثِيرًا مِّمَّا تَقُولُ وَإِنَّا لَنَرَاكَ فِينَا ضَعِيفًا ۖ وَلَوْلَا رَهْطُكَ لَرَجَمْنَاكَ ۖ وَمَا أَنتَ عَلَيْنَا بِعَزِيزٍ',
       translation: 'They said, "O Shu\'ayb, we do not understand much of what you say, and indeed, we consider you among us as weak. And if not for your family, we would have stoned you; and you are not to us one respected."',
+      translationFr: 'Ils dirent : "Ô Chou\'ayb, nous ne comprenons pas beaucoup de ce que tu dis, et en vérité, nous te considérons parmi nous comme faible. Et sans ta famille, nous t\'aurions lapidé ; et tu n\'es pas pour nous quelqu\'un de respecté."',
     } as QuranReference,
   },
   {
@@ -243,12 +283,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 21,
     content: "Their response was shocking in its brutality. They claimed not to understand him - not because his words were unclear, but because they refused to accept the truth. They called him weak, meaning he had no political power or tribal backing to enforce his views. They threatened to stone him to death, restrained only by his family connections. And they made clear he meant nothing to them. Such is the response of the corrupt when confronted with truth.",
+    contentFr: "Leur réponse fut choquante dans sa brutalité. Ils prétendirent ne pas le comprendre - non pas parce que ses mots étaient flous, mais parce qu'ils refusaient d'accepter la vérité. Ils le qualifièrent de faible, signifiant qu'il n'avait ni pouvoir politique ni soutien tribal pour imposer ses vues. Ils menacèrent de le lapider à mort, retenus seulement par ses liens familiaux. Et ils firent clairement savoir qu'il ne représentait rien pour eux. Telle est la réponse des corrompus face à la vérité.",
   },
   {
     id: 'shuayb-22',
     type: 'quran_source',
     order: 22,
     content: "Shu'ayb's response to their threats was powerful.",
+    contentFr: "La réponse de Chou'ayb à leurs menaces fut puissante.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -258,6 +300,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 93,
       arabicText: 'قَالَ يَا قَوْمِ أَرَهْطِي أَعَزُّ عَلَيْكُم مِّنَ اللَّهِ وَاتَّخَذْتُمُوهُ وَرَاءَكُمْ ظِهْرِيًّا ۖ إِنَّ رَبِّي بِمَا تَعْمَلُونَ مُحِيطٌ ۝ وَيَا قَوْمِ اعْمَلُوا عَلَىٰ مَكَانَتِكُمْ إِنِّي عَامِلٌ ۖ سَوْفَ تَعْلَمُونَ مَن يَأْتِيهِ عَذَابٌ يُخْزِيهِ وَمَنْ هُوَ كَاذِبٌ ۖ وَارْتَقِبُوا إِنِّي مَعَكُمْ رَقِيبٌ',
       translation: 'He said, "O my people, is my family more respected to you than Allah? And you have put Him behind your backs [in neglect]. Indeed, my Lord is encompassing of what you do. And O my people, work according to your position; indeed, I am working. You are going to know to whom will come a punishment that will disgrace him and who is a liar. So watch; indeed, I am with you a watcher."',
+      translationFr: 'Il dit : "Ô mon peuple, ma famille est-elle plus respectée à vos yeux qu\'Allah ? Et vous L\'avez relégué derrière vos dos [par négligence]. En vérité, mon Seigneur englobe ce que vous faites. Et ô mon peuple, agissez selon votre position ; moi aussi j\'agis. Vous saurez bientôt à qui viendra un châtiment qui le couvrira d\'opprobre et qui est le menteur. Guettez donc ; moi aussi je guette avec vous."',
     } as QuranReference,
   },
   {
@@ -265,12 +308,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 23,
     content: "Shu'ayb's response cut to the heart of the matter. They respected his family but not Allah? They had thrown Allah behind their backs, ignoring Him completely. This is a profound rebuke. And then he challenged them: continue in your way, and I will continue in mine. We will see who is disgraced and who is the liar. Watch and wait - I too am watching.",
+    contentFr: "La réponse de Chou'ayb alla droit au coeur du problème. Ils respectaient sa famille mais pas Allah ? Ils avaient jeté Allah derrière leurs dos, L'ignorant complètement. C'est un reproche profond. Et puis il les défia : continuez dans votre voie, et je continuerai dans la mienne. Nous verrons qui est couvert d'opprobre et qui est le menteur. Guettez et attendez - moi aussi je guette.",
   },
   {
     id: 'shuayb-24',
     type: 'quran_source',
     order: 24,
     content: "In Surah Ash-Shu'ara, Allah mentions Shu'ayb's mission to the Companions of the Thicket.",
+    contentFr: "Dans la sourate Ash-Shou'ara, Allah mentionne la mission de Chou'ayb auprès des Compagnons du Bosquet.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -280,6 +325,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 180,
       arabicText: 'كَذَّبَ أَصْحَابُ الْأَيْكَةِ الْمُرْسَلِينَ ۝ إِذْ قَالَ لَهُمْ شُعَيْبٌ أَلَا تَتَّقُونَ ۝ إِنِّي لَكُمْ رَسُولٌ أَمِينٌ ۝ فَاتَّقُوا اللَّهَ وَأَطِيعُونِ ۝ وَمَا أَسْأَلُكُمْ عَلَيْهِ مِنْ أَجْرٍ ۖ إِنْ أَجْرِيَ إِلَّا عَلَىٰ رَبِّ الْعَالَمِينَ',
       translation: 'The companions of the thicket denied the messengers when Shu\'ayb said to them, "Will you not fear Allah? Indeed, I am to you a trustworthy messenger. So fear Allah and obey me. And I do not ask you for it any payment. My payment is only from the Lord of the worlds."',
+      translationFr: 'Les compagnons du Bosquet traitèrent de menteurs les messagers quand Chou\'ayb leur dit : "Ne craignez-vous pas Allah ? En vérité, je suis pour vous un messager digne de confiance. Craignez donc Allah et obéissez-moi. Et je ne vous demande pour cela aucun salaire. Mon salaire n\'incombe qu\'au Seigneur des mondes."',
     } as QuranReference,
   },
   {
@@ -287,12 +333,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 25,
     content: "The 'Companions of the Thicket' (Ashab al-Aykah) were either the same people as Madyan or a related community nearby. The 'Aykah' refers to a dense forest or thicket where they lived. Shu'ayb delivered the same message to them, emphasizing his trustworthiness and seeking no worldly reward for his preaching.",
+    contentFr: "Les 'Compagnons du Bosquet' (Ashab al-Aykah) étaient soit le même peuple que Madyan, soit une communauté apparentée voisine. L''Aykah' désigne une forêt dense ou un bosquet où ils vivaient. Chou'ayb leur délivra le même message, soulignant sa fiabilité et ne cherchant aucune récompense mondaine pour sa prédication.",
   },
   {
     id: 'shuayb-26',
     type: 'quran_source',
     order: 26,
     content: "Shu'ayb continued to emphasize honest trade.",
+    contentFr: "Chou'ayb continua à mettre l'accent sur le commerce honnête.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -302,6 +350,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 184,
       arabicText: 'أَوْفُوا الْكَيْلَ وَلَا تَكُونُوا مِنَ الْمُخْسِرِينَ ۝ وَزِنُوا بِالْقِسْطَاسِ الْمُسْتَقِيمِ ۝ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ وَلَا تَعْثَوْا فِي الْأَرْضِ مُفْسِدِينَ ۝ وَاتَّقُوا الَّذِي خَلَقَكُمْ وَالْجِبِلَّةَ الْأَوَّلِينَ',
       translation: '"Give full measure and do not be of those who cause loss. And weigh with an even balance. And do not deprive people of their due and do not commit abuse on the earth, spreading corruption. And fear He who created you and the former creation."',
+      translationFr: '"Donnez la pleine mesure et ne soyez pas parmi ceux qui causent des pertes. Et pesez avec une balance juste. Et ne diminuez pas aux gens ce qui leur est dû et ne commettez pas d\'abus sur la terre en y semant la corruption. Et craignez Celui qui vous a créés, vous et les générations antérieures."',
     } as QuranReference,
   },
   {
@@ -309,12 +358,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 27,
     content: "The 'Qistas al-Mustaqim' - the straight, just balance - became a powerful metaphor in Islam. It represents fairness in all dealings, not just commercial transactions. Shu'ayb was calling for comprehensive justice: in weights, in measures, in all transactions, and in society at large. He reminded them that the same God who created them also created previous generations who were destroyed for their sins.",
+    contentFr: "Le 'Qistas al-Mustaqim' - la balance droite et juste - devint une métaphore puissante en Islam. Il représente l'équité dans toutes les transactions, pas seulement commerciales. Chou'ayb appelait à une justice globale : dans les poids, dans les mesures, dans toutes les transactions et dans la société en général. Il leur rappela que le même Dieu qui les créa créa aussi les générations précédentes qui furent détruites pour leurs péchés.",
   },
   {
     id: 'shuayb-28',
     type: 'quran_source',
     order: 28,
     content: "The people accused Shu'ayb of being bewitched.",
+    contentFr: "Le peuple accusa Chou'ayb d'être ensorcelé.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -324,6 +375,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 188,
       arabicText: 'قَالُوا إِنَّمَا أَنتَ مِنَ الْمُسَحَّرِينَ ۝ وَمَا أَنتَ إِلَّا بَشَرٌ مِّثْلُنَا وَإِن نَّظُنُّكَ لَمِنَ الْكَاذِبِينَ ۝ فَأَسْقِطْ عَلَيْنَا كِسَفًا مِّنَ السَّمَاءِ إِن كُنتَ مِنَ الصَّادِقِينَ ۝ قَالَ رَبِّي أَعْلَمُ بِمَا تَعْمَلُونَ',
       translation: 'They said, "You are only of those affected by magic. You are but a man like ourselves, and indeed, we think you are among the liars. So cause to fall upon us fragments of the sky, if you should be of the truthful." He said, "My Lord is most knowing of what you do."',
+      translationFr: 'Ils dirent : "Tu n\'es que de ceux qui sont ensorcelés. Tu n\'es qu\'un homme comme nous, et en vérité, nous te pensons parmi les menteurs. Fais donc tomber sur nous des morceaux du ciel, si tu es parmi les véridiques." Il dit : "Mon Seigneur connaît mieux ce que vous faites."',
     } as QuranReference,
   },
   {
@@ -331,12 +383,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 29,
     content: "Like the disbelievers before them, the people of Madyan dismissed Shu'ayb as bewitched or crazy. They challenged him to bring down punishment from the sky if he was truthful - a challenge born of arrogance, not sincere inquiry. Shu'ayb simply referred the matter to Allah, who knows all that they do.",
+    contentFr: "Comme les mécréants avant eux, le peuple de Madyan rejeta Chou'ayb comme ensorcelé ou fou. Ils le défièrent de faire tomber le châtiment du ciel s'il était véridique - un défi né de l'arrogance, pas d'une recherche sincère. Chou'ayb référa simplement l'affaire à Allah, qui sait tout ce qu'ils font.",
   },
   {
     id: 'shuayb-30',
     type: 'quran_source',
     order: 30,
     content: "The punishment came upon them.",
+    contentFr: "Le châtiment s'abattit sur eux.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -346,6 +400,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 191,
       arabicText: 'فَكَذَّبُوهُ فَأَخَذَهُمْ عَذَابُ يَوْمِ الظُّلَّةِ ۚ إِنَّهُ كَانَ عَذَابَ يَوْمٍ عَظِيمٍ ۝ إِنَّ فِي ذَٰلِكَ لَآيَةً ۖ وَمَا كَانَ أَكْثَرُهُم مُّؤْمِنِينَ ۝ وَإِنَّ رَبَّكَ لَهُوَ الْعَزِيزُ الرَّحِيمُ',
       translation: 'And they denied him, so the punishment of the day of the black cloud seized them. Indeed, it was the punishment of a terrible day. Indeed in that is a sign, but most of them were not to be believers. And indeed, your Lord - He is the Exalted in Might, the Merciful.',
+      translationFr: 'Et ils le traitèrent de menteur, alors le châtiment du jour de l\'ombre les saisit. En vérité, ce fut le châtiment d\'un jour terrible. Il y a certes en cela un signe, mais la plupart d\'entre eux ne sont pas croyants. Et en vérité, ton Seigneur est le Puissant, le Miséricordieux.',
     } as QuranReference,
   },
   {
@@ -353,12 +408,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: "The 'Day of the Shadow' (Yawm al-Zullah) was their punishment. A terrible heat wave struck them, and they sought relief outdoors. Then a great cloud appeared, and they rushed under its shade, thinking it would bring cool relief. But instead, the cloud rained fire and destruction upon them, and an earthquake struck from below. They were destroyed from above and below simultaneously.",
+    contentFr: "Le 'Jour de l'Ombre' (Yawm al-Zullah) fut leur châtiment. Une terrible vague de chaleur les frappa, et ils cherchèrent un soulagement à l'extérieur. Puis un grand nuage apparut, et ils se précipitèrent sous son ombre, pensant qu'il apporterait la fraîcheur. Mais au lieu de cela, le nuage fit pleuvoir le feu et la destruction sur eux, et un tremblement de terre frappa par en dessous. Ils furent détruits par le haut et par le bas simultanément.",
   },
   {
     id: 'shuayb-32',
     type: 'quran_source',
     order: 32,
     content: "The earthquake and blast destroyed the wrongdoers.",
+    contentFr: "Le tremblement de terre et le cri détruisirent les injustes.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -368,6 +425,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 95,
       arabicText: 'وَلَمَّا جَاءَ أَمْرُنَا نَجَّيْنَا شُعَيْبًا وَالَّذِينَ آمَنُوا مَعَهُ بِرَحْمَةٍ مِّنَّا وَأَخَذَتِ الَّذِينَ ظَلَمُوا الصَّيْحَةُ فَأَصْبَحُوا فِي دِيَارِهِمْ جَاثِمِينَ ۝ كَأَن لَّمْ يَغْنَوْا فِيهَا ۗ أَلَا بُعْدًا لِّمَدْيَنَ كَمَا بَعِدَتْ ثَمُودُ',
       translation: 'And when Our command came, We saved Shu\'ayb and those who believed with him, by mercy from Us. And the shriek seized those who had wronged, and they became within their homes [corpses] fallen prone as if they had never prospered therein. Then away with Madyan as Thamud was taken away.',
+      translationFr: 'Et quand vint Notre ordre, Nous sauvâmes Chou\'ayb et ceux qui avaient cru avec lui, par une miséricorde de Notre part. Et le cri saisit ceux qui avaient été injustes, et ils se retrouvèrent dans leurs demeures [cadavres] gisant face contre terre comme s\'ils n\'y avaient jamais prospéré. Que Madyan soit maudite comme Thamoud fut maudite.',
     } as QuranReference,
   },
   {
@@ -375,12 +433,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 33,
     content: "The punishment combined multiple elements: the scorching heat, the deceptive cloud, the shriek (al-Sayhah), and the earthquake. By morning, the once-thriving people lay dead in their homes, as if they had never lived there. Allah saved Shu'ayb and the believers by His mercy. The phrase 'as if they had never prospered therein' is a powerful reminder of how quickly worldly prosperity can vanish.",
+    contentFr: "Le châtiment combina plusieurs éléments : la chaleur torride, le nuage trompeur, le cri (al-Sayhah) et le tremblement de terre. Au matin, le peuple autrefois florissant gisait mort dans ses demeures, comme s'il n'y avait jamais vécu. Allah sauva Chou'ayb et les croyants par Sa miséricorde. L'expression 'comme s'ils n'y avaient jamais prospéré' est un puissant rappel de la rapidité avec laquelle la prospérité mondaine peut s'évanouir.",
   },
   {
     id: 'shuayb-34',
     type: 'quran_source',
     order: 34,
     content: "In Surah Al-A'raf, the earthquake is mentioned specifically.",
+    contentFr: "Dans la sourate Al-A'raf, le tremblement de terre est mentionné spécifiquement.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -390,6 +450,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 93,
       arabicText: 'فَأَخَذَتْهُمُ الرَّجْفَةُ فَأَصْبَحُوا فِي دَارِهِمْ جَاثِمِينَ ۝ الَّذِينَ كَذَّبُوا شُعَيْبًا كَأَن لَّمْ يَغْنَوْا فِيهَا ۚ الَّذِينَ كَذَّبُوا شُعَيْبًا كَانُوا هُمُ الْخَاسِرِينَ ۝ فَتَوَلَّىٰ عَنْهُمْ وَقَالَ يَا قَوْمِ لَقَدْ أَبْلَغْتُكُمْ رِسَالَاتِ رَبِّي وَنَصَحْتُ لَكُمْ ۖ فَكَيْفَ آسَىٰ عَلَىٰ قَوْمٍ كَافِرِينَ',
       translation: 'So the earthquake seized them, and they became within their home [corpses] fallen prone. Those who denied Shu\'ayb - it was as though they had never resided there. Those who denied Shu\'ayb - it was they who were the losers. And he turned away from them and said, "O my people, I had certainly conveyed to you the messages of my Lord and advised you, so how could I grieve for a disbelieving people?"',
+      translationFr: 'Alors le tremblement de terre les saisit, et ils se retrouvèrent dans leurs demeures [cadavres] gisant face contre terre. Ceux qui traitèrent Chou\'ayb de menteur - c\'est comme s\'ils n\'y avaient jamais habité. Ceux qui traitèrent Chou\'ayb de menteur - ce furent eux les perdants. Et il se détourna d\'eux et dit : "Ô mon peuple, je vous avais certes transmis les messages de mon Seigneur et je vous avais conseillés, comment pourrais-je m\'affliger pour un peuple mécréant ?"',
     } as QuranReference,
   },
   {
@@ -397,12 +458,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 35,
     content: "After their destruction, Shu'ayb addressed his people one final time. He had fulfilled his duty - he delivered Allah's message and sincerely advised them. He could not grieve for those who chose disbelief despite clear guidance. This shows the balance a believer must strike: compassion and effort in calling people to truth, but acceptance that guidance is ultimately from Allah.",
+    contentFr: "Après leur destruction, Chou'ayb s'adressa à son peuple une dernière fois. Il avait accompli son devoir - il avait transmis le message d'Allah et les avait sincèrement conseillés. Il ne pouvait pas s'affliger pour ceux qui choisirent la mécréance malgré une guidance claire. Cela montre l'équilibre qu'un croyant doit trouver : compassion et effort dans l'appel des gens à la vérité, mais acceptation que la guidance vient ultimement d'Allah.",
   },
   {
     id: 'shuayb-36',
     type: 'quran_source',
     order: 36,
     content: "Allah mentions Madyan alongside other destroyed nations.",
+    contentFr: "Allah mentionne Madyan aux côtés d'autres nations détruites.",
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -412,6 +475,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'وَإِلَىٰ مَدْيَنَ أَخَاهُمْ شُعَيْبًا فَقَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ وَارْجُوا الْيَوْمَ الْآخِرَ وَلَا تَعْثَوْا فِي الْأَرْضِ مُفْسِدِينَ ۝ فَكَذَّبُوهُ فَأَخَذَتْهُمُ الرَّجْفَةُ فَأَصْبَحُوا فِي دَارِهِمْ جَاثِمِينَ',
       translation: 'And to Madyan [We sent] their brother Shu\'ayb, and he said, "O my people, worship Allah and expect the Last Day and do not commit abuse on the earth, spreading corruption." But they denied him, so the earthquake seized them, and they became within their home [corpses] fallen prone.',
+      translationFr: 'Et vers Madyan [Nous envoyâmes] leur frère Chou\'ayb, et il dit : "Ô mon peuple, adorez Allah et espérez le Jour Dernier et ne commettez pas d\'abus sur la terre en y semant la corruption." Mais ils le traitèrent de menteur, alors le tremblement de terre les saisit, et ils se retrouvèrent dans leurs demeures [cadavres] gisant face contre terre.',
     } as QuranReference,
   },
   {
@@ -419,12 +483,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 37,
     content: "Years passed after the destruction of Madyan. Shu'ayb continued to live in the region, worshipping Allah. Then one day, a young man arrived from Egypt - exhausted, alone, fleeing for his life. This was Musa, who had accidentally killed an Egyptian and fled Pharaoh's wrath. His arrival at Madyan would begin a new chapter in prophetic history.",
+    contentFr: "Des années passèrent après la destruction de Madyan. Chou'ayb continua à vivre dans la région, adorant Allah. Puis un jour, un jeune homme arriva d'Égypte - épuisé, seul, fuyant pour sa vie. C'était Moussa, qui avait accidentellement tué un Égyptien et fui la colère de Pharaon. Son arrivée à Madyan allait commencer un nouveau chapitre de l'histoire prophétique.",
   },
   {
     id: 'shuayb-38',
     type: 'quran_source',
     order: 38,
     content: "Musa arrived in Madyan after fleeing Egypt.",
+    contentFr: "Moussa arriva à Madyan après avoir fui l'Égypte.",
     source: {
       type: 'quran',
       surahNumber: 28,
@@ -434,6 +500,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 22,
       arabicText: 'وَلَمَّا تَوَجَّهَ تِلْقَاءَ مَدْيَنَ قَالَ عَسَىٰ رَبِّي أَن يَهْدِيَنِي سَوَاءَ السَّبِيلِ',
       translation: 'And when he directed himself toward Madyan, he said, "Perhaps my Lord will guide me to the right way."',
+      translationFr: 'Et quand il se dirigea vers Madyan, il dit : "Peut-être mon Seigneur me guidera-t-Il sur le droit chemin."',
     } as QuranReference,
   },
   {
@@ -441,6 +508,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 39,
     content: "Musa helped Shu'ayb's daughters water their flock.",
+    contentFr: "Moussa aida les filles de Chou'ayb à abreuver leur troupeau.",
     source: {
       type: 'quran',
       surahNumber: 28,
@@ -450,6 +518,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 24,
       arabicText: 'وَلَمَّا وَرَدَ مَاءَ مَدْيَنَ وَجَدَ عَلَيْهِ أُمَّةً مِّنَ النَّاسِ يَسْقُونَ وَوَجَدَ مِن دُونِهِمُ امْرَأَتَيْنِ تَذُودَانِ ۖ قَالَ مَا خَطْبُكُمَا ۖ قَالَتَا لَا نَسْقِي حَتَّىٰ يُصْدِرَ الرِّعَاءُ ۖ وَأَبُونَا شَيْخٌ كَبِيرٌ ۝ فَسَقَىٰ لَهُمَا ثُمَّ تَوَلَّىٰ إِلَى الظِّلِّ فَقَالَ رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ',
       translation: 'And when he came to the water of Madyan, he found there a crowd of people watering [their flocks], and he found aside from them two women holding back [their flocks]. He said, "What is your circumstance?" They said, "We do not water until the shepherds dispatch [their flocks]; and our father is an old man." So he watered [their flocks] for them; then he went back to the shade and said, "My Lord, indeed I am, for whatever good You would send down to me, in need."',
+      translationFr: 'Et quand il arriva au point d\'eau de Madyan, il y trouva un attroupement de gens qui abreuvaient [leurs troupeaux], et il trouva à l\'écart d\'eux deux femmes qui retenaient [leurs bêtes]. Il dit : "Quel est votre problème ?" Elles dirent : "Nous n\'abreuvons pas tant que les bergers n\'ont pas emmené [leurs troupeaux] ; et notre père est un vieil homme." Il abreuva donc [leurs bêtes] pour elles ; puis il se retira à l\'ombre et dit : "Mon Seigneur, en vérité, j\'ai besoin de tout bien que Tu voudrais faire descendre sur moi."',
     } as QuranReference,
   },
   {
@@ -457,12 +526,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 40,
     content: "Musa's character shone through immediately. Despite being a fugitive, exhausted and hungry, he helped two women water their flock when he saw they were waiting for the men to finish. Then he sat in the shade and made a beautiful supplication, acknowledging his need for whatever good Allah might send him. This humility would be rewarded beyond his expectations.",
+    contentFr: "Le caractère de Moussa brilla immédiatement. Bien qu'étant un fugitif, épuisé et affamé, il aida deux femmes à abreuver leur troupeau quand il vit qu'elles attendaient que les hommes finissent. Puis il s'assit à l'ombre et fit une belle supplication, reconnaissant son besoin de tout bien qu'Allah pourrait lui envoyer. Cette humilité serait récompensée au-delà de ses attentes.",
   },
   {
     id: 'shuayb-41',
     type: 'quran_source',
     order: 41,
     content: "One of Shu'ayb's daughters returned to invite Musa.",
+    contentFr: "L'une des filles de Chou'ayb revint pour inviter Moussa.",
     source: {
       type: 'quran',
       surahNumber: 28,
@@ -472,6 +543,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 25,
       arabicText: 'فَجَاءَتْهُ إِحْدَاهُمَا تَمْشِي عَلَى اسْتِحْيَاءٍ قَالَتْ إِنَّ أَبِي يَدْعُوكَ لِيَجْزِيَكَ أَجْرَ مَا سَقَيْتَ لَنَا ۚ فَلَمَّا جَاءَهُ وَقَصَّ عَلَيْهِ الْقَصَصَ قَالَ لَا تَخَفْ ۖ نَجَوْتَ مِنَ الْقَوْمِ الظَّالِمِينَ',
       translation: 'Then one of the two women came to him walking with shyness. She said, "Indeed, my father invites you that he may reward you for having watered for us." So when he came to him and related to him the story, he said, "Fear not. You have escaped from the wrongdoing people."',
+      translationFr: 'Puis l\'une des deux femmes vint à lui en marchant avec pudeur. Elle dit : "En vérité, mon père t\'invite afin de te récompenser pour avoir abreuvé pour nous." Et quand il vint à lui et lui raconta l\'histoire, il dit : "Ne crains rien. Tu as échappé au peuple injuste."',
     } as QuranReference,
   },
   {
@@ -479,12 +551,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 42,
     content: "The daughter came 'walking with shyness' - a phrase that captures her modesty and noble character. Shu'ayb, the elderly sheikh, wanted to reward Musa for his kindness. When Musa told him his story - how he had fled Egypt after killing a man - Shu'ayb reassured him: 'Fear not. You have escaped from the wrongdoing people.' Egypt's jurisdiction did not extend to Madyan. Musa was safe.",
+    contentFr: "La fille vint 'en marchant avec pudeur' - une expression qui capture sa modestie et son noble caractère. Chou'ayb, le vieux cheikh, voulut récompenser Moussa pour sa gentillesse. Quand Moussa lui raconta son histoire - comment il avait fui l'Égypte après avoir tué un homme - Chou'ayb le rassura : 'Ne crains rien. Tu as échappé au peuple injuste.' La juridiction de l'Égypte ne s'étendait pas à Madyan. Moussa était en sécurité.",
   },
   {
     id: 'shuayb-43',
     type: 'quran_source',
     order: 43,
     content: "One daughter recommended hiring Musa, and Shu'ayb offered him marriage.",
+    contentFr: "L'une des filles recommanda d'embaucher Moussa, et Chou'ayb lui offrit le mariage.",
     source: {
       type: 'quran',
       surahNumber: 28,
@@ -494,6 +568,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'قَالَتْ إِحْدَاهُمَا يَا أَبَتِ اسْتَأْجِرْهُ ۖ إِنَّ خَيْرَ مَنِ اسْتَأْجَرْتَ الْقَوِيُّ الْأَمِينُ ۝ قَالَ إِنِّي أُرِيدُ أَنْ أُنكِحَكَ إِحْدَى ابْنَتَيَّ هَاتَيْنِ عَلَىٰ أَن تَأْجُرَنِي ثَمَانِيَ حِجَجٍ ۖ فَإِنْ أَتْمَمْتَ عَشْرًا فَمِنْ عِندِكَ ۖ وَمَا أُرِيدُ أَنْ أَشُقَّ عَلَيْكَ ۚ سَتَجِدُنِي إِن شَاءَ اللَّهُ مِنَ الصَّالِحِينَ',
       translation: 'One of the two women said, "O my father, hire him. Indeed, the best one you can hire is the strong and the trustworthy." He said, "Indeed, I wish to wed you one of these, my two daughters, on [the condition] that you serve me for eight years; but if you complete ten, it will be [as a favor] from you. And I do not wish to put you in difficulty. You will find me, if Allah wills, from among the righteous."',
+      translationFr: 'L\'une des deux femmes dit : "Ô mon père, engage-le. En vérité, le meilleur que tu puisses engager est le fort et le digne de confiance." Il dit : "En vérité, je souhaite te marier à l\'une de mes deux filles que voici, à condition que tu me serves pendant huit ans ; mais si tu en complètes dix, ce sera de ta part. Et je ne veux pas te rendre la tâche difficile. Tu me trouveras, si Allah le veut, parmi les vertueux."',
     } as QuranReference,
   },
   {
@@ -501,12 +576,14 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 44,
     content: "The daughter's recommendation - 'the strong and the trustworthy' - became legendary. She recognized in Musa the two qualities essential for any task: strength to accomplish it and integrity to be trusted with it. Shu'ayb saw in Musa a worthy son-in-law and proposed marriage to one of his daughters, with eight to ten years of service as the mahr (dowry). Musa agreed.",
+    contentFr: "La recommandation de la fille - 'le fort et le digne de confiance' - devint légendaire. Elle reconnut en Moussa les deux qualités essentielles pour toute tâche : la force pour l'accomplir et l'intégrité pour être digne de confiance. Chou'ayb vit en Moussa un gendre digne et proposa le mariage avec l'une de ses filles, avec huit à dix ans de service comme mahr (dot). Moussa accepta.",
   },
   {
     id: 'shuayb-45',
     type: 'quran_source',
     order: 45,
     content: "Musa accepted the offer and fulfilled his commitment.",
+    contentFr: "Moussa accepta l'offre et accomplit son engagement.",
     source: {
       type: 'quran',
       surahNumber: 28,
@@ -516,6 +593,7 @@ const shuaybStoryContent: StoryContentBlock[] = [
       ayahEnd: 28,
       arabicText: 'قَالَ ذَٰلِكَ بَيْنِي وَبَيْنَكَ ۖ أَيَّمَا الْأَجَلَيْنِ قَضَيْتُ فَلَا عُدْوَانَ عَلَيَّ ۖ وَاللَّهُ عَلَىٰ مَا نَقُولُ وَكِيلٌ',
       translation: 'He said, "That is [established] between me and you. Whichever of the two terms I complete - there is no injustice to me, and Allah, over what we say, is Witness."',
+      translationFr: 'Il dit : "C\'est [établi] entre moi et toi. Quel que soit celui des deux termes que j\'accomplis - il n\'y a pas d\'injustice envers moi, et Allah, de ce que nous disons, est Témoin."',
     } as QuranReference,
   },
   {
@@ -523,30 +601,35 @@ const shuaybStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 46,
     content: "Musa agreed to the terms, with Allah as witness to their agreement. According to narrations, Musa completed the full ten years, demonstrating his integrity and gratitude to his father-in-law. During these years in Madyan, Musa learned patience, humility, and the life of a shepherd - preparation for the enormous task that awaited him in Egypt.",
+    contentFr: "Moussa accepta les conditions, avec Allah comme témoin de leur accord. Selon les récits, Moussa accomplit les dix années complètes, démontrant son intégrité et sa gratitude envers son beau-père. Pendant ces années à Madyan, Moussa apprit la patience, l'humilité et la vie de berger - une préparation pour l'énorme tâche qui l'attendait en Égypte.",
   },
   {
     id: 'shuayb-47',
     type: 'narrative',
     order: 47,
     content: "After completing his service, Musa set out with his family toward Egypt. On the way, at Mount Sinai, Allah spoke to him and appointed him as a prophet. Musa returned to Egypt not as a fugitive, but as Allah's messenger to Pharaoh. Shu'ayb had unknowingly sheltered and trained the man who would become one of the greatest prophets in history.",
+    contentFr: "Après avoir accompli son service, Moussa partit avec sa famille vers l'Égypte. En chemin, au mont Sinaï, Allah lui parla et le désigna comme prophète. Moussa retourna en Égypte non pas comme fugitif, mais comme messager d'Allah auprès de Pharaon. Chou'ayb avait, sans le savoir, abrité et formé l'homme qui allait devenir l'un des plus grands prophètes de l'histoire.",
   },
   {
     id: 'shuayb-48',
     type: 'narrative',
     order: 48,
     content: "The story of Shu'ayb carries powerful lessons for all time. Economic justice is not separate from religious obligation - it is central to it. Cheating in business is a form of disbelief in action, even if one claims faith with words. The corruption of commerce corrupts all of society, and Allah punishes such corruption severely.",
+    contentFr: "L'histoire de Chou'ayb porte des leçons puissantes pour tous les temps. La justice économique n'est pas séparée de l'obligation religieuse - elle en est au coeur. La triche dans le commerce est une forme de mécréance en acte, même si l'on prétend la foi en paroles. La corruption du commerce corrompt toute la société, et Allah punit sévèrement une telle corruption.",
   },
   {
     id: 'shuayb-49',
     type: 'narrative',
     order: 49,
     content: "Shu'ayb's eloquence teaches us the value of clear, persuasive communication in calling people to truth. His persistence despite mockery and threats teaches steadfastness. His connection to Musa shows how the righteous support each other across generations. And his fair treatment of a stranger in need - Musa - shows the importance of generosity and giving refuge to those fleeing oppression.",
+    contentFr: "L'éloquence de Chou'ayb nous enseigne la valeur d'une communication claire et persuasive dans l'appel des gens à la vérité. Sa persistance malgré les moqueries et les menaces enseigne la fermeté. Sa connexion avec Moussa montre comment les vertueux se soutiennent mutuellement à travers les générations. Et son traitement équitable d'un étranger dans le besoin - Moussa - montre l'importance de la générosité et de l'accueil de ceux qui fuient l'oppression.",
   },
   {
     id: 'shuayb-50',
     type: 'narrative',
     order: 50,
     content: "Prophet Shu'ayb lived out his days in Madyan, remembered as the Orator of the Prophets. His message echoes through time: worship Allah alone, deal justly with people, and remember that 'what remains from Allah is best for you.' In an age of economic exploitation and fraud, his words remain as relevant as ever.",
+    contentFr: "Le prophète Chou'ayb vécut le reste de ses jours à Madyan, rappelé comme l'Orateur des Prophètes. Son message résonne à travers le temps : adorez Allah seul, traitez les gens avec justice et rappelez-vous que 'ce qui reste d'Allah est meilleur pour vous.' À une époque d'exploitation économique et de fraude, ses mots restent plus pertinents que jamais.",
   },
 ];
 
@@ -556,6 +639,7 @@ export const shuaybSubStories: SubStory[] = [
     id: 'shuayb-complete',
     prophetId: 'shuayb',
     title: "The Story of Prophet Shu'ayb",
+    titleFr: "L'Histoire du Prophète Chou'ayb",
     titleArabic: 'قصة نبي الله شعيب',
     order: 1,
     estimatedReadTime: 18,

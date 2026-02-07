@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, Alert
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getDuaById, getAllDuas } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
@@ -12,6 +14,8 @@ import {
 } from '../../../src/types/duas';
 
 export default function DuaDetailScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { duaId } = useLocalSearchParams<{ duaId: string }>();
 
   const {
@@ -78,16 +82,9 @@ export default function DuaDetailScreen() {
     if (!hasMultipleVoices) {
       // Only one voice available, show help
       Alert.alert(
-        'Download More Voices',
-        'Your device only has one Arabic voice installed. To get both male and female voices:\n\n' +
-        '1. Open Settings app\n' +
-        '2. Go to Accessibility\n' +
-        '3. Tap "Spoken Content"\n' +
-        '4. Tap "Voices"\n' +
-        '5. Tap "Arabic"\n' +
-        '6. Download "Laila" (female) or other voices\n\n' +
-        'After downloading, restart the app.',
-        [{ text: 'OK' }]
+        t('duasFeature.downloadMoreVoices'),
+        t('duasFeature.downloadVoicesInstructions'),
+        [{ text: t('duasFeature.ok') }]
       );
       return;
     }
@@ -99,18 +96,17 @@ export default function DuaDetailScreen() {
     if (!hasMultipleVoices) {
       // Only one voice available, show help
       Alert.alert(
-        'Only One Voice Available',
-        'Your device only has one Arabic voice. Download more voices from:\n\n' +
-        'Settings > Accessibility > Spoken Content > Voices > Arabic',
-        [{ text: 'OK' }]
+        t('duasFeature.onlyOneVoice'),
+        t('duasFeature.onlyOneVoiceDesc'),
+        [{ text: t('duasFeature.ok') }]
       );
       return;
     }
     swapVoices();
     Alert.alert(
-      'Voices Swapped',
-      'Male and female voices have been swapped. Try playing the audio again.',
-      [{ text: 'OK' }]
+      t('duasFeature.voicesSwapped'),
+      t('duasFeature.voicesSwappedDesc'),
+      [{ text: t('duasFeature.ok') }]
     );
   }, [swapVoices, hasMultipleVoices]);
 
@@ -143,7 +139,7 @@ export default function DuaDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#f59e0b" />
-          <Text style={styles.loadingText}>Loading dua...</Text>
+          <Text style={styles.loadingText}>{t('duasFeature.loadingDua')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -163,14 +159,14 @@ export default function DuaDetailScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.duaNameArabic}>{dua.titleArabic}</Text>
-          <Text style={styles.duaNameEnglish}>{dua.titleEnglish}</Text>
+          <Text style={styles.duaNameEnglish}>{lc(dua.titleEnglish, dua.titleFrench)}</Text>
         </View>
       </View>
 
       {/* Category Badge + Navigation */}
       <View style={styles.subHeader}>
         <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{categoryLabel.english}</Text>
+          <Text style={styles.categoryText}>{lc(categoryLabel.english, categoryLabel.french)}</Text>
           <Text style={styles.categoryTextArabic}>{categoryLabel.arabic}</Text>
         </View>
         <View style={{ flex: 1 }} />
@@ -221,7 +217,7 @@ export default function DuaDetailScreen() {
               {!hasMultipleVoices ? (
                 <>
                   <Ionicons name="alert-circle" size={18} color="#f59e0b" />
-                  <Text style={styles.voiceTextWarning}>1 Voice</Text>
+                  <Text style={styles.voiceTextWarning}>{t('duasFeature.oneVoice')}</Text>
                 </>
               ) : (
                 <>
@@ -231,7 +227,7 @@ export default function DuaDetailScreen() {
                     color={voiceGender === 'female' ? '#ec4899' : '#3b82f6'}
                   />
                   <Text style={[styles.voiceText, voiceGender === 'female' ? styles.voiceTextFemale : styles.voiceTextMale]}>
-                    {voiceGender === 'female' ? 'Female' : 'Male'}
+                    {voiceGender === 'female' ? t('duasFeature.female') : t('duasFeature.male')}
                   </Text>
                 </>
               )}
@@ -247,7 +243,7 @@ export default function DuaDetailScreen() {
                 color={isSlowMode ? '#f59e0b' : '#94a3b8'}
               />
               <Text style={[styles.speedText, isSlowMode && styles.speedTextActive]}>
-                {isSlowMode ? 'Slow' : 'Normal'}
+                {isSlowMode ? t('duasFeature.slow') : t('duasFeature.normal')}
               </Text>
             </Pressable>
 
@@ -261,7 +257,7 @@ export default function DuaDetailScreen() {
                 color="#ffffff"
               />
               <Text style={styles.playButtonText}>
-                {isSpeaking ? 'Stop' : 'Listen'}
+                {isSpeaking ? t('duasFeature.stop') : t('duasFeature.listen')}
               </Text>
             </Pressable>
           </View>
@@ -269,27 +265,27 @@ export default function DuaDetailScreen() {
 
         {/* Transliteration */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Transliteration</Text>
+          <Text style={styles.sectionTitle}>{t('duasFeature.transliteration')}</Text>
           <Text style={styles.transliterationText}>{dua.transliteration}</Text>
         </View>
 
         {/* Translation */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Translation</Text>
-          <Text style={styles.translationText}>{dua.translation}</Text>
+          <Text style={styles.sectionTitle}>{t('duasFeature.translation')}</Text>
+          <Text style={styles.translationText}>{lc(dua.translation, dua.translationFr)}</Text>
         </View>
 
         {/* Source Card */}
         <View style={styles.sourceCard}>
           <View style={styles.sourceHeader}>
             <Ionicons name="book" size={18} color="#818cf8" />
-            <Text style={styles.sourceTitle}>Source</Text>
+            <Text style={styles.sourceTitle}>{t('duasFeature.source')}</Text>
           </View>
           <Text style={styles.sourceCollection}>{collectionName}</Text>
-          <Text style={styles.sourceHadith}>Hadith #{dua.source.hadithNumber}</Text>
+          <Text style={styles.sourceHadith}>{t('duasFeature.hadithNumber', { number: dua.source.hadithNumber })}</Text>
           {dua.source.narrator && (
             <Text style={styles.sourceNarrator}>
-              Narrated by: {dua.source.narrator}
+              {t('duasFeature.narratedBy')} {dua.source.narrator}
             </Text>
           )}
         </View>
@@ -300,10 +296,10 @@ export default function DuaDetailScreen() {
             <View style={styles.sectionHeader}>
               <Ionicons name="time" size={18} color="#f59e0b" />
               <Text style={[styles.sectionTitle, { marginLeft: 8, marginBottom: 0 }]}>
-                When to Recite
+                {t('duasFeature.whenToRecite')}
               </Text>
             </View>
-            <Text style={styles.occasionText}>{dua.occasion}</Text>
+            <Text style={styles.occasionText}>{lc(dua.occasion, dua.occasionFr)}</Text>
           </View>
         )}
 
@@ -313,10 +309,10 @@ export default function DuaDetailScreen() {
             <View style={styles.sectionHeader}>
               <Ionicons name="star" size={18} color="#10b981" />
               <Text style={[styles.sectionTitle, { color: '#10b981', marginLeft: 8, marginBottom: 0 }]}>
-                Virtues & Rewards
+                {t('duasFeature.virtuesRewards')}
               </Text>
             </View>
-            <Text style={styles.virtuesText}>{dua.virtues}</Text>
+            <Text style={styles.virtuesText}>{lc(dua.virtues, dua.virtuesFr)}</Text>
           </View>
         )}
 
@@ -326,10 +322,10 @@ export default function DuaDetailScreen() {
             <View style={styles.sectionHeader}>
               <Ionicons name="book-outline" size={18} color="#8b5cf6" />
               <Text style={[styles.sectionTitle, { color: '#8b5cf6', marginLeft: 8, marginBottom: 0 }]}>
-                Background Story
+                {t('duasFeature.backgroundStory')}
               </Text>
             </View>
-            <Text style={styles.storyText}>{dua.story}</Text>
+            <Text style={styles.storyText}>{lc(dua.story, dua.storyFr)}</Text>
           </View>
         )}
 
@@ -352,7 +348,7 @@ export default function DuaDetailScreen() {
               memorized && styles.memorizedButtonTextActive,
             ]}
           >
-            {memorized ? 'Memorized' : 'Mark as Memorized'}
+            {memorized ? t('duasFeature.memorized') : t('duasFeature.markMemorized')}
           </Text>
         </Pressable>
 

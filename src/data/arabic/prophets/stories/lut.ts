@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference }
 export const lutStory: Prophet = {
   id: 'lut',
   nameEnglish: 'Lut',
+  nameFrench: 'Lut',
   nameArabic: 'لوط',
   order: 7,
   title: 'Nephew of Ibrahim',
+  titleFr: 'Neveu d\'Ibrahim',
   titleArabic: 'ابن أخي إبراهيم',
   summary: "Prophet Lut (Lot) was the nephew of Prophet Ibrahim and one of the first to believe in his message. He was sent to the people of Sodom and surrounding cities who had become infamous for their unprecedented sins. Despite his tireless efforts to guide them, they rejected his message and were destroyed by a catastrophic punishment from Allah.",
+  summaryFr: "Le prophète Lut (Lot) était le neveu du prophète Ibrahim et l'un des premiers à croire en son message. Il fut envoyé au peuple de Sodome et des villes environnantes, devenus tristement célèbres pour leurs péchés sans précédent. Malgré ses efforts inlassables pour les guider, ils rejetèrent son message et furent détruits par un châtiment cataclysmique d'Allah.",
   hasSubStories: false,
   lessons: [
     'Moral corruption leads to the destruction of entire societies',
@@ -20,6 +23,14 @@ export const lutStory: Prophet = {
     'Allah always protects His righteous servants from punishment',
     'Even family ties cannot save those who choose disbelief',
     'Unprecedented sins bring unprecedented punishments',
+  ],
+  lessonsFr: [
+    'La corruption morale mène à la destruction de sociétés entières',
+    'Suivre ses désirs sans limites mène à la ruine',
+    'Les prophètes doivent rester patients même quand leur peuple les rejette',
+    'Allah protège toujours Ses serviteurs vertueux du châtiment',
+    'Même les liens familiaux ne peuvent sauver ceux qui choisissent la mécréance',
+    'Des péchés sans précédent entraînent des châtiments sans précédent',
   ],
   estimatedReadTime: 28,
   quranMentions: 27,
@@ -33,12 +44,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "Lut was the son of Haran, who was the brother of Prophet Ibrahim. This made Lut the nephew of Ibrahim. When Ibrahim began calling his people to the worship of Allah alone, Lut was among the very first to believe in his message. His faith was sincere and his commitment was unwavering.",
+    contentFr: "Lut était le fils de Haran, qui était le frère du prophète Ibrahim. Cela faisait de Lut le neveu d'Ibrahim. Quand Ibrahim commença à appeler son peuple à l'adoration d'Allah seul, Lut fut parmi les tout premiers à croire en son message. Sa foi était sincère et son engagement inébranlable.",
   },
   {
     id: 'lut-2',
     type: 'quran_source',
     order: 2,
     content: "Lut believed in Ibrahim and migrated with him.",
+    contentFr: "Lut crut en Ibrahim et émigra avec lui.",
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -48,6 +61,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 26,
       arabicText: 'فَآمَنَ لَهُ لُوطٌ ۘ وَقَالَ إِنِّي مُهَاجِرٌ إِلَىٰ رَبِّي ۖ إِنَّهُ هُوَ الْعَزِيزُ الْحَكِيمُ',
       translation: 'And Lut believed him. [Ibrahim] said, "Indeed, I will emigrate to [the service of] my Lord. Indeed, He is the Exalted in Might, the Wise."',
+      translationFr: 'Et Lut crut en lui. [Ibrahim] dit : « Moi, j\'émigre vers mon Seigneur. C\'est Lui certes le Tout-Puissant, le Sage. »',
     } as QuranReference,
   },
   {
@@ -55,18 +69,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 3,
     content: "When Ibrahim was commanded to leave his homeland and migrate for the sake of Allah, Lut accompanied him on this blessed journey. They traveled together to the blessed land of Syria and Palestine. Lut witnessed firsthand the trials Ibrahim faced and the miracles Allah granted him.",
+    contentFr: "Lorsqu'Ibrahim reçut l'ordre de quitter sa patrie et d'émigrer pour Allah, Lut l'accompagna dans ce voyage béni. Ils voyagèrent ensemble vers la terre bénie de Syrie et de Palestine. Lut fut témoin direct des épreuves qu'Ibrahim traversa et des miracles qu'Allah lui accorda.",
   },
   {
     id: 'lut-4',
     type: 'narrative',
     order: 4,
     content: "After some time, Allah chose Lut for a special mission. He was to be sent as a prophet to a people living near the Dead Sea - the people of Sodom (Sadum) and the surrounding towns including Gomorrah. These cities were located in a fertile region, but their inhabitants had become deeply corrupted.",
+    contentFr: "Après un certain temps, Allah choisit Lut pour une mission spéciale. Il devait être envoyé comme prophète auprès d'un peuple vivant près de la mer Morte - le peuple de Sodome (Sadum) et des villes environnantes dont Gomorrhe. Ces cités étaient situées dans une région fertile, mais leurs habitants étaient devenus profondément corrompus.",
   },
   {
     id: 'lut-5',
     type: 'quran_source',
     order: 5,
     content: "Allah sent Lut as a messenger to his people.",
+    contentFr: "Allah envoya Lut comme messager à son peuple.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -76,6 +93,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 80,
       arabicText: 'وَلُوطًا إِذْ قَالَ لِقَوْمِهِ أَتَأْتُونَ الْفَاحِشَةَ مَا سَبَقَكُم بِهَا مِنْ أَحَدٍ مِّنَ الْعَالَمِينَ',
       translation: 'And [We sent] Lut, when he said to his people, "Do you commit such immorality as no one has preceded you with from among the worlds?"',
+      translationFr: 'Et [Nous envoyâmes] Lut, quand il dit à son peuple : « Commettez-vous la turpitude qu\'aucun peuple au monde n\'a commise avant vous ? »',
     } as QuranReference,
   },
   {
@@ -83,18 +101,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: "Lut settled among these people and began his mission of calling them to worship Allah alone and abandon their sinful ways. He would spend years patiently advising them, warning them, and trying to guide them to the straight path. But the corruption in their society ran deep.",
+    contentFr: "Lut s'installa parmi ce peuple et commença sa mission de les appeler à adorer Allah seul et à abandonner leurs voies pécheresses. Il passerait des années à les conseiller patiemment, les avertir et essayer de les guider vers le droit chemin. Mais la corruption dans leur société était profonde.",
   },
   {
     id: 'lut-7',
     type: 'narrative',
     order: 7,
     content: "The people of Lut had invented a sin that no nation before them had ever committed on such a scale. They had abandoned natural relationships and instead pursued unnatural desires. This was not merely the act of individuals but had become a widespread practice openly celebrated in their society.",
+    contentFr: "Le peuple de Lut avait inventé un péché qu'aucune nation avant eux n'avait jamais commis à une telle échelle. Ils avaient abandonné les relations naturelles pour poursuivre des désirs contre nature. Ce n'était pas simplement l'acte d'individus isolés mais c'était devenu une pratique répandue ouvertement célébrée dans leur société.",
   },
   {
     id: 'lut-8',
     type: 'quran_source',
     order: 8,
     content: "Allah describes the unprecedented nature of their sin.",
+    contentFr: "Allah décrit la nature sans précédent de leur péché.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -104,6 +125,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 81,
       arabicText: 'إِنَّكُمْ لَتَأْتُونَ الرِّجَالَ شَهْوَةً مِّن دُونِ النِّسَاءِ ۚ بَلْ أَنتُمْ قَوْمٌ مُّسْرِفُونَ',
       translation: 'Indeed, you approach men with desire, instead of women. Rather, you are a transgressing people.',
+      translationFr: 'Vous assouvissez vos désirs charnels avec les hommes au lieu des femmes. Vous êtes bien un peuple outrancier.',
     } as QuranReference,
   },
   {
@@ -111,12 +133,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 9,
     content: "Their sins were not limited to this single transgression. They had created an entire culture of wickedness. They would rob travelers on the highways, they committed evil deeds openly in their gatherings, and they had abandoned all sense of shame and decency.",
+    contentFr: "Leurs péchés ne se limitaient pas à cette seule transgression. Ils avaient créé toute une culture de perversité. Ils détroussaient les voyageurs sur les routes, commettaient des actes mauvais ouvertement dans leurs assemblées, et avaient abandonné tout sens de la pudeur et de la décence.",
   },
   {
     id: 'lut-10',
     type: 'quran_source',
     order: 10,
     content: "Allah mentions their multiple transgressions.",
+    contentFr: "Allah mentionne leurs transgressions multiples.",
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -126,6 +150,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 29,
       arabicText: 'أَئِنَّكُمْ لَتَأْتُونَ الرِّجَالَ وَتَقْطَعُونَ السَّبِيلَ وَتَأْتُونَ فِي نَادِيكُمُ الْمُنكَرَ',
       translation: 'Indeed, you approach men and obstruct the road [for robbery] and commit in your gatherings [every] evil.',
+      translationFr: 'Vous vous approchez des hommes, vous coupez les chemins [pour le brigandage] et vous commettez le blâmable dans vos assemblées.',
     } as QuranReference,
   },
   {
@@ -133,12 +158,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 11,
     content: "The scholars explain that they would openly commit shameful acts in their public gatherings, throwing stones at travelers, and engaging in all forms of indecency. When shamelessness becomes public and celebrated rather than hidden and shameful, it indicates a society that has lost all moral foundation.",
+    contentFr: "Les savants expliquent qu'ils commettaient ouvertement des actes honteux dans leurs assemblées publiques, jetaient des pierres aux voyageurs et se livraient à toutes formes d'indécence. Quand l'impudeur devient publique et célébrée plutôt que cachée et honteuse, cela indique une société qui a perdu tout fondement moral.",
   },
   {
     id: 'lut-12',
     type: 'quran_source',
     order: 12,
     content: "Lut confronted them about their unprecedented sin.",
+    contentFr: "Lut les confronta au sujet de leur péché sans précédent.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -148,6 +175,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 166,
       arabicText: 'أَتَأْتُونَ الذُّكْرَانَ مِنَ الْعَالَمِينَ ۝ وَتَذَرُونَ مَا خَلَقَ لَكُمْ رَبُّكُم مِّنْ أَزْوَاجِكُم ۚ بَلْ أَنتُمْ قَوْمٌ عَادُونَ',
       translation: 'Do you approach males among the worlds, and leave what your Lord has created for you as mates? But you are a transgressing people.',
+      translationFr: 'Allez-vous aux mâles de ce monde et délaissez-vous ce que votre Seigneur a créé pour vous comme épouses ? Vous êtes plutôt un peuple transgresseur.',
     } as QuranReference,
   },
   {
@@ -155,18 +183,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: "Lut pointed out the irrationality of their behavior - Allah had created spouses for them, yet they abandoned the natural way and pursued unnatural desires. This was not merely a sin; it was a rebellion against the very nature Allah had created. They were described as 'transgressing people' - those who exceed all limits.",
+    contentFr: "Lut souligna l'irrationalité de leur comportement - Allah avait créé des épouses pour eux, pourtant ils abandonnèrent la voie naturelle et poursuivirent des désirs contre nature. Ce n'était pas simplement un péché ; c'était une rébellion contre la nature même qu'Allah avait créée. Ils furent décrits comme un « peuple transgresseur » - ceux qui dépassent toutes les limites.",
   },
   {
     id: 'lut-14',
     type: 'narrative',
     order: 14,
     content: "Despite the severity of their corruption, Lut continued to call his people with patience and persistence. He reminded them of Allah, warned them of the consequences of their actions, and urged them to repent before it was too late. He presented himself as a trustworthy messenger seeking their guidance.",
+    contentFr: "Malgré la gravité de leur corruption, Lut continua d'appeler son peuple avec patience et persévérance. Il leur rappela Allah, les avertit des conséquences de leurs actes et les exhorta à se repentir avant qu'il ne soit trop tard. Il se présenta comme un messager digne de confiance cherchant à les guider.",
   },
   {
     id: 'lut-15',
     type: 'quran_source',
     order: 15,
     content: "Lut presented himself as a trustworthy messenger.",
+    contentFr: "Lut se présenta comme un messager digne de confiance.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -176,6 +207,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 164,
       arabicText: 'كَذَّبَتْ قَوْمُ لُوطٍ الْمُرْسَلِينَ ۝ إِذْ قَالَ لَهُمْ أَخُوهُمْ لُوطٌ أَلَا تَتَّقُونَ ۝ إِنِّي لَكُمْ رَسُولٌ أَمِينٌ ۝ فَاتَّقُوا اللَّهَ وَأَطِيعُونِ ۝ وَمَا أَسْأَلُكُمْ عَلَيْهِ مِنْ أَجْرٍ ۖ إِنْ أَجْرِيَ إِلَّا عَلَىٰ رَبِّ الْعَالَمِينَ',
       translation: 'The people of Lut denied the messengers, when their brother Lut said to them, "Will you not fear Allah? Indeed, I am to you a trustworthy messenger. So fear Allah and obey me. And I do not ask you for any payment. My payment is only from the Lord of the worlds."',
+      translationFr: 'Le peuple de Lut traita de menteurs les messagers, quand leur frère Lut leur dit : « Ne craignez-vous pas [Allah] ? Je suis pour vous un messager digne de confiance. Craignez donc Allah et obéissez-moi. Et je ne vous demande aucun salaire pour cela. Mon salaire n\'incombe qu\'au Seigneur des mondes. »',
     } as QuranReference,
   },
   {
@@ -183,12 +215,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 16,
     content: "Like all the prophets before him, Lut sought no worldly reward for his guidance. His only concern was their salvation. He was their brother in humanity, living among them, knowing them, and sincerely wanting good for them. Yet they met his sincere advice with mockery and threats.",
+    contentFr: "Comme tous les prophètes avant lui, Lut ne cherchait aucune récompense mondaine pour sa guidance. Son seul souci était leur salut. Il était leur frère en humanité, vivant parmi eux, les connaissant et voulant sincèrement leur bien. Pourtant, ils accueillirent ses conseils sincères par la moquerie et les menaces.",
   },
   {
     id: 'lut-17',
     type: 'quran_source',
     order: 17,
     content: "The people's mocking response to Lut's warnings.",
+    contentFr: "La réponse moqueuse du peuple aux avertissements de Lut.",
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -198,6 +232,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 29,
       arabicText: 'فَمَا كَانَ جَوَابَ قَوْمِهِ إِلَّا أَن قَالُوا ائْتِنَا بِعَذَابِ اللَّهِ إِن كُنتَ مِنَ الصَّادِقِينَ',
       translation: 'And the answer of his people was not but that they said, "Bring us the punishment of Allah, if you should be of the truthful."',
+      translationFr: 'La réponse de son peuple ne fut que de dire : « Fais-nous venir le châtiment d\'Allah, si tu es du nombre des véridiques. »',
     } as QuranReference,
   },
   {
@@ -205,12 +240,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 18,
     content: "Their arrogance was such that they challenged Lut to bring Allah's punishment upon them if he was truthful. They did not believe any harm could come to them in their prosperous cities. This challenge would soon be answered in a way they never anticipated.",
+    contentFr: "Leur arrogance était telle qu'ils défiaient Lut d'amener le châtiment d'Allah sur eux s'il était véridique. Ils ne croyaient pas que le moindre mal puisse les atteindre dans leurs cités prospères. Ce défi allait bientôt recevoir une réponse qu'ils n'avaient jamais anticipée.",
   },
   {
     id: 'lut-19',
     type: 'quran_source',
     order: 19,
     content: "They threatened to expel Lut from their city.",
+    contentFr: "Ils menacèrent d'expulser Lut de leur cité.",
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -220,6 +257,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 82,
       arabicText: 'وَمَا كَانَ جَوَابَ قَوْمِهِ إِلَّا أَن قَالُوا أَخْرِجُوهُم مِّن قَرْيَتِكُمْ ۖ إِنَّهُمْ أُنَاسٌ يَتَطَهَّرُونَ',
       translation: 'But the answer of his people was only that they said, "Expel them from your city! Indeed, they are people who want to be pure."',
+      translationFr: 'Et la réponse de son peuple ne fut que de dire : « Expulsez-les de votre cité ! Ce sont des gens qui veulent se garder purs. »',
     } as QuranReference,
   },
   {
@@ -227,18 +265,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: "Their mockery reached its peak when they said, 'Expel them - they want to be pure!' They considered purity and morality to be worthy of ridicule and expulsion. When a society reaches the point where righteousness is mocked and sin is celebrated openly, destruction is near.",
+    contentFr: "Leur moquerie atteignit son comble lorsqu'ils dirent : « Expulsez-les - ils veulent être purs ! » Ils considéraient la pureté et la moralité comme dignes de ridicule et d'expulsion. Quand une société en arrive au point où la vertu est moquée et le péché célébré ouvertement, la destruction est proche.",
   },
   {
     id: 'lut-21',
     type: 'narrative',
     order: 21,
     content: "The time for the punishment had arrived. Allah sent angels in the form of handsome young men to destroy the cities of Lut's people. But first, they visited Prophet Ibrahim with the glad tidings of a son, and then informed him of their mission to the cities of Lut.",
+    contentFr: "Le temps du châtiment était venu. Allah envoya des anges sous la forme de beaux jeunes hommes pour détruire les cités du peuple de Lut. Mais d'abord, ils rendirent visite au prophète Ibrahim avec la bonne nouvelle d'un fils, puis l'informèrent de leur mission vers les cités de Lut.",
   },
   {
     id: 'lut-22',
     type: 'quran_source',
     order: 22,
     content: "Ibrahim was informed about the impending punishment.",
+    contentFr: "Ibrahim fut informé du châtiment imminent.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -248,6 +289,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 76,
       arabicText: 'فَلَمَّا ذَهَبَ عَنْ إِبْرَاهِيمَ الرَّوْعُ وَجَاءَتْهُ الْبُشْرَىٰ يُجَادِلُنَا فِي قَوْمِ لُوطٍ ۝ إِنَّ إِبْرَاهِيمَ لَحَلِيمٌ أَوَّاهٌ مُّنِيبٌ ۝ يَا إِبْرَاهِيمُ أَعْرِضْ عَنْ هَٰذَا ۖ إِنَّهُ قَدْ جَاءَ أَمْرُ رَبِّكَ ۖ وَإِنَّهُمْ آتِيهِمْ عَذَابٌ غَيْرُ مَرْدُودٍ',
       translation: 'And when the fright had left Ibrahim and the good tidings had reached him, he began to argue with Us concerning the people of Lut. Indeed, Ibrahim was forbearing, grieving and turning to Allah. [The angels said], "O Ibrahim, give up this [plea]. Indeed, the command of your Lord has come, and indeed, there will reach them a punishment that cannot be repelled."',
+      translationFr: 'Puis quand l\'effroi eut quitté Ibrahim et que la bonne nouvelle l\'eut atteint, il se mit à discuter avec Nous au sujet du peuple de Lut. Ibrahim était certes longanime, compatissant et repentant. « Ô Ibrahim, renonce à cela. Le commandement de ton Seigneur est déjà venu, et un châtiment irrévocable va les atteindre. »',
     } as QuranReference,
   },
   {
@@ -255,12 +297,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 23,
     content: "Ibrahim's compassionate nature made him plead for the people of Lut, hoping they might be spared. But the angels told him the matter was decided - Allah's command had come, and the punishment could not be averted. The angels then proceeded to the cities of Sodom.",
+    contentFr: "La nature compatissante d'Ibrahim le poussa à plaider pour le peuple de Lut, espérant qu'ils pourraient être épargnés. Mais les anges lui dirent que l'affaire était décidée - le commandement d'Allah était venu, et le châtiment ne pouvait être détourné. Les anges se rendirent alors aux cités de Sodome.",
   },
   {
     id: 'lut-24',
     type: 'quran_source',
     order: 24,
     content: "The angels arrived at Lut's home.",
+    contentFr: "Les anges arrivèrent chez Lut.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -270,6 +314,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 78,
       arabicText: 'وَلَمَّا جَاءَتْ رُسُلُنَا لُوطًا سِيءَ بِهِمْ وَضَاقَ بِهِمْ ذَرْعًا وَقَالَ هَٰذَا يَوْمٌ عَصِيبٌ ۝ وَجَاءَهُ قَوْمُهُ يُهْرَعُونَ إِلَيْهِ وَمِن قَبْلُ كَانُوا يَعْمَلُونَ السَّيِّئَاتِ',
       translation: 'And when Our messengers [i.e., angels] came to Lut, he was distressed for them and felt for them great discomfort and said, "This is a difficult day." And his people came hastening to him, and before [this] they had been doing evil deeds.',
+      translationFr: 'Et quand Nos messagers [c\'est-à-dire les anges] vinrent à Lut, il fut affligé pour eux et se sentit impuissant à les protéger. Il dit : « C\'est un jour difficile. » Et son peuple accourut vers lui, car auparavant ils commettaient des mauvaises actions.',
     } as QuranReference,
   },
   {
@@ -277,18 +322,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 25,
     content: "When the angels arrived in the form of beautiful young men, Lut was immediately distressed. He knew the nature of his people and feared what they would do to his guests. His fears were confirmed when the people of the city came rushing to his house, intent on their evil.",
+    contentFr: "Quand les anges arrivèrent sous la forme de beaux jeunes hommes, Lut fut immédiatement affligé. Il connaissait la nature de son peuple et craignait ce qu'ils feraient à ses invités. Ses craintes furent confirmées quand le peuple de la cité accourut vers sa maison, animé de mauvaises intentions.",
   },
   {
     id: 'lut-26',
     type: 'narrative',
     order: 26,
     content: "Lut's wife had secretly informed the townspeople about the handsome guests. She was a disbeliever who did not support her husband's message. Her betrayal made the situation even more desperate for Lut as he tried to protect his guests from the mob.",
+    contentFr: "La femme de Lut avait secrètement informé les habitants de la ville au sujet des beaux invités. C'était une mécréante qui ne soutenait pas le message de son mari. Sa trahison rendit la situation encore plus désespérée pour Lut alors qu'il essayait de protéger ses invités de la foule.",
   },
   {
     id: 'lut-27',
     type: 'quran_source',
     order: 27,
     content: "Lut desperately tried to reason with his people.",
+    contentFr: "Lut essaya désespérément de raisonner son peuple.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -298,6 +346,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 79,
       arabicText: 'قَالَ يَا قَوْمِ هَٰؤُلَاءِ بَنَاتِي هُنَّ أَطْهَرُ لَكُمْ ۖ فَاتَّقُوا اللَّهَ وَلَا تُخْزُونِ فِي ضَيْفِي ۖ أَلَيْسَ مِنكُمْ رَجُلٌ رَّشِيدٌ ۝ قَالُوا لَقَدْ عَلِمْتَ مَا لَنَا فِي بَنَاتِكَ مِنْ حَقٍّ وَإِنَّكَ لَتَعْلَمُ مَا نُرِيدُ',
       translation: 'He said, "O my people, these are my daughters; they are purer for you. So fear Allah and do not disgrace me concerning my guests. Is there not among you a man of reason?" They said, "You have already known that we have no right to your daughters, and indeed, you know what we want."',
+      translationFr: 'Il dit : « Ô mon peuple, voici mes filles ; elles sont plus pures pour vous. Craignez donc Allah et ne me déshonorez pas à travers mes invités. N\'y a-t-il parmi vous aucun homme sensé ? » Ils dirent : « Tu sais bien que nous n\'avons aucun droit sur tes filles. Et tu sais certes ce que nous voulons. »',
     } as QuranReference,
   },
   {
@@ -305,12 +354,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 28,
     content: "Lut offered his daughters in lawful marriage as an alternative, directing them toward the natural way. But they rejected this, openly declaring their unnatural desires. Lut cried out in desperation, wishing he had power to stop them or a strong support to rely upon.",
+    contentFr: "Lut offrit ses filles en mariage légitime comme alternative, les dirigeant vers la voie naturelle. Mais ils rejetèrent cela, déclarant ouvertement leurs désirs contre nature. Lut cria de désespoir, souhaitant avoir le pouvoir de les arrêter ou un soutien solide sur lequel s'appuyer.",
   },
   {
     id: 'lut-29',
     type: 'quran_source',
     order: 29,
     content: "Lut wished for strength to resist them.",
+    contentFr: "Lut souhaita avoir la force de leur résister.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -320,6 +371,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 80,
       arabicText: 'قَالَ لَوْ أَنَّ لِي بِكُمْ قُوَّةً أَوْ آوِي إِلَىٰ رُكْنٍ شَدِيدٍ',
       translation: 'He said, "If only I had against you some power or could take refuge in a strong support."',
+      translationFr: 'Il dit : « Si j\'avais de la force contre vous, ou si je pouvais me réfugier auprès d\'un soutien puissant ! »',
     } as QuranReference,
   },
   {
@@ -327,12 +379,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'hadith_source',
     order: 30,
     content: "The Prophet commented on Lut's wish for support.",
+    contentFr: "Le Prophète commenta le souhait de Lut pour un soutien.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Hurairah',
       arabicText: 'يَرْحَمُ اللَّهُ لُوطًا، لَقَدْ كَانَ يَأْوِي إِلَى رُكْنٍ شَدِيدٍ',
       translation: 'May Allah have mercy on Lut. He was indeed taking refuge in a strong support (Allah).',
+      translationFr: 'Qu\'Allah fasse miséricorde à Lut. Il se réfugiait en vérité auprès d\'un soutien puissant (Allah).',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -341,12 +395,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: "At this critical moment, when Lut felt most helpless and the mob was about to break in, the angels finally revealed their true identity. They assured Lut that they were messengers of Allah and that no harm would come to him or his family - except for his wife who had betrayed him.",
+    contentFr: "En ce moment critique, quand Lut se sentait le plus impuissant et que la foule était sur le point d'entrer de force, les anges révélèrent enfin leur véritable identité. Ils assurèrent Lut qu'ils étaient des messagers d'Allah et qu'aucun mal ne lui serait fait ni à sa famille - sauf à sa femme qui l'avait trahi.",
   },
   {
     id: 'lut-32',
     type: 'quran_source',
     order: 32,
     content: "The angels revealed their identity and mission.",
+    contentFr: "Les anges révélèrent leur identité et leur mission.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -356,6 +412,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 81,
       arabicText: 'قَالُوا يَا لُوطُ إِنَّا رُسُلُ رَبِّكَ لَن يَصِلُوا إِلَيْكَ ۖ فَأَسْرِ بِأَهْلِكَ بِقِطْعٍ مِّنَ اللَّيْلِ وَلَا يَلْتَفِتْ مِنكُمْ أَحَدٌ إِلَّا امْرَأَتَكَ ۖ إِنَّهُ مُصِيبُهَا مَا أَصَابَهُمْ ۚ إِنَّ مَوْعِدَهُمُ الصُّبْحُ ۚ أَلَيْسَ الصُّبْحُ بِقَرِيبٍ',
       translation: 'They said, "O Lut, indeed we are messengers of your Lord; [therefore], they will never reach you. So set out with your family during a portion of the night and let not any among you look back - except your wife; indeed, she will be struck by that which strikes them. Indeed, their appointment is [for] the morning. Is not the morning near?"',
+      translationFr: 'Ils dirent : « Ô Lut, nous sommes certes des messagers de ton Seigneur ; ils ne t\'atteindront pas. Pars avec ta famille dans un moment de la nuit et que nul d\'entre vous ne se retourne - sauf ta femme ; elle sera certes atteinte par ce qui les atteindra. Leur rendez-vous est le matin. Le matin n\'est-il pas proche ? »',
     } as QuranReference,
   },
   {
@@ -363,12 +420,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 33,
     content: "The angels struck the mob with blindness. These people who had come seeking to satisfy their desires were left groping in darkness, unable to find even the door. This was a preview of the greater punishment to come. Lut was commanded to leave with his family before dawn.",
+    contentFr: "Les anges frappèrent la foule de cécité. Ces gens qui étaient venus chercher à assouvir leurs désirs furent laissés à tâtonner dans l'obscurité, incapables de trouver même la porte. C'était un avant-goût du châtiment plus grand à venir. Lut reçut l'ordre de partir avec sa famille avant l'aube.",
   },
   {
     id: 'lut-34',
     type: 'quran_source',
     order: 34,
     content: "The people were struck blind by the angels.",
+    contentFr: "Le peuple fut frappé de cécité par les anges.",
     source: {
       type: 'quran',
       surahNumber: 54,
@@ -378,6 +437,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'وَلَقَدْ رَاوَدُوهُ عَن ضَيْفِهِ فَطَمَسْنَا أَعْيُنَهُمْ فَذُوقُوا عَذَابِي وَنُذُرِ',
       translation: 'And they had demanded from him his guests, but We obliterated their eyes, [saying], "Taste My punishment and warning."',
+      translationFr: 'Et ils le pressèrent au sujet de ses hôtes. Alors Nous leur voilâmes les yeux : « Goûtez donc Mon châtiment et Mes avertissements. »',
     } as QuranReference,
   },
   {
@@ -385,12 +445,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 35,
     content: "The instruction was clear: leave during the night, do not look back, and know that the wife of Lut would share the fate of the disbelievers. Her betrayal of her husband and her sympathy with the sinful people meant that family ties alone could not save her from the punishment.",
+    contentFr: "L'instruction était claire : partir pendant la nuit, ne pas se retourner, et savoir que la femme de Lut partagerait le sort des mécréants. Sa trahison envers son mari et sa sympathie avec le peuple pécheur signifiaient que les liens familiaux seuls ne pouvaient la sauver du châtiment.",
   },
   {
     id: 'lut-36',
     type: 'quran_source',
     order: 36,
     content: "Allah mentions the fate of Lut's wife.",
+    contentFr: "Allah mentionne le sort de la femme de Lut.",
     source: {
       type: 'quran',
       surahNumber: 66,
@@ -400,6 +462,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 10,
       arabicText: 'ضَرَبَ اللَّهُ مَثَلًا لِّلَّذِينَ كَفَرُوا امْرَأَتَ نُوحٍ وَامْرَأَتَ لُوطٍ ۖ كَانَتَا تَحْتَ عَبْدَيْنِ مِنْ عِبَادِنَا صَالِحَيْنِ فَخَانَتَاهُمَا فَلَمْ يُغْنِيَا عَنْهُمَا مِنَ اللَّهِ شَيْئًا وَقِيلَ ادْخُلَا النَّارَ مَعَ الدَّاخِلِينَ',
       translation: 'Allah presents an example of those who disbelieved: the wife of Nuh and the wife of Lut. They were under two of Our righteous servants but betrayed them, so they [i.e., their husbands] did not avail them from Allah at all, and it was said, "Enter the Fire with those who enter."',
+      translationFr: 'Allah a cité en exemple pour ceux qui ont mécru la femme de Nouh et la femme de Lut. Elles étaient sous l\'autorité de deux de Nos bons serviteurs mais elles les trahirent. Leurs maris ne leur furent d\'aucune utilité face à Allah et il leur fut dit : « Entrez au Feu avec ceux qui y entrent. »',
     } as QuranReference,
   },
   {
@@ -407,18 +470,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 37,
     content: "This verse teaches a profound lesson: being married to a prophet does not guarantee salvation. The wife of Lut lived with a prophet, witnessed his character and miracles, yet chose disbelief and betrayal. Each person is accountable for their own faith and choices.",
+    contentFr: "Ce verset enseigne une leçon profonde : être mariée à un prophète ne garantit pas le salut. La femme de Lut vécut avec un prophète, fut témoin de son caractère et de ses miracles, mais choisit la mécréance et la trahison. Chaque personne est responsable de sa propre foi et de ses choix.",
   },
   {
     id: 'lut-38',
     type: 'narrative',
     order: 38,
     content: "As dawn approached, Lut and his believing family members departed from the city. Behind them, they left a civilization that had sealed its own fate through its rebellion against Allah and nature. The punishment that would follow would be unlike anything the world had seen before.",
+    contentFr: "Alors que l'aube approchait, Lut et les membres croyants de sa famille quittèrent la cité. Derrière eux, ils laissèrent une civilisation qui avait scellé son propre destin par sa rébellion contre Allah et la nature. Le châtiment qui allait suivre serait sans pareil dans l'histoire du monde.",
   },
   {
     id: 'lut-39',
     type: 'quran_source',
     order: 39,
     content: "Allah describes the devastating punishment.",
+    contentFr: "Allah décrit le châtiment dévastateur.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -428,6 +494,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 83,
       arabicText: 'فَلَمَّا جَاءَ أَمْرُنَا جَعَلْنَا عَالِيَهَا سَافِلَهَا وَأَمْطَرْنَا عَلَيْهَا حِجَارَةً مِّن سِجِّيلٍ مَّنضُودٍ ۝ مُّسَوَّمَةً عِندَ رَبِّكَ ۖ وَمَا هِيَ مِنَ الظَّالِمِينَ بِبَعِيدٍ',
       translation: 'So when Our command came, We made the highest part [of the city] its lowest and rained upon them stones of layered hard clay, marked from your Lord. And it [i.e., Allah\'s punishment] is not from the wrongdoers [very] far.',
+      translationFr: 'Puis quand Notre commandement vint, Nous renversâmes [la cité] de fond en comble et fîmes pleuvoir sur elle des pierres d\'argile cuite superposées, marquées auprès de ton Seigneur. Et [ce châtiment] n\'est pas loin des injustes.',
     } as QuranReference,
   },
   {
@@ -435,18 +502,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 40,
     content: "The punishment was multi-fold: First, the angel Jibreel lifted the entire cities with his wing - taking them so high that the inhabitants of the heavens could hear the barking of their dogs. Then he turned them completely upside down, making what was highest become lowest.",
+    contentFr: "Le châtiment fut multiple : d'abord, l'ange Jibreel souleva les cités entières de son aile - les emportant si haut que les habitants des cieux pouvaient entendre les aboiements de leurs chiens. Puis il les retourna complètement, faisant de ce qui était le plus haut le plus bas.",
   },
   {
     id: 'lut-41',
     type: 'narrative',
     order: 41,
     content: "As if this were not enough, Allah then rained upon them stones of baked clay - each stone marked and destined for a specific sinner. These were not ordinary stones but specially prepared instruments of punishment from Allah. The entire region was obliterated.",
+    contentFr: "Comme si cela ne suffisait pas, Allah fit ensuite pleuvoir sur eux des pierres d'argile cuite - chaque pierre marquée et destinée à un pécheur spécifique. Ce n'étaient pas des pierres ordinaires mais des instruments de châtiment spécialement préparés par Allah. La région entière fut anéantie.",
   },
   {
     id: 'lut-42',
     type: 'quran_source',
     order: 42,
     content: "Allah rained marked stones upon them.",
+    contentFr: "Allah fit pleuvoir sur eux des pierres marquées.",
     source: {
       type: 'quran',
       surahNumber: 15,
@@ -456,6 +526,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 74,
       arabicText: 'فَأَخَذَتْهُمُ الصَّيْحَةُ مُشْرِقِينَ ۝ فَجَعَلْنَا عَالِيَهَا سَافِلَهَا وَأَمْطَرْنَا عَلَيْهِمْ حِجَارَةً مِّن سِجِّيلٍ',
       translation: 'So the shriek seized them at sunrise. And We made the highest part [of the city] its lowest and rained upon them stones of hard clay.',
+      translationFr: 'Le Cri les saisit au lever du soleil. Et Nous renversâmes [la cité] de fond en comble et fîmes pleuvoir sur eux des pierres d\'argile cuite.',
     } as QuranReference,
   },
   {
@@ -463,12 +534,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 43,
     content: "The wife of Lut, despite leaving with the family, looked back - perhaps longing for her people or her home - and was struck by the punishment along with them. She had been warned not to look back, but her heart was with the disbelievers, and so her fate was with them as well.",
+    contentFr: "La femme de Lut, bien qu'elle fût partie avec la famille, se retourna - peut-être par nostalgie pour son peuple ou sa maison - et fut frappée par le châtiment avec eux. Elle avait été avertie de ne pas se retourner, mais son cœur était avec les mécréants, et son sort fut donc le même que le leur.",
   },
   {
     id: 'lut-44',
     type: 'quran_source',
     order: 44,
     content: "Only Lut and his believing family were saved.",
+    contentFr: "Seuls Lut et les membres croyants de sa famille furent sauvés.",
     source: {
       type: 'quran',
       surahNumber: 15,
@@ -478,6 +551,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 60,
       arabicText: 'إِلَّا آلَ لُوطٍ إِنَّا لَمُنَجُّوهُمْ أَجْمَعِينَ ۝ إِلَّا امْرَأَتَهُ قَدَّرْنَا ۙ إِنَّهَا لَمِنَ الْغَابِرِينَ',
       translation: 'Except the family of Lut; indeed, we will save them all, except his wife. We have decreed that she is of those who remain behind [i.e., will be destroyed].',
+      translationFr: 'Sauf la famille de Lut ; nous les sauverons tous, sauf sa femme. Nous avons décrété qu\'elle sera du nombre de ceux qui restent en arrière [c\'est-à-dire qui seront détruits].',
     } as QuranReference,
   },
   {
@@ -485,12 +559,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'hadith_source',
     order: 45,
     content: "The Prophet warned about the sin of the people of Lut.",
+    contentFr: "Le Prophète avertit au sujet du péché du peuple de Lut.",
     source: {
       type: 'hadith',
       collection: 'tirmidhi',
       narrator: 'Ibn Abbas',
       arabicText: 'لَعَنَ اللَّهُ مَنْ عَمِلَ عَمَلَ قَوْمِ لُوطٍ',
       translation: 'Allah has cursed the one who does the action of the people of Lut.',
+      translationFr: 'Allah a maudit celui qui commet l\'acte du peuple de Lut.',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -499,12 +575,14 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 46,
     content: "The story of Prophet Lut and his people carries profound lessons that remain relevant throughout time. Allah preserved this story in the Quran as a warning and guidance for all of humanity. The remnants of their cities serve as a visible sign.",
+    contentFr: "L'histoire du prophète Lut et de son peuple porte des leçons profondes qui restent pertinentes à travers le temps. Allah préserva cette histoire dans le Coran comme un avertissement et une guidance pour toute l'humanité. Les vestiges de leurs cités servent de signe visible.",
   },
   {
     id: 'lut-47',
     type: 'quran_source',
     order: 47,
     content: "The ruins remain as a sign for those who reflect.",
+    contentFr: "Les ruines demeurent comme un signe pour ceux qui réfléchissent.",
     source: {
       type: 'quran',
       surahNumber: 15,
@@ -514,6 +592,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 77,
       arabicText: 'إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّلْمُتَوَسِّمِينَ ۝ وَإِنَّهَا لَبِسَبِيلٍ مُّقِيمٍ ۝ إِنَّ فِي ذَٰلِكَ لَآيَةً لِّلْمُؤْمِنِينَ',
       translation: 'Indeed, in that are signs for those who discern. And indeed, they [i.e., those cities] are [situated] on an established road. Indeed, in that is a sign for the believers.',
+      translationFr: 'Il y a certes en cela des signes pour ceux qui savent observer. Et elles [ces cités] sont situées sur un chemin permanent. Il y a certes en cela un signe pour les croyants.',
     } as QuranReference,
   },
   {
@@ -521,18 +600,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 48,
     content: "The first lesson is about the danger of normalizing sin. The people of Lut did not merely commit sins privately - they made them public, celebrated them, and mocked those who sought purity. When a society reaches this level of moral inversion, destruction follows.",
+    contentFr: "La première leçon concerne le danger de normaliser le péché. Le peuple de Lut ne commettait pas simplement des péchés en privé - ils les rendaient publics, les célébraient et se moquaient de ceux qui cherchaient la pureté. Quand une société atteint ce niveau d'inversion morale, la destruction s'ensuit.",
   },
   {
     id: 'lut-49',
     type: 'narrative',
     order: 49,
     content: "The second lesson is about the limits of family ties in matters of faith. Lut's wife lived with a prophet but chose disbelief. Being related to righteous people does not save anyone - each person must believe and act righteously for themselves.",
+    contentFr: "La deuxième leçon concerne les limites des liens familiaux en matière de foi. La femme de Lut vécut avec un prophète mais choisit la mécréance. Être apparenté à des gens vertueux ne sauve personne - chaque personne doit croire et agir vertueusement pour elle-même.",
   },
   {
     id: 'lut-50',
     type: 'quran_source',
     order: 50,
     content: "Allah reminds us that this punishment is not far from wrongdoers.",
+    contentFr: "Allah nous rappelle que ce châtiment n'est pas loin des injustes.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -542,6 +624,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 83,
       arabicText: 'مُّسَوَّمَةً عِندَ رَبِّكَ ۖ وَمَا هِيَ مِنَ الظَّالِمِينَ بِبَعِيدٍ',
       translation: '[Those stones were] marked from your Lord. And it [i.e., Allah\'s punishment] is not from the wrongdoers [very] far.',
+      translationFr: '[Ces pierres étaient] marquées auprès de ton Seigneur. Et [le châtiment d\'Allah] n\'est pas loin des injustes.',
     } as QuranReference,
   },
   {
@@ -549,18 +632,21 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 51,
     content: "The third lesson is that unprecedented sins bring unprecedented punishments. No nation before had practiced this sin openly, and no nation before had been punished in this particular way - their cities overturned and rained upon with stones. The punishment matched the crime.",
+    contentFr: "La troisième leçon est que des péchés sans précédent entraînent des châtiments sans précédent. Aucune nation auparavant n'avait pratiqué ce péché ouvertement, et aucune nation auparavant n'avait été punie de cette manière particulière - leurs cités retournées et une pluie de pierres. Le châtiment correspondait au crime.",
   },
   {
     id: 'lut-52',
     type: 'narrative',
     order: 52,
     content: "The fourth lesson concerns the patience of prophets. Despite years of rejection, mockery, and threats, Lut continued calling his people. He only wished for the strength to stop their evil, showing his deep concern for preventing sin rather than just escaping from it.",
+    contentFr: "La quatrième leçon concerne la patience des prophètes. Malgré des années de rejet, de moqueries et de menaces, Lut continua d'appeler son peuple. Il ne souhaitait que la force d'arrêter leur mal, montrant sa profonde préoccupation de prévenir le péché plutôt que simplement de le fuir.",
   },
   {
     id: 'lut-53',
     type: 'quran_source',
     order: 53,
     content: "Allah mentions the people of Lut as a lesson.",
+    contentFr: "Allah mentionne le peuple de Lut comme une leçon.",
     source: {
       type: 'quran',
       surahNumber: 54,
@@ -570,6 +656,7 @@ const lutStoryContent: StoryContentBlock[] = [
       ayahEnd: 35,
       arabicText: 'كَذَّبَتْ قَوْمُ لُوطٍ بِالنُّذُرِ ۝ إِنَّا أَرْسَلْنَا عَلَيْهِمْ حَاصِبًا إِلَّا آلَ لُوطٍ ۖ نَّجَّيْنَاهُم بِسَحَرٍ ۝ نِّعْمَةً مِّنْ عِندِنَا ۚ كَذَٰلِكَ نَجْزِي مَن شَكَرَ',
       translation: 'The people of Lut denied the warning. Indeed, We sent upon them a storm of stones, except the family of Lut - We saved them before dawn, as a favor from Us. Thus do We reward he who is grateful.',
+      translationFr: 'Le peuple de Lut traita de mensonges les avertissements. Nous envoyâmes sur eux un vent violent chargé de pierres, sauf la famille de Lut que Nous sauvâmes avant l\'aube, comme une grâce de Notre part. C\'est ainsi que Nous récompensons celui qui est reconnaissant.',
     } as QuranReference,
   },
   {
@@ -577,6 +664,7 @@ const lutStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 54,
     content: "Finally, this story teaches that Allah always protects His righteous servants. While entire cities were destroyed, Lut and his believing family were saved 'as a favor from Allah.' Those who are grateful and obedient will always find Allah's protection and mercy, even in the darkest circumstances.",
+    contentFr: "Enfin, cette histoire enseigne qu'Allah protège toujours Ses serviteurs vertueux. Alors que des cités entières furent détruites, Lut et les membres croyants de sa famille furent sauvés « comme une grâce d'Allah ». Ceux qui sont reconnaissants et obéissants trouveront toujours la protection et la miséricorde d'Allah, même dans les circonstances les plus sombres.",
   },
 ];
 

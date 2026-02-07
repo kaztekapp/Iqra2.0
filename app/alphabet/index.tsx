@@ -2,11 +2,15 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { arabicLetters } from '../../src/data/arabic/alphabet/letters';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 
 export default function AlphabetScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { progress, getAlphabetCompletionPercent } = useProgressStore();
   const { speak, isSpeaking } = useArabicSpeech();
   const learnedLetters = progress.alphabetProgress.lettersLearned;
@@ -38,7 +42,7 @@ export default function AlphabetScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Arabic Alphabet</Text>
+            <Text style={styles.title}>{t('alphabet.title')}</Text>
             <Text style={styles.titleArabic}>الْحُرُوفُ الْعَرَبِيَّة</Text>
           </View>
         </View>
@@ -46,9 +50,9 @@ export default function AlphabetScreen() {
         {/* Progress Card */}
         <View style={styles.progressCard}>
           <View style={styles.progressInfo}>
-            <Text style={styles.progressLabel}>Your Progress</Text>
+            <Text style={styles.progressLabel}>{t('common.yourProgress')}</Text>
             <Text style={styles.progressValue}>
-              {learnedLetters.length}/28 letters learned
+              {t('alphabet.lettersLearnedCount', { count: learnedLetters.length })}
             </Text>
           </View>
           <View style={styles.progressBarContainer}>
@@ -70,21 +74,21 @@ export default function AlphabetScreen() {
         <View style={styles.legend}>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, { backgroundColor: '#6366f1' }]} />
-            <Text style={styles.legendText}>New</Text>
+            <Text style={styles.legendText}>{t('common.new')}</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, { backgroundColor: '#D4AF37' }]} />
-            <Text style={styles.legendText}>Learned</Text>
+            <Text style={styles.legendText}>{t('common.learned')}</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, { backgroundColor: '#22c55e' }]} />
-            <Text style={styles.legendText}>Mastered</Text>
+            <Text style={styles.legendText}>{t('common.mastered')}</Text>
           </View>
         </View>
 
         {/* Letter Grid - 28 Letters */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>28 Letters</Text>
+          <Text style={styles.sectionTitle}>{t('alphabet.lettersCount')}</Text>
           <View style={styles.letterGrid}>
             {arabicLetters.map((letter) => {
               const status = getLetterStatus(letter.id);
@@ -96,7 +100,7 @@ export default function AlphabetScreen() {
                   onPress={() => router.push(`/alphabet/${letter.id}` as any)}
                 >
                   <Text style={styles.letterArabic}>{letter.letter}</Text>
-                  <Text style={styles.letterName}>{letter.name}</Text>
+                  <Text style={styles.letterName}>{lc(letter.name, letter.nameFr)}</Text>
                   <Text style={styles.letterTranslit}>{letter.transliteration}</Text>
                   <Pressable
                     style={styles.letterAudioBtn}
@@ -137,9 +141,9 @@ export default function AlphabetScreen() {
               </View>
             </View>
             <View style={styles.sunMoonContent}>
-              <Text style={styles.sunMoonTitle}>Sun & Moon Letters</Text>
+              <Text style={styles.sunMoonTitle}>{t('alphabet.sunMoonLetters')}</Text>
               <Text style={styles.sunMoonTitleAr}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
-              <Text style={styles.sunMoonDesc}>Learn how "ال" pronunciation changes</Text>
+              <Text style={styles.sunMoonDesc}>{t('alphabet.sunMoonDesc')}</Text>
             </View>
             <Ionicons name="chevron-forward" size={24} color="#64748b" />
           </Pressable>
@@ -148,17 +152,15 @@ export default function AlphabetScreen() {
 
         {/* Study Tips */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Text style={styles.sectionTitle}>Study Tips</Text>
+          <Text style={styles.sectionTitle}>{t('alphabet.studyTips')}</Text>
           <View style={styles.tipCard}>
             <View style={styles.tipIcon}>
               <Ionicons name="bulb" size={24} color="#D4AF37" />
             </View>
             <View style={styles.tipContent}>
-              <Text style={styles.tipTitle}>Letter Forms</Text>
+              <Text style={styles.tipTitle}>{t('alphabet.letterForms')}</Text>
               <Text style={styles.tipText}>
-                Each Arabic letter has up to 4 forms depending on its position in a
-                word: isolated, initial, medial, and final. Tap any letter to see
-                all its forms!
+                {t('alphabet.letterFormsDesc')}
               </Text>
             </View>
           </View>

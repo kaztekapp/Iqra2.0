@@ -7,11 +7,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'adam',
     nameEnglish: 'Adam',
+    nameFrench: 'Adam',
     nameArabic: 'آدم',
     order: 1,
     title: 'Father of Mankind',
+    titleFr: 'Père de l\'Humanité',
     titleArabic: 'أبو البشر',
     summary: 'The first human and prophet, created by Allah from clay. His story teaches us about the origin of humanity, the honor bestowed upon mankind, the danger of arrogance, and the mercy of repentance.',
+    summaryFr: 'Le premier humain et prophète, créé par Allah à partir d\'argile. Son histoire nous enseigne l\'origine de l\'humanité, l\'honneur accordé à l\'homme, le danger de l\'orgueil et la miséricorde du repentir.',
     hasSubStories: false,
     lessons: [
       'Obedience to Allah is paramount above all else',
@@ -29,11 +32,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'idris',
     nameEnglish: 'Idris',
+    nameFrench: 'Idris',
     nameArabic: 'إدريس',
     order: 2,
     title: 'The Truthful One',
+    titleFr: 'Le Véridique',
     titleArabic: 'الصديق',
     summary: 'One of the earliest prophets, known for his exceptional knowledge, patience, and righteousness. Allah raised him to a high station, honoring him for his devotion and truthfulness.',
+    summaryFr: 'L\'un des premiers prophètes, connu pour ses connaissances exceptionnelles, sa patience et sa droiture. Allah l\'a élevé à un rang élevé, l\'honorant pour sa dévotion et sa véracité.',
     hasSubStories: false,
     lessons: [
       'The pursuit of knowledge is a noble and virtuous path',
@@ -50,11 +56,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'nuh',
     nameEnglish: 'Nuh',
+    nameFrench: 'Noé',
     nameArabic: 'نوح',
     order: 3,
     title: 'The Grateful Servant',
+    titleFr: 'Le Serviteur Reconnaissant',
     titleArabic: 'العبد الشكور',
     summary: 'One of the greatest prophets, Nuh preached to his people for 950 years. When they persisted in disbelief, Allah commanded him to build an ark. The Great Flood destroyed the disbelievers, and Nuh and the believers were saved.',
+    summaryFr: 'L\'un des plus grands prophètes, Noé a prêché à son peuple pendant 950 ans. Quand ils ont persisté dans la mécréance, Allah lui a ordonné de construire une arche. Le Déluge a détruit les mécréants, et Noé et les croyants ont été sauvés.',
     hasSubStories: false,
     lessons: [
       'Patience in calling people to truth, even for centuries',
@@ -72,11 +81,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'hud',
     nameEnglish: 'Hud',
+    nameFrench: 'Houd',
     nameArabic: 'هود',
     order: 4,
     title: 'Prophet to \'Ad',
+    titleFr: 'Prophète des \'Ad',
     titleArabic: 'نبي عاد',
     summary: 'Sent to the powerful people of \'Ad who were known for their strength and magnificent buildings. They were destroyed for their arrogance.',
+    summaryFr: 'Envoyé au puissant peuple de \'Ad, connu pour sa force et ses bâtiments magnifiques. Ils furent détruits pour leur arrogance.',
     hasSubStories: true,
     lessons: [
       'Strength and wealth do not protect from Allah\'s punishment',
@@ -90,11 +102,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'salih',
     nameEnglish: 'Salih',
+    nameFrench: 'Salih',
     nameArabic: 'صالح',
     order: 5,
     title: 'Prophet to Thamud',
+    titleFr: 'Prophète des Thamoud',
     titleArabic: 'نبي ثمود',
     summary: 'Sent to the people of Thamud who carved homes in mountains. Allah sent them a she-camel as a sign, but they killed it and were destroyed.',
+    summaryFr: 'Envoyé au peuple de Thamoud qui sculptait des maisons dans les montagnes. Allah leur envoya une chamelle comme signe, mais ils la tuèrent et furent détruits.',
     hasSubStories: true,
     lessons: [
       'Defying Allah\'s signs leads to destruction',
@@ -108,11 +123,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'ibrahim',
     nameEnglish: 'Ibrahim',
+    nameFrench: 'Abraham',
     nameArabic: 'إبراهيم',
     order: 6,
     title: 'The Friend of Allah',
+    titleFr: 'L\'Ami d\'Allah',
     titleArabic: 'خليل الله',
     summary: 'One of the greatest prophets, known for his unwavering faith. He built the Kaaba with his son Ismail and is the father of many prophets.',
+    summaryFr: 'L\'un des plus grands prophètes, connu pour sa foi inébranlable. Il a construit la Kaaba avec son fils Ismaël et est le père de nombreux prophètes.',
     hasSubStories: true,
     lessons: [
       'True faith requires complete submission to Allah',
@@ -127,11 +145,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'lut',
     nameEnglish: 'Lut',
+    nameFrench: 'Loth',
     nameArabic: 'لوط',
     order: 7,
     title: 'Nephew of Ibrahim',
+    titleFr: 'Neveu d\'Abraham',
     titleArabic: 'ابن أخي إبراهيم',
     summary: 'Sent to the people of Sodom and Gomorrah who engaged in grave sins. The cities were destroyed, but Lut and the believers were saved.',
+    summaryFr: 'Envoyé au peuple de Sodome et Gomorrhe qui commettait de graves péchés. Les villes furent détruites, mais Loth et les croyants furent sauvés.',
     hasSubStories: true,
     lessons: [
       'Moral corruption leads to societal destruction',
@@ -145,11 +166,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'ismail',
     nameEnglish: 'Ismail',
+    nameFrench: 'Ismaël',
     nameArabic: 'إسماعيل',
     order: 8,
     title: 'The Sacrificed One',
+    titleFr: 'Le Sacrifié',
     titleArabic: 'الذبيح',
     summary: 'Son of Ibrahim, he willingly submitted to Allah\'s command to be sacrificed. He helped build the Kaaba and is an ancestor of Prophet Muhammad (PBUH).',
+    summaryFr: 'Fils d\'Abraham, il s\'est volontairement soumis à l\'ordre d\'Allah d\'être sacrifié. Il a aidé à construire la Kaaba et est un ancêtre du Prophète Muhammad (PSL).',
     hasSubStories: true,
     lessons: [
       'Submission to Allah\'s will',
@@ -163,11 +187,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'ishaq',
     nameEnglish: 'Ishaq',
+    nameFrench: 'Isaac',
     nameArabic: 'إسحاق',
     order: 9,
     title: 'Son of Ibrahim',
+    titleFr: 'Fils d\'Abraham',
     titleArabic: 'ابن إبراهيم',
     summary: 'Born to Ibrahim and Sarah in their old age as a miraculous gift from Allah. He was a righteous prophet and father of Yaqub.',
+    summaryFr: 'Né d\'Abraham et Sarah dans leur vieillesse comme un don miraculeux d\'Allah. Il était un prophète pieux et père de Jacob.',
     hasSubStories: false,
     lessons: [
       'Allah\'s promises always come true',
@@ -181,11 +208,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'yaqub',
     nameEnglish: 'Yaqub',
+    nameFrench: 'Jacob',
     nameArabic: 'يعقوب',
     order: 10,
     title: 'Israel',
+    titleFr: 'Israël',
     titleArabic: 'إسرائيل',
     summary: 'Also known as Israel, he was the father of the twelve tribes. His story is intertwined with his son Yusuf\'s remarkable journey.',
+    summaryFr: 'Aussi connu sous le nom d\'Israël, il était le père des douze tribus. Son histoire est liée au remarquable parcours de son fils Joseph.',
     hasSubStories: true,
     lessons: [
       'Patience in the face of grief',
@@ -199,11 +229,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'yusuf',
     nameEnglish: 'Yusuf',
+    nameFrench: 'Joseph',
     nameArabic: 'يوسف',
     order: 11,
     title: 'The Truthful One',
+    titleFr: 'Le Véridique',
     titleArabic: 'الصديق',
     summary: 'His story is called "the best of stories" in the Quran. From being thrown in a well by his brothers to becoming the minister of Egypt.',
+    summaryFr: 'Son histoire est appelée « la plus belle des histoires » dans le Coran. De la fosse où ses frères l\'ont jeté jusqu\'à devenir ministre d\'Égypte.',
     hasSubStories: true,
     lessons: [
       'Patience through adversity leads to success',
@@ -218,11 +251,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'ayyub',
     nameEnglish: 'Ayyub',
+    nameFrench: 'Job',
     nameArabic: 'أيوب',
     order: 12,
     title: 'The Patient One',
+    titleFr: 'Le Patient',
     titleArabic: 'الصابر',
     summary: 'Known for his extraordinary patience during severe trials. He lost his health, wealth, and children, but remained steadfast in faith.',
+    summaryFr: 'Connu pour sa patience extraordinaire lors d\'épreuves sévères. Il a perdu sa santé, sa richesse et ses enfants, mais est resté ferme dans la foi.',
     hasSubStories: true,
     lessons: [
       'Patience in hardship is a virtue',
@@ -236,11 +272,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'shuayb',
     nameEnglish: 'Shu\'ayb',
+    nameFrench: 'Chouaïb',
     nameArabic: 'شعيب',
     order: 13,
     title: 'Orator of the Prophets',
+    titleFr: 'L\'Orateur des Prophètes',
     titleArabic: 'خطيب الأنبياء',
     summary: 'Sent to the people of Madyan who cheated in their business dealings. He called them to justice and fair trade.',
+    summaryFr: 'Envoyé au peuple de Madyan qui trichait dans ses affaires commerciales. Il les a appelés à la justice et au commerce équitable.',
     hasSubStories: true,
     lessons: [
       'Honesty in business is a religious duty',
@@ -254,11 +293,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'musa',
     nameEnglish: 'Musa',
+    nameFrench: 'Moïse',
     nameArabic: 'موسى',
     order: 14,
     title: 'The One Who Spoke to Allah',
+    titleFr: 'Celui Qui Parla à Allah',
     titleArabic: 'كليم الله',
     summary: 'The most mentioned prophet in the Quran. Confronted Pharaoh, led the Israelites out of Egypt, received the Torah on Mount Sinai.',
+    summaryFr: 'Le prophète le plus mentionné dans le Coran. Il a affronté Pharaon, mené les Israélites hors d\'Égypte et reçu la Torah sur le Mont Sinaï.',
     hasSubStories: true,
     lessons: [
       'Trust in Allah against all odds',
@@ -273,11 +315,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'harun',
     nameEnglish: 'Harun',
+    nameFrench: 'Aaron',
     nameArabic: 'هارون',
     order: 15,
     title: 'Brother of Musa',
+    titleFr: 'Frère de Moïse',
     titleArabic: 'أخو موسى',
     summary: 'The brother and helper of Musa. He was known for his eloquent speech and assisted Musa in calling Pharaoh to Islam.',
+    summaryFr: 'Le frère et assistant de Moïse. Il était connu pour son éloquence et a aidé Moïse à appeler Pharaon à l\'Islam.',
     hasSubStories: false,
     lessons: [
       'Supporting others in righteous work',
@@ -291,11 +336,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'dhul-kifl',
     nameEnglish: 'Dhul-Kifl',
+    nameFrench: 'Dhoul-Kifl',
     nameArabic: 'ذو الكفل',
     order: 16,
     title: 'The One with a Portion',
+    titleFr: 'Celui à la Part',
     titleArabic: 'صاحب الكفل',
     summary: 'A righteous prophet mentioned in the Quran among those who were patient. He fulfilled his responsibilities with excellence.',
+    summaryFr: 'Un prophète pieux mentionné dans le Coran parmi ceux qui étaient patients. Il a accompli ses responsabilités avec excellence.',
     hasSubStories: false,
     lessons: [
       'Fulfilling responsibilities faithfully',
@@ -308,11 +356,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'dawud',
     nameEnglish: 'Dawud',
+    nameFrench: 'David',
     nameArabic: 'داود',
     order: 17,
     title: 'The King Prophet',
+    titleFr: 'Le Roi Prophète',
     titleArabic: 'الملك النبي',
     summary: 'A prophet and king who was given the Zabur (Psalms). Known for his beautiful voice, justice, and defeat of Jalut (Goliath).',
+    summaryFr: 'Un prophète et roi à qui fut donné le Zabour (Psaumes). Connu pour sa belle voix, sa justice et sa victoire contre Goliath.',
     hasSubStories: true,
     lessons: [
       'Power should be accompanied by righteousness',
@@ -327,11 +378,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'sulayman',
     nameEnglish: 'Sulayman',
+    nameFrench: 'Salomon',
     nameArabic: 'سليمان',
     order: 18,
     title: 'The Wise King',
+    titleFr: 'Le Roi Sage',
     titleArabic: 'الملك الحكيم',
     summary: 'Son of Dawud, he was given a kingdom unlike any other. He could speak to animals and command the jinn and wind.',
+    summaryFr: 'Fils de David, il reçut un royaume sans pareil. Il pouvait parler aux animaux et commander les djinns et le vent.',
     hasSubStories: true,
     lessons: [
       'Wisdom is a gift from Allah',
@@ -346,11 +400,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'ilyas',
     nameEnglish: 'Ilyas',
+    nameFrench: 'Élie',
     nameArabic: 'إلياس',
     order: 19,
     title: 'Prophet to Baal Worshippers',
+    titleFr: 'Prophète des Adorateurs de Baal',
     titleArabic: 'نبي عبدة بعل',
     summary: 'Sent to a community that worshipped an idol named Baal. He called them to worship Allah alone.',
+    summaryFr: 'Envoyé à une communauté qui adorait une idole nommée Baal. Il les a appelés à adorer Allah seul.',
     hasSubStories: false,
     lessons: [
       'Standing against idol worship',
@@ -363,11 +420,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'al-yasa',
     nameEnglish: 'Al-Yasa',
+    nameFrench: 'Élisée',
     nameArabic: 'اليسع',
     order: 20,
     title: 'The Righteous',
+    titleFr: 'Le Pieux',
     titleArabic: 'الصالح',
     summary: 'A righteous prophet mentioned among those preferred above the worlds. He continued the message after Ilyas.',
+    summaryFr: 'Un prophète pieux mentionné parmi ceux préférés au-dessus des mondes. Il a continué le message après Élie.',
     hasSubStories: false,
     lessons: [
       'Continuing the work of predecessors',
@@ -380,11 +440,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'yunus',
     nameEnglish: 'Yunus',
+    nameFrench: 'Jonas',
     nameArabic: 'يونس',
     order: 21,
     title: 'Companion of the Whale',
+    titleFr: 'Le Compagnon de la Baleine',
     titleArabic: 'صاحب الحوت',
     summary: 'Left his people in anger before receiving permission. Swallowed by a whale, he repented in its belly and Allah forgave him.',
+    summaryFr: 'Il quitta son peuple en colère avant d\'en recevoir la permission. Avalé par une baleine, il se repentit dans son ventre et Allah lui pardonna.',
     hasSubStories: true,
     lessons: [
       'Never despair of Allah\'s mercy',
@@ -399,11 +462,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'zakariya',
     nameEnglish: 'Zakariya',
+    nameFrench: 'Zacharie',
     nameArabic: 'زكريا',
     order: 22,
     title: 'Guardian of Maryam',
+    titleFr: 'Gardien de Marie',
     titleArabic: 'كافل مريم',
     summary: 'An elderly prophet who prayed for a son. Allah granted him Yahya even in old age. He was the guardian of Maryam.',
+    summaryFr: 'Un prophète âgé qui pria pour avoir un fils. Allah lui accorda Yahya même dans sa vieillesse. Il était le gardien de Marie.',
     hasSubStories: true,
     lessons: [
       'Never give up on dua',
@@ -417,11 +483,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'yahya',
     nameEnglish: 'Yahya',
+    nameFrench: 'Jean',
     nameArabic: 'يحيى',
     order: 23,
     title: 'The Pure',
+    titleFr: 'Le Pur',
     titleArabic: 'الطاهر',
     summary: 'Son of Zakariya, born miraculously. He was given wisdom from childhood and was noble, chaste, and a righteous prophet.',
+    summaryFr: 'Fils de Zacharie, né miraculeusement. Il reçut la sagesse dès l\'enfance et était noble, chaste et un prophète pieux.',
     hasSubStories: true,
     lessons: [
       'Wisdom can be granted from youth',
@@ -435,11 +504,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'isa',
     nameEnglish: 'Isa',
+    nameFrench: 'Jésus',
     nameArabic: 'عيسى',
     order: 24,
     title: 'The Messiah',
+    titleFr: 'Le Messie',
     titleArabic: 'المسيح',
     summary: 'Born miraculously to Maryam. Spoke as an infant, performed miracles by Allah\'s permission, given the Injeel. He was raised to heaven.',
+    summaryFr: 'Né miraculeusement de Marie. Il parla au berceau, accomplit des miracles par la permission d\'Allah, reçut l\'Injil. Il fut élevé au ciel.',
     hasSubStories: true,
     lessons: [
       'Allah creates as He wills',
@@ -454,11 +526,14 @@ export const PROPHETS: Prophet[] = [
   {
     id: 'muhammad',
     nameEnglish: 'Muhammad',
+    nameFrench: 'Muhammad',
     nameArabic: 'محمد',
     order: 25,
     title: 'The Seal of the Prophets',
+    titleFr: 'Le Sceau des Prophètes',
     titleArabic: 'خاتم الأنبياء',
     summary: 'The final messenger to mankind, sent with the Quran. His life is the perfect example for all humanity until the Day of Judgment.',
+    summaryFr: 'Le dernier messager envoyé à l\'humanité, porteur du Coran. Sa vie est l\'exemple parfait pour toute l\'humanité jusqu\'au Jour du Jugement.',
     hasSubStories: true,
     lessons: [
       'Mercy to all of creation',

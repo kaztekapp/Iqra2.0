@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getAllDuas, getAvailableCategories } from '../../../src/data/arabic/duas';
 import { DuaCard } from '../../../src/components/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
@@ -11,6 +13,8 @@ import { DuaCategory, DUA_CATEGORY_LABELS, DuaListItem } from '../../../src/type
 type FilterCategory = 'all' | DuaCategory;
 
 export default function DuasListScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>('all');
 
   const {
@@ -52,7 +56,7 @@ export default function DuasListScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Duas</Text>
+          <Text style={styles.title}>{t('duasFeature.title')}</Text>
           <Text style={styles.titleArabic}>الأدعية النبوية</Text>
         </View>
         <View style={styles.headerSpacer} />
@@ -64,9 +68,9 @@ export default function DuasListScreen() {
           <Ionicons name="checkmark-done-circle" size={28} color="#10b981" />
         </View>
         <View style={styles.progressContent}>
-          <Text style={styles.progressTitle}>Memorized</Text>
+          <Text style={styles.progressTitle}>{t('duasFeature.memorized')}</Text>
           <Text style={styles.progressSubtitle}>
-            {memorizedCount} of {duas.length} duas
+            {memorizedCount} {t('duasFeature.ofDuas', { total: duas.length })}
           </Text>
         </View>
         <View style={styles.progressPercent}>
@@ -96,7 +100,7 @@ export default function DuasListScreen() {
               selectedCategory === 'all' && styles.filterChipTextActive,
             ]}
           >
-            All
+            {t('common.all')}
           </Text>
         </Pressable>
         {categories.map((category) => (
@@ -114,7 +118,7 @@ export default function DuasListScreen() {
                 selectedCategory === category && styles.filterChipTextActive,
               ]}
             >
-              {DUA_CATEGORY_LABELS[category].english}
+              {lc(DUA_CATEGORY_LABELS[category].english, DUA_CATEGORY_LABELS[category].french)}
             </Text>
           </Pressable>
         ))}

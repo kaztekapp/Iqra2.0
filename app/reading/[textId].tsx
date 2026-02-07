@@ -3,20 +3,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState, useCallback, useRef, memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 
 // Reading content
 const readingContent: Record<string, {
   title: string;
+  titleFr?: string;
   titleArabic: string;
   level: 'beginner' | 'intermediate' | 'advanced';
   icon: string;
   color: string;
-  paragraphs: { arabic: string; english: string }[];
+  paragraphs: { arabic: string; english: string; french?: string }[];
 }> = {
   'intro-1': {
     title: 'Introducing Yourself',
+    titleFr: 'Se presenter',
     titleArabic: 'التَّعْرِيفُ بِالنَّفْس',
     level: 'beginner',
     icon: '👋',
@@ -38,6 +42,7 @@ const readingContent: Record<string, {
   },
   'family-1': {
     title: 'My Family',
+    titleFr: 'Ma famille',
     titleArabic: 'عَائِلَتِي',
     level: 'beginner',
     icon: '👨‍👩‍👧‍👦',
@@ -61,6 +66,7 @@ const readingContent: Record<string, {
   },
   'daily-routine': {
     title: 'Daily Routine',
+    titleFr: 'Routine quotidienne',
     titleArabic: 'الرُّوتِينُ الْيَوْمِي',
     level: 'beginner',
     icon: '☀️',
@@ -83,6 +89,7 @@ const readingContent: Record<string, {
   },
   'at-school': {
     title: 'At School',
+    titleFr: "A l'ecole",
     titleArabic: 'فِي الْمَدْرَسَة',
     level: 'intermediate',
     icon: '🏫',
@@ -106,6 +113,7 @@ const readingContent: Record<string, {
   },
   'at-market': {
     title: 'At the Market',
+    titleFr: 'Au marche',
     titleArabic: 'فِي السُّوق',
     level: 'intermediate',
     icon: '🛒',
@@ -129,6 +137,7 @@ const readingContent: Record<string, {
   },
   'weather': {
     title: 'The Weather',
+    titleFr: 'La meteo',
     titleArabic: 'الطَّقْس',
     level: 'intermediate',
     icon: '🌤️',
@@ -152,6 +161,7 @@ const readingContent: Record<string, {
   },
   'travel-story': {
     title: 'A Travel Story',
+    titleFr: 'Une histoire de voyage',
     titleArabic: 'قِصَّةُ سَفَر',
     level: 'advanced',
     icon: '✈️',
@@ -175,6 +185,7 @@ const readingContent: Record<string, {
   },
   'arab-culture': {
     title: 'Arab Culture',
+    titleFr: 'Culture arabe',
     titleArabic: 'الثَّقَافَةُ الْعَرَبِيَّة',
     level: 'advanced',
     icon: '🕌',
@@ -203,13 +214,14 @@ interface SentenceCardProps {
   index: number;
   arabic: string;
   english: string;
+  french?: string;
   color: string;
   isPlaying: boolean;
   isLoading: boolean;
   onPlay: () => void;
 }
 
-const SentenceCard = memo(function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
+const SentenceCard = memo(function SentenceCard({ index, arabic, english, french, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
   return (
     <View style={styles.sentenceCard}>
       {/* Header with Number and Play Button */}
@@ -237,13 +249,15 @@ const SentenceCard = memo(function SentenceCard({ index, arabic, english, color,
       {/* Arabic Text */}
       <Text style={styles.sentenceArabic}>{arabic}</Text>
 
-      {/* English Translation */}
+      {/* Translation */}
       <Text style={styles.sentenceEnglish}>{english}</Text>
     </View>
   );
 });
 
 export default function ReadingDetailScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { textId } = useLocalSearchParams<{ textId: string }>();
   const { startReading, completeReading, addXp, updateStreak } = useProgressStore();
 
@@ -331,9 +345,9 @@ export default function ReadingDetailScreen() {
           </Pressable>
           <View style={styles.comingSoonContent}>
             <Ionicons name="book" size={64} color="#10b981" />
-            <Text style={styles.comingSoonTitle}>Coming Soon</Text>
+            <Text style={styles.comingSoonTitle}>{t('common.comingSoon')}</Text>
             <Text style={styles.comingSoonText}>
-              This reading passage is currently being developed. Check back soon!
+              {t('reading.comingSoonReading')}
             </Text>
           </View>
         </View>
@@ -357,7 +371,7 @@ export default function ReadingDetailScreen() {
           </Pressable>
           <View style={styles.headerTitle}>
             <Text style={styles.titleArabic}>{text.titleArabic}</Text>
-            <Text style={styles.title}>{text.title}</Text>
+            <Text style={styles.title}>{lc(text.title, text.titleFr)}</Text>
           </View>
           <View style={styles.headerIcon}>
             <Text style={styles.iconText}>{text.icon}</Text>
@@ -369,7 +383,7 @@ export default function ReadingDetailScreen() {
           <View style={styles.infoRow}>
             <View style={styles.infoItem}>
               <Ionicons name="list" size={16} color={text.color} />
-              <Text style={styles.infoText}>{text.paragraphs.length} Sentences</Text>
+              <Text style={styles.infoText}>{t('reading.sentencesCount', { count: text.paragraphs.length })}</Text>
             </View>
             <View style={styles.infoItem}>
               <Ionicons name="school" size={16} color={text.color} />
@@ -384,7 +398,7 @@ export default function ReadingDetailScreen() {
 
         {/* Sentences Header with Play All */}
         <View style={styles.sentencesHeader}>
-          <Text style={styles.sectionTitle}>Sentences</Text>
+          <Text style={styles.sectionTitle}>{t('reading.sentences')}</Text>
           <View style={styles.headerButtons}>
             {/* Speed Toggle */}
             <Pressable
@@ -396,7 +410,7 @@ export default function ReadingDetailScreen() {
             >
               <Ionicons name="speedometer" size={14} color={isSlowMode ? '#ffffff' : '#94a3b8'} />
               <Text style={[styles.speedToggleText, isSlowMode && styles.speedToggleTextActive]}>
-                {isSlowMode ? 'Slow' : 'Normal'}
+                {isSlowMode ? t('reading.slow') : t('reading.normal')}
               </Text>
             </Pressable>
             {/* Play All Button */}
@@ -412,13 +426,13 @@ export default function ReadingDetailScreen() {
                 <>
                   <Ionicons name="stop" size={14} color="#ffffff" />
                   <Text style={styles.playAllText}>
-                    {currentPlayingIndex !== null ? `${currentPlayingIndex + 1}/${text.paragraphs.length}` : 'Stop'}
+                    {currentPlayingIndex !== null ? `${currentPlayingIndex + 1}/${text.paragraphs.length}` : t('reading.stop')}
                   </Text>
                 </>
               ) : (
                 <>
                   <Ionicons name="play" size={14} color="#ffffff" />
-                  <Text style={styles.playAllText}>Play All</Text>
+                  <Text style={styles.playAllText}>{t('reading.playAll')}</Text>
                 </>
               )}
             </Pressable>
@@ -432,7 +446,7 @@ export default function ReadingDetailScreen() {
               key={index}
               index={index}
               arabic={paragraph.arabic}
-              english={paragraph.english}
+              english={lc(paragraph.english, paragraph.french)}
               color={text.color}
               isPlaying={currentPlayingIndex === index}
               isLoading={false}
@@ -448,7 +462,7 @@ export default function ReadingDetailScreen() {
             onPress={handleComplete}
           >
             <Ionicons name="checkmark-circle" size={24} color="#ffffff" />
-            <Text style={styles.completeButtonText}>Mark as Complete (+30 XP)</Text>
+            <Text style={styles.completeButtonText}>{t('reading.markComplete')}</Text>
           </Pressable>
         </View>
       </ScrollView>

@@ -2,6 +2,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { grammarLessons as lessonsData } from '../../src/data/arabic/grammar/lessons';
 
@@ -16,18 +18,22 @@ const categoryConfig: Record<string, { icon: string; color: string }> = {
   other: { icon: 'bulb', color: '#14b8a6' },
 };
 
-// Transform lessons data for UI
+// Transform lessons data for UI - keep raw data, localize in component
 const grammarLessons = lessonsData.map((lesson) => ({
   id: lesson.id,
   title: lesson.title,
+  titleFr: (lesson as any).titleFr,
   titleArabic: lesson.titleArabic,
   description: lesson.description,
+  descriptionFr: (lesson as any).descriptionFr,
   level: lesson.level,
   icon: categoryConfig[lesson.category]?.icon || 'book',
   color: categoryConfig[lesson.category]?.color || '#6366f1',
 }));
 
 export default function GrammarScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { progress, getGrammarCompletionPercent } = useProgressStore();
   const completedLessons = progress.grammarProgress.lessonsCompleted;
   const startedLessons = progress.grammarProgress.lessonsStarted;
@@ -50,7 +56,7 @@ export default function GrammarScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Grammar</Text>
+            <Text style={styles.title}>{t('grammar.title')}</Text>
             <Text style={styles.titleArabic}>الْقَوَاعِد</Text>
           </View>
         </View>
@@ -58,9 +64,9 @@ export default function GrammarScreen() {
         {/* Progress Card */}
         <View style={styles.progressCard}>
           <View style={styles.progressInfo}>
-            <Text style={styles.progressLabel}>Overall Progress</Text>
+            <Text style={styles.progressLabel}>{t('common.overallProgress')}</Text>
             <Text style={styles.progressValue}>
-              {completedLessons.length}/{grammarLessons.length} lessons
+              {t('grammar.lessonsCount', { completed: completedLessons.length, total: grammarLessons.length })}
             </Text>
           </View>
           <View style={styles.progressBarContainer}>
@@ -81,7 +87,7 @@ export default function GrammarScreen() {
         {/* Beginner Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Beginner</Text>
+            <Text style={styles.sectionTitle}>{t('common.beginner')}</Text>
             <Text style={styles.sectionTitleAr}>الْمُبْتَدِئ</Text>
           </View>
 
@@ -100,7 +106,7 @@ export default function GrammarScreen() {
                 </View>
                 <View style={styles.lessonContent}>
                   <View style={styles.lessonHeader}>
-                    <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                    <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
                     {status === 'completed' && (
                       <Ionicons name="checkmark-circle" size={20} color="#22c55e" />
                     )}
@@ -109,7 +115,7 @@ export default function GrammarScreen() {
                     )}
                   </View>
                   <Text style={styles.lessonTitleAr}>{lesson.titleArabic}</Text>
-                  <Text style={styles.lessonDesc}>{lesson.description}</Text>
+                  <Text style={styles.lessonDesc}>{lc(lesson.description, lesson.descriptionFr)}</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={20} color="#64748b" />
               </Pressable>
@@ -120,7 +126,7 @@ export default function GrammarScreen() {
         {/* Intermediate Section */}
         <View style={[styles.section, { marginBottom: 100 }]}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Intermediate</Text>
+            <Text style={styles.sectionTitle}>{t('common.intermediate')}</Text>
             <Text style={styles.sectionTitleAr}>الْمُتَوَسِّط</Text>
           </View>
 
@@ -139,7 +145,7 @@ export default function GrammarScreen() {
                 </View>
                 <View style={styles.lessonContent}>
                   <View style={styles.lessonHeader}>
-                    <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                    <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
                     {status === 'completed' && (
                       <Ionicons name="checkmark-circle" size={20} color="#22c55e" />
                     )}
@@ -148,7 +154,7 @@ export default function GrammarScreen() {
                     )}
                   </View>
                   <Text style={styles.lessonTitleAr}>{lesson.titleArabic}</Text>
-                  <Text style={styles.lessonDesc}>{lesson.description}</Text>
+                  <Text style={styles.lessonDesc}>{lc(lesson.description, lesson.descriptionFr)}</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={20} color="#64748b" />
               </Pressable>

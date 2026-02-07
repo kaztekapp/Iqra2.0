@@ -12,14 +12,14 @@ export type DuaCategory =
   | 'guidance'
   | 'distress';
 
-export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; arabic: string }> = {
-  protection: { english: 'Protection', arabic: 'الحماية' },
-  rizq: { english: 'Provision', arabic: 'الرزق' },
-  forgiveness: { english: 'Forgiveness', arabic: 'الاستغفار' },
-  morning_evening: { english: 'Morning & Evening', arabic: 'أذكار الصباح والمساء' },
-  health: { english: 'Health', arabic: 'الصحة' },
-  guidance: { english: 'Guidance', arabic: 'الهداية' },
-  distress: { english: 'Distress & Relief', arabic: 'الكرب والفرج' },
+export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; french: string; arabic: string }> = {
+  protection: { english: 'Protection', french: 'Protection', arabic: 'الحماية' },
+  rizq: { english: 'Provision', french: 'Subsistance', arabic: 'الرزق' },
+  forgiveness: { english: 'Forgiveness', french: 'Pardon', arabic: 'الاستغفار' },
+  morning_evening: { english: 'Morning & Evening', french: 'Matin & Soir', arabic: 'أذكار الصباح والمساء' },
+  health: { english: 'Health', french: 'Santé', arabic: 'الصحة' },
+  guidance: { english: 'Guidance', french: 'Guidée', arabic: 'الهداية' },
+  distress: { english: 'Distress & Relief', french: 'Détresse & Soulagement', arabic: 'الكرب والفرج' },
 };
 
 // ============ Hadith Source Types ============
@@ -56,15 +56,20 @@ export interface DuaSource {
 export interface Dua {
   id: string;
   titleEnglish: string;
+  titleFrench?: string;
   titleArabic: string;
   category: DuaCategory;
   arabicText: string;           // Full Arabic with diacritics
   transliteration: string;      // Latin script
   translation: string;          // English meaning
+  translationFr?: string;       // French meaning
   source: DuaSource;
   occasion?: string;            // When to recite
+  occasionFr?: string;
   virtues?: string;             // Benefits/rewards
+  virtuesFr?: string;
   story?: string;               // Narration behind the dua
+  storyFr?: string;
   order: number;
 }
 
@@ -82,6 +87,7 @@ export interface DuasProgress {
 export interface DuaListItem {
   id: string;
   titleEnglish: string;
+  titleFrench?: string;
   titleArabic: string;
   category: DuaCategory;
   arabicText: string;

@@ -10,10 +10,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'izhar',
     nameArabic: 'إظهار',
     nameEnglish: 'Izhar (Clear)',
+    nameFrench: 'Prononciation Claire',
     category: 'noon_sakinah',
     colorCode: TAJWEED_COLORS.izhar,
     description:
       'When you see a Noon with sukoon (نْ) or Tanween (ـً ـٍ ـٌ) followed by one of 6 throat letters, pronounce the Noon clearly and fully. Do NOT blend or hide it. These 6 letters come from deep in the throat, making it natural to say the Noon separately. Think of it as "showing" the Noon sound before moving to the throat letter.',
+    descriptionFr:
+      'Lorsque vous voyez un Noun avec soukoun (نْ) ou un Tanween (ـً ـٍ ـٌ) suivi par l\'une des 6 lettres de la gorge, prononcez le Noun clairement et complètement. Ne le mélangez PAS et ne le cachez pas. Ces 6 lettres proviennent du fond de la gorge, ce qui rend naturel de prononcer le Noun séparément. Pensez-y comme le fait de « montrer » le son du Noun avant de passer à la lettre de la gorge.',
     descriptionArabic:
       'إظهار النون الساكنة أو التنوين عند حروف الحلق الستة: الهمزة والهاء والعين والحاء والغين والخاء',
     letters: ['ء', 'ه', 'ع', 'ح', 'غ', 'خ'],
@@ -28,6 +31,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Az-Zumar',
         ayahNumber: 11,
         explanation: 'Noon sakinah before Hamza (ء) - clear pronunciation',
+        explanationFr: 'Noun sakinah avant Hamza (ء) - prononciation claire',
       },
       // Ha (ه)
       {
@@ -39,6 +43,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Masad',
         ayahNumber: 2,
         explanation: 'Noon sakinah before Ha (ه) - pronounced clearly without merging',
+        explanationFr: 'Noun sakinah avant Ha (ه) - prononcé clairement sans fusion',
       },
       // Ayn (ع)
       {
@@ -50,6 +55,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 7,
         explanation: 'Noon sakinah before Ayn (ع) - the most recited verse',
+        explanationFr: 'Noun sakinah avant Ayn (ع) - le verset le plus récité',
       },
       // Haa (ح)
       {
@@ -61,6 +67,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Naml',
         ayahNumber: 6,
         explanation: 'Noon sakinah before Haa (ح) - clear without nasalization',
+        explanationFr: 'Noun sakinah avant Haa (ح) - clair sans nasalisation',
       },
       // Ghayn (غ)
       {
@@ -72,6 +79,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'At-Tur',
         ayahNumber: 35,
         explanation: 'Noon sakinah before Ghayn (غ) - izhar from the throat',
+        explanationFr: 'Noun sakinah avant Ghayn (غ) - izhar de la gorge',
       },
       // Kha (خ)
       {
@@ -83,6 +91,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Quraysh',
         ayahNumber: 4,
         explanation: 'Noon sakinah before Kha (خ) - clear throat pronunciation',
+        explanationFr: 'Noun sakinah avant Kha (خ) - prononciation claire de la gorge',
       },
     ],
   },
@@ -90,10 +99,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'ikhfa',
     nameArabic: 'إخفاء',
     nameEnglish: 'Ikhfa (Hiding)',
+    nameFrench: 'Dissimulation',
     category: 'noon_sakinah',
     colorCode: TAJWEED_COLORS.ikhfa,
     description:
       'When Noon Sakinah or Tanween is followed by one of 15 letters, you "hide" the Noon sound. Do not pronounce it fully, but let a soft nasal hum (ghunnah) flow through your nose for 2 counts while your tongue moves toward the next letter. Your tongue position changes slightly depending on which letter follows - this creates different "shades" of hiding.',
+    descriptionFr:
+      'Lorsque le Noun Sakinah ou le Tanween est suivi par l\'une des 15 lettres, vous « dissimulez » le son du Noun. Ne le prononcez pas complètement, mais laissez un léger bourdonnement nasal (ghunnah) passer par le nez pendant 2 temps tandis que votre langue se déplace vers la lettre suivante. La position de votre langue change légèrement selon la lettre qui suit, créant différentes « nuances » de dissimulation.',
     descriptionArabic:
       'إخفاء النون الساكنة أو التنوين عند خمسة عشر حرفاً مع الغنة بمقدار حركتين',
     letters: ['ت', 'ث', 'ج', 'د', 'ذ', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ف', 'ق', 'ك'],
@@ -109,6 +121,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Ad-Dukhan',
         ayahNumber: 16,
         explanation: 'Noon before Ta (ت) - hide with ghunnah, tongue near upper teeth',
+        explanationFr: 'Noun avant Ta (ت) - dissimulé avec ghunnah, langue près des dents supérieures',
       },
       // ث (Tha)
       {
@@ -120,6 +133,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Furqan',
         ayahNumber: 23,
         explanation: 'Noon before Tha (ث) - hide with tongue between teeth',
+        explanationFr: 'Noun avant Tha (ث) - dissimulé avec la langue entre les dents',
       },
       // ج (Jeem)
       {
@@ -131,6 +145,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Ankabut',
         ayahNumber: 15,
         explanation: 'Noon before Jeem (ج) - hide with ghunnah',
+        explanationFr: 'Noun avant Jeem (ج) - dissimulé avec ghunnah',
       },
       // د (Dal)
       {
@@ -142,6 +157,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Najm',
         ayahNumber: 14,
         explanation: 'Noon before Dal (د) - hide with tongue at upper teeth ridge',
+        explanationFr: 'Noun avant Dal (د) - dissimulé avec la langue sur la crête des dents supérieures',
       },
       // ذ (Dhal)
       {
@@ -153,6 +169,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Layl',
         ayahNumber: 14,
         explanation: 'Noon before Dhal (ذ) - hide with tongue tip visible',
+        explanationFr: 'Noun avant Dhal (ذ) - dissimulé avec le bout de la langue visible',
       },
       // ز (Zayn)
       {
@@ -164,6 +181,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Qadr',
         ayahNumber: 1,
         explanation: 'Noon before Zayn (ز) - hide with slight buzz',
+        explanationFr: 'Noun avant Zayn (ز) - dissimulé avec un léger bourdonnement',
       },
       // س (Seen)
       {
@@ -175,6 +193,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Nahl',
         ayahNumber: 4,
         explanation: 'Noon before Seen (س) - hide with soft hiss',
+        explanationFr: 'Noun avant Seen (س) - dissimulé avec un léger sifflement',
       },
       // ش (Sheen)
       {
@@ -186,6 +205,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Falaq',
         ayahNumber: 2,
         explanation: 'Noon before Sheen (ش) - hide with hushing sound',
+        explanationFr: 'Noun avant Sheen (ش) - dissimulé avec un son chuchoté',
       },
       // ص (Sad)
       {
@@ -197,6 +217,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Nasr',
         ayahNumber: 1,
         explanation: 'Noon before Sad (ص) - hide with emphatic quality',
+        explanationFr: 'Noun avant Sad (ص) - dissimulé avec une qualité emphatique',
       },
       // ض (Dad)
       {
@@ -208,6 +229,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Waqi\'ah',
         ayahNumber: 29,
         explanation: 'Noon before Dad (ض) - hide with emphatic heaviness',
+        explanationFr: 'Noun avant Dad (ض) - dissimulé avec une lourdeur emphatique',
       },
       // ط (Ṭa)
       {
@@ -219,6 +241,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Mursalat',
         ayahNumber: 35,
         explanation: 'Noon before Ṭa (ط) - hide with full mouth emphasis',
+        explanationFr: 'Noun avant Ṭa (ط) - dissimulé avec emphase buccale complète',
       },
       // ظ (Ẓa)
       {
@@ -230,6 +253,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Az-Zukhruf',
         ayahNumber: 66,
         explanation: 'Noon before Ẓa (ظ) - hide with emphatic tongue position',
+        explanationFr: 'Noun avant Ẓa (ظ) - dissimulé avec position emphatique de la langue',
       },
       // ف (Fa)
       {
@@ -241,6 +265,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Ash-Shu\'ara',
         ayahNumber: 88,
         explanation: 'Noon before Fa (ف) - hide with lip near teeth',
+        explanationFr: 'Noun avant Fa (ف) - dissimulé avec la lèvre près des dents',
       },
       // ق (Qaf)
       {
@@ -252,6 +277,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Aal-Imran',
         ayahNumber: 4,
         explanation: 'Noon before Qaf (ق) - hide with back tongue raised',
+        explanationFr: 'Noun avant Qaf (ق) - dissimulé avec l\'arrière de la langue relevé',
       },
       // ك (Kaf)
       {
@@ -263,6 +289,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Adh-Dhariyat',
         ayahNumber: 49,
         explanation: 'Noon before Kaf (ك) - hide with mid-back tongue',
+        explanationFr: 'Noun avant Kaf (ك) - dissimulé avec le milieu-arrière de la langue',
       },
     ],
   },
@@ -270,10 +297,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'iqlab',
     nameArabic: 'إقلاب',
     nameEnglish: 'Iqlab (Conversion)',
+    nameFrench: 'Conversion',
     category: 'noon_sakinah',
     colorCode: TAJWEED_COLORS.iqlab,
     description:
       'When Noon Sakinah or Tanween comes before the letter Ba (ب), convert the Noon sound into a Meem (م) sound. Close your lips lightly (as if saying "m") and let a nasal hum flow through your nose for 2 counts. This happens because both Meem and Ba are pronounced with the lips, making this transition smooth and natural.',
+    descriptionFr:
+      'Lorsque le Noun Sakinah ou le Tanween précède la lettre Ba (ب), convertissez le son du Noun en un son de Meem (م). Fermez légèrement les lèvres (comme si vous disiez « m ») et laissez un bourdonnement nasal passer par le nez pendant 2 temps. Cela se produit parce que le Meem et le Ba sont tous deux prononcés avec les lèvres, rendant cette transition douce et naturelle.',
     descriptionArabic:
       'قلب النون الساكنة أو التنوين ميماً مخفاة عند الباء مع الغنة بمقدار حركتين',
     letters: ['ب'],
@@ -288,6 +318,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Humazah',
         ayahNumber: 4,
         explanation: 'Noon becomes Meem (م) sound before Ba (ب) with ghunnah',
+        explanationFr: 'Le Noun devient un son de Meem (م) avant Ba (ب) avec ghunnah',
       },
       {
         text: 'مِن بَيْنِ',
@@ -298,6 +329,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'At-Tariq',
         ayahNumber: 7,
         explanation: 'Noon sakinah converts to Meem sound before Ba (ب)',
+        explanationFr: 'Le Noun sakinah se convertit en son de Meem avant Ba (ب)',
       },
       {
         text: 'حَدِيثٍ بَعْدَهُ',
@@ -308,6 +340,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Mursalat',
         ayahNumber: 50,
         explanation: 'Tanween converts to Meem sound before Ba with nasal hum',
+        explanationFr: 'Le Tanween se convertit en son de Meem avant Ba avec bourdonnement nasal',
       },
     ],
   },
@@ -315,10 +348,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'idgham_with_ghunnah',
     nameArabic: 'إدغام بغنة',
     nameEnglish: 'Idgham with Ghunnah',
+    nameFrench: 'Assimilation avec Nasalisation',
     category: 'noon_sakinah',
     colorCode: TAJWEED_COLORS.idgham_with_ghunnah,
     description:
       'When Noon Sakinah or Tanween is followed by ي ن م و (remember: "YaNMaWu" ينمو), merge the Noon completely into the next letter while keeping a nasal hum (ghunnah) for 2 counts. The Noon disappears, but you hear the nasalization. The next letter sounds doubled. Note: This only applies when these letters start the NEXT word.',
+    descriptionFr:
+      'Lorsque le Noun Sakinah ou le Tanween est suivi par ي ن م و (retenez : « YaNMaWu » ينمو), fusionnez le Noun complètement dans la lettre suivante tout en maintenant un bourdonnement nasal (ghunnah) pendant 2 temps. Le Noun disparaît, mais vous entendez la nasalisation. La lettre suivante sonne doublée. Note : cela ne s\'applique que lorsque ces lettres commencent le mot SUIVANT.',
     descriptionArabic:
       'إدغام النون الساكنة أو التنوين في حروف ينمو مع الغنة بمقدار حركتين - يشترط أن يكون الحرف في كلمة أخرى',
     letters: ['ي', 'ن', 'م', 'و'],
@@ -334,6 +370,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Az-Zalzalah',
         ayahNumber: 7,
         explanation: 'Noon merges into Ya (ي) - sounds like "may-ya\'mal" with ghunnah',
+        explanationFr: 'Le Noun fusionne dans Ya (ي) - se prononce « may-ya\'mal » avec ghunnah',
       },
       // ن (Noon)
       {
@@ -345,6 +382,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Ar-Rahman',
         ayahNumber: 15,
         explanation: 'Noon merges into Noon (ن) - doubled noon with ghunnah',
+        explanationFr: 'Le Noun fusionne dans Noun (ن) - Noun doublé avec ghunnah',
       },
       // م (Meem)
       {
@@ -356,6 +394,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'At-Tariq',
         ayahNumber: 6,
         explanation: 'Noon merges into Meem (م) - sounds like "mim-mā" with ghunnah',
+        explanationFr: 'Le Noun fusionne dans Meem (م) - se prononce « mim-mā » avec ghunnah',
       },
       // و (Waw)
       {
@@ -367,6 +406,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Ibrahim',
         ayahNumber: 16,
         explanation: 'Noon merges into Waw (و) - sounds like "miw-warā\'ihi" with ghunnah',
+        explanationFr: 'Le Noun fusionne dans Waw (و) - se prononce « miw-warā\'ihi » avec ghunnah',
       },
     ],
   },
@@ -374,10 +414,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'idgham_without_ghunnah',
     nameArabic: 'إدغام بلا غنة',
     nameEnglish: 'Idgham without Ghunnah',
+    nameFrench: 'Assimilation sans Nasalisation',
     category: 'noon_sakinah',
     colorCode: TAJWEED_COLORS.idgham_without_ghunnah,
     description:
       'When Noon Sakinah or Tanween is followed by Lam (ل) or Ra (ر), merge completely WITHOUT any nasal sound. The Noon vanishes entirely and the next letter sounds doubled. Unlike Idgham with Ghunnah, there is NO humming through the nose here. This is called "complete merging" because the Noon leaves no trace.',
+    descriptionFr:
+      'Lorsque le Noun Sakinah ou le Tanween est suivi par Lam (ل) ou Ra (ر), fusionnez complètement SANS aucun son nasal. Le Noun disparaît entièrement et la lettre suivante sonne doublée. Contrairement à l\'Idgham avec Ghunnah, il n\'y a AUCUN bourdonnement par le nez ici. C\'est appelé « fusion complète » car le Noun ne laisse aucune trace.',
     descriptionArabic:
       'إدغام النون الساكنة أو التنوين في اللام والراء بدون غنة - إدغام كامل بلا أثر للنون',
     letters: ['ل', 'ر'],
@@ -392,6 +435,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Kahf',
         ayahNumber: 65,
         explanation: 'Noon merges into Lam (ل) - say "mil-ladunnā" with NO nasal sound',
+        explanationFr: 'Le Noun fusionne dans Lam (ل) - dites « mil-ladunnā » SANS son nasal',
       },
       // ر (Ra)
       {
@@ -403,6 +447,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Baqarah',
         ayahNumber: 5,
         explanation: 'Noon merges into Ra (ر) - say "mir-rabbihim" with NO nasal sound',
+        explanationFr: 'Le Noun fusionne dans Ra (ر) - dites « mir-rabbihim » SANS son nasal',
       },
     ],
   },
@@ -412,10 +457,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'ikhfa_shafawi',
     nameArabic: 'إخفاء شفوي',
     nameEnglish: 'Ikhfa Shafawi (Labial Hiding)',
+    nameFrench: 'Dissimulation Labiale',
     category: 'meem_sakinah',
     colorCode: TAJWEED_COLORS.ikhfa_shafawi,
     description:
       'When Meem Sakinah (مْ) is followed by Ba (ب), hide the Meem with your lips slightly apart (not fully closed). Let a nasal hum flow through your nose for 2 counts. This is called "labial hiding" because both Meem and Ba are lip letters. Your lips should be relaxed, not pressed together.',
+    descriptionFr:
+      'Lorsque le Meem Sakinah (مْ) est suivi par Ba (ب), dissimulez le Meem avec les lèvres légèrement entrouvertes (pas complètement fermées). Laissez un bourdonnement nasal passer par le nez pendant 2 temps. C\'est appelé « dissimulation labiale » car le Meem et le Ba sont tous deux des lettres labiales. Vos lèvres doivent être détendues, pas pressées l\'une contre l\'autre.',
     descriptionArabic:
       'إخفاء الميم الساكنة عند حرف الباء فقط مع إبقاء الشفتين منفرجتين قليلاً والغنة بمقدار حركتين',
     letters: ['ب'],
@@ -430,6 +478,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fil',
         ayahNumber: 4,
         explanation: 'Meem sakinah hidden before Ba (ب) with ghunnah',
+        explanationFr: 'Meem sakinah dissimulé avant Ba (ب) avec ghunnah',
       },
       {
         text: 'فَبَشِّرْهُم بِعَذَابٍ',
@@ -440,6 +489,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Inshiqaq',
         ayahNumber: 24,
         explanation: 'Meem hidden before Ba with lips slightly apart',
+        explanationFr: 'Meem dissimulé avant Ba avec les lèvres légèrement entrouvertes',
       },
     ],
   },
@@ -447,10 +497,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'idgham_shafawi',
     nameArabic: 'إدغام شفوي',
     nameEnglish: 'Idgham Shafawi (Labial Merging)',
+    nameFrench: 'Assimilation Labiale',
     category: 'meem_sakinah',
     colorCode: TAJWEED_COLORS.idgham_shafawi,
     description:
       'When Meem Sakinah (مْ) is followed by another Meem (م), the two Meems merge into one long Meem sound with nasalization for 2 counts. Close your lips and let the sound flow through your nose. It sounds like one extended "mmm" sound.',
+    descriptionFr:
+      'Lorsque le Meem Sakinah (مْ) est suivi par un autre Meem (م), les deux Meem fusionnent en un seul son de Meem prolongé avec nasalisation pendant 2 temps. Fermez les lèvres et laissez le son passer par le nez. Cela sonne comme un son « mmm » prolongé.',
     descriptionArabic:
       'إدغام الميم الساكنة في الميم المتحركة فتصيران ميماً واحدة مشددة مع الغنة بمقدار حركتين',
     letters: ['م'],
@@ -465,6 +518,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Qaf',
         ayahNumber: 35,
         explanation: 'Two Meems merge into one extended Meem with ghunnah',
+        explanationFr: 'Deux Meem fusionnent en un seul Meem prolongé avec ghunnah',
       },
       {
         text: 'أَنَّهُم مُّهْتَدُونَ',
@@ -475,6 +529,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Az-Zukhruf',
         ayahNumber: 37,
         explanation: 'Meem sakinah merges into Meem - pronounced as one long Meem',
+        explanationFr: 'Meem sakinah fusionne dans Meem - prononcé comme un seul Meem prolongé',
       },
     ],
   },
@@ -482,10 +537,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'izhar_shafawi',
     nameArabic: 'إظهار شفوي',
     nameEnglish: 'Izhar Shafawi (Labial Clear)',
+    nameFrench: 'Prononciation Claire Labiale',
     category: 'meem_sakinah',
     colorCode: TAJWEED_COLORS.izhar_shafawi,
     description:
       'When Meem Sakinah (مْ) is followed by ANY letter except Ba (ب) or Meem (م), pronounce the Meem clearly and fully. Close your lips briefly for the Meem, then open them for the next letter. There is NO nasal hum here - just a clean, clear Meem sound.',
+    descriptionFr:
+      'Lorsque le Meem Sakinah (مْ) est suivi par N\'IMPORTE QUELLE lettre sauf Ba (ب) ou Meem (م), prononcez le Meem clairement et complètement. Fermez brièvement les lèvres pour le Meem, puis ouvrez-les pour la lettre suivante. Il n\'y a AUCUN bourdonnement nasal ici - juste un son de Meem net et clair.',
     descriptionArabic:
       'إظهار الميم الساكنة وإخراجها واضحة عند جميع الحروف ما عدا الباء والميم - بدون غنة زائدة',
     letters: [],
@@ -499,6 +557,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 2,
         explanation: 'Meem sakinah before Dal (د) - clear pronunciation',
+        explanationFr: 'Meem sakinah avant Dal (د) - prononciation claire',
       },
       {
         text: 'لَكُمْ دِينُكُمْ',
@@ -509,6 +568,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Kafirun',
         ayahNumber: 6,
         explanation: 'Meem sakinah before Dal (د) - izhar shafawi',
+        explanationFr: 'Meem sakinah avant Dal (د) - izhar shafawi',
       },
     ],
   },
@@ -518,10 +578,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_tabii',
     nameArabic: 'مد طبيعي',
     nameEnglish: 'Madd Tabii (Natural)',
+    nameFrench: 'Prolongation Naturelle',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_tabii,
     description:
       'The basic elongation that naturally occurs with long vowels. When you see Alif (ا) after Fatha, Waw (و) after Damma, or Ya (ي) after Kasra, stretch the sound for exactly 2 counts (like saying "one-two" in your head). This is the foundation - all other Madd rules build on this.',
+    descriptionFr:
+      'La prolongation de base qui se produit naturellement avec les voyelles longues. Lorsque vous voyez un Alif (ا) après une Fatha, un Waw (و) après une Damma, ou un Ya (ي) après une Kasra, étirez le son pendant exactement 2 temps (comme si vous disiez « un-deux » dans votre tête). C\'est le fondement - toutes les autres règles de Madd s\'appuient sur celui-ci.',
     descriptionArabic:
       'المد الأصلي الطبيعي - الألف بعد الفتحة، الواو بعد الضمة، الياء بعد الكسرة - مقداره حركتان',
     duration: 2,
@@ -535,6 +598,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 3,
         explanation: 'Ya after kasra - elongate for 2 counts',
+        explanationFr: 'Ya après kasra - prolonger pendant 2 temps',
       },
       {
         text: 'مَالِكِ',
@@ -545,6 +609,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 4,
         explanation: 'Alif after fatha - 2 counts natural elongation',
+        explanationFr: 'Alif après fatha - prolongation naturelle de 2 temps',
       },
       {
         text: 'الْأُولَىٰ',
@@ -555,6 +620,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Ad-Duha',
         ayahNumber: 4,
         explanation: 'Waw after damma (أُو) - elongate for 2 counts',
+        explanationFr: 'Waw après damma (أُو) - prolonger pendant 2 temps',
       },
     ],
   },
@@ -562,10 +628,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_wajib',
     nameArabic: 'مد واجب متصل',
     nameEnglish: 'Madd Wajib (Required Connected)',
+    nameFrench: 'Prolongation Obligatoire',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_wajib,
     description:
       'When a Hamza (ء) comes AFTER a Madd letter WITHIN THE SAME WORD, you MUST stretch for 4-5 counts. This is called "connected" because the Madd and Hamza are connected in one word. Think of it as the Hamza "pulling" the sound longer. This is REQUIRED - not optional.',
+    descriptionFr:
+      'Lorsqu\'une Hamza (ء) vient APRES une lettre de Madd DANS LE MEME MOT, vous DEVEZ étirer pendant 4-5 temps. C\'est appelé « connecté » car le Madd et la Hamza sont connectés dans un seul mot. Pensez-y comme la Hamza qui « tire » le son plus longtemps. C\'est OBLIGATOIRE - pas optionnel.',
     descriptionArabic:
       'المد المتصل الواجب - الهمزة بعد حرف المد في كلمة واحدة - مقداره ٤-٥ حركات - لا يجوز قصره',
     duration: 5,
@@ -579,6 +648,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Nasr',
         ayahNumber: 1,
         explanation: 'Alif followed by hamza in same word - must elongate 4-5 counts',
+        explanationFr: 'Alif suivi d\'une hamza dans le même mot - prolonger obligatoirement 4-5 temps',
       },
       {
         text: 'السَّمَاءُ',
@@ -589,6 +659,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Naba',
         ayahNumber: 19,
         explanation: 'Alif before hamza within the word - 4-5 counts',
+        explanationFr: 'Alif avant hamza dans le mot - 4-5 temps',
       },
       {
         text: 'مَاءً',
@@ -599,6 +670,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'An-Naba',
         ayahNumber: 14,
         explanation: 'Alif followed by hamza - madd wajib muttasil',
+        explanationFr: 'Alif suivi d\'une hamza - madd wajib muttasil',
       },
     ],
   },
@@ -606,10 +678,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_jaiz',
     nameArabic: 'مد جائز منفصل',
     nameEnglish: 'Madd Jaiz (Permissible Separated)',
+    nameFrench: 'Prolongation Permise',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_jaiz,
     description:
       'When a Madd letter at the END of one word is followed by a Hamza (ء) at the START of the NEXT word, you MAY stretch for 2, 4, or 6 counts. This is "permissible" because you have flexibility. It is called "separated" because the Madd and Hamza are in different words.',
+    descriptionFr:
+      'Lorsqu\'une lettre de Madd à la FIN d\'un mot est suivie par une Hamza (ء) au DEBUT du mot SUIVANT, vous POUVEZ étirer pendant 2, 4 ou 6 temps. C\'est « permis » car vous avez de la flexibilité. C\'est appelé « séparé » car le Madd et la Hamza sont dans des mots différents.',
     descriptionArabic:
       'المد المنفصل الجائز - حرف المد في آخر كلمة والهمزة في أول الكلمة التالية - يجوز مده ٢ أو ٤ أو ٦ حركات',
     duration: 4,
@@ -623,6 +698,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Muzzammil',
         ayahNumber: 1,
         explanation: 'Alif of "yā" followed by hamza of next word - 2, 4, or 6 counts',
+        explanationFr: 'Alif de « yā » suivi d\'une hamza du mot suivant - 2, 4 ou 6 temps',
       },
       {
         text: 'إِنَّا أَنزَلْنَاهُ',
@@ -633,6 +709,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Qadr',
         ayahNumber: 1,
         explanation: 'Alif madd followed by hamza in next word',
+        explanationFr: 'Alif madd suivi d\'une hamza dans le mot suivant',
       },
     ],
   },
@@ -640,10 +717,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_lazim',
     nameArabic: 'مد لازم',
     nameEnglish: 'Madd Lazim (Obligatory)',
+    nameFrench: 'Prolongation Nécessaire',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_lazim,
     description:
       'When a Sukoon (ـْـ) or Shaddah (ـّـ) comes AFTER a Madd letter, you MUST stretch for exactly 6 counts - no more, no less. This is the longest required Madd. The "heaviness" of the sukoon/shaddah demands this full elongation. Common in words like "الضَّالِّين" and opening letters of some Surahs.',
+    descriptionFr:
+      'Lorsqu\'un Soukoun (ـْـ) ou une Shadda (ـّـ) vient APRES une lettre de Madd, vous DEVEZ étirer pendant exactement 6 temps - ni plus, ni moins. C\'est la plus longue prolongation obligatoire. La « lourdeur » du soukoun/shadda exige cette prolongation complète. Courant dans des mots comme « الضَّالِّين » et les lettres d\'ouverture de certaines sourates.',
     descriptionArabic:
       'المد اللازم - سكون أو شدة بعد حرف المد - مقداره ٦ حركات وجوباً - أطول أنواع المد',
     duration: 6,
@@ -657,6 +737,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 7,
         explanation: 'Alif before shaddah on Lam - must elongate exactly 6 counts',
+        explanationFr: 'Alif avant shadda sur Lam - prolonger obligatoirement exactement 6 temps',
       },
       {
         text: 'الْحَاقَّةُ',
@@ -667,6 +748,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Haqqah',
         ayahNumber: 1,
         explanation: 'Alif before shaddah on Qaf - obligatory 6 counts',
+        explanationFr: 'Alif avant shadda sur Qaf - 6 temps obligatoires',
       },
     ],
   },
@@ -674,10 +756,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_arid',
     nameArabic: 'مد عارض للسكون',
     nameEnglish: 'Madd Arid (Due to Stopping)',
+    nameFrench: 'Prolongation due au Arrêt',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_arid,
     description:
       'When you STOP (pause) at the end of a word that has a Madd letter before the final letter, you may stretch for 2, 4, or 6 counts. The sukoon is "temporary" - it only exists because you stopped. This commonly happens at the end of verses. You have flexibility in how long to stretch.',
+    descriptionFr:
+      'Lorsque vous vous ARRETEZ (pause) à la fin d\'un mot qui contient une lettre de Madd avant la dernière lettre, vous pouvez étirer pendant 2, 4 ou 6 temps. Le soukoun est « temporaire » - il n\'existe que parce que vous vous êtes arrêté. Cela se produit couramment à la fin des versets. Vous avez de la flexibilité dans la durée de l\'étirement.',
     descriptionArabic:
       'المد العارض للسكون - يحدث عند الوقف على كلمة فيها حرف مد قبل الحرف الأخير - يجوز مده ٢ أو ٤ أو ٦ حركات',
     examples: [
@@ -690,6 +775,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 2,
         explanation: 'When stopping, Ya before Noon can be elongated 2, 4, or 6 counts',
+        explanationFr: 'En s\'arrêtant, Ya avant Noun peut être prolongé de 2, 4 ou 6 temps',
       },
       {
         text: 'نَسْتَعِينُ',
@@ -700,6 +786,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Al-Fatiha',
         ayahNumber: 5,
         explanation: 'Ya before Noon - madd arid when pausing',
+        explanationFr: 'Ya avant Noun - madd arid lors d\'une pause',
       },
     ],
   },
@@ -707,10 +794,13 @@ export const TAJWEED_RULES: TajweedRule[] = [
     id: 'madd_leen',
     nameArabic: 'مد لين',
     nameEnglish: 'Madd Leen (Soft)',
+    nameFrench: 'Prolongation Douce',
     category: 'madd',
     colorCode: TAJWEED_COLORS.madd_leen,
     description:
       'When Waw Sakinah (وْ) or Ya Sakinah (يْ) is preceded by a FATHA (not their matching vowel), and you stop on the following letter, you may softly stretch for 2, 4, or 6 counts. These are called "soft letters" because the sound glides smoothly. Examples: خَوْف (khawf), بَيْت (bayt).',
+    descriptionFr:
+      'Lorsque le Waw Sakinah (وْ) ou le Ya Sakinah (يْ) est précédé par une FATHA (pas leur voyelle correspondante), et que vous vous arrêtez sur la lettre suivante, vous pouvez doucement étirer pendant 2, 4 ou 6 temps. Elles sont appelées « lettres douces » car le son glisse en douceur. Exemples : خَوْف (khawf), بَيْت (bayt).',
     descriptionArabic:
       'مد الواو والياء الساكنتين المفتوح ما قبلهما (حرفا اللين) عند الوقف - يجوز مده ٢ أو ٤ أو ٦ حركات',
     examples: [
@@ -723,6 +813,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Quraysh',
         ayahNumber: 1,
         explanation: 'Ya sakinah after fatha - soft elongation when stopping',
+        explanationFr: 'Ya sakinah après fatha - prolongation douce lors de l\'arrêt',
       },
       {
         text: 'خَوْفٍ',
@@ -733,6 +824,7 @@ export const TAJWEED_RULES: TajweedRule[] = [
         surahName: 'Quraysh',
         ayahNumber: 4,
         explanation: 'Waw sakinah after fatha - soft elongation when stopping',
+        explanationFr: 'Waw sakinah après fatha - prolongation douce lors de l\'arrêt',
       },
     ],
   },

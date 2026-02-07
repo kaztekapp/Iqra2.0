@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_LESSONS, getJuzLesson } from '../../../src/data/arabic/quran/lessons/juzLessons';
 
@@ -94,6 +95,7 @@ function VerseCard({
 }
 
 export default function JuzDetailScreen() {
+  const { t } = useTranslation();
   const { juzId } = useLocalSearchParams<{ juzId: string }>();
   const juzNumber = parseInt(juzId || '1', 10);
 
@@ -103,9 +105,9 @@ export default function JuzDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Juz not found</Text>
+          <Text style={styles.errorText}>{t('juzFeature.juzNotFound')}</Text>
           <Pressable style={styles.backButtonError} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -140,7 +142,7 @@ export default function JuzDetailScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.headerText}>Juz {juz.id}</Text>
+          <Text style={styles.headerText}>{t('juzFeature.juz')} {juz.id}</Text>
         </View>
         <View style={styles.headerNav}>
           <Pressable
@@ -183,7 +185,7 @@ export default function JuzDetailScreen() {
             <Text style={styles.heroNameEnglish}>{juz.nameEnglish}</Text>
             <Text style={styles.heroNameArabic}>{juz.nameArabic}</Text>
             {juz.alternativeName && (
-              <Text style={styles.heroAltName}>Also known as: {juz.alternativeName}</Text>
+              <Text style={styles.heroAltName}>{t('juzFeature.alsoKnownAs', { name: juz.alternativeName })}</Text>
             )}
 
             <View style={styles.heroDivider} />
@@ -197,7 +199,7 @@ export default function JuzDetailScreen() {
               </View>
               <View style={styles.heroStat}>
                 <Ionicons name="layers" size={16} color="rgba(255,255,255,0.8)" />
-                <Text style={styles.heroStatText}>{juz.totalSurahs} Surah(s)</Text>
+                <Text style={styles.heroStatText}>{juz.totalSurahs} {t('juzFeature.surahs')}</Text>
               </View>
             </View>
 
@@ -218,7 +220,7 @@ export default function JuzDetailScreen() {
                   { color: getDifficultyColor(juz.memorization.difficulty) },
                 ]}
               >
-                {juz.memorization.difficulty} difficulty
+                {t(`juzFeature.${juz.memorization.difficulty}`)} {t('juzFeature.difficulty')}
               </Text>
             </View>
           </LinearGradient>
@@ -227,7 +229,7 @@ export default function JuzDetailScreen() {
         <View style={styles.content}>
           {/* Key Themes */}
           <ExpandableSection
-            title="Key Themes"
+            title={t('juzFeature.keyThemes')}
             icon="bulb"
             iconColor="#f59e0b"
             defaultExpanded={true}
@@ -244,7 +246,7 @@ export default function JuzDetailScreen() {
 
           {/* Highlights */}
           <ExpandableSection
-            title="Highlights"
+            title={t('juzFeature.highlights')}
             icon="star"
             iconColor="#3b82f6"
             defaultExpanded={true}
@@ -262,7 +264,7 @@ export default function JuzDetailScreen() {
           {/* Famous Verses */}
           {juz.famousVerses && juz.famousVerses.length > 0 && (
             <ExpandableSection
-              title="Famous Verses"
+              title={t('juzFeature.famousVerses')}
               icon="heart"
               iconColor="#ec4899"
               defaultExpanded={true}
@@ -276,7 +278,7 @@ export default function JuzDetailScreen() {
           {/* Stories */}
           {juz.stories && juz.stories.length > 0 && (
             <StaticSection
-              title="Stories & Narratives"
+              title={t('juzFeature.storiesNarratives')}
               icon="book"
               iconColor="#8b5cf6"
             >
@@ -295,7 +297,7 @@ export default function JuzDetailScreen() {
 
           {/* Memorization Tips */}
           <StaticSection
-            title="Memorization Guide"
+            title={t('juzFeature.memorizationGuide')}
             icon="school"
             iconColor="#22c55e"
           >
@@ -306,7 +308,7 @@ export default function JuzDetailScreen() {
                   <Text style={styles.memorizationStatValue}>
                     ~{juz.memorization.estimatedDays}
                   </Text>
-                  <Text style={styles.memorizationStatLabel}>days</Text>
+                  <Text style={styles.memorizationStatLabel}>{t('juzFeature.days')}</Text>
                 </View>
                 <View style={styles.memorizationStatDivider} />
                 <View style={styles.memorizationStat}>
@@ -316,13 +318,13 @@ export default function JuzDetailScreen() {
                     color={getDifficultyColor(juz.memorization.difficulty)}
                   />
                   <Text style={styles.memorizationStatValue}>
-                    {juz.memorization.difficulty}
+                    {t(`juzFeature.${juz.memorization.difficulty}`)}
                   </Text>
-                  <Text style={styles.memorizationStatLabel}>level</Text>
+                  <Text style={styles.memorizationStatLabel}>{t('juzFeature.level')}</Text>
                 </View>
               </View>
 
-              <Text style={styles.tipsTitle}>Tips for Success</Text>
+              <Text style={styles.tipsTitle}>{t('juzFeature.tipsForSuccess')}</Text>
               {juz.memorization.tips.map((tip, index) => (
                 <View key={index} style={styles.tipCard}>
                   <View style={styles.tipNumber}>
@@ -336,7 +338,7 @@ export default function JuzDetailScreen() {
 
           {/* Quick Navigation */}
           <View style={styles.quickNav}>
-            <Text style={styles.quickNavTitle}>Quick Navigation</Text>
+            <Text style={styles.quickNavTitle}>{t('juzFeature.quickNavigation')}</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}

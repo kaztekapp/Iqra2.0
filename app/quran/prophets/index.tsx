@@ -3,12 +3,16 @@ import { View, Text, ScrollView, Pressable, TextInput, StyleSheet } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { PROPHETS } from '../../../src/data/arabic/prophets';
 import { ProphetCard } from '../../../src/components/prophetStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
 import { ProphetListItem } from '../../../src/types/prophetStories';
 
 export default function ProphetListScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [searchQuery, setSearchQuery] = useState('');
   const { getStoryProgress, isStoryCompleted, getTotalStoriesCompleted } = useProphetStoriesStore();
 
@@ -36,17 +40,17 @@ export default function ProphetListScreen() {
 
       return {
         id: prophet.id,
-        nameEnglish: prophet.nameEnglish,
+        nameEnglish: lc(prophet.nameEnglish, prophet.nameFrench),
         nameArabic: prophet.nameArabic,
         order: prophet.order,
-        title: prophet.title,
-        summary: prophet.summary,
+        title: lc(prophet.title, prophet.titleFr),
+        summary: lc(prophet.summary, prophet.summaryFr),
         isCompleted: isStoryCompleted(prophet.id),
         progress: completionPercent,
         estimatedReadTime: prophet.estimatedReadTime,
       };
     });
-  }, [filteredProphets, getStoryProgress, isStoryCompleted]);
+  }, [filteredProphets, getStoryProgress, isStoryCompleted, lc]);
 
   const totalCompleted = getTotalStoriesCompleted();
   const overallProgress = Math.round((totalCompleted / PROPHETS.length) * 100);
@@ -63,7 +67,7 @@ export default function ProphetListScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Prophet Stories</Text>
+          <Text style={styles.title}>{t('prophetsFeature.title')}</Text>
           <Text style={styles.titleArabic}>قصص الأنبياء</Text>
         </View>
         <View style={{ width: 40 }} />
@@ -78,9 +82,9 @@ export default function ProphetListScreen() {
               <Text style={styles.progressTotal}>/{PROPHETS.length}</Text>
             </View>
             <View style={styles.progressDetails}>
-              <Text style={styles.progressTitle}>Stories Completed</Text>
+              <Text style={styles.progressTitle}>{t('prophetsFeature.storiesCompleted')}</Text>
               <Text style={styles.progressSubtitle}>
-                Learn about the prophets mentioned in the Quran
+                {t('prophetsFeature.learnAboutProphets')}
               </Text>
             </View>
           </View>
@@ -98,7 +102,7 @@ export default function ProphetListScreen() {
             <Ionicons name="search" size={18} color="#64748b" />
             <TextInput
               style={styles.searchInput}
-              placeholder="Search prophets..."
+              placeholder={t('prophetsFeature.searchProphets')}
               placeholderTextColor="#64748b"
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -117,8 +121,8 @@ export default function ProphetListScreen() {
           {prophetListItems.length === 0 ? (
             <View style={styles.emptyState}>
               <Ionicons name="search-outline" size={48} color="#475569" />
-              <Text style={styles.emptyStateText}>No prophets found</Text>
-              <Text style={styles.emptyStateSubtext}>Try a different search term</Text>
+              <Text style={styles.emptyStateText}>{t('prophetsFeature.noProphetsFound')}</Text>
+              <Text style={styles.emptyStateSubtext}>{t('prophetsFeature.tryDifferentSearch')}</Text>
             </View>
           ) : (
             prophetListItems.map((prophet) => (

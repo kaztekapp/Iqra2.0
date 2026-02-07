@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -18,9 +20,14 @@ interface Question {
   id: string;
   type: 'letter_recognition' | 'vocabulary_quiz';
   question: string;
+  questionFr?: string;
   questionArabic?: string;
-  options: { id: string; text: string; textArabic?: string }[];
+  options: { id: string; text: string; textFr?: string; textArabic?: string }[];
   correctAnswerId: string;
+  hint?: string;
+  hintFr?: string;
+  explanation?: string;
+  explanationFr?: string;
 }
 
 const generateLetterRecognitionQuestions = (count: number): Question[] => {
@@ -43,6 +50,7 @@ const generateLetterRecognitionQuestions = (count: number): Question[] => {
       id: `letter-${i}`,
       type: 'letter_recognition',
       question: `What letter is this?`,
+      questionFr: `Quelle est cette lettre ?`,
       questionArabic: correctLetter.letter,
       options,
       correctAnswerId: correctLetter.id,
@@ -64,14 +72,15 @@ const generateVocabularyQuizQuestions = (count: number): Question[] => {
       .slice(0, 3);
 
     const options = [
-      { id: correctWord.id, text: correctWord.english },
-      ...wrongWords.map((w) => ({ id: w.id, text: w.english })),
+      { id: correctWord.id, text: correctWord.english, textFr: (correctWord as any).french },
+      ...wrongWords.map((w) => ({ id: w.id, text: w.english, textFr: (w as any).french })),
     ].sort(() => Math.random() - 0.5);
 
     questions.push({
       id: `vocab-${i}`,
       type: 'vocabulary_quiz',
       question: `What does this word mean?`,
+      questionFr: `Que signifie ce mot ?`,
       questionArabic: correctWord.arabicWithVowels,
       options,
       correctAnswerId: correctWord.id,
@@ -85,6 +94,8 @@ export default function ExerciseScreen() {
   const { exerciseId } = useLocalSearchParams<{ exerciseId: string }>();
   const { recordExerciseResult, addXp, updateStreak, showVowels } = useProgressStore();
   const { speak, isSpeaking } = useArabicSpeech();
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -172,20 +183,20 @@ export default function ExerciseScreen() {
   }));
 
   const exerciseTitle = {
-    'letter-recognition': 'Letter Recognition',
-    'vocabulary-quiz': 'Vocabulary Quiz',
-    'quick-review': 'Quick Review',
-    listening: 'Listening Practice',
-    writing: 'Writing Practice',
-    matching: 'Matching Game',
-    'fill-blank': 'Fill in the Blank',
-  }[exerciseId || ''] || 'Exercise';
+    'letter-recognition': t('exercise.letterRecognition'),
+    'vocabulary-quiz': t('exercise.vocabularyQuiz'),
+    'quick-review': t('exercise.quickReview'),
+    listening: t('exercise.listeningPractice'),
+    writing: t('exercise.writingPractice'),
+    matching: t('exercise.matchingGame'),
+    'fill-blank': t('exercise.fillInBlank'),
+  }[exerciseId || ''] || t('exercise.exerciseTitle');
 
   if (questions.length === 0) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading exercise...</Text>
+          <Text style={styles.loadingText}>{t('exercise.loadingExercise')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -214,28 +225,28 @@ export default function ExerciseScreen() {
             />
           </View>
           <Text style={styles.completeTitle}>
-            {accuracy >= 80 ? 'Excellent!' : accuracy >= 50 ? 'Good Job!' : 'Keep Practicing!'}
+            {accuracy >= 80 ? t('exercise.excellent') : accuracy >= 50 ? t('exercise.goodJob') : t('exercise.keepPracticing')}
           </Text>
           <Text style={styles.completeSubtitle}>{exerciseTitle}</Text>
 
           <View style={styles.resultsCard}>
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.correct}</Text>
-              <Text style={styles.resultLabel}>Correct</Text>
+              <Text style={styles.resultLabel}>{t('common.correct')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.total - score.correct}</Text>
-              <Text style={styles.resultLabel}>Wrong</Text>
+              <Text style={styles.resultLabel}>{t('common.wrong')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={[styles.resultValue, { color: '#6366f1' }]}>{accuracy}%</Text>
-              <Text style={styles.resultLabel}>Accuracy</Text>
+              <Text style={styles.resultLabel}>{t('common.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{xpEarned} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
             <Pressable
@@ -255,10 +266,10 @@ export default function ExerciseScreen() {
               }}
             >
               <Ionicons name="refresh" size={20} color="#6366f1" />
-              <Text style={styles.retryButtonText}>Try Again</Text>
+              <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
             <Pressable style={styles.doneButton} onPress={() => router.back()}>
-              <Text style={styles.doneButtonText}>Done</Text>
+              <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
         </View>
@@ -301,7 +312,9 @@ export default function ExerciseScreen() {
 
       {/* Question */}
       <Animated.View style={[styles.questionContainer, shakeStyle]}>
-        <Text style={styles.questionText}>{currentQuestion.question}</Text>
+        <Text style={styles.questionText}>
+          {currentQuestion.type === 'letter_recognition' ? t('exercise.whatLetter') : t('exercise.whatMeaning')}
+        </Text>
         {currentQuestion.questionArabic && (
           <View style={styles.questionArabicContainer}>
             <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
@@ -351,7 +364,7 @@ export default function ExerciseScreen() {
                   (showCorrect || showWrong) && styles.optionTextActive,
                 ]}
               >
-                {option.text}
+                {lc(option.text, option.textFr)}
               </Text>
               {showCorrect && (
                 <Ionicons name="checkmark-circle" size={24} color="#ffffff" />
@@ -367,7 +380,7 @@ export default function ExerciseScreen() {
         <View style={styles.nextButtonContainer}>
           <Pressable style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
-              {currentIndex < questions.length - 1 ? 'Next Question' : 'See Results'}
+              {currentIndex < questions.length - 1 ? t('exercise.nextQuestion') : t('exercise.seeResults')}
             </Text>
             <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>

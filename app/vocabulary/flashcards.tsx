@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -24,6 +26,8 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
 
 export default function FlashcardsScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId?: string }>();
   const { showVowels, markWordLearned, addXp, updateStreak, scheduleVocabularyReview } = useProgressStore();
 
@@ -110,7 +114,7 @@ export default function FlashcardsScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading flashcards...</Text>
+          <Text style={styles.loadingText}>{t('vocabulary.loadingFlashcards')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -126,29 +130,29 @@ export default function FlashcardsScreen() {
           <View style={styles.completeIcon}>
             <Ionicons name="trophy" size={64} color="#D4AF37" />
           </View>
-          <Text style={styles.completeTitle}>Session Complete!</Text>
+          <Text style={styles.completeTitle}>{t('vocabulary.sessionComplete')}</Text>
           <Text style={styles.completeSubtitle}>
-            {theme ? theme.name : 'All Vocabulary'}
+            {theme ? lc(theme.name, theme.nameFr) : t('vocabulary.allVocabulary')}
           </Text>
 
           <View style={styles.statsCard}>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{stats.known}</Text>
-              <Text style={styles.statLabel}>Known</Text>
+              <Text style={styles.statLabel}>{t('vocabulary.known')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#f59e0b' }]}>
                 {stats.learning}
               </Text>
-              <Text style={styles.statLabel}>Still Learning</Text>
+              <Text style={styles.statLabel}>{t('vocabulary.stillLearning')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{stats.known * 2} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.known * 2 })}</Text>
 
           <Pressable style={styles.doneButton} onPress={() => router.back()}>
-            <Text style={styles.doneButtonText}>Done</Text>
+            <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -166,7 +170,7 @@ export default function FlashcardsScreen() {
         </Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.headerTitle}>
-            {theme ? theme.name : 'All Vocabulary'}
+            {theme ? lc(theme.name, theme.nameFr) : t('vocabulary.allVocabulary')}
           </Text>
           <Text style={styles.headerProgress}>
             {currentIndex + 1} / {words.length}
@@ -211,13 +215,13 @@ export default function FlashcardsScreen() {
                     <Ionicons name="volume-high" size={28} color={isSpeaking ? "#ffffff" : "#D4AF37"} />
                   </Pressable>
                 </View>
-                <Text style={styles.tapHint}>Tap to reveal answer</Text>
+                <Text style={styles.tapHint}>{t('vocabulary.tapToReveal')}</Text>
               </Animated.View>
 
               {/* Back of Card (English) */}
               <Animated.View style={[styles.card, styles.cardBack, backAnimatedStyle]}>
                 <View style={styles.cardContent}>
-                  <Text style={styles.cardEnglish}>{currentWord.english}</Text>
+                  <Text style={styles.cardEnglish}>{lc(currentWord.english, currentWord.french)}</Text>
                   <View style={styles.backArabic}>
                     <Text style={styles.backArabicText}>
                       {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
@@ -229,12 +233,12 @@ export default function FlashcardsScreen() {
                         {currentWord.exampleSentence.arabic}
                       </Text>
                       <Text style={styles.exampleEnglish}>
-                        {currentWord.exampleSentence.english}
+                        {lc(currentWord.exampleSentence.english, currentWord.exampleSentence.french)}
                       </Text>
                     </View>
                   )}
                 </View>
-                <Text style={styles.swipeHint}>Swipe right = Know it, Left = Learning</Text>
+                <Text style={styles.swipeHint}>{t('vocabulary.swipeHint')}</Text>
               </Animated.View>
             </Pressable>
           </Animated.View>
@@ -248,14 +252,14 @@ export default function FlashcardsScreen() {
           onPress={() => handleNext(false)}
         >
           <Ionicons name="refresh" size={24} color="#f59e0b" />
-          <Text style={styles.learningButtonText}>Still Learning</Text>
+          <Text style={styles.learningButtonText}>{t('vocabulary.stillLearning')}</Text>
         </Pressable>
         <Pressable
           style={[styles.actionButton, styles.knowButton]}
           onPress={() => handleNext(true)}
         >
           <Ionicons name="checkmark" size={24} color="#22c55e" />
-          <Text style={styles.knowButtonText}>Know It!</Text>
+          <Text style={styles.knowButtonText}>{t('vocabulary.knowIt')}</Text>
         </Pressable>
       </View>
     </SafeAreaView>

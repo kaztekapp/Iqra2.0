@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getRandomQuestions, getCategoryById, getQuestionsBySet, getTotalSets, getSetName } from '../../../src/data/arabic/quran/quizzes';
 import { QuizQuestion, QuizCategory, QuizAnswer } from '../../../src/types/quran';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
@@ -148,6 +150,8 @@ const getEnglishOnly = (text: string): string => {
 const PASSING_SCORE = 70; // Percentage required to pass and unlock next set
 
 export default function QuizScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { categoryId, setIndex } = useLocalSearchParams<{ categoryId: string; setIndex?: string }>();
   const category = getCategoryById(categoryId as QuizCategory);
   const { speak, speakSlow, stop, isSpeaking } = useArabicSpeech();
@@ -215,7 +219,7 @@ export default function QuizScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading quiz...</Text>
+          <Text style={styles.loadingText}>{t('quranQuiz.loadingQuiz')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -307,7 +311,7 @@ export default function QuizScreen() {
             <Ionicons name="close" size={24} color="#ffffff" />
           </Pressable>
           <Text style={styles.reviewHeaderTitle}>
-            {showReview ? 'Review Answers' : 'Results'}
+            {showReview ? t('quranQuiz.reviewAnswers') : t('quranQuiz.results')}
           </Text>
           <Pressable
             style={styles.reviewToggleBtn}
@@ -334,10 +338,10 @@ export default function QuizScreen() {
               </View>
 
               <Text style={styles.resultTitle}>
-                {passed ? 'Passed!' : percentage >= 50 ? 'Almost There!' : 'Keep Learning!'}
+                {passed ? t('quranQuiz.passed') : percentage >= 50 ? t('quranQuiz.almostThere') : t('quranQuiz.keepLearning')}
               </Text>
 
-              <Text style={styles.resultCategory}>{category.nameEnglish}</Text>
+              <Text style={styles.resultCategory}>{lc(category.nameEnglish, category.nameFrench)}</Text>
               <View style={styles.resultSetRow}>
                 <Text style={styles.resultSetName}>{currentSetName}</Text>
                 {totalSets > 1 && (
@@ -347,24 +351,24 @@ export default function QuizScreen() {
 
               <View style={[styles.scoreCircle, { borderColor: passed ? '#10b981' : '#ef4444' }]}>
                 <Text style={[styles.scorePercentage, { color: passed ? '#10b981' : '#ef4444' }]}>{percentage}%</Text>
-                <Text style={styles.scoreLabel}>{passed ? 'Passed' : `Need ${PASSING_SCORE}%`}</Text>
+                <Text style={styles.scoreLabel}>{passed ? t('quranQuiz.passed') : `${t('quranQuiz.need')} ${PASSING_SCORE}%`}</Text>
               </View>
 
               <View style={styles.resultStats}>
                 <View style={styles.resultStat}>
                   <Ionicons name="checkmark-circle" size={22} color="#10b981" />
                   <Text style={styles.resultStatValue}>{score}</Text>
-                  <Text style={styles.resultStatLabel}>Correct</Text>
+                  <Text style={styles.resultStatLabel}>{t('common.correct')}</Text>
                 </View>
                 <View style={styles.resultStat}>
                   <Ionicons name="close-circle" size={22} color="#ef4444" />
                   <Text style={styles.resultStatValue}>{questions.length - score}</Text>
-                  <Text style={styles.resultStatLabel}>Wrong</Text>
+                  <Text style={styles.resultStatLabel}>{t('common.wrong')}</Text>
                 </View>
                 <View style={styles.resultStat}>
                   <Ionicons name="time" size={22} color="#3b82f6" />
                   <Text style={styles.resultStatValue}>{totalTime}s</Text>
-                  <Text style={styles.resultStatLabel}>Time</Text>
+                  <Text style={styles.resultStatLabel}>{t('quranQuiz.time')}</Text>
                 </View>
               </View>
 
@@ -374,7 +378,7 @@ export default function QuizScreen() {
                 <View style={styles.primaryButtonRow}>
                   <Pressable style={styles.tryAgainBtn} onPress={handleRestart}>
                     <Ionicons name="refresh" size={16} color="#ffffff" />
-                    <Text style={styles.tryAgainBtnText}>Try Again</Text>
+                    <Text style={styles.tryAgainBtnText}>{t('common.tryAgain')}</Text>
                   </Pressable>
                   {hasNextSet && (
                     <Pressable
@@ -382,7 +386,7 @@ export default function QuizScreen() {
                       onPress={handleNextSet}
                       disabled={!passed}
                     >
-                      <Text style={[styles.nextSetBtnText, !passed && styles.nextSetBtnTextDisabled]}>Next</Text>
+                      <Text style={[styles.nextSetBtnText, !passed && styles.nextSetBtnTextDisabled]}>{t('common.next')}</Text>
                       <Ionicons name="arrow-forward" size={16} color={passed ? '#ffffff' : '#64748b'} />
                     </Pressable>
                   )}
@@ -394,12 +398,12 @@ export default function QuizScreen() {
                   onPress={() => setShowReview(true)}
                 >
                   <Ionicons name="list" size={16} color="#10b981" />
-                  <Text style={styles.viewAnswersButtonText}>View All Answers</Text>
+                  <Text style={styles.viewAnswersButtonText}>{t('quranQuiz.viewAllAnswers')}</Text>
                 </Pressable>
 
                 {/* Back */}
                 <Pressable style={styles.backButton} onPress={() => router.back()}>
-                  <Text style={styles.backButtonText}>Back to Categories</Text>
+                  <Text style={styles.backButtonText}>{t('quranQuiz.backToCategories')}</Text>
                 </Pressable>
               </View>
             </View>
@@ -413,7 +417,7 @@ export default function QuizScreen() {
                   onPress={() => setShowReview(false)}
                 >
                   <Ionicons name="arrow-back" size={16} color="#64748b" />
-                  <Text style={styles.returnButtonText}>Back to Summary</Text>
+                  <Text style={styles.returnButtonText}>{t('quranQuiz.backToSummary')}</Text>
                 </Pressable>
                 <Text style={styles.reviewSummaryText}>
                   {score}/{questions.length} ({percentage}%)
@@ -424,10 +428,21 @@ export default function QuizScreen() {
               {questions.map((question, index) => {
                 const userAnswer = getUserAnswer(question.id);
                 const isAnswerCorrect = userAnswer?.isCorrect ?? false;
-                const { arabic: correctArabic, english: correctEnglish } = splitOptionText(question.correctAnswer);
-                const userAnswerSplit = userAnswer ? splitOptionText(userAnswer.userAnswer) : null;
-                const userNumberAnswer = userAnswer ? extractNumberFromAnswer(userAnswer.userAnswer) : { isNumberAnswer: false, number: '' };
-                const correctNumberAnswer = extractNumberFromAnswer(question.correctAnswer);
+                // Map English answers to French equivalents for display
+                const correctAnswerStr = String(question.correctAnswer);
+                const correctAnswerIndex = question.options?.indexOf(correctAnswerStr) ?? -1;
+                const displayCorrectAnswer = correctAnswerIndex >= 0
+                  ? lc(correctAnswerStr, question.optionsFr?.[correctAnswerIndex])
+                  : correctAnswerStr;
+                const userAnswerStr = userAnswer?.userAnswer ? String(userAnswer.userAnswer) : '';
+                const userAnswerIndex = userAnswerStr ? (question.options?.indexOf(userAnswerStr) ?? -1) : -1;
+                const displayUserAnswer = userAnswerStr && userAnswerIndex >= 0
+                  ? lc(userAnswerStr, question.optionsFr?.[userAnswerIndex])
+                  : userAnswerStr;
+                const { arabic: correctArabic, english: correctEnglish } = splitOptionText(displayCorrectAnswer);
+                const userAnswerSplit = userAnswer ? splitOptionText(displayUserAnswer) : null;
+                const userNumberAnswer = userAnswer ? extractNumberFromAnswer(displayUserAnswer) : { isNumberAnswer: false, number: '' };
+                const correctNumberAnswer = extractNumberFromAnswer(displayCorrectAnswer);
 
                 return (
                   <View
@@ -440,7 +455,7 @@ export default function QuizScreen() {
                     {/* Question number and status */}
                     <View style={styles.reviewItemHeader}>
                       <View style={styles.reviewQuestionNum}>
-                        <Text style={styles.reviewQuestionNumText}>Q{index + 1}</Text>
+                        <Text style={styles.reviewQuestionNumText}>{t('quranQuiz.questionNumber', { number: index + 1 })}</Text>
                       </View>
                       <Ionicons
                         name={isAnswerCorrect ? 'checkmark-circle' : 'close-circle'}
@@ -454,12 +469,12 @@ export default function QuizScreen() {
                       <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
                     )}
                     <Text style={styles.reviewQuestionEnglish}>
-                      {getEnglishOnly(question.question)}
+                      {getEnglishOnly(lc(question.question, question.questionFr))}
                     </Text>
 
                     {/* Your Answer */}
                     <View style={styles.reviewAnswerSection}>
-                      <Text style={styles.reviewAnswerLabel}>Your answer:</Text>
+                      <Text style={styles.reviewAnswerLabel}>{t('quranQuiz.yourAnswer')}</Text>
                       <View style={[
                         styles.reviewAnswerBox,
                         isAnswerCorrect ? styles.reviewAnswerCorrect : styles.reviewAnswerWrong
@@ -487,7 +502,7 @@ export default function QuizScreen() {
                     {/* Correct Answer (if wrong) */}
                     {!isAnswerCorrect && (
                       <View style={styles.reviewAnswerSection}>
-                        <Text style={styles.reviewAnswerLabel}>Correct answer:</Text>
+                        <Text style={styles.reviewAnswerLabel}>{t('quranQuiz.correctAnswer')}</Text>
                         <View style={[styles.reviewAnswerBox, styles.reviewAnswerCorrect]}>
                           {correctNumberAnswer.isNumberAnswer ? (
                             <View style={styles.reviewNumberAnswer}>
@@ -514,7 +529,7 @@ export default function QuizScreen() {
                     {question.explanation && (
                       <View style={styles.reviewExplanation}>
                         <Ionicons name="bulb" size={14} color="#f59e0b" />
-                        <Text style={styles.reviewExplanationText}>{question.explanation}</Text>
+                        <Text style={styles.reviewExplanationText}>{lc(question.explanation, question.explanationFr)}</Text>
                       </View>
                     )}
                   </View>
@@ -525,7 +540,7 @@ export default function QuizScreen() {
               <View style={styles.reviewBottomActions}>
                 <Pressable style={styles.restartButton} onPress={handleRestart}>
                   <Ionicons name="refresh" size={16} color="#ffffff" />
-                  <Text style={styles.restartButtonText}>Try Again</Text>
+                  <Text style={styles.restartButtonText}>{t('common.tryAgain')}</Text>
                 </Pressable>
                 {hasNextSet && (
                   <Pressable
@@ -533,7 +548,7 @@ export default function QuizScreen() {
                     onPress={handleNextSet}
                     disabled={!passed}
                   >
-                    <Text style={[styles.nextSetButtonText, !passed && styles.nextSetButtonTextDisabled]}>Next</Text>
+                    <Text style={[styles.nextSetButtonText, !passed && styles.nextSetButtonTextDisabled]}>{t('common.next')}</Text>
                     <Ionicons name="arrow-forward" size={16} color={passed ? '#ffffff' : '#64748b'} />
                   </Pressable>
                 )}
@@ -573,7 +588,7 @@ export default function QuizScreen() {
             <View style={[styles.categoryBadge, { backgroundColor: `${category.color}20` }]}>
               <Ionicons name={category.icon as any} size={16} color={category.color} />
               <Text style={[styles.categoryBadgeText, { color: category.color }]}>
-                {category.nameEnglish}
+                {lc(category.nameEnglish, category.nameFrench)}
               </Text>
             </View>
             {totalSets > 1 && (
@@ -621,17 +636,18 @@ export default function QuizScreen() {
             {/* English Question */}
             <Text style={styles.questionTextEnglish}>
               {currentQuestion.questionArabic
-                ? getEnglishOnly(currentQuestion.question)
-                : currentQuestion.question}
+                ? getEnglishOnly(lc(currentQuestion.question, currentQuestion.questionFr))
+                : lc(currentQuestion.question, currentQuestion.questionFr)}
             </Text>
           </View>
 
           {/* Options */}
           <View style={styles.optionsContainer}>
             {currentQuestion.options?.map((option, index) => {
-              const { arabic, english } = splitOptionText(option);
-              const showAudio = hasArabicText(option) && !isJustLettersOrNumbers(option);
-              const { isNumberAnswer, number } = extractNumberFromAnswer(option);
+              const displayOption = lc(option, currentQuestion.optionsFr?.[index]);
+              const { arabic, english } = splitOptionText(displayOption);
+              const showAudio = hasArabicText(displayOption) && !isJustLettersOrNumbers(displayOption);
+              const { isNumberAnswer, number } = extractNumberFromAnswer(displayOption);
 
               return (
                 <Pressable
@@ -702,7 +718,7 @@ export default function QuizScreen() {
           disabled={!selectedAnswer}
         >
           <Text style={styles.nextButtonText}>
-            {currentIndex < questions.length - 1 ? 'Next' : 'Finish'}
+            {currentIndex < questions.length - 1 ? t('common.next') : t('quranQuiz.finish')}
           </Text>
           <Ionicons name="arrow-forward" size={18} color="#ffffff" />
         </Pressable>

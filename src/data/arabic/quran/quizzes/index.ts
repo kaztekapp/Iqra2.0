@@ -12,8 +12,10 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
   {
     id: 'surah_structure',
     nameEnglish: 'Surah & Structure',
+    nameFrench: 'Sourates et Structure',
     nameArabic: 'السور والتركيب',
     description: 'Test your knowledge of Surah names, numbers, and order',
+    descriptionFr: 'Testez vos connaissances sur les noms, numéros et ordre des sourates',
     icon: 'book',
     color: '#10b981',
     questionCount: 154,
@@ -21,8 +23,10 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
   {
     id: 'juz',
     nameEnglish: 'Juz (Ajza\')',
+    nameFrench: 'Juz (Ajza\')',
     nameArabic: 'الأجزاء',
     description: 'Learn and test your knowledge of the 30 Juz',
+    descriptionFr: 'Apprenez et testez vos connaissances sur les 30 Juz',
     icon: 'layers',
     color: '#3b82f6',
     questionCount: 100,
@@ -30,8 +34,10 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
   {
     id: 'makki_madani',
     nameEnglish: 'Makki vs Madani',
+    nameFrench: 'Makki vs Madani',
     nameArabic: 'مكي ومدني',
     description: 'Learn about revelation locations',
+    descriptionFr: 'Apprenez les lieux de révélation',
     icon: 'location',
     color: '#ec4899',
     questionCount: 50,
@@ -39,8 +45,10 @@ export const QUIZ_CATEGORIES: QuizCategoryInfo[] = [
   {
     id: 'tajweed',
     nameEnglish: 'Tajweed Rules',
+    nameFrench: 'Règles de Tajweed',
     nameArabic: 'أحكام التجويد',
     description: 'Test your Tajweed knowledge',
+    descriptionFr: 'Testez vos connaissances en Tajweed',
     icon: 'musical-notes',
     color: '#14b8a6',
     questionCount: 50,

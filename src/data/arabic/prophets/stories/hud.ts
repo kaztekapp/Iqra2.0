@@ -6,11 +6,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../.
 export const hudStory: Prophet = {
   id: 'hud',
   nameEnglish: 'Hud',
+  nameFrench: 'Hud',
   nameArabic: 'هود',
   order: 4,
   title: 'Prophet to the Mighty \'Ad',
+  titleFr: 'Prophète du puissant peuple de \'Ad',
   titleArabic: 'نبي عاد',
   summary: 'Prophet Hud was sent to the powerful nation of \'Ad, who were known for their impressive buildings and great physical strength. Despite their might, they rejected Hud\'s message and were destroyed by a devastating wind that lasted seven nights and eight days.',
+  summaryFr: 'Le prophète Hud fut envoyé à la puissante nation de \'Ad, connue pour ses constructions impressionnantes et sa grande force physique. Malgré leur puissance, ils rejetèrent le message de Hud et furent détruits par un vent dévastateur qui dura sept nuits et huit jours.',
   hasSubStories: false,
   lessons: [
     'Physical strength and worldly power cannot protect from Allah\'s punishment',
@@ -18,6 +21,13 @@ export const hudStory: Prophet = {
     'The importance of gratitude for Allah\'s blessings',
     'True strength lies in faith, not physical might',
     'Allah\'s punishment comes when people persistently reject guidance',
+  ],
+  lessonsFr: [
+    'La force physique et la puissance mondaine ne peuvent protéger du châtiment d\'Allah',
+    'L\'orgueil mène à la destruction',
+    'L\'importance de la gratitude envers les bienfaits d\'Allah',
+    'La vraie force réside dans la foi, non dans la puissance physique',
+    'Le châtiment d\'Allah survient lorsque les gens rejettent obstinément la guidance',
   ],
   estimatedReadTime: 20,
   quranMentions: 7,
@@ -31,18 +41,21 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: 'After the great flood that destroyed the people of Nuh, humanity began anew from the survivors who had been on the ark. Generations passed, and people spread across the earth. Among them arose a mighty nation known as \'Ad, who settled in a region called Al-Ahqaf in the southern part of the Arabian Peninsula, near present-day Yemen.',
+    contentFr: 'Après le grand déluge qui détruisit le peuple de Nuh, l\'humanité recommença à partir des survivants qui avaient été sur l\'arche. Des générations passèrent, et les gens se répandirent sur la terre. Parmi eux surgit une puissante nation connue sous le nom de \'Ad, qui s\'installa dans une région appelée Al-Ahqaf dans le sud de la péninsule arabique, près de l\'actuel Yémen.',
   },
   {
     id: 'hud-2',
     type: 'narrative',
     order: 2,
     content: 'The people of \'Ad were extraordinary in many ways. Allah had blessed them with great physical stature - they were described as giants, tall and powerful like no other people. They were also blessed with intelligence and skill, building magnificent structures and monuments that amazed all who saw them.',
+    contentFr: 'Le peuple de \'Ad était extraordinaire à bien des égards. Allah les avait bénis d\'une grande stature physique - ils étaient décrits comme des géants, grands et puissants comme aucun autre peuple. Ils étaient également bénis d\'intelligence et d\'habileté, construisant des structures et des monuments magnifiques qui émerveillaient tous ceux qui les voyaient.',
   },
   {
     id: 'hud-3',
     type: 'quran_source',
     order: 3,
     content: 'Allah describes the unique power and construction abilities of \'Ad.',
+    contentFr: 'Allah décrit la puissance unique et les capacités de construction de \'Ad.',
     source: {
       type: 'quran',
       surahNumber: 89,
@@ -52,6 +65,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 8,
       arabicText: 'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِعَادٍ ﴿٦﴾ إِرَمَ ذَاتِ الْعِمَادِ ﴿٧﴾ الَّتِي لَمْ يُخْلَقْ مِثْلُهَا فِي الْبِلَادِ ﴿٨﴾',
       translation: 'Have you not considered how your Lord dealt with \'Ad - [With] Iram - who had lofty pillars, the likes of whom had never been created in the land?',
+      translationFr: 'N\'as-tu pas vu comment ton Seigneur a agi avec les \'Ad - [Avec] Iram - aux colonnes imposantes, dont la semblable n\'avait jamais été créée dans aucun pays ?',
     } as QuranReference,
   },
   {
@@ -59,12 +73,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: 'Iram, the city of pillars, was their crown jewel - a magnificent city with towering columns and impressive architecture. The people of \'Ad were proud of their achievements and their strength. They felt invincible, believing that no one could overpower them.',
+    contentFr: 'Iram, la cité aux colonnes, était leur joyau - une magnifique ville aux colonnes imposantes et à l\'architecture impressionnante. Le peuple de \'Ad était fier de ses réalisations et de sa force. Ils se sentaient invincibles, croyant que personne ne pouvait les surpasser.',
   },
   {
     id: 'hud-5',
     type: 'quran_source',
     order: 5,
     content: 'The arrogance of \'Ad is described in the Quran.',
+    contentFr: 'L\'arrogance de \'Ad est décrite dans le Coran.',
     source: {
       type: 'quran',
       surahNumber: 41,
@@ -74,6 +90,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 15,
       arabicText: 'فَأَمَّا عَادٌ فَاسْتَكْبَرُوا فِي الْأَرْضِ بِغَيْرِ الْحَقِّ وَقَالُوا مَنْ أَشَدُّ مِنَّا قُوَّةً ۖ أَوَلَمْ يَرَوْا أَنَّ اللَّهَ الَّذِي خَلَقَهُمْ هُوَ أَشَدُّ مِنْهُمْ قُوَّةً ۖ وَكَانُوا بِآيَاتِنَا يَجْحَدُونَ ﴿١٥﴾',
       translation: 'As for \'Ad, they were arrogant upon the earth without right and said, "Who is greater than us in strength?" Did they not consider that Allah who created them was greater than them in strength? But they were rejecting Our signs.',
+      translationFr: 'Quant aux \'Ad, ils s\'enorguillirent sur terre sans droit et dirent : « Qui est plus fort que nous ? » Ne voyaient-ils pas qu\'Allah qui les a créés est plus fort qu\'eux ? Et ils niaient Nos signes.',
     } as QuranReference,
   },
   {
@@ -81,18 +98,21 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: 'Despite all these blessings, the people of \'Ad fell into the same trap as those before them. They abandoned the worship of Allah alone and began worshipping idols. They became oppressive, using their strength to dominate others. Their hearts hardened, and they forgot the One who had given them everything.',
+    contentFr: 'Malgré tous ces bienfaits, le peuple de \'Ad tomba dans le même piège que ceux qui les avaient précédés. Ils abandonnèrent l\'adoration d\'Allah seul et commencèrent à adorer des idoles. Ils devinrent oppresseurs, utilisant leur force pour dominer les autres. Leurs cœurs s\'endurcirent, et ils oublièrent Celui qui leur avait tout donné.',
   },
   {
     id: 'hud-7',
     type: 'narrative',
     order: 7,
     content: 'It was into this society that Allah sent Prophet Hud, peace be upon him. Hud was one of them - a man from their own tribe, speaking their language, understanding their ways. He was known for his honesty and wisdom even before his prophethood.',
+    contentFr: 'C\'est dans cette société qu\'Allah envoya le prophète Hud, paix sur lui. Hud était l\'un des leurs - un homme de leur propre tribu, parlant leur langue, comprenant leurs coutumes. Il était connu pour son honnêteté et sa sagesse même avant sa prophétie.',
   },
   {
     id: 'hud-8',
     type: 'quran_source',
     order: 8,
     content: 'Allah sent Hud to his people with a clear message.',
+    contentFr: 'Allah envoya Hud à son peuple avec un message clair.',
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -102,6 +122,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 65,
       arabicText: 'وَإِلَىٰ عَادٍ أَخَاهُمْ هُودًا ۗ قَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُم مِّنْ إِلَٰهٍ غَيْرُهُ ۚ أَفَلَا تَتَّقُونَ ﴿٦٥﴾',
       translation: 'And to the \'Ad [We sent] their brother Hud. He said, "O my people, worship Allah; you have no deity other than Him. Then will you not fear Him?"',
+      translationFr: 'Et aux \'Ad, [Nous envoyâmes] leur frère Hud. Il dit : « Ô mon peuple, adorez Allah ; vous n\'avez point de divinité en dehors de Lui. Ne Le craindrez-vous donc pas ? »',
     } as QuranReference,
   },
   {
@@ -109,12 +130,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 9,
     content: 'Hud called his people to the fundamental truth - to worship Allah alone and abandon their false idols. He reminded them that all their blessings came from Allah, and that they should be grateful rather than arrogant. He warned them of a severe punishment if they continued in their disbelief and oppression.',
+    contentFr: 'Hud appela son peuple à la vérité fondamentale - adorer Allah seul et abandonner leurs fausses idoles. Il leur rappela que tous leurs bienfaits venaient d\'Allah, et qu\'ils devaient être reconnaissants plutôt qu\'arrogants. Il les avertit d\'un châtiment sévère s\'ils persistaient dans leur mécréance et leur oppression.',
   },
   {
     id: 'hud-10',
     type: 'quran_source',
     order: 10,
     content: 'Hud reminded his people of Allah\'s blessings and warned them.',
+    contentFr: 'Hud rappela à son peuple les bienfaits d\'Allah et les avertit.',
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -124,6 +147,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 132,
       arabicText: 'أَتَبْنُونَ بِكُلِّ رِيعٍ آيَةً تَعْبَثُونَ ﴿١٢٨﴾ وَتَتَّخِذُونَ مَصَانِعَ لَعَلَّكُمْ تَخْلُدُونَ ﴿١٢٩﴾ وَإِذَا بَطَشْتُم بَطَشْتُمْ جَبَّارِينَ ﴿١٣٠﴾ فَاتَّقُوا اللَّهَ وَأَطِيعُونِ ﴿١٣١﴾ وَاتَّقُوا الَّذِي أَمَدَّكُم بِمَا تَعْلَمُونَ ﴿١٣٢﴾',
       translation: '"Do you construct on every elevation a sign, amusing yourselves? And take for yourselves palaces that you might live eternally? And when you strike, you strike as tyrants. So fear Allah and obey me. And fear He who provided you with that which you know."',
+      translationFr: '« Bâtissez-vous sur chaque hauteur un monument pour vous amuser ? Et prenez-vous des palaces comme si vous deviez vivre éternellement ? Et quand vous sévissez, vous sévissez en tyrans. Craignez donc Allah et obéissez-moi. Et craignez Celui qui vous a pourvus de ce que vous savez. »',
     } as QuranReference,
   },
   {
@@ -131,6 +155,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 11,
     content: 'Hud elaborated on the blessings Allah had given them.',
+    contentFr: 'Hud détailla les bienfaits qu\'Allah leur avait accordés.',
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -140,6 +165,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 135,
       arabicText: 'أَمَدَّكُم بِأَنْعَامٍ وَبَنِينَ ﴿١٣٣﴾ وَجَنَّاتٍ وَعُيُونٍ ﴿١٣٤﴾ إِنِّي أَخَافُ عَلَيْكُمْ عَذَابَ يَوْمٍ عَظِيمٍ ﴿١٣٥﴾',
       translation: '"Provided you with grazing livestock and children, and gardens and springs. Indeed, I fear for you the punishment of a terrible day."',
+      translationFr: '« Il vous a pourvus de bestiaux et d\'enfants, et de jardins et de sources. Je crains pour vous le châtiment d\'un jour terrible. »',
     } as QuranReference,
   },
   {
@@ -147,12 +173,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 12,
     content: 'But the leaders of \'Ad, intoxicated by their power and pride, refused to listen. They mocked Hud and accused him of being foolish and a liar. They could not fathom that their idols were false or that they needed to change their ways.',
+    contentFr: 'Mais les chefs de \'Ad, enivrés par leur pouvoir et leur orgueil, refusèrent d\'écouter. Ils se moquèrent de Hud et l\'accusèrent d\'être insensé et menteur. Ils ne pouvaient concevoir que leurs idoles fussent fausses ou qu\'ils eussent besoin de changer leurs habitudes.',
   },
   {
     id: 'hud-13',
     type: 'quran_source',
     order: 13,
     content: 'The leaders of \'Ad responded with mockery and rejection.',
+    contentFr: 'Les chefs de \'Ad répondirent par la moquerie et le rejet.',
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -162,6 +190,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 67,
       arabicText: 'قَالَ الْمَلَأُ الَّذِينَ كَفَرُوا مِن قَوْمِهِ إِنَّا لَنَرَاكَ فِي سَفَاهَةٍ وَإِنَّا لَنَظُنُّكَ مِنَ الْكَاذِبِينَ ﴿٦٦﴾ قَالَ يَا قَوْمِ لَيْسَ بِي سَفَاهَةٌ وَلَٰكِنِّي رَسُولٌ مِّن رَّبِّ الْعَالَمِينَ ﴿٦٧﴾',
       translation: 'Said the eminent ones who disbelieved among his people, "Indeed, we see you in foolishness, and indeed, we think you are of the liars." He said, "O my people, there is not foolishness in me, but I am a messenger from the Lord of the worlds."',
+      translationFr: 'Les notables mécréants de son peuple dirent : « Nous te voyons certes dans la folie, et nous pensons que tu es du nombre des menteurs. » Il dit : « Ô mon peuple, il n\'y a point de folie en moi, mais je suis un messager du Seigneur des mondes. »',
     } as QuranReference,
   },
   {
@@ -169,12 +198,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 14,
     content: 'Despite the rejection and mockery, Hud remained patient and steadfast. He continued to convey Allah\'s message faithfully, explaining that he sought no reward from them - his reward was with Allah alone. He was simply a sincere advisor who wanted good for his people.',
+    contentFr: 'Malgré le rejet et la moquerie, Hud resta patient et ferme. Il continua à transmettre fidèlement le message d\'Allah, expliquant qu\'il ne cherchait aucune récompense de leur part - sa récompense était auprès d\'Allah seul. Il était simplement un conseiller sincère qui voulait le bien pour son peuple.',
   },
   {
     id: 'hud-15',
     type: 'quran_source',
     order: 15,
     content: 'Hud declared his sincere intentions.',
+    contentFr: 'Hud déclara ses intentions sincères.',
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -184,6 +215,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 68,
       arabicText: 'أُبَلِّغُكُمْ رِسَالَاتِ رَبِّي وَأَنَا لَكُمْ نَاصِحٌ أَمِينٌ ﴿٦٨﴾',
       translation: '"I convey to you the messages of my Lord, and I am to you a trustworthy adviser."',
+      translationFr: '« Je vous transmets les messages de mon Seigneur, et je suis pour vous un conseiller digne de confiance. »',
     } as QuranReference,
   },
   {
@@ -191,12 +223,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 16,
     content: 'The disbelievers challenged Hud to bring upon them the punishment he warned about. In their arrogance, they believed nothing could harm them. They taunted him, saying they would never abandon their gods based on his words alone.',
+    contentFr: 'Les mécréants défirent Hud de faire venir sur eux le châtiment dont il les avertissait. Dans leur arrogance, ils croyaient que rien ne pouvait leur nuire. Ils le narguèrent, disant qu\'ils n\'abandonneraient jamais leurs dieux sur la base de ses seules paroles.',
   },
   {
     id: 'hud-17',
     type: 'quran_source',
     order: 17,
     content: 'The people of \'Ad challenged Hud to bring the punishment.',
+    contentFr: 'Le peuple de \'Ad défia Hud de faire venir le châtiment.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -206,6 +240,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 54,
       arabicText: 'قَالُوا يَا هُودُ مَا جِئْتَنَا بِبَيِّنَةٍ وَمَا نَحْنُ بِتَارِكِي آلِهَتِنَا عَن قَوْلِكَ وَمَا نَحْنُ لَكَ بِمُؤْمِنِينَ ﴿٥٣﴾ إِن نَّقُولُ إِلَّا اعْتَرَاكَ بَعْضُ آلِهَتِنَا بِسُوءٍ ۗ قَالَ إِنِّي أُشْهِدُ اللَّهَ وَاشْهَدُوا أَنِّي بَرِيءٌ مِّمَّا تُشْرِكُونَ ﴿٥٤﴾',
       translation: 'They said, "O Hud, you have not brought us clear evidence, and we are not ones to leave our gods on your say-so. And we are not believers in you. We only say that some of our gods have afflicted you with evil." He said, "Indeed, I call Allah to witness, and witness yourselves that I am free from whatever you associate with Allah."',
+      translationFr: 'Ils dirent : « Ô Hud, tu ne nous as apporté aucune preuve évidente, et nous ne sommes pas disposés à abandonner nos divinités sur ta parole, et nous ne te croyons pas. Nous disons seulement que certaines de nos divinités t\'ont frappé d\'un mal. » Il dit : « Je prends Allah à témoin, et soyez témoins que je suis innocent de ce que vous associez à Allah. »',
     } as QuranReference,
   },
   {
@@ -213,12 +248,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 18,
     content: 'Hud stood firm against his entire nation. He declared his complete trust in Allah and his freedom from their false worship. He proclaimed that neither they nor their false gods could harm him in the least without Allah\'s permission.',
+    contentFr: 'Hud se dressa fermement face à toute sa nation. Il déclara sa confiance totale en Allah et son innocence vis-à-vis de leur faux culte. Il proclama que ni eux ni leurs faux dieux ne pouvaient lui nuire en quoi que ce soit sans la permission d\'Allah.',
   },
   {
     id: 'hud-19',
     type: 'quran_source',
     order: 19,
     content: 'Hud expressed his complete trust in Allah.',
+    contentFr: 'Hud exprima sa confiance totale en Allah.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -228,6 +265,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 57,
       arabicText: 'مِن دُونِهِ ۖ فَكِيدُونِي جَمِيعًا ثُمَّ لَا تُنظِرُونِ ﴿٥٥﴾ إِنِّي تَوَكَّلْتُ عَلَى اللَّهِ رَبِّي وَرَبِّكُم ۚ مَّا مِن دَابَّةٍ إِلَّا هُوَ آخِذٌ بِنَاصِيَتِهَا ۚ إِنَّ رَبِّي عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ ﴿٥٦﴾ فَإِن تَوَلَّوْا فَقَدْ أَبْلَغْتُكُم مَّا أُرْسِلْتُ بِهِ إِلَيْكُمْ ۚ وَيَسْتَخْلِفُ رَبِّي قَوْمًا غَيْرَكُمْ وَلَا تَضُرُّونَهُ شَيْئًا ۚ إِنَّ رَبِّي عَلَىٰ كُلِّ شَيْءٍ حَفِيظٌ ﴿٥٧﴾',
       translation: '"Other than Him. So plot against me all together; then do not give me respite. Indeed, I have relied upon Allah, my Lord and your Lord. There is no creature but that He holds its forelock. Indeed, my Lord is on a path that is straight." And if you turn away, then I have already conveyed that with which I was sent to you. My Lord will give succession to a people other than you, and you will not harm Him at all. Indeed, my Lord is over all things a Guardian.',
+      translationFr: '« En dehors de Lui. Rusez donc tous contre moi, puis ne me donnez pas de répit. Je place ma confiance en Allah, mon Seigneur et votre Seigneur. Il n\'y a pas de créature qu\'Il ne tienne par le toupet. Mon Seigneur est certes sur un chemin droit. » Si vous vous détournez, je vous ai déjà transmis ce avec quoi j\'ai été envoyé vers vous. Mon Seigneur vous remplacera par un autre peuple, et vous ne Lui nuirez en rien. Mon Seigneur est certes gardien de toute chose.',
     } as QuranReference,
   },
   {
@@ -235,18 +273,21 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: 'Years passed, and the people of \'Ad continued in their rejection. Then a drought befell the land. The skies withheld their rain, and the earth became parched. The once-lush gardens began to wither. Still, they did not turn back to Allah.',
+    contentFr: 'Les années passèrent, et le peuple de \'Ad persista dans son rejet. Puis une sécheresse s\'abattit sur la terre. Les cieux retinrent leur pluie, et la terre devint aride. Les jardins autrefois luxuriants commencèrent à se flétrir. Pourtant, ils ne revinrent pas vers Allah.',
   },
   {
     id: 'hud-21',
     type: 'narrative',
     order: 21,
     content: 'One day, the people saw a cloud forming on the horizon - a massive cloud moving toward their valley. After the long drought, they rejoiced, believing relief had finally come. They exclaimed happily that rain was approaching.',
+    contentFr: 'Un jour, le peuple vit un nuage se former à l\'horizon - un énorme nuage se dirigeant vers leur vallée. Après la longue sécheresse, ils se réjouirent, croyant que le soulagement était enfin arrivé. Ils s\'exclamèrent joyeusement que la pluie approchait.',
   },
   {
     id: 'hud-22',
     type: 'quran_source',
     order: 22,
     content: 'The people mistook the punishment for rain.',
+    contentFr: 'Le peuple confondit le châtiment avec la pluie.',
     source: {
       type: 'quran',
       surahNumber: 46,
@@ -256,6 +297,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 25,
       arabicText: 'فَلَمَّا رَأَوْهُ عَارِضًا مُّسْتَقْبِلَ أَوْدِيَتِهِمْ قَالُوا هَٰذَا عَارِضٌ مُّمْطِرُنَا ۚ بَلْ هُوَ مَا اسْتَعْجَلْتُم بِهِ ۖ رِيحٌ فِيهَا عَذَابٌ أَلِيمٌ ﴿٢٤﴾ تُدَمِّرُ كُلَّ شَيْءٍ بِأَمْرِ رَبِّهَا فَأَصْبَحُوا لَا يُرَىٰ إِلَّا مَسَاكِنُهُمْ ۚ كَذَٰلِكَ نَجْزِي الْقَوْمَ الْمُجْرِمِينَ ﴿٢٥﴾',
       translation: 'And when they saw it as a cloud approaching their valleys, they said, "This is a cloud bringing us rain!" Rather, it is that for which you were impatient: a wind, within it a painful punishment, destroying everything by command of its Lord. And they became so that nothing was seen except their dwellings. Thus do We recompense the criminal people.',
+      translationFr: 'Quand ils le virent comme un nuage se dirigeant vers leurs vallées, ils dirent : « Voici un nuage qui va nous apporter la pluie ! » C\'est plutôt ce que vous cherchiez à hâter : un vent porteur d\'un châtiment douloureux, détruisant tout sur l\'ordre de son Seigneur. Et au matin, on ne voyait plus que leurs demeures. C\'est ainsi que Nous rétribuons le peuple criminel.',
     } as QuranReference,
   },
   {
@@ -263,12 +305,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 23,
     content: 'What they thought was rain was actually the punishment they had mockingly demanded. A devastating wind was unleashed upon them - not a gentle breeze, but a furious, howling tempest that carried death and destruction.',
+    contentFr: 'Ce qu\'ils prenaient pour de la pluie était en réalité le châtiment qu\'ils avaient réclamé par moquerie. Un vent dévastateur fut déchaîné sur eux - non pas une brise légère, mais une tempête furieuse et hurlante qui portait mort et destruction.',
   },
   {
     id: 'hud-24',
     type: 'quran_source',
     order: 24,
     content: 'Allah describes the terrible wind that destroyed \'Ad.',
+    contentFr: 'Allah décrit le terrible vent qui détruisit les \'Ad.',
     source: {
       type: 'quran',
       surahNumber: 69,
@@ -278,6 +322,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 8,
       arabicText: 'وَأَمَّا عَادٌ فَأُهْلِكُوا بِرِيحٍ صَرْصَرٍ عَاتِيَةٍ ﴿٦﴾ سَخَّرَهَا عَلَيْهِمْ سَبْعَ لَيَالٍ وَثَمَانِيَةَ أَيَّامٍ حُسُومًا فَتَرَى الْقَوْمَ فِيهَا صَرْعَىٰ كَأَنَّهُمْ أَعْجَازُ نَخْلٍ خَاوِيَةٍ ﴿٧﴾ فَهَلْ تَرَىٰ لَهُم مِّن بَاقِيَةٍ ﴿٨﴾',
       translation: 'And as for \'Ad, they were destroyed by a screaming violent wind which Allah imposed upon them for seven nights and eight days in succession, so you would see the people therein fallen as if they were hollow trunks of palm trees. Then do you see of them any remains?',
+      translationFr: 'Quant aux \'Ad, ils furent détruits par un vent violent et glacial qu\'Allah déchaîna sur eux pendant sept nuits et huit jours consécutifs ; tu aurais vu les gens gisant comme des troncs de palmiers évidés. En vois-tu le moindre vestige ?',
     } as QuranReference,
   },
   {
@@ -285,12 +330,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 25,
     content: 'For seven nights and eight consecutive days, the wind raged without cease. The same giants who had boasted "Who is mightier than us?" were tossed about like dry leaves. Their magnificent buildings were leveled. Their proud city of Iram was buried beneath the sands.',
+    contentFr: 'Pendant sept nuits et huit jours consécutifs, le vent fit rage sans répit. Les mêmes géants qui s\'étaient vantés en disant « Qui est plus fort que nous ? » furent projetés comme des feuilles sèches. Leurs magnifiques bâtiments furent rasés. Leur fière cité d\'Iram fut ensevelie sous les sables.',
   },
   {
     id: 'hud-26',
     type: 'quran_source',
     order: 26,
     content: 'The wind spared nothing of the arrogant people.',
+    contentFr: 'Le vent n\'épargna rien du peuple arrogant.',
     source: {
       type: 'quran',
       surahNumber: 51,
@@ -300,6 +347,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 42,
       arabicText: 'وَفِي عَادٍ إِذْ أَرْسَلْنَا عَلَيْهِمُ الرِّيحَ الْعَقِيمَ ﴿٤١﴾ مَا تَذَرُ مِن شَيْءٍ أَتَتْ عَلَيْهِ إِلَّا جَعَلَتْهُ كَالرَّمِيمِ ﴿٤٢﴾',
       translation: 'And in \'Ad [there is a sign], when We sent against them the barren wind. It left nothing of what it came upon but that it made it like disintegrated ruins.',
+      translationFr: 'Et dans les \'Ad [il y a un signe], quand Nous envoyâmes contre eux le vent stérile. Il ne laissa rien de ce qu\'il atteignit sans le réduire en poussière.',
     } as QuranReference,
   },
   {
@@ -307,12 +355,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 27,
     content: 'When the punishment came, Prophet Hud and those who believed with him were saved by Allah\'s mercy. They were protected from the wind that destroyed everyone else. This was a sign of Allah\'s justice - He distinguishes between the believers and disbelievers.',
+    contentFr: 'Lorsque le châtiment arriva, le prophète Hud et ceux qui avaient cru avec lui furent sauvés par la miséricorde d\'Allah. Ils furent protégés du vent qui détruisit tous les autres. C\'était un signe de la justice d\'Allah - Il distingue entre les croyants et les mécréants.',
   },
   {
     id: 'hud-28',
     type: 'quran_source',
     order: 28,
     content: 'Allah saved Hud and the believers from the punishment.',
+    contentFr: 'Allah sauva Hud et les croyants du châtiment.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -322,6 +372,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 58,
       arabicText: 'وَلَمَّا جَاءَ أَمْرُنَا نَجَّيْنَا هُودًا وَالَّذِينَ آمَنُوا مَعَهُ بِرَحْمَةٍ مِّنَّا وَنَجَّيْنَاهُم مِّنْ عَذَابٍ غَلِيظٍ ﴿٥٨﴾',
       translation: 'And when Our command came, We saved Hud and those who believed with him, by mercy from Us. And We saved them from a harsh punishment.',
+      translationFr: 'Et quand Notre ordre vint, Nous sauvâmes Hud et ceux qui avaient cru avec lui, par une miséricorde de Notre part. Et Nous les sauvâmes d\'un dur châtiment.',
     } as QuranReference,
   },
   {
@@ -329,12 +380,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 29,
     content: 'The story of \'Ad serves as a powerful reminder for all of humanity. Their physical strength could not save them. Their impressive buildings could not protect them. Their wealth and power meant nothing when Allah\'s decree came.',
+    contentFr: 'L\'histoire des \'Ad constitue un puissant rappel pour toute l\'humanité. Leur force physique ne put les sauver. Leurs bâtiments impressionnants ne purent les protéger. Leur richesse et leur pouvoir ne signifièrent rien lorsque le décret d\'Allah arriva.',
   },
   {
     id: 'hud-30',
     type: 'quran_source',
     order: 30,
     content: 'Allah summarizes the lesson from the story of \'Ad.',
+    contentFr: 'Allah résume la leçon de l\'histoire des \'Ad.',
     source: {
       type: 'quran',
       surahNumber: 7,
@@ -344,6 +397,7 @@ export const hudStoryContent: StoryContentBlock[] = [
       ayahEnd: 72,
       arabicText: 'فَأَنجَيْنَاهُ وَالَّذِينَ مَعَهُ بِرَحْمَةٍ مِّنَّا وَقَطَعْنَا دَابِرَ الَّذِينَ كَذَّبُوا بِآيَاتِنَا ۖ وَمَا كَانُوا مُؤْمِنِينَ ﴿٧٢﴾',
       translation: 'So We saved him and those with him by mercy from Us. And We eliminated those who denied Our signs, and they were not believers.',
+      translationFr: 'Nous le sauvâmes ainsi que ceux qui étaient avec lui par une miséricorde de Notre part. Et Nous exterminâmes ceux qui traitaient de mensonges Nos signes, et ils n\'étaient pas croyants.',
     } as QuranReference,
   },
   {
@@ -351,12 +405,14 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: 'Today, the sands of the Arabian desert cover whatever remains of \'Ad and their once-great civilization. Archaeologists have searched for the legendary city of Iram, and some believe they have found traces of it buried beneath the dunes. Whether those ruins are indeed Iram or not, the Quran preserves the true account of what happened to those who defied Allah.',
+    contentFr: 'Aujourd\'hui, les sables du désert arabique recouvrent ce qui reste de \'Ad et de leur civilisation autrefois grandiose. Les archéologues ont recherché la légendaire cité d\'Iram, et certains croient en avoir trouvé des traces ensevelies sous les dunes. Que ces ruines soient véritablement Iram ou non, le Coran préserve le véritable récit de ce qui arriva à ceux qui défièrent Allah.',
   },
   {
     id: 'hud-32',
     type: 'narrative',
     order: 32,
     content: 'May Allah grant us the wisdom to learn from the story of \'Ad. May we recognize that all our blessings come from Him, and that true strength lies not in physical power or worldly achievements, but in faith, humility, and obedience to our Creator. And may peace and blessings be upon Prophet Hud, who stood alone against a mighty nation to deliver Allah\'s message of truth.',
+    contentFr: 'Qu\'Allah nous accorde la sagesse de tirer les leçons de l\'histoire des \'Ad. Puissions-nous reconnaître que tous nos bienfaits viennent de Lui, et que la vraie force ne réside pas dans la puissance physique ou les réalisations mondaines, mais dans la foi, l\'humilité et l\'obéissance à notre Créateur. Et que la paix et les bénédictions soient sur le prophète Hud, qui se dressa seul face à une puissante nation pour transmettre le message de vérité d\'Allah.',
   },
 ];
 

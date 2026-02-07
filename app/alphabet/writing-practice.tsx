@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
@@ -14,11 +15,14 @@ import Svg, { Path } from 'react-native-svg';
 import { arabicLetters, getLetterById } from '../../src/data/arabic/alphabet/letters';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CANVAS_SIZE = SCREEN_WIDTH - 80;
 
 export default function WritingPracticeScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { letterId } = useLocalSearchParams<{ letterId?: string }>();
   const { markLetterPracticed, addXp, updateStreak } = useProgressStore();
   const { speak, isSpeaking } = useArabicSpeech();
@@ -115,9 +119,9 @@ export default function WritingPracticeScreen() {
             <Ionicons name="close" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>Writing Practice</Text>
+            <Text style={styles.headerTitle}>{t('alphabet.writingPractice')}</Text>
             <Text style={styles.headerProgress}>
-              Letter {currentLetterIndex + 1} of {arabicLetters.length}
+              {t('alphabet.letterOf', { current: currentLetterIndex + 1, total: arabicLetters.length })}
             </Text>
           </View>
           <Pressable
@@ -146,7 +150,7 @@ export default function WritingPracticeScreen() {
 
         {/* Letter Info */}
         <View style={styles.letterInfo}>
-          <Text style={styles.letterName}>{currentLetter.name}</Text>
+          <Text style={styles.letterName}>{lc(currentLetter.name, currentLetter.nameFr)}</Text>
           <Text style={styles.letterNameAr}>{currentLetter.nameArabic}</Text>
           <Pressable
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
@@ -210,23 +214,23 @@ export default function WritingPracticeScreen() {
 
         {/* Letter Forms Reference */}
         <View style={styles.formsContainer}>
-          <Text style={styles.formsTitle}>Letter Forms</Text>
+          <Text style={styles.formsTitle}>{t('alphabet.letterForms')}</Text>
           <View style={styles.formsRow}>
             <View style={styles.formItem}>
               <Text style={styles.formLetter}>{currentLetter.forms.isolated}</Text>
-              <Text style={styles.formLabel}>Isolated</Text>
+              <Text style={styles.formLabel}>{t('alphabet.isolated')}</Text>
             </View>
             <View style={styles.formItem}>
               <Text style={styles.formLetter}>{currentLetter.forms.initial}</Text>
-              <Text style={styles.formLabel}>Initial</Text>
+              <Text style={styles.formLabel}>{t('alphabet.initial')}</Text>
             </View>
             <View style={styles.formItem}>
               <Text style={styles.formLetter}>{currentLetter.forms.medial}</Text>
-              <Text style={styles.formLabel}>Medial</Text>
+              <Text style={styles.formLabel}>{t('alphabet.medial')}</Text>
             </View>
             <View style={styles.formItem}>
               <Text style={styles.formLetter}>{currentLetter.forms.final}</Text>
-              <Text style={styles.formLabel}>Final</Text>
+              <Text style={styles.formLabel}>{t('alphabet.final')}</Text>
             </View>
           </View>
         </View>
@@ -235,12 +239,12 @@ export default function WritingPracticeScreen() {
         <View style={styles.actionButtons}>
           <Pressable style={styles.clearButton} onPress={clearCanvas}>
             <Ionicons name="refresh" size={20} color="#ef4444" />
-            <Text style={styles.clearButtonText}>Clear</Text>
+            <Text style={styles.clearButtonText}>{t('common.clear')}</Text>
           </Pressable>
 
           <Pressable style={styles.submitButton} onPress={handleSubmit}>
             <Ionicons name="checkmark" size={20} color="#ffffff" />
-            <Text style={styles.submitButtonText}>Submit (+10 XP)</Text>
+            <Text style={styles.submitButtonText}>{t('alphabet.submitXp')}</Text>
           </Pressable>
         </View>
 
@@ -262,7 +266,7 @@ export default function WritingPracticeScreen() {
                 currentLetterIndex === 0 && styles.navButtonTextDisabled,
               ]}
             >
-              Previous
+              {t('common.previous')}
             </Text>
           </Pressable>
 
@@ -280,7 +284,7 @@ export default function WritingPracticeScreen() {
                 currentLetterIndex === arabicLetters.length - 1 && styles.navButtonTextDisabled,
               ]}
             >
-              Next
+              {t('common.next')}
             </Text>
             <Ionicons
               name="chevron-forward"

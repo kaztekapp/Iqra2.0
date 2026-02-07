@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getProphetStory, hasProphetStory } from '../../../src/data/arabic/prophets';
 import { SubStoryNav, StoryContentBlock } from '../../../src/components/prophetStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
@@ -10,6 +12,8 @@ import { SubStory, QuranReference } from '../../../src/types/prophetStories';
 import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
 
 export default function ProphetStoryScreen() {
+  const { t } = useTranslation();
+  const { lc, lcArray } = useLocalizedContent();
   const { prophetId } = useLocalSearchParams<{ prophetId: string }>();
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -121,7 +125,7 @@ export default function ProphetStoryScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#6366f1" />
-          <Text style={styles.loadingText}>Loading story...</Text>
+          <Text style={styles.loadingText}>{t('prophetsFeature.loadingStory')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -141,14 +145,14 @@ export default function ProphetStoryScreen() {
         <View style={styles.headerTitle}>
           <View style={styles.prophetNameRow}>
             <Text style={styles.prophetNameArabic}>{prophet.nameArabic}</Text>
-            <Text style={styles.prophetNameEnglish}>{prophet.nameEnglish}</Text>
+            <Text style={styles.prophetNameEnglish}>{lc(prophet.nameEnglish, prophet.nameFrench)}</Text>
           </View>
-          <Text style={styles.prophetTitle}>{prophet.title}</Text>
+          <Text style={styles.prophetTitle}>{lc(prophet.title, prophet.titleFr)}</Text>
         </View>
         <View style={styles.headerMeta}>
           <View style={styles.metaItem}>
             <Ionicons name="time-outline" size={14} color="#64748b" />
-            <Text style={styles.metaText}>{prophet.estimatedReadTime} min</Text>
+            <Text style={styles.metaText}>{prophet.estimatedReadTime} {t('common.min')}</Text>
           </View>
         </View>
       </View>
@@ -172,18 +176,18 @@ export default function ProphetStoryScreen() {
         {/* Sub-story Title */}
         {currentSubStory && (
           <View style={styles.subStoryHeader}>
-            <Text style={styles.subStoryTitle}>{currentSubStory.title}</Text>
+            <Text style={styles.subStoryTitle}>{lc(currentSubStory.title, currentSubStory.titleFr)}</Text>
             {currentSubStory.titleArabic && (
               <Text style={styles.subStoryTitleArabic}>{currentSubStory.titleArabic}</Text>
             )}
             <View style={styles.subStoryMeta}>
               <View style={styles.metaItem}>
                 <Ionicons name="book-outline" size={12} color="#64748b" />
-                <Text style={styles.metaText}>{sourceCount} sources</Text>
+                <Text style={styles.metaText}>{sourceCount} {t('prophetsFeature.sources')}</Text>
               </View>
               <View style={styles.metaItem}>
                 <Ionicons name="time-outline" size={12} color="#64748b" />
-                <Text style={styles.metaText}>{currentSubStory.estimatedReadTime} min</Text>
+                <Text style={styles.metaText}>{currentSubStory.estimatedReadTime} {t('common.min')}</Text>
               </View>
             </View>
           </View>
@@ -193,18 +197,18 @@ export default function ProphetStoryScreen() {
         {!hasFullStory ? (
           <View style={styles.comingSoonContainer}>
             <Ionicons name="construct-outline" size={48} color="#64748b" />
-            <Text style={styles.comingSoonTitle}>Coming Soon</Text>
+            <Text style={styles.comingSoonTitle}>{t('prophetsFeature.comingSoon')}</Text>
             <Text style={styles.comingSoonText}>
-              The full story of {prophet.nameEnglish} is being prepared. Check back soon!
+              {t('prophetsFeature.fullStoryOf')} {lc(prophet.nameEnglish, prophet.nameFrench)} {t('prophetsFeature.beingPrepared')}
             </Text>
             <View style={styles.summaryCard}>
-              <Text style={styles.summaryTitle}>Summary</Text>
-              <Text style={styles.summaryText}>{prophet.summary}</Text>
+              <Text style={styles.summaryTitle}>{t('prophetsFeature.summary')}</Text>
+              <Text style={styles.summaryText}>{lc(prophet.summary, prophet.summaryFr)}</Text>
             </View>
             {prophet.lessons.length > 0 && (
               <View style={styles.lessonsCard}>
-                <Text style={styles.lessonsTitle}>Key Lessons</Text>
-                {prophet.lessons.map((lesson, index) => (
+                <Text style={styles.lessonsTitle}>{t('prophetsFeature.keyLessons')}</Text>
+                {lcArray(prophet.lessons, prophet.lessonsFr).map((lesson, index) => (
                   <View key={index} style={styles.lessonItem}>
                     <Ionicons name="checkmark-circle" size={16} color="#10b981" />
                     <Text style={styles.lessonText}>{lesson}</Text>
@@ -233,14 +237,14 @@ export default function ProphetStoryScreen() {
             {currentContent.length > 0 && !isCurrentSubStoryCompleted && (
               <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
                 <Ionicons name="checkmark-circle-outline" size={20} color="#10b981" />
-                <Text style={styles.completeButtonText}>Mark as Complete</Text>
+                <Text style={styles.completeButtonText}>{t('prophetsFeature.markComplete')}</Text>
               </Pressable>
             )}
 
             {isCurrentSubStoryCompleted && (
               <View style={styles.completedBadge}>
                 <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-                <Text style={styles.completedText}>Section Completed</Text>
+                <Text style={styles.completedText}>{t('prophetsFeature.sectionCompleted')}</Text>
               </View>
             )}
           </View>

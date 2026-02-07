@@ -2,9 +2,11 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { getLetterById, arabicLetters } from '../../src/data/arabic/alphabet/letters';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useEffect, useState } from 'react';
 
 export default function LetterDetailScreen() {
@@ -18,6 +20,8 @@ export default function LetterDetailScreen() {
     updateStreak,
   } = useProgressStore();
 
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [isLearned, setIsLearned] = useState(false);
   const [isMastered, setIsMastered] = useState(false);
   const { speak, speakSlow, isSpeaking } = useArabicSpeech();
@@ -33,9 +37,9 @@ export default function LetterDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Letter not found</Text>
+          <Text style={styles.errorText}>{t('common.notFound')}</Text>
           <Pressable style={styles.backLink} onPress={() => router.back()}>
-            <Text style={styles.backLinkText}>Go back</Text>
+            <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -63,10 +67,10 @@ export default function LetterDetailScreen() {
     currentIndex < arabicLetters.length - 1 ? arabicLetters[currentIndex + 1] : null;
 
   const forms = [
-    { key: 'isolated', label: 'Isolated', labelAr: 'مُنْفَرِد', form: letter.forms.isolated },
-    { key: 'initial', label: 'Initial', labelAr: 'بِدَايَة', form: letter.forms.initial },
-    { key: 'medial', label: 'Medial', labelAr: 'وَسَط', form: letter.forms.medial },
-    { key: 'final', label: 'Final', labelAr: 'نِهَايَة', form: letter.forms.final },
+    { key: 'isolated', label: t('alphabet.isolated'), labelAr: 'مُنْفَرِد', form: letter.forms.isolated },
+    { key: 'initial', label: t('alphabet.initial'), labelAr: 'بِدَايَة', form: letter.forms.initial },
+    { key: 'medial', label: t('alphabet.medial'), labelAr: 'وَسَط', form: letter.forms.medial },
+    { key: 'final', label: t('alphabet.final'), labelAr: 'نِهَايَة', form: letter.forms.final },
   ];
 
   return (
@@ -78,7 +82,7 @@ export default function LetterDetailScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>{letter.name}</Text>
+            <Text style={styles.title}>{lc(letter.name, letter.nameFr)}</Text>
             <Text style={styles.titleArabic}>{letter.nameArabic}</Text>
           </View>
           <Pressable
@@ -100,33 +104,33 @@ export default function LetterDetailScreen() {
           {isMastered && (
             <View style={styles.masteredBadge}>
               <Ionicons name="star" size={16} color="#22c55e" />
-              <Text style={styles.masteredText}>Mastered</Text>
+              <Text style={styles.masteredText}>{t('common.mastered')}</Text>
             </View>
           )}
           {isLearned && !isMastered && (
             <View style={styles.learnedBadge}>
               <Ionicons name="checkmark-circle" size={16} color="#D4AF37" />
-              <Text style={styles.learnedText}>Learned</Text>
+              <Text style={styles.learnedText}>{t('common.learned')}</Text>
             </View>
           )}
         </View>
 
         {/* Sound Description */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Pronunciation</Text>
+          <Text style={styles.sectionTitle}>{t('alphabet.pronunciation')}</Text>
           <View style={styles.soundCard}>
             <Ionicons name="mic" size={24} color="#6366f1" />
-            <Text style={styles.soundDescription}>{letter.soundDescription}</Text>
+            <Text style={styles.soundDescription}>{lc(letter.soundDescription, letter.soundDescriptionFr)}</Text>
           </View>
         </View>
 
         {/* Letter Forms */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Letter Forms</Text>
+          <Text style={styles.sectionTitle}>{t('alphabet.letterForms')}</Text>
           <Text style={styles.sectionSubtitle}>
             {letter.connectable
-              ? 'This letter connects to both sides'
-              : 'This letter only connects from the right'}
+              ? t('alphabet.connectsBothSides')
+              : t('alphabet.connectsRightOnly')}
           </Text>
           <View style={styles.formsGrid}>
             {forms.map((form) => (
@@ -141,7 +145,7 @@ export default function LetterDetailScreen() {
 
         {/* Examples */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Examples</Text>
+          <Text style={styles.sectionTitle}>{t('alphabet.examples')}</Text>
           {letter.examples.map((example, index) => (
             <View key={index} style={styles.exampleCard}>
               <View style={styles.exampleLeft}>
@@ -149,7 +153,7 @@ export default function LetterDetailScreen() {
                 <Text style={styles.exampleTranslit}>{example.transliteration}</Text>
               </View>
               <View style={styles.exampleRight}>
-                <Text style={styles.exampleMeaning}>{example.meaning}</Text>
+                <Text style={styles.exampleMeaning}>{lc(example.meaning, example.meaningFr)}</Text>
                 <View style={styles.positionBadge}>
                   <Text style={styles.positionText}>{example.position}</Text>
                 </View>
@@ -176,7 +180,7 @@ export default function LetterDetailScreen() {
             }
           >
             <Ionicons name="pencil" size={20} color="#ec4899" />
-            <Text style={styles.writingButtonText}>Practice Writing This Letter</Text>
+            <Text style={styles.writingButtonText}>{t('alphabet.practiceWriting')}</Text>
           </Pressable>
         </View>
 
@@ -185,13 +189,13 @@ export default function LetterDetailScreen() {
           {!isLearned && (
             <Pressable style={styles.primaryButton} onPress={handleMarkLearned}>
               <Ionicons name="checkmark-circle" size={20} color="#ffffff" />
-              <Text style={styles.primaryButtonText}>Mark as Learned (+10 XP)</Text>
+              <Text style={styles.primaryButtonText}>{t('alphabet.markLearned')}</Text>
             </Pressable>
           )}
           {isLearned && !isMastered && (
             <Pressable style={styles.masterButton} onPress={handleMarkMastered}>
               <Ionicons name="star" size={20} color="#0f172a" />
-              <Text style={styles.masterButtonText}>Mark as Mastered (+25 XP)</Text>
+              <Text style={styles.masterButtonText}>{t('alphabet.markMastered')}</Text>
             </Pressable>
           )}
         </View>
@@ -205,7 +209,7 @@ export default function LetterDetailScreen() {
                 onPress={() => router.replace(`/alphabet/${prevLetter.id}` as any)}
               >
                 <Ionicons name="chevron-back" size={20} color="#ffffff" />
-                <Text style={styles.navButtonText}>{prevLetter.name}</Text>
+                <Text style={styles.navButtonText}>{lc(prevLetter.name, prevLetter.nameFr)}</Text>
               </Pressable>
             ) : (
               <View style={styles.navButtonPlaceholder} />
@@ -215,7 +219,7 @@ export default function LetterDetailScreen() {
                 style={styles.navButton}
                 onPress={() => router.replace(`/alphabet/${nextLetter.id}` as any)}
               >
-                <Text style={styles.navButtonText}>{nextLetter.name}</Text>
+                <Text style={styles.navButtonText}>{lc(nextLetter.name, nextLetter.nameFr)}</Text>
                 <Ionicons name="chevron-forward" size={20} color="#ffffff" />
               </Pressable>
             ) : (

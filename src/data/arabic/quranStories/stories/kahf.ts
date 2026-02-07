@@ -6,11 +6,14 @@ import { QuranStory, StoryContentBlock, QuranReference } from '../../../../types
 export const kahfStory: QuranStory = {
   id: 'kahf',
   titleEnglish: 'The People of the Cave',
+  titleFrench: 'Les Gens de la Caverne',
   titleArabic: 'أصحاب الكهف',
   order: 1,
   category: 'groups_nations',
   description: 'Young believers who fled persecution and slept for centuries',
+  descriptionFr: 'De jeunes croyants qui fuirent la persecution et dormirent pendant des siecles',
   summary: "The story of the Sleepers of the Cave tells of young men who believed in Allah during a time of polytheism and persecution. Rather than compromise their faith, they fled to a cave where Allah caused them to sleep for over 300 years. When they awoke, they became a sign of Allah's power over life, death, and time - proof of resurrection. Their story, revealed in Surah Al-Kahf, teaches about maintaining faith under pressure, trusting in Allah's protection, and the reality of the resurrection.",
+  summaryFr: "L'histoire des Dormeurs de la Caverne raconte l'histoire de jeunes hommes qui crurent en Allah a une epoque de polytheisme et de persecution. Plutot que de compromettre leur foi, ils fuirent dans une caverne ou Allah les fit dormir pendant plus de 300 ans. A leur reveil, ils devinrent un signe de la puissance d'Allah sur la vie, la mort et le temps - une preuve de la resurrection. Leur histoire, revelee dans la sourate Al-Kahf, enseigne le maintien de la foi sous la pression, la confiance en la protection d'Allah et la realite de la resurrection.",
   lessons: [
     'Faith may require sacrifice and separation from society',
     'Allah protects those who trust in Him',
@@ -18,6 +21,14 @@ export const kahfStory: QuranStory = {
     'Time is in Allah\'s control',
     'Youth devoted to Allah are especially honored',
     'Worldly power is temporary; faith is eternal',
+  ],
+  lessonsFr: [
+    'La foi peut exiger le sacrifice et la separation de la societe',
+    'Allah protege ceux qui Lui font confiance',
+    'La resurrection est une realite certaine',
+    'Le temps est sous le controle d\'Allah',
+    'Les jeunes devoues a Allah sont particulierement honores',
+    'Le pouvoir mondain est temporaire ; la foi est eternelle',
   ],
   estimatedReadTime: 15,
   quranMentions: 1,
@@ -33,12 +44,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 1,
       content: "In ancient times, there lived a group of young men in a city ruled by a tyrannical king who forced his subjects to worship idols. While most people conformed out of fear, these youths recognized the truth: there is no god but Allah. They refused to bow to the idols that their people worshipped, holding firm to monotheism in an age of darkness.",
+      contentFr: "Dans les temps anciens, vivait un groupe de jeunes hommes dans une cite gouvernee par un roi tyrannique qui forcait ses sujets a adorer des idoles. Alors que la plupart des gens se conformaient par peur, ces jeunes reconnurent la verite : il n'y a de dieu qu'Allah. Ils refuserent de se prosterner devant les idoles que leur peuple adorait, tenant fermement au monotheisme en une ere de tenebres.",
     },
     {
       id: 'kahf-2',
       type: 'quran_source',
       order: 2,
       content: "Allah introduces their story as a wondrous sign.",
+      contentFr: "Allah introduit leur histoire comme un signe merveilleux.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -48,6 +61,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 10,
         arabicText: 'أَمْ حَسِبْتَ أَنَّ أَصْحَابَ الْكَهْفِ وَالرَّقِيمِ كَانُوا مِنْ آيَاتِنَا عَجَبًا ۝ إِذْ أَوَى الْفِتْيَةُ إِلَى الْكَهْفِ فَقَالُوا رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا',
         translation: 'Or have you thought that the companions of the cave and the inscription were, among Our signs, a wonder? When the youths retreated to the cave and said, "Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance."',
+        translationFr: 'Penses-tu que les gens de la Caverne et d\'ar-Raqim etaient, parmi Nos signes, une merveille ? Quand les jeunes gens se refugierent dans la caverne et dirent : "Notre Seigneur, accorde-nous de Ta part une misericorde et arrange-nous une issue favorable dans notre affaire."',
       } as QuranReference,
     },
     {
@@ -55,12 +69,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 3,
       content: "These young men gathered secretly, strengthening each other's faith. They discussed the absurdity of worshipping stones that could neither help nor harm. Their hearts were bound together by belief in the One True God. But as their faith grew, so did the danger - the king's spies were everywhere, and apostasy was punishable by death.",
+      contentFr: "Ces jeunes hommes se reunissaient en secret, renforçant mutuellement leur foi. Ils discutaient de l'absurdite d'adorer des pierres qui ne pouvaient ni aider ni nuire. Leurs coeurs etaient unis par la croyance en le Dieu Unique et Vrai. Mais a mesure que leur foi grandissait, le danger aussi - les espions du roi etaient partout, et l'apostasie etait passible de mort.",
     },
     {
       id: 'kahf-4',
       type: 'quran_source',
       order: 4,
       content: "Allah describes how He strengthened their hearts.",
+      contentFr: "Allah decrit comment Il raffermit leurs coeurs.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -70,6 +86,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 14,
         arabicText: 'نَّحْنُ نَقُصُّ عَلَيْكَ نَبَأَهُم بِالْحَقِّ ۚ إِنَّهُمْ فِتْيَةٌ آمَنُوا بِرَبِّهِمْ وَزِدْنَاهُمْ هُدًى ۝ وَرَبَطْنَا عَلَىٰ قُلُوبِهِمْ إِذْ قَامُوا فَقَالُوا رَبُّنَا رَبُّ السَّمَاوَاتِ وَالْأَرْضِ لَن نَّدْعُوَ مِن دُونِهِ إِلَٰهًا ۖ لَّقَدْ قُلْنَا إِذًا شَطَطًا',
         translation: 'We relate to you their story in truth. Indeed, they were youths who believed in their Lord, and We increased them in guidance. And We bound their hearts when they stood up and said, "Our Lord is the Lord of the heavens and the earth. Never will we invoke besides Him any deity. We would have certainly spoken, then, an excessive transgression."',
+        translationFr: 'Nous te racontons leur histoire en toute verite. Ce sont des jeunes gens qui croyaient en leur Seigneur, et Nous les avons augmentes en guidance. Et Nous avons raffermi leurs coeurs lorsqu\'ils se leverent et dirent : "Notre Seigneur est le Seigneur des cieux et de la terre. Jamais nous n\'invoquerons de divinite en dehors de Lui. Nous aurions alors profere une enorme aberration."',
       } as QuranReference,
     },
     {
@@ -77,12 +94,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 5,
       content: "The young men understood the gravity of their situation. Their people had taken gods besides Allah, yet could produce no clear proof for their worship. These youths saw this as manifest error. They knew they must make a choice: compromise their faith or flee. They chose to preserve their belief, even if it meant leaving everything behind.",
+      contentFr: "Les jeunes hommes comprirent la gravite de leur situation. Leur peuple avait pris des divinites en dehors d'Allah, sans pouvoir produire aucune preuve claire pour leur adoration. Ces jeunes voyaient cela comme une erreur manifeste. Ils savaient qu'ils devaient faire un choix : compromettre leur foi ou fuir. Ils choisirent de preserver leur croyance, meme si cela signifiait tout abandonner.",
     },
     {
       id: 'kahf-6',
       type: 'quran_source',
       order: 6,
       content: "They decided to withdraw and seek Allah's mercy.",
+      contentFr: "Ils deciderent de se retirer et de chercher la misericorde d'Allah.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -92,6 +111,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 16,
         arabicText: 'هَٰؤُلَاءِ قَوْمُنَا اتَّخَذُوا مِن دُونِهِ آلِهَةً ۖ لَّوْلَا يَأْتُونَ عَلَيْهِم بِسُلْطَانٍ بَيِّنٍ ۖ فَمَنْ أَظْلَمُ مِمَّنِ افْتَرَىٰ عَلَى اللَّهِ كَذِبًا ۝ وَإِذِ اعْتَزَلْتُمُوهُمْ وَمَا يَعْبُدُونَ إِلَّا اللَّهَ فَأْوُوا إِلَى الْكَهْفِ يَنشُرْ لَكُمْ رَبُّكُم مِّن رَّحْمَتِهِ وَيُهَيِّئْ لَكُم مِّنْ أَمْرِكُم مِّرْفَقًا',
         translation: '"These, our people, have taken besides Him deities. Why do they not bring for [worship of] them a clear authority? And who is more unjust than one who invents a lie about Allah?" [They said to one another], "And when you have withdrawn from them and that which they worship other than Allah, retreat to the cave. Your Lord will spread out for you of His mercy and will prepare for you from your affair facility."',
+        translationFr: '"Ceux-la, notre peuple, ont pris en dehors de Lui des divinites. Pourquoi ne produisent-ils pas une preuve evidente ? Qui est plus injuste que celui qui invente un mensonge contre Allah ?" "Et quand vous vous etes separes d\'eux et de ce qu\'ils adorent en dehors d\'Allah, refugiez-vous dans la caverne. Votre Seigneur repandra sur vous de Sa misericorde et vous arrangera une issue favorable dans votre affaire."',
       } as QuranReference,
     },
     {
@@ -99,12 +119,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 7,
       content: "Under cover of night, the young believers fled the city. They climbed into the mountains until they found a suitable cave. With them was their dog, a faithful companion. They entered the cave, trusting completely in Allah, asking Him for mercy and guidance. Little did they know the extraordinary fate that awaited them.",
+      contentFr: "Sous le couvert de la nuit, les jeunes croyants fuirent la cite. Ils grimperent dans les montagnes jusqu'a trouver une caverne appropriee. Avec eux se trouvait leur chien, un fidele compagnon. Ils entrerent dans la caverne, faisant entierement confiance a Allah, Lui demandant misericorde et guidance. Ils ne savaient pas le destin extraordinaire qui les attendait.",
     },
     {
       id: 'kahf-8',
       type: 'quran_source',
       order: 8,
       content: "Allah caused them to fall into a deep sleep.",
+      contentFr: "Allah les plongea dans un profond sommeil.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -114,6 +136,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 12,
         arabicText: 'فَضَرَبْنَا عَلَىٰ آذَانِهِمْ فِي الْكَهْفِ سِنِينَ عَدَدًا ۝ ثُمَّ بَعَثْنَاهُمْ لِنَعْلَمَ أَيُّ الْحِزْبَيْنِ أَحْصَىٰ لِمَا لَبِثُوا أَمَدًا',
         translation: 'So We cast [a cover of sleep] over their ears within the cave for a number of years. Then We awakened them that We might show which of the two factions was most precise in calculating what [extent] they had remained in time.',
+        translationFr: 'Nous avons alors frappe sur leurs oreilles [les avons endormis] dans la caverne pendant de nombreuses annees. Puis Nous les avons ressuscites pour savoir lequel des deux groupes comptait le mieux le temps qu\'ils avaient passe.',
       } as QuranReference,
     },
     {
@@ -121,12 +144,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 9,
       content: "Allah caused them to sleep - not an ordinary sleep, but a miraculous state that preserved them across centuries. The sun would rise and set, seasons would change, empires would fall and rise, but the sleepers remained unchanged. Anyone who saw them would have thought them awake, yet they were deep in slumber.",
+      contentFr: "Allah les fit dormir - non pas un sommeil ordinaire, mais un etat miraculeux qui les preserva a travers les siecles. Le soleil se levait et se couchait, les saisons changeaient, les empires tombaient et se levaient, mais les dormeurs restaient inchanges. Quiconque les voyait les aurait crus eveilles, pourtant ils etaient plonges dans un profond sommeil.",
     },
     {
       id: 'kahf-10',
       type: 'quran_source',
       order: 10,
       content: "Allah describes how they appeared in the cave.",
+      contentFr: "Allah decrit leur apparence dans la caverne.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -136,6 +161,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 18,
         arabicText: 'وَتَرَى الشَّمْسَ إِذَا طَلَعَت تَّزَاوَرُ عَن كَهْفِهِمْ ذَاتَ الْيَمِينِ وَإِذَا غَرَبَت تَّقْرِضُهُمْ ذَاتَ الشِّمَالِ وَهُمْ فِي فَجْوَةٍ مِّنْهُ ۚ ذَٰلِكَ مِنْ آيَاتِ اللَّهِ ۗ مَن يَهْدِ اللَّهُ فَهُوَ الْمُهْتَدِ ۖ وَمَن يُضْلِلْ فَلَن تَجِدَ لَهُ وَلِيًّا مُّرْشِدًا ۝ وَتَحْسَبُهُمْ أَيْقَاظًا وَهُمْ رُقُودٌ ۚ وَنُقَلِّبُهُمْ ذَاتَ الْيَمِينِ وَذَاتَ الشِّمَالِ ۖ وَكَلْبُهُم بَاسِطٌ ذِرَاعَيْهِ بِالْوَصِيدِ',
         translation: 'And you would see the sun when it rose, inclining away from their cave on the right, and when it set, passing away from them on the left, while they were within an open space thereof. That was from the signs of Allah. He whom Allah guides is the [rightly] guided, but he whom He sends astray - never will you find for him a protecting guide. And you would think them awake, while they were asleep. And We turned them to the right and to the left, while their dog stretched his forelegs at the entrance.',
+        translationFr: 'Et tu aurais vu le soleil, a son lever, s\'ecarter de leur caverne vers la droite, et a son coucher, les eviter sur la gauche, tandis qu\'ils se trouvaient dans un espace interieur. Cela fait partie des signes d\'Allah. Celui qu\'Allah guide est le bien guide, et celui qu\'Il egare, tu ne lui trouveras pas de protecteur pour le guider. Tu les aurais crus eveilles alors qu\'ils dormaient. Et Nous les retournions a droite et a gauche, tandis que leur chien etendait ses pattes au seuil.',
       } as QuranReference,
     },
     {
@@ -143,12 +169,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 11,
       content: "Allah turned them from side to side to preserve their bodies. Their dog lay at the entrance with its forelegs stretched out, as if guarding them. Anyone who approached would have been filled with terror at the sight - these still figures who seemed both alive and asleep, protected by an invisible barrier of divine power.",
+      contentFr: "Allah les retournait d'un cote a l'autre pour preserver leurs corps. Leur chien etait couche a l'entree, les pattes avant etendues, comme pour les garder. Quiconque s'approchait aurait ete rempli de terreur a cette vue - ces silhouettes immobiles qui semblaient a la fois vivantes et endormies, protegees par une barriere invisible de puissance divine.",
     },
     {
       id: 'kahf-12',
       type: 'quran_source',
       order: 12,
       content: "Their appearance would strike fear into any observer.",
+      contentFr: "Leur apparence aurait frappe de terreur tout observateur.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -158,6 +186,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 18,
         arabicText: 'لَوِ اطَّلَعْتَ عَلَيْهِمْ لَوَلَّيْتَ مِنْهُمْ فِرَارًا وَلَمُلِئْتَ مِنْهُمْ رُعْبًا',
         translation: 'If you had looked at them, you would have turned from them in flight and been filled by them with terror.',
+        translationFr: 'Si tu les avais aperçus, tu leur aurais certainement tourne le dos en fuyant, et tu aurais ete rempli de frayeur devant eux.',
       } as QuranReference,
     },
     {
@@ -165,12 +194,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 13,
       content: "Centuries passed. The tyrant king died. Generations came and went. The city transformed. Eventually, the land became ruled by believers. The cave remained undiscovered, its occupants preserved in perfect sleep. Then, according to Allah's decree, the time came for them to awaken.",
+      contentFr: "Des siecles passerent. Le roi tyran mourut. Les generations se succederent. La cite se transforma. Finalement, le pays fut gouverne par des croyants. La caverne resta indecouverte, ses occupants preserves dans un sommeil parfait. Puis, selon le decret d'Allah, le temps vint pour eux de se reveiller.",
     },
     {
       id: 'kahf-14',
       type: 'quran_source',
       order: 14,
       content: "They awoke and questioned each other about the time.",
+      contentFr: "Ils se reveillerent et s'interrogerent les uns les autres sur le temps ecoule.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -180,6 +211,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 19,
         arabicText: 'وَكَذَٰلِكَ بَعَثْنَاهُمْ لِيَتَسَاءَلُوا بَيْنَهُمْ ۚ قَالَ قَائِلٌ مِّنْهُمْ كَمْ لَبِثْتُمْ ۖ قَالُوا لَبِثْنَا يَوْمًا أَوْ بَعْضَ يَوْمٍ ۚ قَالُوا رَبُّكُمْ أَعْلَمُ بِمَا لَبِثْتُمْ فَابْعَثُوا أَحَدَكُم بِوَرِقِكُمْ هَٰذِهِ إِلَى الْمَدِينَةِ فَلْيَنظُرْ أَيُّهَا أَزْكَىٰ طَعَامًا فَلْيَأْتِكُم بِرِزْقٍ مِّنْهُ وَلْيَتَلَطَّفْ وَلَا يُشْعِرَنَّ بِكُمْ أَحَدًا',
         translation: 'And similarly, We awakened them that they might question one another. Said a speaker from among them, "How long have you remained [here]?" They said, "We have remained a day or part of a day." They said, "Your Lord is most knowing of how long you remained. So send one of you with this silver coin of yours to the city and let him look to which is the best of food and bring you provision from it and let him be cautious. And let no one be aware of you."',
+        translationFr: 'Et c\'est ainsi que Nous les avons ressuscites pour qu\'ils s\'interrogent entre eux. L\'un d\'eux dit : "Combien de temps etes-vous restes ?" Ils dirent : "Nous sommes restes un jour ou une partie d\'un jour." Ils dirent : "Votre Seigneur sait mieux combien vous etes restes. Envoyez l\'un de vous avec cette piece d\'argent a la ville et qu\'il regarde quelle nourriture est la plus pure et qu\'il vous en apporte des provisions. Qu\'il soit courtois et qu\'il ne revele votre presence a personne."',
       } as QuranReference,
     },
     {
@@ -187,12 +219,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 15,
       content: "The young men awoke, stretching as if from a night's rest. They asked each other how long they had slept. Some said a day, others said part of a day. Wisely, they concluded that only Allah knew the true duration. Feeling hungry, they decided to send one of them to the city to buy food, cautioning him to be discreet lest the polytheists discover them.",
+      contentFr: "Les jeunes hommes se reveillerent, s'etirant comme apres une nuit de repos. Ils se demanderent combien de temps ils avaient dormi. Certains dirent un jour, d'autres une partie d'un jour. Sagement, ils conclurent que seul Allah connaissait la duree reelle. Affames, ils deciderent d'envoyer l'un d'entre eux a la ville acheter de la nourriture, l'avertissant d'etre discret de peur que les polytheistes ne les decouvrent.",
     },
     {
       id: 'kahf-16',
       type: 'quran_source',
       order: 16,
       content: "They feared what would happen if they were discovered.",
+      contentFr: "Ils craignaient ce qui arriverait s'ils etaient decouverts.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -202,6 +236,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 20,
         arabicText: 'إِنَّهُمْ إِن يَظْهَرُوا عَلَيْكُمْ يَرْجُمُوكُمْ أَوْ يُعِيدُوكُمْ فِي مِلَّتِهِمْ وَلَن تُفْلِحُوا إِذًا أَبَدًا',
         translation: '"Indeed, if they come to know of you, they will stone you or return you to their religion. And never would you succeed, then - ever."',
+        translationFr: '"S\'ils venaient a vous decouvrir, ils vous lapideraient ou vous forceraient a retourner dans leur religion. Et alors vous ne reussiriez jamais."',
       } as QuranReference,
     },
     {
@@ -209,18 +244,21 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 17,
       content: "One of them went to the city with ancient coins - currency from centuries ago. When he tried to use them in the marketplace, the merchants were astonished. They examined the coins, recognizing them as relics from a long-forgotten era. Word spread quickly. How could this young man possess coins from 300 years ago? He was taken to the authorities.",
+      contentFr: "L'un d'eux se rendit a la ville avec des pieces anciennes - une monnaie datant de siecles auparavant. Quand il essaya de les utiliser au marche, les marchands furent stupefaits. Ils examinerent les pieces, les reconnaissant comme des reliques d'une epoque oubliee depuis longtemps. La nouvelle se repandit rapidement. Comment ce jeune homme pouvait-il posseder des pieces datant de 300 ans ? Il fut conduit devant les autorites.",
     },
     {
       id: 'kahf-18',
       type: 'narrative',
       order: 18,
       content: "But the world had changed. The city was now ruled by a righteous king who believed in Allah and the resurrection. When the young man explained who he was and where he came from, the people were amazed. They followed him back to the cave and discovered his companions. The sleepers had become living proof of resurrection - that Allah can bring the dead back to life.",
+      contentFr: "Mais le monde avait change. La cite etait desormais gouvernee par un roi juste qui croyait en Allah et en la resurrection. Quand le jeune homme expliqua qui il etait et d'ou il venait, les gens furent emerveilles. Ils le suivirent jusqu'a la caverne et decouvrirent ses compagnons. Les dormeurs etaient devenus une preuve vivante de la resurrection - qu'Allah peut ramener les morts a la vie.",
     },
     {
       id: 'kahf-19',
       type: 'quran_source',
       order: 19,
       content: "Allah made them a sign for the people.",
+      contentFr: "Allah en fit un signe pour les gens.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -230,6 +268,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 21,
         arabicText: 'وَكَذَٰلِكَ أَعْثَرْنَا عَلَيْهِمْ لِيَعْلَمُوا أَنَّ وَعْدَ اللَّهِ حَقٌّ وَأَنَّ السَّاعَةَ لَا رَيْبَ فِيهَا إِذْ يَتَنَازَعُونَ بَيْنَهُمْ أَمْرَهُمْ ۖ فَقَالُوا ابْنُوا عَلَيْهِم بُنْيَانًا ۖ رَّبُّهُمْ أَعْلَمُ بِهِمْ ۚ قَالَ الَّذِينَ غَلَبُوا عَلَىٰ أَمْرِهِمْ لَنَتَّخِذَنَّ عَلَيْهِم مَّسْجِدًا',
         translation: 'And similarly, We caused them to be found that they [who found them] would know that the promise of Allah is truth and that of the Hour there is no doubt. When they disputed among themselves about their affair and said, "Construct over them a structure. Their Lord is most knowing about them." Those who prevailed in their affair said, "We will surely take [for ourselves] over them a masjid."',
+        translationFr: 'Et c\'est ainsi que Nous les avons fait decouvrir pour qu\'ils [ceux qui les decouvrirent] sachent que la promesse d\'Allah est verite et que l\'Heure ne fait aucun doute. Quand ils discuterent entre eux de leur affaire, ils dirent : "Construisez sur eux un edifice. Leur Seigneur les connait mieux." Ceux qui l\'emporterent dans leur affaire dirent : "Nous erigerons certainement sur eux un lieu de culte."',
       } as QuranReference,
     },
     {
@@ -237,12 +276,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 20,
       content: "After their discovery, the sleepers returned to their Lord - their souls departing this world having fulfilled their miraculous purpose. The people debated what to do with the cave. The believers prevailed, and a place of worship was built over it. The cave became a testimony to Allah's power over death, time, and resurrection.",
+      contentFr: "Apres leur decouverte, les dormeurs retournerent a leur Seigneur - leurs ames quittant ce monde apres avoir accompli leur but miraculeux. Les gens debattirent de ce qu'il fallait faire de la caverne. Les croyants l'emporterent, et un lieu de culte fut construit par-dessus. La caverne devint un temoignage de la puissance d'Allah sur la mort, le temps et la resurrection.",
     },
     {
       id: 'kahf-21',
       type: 'quran_source',
       order: 21,
       content: "Allah reveals the duration of their sleep.",
+      contentFr: "Allah revele la duree de leur sommeil.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -252,6 +293,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 26,
         arabicText: 'وَلَبِثُوا فِي كَهْفِهِمْ ثَلَاثَ مِائَةٍ سِنِينَ وَازْدَادُوا تِسْعًا ۝ قُلِ اللَّهُ أَعْلَمُ بِمَا لَبِثُوا ۖ لَهُ غَيْبُ السَّمَاوَاتِ وَالْأَرْضِ ۖ أَبْصِرْ بِهِ وَأَسْمِعْ ۚ مَا لَهُم مِّن دُونِهِ مِن وَلِيٍّ وَلَا يُشْرِكُ فِي حُكْمِهِ أَحَدًا',
         translation: 'And they remained in their cave for three hundred years and exceeded by nine. Say, "Allah is most knowing of how long they remained. He has [knowledge of] the unseen of the heavens and the earth. How Seeing is He and how Hearing! They have not besides Him any protector, and He shares not His legislation with anyone."',
+        translationFr: 'Et ils resterent dans leur caverne trois cents ans et en ajouterent neuf. Dis : "Allah sait mieux combien de temps ils demeurerent. A Lui appartient l\'Inconnaissable des cieux et de la terre. Comme Il est Clairvoyant et Audient ! Ils n\'ont aucun protecteur en dehors de Lui et Il n\'associe personne dans Son commandement."',
       } as QuranReference,
     },
     {
@@ -259,12 +301,14 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 22,
       content: "They slept for 309 years - 300 solar years, which equals 309 lunar years. In Allah's knowledge alone is the true count. The Quran settles the matter definitively while reminding us that ultimate knowledge belongs to Allah. He sees all, hears all, and nothing in the heavens or earth is hidden from Him.",
+      contentFr: "Ils dormirent pendant 309 ans - 300 annees solaires, ce qui equivaut a 309 annees lunaires. Seule la connaissance d'Allah detient le compte exact. Le Coran regle la question definitivement tout en nous rappelant que la connaissance ultime appartient a Allah. Il voit tout, entend tout, et rien dans les cieux ou sur la terre ne Lui est cache.",
     },
     {
       id: 'kahf-23',
       type: 'quran_source',
       order: 23,
       content: "Allah corrects those who speculate about their number.",
+      contentFr: "Allah corrige ceux qui speculent sur leur nombre.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -274,6 +318,7 @@ export const kahfStory: QuranStory = {
         ayahEnd: 22,
         arabicText: 'سَيَقُولُونَ ثَلَاثَةٌ رَّابِعُهُمْ كَلْبُهُمْ وَيَقُولُونَ خَمْسَةٌ سَادِسُهُمْ كَلْبُهُمْ رَجْمًا بِالْغَيْبِ ۖ وَيَقُولُونَ سَبْعَةٌ وَثَامِنُهُمْ كَلْبُهُمْ ۚ قُل رَّبِّي أَعْلَمُ بِعِدَّتِهِم مَّا يَعْلَمُهُمْ إِلَّا قَلِيلٌ ۗ فَلَا تُمَارِ فِيهِمْ إِلَّا مِرَاءً ظَاهِرًا وَلَا تَسْتَفْتِ فِيهِم مِّنْهُمْ أَحَدًا',
         translation: 'They will say there were three, the fourth of them being their dog; and they will say there were five, the sixth of them being their dog - guessing at the unseen; and they will say there were seven, and the eighth of them was their dog. Say, "My Lord is most knowing of their number. None knows them except a few. So do not argue about them except with an obvious argument and do not inquire about them among [the speculators] from anyone."',
+        translationFr: 'Ils diront : "Ils etaient trois, le quatrieme etant leur chien." Et ils diront : "Ils etaient cinq, le sixieme etant leur chien" - conjecturant sur l\'Inconnaissable. Et ils diront : "Ils etaient sept, le huitieme etant leur chien." Dis : "Mon Seigneur connait mieux leur nombre. Il n\'en est que peu qui le sachent. Ne discute a leur sujet que de maniere apparente et ne consulte personne en la matiere."',
       } as QuranReference,
     },
     {
@@ -281,18 +326,21 @@ export const kahfStory: QuranStory = {
       type: 'narrative',
       order: 24,
       content: "People have speculated about how many sleepers there were - three, five, or seven, with their dog as an additional member. Allah says their exact number is known only to a few, and we should not engage in pointless speculation. The lesson is not in their number but in their faith and Allah's power to preserve them.",
+      contentFr: "Les gens ont specule sur le nombre de dormeurs - trois, cinq ou sept, avec leur chien comme membre supplementaire. Allah dit que leur nombre exact n'est connu que de quelques-uns, et que nous ne devrions pas nous engager dans des speculations inutiles. La lecon ne reside pas dans leur nombre mais dans leur foi et la puissance d'Allah pour les preserver.",
     },
     {
       id: 'kahf-25',
       type: 'narrative',
       order: 25,
       content: "The story of the People of the Cave teaches profound lessons. Young people who stand firm in faith are honored by Allah. Fleeing from corruption to preserve one's religion is praiseworthy. Allah protects those who trust in Him, even in ways they cannot imagine. Time is under Allah's complete control. And resurrection is not just a future event - Allah demonstrated it through these sleepers.",
+      contentFr: "L'histoire des Gens de la Caverne enseigne de profondes lecons. Les jeunes qui tiennent fermement dans la foi sont honores par Allah. Fuir la corruption pour preserver sa religion est louable. Allah protege ceux qui Lui font confiance, meme de manieres qu'ils ne peuvent imaginer. Le temps est entierement sous le controle d'Allah. Et la resurrection n'est pas seulement un evenement futur - Allah l'a demontree a travers ces dormeurs.",
     },
     {
       id: 'kahf-26',
       type: 'narrative',
       order: 26,
-      content: "The Prophet Muhammad ﷺ encouraged Muslims to recite Surah Al-Kahf every Friday. It protects from the trials of the Dajjal (Antichrist) and illuminates one's week with light. The story of the Cave's companions remains a beacon of hope: no matter how dark the age, sincere faith finds Allah's protection and mercy.",
+      content: "The Prophet Muhammad \uFE0E encouraged Muslims to recite Surah Al-Kahf every Friday. It protects from the trials of the Dajjal (Antichrist) and illuminates one's week with light. The story of the Cave's companions remains a beacon of hope: no matter how dark the age, sincere faith finds Allah's protection and mercy.",
+      contentFr: "Le Prophete Muhammad \uFE0E encouragea les musulmans a reciter la sourate Al-Kahf chaque vendredi. Elle protege des epreuves du Dajjal (Antechrist) et illumine sa semaine de lumiere. L'histoire des compagnons de la Caverne reste un phare d'espoir : aussi sombre que soit l'epoque, la foi sincere trouve la protection et la misericorde d'Allah.",
     },
   ],
 };

@@ -3,14 +3,15 @@ import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { LeaderboardType, LeaderboardEntry } from '../../src/types/community';
 
-const TAB_OPTIONS: { type: LeaderboardType; label: string; icon: string }[] = [
-  { type: 'weekly', label: 'Weekly', icon: 'calendar' },
-  { type: 'streaks', label: 'Streaks', icon: 'flame' },
-  { type: 'allTime', label: 'All-Time', icon: 'trophy' },
+const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
+  { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
+  { type: 'streaks', labelKey: 'community.streaks', icon: 'flame' },
+  { type: 'allTime', labelKey: 'community.allTime', icon: 'trophy' },
 ];
 
 // Memoized row component to prevent unnecessary re-renders
@@ -21,6 +22,8 @@ const LeaderboardRow = memo(function LeaderboardRow({
   entry: LeaderboardEntry;
   type: LeaderboardType;
 }) {
+  const { t } = useTranslation();
+
   const getRankDisplay = (rank: number) => {
     if (rank === 1) return { emoji: '🥇', color: '#FFD700' };
     if (rank === 2) return { emoji: '🥈', color: '#C0C0C0' };
@@ -31,7 +34,7 @@ const LeaderboardRow = memo(function LeaderboardRow({
   const rankInfo = getRankDisplay(entry.rank);
 
   const getValue = () => {
-    if (type === 'streaks') return `${entry.streak} days`;
+    if (type === 'streaks') return t('community.days', { count: entry.streak });
     return `${entry.xp.toLocaleString()} XP`;
   };
 
@@ -46,7 +49,7 @@ const LeaderboardRow = memo(function LeaderboardRow({
       </View>
       <View style={styles.userInfo}>
         <Text style={[styles.userName, entry.isCurrentUser && styles.userNameCurrent]}>
-          {entry.isCurrentUser ? 'You' : entry.name}
+          {entry.isCurrentUser ? t('community.you') : entry.name}
         </Text>
         {!entry.isCurrentUser && (
           <Text style={styles.userNameArabic}>{entry.nameArabic}</Text>
@@ -57,7 +60,7 @@ const LeaderboardRow = memo(function LeaderboardRow({
           {getValue()}
         </Text>
         {entry.isCurrentUser && entry.rank > 1 && (
-          <Text style={styles.rankDiff}>↑ Keep going!</Text>
+          <Text style={styles.rankDiff}>↑ {t('community.keepGoing')}</Text>
         )}
       </View>
     </View>
@@ -65,6 +68,7 @@ const LeaderboardRow = memo(function LeaderboardRow({
 });
 
 export default function LeaderboardScreen() {
+  const { t } = useTranslation();
   const [currentType, setCurrentType] = useState<LeaderboardType>('weekly');
   const { getLeaderboard } = useCommunityStore();
   const { progress } = useProgressStore();
@@ -82,7 +86,7 @@ export default function LeaderboardScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitles}>
-          <Text style={styles.headerTitle}>Leaderboard</Text>
+          <Text style={styles.headerTitle}>{t('community.leaderboard')}</Text>
           <Text style={styles.headerTitleArabic}>الترتيب</Text>
         </View>
         <View style={styles.headerSpacer} />
@@ -90,7 +94,7 @@ export default function LeaderboardScreen() {
 
       {/* Tab Selector */}
       <View style={styles.tabContainer}>
-        {TAB_OPTIONS.map((tab) => (
+        {TAB_KEYS.map((tab) => (
           <Pressable
             key={tab.type}
             style={[styles.tab, currentType === tab.type && styles.tabActive]}
@@ -102,7 +106,7 @@ export default function LeaderboardScreen() {
               color={currentType === tab.type ? '#ffffff' : '#64748b'}
             />
             <Text style={[styles.tabText, currentType === tab.type && styles.tabTextActive]}>
-              {tab.label}
+              {t(tab.labelKey)}
             </Text>
           </Pressable>
         ))}
@@ -122,7 +126,7 @@ export default function LeaderboardScreen() {
                 <Text style={styles.podiumEmoji}>🥈</Text>
               </View>
               <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[1].isCurrentUser ? 'You' : entries[1].name}
+                {entries[1].isCurrentUser ? t('community.you') : entries[1].name}
               </Text>
               <Text style={styles.podiumValue}>
                 {currentType === 'streaks' ? `${entries[1].streak}d` : `${entries[1].xp}`}
@@ -135,7 +139,7 @@ export default function LeaderboardScreen() {
                 <Text style={styles.podiumEmoji}>🥇</Text>
               </View>
               <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[0].isCurrentUser ? 'You' : entries[0].name}
+                {entries[0].isCurrentUser ? t('community.you') : entries[0].name}
               </Text>
               <Text style={styles.podiumValue}>
                 {currentType === 'streaks' ? `${entries[0].streak}d` : `${entries[0].xp}`}
@@ -148,7 +152,7 @@ export default function LeaderboardScreen() {
                 <Text style={styles.podiumEmoji}>🥉</Text>
               </View>
               <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[2].isCurrentUser ? 'You' : entries[2].name}
+                {entries[2].isCurrentUser ? t('community.you') : entries[2].name}
               </Text>
               <Text style={styles.podiumValue}>
                 {currentType === 'streaks' ? `${entries[2].streak}d` : `${entries[2].xp}`}

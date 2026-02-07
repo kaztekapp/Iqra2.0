@@ -12,6 +12,7 @@ export interface Surah {
   nameEnglish: string;
   nameTransliteration: string;
   meaning: string;
+  meaningFr?: string;
   revelationType: 'Meccan' | 'Medinan';
   ayahCount: number;
   wordCount: number;
@@ -91,9 +92,11 @@ export interface TajweedRule {
   id: TajweedRuleId;
   nameArabic: string;
   nameEnglish: string;
+  nameFrench?: string;
   category: TajweedCategory;
   colorCode: string;
   description: string;
+  descriptionFr?: string;
   descriptionArabic?: string;
   letters?: string[]; // Letters involved in the rule
   duration?: number; // Duration in harakat (for madd)
@@ -110,6 +113,7 @@ export interface TajweedExample {
   ayahNumber: number;
   highlightText?: string; // The specific letters demonstrating the rule
   explanation?: string;
+  explanationFr?: string;
 }
 
 export interface TajweedOccurrence {
@@ -314,8 +318,10 @@ export type QuizFormat =
 export interface QuizCategoryInfo {
   id: QuizCategory;
   nameEnglish: string;
+  nameFrench?: string;
   nameArabic: string;
   description: string;
+  descriptionFr?: string;
   icon: string;
   color: string;
   questionCount: number;
@@ -327,10 +333,13 @@ export interface QuizQuestion {
   format: QuizFormat;
   difficulty: 'easy' | 'medium' | 'hard';
   question: string;
+  questionFr?: string;
   questionArabic?: string;
   options?: string[];
+  optionsFr?: string[];
   correctAnswer: string | string[] | number;
   explanation?: string;
+  explanationFr?: string;
   relatedSurah?: string;
   relatedAyah?: number;
 }

@@ -17,8 +17,10 @@ export type LeaderboardType = 'weekly' | 'streaks' | 'allTime';
 export interface Challenge {
   id: string;
   title: string;
+  titleFr?: string;
   titleArabic: string;
   description: string;
+  descriptionFr?: string;
   descriptionArabic: string;
   type: 'daily' | 'weekly' | 'weekend';
   targetType: 'words' | 'lessons' | 'xp' | 'minutes' | 'exercises';

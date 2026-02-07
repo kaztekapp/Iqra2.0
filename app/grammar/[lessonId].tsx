@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState, memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getExercisesForGrammarLesson } from '../../src/data/arabic/exercises';
@@ -17,6 +19,8 @@ import { lessonContent, getGrammarId } from '../../src/data/arabic/grammar/lesso
 // '../../src/data/arabic/grammar/lessonContent'
 
 export default function GrammarLessonScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
   const { startLesson, completeLesson, addXp, updateStreak } = useProgressStore();
   const { speak } = useArabicSpeech();
@@ -38,15 +42,20 @@ export default function GrammarLessonScreen() {
   // Use data lesson if available, converting its content structure
   const lesson = dataLesson ? {
     title: dataLesson.title,
+    titleFr: (dataLesson as any).titleFr,
     titleArabic: dataLesson.titleArabic,
+    description: (dataLesson as any).description,
+    descriptionFr: (dataLesson as any).descriptionFr,
     contentItems: dataLesson.content, // Keep original GrammarContent for new rendering
     sections: dataLesson.content.reduce((acc: any[], item: GrammarContent, index: number) => {
       if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
         acc.push({
           title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
           content: item.content,
+          contentFr: (item as any).contentFr,
           arabicDescription: item.arabicDescription,
           arabicTranslation: item.arabicTranslation,
+          arabicTranslationFr: (item as any).arabicTranslationFr,
           examples: [],
           itemType: item.type,
         });
@@ -54,14 +63,17 @@ export default function GrammarLessonScreen() {
         acc.push({
           title: '',
           content: item.content,
+          contentFr: (item as any).contentFr,
           arabicDescription: item.arabicDescription,
           arabicTranslation: item.arabicTranslation,
+          arabicTranslationFr: (item as any).arabicTranslationFr,
           examples: [],
           itemType: 'description',
         });
       } else if (item.type === 'letters_grid') {
         acc.push({
           title: item.content,
+          titleFr: (item as any).contentFr,
           content: '',
           examples: [],
           letters: item.letters,
@@ -71,17 +83,27 @@ export default function GrammarLessonScreen() {
       } else if (item.type === 'examples_grid') {
         acc.push({
           title: item.content,
+          titleFr: (item as any).contentFr,
           content: '',
-          examples: item.examples || [],
+          examples: (item.examples || []).map((ex: any) => ({
+            ...ex,
+            french: ex.french,
+          })),
           itemType: 'examples_grid',
         });
       } else if (item.type === 'comparison_grid') {
         acc.push({
           title: item.content,
+          titleFr: (item as any).contentFr,
           content: '',
-          comparisons: item.comparisons || [],
+          comparisons: (item.comparisons || []).map((comp: any) => ({
+            left: { ...comp.left, labelFr: comp.left?.labelFr },
+            right: { ...comp.right, labelFr: comp.right?.labelFr },
+          })),
           leftLabel: item.leftLabel,
+          leftLabelFr: (item as any).leftLabelFr,
           rightLabel: item.rightLabel,
+          rightLabelFr: (item as any).rightLabelFr,
           itemType: 'comparison_grid',
         });
       } else if (item.type === 'example') {
@@ -92,15 +114,18 @@ export default function GrammarLessonScreen() {
             arabic: item.arabic || '',
             transliteration: item.transliteration || '',
             english: item.translation || '',
+            french: (item as any).translationFr || '',
           });
         } else {
           acc.push({
             title: item.content || 'Examples',
+            titleFr: (item as any).contentFr,
             content: '',
             examples: [{
               arabic: item.arabic || '',
               transliteration: item.transliteration || '',
               english: item.translation || '',
+              french: (item as any).translationFr || '',
             }],
             itemType: 'example',
           });
@@ -114,6 +139,7 @@ export default function GrammarLessonScreen() {
         }));
         acc.push({
           title: item.content || 'Reference',
+          titleFr: (item as any).contentFr,
           content: `Columns: ${item.tableData.headers.join(' | ')}`,
           examples,
           itemType: 'table',
@@ -148,9 +174,9 @@ export default function GrammarLessonScreen() {
           </Pressable>
           <View style={styles.comingSoonContent}>
             <Ionicons name="construct" size={64} color="#D4AF37" />
-            <Text style={styles.comingSoonTitle}>Coming Soon</Text>
+            <Text style={styles.comingSoonTitle}>{t('common.comingSoon')}</Text>
             <Text style={styles.comingSoonText}>
-              This lesson is currently being developed. Check back soon!
+              {t('grammar.comingSoonLesson')}
             </Text>
           </View>
         </View>
@@ -233,16 +259,16 @@ export default function GrammarLessonScreen() {
               <Ionicons name="close" size={24} color="#ffffff" />
             </Pressable>
             <View style={styles.headerText}>
-              <Text style={styles.title}>Practice</Text>
+              <Text style={styles.title}>{t('common.practice')}</Text>
             </View>
           </View>
           <View style={styles.noExercises}>
             <Ionicons name="document-text-outline" size={48} color="#64748b" />
             <Text style={styles.noExercisesText}>
-              No practice exercises available yet for this lesson.
+              {t('grammar.noPractice')}
             </Text>
             <Pressable style={styles.backToLessonBtn} onPress={() => setShowExercises(false)}>
-              <Text style={styles.backToLessonText}>Back to Lesson</Text>
+              <Text style={styles.backToLessonText}>{t('grammar.backToLesson')}</Text>
             </Pressable>
           </View>
         </SafeAreaView>
@@ -259,7 +285,7 @@ export default function GrammarLessonScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>
-              {practiceType === 'writing' ? 'Writing Practice' : 'Quiz Practice'}
+              {practiceType === 'writing' ? t('grammar.writingPractice') : t('grammar.quizPractice')}
             </Text>
             <Text style={styles.titleArabic}>{lesson.titleArabic}</Text>
           </View>
@@ -269,7 +295,9 @@ export default function GrammarLessonScreen() {
           {/* Progress */}
           <View style={styles.exerciseProgress}>
             <Text style={styles.exerciseProgressText}>
-              {practiceType === 'writing' ? 'Exercise' : 'Question'} {currentExerciseIndex + 1} of {activeExercises.length}
+              {practiceType === 'writing'
+                ? t('grammar.exerciseOf', { current: currentExerciseIndex + 1, total: activeExercises.length })
+                : t('grammar.questionOf', { current: currentExerciseIndex + 1, total: activeExercises.length })}
             </Text>
             <View style={styles.exerciseProgressBar}>
               <View
@@ -283,7 +311,7 @@ export default function GrammarLessonScreen() {
 
           {/* Question */}
           <View style={styles.questionCard}>
-            <Text style={styles.questionText}>{currentExercise.question}</Text>
+            <Text style={styles.questionText}>{lc(currentExercise.question, (currentExercise as any).questionFr)}</Text>
             {currentExercise.questionArabic && (
               <Pressable
                 style={styles.questionArabicRow}
@@ -320,7 +348,7 @@ export default function GrammarLessonScreen() {
                       showCorrect && styles.optionTextCorrect,
                       showWrong && styles.optionTextWrong,
                     ]}>
-                      {option.textArabic || option.text}
+                      {option.textArabic || lc(option.text, (option as any).textFr)}
                     </Text>
                     {showCorrect && (
                       <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
@@ -359,7 +387,7 @@ export default function GrammarLessonScreen() {
                       showCorrect && styles.optionTextCorrect,
                       showWrong && styles.optionTextWrong,
                     ]}>
-                      {option.textArabic || option.text}
+                      {option.textArabic || lc(option.text, (option as any).textFr)}
                     </Text>
                     {showCorrect && (
                       <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
@@ -379,7 +407,7 @@ export default function GrammarLessonScreen() {
               {currentExercise.hint && !showResult && (
                 <View style={styles.hintBox}>
                   <Ionicons name="bulb-outline" size={16} color="#D4AF37" />
-                  <Text style={styles.hintText}>{currentExercise.hint}</Text>
+                  <Text style={styles.hintText}>{lc(currentExercise.hint, (currentExercise as any).hintFr)}</Text>
                 </View>
               )}
 
@@ -410,13 +438,13 @@ export default function GrammarLessonScreen() {
                       styles.writingResultLabel,
                       isWritingCorrect ? styles.writingResultLabelCorrect : styles.writingResultLabelWrong,
                     ]}>
-                      {isWritingCorrect ? "Correct!" : "Not quite right"}
+                      {isWritingCorrect ? t('grammar.correctAnswer') : t('grammar.incorrectAnswer')}
                     </Text>
                     {!isWritingCorrect && (
                       <Text style={styles.correctAnswerText}>
-                        Correct: {Array.isArray(currentExercise.correctAnswer)
+                        {t('grammar.correctIs', { answer: Array.isArray(currentExercise.correctAnswer)
                           ? currentExercise.correctAnswer[0]
-                          : currentExercise.correctAnswer}
+                          : currentExercise.correctAnswer })}
                       </Text>
                     )}
                   </View>
@@ -431,7 +459,7 @@ export default function GrammarLessonScreen() {
               {currentExercise.hint && !showResult && (
                 <View style={styles.hintBox}>
                   <Ionicons name="bulb-outline" size={16} color="#D4AF37" />
-                  <Text style={styles.hintText}>{currentExercise.hint}</Text>
+                  <Text style={styles.hintText}>{lc(currentExercise.hint, (currentExercise as any).hintFr)}</Text>
                 </View>
               )}
 
@@ -462,13 +490,13 @@ export default function GrammarLessonScreen() {
                       styles.writingResultLabel,
                       isWritingCorrect ? styles.writingResultLabelCorrect : styles.writingResultLabelWrong,
                     ]}>
-                      {isWritingCorrect ? "Correct!" : "Not quite right"}
+                      {isWritingCorrect ? t('grammar.correctAnswer') : t('grammar.incorrectAnswer')}
                     </Text>
                     {!isWritingCorrect && (
                       <Text style={styles.correctAnswerText}>
-                        Correct answer: {Array.isArray(currentExercise.correctAnswer)
+                        {t('grammar.correctAnswerIs', { answer: Array.isArray(currentExercise.correctAnswer)
                           ? currentExercise.correctAnswer[0]
-                          : currentExercise.correctAnswer}
+                          : currentExercise.correctAnswer })}
                       </Text>
                     )}
                   </View>
@@ -481,7 +509,7 @@ export default function GrammarLessonScreen() {
           {showResult && currentExercise.explanation && (
             <View style={styles.explanationBox}>
               <Ionicons name="bulb" size={20} color="#D4AF37" />
-              <Text style={styles.explanationText}>{currentExercise.explanation}</Text>
+              <Text style={styles.explanationText}>{lc(currentExercise.explanation, (currentExercise as any).explanationFr)}</Text>
             </View>
           )}
 
@@ -489,7 +517,7 @@ export default function GrammarLessonScreen() {
           {showResult && (
             <Pressable style={styles.nextBtn} onPress={handleNextExercise}>
               <Text style={styles.nextBtnText}>
-                {currentExerciseIndex < activeExercises.length - 1 ? 'Next Question' : 'Finish Practice'}
+                {currentExerciseIndex < activeExercises.length - 1 ? t('grammar.nextQuestion') : t('grammar.finishPractice')}
               </Text>
               <Ionicons name="arrow-forward" size={20} color="#ffffff" />
             </Pressable>
@@ -519,7 +547,7 @@ export default function GrammarLessonScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>{lesson.title}</Text>
+            <Text style={styles.title}>{lc(lesson.title, lesson.titleFr)}</Text>
             <Text style={styles.titleArabic}>{lesson.titleArabic}</Text>
           </View>
         </View>
@@ -528,13 +556,13 @@ export default function GrammarLessonScreen() {
         {lesson.sections.map((section: any, index: number) => (
           <View key={index} style={styles.section}>
             {/* Section Title */}
-            {section.title ? <Text style={styles.sectionTitle}>{section.title}</Text> : null}
+            {section.title ? <Text style={styles.sectionTitle}>{lc(section.title, section.titleFr)}</Text> : null}
 
             {/* Description with Arabic - highlighted */}
             {section.itemType === 'description' ? (
               <View style={styles.descriptionCard}>
                 <View style={styles.descriptionHighlight} />
-                <HighlightedText text={section.content} style={styles.descriptionText} />
+                <HighlightedText text={lc(section.content, section.contentFr)} style={styles.descriptionText} />
                 {section.arabicDescription && (
                   <View>
                     <Pressable
@@ -547,7 +575,7 @@ export default function GrammarLessonScreen() {
                       </View>
                     </Pressable>
                     {section.arabicTranslation && (
-                      <Text style={styles.arabicTranslationText}>{section.arabicTranslation}</Text>
+                      <Text style={styles.arabicTranslationText}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</Text>
                     )}
                   </View>
                 )}
@@ -558,11 +586,11 @@ export default function GrammarLessonScreen() {
                 {/* Header labels */}
                 <View style={styles.comparisonHeader}>
                   <View style={[styles.comparisonLabelBox, styles.comparisonLabelLeft]}>
-                    <Text style={styles.comparisonLabelText}>{section.leftLabel || 'Indefinite'}</Text>
+                    <Text style={styles.comparisonLabelText}>{lc(section.leftLabel || 'Indefinite', section.leftLabelFr)}</Text>
                   </View>
                   <Ionicons name="arrow-forward" size={20} color="#64748b" />
                   <View style={[styles.comparisonLabelBox, styles.comparisonLabelRight]}>
-                    <Text style={styles.comparisonLabelText}>{section.rightLabel || 'Definite'}</Text>
+                    <Text style={styles.comparisonLabelText}>{lc(section.rightLabel || 'Definite', section.rightLabelFr)}</Text>
                   </View>
                 </View>
                 {/* Comparison rows */}
@@ -577,7 +605,7 @@ export default function GrammarLessonScreen() {
                       ) : (
                         <Text style={styles.comparisonArabic}>{comp.left.arabic}</Text>
                       )}
-                      <Text style={styles.comparisonEnglish}>{comp.left.label}</Text>
+                      <Text style={styles.comparisonEnglish}>{lc(comp.left.label, comp.left.labelFr)}</Text>
                     </Pressable>
                     <Ionicons name="arrow-forward" size={16} color="#10b981" />
                     <Pressable
@@ -589,7 +617,7 @@ export default function GrammarLessonScreen() {
                       ) : (
                         <Text style={styles.comparisonArabic}>{comp.right.arabic}</Text>
                       )}
-                      <Text style={styles.comparisonEnglish}>{comp.right.label}</Text>
+                      <Text style={styles.comparisonEnglish}>{lc(comp.right.label, comp.right.labelFr)}</Text>
                     </Pressable>
                   </View>
                 ))}
@@ -639,7 +667,7 @@ export default function GrammarLessonScreen() {
                     ) : (
                       <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
                     )}
-                    <HighlightedText text={example.english} style={styles.exampleCardEnglish} />
+                    <HighlightedText text={lc(example.english, example.french)} style={styles.exampleCardEnglish} />
                     <View style={styles.exampleCardAudioIcon}>
                       <Ionicons name="volume-medium" size={16} color="#10b981" />
                     </View>
@@ -668,7 +696,7 @@ export default function GrammarLessonScreen() {
                         />
                       </View>
                       <HighlightedText
-                        text={section.content}
+                        text={lc(section.content, section.contentFr)}
                         style={styles.highlightedCardText}
                         highlightColor={section.itemType === 'rule' ? '#10b981' : '#f59e0b'}
                       />
@@ -697,16 +725,16 @@ export default function GrammarLessonScreen() {
                             <Text style={[
                               styles.arabicTranslationText,
                               { color: section.itemType === 'rule' ? '#10b98199' : '#f59e0b99' }
-                            ]}>{section.arabicTranslation}</Text>
+                            ]}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</Text>
                           )}
                         </View>
                       )}
                     </View>
                   </View>
                 ) : section.itemType === 'text' && section.content ? (
-                  <Text style={styles.textSectionTitle}>{section.content}</Text>
+                  <Text style={styles.textSectionTitle}>{lc(section.content, section.contentFr)}</Text>
                 ) : section.content ? (
-                  <Text style={styles.sectionContent}>{section.content}</Text>
+                  <Text style={styles.sectionContent}>{lc(section.content, section.contentFr)}</Text>
                 ) : null}
 
                 {/* Arabic description for other types (not rule/note) */}
@@ -740,7 +768,7 @@ export default function GrammarLessonScreen() {
                             <Text style={styles.exampleArabic}>{example.arabic}</Text>
                           )}
                         </View>
-                        <Text style={styles.exampleEnglish}>{example.english}</Text>
+                        <Text style={styles.exampleEnglish}>{lc(example.english, example.french)}</Text>
                         <View style={styles.audioBtn}>
                           <Ionicons name="volume-medium" size={18} color="#10b981" />
                         </View>
@@ -758,10 +786,10 @@ export default function GrammarLessonScreen() {
           <View style={styles.practiceSection}>
             <View style={styles.practiceSectionHeader}>
               <Ionicons name="fitness" size={24} color="#22c55e" />
-              <Text style={styles.practiceSectionTitle}>Practice Exercises</Text>
+              <Text style={styles.practiceSectionTitle}>{t('grammar.practiceExercises')}</Text>
             </View>
             <Text style={styles.practiceSectionDesc}>
-              Test your understanding with practice questions
+              {t('grammar.practiceDesc')}
             </Text>
 
             {/* Regular Practice Button */}
@@ -769,7 +797,7 @@ export default function GrammarLessonScreen() {
               <Pressable style={styles.practiceButton} onPress={() => handleStartPractice('regular')}>
                 <Ionicons name="play" size={20} color="#ffffff" />
                 <Text style={styles.practiceButtonText}>
-                  Quiz Practice ({regularExercises.length} questions)
+                  {t('grammar.quizPracticeCount', { count: regularExercises.length })}
                 </Text>
               </Pressable>
             )}
@@ -779,7 +807,7 @@ export default function GrammarLessonScreen() {
               <Pressable style={styles.writingPracticeButton} onPress={() => handleStartPractice('writing')}>
                 <Ionicons name="create" size={20} color="#ffffff" />
                 <Text style={styles.practiceButtonText}>
-                  Writing Practice ({writingExercises.length} exercises)
+                  {t('grammar.writingPracticeCount', { count: writingExercises.length })}
                 </Text>
               </Pressable>
             )}
@@ -790,7 +818,7 @@ export default function GrammarLessonScreen() {
         <View style={[styles.section, { marginBottom: 100 }]}>
           <Pressable style={styles.completeButton} onPress={handleComplete}>
             <Ionicons name="checkmark-circle" size={24} color="#ffffff" />
-            <Text style={styles.completeButtonText}>Mark as Complete (+50 XP)</Text>
+            <Text style={styles.completeButtonText}>{t('grammar.markComplete')}</Text>
           </Pressable>
         </View>
       </ScrollView>

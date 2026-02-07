@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -21,6 +23,8 @@ import { VocabularyWord } from '../../src/types/arabic';
 type PracticeState = 'ready' | 'listening' | 'recording' | 'processing' | 'result';
 
 export default function SpeakingPracticeScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId?: string }>();
   const { showVowels, addXp, updateStreak } = useProgressStore();
 
@@ -162,7 +166,7 @@ export default function SpeakingPracticeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading practice words...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -177,7 +181,7 @@ export default function SpeakingPracticeScreen() {
             <Ionicons name="close" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>Speaking Practice</Text>
+            <Text style={styles.headerTitle}>{t('vocabulary.speakingPractice')}</Text>
           </View>
           <View style={{ width: 40 }} />
         </View>
@@ -186,17 +190,17 @@ export default function SpeakingPracticeScreen() {
           <View style={styles.fallbackIcon}>
             <Ionicons name="build" size={64} color="#f59e0b" />
           </View>
-          <Text style={styles.fallbackTitle}>Development Build Required</Text>
+          <Text style={styles.fallbackTitle}>{t('vocabulary.devBuildRequired')}</Text>
           <Text style={styles.fallbackTitleArabic}>يتطلب بناء التطوير</Text>
           <Text style={styles.fallbackDesc}>
-            Speech recognition requires a development build to work. Run the following commands:
+            {t('vocabulary.devBuildDesc')}
           </Text>
           <View style={styles.codeBlock}>
             <Text style={styles.codeText}>npx expo prebuild</Text>
             <Text style={styles.codeText}>npx expo run:ios</Text>
           </View>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -215,34 +219,34 @@ export default function SpeakingPracticeScreen() {
           <View style={styles.completeIcon}>
             <Ionicons name="mic" size={64} color="#10b981" />
           </View>
-          <Text style={styles.completeTitle}>Practice Complete!</Text>
+          <Text style={styles.completeTitle}>{t('vocabulary.practiceComplete')}</Text>
           <Text style={styles.completeTitleArabic}>اكتمل التدريب</Text>
 
           <View style={styles.statsCard}>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{stats.correct}</Text>
-              <Text style={styles.statLabel}>Correct</Text>
+              <Text style={styles.statLabel}>{t('common.correct')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#f59e0b' }]}>
                 {stats.incorrect}
               </Text>
-              <Text style={styles.statLabel}>Need Practice</Text>
+              <Text style={styles.statLabel}>{t('vocabulary.needPractice')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#6366f1' }]}>
                 {accuracy}%
               </Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
+              <Text style={styles.statLabel}>{t('common.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{stats.totalXp} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.totalXp })}</Text>
 
           <Pressable style={styles.doneButton} onPress={() => router.back()}>
-            <Text style={styles.doneButtonText}>Done</Text>
+            <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -259,7 +263,7 @@ export default function SpeakingPracticeScreen() {
           <Ionicons name="close" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Speaking Practice</Text>
+          <Text style={styles.headerTitle}>{t('vocabulary.speakingPractice')}</Text>
           <Text style={styles.headerProgress}>
             {currentIndex + 1} / {words.length}
           </Text>
@@ -288,7 +292,7 @@ export default function SpeakingPracticeScreen() {
             {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
           </Text>
           <Text style={styles.wordTranslit}>{currentWord.transliteration}</Text>
-          <Text style={styles.wordEnglish}>{currentWord.english}</Text>
+          <Text style={styles.wordEnglish}>{lc(currentWord.english, currentWord.french)}</Text>
         </View>
 
         {/* Listen Button */}
@@ -303,7 +307,7 @@ export default function SpeakingPracticeScreen() {
               color={isSpeaking ? '#ffffff' : '#D4AF37'}
             />
             <Text style={[styles.listenButtonText, isSpeaking && { color: '#ffffff' }]}>
-              {isSpeaking ? 'Playing...' : hasListened ? 'Listen Again' : 'Listen First'}
+              {isSpeaking ? t('vocabulary.playing') : hasListened ? t('vocabulary.listenAgain') : t('vocabulary.listenFirst')}
             </Text>
           </Pressable>
         </View>
@@ -313,12 +317,12 @@ export default function SpeakingPracticeScreen() {
           <View style={styles.recordSection}>
             <Text style={styles.recordInstruction}>
               {!hasListened
-                ? 'Tap "Listen First" to hear the pronunciation'
+                ? t('vocabulary.tapListenFirst')
                 : practiceState === 'recording' || isListening
-                ? 'Speaking... Tap to stop'
+                ? t('vocabulary.speakingTapToStop')
                 : practiceState === 'processing'
-                ? 'Processing...'
-                : 'Tap the microphone and say the word'}
+                ? t('vocabulary.processing')
+                : t('vocabulary.tapMicAndSay')}
             </Text>
 
             <Animated.View style={[styles.recordButtonWrapper, recordingAnimatedStyle]}>
@@ -377,12 +381,12 @@ export default function SpeakingPracticeScreen() {
                     result.isCorrect ? styles.resultTitleCorrect : styles.resultTitleIncorrect,
                   ]}
                 >
-                  {result.isCorrect ? 'Correct!' : 'Try Again'}
+                  {result.isCorrect ? `${t('common.correct')}!` : t('common.tryAgain')}
                 </Text>
               </View>
 
               <View style={styles.similarityContainer}>
-                <Text style={styles.similarityLabel}>Match Score</Text>
+                <Text style={styles.similarityLabel}>{t('vocabulary.matchScore')}</Text>
                 <Text
                   style={[
                     styles.similarityValue,
@@ -397,7 +401,7 @@ export default function SpeakingPracticeScreen() {
 
               {result.transcript && (
                 <View style={styles.transcriptContainer}>
-                  <Text style={styles.transcriptLabel}>You said:</Text>
+                  <Text style={styles.transcriptLabel}>{t('vocabulary.youSaid')}</Text>
                   <Text style={styles.transcriptValue}>"{result.transcript}"</Text>
                 </View>
               )}
@@ -414,7 +418,7 @@ export default function SpeakingPracticeScreen() {
               {!result.isCorrect && (
                 <Pressable style={styles.tryAgainButton} onPress={handleTryAgain}>
                   <Ionicons name="refresh" size={20} color="#f59e0b" />
-                  <Text style={styles.tryAgainText}>Try Again</Text>
+                  <Text style={styles.tryAgainText}>{t('common.tryAgain')}</Text>
                 </Pressable>
               )}
 
@@ -423,7 +427,7 @@ export default function SpeakingPracticeScreen() {
                 onPress={handleNextWord}
               >
                 <Text style={styles.nextButtonText}>
-                  {currentIndex < words.length - 1 ? 'Next Word' : 'Finish'}
+                  {currentIndex < words.length - 1 ? t('vocabulary.nextWord') : t('vocabulary.finish')}
                 </Text>
                 <Ionicons name="arrow-forward" size={20} color="#ffffff" />
               </Pressable>
@@ -434,12 +438,12 @@ export default function SpeakingPracticeScreen() {
         {/* Example Sentence */}
         {currentWord.exampleSentence && (
           <View style={styles.exampleCard}>
-            <Text style={styles.exampleLabel}>Example:</Text>
+            <Text style={styles.exampleLabel}>{t('vocabulary.exampleSentence')}:</Text>
             <Text style={styles.exampleArabic}>
               {currentWord.exampleSentence.arabic}
             </Text>
             <Text style={styles.exampleEnglish}>
-              {currentWord.exampleSentence.english}
+              {lc(currentWord.exampleSentence.english, currentWord.exampleSentence.french)}
             </Text>
           </View>
         )}

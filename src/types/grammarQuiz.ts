@@ -9,11 +9,14 @@ export interface GrammarQuizQuestion {
   lessonId: string;
   type: GrammarQuestionType;
   question: string;
+  questionFr?: string;
   questionArabic?: string;
   options?: GrammarQuizOption[];
   correctAnswer: string | string[];
   hint?: string;
+  hintFr?: string;
   explanation: string;
+  explanationFr?: string;
   xpReward: number;
   level: 'beginner' | 'intermediate' | 'advanced';
   category: string;
@@ -22,6 +25,7 @@ export interface GrammarQuizQuestion {
 export interface GrammarQuizOption {
   id: string;
   text: string;
+  textFr?: string;
   isCorrect: boolean;
 }
 

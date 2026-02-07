@@ -6,11 +6,14 @@ import { QuranStory, StoryContentBlock, QuranReference } from '../../../../types
 export const dhulQarnaynStory: QuranStory = {
   id: 'dhulqarnayn',
   titleEnglish: 'Dhul-Qarnayn - The Two-Horned King',
+    titleFrench: 'Dhoul-Qarnayn - Le Roi aux Deux Cornes',
   titleArabic: 'ذو القرنين',
   order: 3,
   category: 'individuals',
   description: 'A righteous king who traveled the earth and built a barrier against Gog and Magog',
+    descriptionFr: 'Un roi juste qui parcourut la terre et construisit une barriere contre Gog et Magog',
   summary: "Dhul-Qarnayn was a righteous and powerful king whom Allah established on earth and gave means to accomplish great things. He traveled to the far west and far east, dealing justly with all peoples. His greatest feat was building an impenetrable barrier of iron and copper to protect a vulnerable people from the corruption of Gog and Magog. Despite his immense power, he attributed everything to Allah and looked forward to the Day of Judgment.",
+  summaryFr: "Dhoul-Qarnayn etait un roi juste et puissant qu'Allah a etabli sur terre et auquel Il a donne les moyens d'accomplir de grandes choses. Il voyagea a l'extreme ouest et a l'extreme est, traitant tous les peuples avec justice. Son plus grand exploit fut la construction d'une barriere impenetrable de fer et de cuivre pour proteger un peuple vulnerable de la corruption de Gog et Magog. Malgre son immense pouvoir, il attribuait tout a Allah et se tournait vers le Jour du Jugement.",
   lessons: [
     'Power is a trust from Allah to be used justly',
     'True strength lies in serving others',
@@ -18,6 +21,14 @@ export const dhulQarnaynStory: QuranStory = {
     'Worldly achievements are temporary; only deeds for Allah last',
     'Gratitude to Allah for every blessing is essential',
     'The Day of Judgment will level all earthly distinctions',
+  ],
+  lessonsFr: [
+    'Le pouvoir est un depot d\'Allah a utiliser avec justice',
+    'La vraie force reside dans le service aux autres',
+    'La justice s\'applique egalement a tous les peuples',
+    'Les accomplissements terrestres sont temporaires ; seules les actions pour Allah perdurent',
+    'La gratitude envers Allah pour chaque bienfait est essentielle',
+    'Le Jour du Jugement nivellera toutes les distinctions terrestres',
   ],
   estimatedReadTime: 12,
   quranMentions: 1,
@@ -33,12 +44,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 1,
       content: "Dhul-Qarnayn, 'The Two-Horned One,' was a righteous king of immense power and reach. His unusual title may refer to his reaching the two 'horns' (extremes) of the earth - east and west - or to a crown with two horns, or to his rule over two generations. Allah established him firmly on earth and gave him the means to accomplish whatever he set out to do.",
+      contentFr: "Dhoul-Qarnayn, 'Celui aux Deux Cornes', etait un roi juste d'un pouvoir et d'une portee immenses. Son titre inhabituel peut faire reference au fait qu'il ait atteint les deux 'cornes' (extremites) de la terre - est et ouest - ou a une couronne a deux cornes, ou a son regne sur deux generations. Allah l'a fermement etabli sur terre et lui a donne les moyens d'accomplir tout ce qu'il entreprenait.",
     },
     {
       id: 'dhulqarnayn-2',
       type: 'quran_source',
       order: 2,
       content: "Allah describes the power He gave Dhul-Qarnayn.",
+      contentFr: "Allah decrit le pouvoir qu'Il a donne a Dhoul-Qarnayn.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -48,6 +61,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 85,
         arabicText: 'وَيَسْأَلُونَكَ عَن ذِي الْقَرْنَيْنِ ۖ قُلْ سَأَتْلُو عَلَيْكُم مِّنْهُ ذِكْرًا ۝ إِنَّا مَكَّنَّا لَهُ فِي الْأَرْضِ وَآتَيْنَاهُ مِن كُلِّ شَيْءٍ سَبَبًا ۝ فَأَتْبَعَ سَبَبًا',
         translation: 'And they ask you about Dhul-Qarnayn. Say, "I will recite to you about him a report." Indeed We established him upon the earth, and We gave him to everything a way. So he followed a way.',
+        translationFr: 'Et ils t\'interrogent sur Dhoul-Qarnayn. Dis : "Je vais vous en reciter une mention." Nous l\'avons etabli fermement sur terre et Nous lui avons donne acces a toute chose. Puis il suivit un chemin.',
       } as QuranReference,
     },
     {
@@ -55,12 +69,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 3,
       content: "With the resources and knowledge Allah provided, Dhul-Qarnayn embarked on great expeditions. His first journey took him westward until he reached the setting place of the sun - the farthest western lands then known. There he found it appearing to set in a dark, muddy spring, and near it lived a people.",
+      contentFr: "Avec les ressources et les connaissances qu'Allah lui avait fournies, Dhoul-Qarnayn entreprit de grandes expeditions. Son premier voyage le mena vers l'ouest jusqu'a l'endroit ou le soleil se couche - les terres les plus occidentales connues a l'epoque. La, il vit le soleil semblant se coucher dans une source sombre et boueuse, et pres d'elle vivait un peuple.",
     },
     {
       id: 'dhulqarnayn-4',
       type: 'quran_source',
       order: 4,
       content: "He reached the western extreme and was given authority over its people.",
+      contentFr: "Il atteignit l'extreme ouest et recut l'autorite sur ses habitants.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -70,6 +86,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 88,
         arabicText: 'حَتَّىٰ إِذَا بَلَغَ مَغْرِبَ الشَّمْسِ وَجَدَهَا تَغْرُبُ فِي عَيْنٍ حَمِئَةٍ وَوَجَدَ عِندَهَا قَوْمًا ۗ قُلْنَا يَا ذَا الْقَرْنَيْنِ إِمَّا أَن تُعَذِّبَ وَإِمَّا أَن تَتَّخِذَ فِيهِمْ حُسْنًا ۝ قَالَ أَمَّا مَن ظَلَمَ فَسَوْفَ نُعَذِّبُهُ ثُمَّ يُرَدُّ إِلَىٰ رَبِّهِ فَيُعَذِّبُهُ عَذَابًا نُّكْرًا ۝ وَأَمَّا مَنْ آمَنَ وَعَمِلَ صَالِحًا فَلَهُ جَزَاءً الْحُسْنَىٰ ۖ وَسَنَقُولُ لَهُ مِنْ أَمْرِنَا يُسْرًا',
         translation: 'Until, when he reached the setting of the sun, he found it setting in a dark, muddy spring, and he found near it a people. We said, "O Dhul-Qarnayn, either you punish [them] or else adopt among them [a way of] goodness." He said, "As for one who wrongs, we will punish him. Then he will be returned to his Lord, and He will punish him with a terrible punishment. But as for one who believes and does righteousness, he will have a reward of the best, and we will speak to him from our command with ease."',
+        translationFr: 'Jusqu\'a ce que, lorsqu\'il eut atteint le couchant du soleil, il le trouva se couchant dans une source boueuse. Et il trouva pres d\'elle un peuple. Nous dimes : "O Dhoul-Qarnayn, soit tu les chaties, soit tu adoptes envers eux une conduite bienveillante." Il dit : "Quant a celui qui est injuste, nous le chatierons. Puis il sera ramene vers son Seigneur, qui le punira d\'un chatiment terrible. Quant a celui qui croit et fait le bien, il recevra la plus belle recompense, et nous lui donnerons des ordres faciles a executer."',
       } as QuranReference,
     },
     {
@@ -77,12 +94,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 5,
       content: "Given absolute authority, Dhul-Qarnayn chose the path of justice. He would punish wrongdoers according to their crimes, knowing they would also face Allah's punishment in the Hereafter. But those who believed and did good would be rewarded and treated gently. His kingdom operated on divine principles, not arbitrary power.",
+      contentFr: "Dote d'une autorite absolue, Dhoul-Qarnayn choisit le chemin de la justice. Il punirait les malfaiteurs selon leurs crimes, sachant qu'ils feraient aussi face au chatiment d'Allah dans l'Au-dela. Mais ceux qui croyaient et faisaient le bien seraient recompenses et traites avec douceur. Son royaume fonctionnait selon des principes divins, et non un pouvoir arbitraire.",
     },
     {
       id: 'dhulqarnayn-6',
       type: 'quran_source',
       order: 6,
       content: "Then he journeyed eastward to the rising of the sun.",
+      contentFr: "Puis il voyagea vers l'est, vers le lever du soleil.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -92,6 +111,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 91,
         arabicText: 'ثُمَّ أَتْبَعَ سَبَبًا ۝ حَتَّىٰ إِذَا بَلَغَ مَطْلِعَ الشَّمْسِ وَجَدَهَا تَطْلُعُ عَلَىٰ قَوْمٍ لَّمْ نَجْعَل لَّهُم مِّن دُونِهَا سِتْرًا ۝ كَذَٰلِكَ وَقَدْ أَحَطْنَا بِمَا لَدَيْهِ خُبْرًا',
         translation: 'Then he followed a way. Until, when he came to the rising of the sun, he found it rising on a people for whom We had not made against it any shield. Thus. And We had encompassed [all] that he had in knowledge.',
+        translationFr: 'Puis il suivit un chemin. Jusqu\'a ce que, lorsqu\'il eut atteint le lever du soleil, il le trouva se levant sur un peuple pour lequel Nous n\'avions fait aucun voile contre lui. Ainsi. Et Nous avions embrasse de Notre science tout ce qui se trouvait aupres de lui.',
       } as QuranReference,
     },
     {
@@ -99,18 +119,21 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 7,
       content: "His eastern journey brought him to a primitive people who had no shelter from the sun - no buildings, no clothing to protect them. Despite their simple state, Dhul-Qarnayn dealt with them justly. Allah's knowledge encompassed all that Dhul-Qarnayn possessed and did, affirming that his actions were righteous.",
+      contentFr: "Son voyage vers l'est le mena a un peuple primitif qui n'avait aucun abri contre le soleil - ni batiments, ni vetements pour se proteger. Malgre leur etat simple, Dhoul-Qarnayn les traita avec justice. La connaissance d'Allah englobait tout ce que Dhoul-Qarnayn possedait et faisait, confirmant la droiture de ses actions.",
     },
     {
       id: 'dhulqarnayn-8',
       type: 'narrative',
       order: 8,
       content: "Then Dhul-Qarnayn embarked on a third journey that would bring him to his greatest achievement. He traveled until he reached a pass between two mountains, where he found a people who could barely understand speech. They were being terrorized by two corrupting tribes - Gog and Magog (Ya'juj and Ma'juj).",
+      contentFr: "Puis Dhoul-Qarnayn entreprit un troisieme voyage qui allait le mener a son plus grand exploit. Il voyagea jusqu'a atteindre un passage entre deux montagnes, ou il trouva un peuple qui pouvait a peine comprendre la parole. Ils etaient terrorises par deux tribus corruptrices - Gog et Magog (Ya'juj et Ma'juj).",
     },
     {
       id: 'dhulqarnayn-9',
       type: 'quran_source',
       order: 9,
       content: "He found a people threatened by Gog and Magog.",
+      contentFr: "Il trouva un peuple menace par Gog et Magog.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -120,6 +143,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 94,
         arabicText: 'ثُمَّ أَتْبَعَ سَبَبًا ۝ حَتَّىٰ إِذَا بَلَغَ بَيْنَ السَّدَّيْنِ وَجَدَ مِن دُونِهِمَا قَوْمًا لَّا يَكَادُونَ يَفْقَهُونَ قَوْلًا ۝ قَالُوا يَا ذَا الْقَرْنَيْنِ إِنَّ يَأْجُوجَ وَمَأْجُوجَ مُفْسِدُونَ فِي الْأَرْضِ فَهَلْ نَجْعَلُ لَكَ خَرْجًا عَلَىٰ أَن تَجْعَلَ بَيْنَنَا وَبَيْنَهُمْ سَدًّا',
         translation: 'Then he followed a way. Until, when he reached [a pass] between two mountains, he found beside them a people who could hardly understand [his] speech. They said, "O Dhul-Qarnayn, indeed Gog and Magog are [great] corrupters in the land. So may we assign for you an expenditure that you might make between us and them a barrier?"',
+        translationFr: 'Puis il suivit un chemin. Jusqu\'a ce que, lorsqu\'il eut atteint un passage entre deux montagnes, il trouva de ce cote un peuple qui ne comprenait presque aucune parole. Ils dirent : "O Dhoul-Qarnayn, Gog et Magog commettent du desordre sur terre. Pouvons-nous te verser un tribut pour que tu eriges entre nous et eux une barriere ?"',
       } as QuranReference,
     },
     {
@@ -127,12 +151,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 10,
       content: "Gog and Magog were tribes of immense destructive power who spread corruption wherever they went. The vulnerable people offered to pay Dhul-Qarnayn tribute if he would build a barrier to protect them. His response showed his true character: he refused payment, saying that what Allah had given him was better than any tribute they could offer.",
+      contentFr: "Gog et Magog etaient des tribus d'une immense puissance destructrice qui repandaient la corruption partout ou elles allaient. Le peuple vulnerable offrit de payer un tribut a Dhoul-Qarnayn s'il construisait une barriere pour les proteger. Sa reponse revela son vrai caractere : il refusa le paiement, disant que ce qu'Allah lui avait donne etait meilleur que tout tribut qu'ils pourraient offrir.",
     },
     {
       id: 'dhulqarnayn-11',
       type: 'quran_source',
       order: 11,
       content: "Dhul-Qarnayn refused payment and asked only for their help.",
+      contentFr: "Dhoul-Qarnayn refusa le paiement et ne demanda que leur aide.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -142,6 +168,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 96,
         arabicText: 'قَالَ مَا مَكَّنِّي فِيهِ رَبِّي خَيْرٌ فَأَعِينُونِي بِقُوَّةٍ أَجْعَلْ بَيْنَكُمْ وَبَيْنَهُمْ رَدْمًا ۝ آتُونِي زُبَرَ الْحَدِيدِ ۖ حَتَّىٰ إِذَا سَاوَىٰ بَيْنَ الصَّدَفَيْنِ قَالَ انفُخُوا ۖ حَتَّىٰ إِذَا جَعَلَهُ نَارًا قَالَ آتُونِي أُفْرِغْ عَلَيْهِ قِطْرًا',
         translation: 'He said, "That in which my Lord has established me is better [than what you offer], but assist me with strength; I will make between you and them a dam. Bring me blocks of iron" - until, when he had leveled [them] between the two mountain walls, he said, "Blow [with bellows]," until when he had made it [like] fire, he said, "Bring me, that I may pour over it molten copper."',
+        translationFr: 'Il dit : "Ce que mon Seigneur m\'a confere vaut mieux [que ce que vous m\'offrez], aidez-moi plutot avec force et je construirai entre vous et eux un remblai. Apportez-moi des blocs de fer" - jusqu\'a ce que, lorsqu\'il les eut niveles entre les deux parois montagneuses, il dit : "Soufflez !" Puis lorsqu\'il l\'eut rendu brulant, il dit : "Apportez-moi du cuivre fondu, que je le deverse dessus."',
       } as QuranReference,
     },
     {
@@ -149,12 +176,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 12,
       content: "With engineering genius provided by Allah, Dhul-Qarnayn directed the construction. They filled the gap between the mountains with blocks of iron, stacked to the height of the peaks. Then they heated the iron until it glowed like fire, and poured molten copper over it. The result was an impenetrable barrier - smooth and strong, impossible to climb or breach.",
+      contentFr: "Avec le genie d'ingenierie fourni par Allah, Dhoul-Qarnayn dirigea la construction. Ils remplirent le passage entre les montagnes avec des blocs de fer, empiles jusqu'a la hauteur des sommets. Puis ils chaufferent le fer jusqu'a ce qu'il rougeoie comme du feu, et verserent du cuivre fondu par-dessus. Le resultat fut une barriere impenetrable - lisse et solide, impossible a escalader ou a percer.",
     },
     {
       id: 'dhulqarnayn-13',
       type: 'quran_source',
       order: 13,
       content: "The barrier was impenetrable, but Dhul-Qarnayn remained humble.",
+      contentFr: "La barriere etait impenetrable, mais Dhoul-Qarnayn resta humble.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -164,6 +193,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 98,
         arabicText: 'فَمَا اسْطَاعُوا أَن يَظْهَرُوهُ وَمَا اسْتَطَاعُوا لَهُ نَقْبًا ۝ قَالَ هَٰذَا رَحْمَةٌ مِّن رَّبِّي ۖ فَإِذَا جَاءَ وَعْدُ رَبِّي جَعَلَهُ دَكَّاءَ ۖ وَكَانَ وَعْدُ رَبِّي حَقًّا',
         translation: 'So they [Gog and Magog] were unable to pass over it, nor were they able to penetrate it. [Dhul-Qarnayn] said, "This is a mercy from my Lord; but when the promise of my Lord comes, He will make it level, and ever is the promise of my Lord true."',
+        translationFr: 'Ainsi ils [Gog et Magog] ne purent ni l\'escalader ni le percer. [Dhoul-Qarnayn] dit : "C\'est une misericorde de mon Seigneur. Mais lorsque la promesse de mon Seigneur viendra, Il le nivellera, et la promesse de mon Seigneur est toujours vraie."',
       } as QuranReference,
     },
     {
@@ -171,12 +201,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 14,
       content: "Despite this incredible achievement, Dhul-Qarnayn did not boast or take credit. He attributed it to Allah's mercy, not his own power. And he looked beyond the present to the Day of Judgment, when Allah would level this barrier and Gog and Magog would pour forth. Even his greatest accomplishment was temporary in the face of divine decree.",
+      contentFr: "Malgre cet incroyable exploit, Dhoul-Qarnayn ne se vanta pas et ne s'en attribua pas le merite. Il l'attribua a la misericorde d'Allah, non a son propre pouvoir. Et il regarda au-dela du present vers le Jour du Jugement, quand Allah nivellerait cette barriere et que Gog et Magog se repandraient. Meme son plus grand accomplissement etait temporaire face au decret divin.",
     },
     {
       id: 'dhulqarnayn-15',
       type: 'quran_source',
       order: 15,
       content: "On that Day, Gog and Magog will emerge and all will be gathered.",
+      contentFr: "Ce Jour-la, Gog et Magog surgiront et tous seront rassembles.",
       source: {
         type: 'quran',
         surahNumber: 18,
@@ -186,6 +218,7 @@ export const dhulQarnaynStory: QuranStory = {
         ayahEnd: 100,
         arabicText: 'وَتَرَكْنَا بَعْضَهُمْ يَوْمَئِذٍ يَمُوجُ فِي بَعْضٍ ۖ وَنُفِخَ فِي الصُّورِ فَجَمَعْنَاهُمْ جَمْعًا ۝ وَعَرَضْنَا جَهَنَّمَ يَوْمَئِذٍ لِّلْكَافِرِينَ عَرْضًا',
         translation: 'And We will leave some of them that Day surging over others, and the Horn will be blown, and We will gather them all together. And We will present Hell that Day to the disbelievers on display.',
+        translationFr: 'Et ce jour-la, Nous les laisserons les uns deferler sur les autres, et on soufflera dans la Trompe, et Nous les rassemblerons tous. Et ce jour-la, Nous presenterons l\'Enfer aux mecreants, bien expose.',
       } as QuranReference,
     },
     {
@@ -193,12 +226,14 @@ export const dhulQarnaynStory: QuranStory = {
       type: 'narrative',
       order: 16,
       content: "Who was Dhul-Qarnayn historically? Scholars have suggested Alexander the Great, Cyrus the Great of Persia, or a pre-Islamic Arabian king. The Quran does not specify, focusing instead on his qualities: justice, humility, gratitude to Allah, and service to the oppressed. These are the characteristics that matter.",
+      contentFr: "Qui etait Dhoul-Qarnayn historiquement ? Les savants ont suggere Alexandre le Grand, Cyrus le Grand de Perse, ou un roi arabe preislamique. Le Coran ne precise pas, se concentrant plutot sur ses qualites : la justice, l'humilite, la gratitude envers Allah et le service aux opprimes. Ce sont ces caracteristiques qui comptent.",
     },
     {
       id: 'dhulqarnayn-17',
       type: 'narrative',
       order: 17,
       content: "The story of Dhul-Qarnayn teaches that true greatness lies not in conquering lands but in establishing justice, not in accumulating power but in using it to serve others, and not in building monuments to oneself but in humility before Allah. Even the greatest human achievement is temporary; only deeds done for Allah's sake endure.",
+      contentFr: "L'histoire de Dhoul-Qarnayn enseigne que la vraie grandeur ne reside pas dans la conquete des terres mais dans l'etablissement de la justice, non dans l'accumulation du pouvoir mais dans son utilisation au service des autres, et non dans la construction de monuments a sa propre gloire mais dans l'humilite devant Allah. Meme le plus grand accomplissement humain est temporaire ; seules les actions faites pour l'amour d'Allah perdurent.",
     },
   ],
 };

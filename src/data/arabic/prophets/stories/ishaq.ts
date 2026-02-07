@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../.
 export const ishaqStory: Prophet = {
   id: 'ishaq',
   nameEnglish: 'Ishaq',
+  nameFrench: 'Ishaq',
   nameArabic: 'إسحاق',
   order: 9,
   title: 'The Blessed Son',
+  titleFr: 'Le fils béni',
   titleArabic: 'الابن المبارك',
   summary: 'Prophet Ishaq was the second son of Prophet Ibrahim, born miraculously to his elderly wife Sarah when she was beyond childbearing age. His birth was announced by angels who visited Ibrahim with glad tidings. Ishaq continued the prophetic lineage of his father, and through his son Yaqub (Jacob), became the ancestor of the Children of Israel and many prophets including Yusuf, Musa, Dawud, Sulayman, and Isa. He is praised in the Quran as a righteous prophet who was blessed by Allah.',
+  summaryFr: 'Le prophète Ishaq était le second fils du prophète Ibrahim, né miraculeusement de son épouse âgée Sarah alors qu\'elle avait dépassé l\'âge de procréer. Sa naissance fut annoncée par des anges qui rendirent visite à Ibrahim avec une bonne nouvelle. Ishaq poursuivit la lignée prophétique de son père, et par son fils Yaqub (Jacob), devint l\'ancêtre des Enfants d\'Israël et de nombreux prophètes dont Yusuf, Musa, Dawud, Sulayman et Isa. Il est loué dans le Coran comme un prophète vertueux béni par Allah.',
   hasSubStories: false,
   lessons: [
     "Allah's power to grant miracles beyond natural laws",
@@ -19,6 +22,13 @@ export const ishaqStory: Prophet = {
     'The continuation of prophetic legacy through righteous offspring',
     "Gratitude for Allah's gifts even when they come late in life",
     'The importance of maintaining faith across generations',
+  ],
+  lessonsFr: [
+    'La puissance d\'Allah à accorder des miracles au-delà des lois naturelles',
+    'La patience dans la vieillesse est récompensée par des bénédictions inattendues',
+    'La continuité de l\'héritage prophétique à travers une descendance vertueuse',
+    'La gratitude envers les dons d\'Allah même lorsqu\'ils arrivent tard dans la vie',
+    'L\'importance de maintenir la foi à travers les générations',
   ],
   estimatedReadTime: 12,
   quranMentions: 17,
@@ -32,18 +42,21 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "Prophet Ibrahim had grown old, and his wife Sarah had never been able to bear children. She had given her servant Hajar to Ibrahim, through whom Ismail was born. But Sarah herself remained childless, a source of deep longing throughout her life.",
+    contentFr: "Le prophète Ibrahim avait vieilli, et son épouse Sarah n'avait jamais pu avoir d'enfants. Elle avait donné sa servante Hajar à Ibrahim, de qui naquit Ismail. Mais Sarah elle-même restait sans enfant, une source de profond désir tout au long de sa vie.",
   },
   {
     id: 'ishaq-2',
     type: 'narrative',
     order: 2,
     content: "One day, honored guests arrived at Ibrahim's home. These were angels in human form, sent by Allah with a special mission. Ibrahim, known for his generous hospitality, rushed to prepare a feast for them.",
+    contentFr: "Un jour, des invités honorables arrivèrent chez Ibrahim. C'étaient des anges sous forme humaine, envoyés par Allah avec une mission spéciale. Ibrahim, connu pour sa généreuse hospitalité, s'empressa de leur préparer un festin.",
   },
   {
     id: 'ishaq-3',
     type: 'quran_source',
     order: 3,
     content: "Allah describes the arrival of the honored guests.",
+    contentFr: "Allah décrit l'arrivée des invités honorables.",
     source: {
       type: 'quran',
       surahNumber: 51,
@@ -53,6 +66,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'هَلْ أَتَاكَ حَدِيثُ ضَيْفِ إِبْرَاهِيمَ الْمُكْرَمِينَ ۝ إِذْ دَخَلُوا عَلَيْهِ فَقَالُوا سَلَامًا ۖ قَالَ سَلَامٌ قَوْمٌ مُّنكَرُونَ ۝ فَرَاغَ إِلَىٰ أَهْلِهِ فَجَاءَ بِعِجْلٍ سَمِينٍ ۝ فَقَرَّبَهُ إِلَيْهِمْ قَالَ أَلَا تَأْكُلُونَ',
       translation: 'Has there reached you the story of the honored guests of Ibrahim? When they entered upon him and said, "[We greet you with] peace." He answered, "[And upon you] peace, [you are] a people unknown." Then he went to his family and came with a fat [roasted] calf. And placed it near them; he said, "Will you not eat?"',
+      translationFr: "T'est-il parvenu le récit des hôtes honorables d'Ibrahim ? Quand ils entrèrent chez lui et dirent : « Paix ! » Il répondit : « Paix, [vous êtes] des gens inconnus. » Puis il alla discrètement vers sa famille et apporta un veau gras [rôti]. Il le leur présenta en disant : « Ne mangerez-vous pas ? »",
     } as QuranReference,
   },
   {
@@ -60,12 +74,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: "When the guests did not eat from the food Ibrahim had prepared, he became apprehensive. In that culture, refusing hospitality was unusual and could signal ill intentions. But the angels reassured him and revealed their true purpose.",
+    contentFr: "Lorsque les invités ne mangèrent pas de la nourriture qu'Ibrahim avait préparée, il devint inquiet. Dans cette culture, refuser l'hospitalité était inhabituel et pouvait signaler de mauvaises intentions. Mais les anges le rassurèrent et révélèrent leur véritable mission.",
   },
   {
     id: 'ishaq-5',
     type: 'quran_source',
     order: 5,
     content: "The angels calmed Ibrahim's fears and gave him wonderful news.",
+    contentFr: "Les anges apaisèrent les craintes d'Ibrahim et lui annoncèrent une merveilleuse nouvelle.",
     source: {
       type: 'quran',
       surahNumber: 51,
@@ -75,6 +91,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 30,
       arabicText: 'فَأَوْجَسَ مِنْهُمْ خِيفَةً ۖ قَالُوا لَا تَخَفْ ۖ وَبَشَّرُوهُ بِغُلَامٍ عَلِيمٍ ۝ فَأَقْبَلَتِ امْرَأَتُهُ فِي صَرَّةٍ فَصَكَّتْ وَجْهَهَا وَقَالَتْ عَجُوزٌ عَقِيمٌ ۝ قَالُوا كَذَٰلِكِ قَالَ رَبُّكِ ۖ إِنَّهُ هُوَ الْحَكِيمُ الْعَلِيمُ',
       translation: 'And he felt from them apprehension. They said, "Fear not," and gave him good tidings of a learned boy. And his wife approached with a cry [of alarm] and struck her face and said, "[I am] a barren old woman!" They said, "Thus has said your Lord; indeed, He is the Wise, the Knowing."',
+      translationFr: "Il ressentit alors de l'appréhension à leur égard. Ils dirent : « N'aie pas peur », et lui annoncèrent la bonne nouvelle d'un garçon savant. Sa femme s'avança en criant, se frappa le visage et dit : « [Je suis] une vieille femme stérile ! » Ils dirent : « Ainsi a parlé ton Seigneur ; en vérité, c'est Lui le Sage, l'Omniscient. »",
     } as QuranReference,
   },
   {
@@ -82,12 +99,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: "Sarah was overwhelmed with disbelief at this news. She was very old, well past the age of bearing children, and had been barren her entire life. How could she possibly have a child now?",
+    contentFr: "Sarah fut submergée d'incrédulité à cette nouvelle. Elle était très âgée, bien au-delà de l'âge de procréer, et avait été stérile toute sa vie. Comment pourrait-elle avoir un enfant maintenant ?",
   },
   {
     id: 'ishaq-7',
     type: 'quran_source',
     order: 7,
     content: "Allah describes the angels' announcement in more detail.",
+    contentFr: "Allah décrit l'annonce des anges plus en détail.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -97,6 +116,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 71,
       arabicText: 'وَلَقَدْ جَاءَتْ رُسُلُنَا إِبْرَاهِيمَ بِالْبُشْرَىٰ قَالُوا سَلَامًا ۖ قَالَ سَلَامٌ ۖ فَمَا لَبِثَ أَن جَاءَ بِعِجْلٍ حَنِيذٍ ۝ فَلَمَّا رَأَىٰ أَيْدِيَهُمْ لَا تَصِلُ إِلَيْهِ نَكِرَهُمْ وَأَوْجَسَ مِنْهُمْ خِيفَةً ۚ قَالُوا لَا تَخَفْ إِنَّا أُرْسِلْنَا إِلَىٰ قَوْمِ لُوطٍ ۝ وَامْرَأَتُهُ قَائِمَةٌ فَضَحِكَتْ فَبَشَّرْنَاهَا بِإِسْحَاقَ وَمِن وَرَاءِ إِسْحَاقَ يَعْقُوبَ',
       translation: 'And certainly did Our messengers come to Ibrahim with good tidings; they said, "Peace." He said, "Peace," and did not delay in bringing [them] a roasted calf. But when he saw their hands not reaching for it, he distrusted them and felt from them apprehension. They said, "Fear not. We have been sent to the people of Lut." And his wife was standing, and she smiled. Then We gave her good tidings of Ishaq, and after Ishaq, Yaqub.',
+      translationFr: "Et certes, Nos messagers vinrent à Ibrahim avec la bonne nouvelle ; ils dirent : « Paix ! » Il dit : « Paix ! » et ne tarda pas à apporter un veau rôti. Mais quand il vit que leurs mains ne se tendaient pas vers lui, il les trouva étranges et ressentit de la crainte. Ils dirent : « N'aie pas peur. Nous avons été envoyés au peuple de Lut. » Et sa femme était debout, et elle sourit. Alors Nous lui annonçâmes la bonne nouvelle d'Ishaq, et après Ishaq, Yaqub.",
     } as QuranReference,
   },
   {
@@ -104,12 +124,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 8,
     content: "The angels not only announced the birth of Ishaq but also foretold that he would have a son named Yaqub. This was a double blessing - Sarah would not only have a son but would live to see her grandson as well.",
+    contentFr: "Les anges n'annoncèrent pas seulement la naissance d'Ishaq, mais prédirent aussi qu'il aurait un fils nommé Yaqub. C'était une double bénédiction - Sarah n'aurait pas seulement un fils, mais vivrait assez longtemps pour voir son petit-fils également.",
   },
   {
     id: 'ishaq-9',
     type: 'quran_source',
     order: 9,
     content: "Sarah expressed her amazement at this extraordinary news.",
+    contentFr: "Sarah exprima son étonnement face à cette nouvelle extraordinaire.",
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -119,6 +141,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 73,
       arabicText: 'قَالَتْ يَا وَيْلَتَىٰ أَأَلِدُ وَأَنَا عَجُوزٌ وَهَٰذَا بَعْلِي شَيْخًا ۖ إِنَّ هَٰذَا لَشَيْءٌ عَجِيبٌ ۝ قَالُوا أَتَعْجَبِينَ مِنْ أَمْرِ اللَّهِ ۖ رَحْمَتُ اللَّهِ وَبَرَكَاتُهُ عَلَيْكُمْ أَهْلَ الْبَيْتِ ۚ إِنَّهُ حَمِيدٌ مَّجِيدٌ',
       translation: 'She said, "Woe to me! Shall I give birth while I am an old woman and this, my husband, is an old man? Indeed, this is an amazing thing!" They said, "Are you amazed at the decree of Allah? May the mercy of Allah and His blessings be upon you, people of the house. Indeed, He is Praiseworthy and Honorable."',
+      translationFr: "Elle dit : « Malheur à moi ! Vais-je enfanter alors que je suis une vieille femme et que voici mon mari, un vieil homme ? C'est là vraiment une chose étonnante ! » Ils dirent : « T'étonnes-tu du décret d'Allah ? Que la miséricorde d'Allah et Ses bénédictions soient sur vous, gens de cette maison ! Il est certes Digne de louange et de gloire. »",
     } as QuranReference,
   },
   {
@@ -126,12 +149,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 10,
     content: "The angels reminded Sarah that nothing is beyond Allah's power. The same Allah who created all of creation could certainly grant a child to an elderly couple. This was a mercy and blessing specifically for the household of Ibrahim.",
+    contentFr: "Les anges rappelèrent à Sarah que rien n'est au-delà du pouvoir d'Allah. Le même Allah qui a créé toute la création pouvait certainement accorder un enfant à un couple âgé. C'était une miséricorde et une bénédiction spécifiquement destinées à la famille d'Ibrahim.",
   },
   {
     id: 'ishaq-11',
     type: 'quran_source',
     order: 11,
     content: "In another account, the Quran describes Ibrahim's own reaction.",
+    contentFr: "Dans un autre récit, le Coran décrit la réaction d'Ibrahim lui-même.",
     source: {
       type: 'quran',
       surahNumber: 15,
@@ -141,6 +166,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 56,
       arabicText: 'قَالُوا لَا تَوْجَلْ إِنَّا نُبَشِّرُكَ بِغُلَامٍ عَلِيمٍ ۝ قَالَ أَبَشَّرْتُمُونِي عَلَىٰ أَن مَّسَّنِيَ الْكِبَرُ فَبِمَ تُبَشِّرُونَ ۝ قَالُوا بَشَّرْنَاكَ بِالْحَقِّ فَلَا تَكُن مِّنَ الْقَانِطِينَ ۝ قَالَ وَمَن يَقْنَطُ مِن رَّحْمَةِ رَبِّهِ إِلَّا الضَّالُّونَ',
       translation: 'They said, "Fear not. Indeed, we give you good tidings of a learned boy." He said, "Have you given me good tidings although old age has come upon me? Then of what [wonder] do you inform?" They said, "We have given you good tidings in truth, so do not be of the despairing." He said, "And who despairs of the mercy of his Lord except for those astray?"',
+      translationFr: "Ils dirent : « N'aie pas peur. Nous t'annonçons la bonne nouvelle d'un garçon savant. » Il dit : « M'annoncez-vous cette nouvelle alors que la vieillesse m'a atteint ? De quoi donc m'annoncez-vous la nouvelle ? » Ils dirent : « Nous t'annonçons la bonne nouvelle en toute vérité, ne sois donc pas de ceux qui désespèrent. » Il dit : « Et qui désespère de la miséricorde de son Seigneur, sinon les égarés ? »",
     } as QuranReference,
   },
   {
@@ -148,18 +174,21 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 12,
     content: "Ibrahim's response was beautiful - he acknowledged his initial surprise but immediately affirmed that only those who are misguided would despair of Allah's mercy. True believers know that Allah can do anything He wills.",
+    contentFr: "La réponse d'Ibrahim fut magnifique - il reconnut sa surprise initiale mais affirma immédiatement que seuls les égarés désespèrent de la miséricorde d'Allah. Les vrais croyants savent qu'Allah peut accomplir tout ce qu'Il veut.",
   },
   {
     id: 'ishaq-13',
     type: 'narrative',
     order: 13,
     content: "Ishaq was born as promised, bringing immense joy to Ibrahim and Sarah in their old age. Allah blessed him and made him a prophet, continuing the noble legacy of his father.",
+    contentFr: "Ishaq naquit comme promis, apportant une immense joie à Ibrahim et Sarah dans leur vieillesse. Allah le bénit et fit de lui un prophète, poursuivant le noble héritage de son père.",
   },
   {
     id: 'ishaq-14',
     type: 'quran_source',
     order: 14,
     content: "After the test of sacrifice with Ismail, Allah gave Ibrahim glad tidings of Ishaq as a prophet.",
+    contentFr: "Après l'épreuve du sacrifice avec Ismail, Allah annonça à Ibrahim la bonne nouvelle d'Ishaq en tant que prophète.",
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -169,6 +198,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 113,
       arabicText: 'وَبَشَّرْنَاهُ بِإِسْحَاقَ نَبِيًّا مِّنَ الصَّالِحِينَ ۝ وَبَارَكْنَا عَلَيْهِ وَعَلَىٰ إِسْحَاقَ ۚ وَمِن ذُرِّيَّتِهِمَا مُحْسِنٌ وَظَالِمٌ لِّنَفْسِهِ مُبِينٌ',
       translation: 'And We gave him good tidings of Ishaq, a prophet from among the righteous. And We blessed him and Ishaq. But among their descendants is the doer of good and the clearly unjust to himself.',
+      translationFr: "Et Nous lui annonçâmes la bonne nouvelle d'Ishaq, un prophète parmi les vertueux. Et Nous le bénîmes ainsi qu'Ishaq. Et parmi leur descendance, il y a le bienfaisant et celui qui est clairement injuste envers lui-même.",
     } as QuranReference,
   },
   {
@@ -176,12 +206,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 15,
     content: "This verse highlights an important truth - having righteous parents or ancestors does not guarantee righteousness. Among the descendants of Ibrahim and Ishaq would be both those who do good and those who wrong themselves. Each person is responsible for their own deeds.",
+    contentFr: "Ce verset souligne une vérité importante : avoir des parents ou des ancêtres vertueux ne garantit pas la vertu. Parmi les descendants d'Ibrahim et d'Ishaq, il y aurait à la fois ceux qui font le bien et ceux qui se font du tort à eux-mêmes. Chaque personne est responsable de ses propres actes.",
   },
   {
     id: 'ishaq-16',
     type: 'quran_source',
     order: 16,
     content: "Allah granted Ibrahim both Ishaq and Yaqub as a special favor.",
+    contentFr: "Allah accorda à Ibrahim Ishaq et Yaqub comme une faveur spéciale.",
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -191,6 +223,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 72,
       arabicText: 'وَوَهَبْنَا لَهُ إِسْحَاقَ وَيَعْقُوبَ نَافِلَةً ۖ وَكُلًّا جَعَلْنَا صَالِحِينَ',
       translation: 'And We gave him Ishaq and Yaqub in addition, and all [of them] We made righteous.',
+      translationFr: "Et Nous lui accordâmes Ishaq et Yaqub en supplément, et tous, Nous les rendîmes vertueux.",
     } as QuranReference,
   },
   {
@@ -198,18 +231,21 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 17,
     content: "The word 'nafilah' (نافلة) meaning 'in addition' or 'as an extra gift' emphasizes that Yaqub was a bonus blessing - Ibrahim not only received the son he prayed for but also a grandson, and all of them were made righteous prophets.",
+    contentFr: "Le mot 'nafilah' (نافلة) signifiant 'en supplément' ou 'comme un don supplémentaire' souligne que Yaqub était une bénédiction en plus - Ibrahim reçut non seulement le fils pour lequel il avait prié, mais aussi un petit-fils, et tous furent rendus prophètes vertueux.",
   },
   {
     id: 'ishaq-18',
     type: 'narrative',
     order: 18,
     content: "Through Ishaq, Allah established a long line of prophets. His son Yaqub (also known as Israel) had twelve sons who became the twelve tribes of Israel. From this lineage came many of the greatest prophets mentioned in the Quran.",
+    contentFr: "À travers Ishaq, Allah établit une longue lignée de prophètes. Son fils Yaqub (également connu sous le nom d'Israël) eut douze fils qui devinrent les douze tribus d'Israël. De cette lignée vinrent bon nombre des plus grands prophètes mentionnés dans le Coran.",
   },
   {
     id: 'ishaq-19',
     type: 'quran_source',
     order: 19,
     content: "Allah placed prophethood and scripture in Ibrahim's offspring through both sons.",
+    contentFr: "Allah plaça la prophétie et l'Écriture dans la descendance d'Ibrahim à travers ses deux fils.",
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -219,6 +255,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'وَوَهَبْنَا لَهُ إِسْحَاقَ وَيَعْقُوبَ وَجَعَلْنَا فِي ذُرِّيَّتِهِ النُّبُوَّةَ وَالْكِتَابَ وَآتَيْنَاهُ أَجْرَهُ فِي الدُّنْيَا ۖ وَإِنَّهُ فِي الْآخِرَةِ لَمِنَ الصَّالِحِينَ',
       translation: 'And We gave to him Ishaq and Yaqub and placed in his descendants prophethood and scripture. And We gave him his reward in this world, and indeed, he is in the Hereafter among the righteous.',
+      translationFr: "Et Nous lui accordâmes Ishaq et Yaqub, et Nous plaçâmes dans sa descendance la prophétie et le Livre. Et Nous lui donnâmes sa récompense ici-bas, et il sera certes dans l'au-delà parmi les vertueux.",
     } as QuranReference,
   },
   {
@@ -226,12 +263,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: "Ibrahim received his reward in this world by seeing his righteous sons and grandsons, and by having his legacy continue through generations of prophets. The Torah, Psalms, and Gospel were all revealed to prophets from the line of Ishaq.",
+    contentFr: "Ibrahim reçut sa récompense en ce monde en voyant ses fils et petits-fils vertueux, et en voyant son héritage se poursuivre à travers des générations de prophètes. La Torah, les Psaumes et l'Évangile furent tous révélés à des prophètes de la lignée d'Ishaq.",
   },
   {
     id: 'ishaq-21',
     type: 'quran_source',
     order: 21,
     content: "Allah mentions the prophets who descended from Ibrahim through Ishaq.",
+    contentFr: "Allah mentionne les prophètes qui descendirent d'Ibrahim par Ishaq.",
     source: {
       type: 'quran',
       surahNumber: 6,
@@ -241,6 +280,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 86,
       arabicText: 'وَوَهَبْنَا لَهُ إِسْحَاقَ وَيَعْقُوبَ ۚ كُلًّا هَدَيْنَا ۚ وَنُوحًا هَدَيْنَا مِن قَبْلُ ۖ وَمِن ذُرِّيَّتِهِ دَاوُودَ وَسُلَيْمَانَ وَأَيُّوبَ وَيُوسُفَ وَمُوسَىٰ وَهَارُونَ ۚ وَكَذَٰلِكَ نَجْزِي الْمُحْسِنِينَ ۝ وَزَكَرِيَّا وَيَحْيَىٰ وَعِيسَىٰ وَإِلْيَاسَ ۖ كُلٌّ مِّنَ الصَّالِحِينَ ۝ وَإِسْمَاعِيلَ وَالْيَسَعَ وَيُونُسَ وَلُوطًا ۚ وَكُلًّا فَضَّلْنَا عَلَى الْعَالَمِينَ',
       translation: 'And We gave to him Ishaq and Yaqub - all [of them] We guided. And Nuh, We guided before; and among his descendants, Dawud and Sulayman and Ayyub and Yusuf and Musa and Harun. Thus do We reward the doers of good. And Zakariya and Yahya and Isa and Ilyas - and all were of the righteous. And Ismail and Elisha and Yunus and Lut - and all [of them] We preferred over the worlds.',
+      translationFr: "Et Nous lui accordâmes Ishaq et Yaqub - tous, Nous les guidâmes. Et Nuh, Nous l'avions guidé auparavant ; et parmi sa descendance, Dawud et Sulayman et Ayyub et Yusuf et Musa et Harun. C'est ainsi que Nous récompensons les bienfaisants. Et Zakariya et Yahya et Isa et Ilyas - tous étaient parmi les vertueux. Et Ismail et Élisée et Yunus et Lut - et tous, Nous les avons préférés sur les mondes.",
     } as QuranReference,
   },
   {
@@ -248,18 +288,21 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 22,
     content: "This remarkable passage lists many prophets who came from Ibrahim's lineage. Through Ishaq came Yaqub, Yusuf, Musa, Harun, Dawud, Sulayman, Zakariya, Yahya, and Isa - peace be upon them all. This fulfilled Allah's promise to bless Ibrahim's descendants.",
+    contentFr: "Ce passage remarquable énumère les nombreux prophètes issus de la lignée d'Ibrahim. Par Ishaq vinrent Yaqub, Yusuf, Musa, Harun, Dawud, Sulayman, Zakariya, Yahya et Isa - paix sur eux tous. Cela accomplit la promesse d'Allah de bénir la descendance d'Ibrahim.",
   },
   {
     id: 'ishaq-23',
     type: 'narrative',
     order: 23,
     content: "Ishaq lived in the land of Canaan (Palestine), where he continued to call people to worship Allah alone. He married Rebekah, and they were blessed with twin sons: Esau and Yaqub. Yaqub would become a great prophet and the father of the twelve tribes of Israel.",
+    contentFr: "Ishaq vécut en terre de Canaan (Palestine), où il continua d'appeler les gens à adorer Allah seul. Il épousa Rébecca, et ils furent bénis de fils jumeaux : Ésaü et Yaqub. Yaqub allait devenir un grand prophète et le père des douze tribus d'Israël.",
   },
   {
     id: 'ishaq-24',
     type: 'quran_source',
     order: 24,
     content: "Ibrahim praised Allah for granting him sons in his old age.",
+    contentFr: "Ibrahim loua Allah de lui avoir accordé des fils dans sa vieillesse.",
     source: {
       type: 'quran',
       surahNumber: 14,
@@ -269,6 +312,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 39,
       arabicText: 'الْحَمْدُ لِلَّهِ الَّذِي وَهَبَ لِي عَلَى الْكِبَرِ إِسْمَاعِيلَ وَإِسْحَاقَ ۚ إِنَّ رَبِّي لَسَمِيعُ الدُّعَاءِ',
       translation: '"Praise to Allah, who has granted to me in old age Ismail and Ishaq. Indeed, my Lord is the Hearer of supplication."',
+      translationFr: "« Louange à Allah qui m'a accordé dans ma vieillesse Ismail et Ishaq. En vérité, mon Seigneur entend bien les invocations. »",
     } as QuranReference,
   },
   {
@@ -276,12 +320,14 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 25,
     content: "Ishaq is mentioned in the Quran as one of the prophets whom Muslims must believe in, without distinction between any of them.",
+    contentFr: "Ishaq est mentionné dans le Coran comme l'un des prophètes auxquels les musulmans doivent croire, sans faire de distinction entre eux.",
   },
   {
     id: 'ishaq-26',
     type: 'quran_source',
     order: 26,
     content: "Belief in Ishaq is part of the Islamic faith.",
+    contentFr: "La croyance en Ishaq fait partie de la foi islamique.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -291,6 +337,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 136,
       arabicText: 'قُولُوا آمَنَّا بِاللَّهِ وَمَا أُنزِلَ إِلَيْنَا وَمَا أُنزِلَ إِلَىٰ إِبْرَاهِيمَ وَإِسْمَاعِيلَ وَإِسْحَاقَ وَيَعْقُوبَ وَالْأَسْبَاطِ وَمَا أُوتِيَ مُوسَىٰ وَعِيسَىٰ وَمَا أُوتِيَ النَّبِيُّونَ مِن رَّبِّهِمْ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّنْهُمْ وَنَحْنُ لَهُ مُسْلِمُونَ',
       translation: 'Say, [O believers], "We have believed in Allah and what has been revealed to us and what has been revealed to Ibrahim and Ismail and Ishaq and Yaqub and the Descendants and what was given to Musa and Isa and what was given to the prophets from their Lord. We make no distinction between any of them, and we are Muslims [in submission] to Him."',
+      translationFr: "Dites : « Nous croyons en Allah et en ce qui nous a été révélé, et en ce qui a été révélé à Ibrahim, Ismail, Ishaq, Yaqub et les Tribus, et en ce qui a été donné à Musa et Isa, et en ce qui a été donné aux prophètes de la part de leur Seigneur. Nous ne faisons aucune distinction entre eux, et à Lui nous sommes soumis. »",
     } as QuranReference,
   },
   {
@@ -298,6 +345,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 27,
     content: "Yaqub reminded his sons of their noble lineage through Ishaq.",
+    contentFr: "Yaqub rappela à ses fils leur noble lignée à travers Ishaq.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -307,6 +355,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
       ayahEnd: 133,
       arabicText: 'أَمْ كُنتُمْ شُهَدَاءَ إِذْ حَضَرَ يَعْقُوبَ الْمَوْتُ إِذْ قَالَ لِبَنِيهِ مَا تَعْبُدُونَ مِن بَعْدِي قَالُوا نَعْبُدُ إِلَٰهَكَ وَإِلَٰهَ آبَائِكَ إِبْرَاهِيمَ وَإِسْمَاعِيلَ وَإِسْحَاقَ إِلَٰهًا وَاحِدًا وَنَحْنُ لَهُ مُسْلِمُونَ',
       translation: 'Or were you witnesses when death approached Yaqub, when he said to his sons, "What will you worship after me?" They said, "We will worship your God and the God of your fathers, Ibrahim and Ismail and Ishaq - one God. And we are Muslims [in submission] to Him."',
+      translationFr: "Étiez-vous témoins quand la mort se présenta à Yaqub, lorsqu'il dit à ses fils : « Qu'adorerez-vous après moi ? » Ils dirent : « Nous adorerons ton Dieu et le Dieu de tes pères, Ibrahim, Ismail et Ishaq - un Dieu unique. Et à Lui nous sommes soumis. »",
     } as QuranReference,
   },
   {
@@ -314,6 +363,7 @@ const ishaqStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 28,
     content: "Prophet Ishaq passed away and was buried in Hebron (Al-Khalil) alongside his father Ibrahim and his son Yaqub. His legacy lived on through his descendants - the Children of Israel - who would receive many prophets and divine scriptures. The message of monotheism that Ibrahim established was faithfully carried forward by Ishaq and transmitted to future generations.",
+    contentFr: "Le prophète Ishaq décéda et fut enterré à Hébron (Al-Khalil) aux côtés de son père Ibrahim et de son fils Yaqub. Son héritage perdura à travers ses descendants - les Enfants d'Israël - qui allaient recevoir de nombreux prophètes et écritures divines. Le message du monothéisme qu'Ibrahim avait établi fut fidèlement transmis par Ishaq aux générations futures.",
   },
 ];
 

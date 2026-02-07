@@ -2,8 +2,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, Dimensions } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
-
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 // Sun Letters (الحروف الشمسية) - 14 letters
@@ -45,6 +45,7 @@ const moonLetters = [
 ];
 
 export default function SunMoonLettersScreen() {
+  const { t } = useTranslation();
   const { speak, isSpeaking } = useArabicSpeech();
 
   return (
@@ -56,7 +57,7 @@ export default function SunMoonLettersScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Sun & Moon Letters</Text>
+            <Text style={styles.title}>{t('alphabet.sunMoonLetters')}</Text>
             <Text style={styles.titleArabic}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
           </View>
         </View>
@@ -65,22 +66,22 @@ export default function SunMoonLettersScreen() {
         <View style={styles.explanationCard}>
           <View style={styles.explanationHeader}>
             <Ionicons name="information-circle" size={24} color="#6366f1" />
-            <Text style={styles.explanationTitle}>What are Sun & Moon Letters?</Text>
+            <Text style={styles.explanationTitle}>{t('alphabet.whatAreSunMoon')}</Text>
           </View>
           <Text style={styles.explanationText}>
-            When adding <Text style={styles.highlight}>الـ</Text> (the) to Arabic words, the pronunciation changes based on the first letter:
+            {t('alphabet.sunMoonExplanation')}
           </Text>
           <View style={styles.ruleBox}>
             <View style={styles.ruleItem}>
               <Ionicons name="sunny" size={20} color="#f59e0b" />
               <Text style={styles.ruleText}>
-                <Text style={styles.ruleBold}>Sun letters:</Text> The ل sound disappears and the letter doubles
+                <Text style={styles.ruleBold}>{t('alphabet.sunLetters')}:</Text> {t('alphabet.sunLettersRule')}
               </Text>
             </View>
             <View style={styles.ruleItem}>
               <Ionicons name="moon" size={20} color="#a5b4fc" />
               <Text style={styles.ruleText}>
-                <Text style={styles.ruleBold}>Moon letters:</Text> The ل sound is pronounced normally
+                <Text style={styles.ruleBold}>{t('alphabet.moonLetters')}:</Text> {t('alphabet.moonLettersRule')}
               </Text>
             </View>
           </View>
@@ -93,7 +94,7 @@ export default function SunMoonLettersScreen() {
               <Ionicons name="sunny" size={28} color="#f59e0b" />
             </View>
             <View>
-              <Text style={styles.sectionTitle}>Sun Letters</Text>
+              <Text style={styles.sectionTitle}>{t('alphabet.sunLetters')}</Text>
               <Text style={styles.sectionTitleArabic}>الْحُرُوفُ الشَّمْسِيَّة</Text>
             </View>
             <View style={styles.badge}>
@@ -103,7 +104,7 @@ export default function SunMoonLettersScreen() {
 
           <View style={styles.sectionNote}>
             <Text style={styles.noteText}>
-              The ل in الـ becomes silent, and the sun letter is doubled (with shadda ّ)
+              {t('alphabet.sunLettersNote')}
             </Text>
           </View>
 
@@ -141,7 +142,7 @@ export default function SunMoonLettersScreen() {
               <Ionicons name="moon" size={28} color="#a5b4fc" />
             </View>
             <View>
-              <Text style={styles.sectionTitle}>Moon Letters</Text>
+              <Text style={styles.sectionTitle}>{t('alphabet.moonLetters')}</Text>
               <Text style={styles.sectionTitleArabic}>الْحُرُوفُ الْقَمَرِيَّة</Text>
             </View>
             <View style={[styles.badge, styles.moonBadge]}>
@@ -151,7 +152,7 @@ export default function SunMoonLettersScreen() {
 
           <View style={[styles.sectionNote, styles.moonNote]}>
             <Text style={styles.noteText}>
-              The ل in الـ is pronounced clearly before moon letters
+              {t('alphabet.moonLettersNote')}
             </Text>
           </View>
 
@@ -186,13 +187,13 @@ export default function SunMoonLettersScreen() {
         <View style={[styles.mnemonicCard, { marginBottom: 100 }]}>
           <View style={styles.mnemonicHeader}>
             <Ionicons name="bulb" size={24} color="#D4AF37" />
-            <Text style={styles.mnemonicTitle}>Memory Tip</Text>
+            <Text style={styles.mnemonicTitle}>{t('alphabet.memoryTip')}</Text>
           </View>
           <Text style={styles.mnemonicText}>
-            Remember the Sun letters with this phrase:{'\n'}
+            {t('alphabet.memoryTipIntro')}{'\n'}
             <Text style={styles.mnemonicArabic}>طِبْ ثُمَّ صِلْ رَحِمًا تَفُزْ ضِفْ ذَا نِعَمْ دَعْ سُوءَ ظَنٍّ زُرْ شَرِيفًا لِلْكَرَمْ</Text>
             {'\n\n'}
-            The first letter of each word is a Sun letter!
+            {t('alphabet.memoryTipConclusion')}
           </Text>
         </View>
       </ScrollView>

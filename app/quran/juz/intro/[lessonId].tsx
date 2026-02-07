@@ -9,11 +9,14 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_INTRO_LESSONS, JuzIntroLesson } from '../../../../src/data/arabic/quran/lessons/juzLessons';
 
 // Content Block Component
 function ContentBlock({ item }: { item: { type: string; text: string; icon?: string } }) {
+  const { t } = useTranslation();
   const getBlockStyle = () => {
     switch (item.type) {
       case 'fact':
@@ -70,7 +73,7 @@ function ContentBlock({ item }: { item: { type: string; text: string; icon?: str
       </View>
       <View style={styles.blockContent}>
         <Text style={styles.blockLabel}>
-          {item.type === 'fact' ? 'Did you know?' : item.type === 'tip' ? 'Tip' : 'Example'}
+          {item.type === 'fact' ? t('juzFeature.didYouKnow') : item.type === 'tip' ? t('juzFeature.tip') : t('juzFeature.example')}
         </Text>
         <Text style={styles.blockText}>{item.text}</Text>
       </View>
@@ -79,6 +82,8 @@ function ContentBlock({ item }: { item: { type: string; text: string; icon?: str
 }
 
 export default function IntroLessonScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
 
   const lesson = JUZ_INTRO_LESSONS.find((l) => l.id === lessonId);
@@ -87,9 +92,9 @@ export default function IntroLessonScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Lesson not found</Text>
+          <Text style={styles.errorText}>{t('juzFeature.lessonNotFound')}</Text>
           <Pressable style={styles.backButtonError} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -137,10 +142,10 @@ export default function IntroLessonScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.titleGradient}
           >
-            <Text style={styles.lessonTitle}>{lesson.title}</Text>
+            <Text style={styles.lessonTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
             <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
             <View style={styles.divider} />
-            <Text style={styles.lessonDescription}>{lesson.description}</Text>
+            <Text style={styles.lessonDescription}>{lc(lesson.description, (lesson as any).descriptionFr)}</Text>
           </LinearGradient>
         </View>
 
@@ -157,7 +162,7 @@ export default function IntroLessonScreen() {
             <Pressable style={styles.navButtonPrev} onPress={handlePrev}>
               <Ionicons name="arrow-back" size={20} color="#3b82f6" />
               <View style={styles.navButtonContent}>
-                <Text style={styles.navButtonLabel}>Previous</Text>
+                <Text style={styles.navButtonLabel}>{t('common.previous')}</Text>
                 <Text style={styles.navButtonTitle} numberOfLines={1}>
                   {prevLesson.title}
                 </Text>
@@ -170,7 +175,7 @@ export default function IntroLessonScreen() {
           {nextLesson ? (
             <Pressable style={styles.navButtonNext} onPress={handleNext}>
               <View style={styles.navButtonContent}>
-                <Text style={[styles.navButtonLabel, { textAlign: 'right' }]}>Next</Text>
+                <Text style={[styles.navButtonLabel, { textAlign: 'right' }]}>{t('common.next')}</Text>
                 <Text style={[styles.navButtonTitle, { textAlign: 'right' }]} numberOfLines={1}>
                   {nextLesson.title}
                 </Text>
@@ -182,7 +187,7 @@ export default function IntroLessonScreen() {
               style={styles.navButtonComplete}
               onPress={() => router.back()}
             >
-              <Text style={styles.navButtonCompleteText}>Complete</Text>
+              <Text style={styles.navButtonCompleteText}>{t('common.complete')}</Text>
               <Ionicons name="checkmark-circle" size={20} color="#ffffff" />
             </Pressable>
           )}

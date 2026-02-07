@@ -2,23 +2,27 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { TAJWEED_RULES, getAllTajweedCategories, getTajweedRulesByCategory } from '../../../src/data/arabic/quran/tajweed/rules';
 import { TAJWEED_CATEGORY_COLORS } from '../../../src/data/arabic/quran/tajweed/colors';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { TajweedRuleId } from '../../../src/types/quran';
 
-const CATEGORY_NAMES: Record<string, { english: string; arabic: string }> = {
-  noon_sakinah: { english: 'Noon Sakinah & Tanween', arabic: 'النون الساكنة والتنوين' },
-  meem_sakinah: { english: 'Meem Sakinah', arabic: 'الميم الساكنة' },
-  madd: { english: 'Madd (Elongation)', arabic: 'المد' },
-  qalqalah: { english: 'Qalqalah (Echo)', arabic: 'القلقلة' },
-  ghunnah: { english: 'Ghunnah (Nasal)', arabic: 'الغنة' },
-  lam_shamsiyyah: { english: 'Lam Rules', arabic: 'اللام' },
-  recitation_styles: { english: 'Recitation Styles', arabic: 'أساليب التلاوة' },
-  other: { english: 'Other Rules', arabic: 'قواعد أخرى' },
+const CATEGORY_KEYS: Record<string, { key: string; arabic: string }> = {
+  noon_sakinah: { key: 'tajweedFeature.noonSakinah', arabic: 'النون الساكنة والتنوين' },
+  meem_sakinah: { key: 'tajweedFeature.meemSakinah', arabic: 'الميم الساكنة' },
+  madd: { key: 'tajweedFeature.madd', arabic: 'المد' },
+  qalqalah: { key: 'tajweedFeature.qalqalah', arabic: 'القلقلة' },
+  ghunnah: { key: 'tajweedFeature.ghunnah', arabic: 'الغنة' },
+  lam_shamsiyyah: { key: 'tajweedFeature.lamRules', arabic: 'اللام' },
+  recitation_styles: { key: 'tajweedFeature.recitationStyles', arabic: 'أساليب التلاوة' },
+  other: { key: 'tajweedFeature.otherRules', arabic: 'قواعد أخرى' },
 };
 
 export default function TajweedRulesScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { isTajweedRuleLearned, isTajweedRuleMastered, progress } = useQuranStore();
 
   const categories = getAllTajweedCategories();
@@ -42,7 +46,7 @@ export default function TajweedRulesScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerTitle}>
-            <Text style={styles.title}>Tajweed Rules</Text>
+            <Text style={styles.title}>{t('tajweedFeature.title')}</Text>
             <Text style={styles.titleArabic}>أحكام التجويد</Text>
           </View>
           <View style={styles.headerRight} />
@@ -51,7 +55,7 @@ export default function TajweedRulesScreen() {
         {/* Progress Overview */}
         <View style={styles.progressCard}>
           <View style={styles.progressHeader}>
-            <Text style={styles.progressTitle}>Your Progress</Text>
+            <Text style={styles.progressTitle}>{t('common.yourProgress')}</Text>
             <Text style={styles.progressPercent}>{getTotalProgress()}%</Text>
           </View>
           <View style={styles.progressBar}>
@@ -62,19 +66,19 @@ export default function TajweedRulesScreen() {
               <Text style={styles.progressStatValue}>
                 {progress.tajweedProgress.rulesLearned.length}
               </Text>
-              <Text style={styles.progressStatLabel}>Learned</Text>
+              <Text style={styles.progressStatLabel}>{t('common.learned')}</Text>
             </View>
             <View style={styles.progressStat}>
               <Text style={[styles.progressStatValue, { color: '#f59e0b' }]}>
                 {progress.tajweedProgress.rulesMastered.length}
               </Text>
-              <Text style={styles.progressStatLabel}>Mastered</Text>
+              <Text style={styles.progressStatLabel}>{t('common.mastered')}</Text>
             </View>
             <View style={styles.progressStat}>
               <Text style={[styles.progressStatValue, { color: '#8b5cf6' }]}>
                 {TAJWEED_RULES.length}
               </Text>
-              <Text style={styles.progressStatLabel}>Total</Text>
+              <Text style={styles.progressStatLabel}>{t('tajweedFeature.total')}</Text>
             </View>
           </View>
         </View>
@@ -83,7 +87,7 @@ export default function TajweedRulesScreen() {
         <View style={[styles.categoriesContainer, { marginBottom: 100 }]}>
           {categories.map((category) => {
             const rules = getTajweedRulesByCategory(category);
-            const categoryInfo = CATEGORY_NAMES[category] || { english: category, arabic: '' };
+            const categoryKeyInfo = CATEGORY_KEYS[category] || { key: category, arabic: '' };
             const categoryColor = TAJWEED_CATEGORY_COLORS[category as keyof typeof TAJWEED_CATEGORY_COLORS] || '#64748b';
 
             return (
@@ -93,9 +97,9 @@ export default function TajweedRulesScreen() {
                     <View style={[styles.categoryDot, { backgroundColor: categoryColor }]} />
                   </View>
                   <View style={styles.categoryTitles}>
-                    <Text style={styles.categoryTitle}>{categoryInfo.english}</Text>
+                    <Text style={styles.categoryTitle}>{t(categoryKeyInfo.key)}</Text>
                     <Text style={[styles.categoryArabic, { color: categoryColor }]}>
-                      {categoryInfo.arabic}
+                      {categoryKeyInfo.arabic}
                     </Text>
                   </View>
                 </View>
@@ -114,11 +118,11 @@ export default function TajweedRulesScreen() {
                       <View style={[styles.ruleColor, { backgroundColor: rule.colorCode }]} />
                       <View style={styles.ruleContent}>
                         <View style={styles.ruleHeader}>
-                          <Text style={styles.ruleName}>{rule.nameEnglish}</Text>
+                          <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
                           <Text style={styles.ruleArabic}>{rule.nameArabic}</Text>
                         </View>
                         <Text style={styles.ruleDesc} numberOfLines={2}>
-                          {rule.description}
+                          {lc(rule.description, rule.descriptionFr)}
                         </Text>
                       </View>
                       <View style={styles.ruleStatus}>

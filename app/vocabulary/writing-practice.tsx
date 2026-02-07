@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -16,6 +18,8 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 
 export default function VocabularyWritingPracticeScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId: string }>();
   const theme = getThemeById(themeId || '');
   const writingExercises = getWritingExercisesForVocabularyTheme(themeId || '');
@@ -50,9 +54,9 @@ export default function VocabularyWritingPracticeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>No writing exercises available</Text>
+          <Text style={styles.errorText}>{t('vocabulary.noWritingExercises')}</Text>
           <Pressable style={styles.backLink} onPress={() => router.back()}>
-            <Text style={styles.backLinkText}>Go back</Text>
+            <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -148,38 +152,38 @@ export default function VocabularyWritingPracticeScreen() {
             />
           </View>
           <Text style={styles.completeTitle}>
-            {accuracy >= 80 ? 'Excellent!' : accuracy >= 50 ? 'Good Job!' : 'Keep Practicing!'}
+            {accuracy >= 80 ? t('exercise.excellent') : accuracy >= 50 ? t('exercise.goodJob') : t('exercise.keepPracticing')}
           </Text>
           <Text style={styles.completeSubtitle}>
-            {theme.name} - Writing Practice
+            {lc(theme.name, theme.nameFr)} - {t('vocabulary.writingPractice')}
           </Text>
 
           <View style={styles.resultsCard}>
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.correct}</Text>
-              <Text style={styles.resultLabel}>Correct</Text>
+              <Text style={styles.resultLabel}>{t('common.correct')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.total - score.correct}</Text>
-              <Text style={styles.resultLabel}>Wrong</Text>
+              <Text style={styles.resultLabel}>{t('common.wrong')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={[styles.resultValue, { color: '#6366f1' }]}>{accuracy}%</Text>
-              <Text style={styles.resultLabel}>Accuracy</Text>
+              <Text style={styles.resultLabel}>{t('common.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{xpEarned} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
             <Pressable style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color="#D4AF37" />
-              <Text style={styles.retryButtonText}>Try Again</Text>
+              <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
             <Pressable style={styles.doneButton} onPress={() => router.back()}>
-              <Text style={styles.doneButtonText}>Done</Text>
+              <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
         </View>
@@ -195,7 +199,7 @@ export default function VocabularyWritingPracticeScreen() {
           <Ionicons name="close" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>{theme.name}</Text>
+          <Text style={styles.headerTitle}>{lc(theme.name, theme.nameFr)}</Text>
           <Text style={styles.headerProgress}>
             {currentIndex + 1} / {writingExercises.length}
           </Text>
@@ -239,7 +243,7 @@ export default function VocabularyWritingPracticeScreen() {
         {currentExercise.hint && !showHint && !isAnswered && (
           <Pressable style={styles.hintButton} onPress={() => setShowHint(true)}>
             <Ionicons name="bulb-outline" size={18} color="#D4AF37" />
-            <Text style={styles.hintButtonText}>Show Hint</Text>
+            <Text style={styles.hintButtonText}>{t('vocabulary.showHint')}</Text>
           </Pressable>
         )}
 
@@ -261,13 +265,13 @@ export default function VocabularyWritingPracticeScreen() {
                 color={isCorrect ? '#22c55e' : '#ef4444'}
               />
               <Text style={[styles.feedbackTitle, isCorrect ? styles.feedbackTitleCorrect : styles.feedbackTitleWrong]}>
-                {isCorrect ? 'Correct!' : 'Not quite...'}
+                {isCorrect ? t('grammar.correctAnswer') : t('vocabulary.notQuite')}
               </Text>
             </View>
 
             {!isCorrect && (
               <View style={styles.correctAnswerBox}>
-                <Text style={styles.correctAnswerLabel}>Correct answer:</Text>
+                <Text style={styles.correctAnswerLabel}>{t('vocabulary.correctAnswer')}</Text>
                 <Pressable
                   style={styles.correctAnswerRow}
                   onPress={() => speak((currentExercise.correctAnswer as string[])[0])}
@@ -303,7 +307,7 @@ export default function VocabularyWritingPracticeScreen() {
         <View style={styles.actionContainer}>
           <Pressable style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
-              {currentIndex < writingExercises.length - 1 ? 'Next Question' : 'See Results'}
+              {currentIndex < writingExercises.length - 1 ? t('vocabulary.nextQuestion') : t('vocabulary.seeResults')}
             </Text>
             <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>

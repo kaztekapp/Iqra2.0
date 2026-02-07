@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getTajweedRuleById } from '../../../src/data/arabic/quran/tajweed/rules';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { TajweedRuleId, TajweedExample } from '../../../src/types/quran';
@@ -20,33 +22,35 @@ const TAJWEED_RECITERS = [
     id: 'mahmoud-khalil-husary' as ReciterId,
     name: 'Al-Husary',
     nameArabic: 'الحصري',
-    description: 'Classic teaching style',
+    descriptionKey: 'tajweedFeature.classicStyle',
     icon: 'school-outline',
   },
   {
     id: 'mishary-alafasy' as ReciterId,
     name: 'Alafasy',
     nameArabic: 'العفاسي',
-    description: 'Clear & melodic',
+    descriptionKey: 'tajweedFeature.clearMelodic',
     icon: 'musical-notes-outline',
   },
   {
     id: 'abdul-basit-murattal' as ReciterId,
     name: 'Abdul Basit',
     nameArabic: 'عبد الباسط',
-    description: 'Traditional murattal',
+    descriptionKey: 'tajweedFeature.traditionalMurattal',
     icon: 'mic-outline',
   },
   {
     id: 'minshawi-murattal' as ReciterId,
     name: 'Al-Minshawi',
     nameArabic: 'المنشاوي',
-    description: 'Beautiful tajweed',
+    descriptionKey: 'tajweedFeature.beautifulTajweed',
     icon: 'heart-outline',
   },
 ];
 
 export default function TajweedRuleDetailScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { ruleId } = useLocalSearchParams<{ ruleId: string }>();
   const [selectedReciter, setSelectedReciter] = useState<ReciterId>('mahmoud-khalil-husary');
   const [showReciterModal, setShowReciterModal] = useState(false);
@@ -71,7 +75,7 @@ export default function TajweedRuleDetailScreen() {
   if (!rule) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Rule not found</Text>
+        <Text style={styles.errorText}>{t('tajweedFeature.ruleNotFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -147,7 +151,7 @@ export default function TajweedRuleDetailScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.ruleName}>{rule.nameEnglish}</Text>
+            <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
             <Text style={[styles.ruleArabic, { color: rule.colorCode }]}>
               {rule.nameArabic}
             </Text>
@@ -168,7 +172,7 @@ export default function TajweedRuleDetailScreen() {
           <View style={styles.reciterInfo}>
             <Ionicons name="person-circle-outline" size={24} color="#10b981" />
             <View style={styles.reciterText}>
-              <Text style={styles.reciterLabel}>Reciter</Text>
+              <Text style={styles.reciterLabel}>{t('tajweedFeature.reciter')}</Text>
               <Text style={styles.reciterName}>
                 {selectedReciterInfo?.name} ({selectedReciterInfo?.nameArabic})
               </Text>
@@ -179,9 +183,9 @@ export default function TajweedRuleDetailScreen() {
 
         {/* Description */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Description</Text>
+          <Text style={styles.sectionTitle}>{t('tajweedFeature.description')}</Text>
           <View style={styles.descriptionCard}>
-            <Text style={styles.description}>{rule.description}</Text>
+            <Text style={styles.description}>{lc(rule.description, rule.descriptionFr)}</Text>
             {rule.descriptionArabic && (
               <Text style={styles.descriptionArabic}>{rule.descriptionArabic}</Text>
             )}
@@ -191,8 +195,8 @@ export default function TajweedRuleDetailScreen() {
         {/* Letters */}
         {rule.letters && rule.letters.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Letters Involved</Text>
-            <Text style={styles.sectionHint}>Tap a letter to hear its pronunciation</Text>
+            <Text style={styles.sectionTitle}>{t('tajweedFeature.lettersInvolved')}</Text>
+            <Text style={styles.sectionHint}>{t('tajweedFeature.tapLetterToHear')}</Text>
             <View style={styles.lettersContainer}>
               {rule.letters.map((letter, index) => (
                 <Pressable
@@ -210,10 +214,10 @@ export default function TajweedRuleDetailScreen() {
         {/* Duration */}
         {rule.duration && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Duration</Text>
+            <Text style={styles.sectionTitle}>{t('tajweedFeature.duration')}</Text>
             <View style={styles.durationCard}>
               <Ionicons name="time-outline" size={24} color="#10b981" />
-              <Text style={styles.durationText}>{rule.duration} Harakat</Text>
+              <Text style={styles.durationText}>{rule.duration} {t('tajweedFeature.harakat')}</Text>
               <View style={styles.durationDots}>
                 {Array.from({ length: rule.duration }).map((_, i) => (
                   <View key={i} style={styles.durationDot} />
@@ -225,9 +229,9 @@ export default function TajweedRuleDetailScreen() {
 
         {/* Examples with Real Quran Audio */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Examples from the Quran</Text>
+          <Text style={styles.sectionTitle}>{t('tajweedFeature.examplesFromQuran')}</Text>
           <Text style={styles.sectionHint}>
-            Listen to real recitation demonstrating this rule
+            {t('tajweedFeature.listenToRecitation')}
           </Text>
           {rule.examples.map((example, index) => {
             const isCurrentlyPlaying = playingExample === index;
@@ -266,7 +270,7 @@ export default function TajweedRuleDetailScreen() {
                 <View style={styles.exampleSourceTop}>
                   <Ionicons name="book-outline" size={14} color="#10b981" />
                   <Text style={styles.exampleSourceTextTop}>
-                    Surah {example.surahName} ({example.surahNumber}:{example.ayahNumber})
+                    {t('tajweedFeature.surah')} {example.surahName} ({example.surahNumber}:{example.ayahNumber})
                   </Text>
                 </View>
 
@@ -297,7 +301,7 @@ export default function TajweedRuleDetailScreen() {
                     )}
                   </Pressable>
                   <Text style={styles.playHintText}>
-                    {isPlaying ? 'Playing...' : isLoading ? 'Loading...' : 'Tap to listen'}
+                    {isPlaying ? t('tajweedFeature.playing') : isLoading ? t('common.loading') : t('tajweedFeature.tapToListen')}
                   </Text>
                 </View>
 
@@ -308,7 +312,7 @@ export default function TajweedRuleDetailScreen() {
                       <Text style={[styles.highlightText, { color: '#FFFF00' }]}>
                         {example.highlightText}
                       </Text>
-                      <Text style={styles.highlightLabel}>Rule applied here</Text>
+                      <Text style={styles.highlightLabel}>{t('tajweedFeature.ruleAppliedHere')}</Text>
                     </View>
                   </View>
                 )}
@@ -316,7 +320,7 @@ export default function TajweedRuleDetailScreen() {
                 {example.explanation && (
                   <View style={styles.explanationContainer}>
                     <Ionicons name="information-circle-outline" size={16} color="#10b981" />
-                    <Text style={styles.exampleExplanation}>{example.explanation}</Text>
+                    <Text style={styles.exampleExplanation}>{lc(example.explanation, example.explanationFr)}</Text>
                   </View>
                 )}
               </View>
@@ -329,19 +333,19 @@ export default function TajweedRuleDetailScreen() {
           {!isLearned && (
             <Pressable style={styles.primaryButton} onPress={handleMarkLearned}>
               <Ionicons name="checkmark" size={20} color="#ffffff" />
-              <Text style={styles.primaryButtonText}>Mark as Learned</Text>
+              <Text style={styles.primaryButtonText}>{t('tajweedFeature.markLearned')}</Text>
             </Pressable>
           )}
           {isLearned && !isMastered && (
             <Pressable style={styles.masterButton} onPress={handleMarkMastered}>
               <Ionicons name="star" size={20} color="#ffffff" />
-              <Text style={styles.masterButtonText}>Mark as Mastered</Text>
+              <Text style={styles.masterButtonText}>{t('tajweedFeature.markMastered')}</Text>
             </Pressable>
           )}
           {isMastered && (
             <View style={styles.masteredBadge}>
               <Ionicons name="star" size={24} color="#f59e0b" />
-              <Text style={styles.masteredText}>You've mastered this rule!</Text>
+              <Text style={styles.masteredText}>{t('tajweedFeature.masteredRule')}</Text>
             </View>
           )}
         </View>
@@ -357,13 +361,13 @@ export default function TajweedRuleDetailScreen() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Choose Reciter</Text>
+              <Text style={styles.modalTitle}>{t('tajweedFeature.chooseReciter')}</Text>
               <Pressable onPress={() => setShowReciterModal(false)}>
                 <Ionicons name="close" size={24} color="#ffffff" />
               </Pressable>
             </View>
             <Text style={styles.modalSubtitle}>
-              Select a reciter for Tajweed examples
+              {t('tajweedFeature.selectReciter')}
             </Text>
 
             {TAJWEED_RECITERS.map((reciter) => (
@@ -389,7 +393,7 @@ export default function TajweedRuleDetailScreen() {
                   <Text style={styles.reciterOptionName}>
                     {reciter.name} ({reciter.nameArabic})
                   </Text>
-                  <Text style={styles.reciterOptionDesc}>{reciter.description}</Text>
+                  <Text style={styles.reciterOptionDesc}>{t(reciter.descriptionKey)}</Text>
                 </View>
                 {selectedReciter === reciter.id && (
                   <Ionicons name="checkmark-circle" size={24} color="#10b981" />

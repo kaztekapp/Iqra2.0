@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getPrayerLessonById, getAllPrayerLessons } from '../../../src/data/arabic/prayer';
 import { usePrayerStore } from '../../../src/stores/prayerStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
@@ -14,6 +16,8 @@ import {
 } from '../../../src/types/prayer';
 
 export default function PrayerLessonScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
   const { isCompleted, completeLesson, startLesson, setLastViewed } = usePrayerStore();
   const { speak, speakSlow, stop, isSpeaking } = useArabicSpeech();
@@ -79,7 +83,7 @@ export default function PrayerLessonScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#10b981" />
-          <Text style={styles.loadingText}>Loading lesson...</Text>
+          <Text style={styles.loadingText}>{t('prayerFeature.loadingLesson')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -91,8 +95,8 @@ export default function PrayerLessonScreen() {
 
   const renderText = (block: PrayerContent & { type: 'text' }, index: number) => (
     <View key={index} style={styles.sectionBlock}>
-      {block.title && <Text style={styles.sectionTitle}>{block.title}</Text>}
-      <Text style={styles.textContent}>{block.content}</Text>
+      {block.title && <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>}
+      <Text style={styles.textContent}>{lc(block.content, block.contentFr)}</Text>
     </View>
   );
 
@@ -102,7 +106,7 @@ export default function PrayerLessonScreen() {
       <View style={styles.descriptionContent}>
         {block.title && (
           <View style={styles.descriptionHeader}>
-            <Text style={styles.descriptionTitle}>{block.title}</Text>
+            <Text style={styles.descriptionTitle}>{lc(block.title, block.titleFr)}</Text>
             {block.titleArabic && (
               <Text style={styles.descriptionTitleArabic}>{block.titleArabic}</Text>
             )}
@@ -120,7 +124,7 @@ export default function PrayerLessonScreen() {
             </View>
           </Pressable>
         )}
-        <Text style={styles.descriptionText}>{block.content}</Text>
+        <Text style={styles.descriptionText}>{lc(block.content, block.contentFr)}</Text>
       </View>
     </View>
   );
@@ -129,9 +133,9 @@ export default function PrayerLessonScreen() {
     <View key={index} style={styles.ruleCard}>
       <View style={styles.ruleHeader}>
         <Ionicons name={(block.icon as any) || 'shield-checkmark'} size={18} color="#10b981" />
-        {block.title && <Text style={styles.ruleTitle}>{block.title}</Text>}
+        {block.title && <Text style={styles.ruleTitle}>{lc(block.title, block.titleFr)}</Text>}
       </View>
-      <Text style={styles.ruleContent}>{block.content}</Text>
+      <Text style={styles.ruleContent}>{lc(block.content, block.contentFr)}</Text>
     </View>
   );
 
@@ -139,17 +143,19 @@ export default function PrayerLessonScreen() {
     <View key={index} style={styles.noteCard}>
       <View style={styles.noteHeader}>
         <Ionicons name="information-circle" size={18} color="#f59e0b" />
-        {block.title && <Text style={styles.noteTitle}>{block.title}</Text>}
+        {block.title && <Text style={styles.noteTitle}>{lc(block.title, block.titleFr)}</Text>}
       </View>
-      <Text style={styles.noteContent}>{block.content}</Text>
+      <Text style={styles.noteContent}>{lc(block.content, block.contentFr)}</Text>
     </View>
   );
 
-  const renderTable = (block: PrayerContent & { type: 'table' }, index: number) => (
+  const renderTable = (block: PrayerContent & { type: 'table' }, index: number) => {
+    const localizedHeaders = block.headersFr ? lc(block.headers, block.headersFr) : block.headers;
+    return (
     <View key={index} style={styles.sectionBlock}>
       {block.title && (
         <View style={styles.tableTitleRow}>
-          <Text style={styles.sectionTitle}>{block.title}</Text>
+          <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
             <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
           )}
@@ -157,7 +163,7 @@ export default function PrayerLessonScreen() {
       )}
       <View style={styles.tableContainer}>
         <View style={styles.tableHeaderRow}>
-          {block.headers.map((header, i) => (
+          {localizedHeaders.map((header, i) => (
             <View key={i} style={[styles.tableCell, { flex: i === 0 ? 1.2 : 1 }]}>
               <Text style={styles.tableHeaderText}>{header}</Text>
             </View>
@@ -180,13 +186,14 @@ export default function PrayerLessonScreen() {
         ))}
       </View>
     </View>
-  );
+    );
+  };
 
   const renderExamplesGrid = (block: PrayerContent & { type: 'examples_grid' }, index: number) => (
     <View key={index} style={styles.sectionBlock}>
       {block.title && (
         <View style={styles.tableTitleRow}>
-          <Text style={styles.sectionTitle}>{block.title}</Text>
+          <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
             <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
           )}
@@ -208,7 +215,7 @@ export default function PrayerLessonScreen() {
               />
             </View>
             <Text style={styles.exampleTransliteration}>{example.transliteration}</Text>
-            <Text style={styles.exampleTranslation}>{example.translation}</Text>
+            <Text style={styles.exampleTranslation}>{lc(example.translation, example.translationFr)}</Text>
           </Pressable>
         ))}
       </View>
@@ -225,7 +232,7 @@ export default function PrayerLessonScreen() {
             <Text style={styles.prayerStepBadgeText}>{step.stepNumber}</Text>
           </View>
           <View style={styles.prayerStepNames}>
-            <Text style={styles.prayerStepName}>{step.positionName}</Text>
+            <Text style={styles.prayerStepName}>{lc(step.positionName, step.positionNameFr)}</Text>
             <Text style={styles.prayerStepNameArabic}>{step.positionNameArabic}</Text>
           </View>
           {step.isSunnah && (
@@ -253,13 +260,13 @@ export default function PrayerLessonScreen() {
         <Text style={styles.prayerStepTransliteration}>{step.transliteration}</Text>
 
         {/* Translation */}
-        <Text style={styles.prayerStepTranslation}>"{step.translation}"</Text>
+        <Text style={styles.prayerStepTranslation}>"{lc(step.translation, step.translationFr)}"</Text>
 
         {/* Repetitions */}
         {step.repetitions && (
           <View style={styles.repetitionBadge}>
             <Ionicons name="repeat" size={14} color="#10b981" />
-            <Text style={styles.repetitionText}>Repeat {step.repetitions} times</Text>
+            <Text style={styles.repetitionText}>{t('prayerFeature.repeat')} {step.repetitions} {t('prayerFeature.times')}</Text>
           </View>
         )}
 
@@ -267,7 +274,7 @@ export default function PrayerLessonScreen() {
         {step.instruction && (
           <View style={styles.instructionBox}>
             <Ionicons name="information-circle" size={16} color="#94a3b8" />
-            <Text style={styles.instructionText}>{step.instruction}</Text>
+            <Text style={styles.instructionText}>{lc(step.instruction, step.instructionFr)}</Text>
           </View>
         )}
       </View>
@@ -278,7 +285,7 @@ export default function PrayerLessonScreen() {
     <View key={index} style={styles.sectionBlock}>
       {block.title && (
         <View style={styles.tableTitleRow}>
-          <Text style={styles.sectionTitle}>{block.title}</Text>
+          <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
             <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
           )}
@@ -296,12 +303,12 @@ export default function PrayerLessonScreen() {
             {/* Step Content */}
             <View style={styles.stepListContent}>
               <View style={styles.stepListTitleRow}>
-                <Text style={styles.stepListTitle}>{step.title}</Text>
+                <Text style={styles.stepListTitle}>{lc(step.title, step.titleFr)}</Text>
                 {step.titleArabic && (
                   <Text style={styles.stepListTitleArabic}>{step.titleArabic}</Text>
                 )}
               </View>
-              <Text style={styles.stepListDescription}>{step.description}</Text>
+              <Text style={styles.stepListDescription}>{lc(step.description, step.descriptionFr)}</Text>
               {step.arabic && (
                 <Pressable
                   onPress={() => handlePlayArabic(step.arabic!)}
@@ -319,7 +326,7 @@ export default function PrayerLessonScreen() {
                 <Text style={styles.stepListTransliteration}>{step.transliteration}</Text>
               )}
               {step.translation && (
-                <Text style={styles.stepListTranslation}>{step.translation}</Text>
+                <Text style={styles.stepListTranslation}>{lc(step.translation, step.translationFr)}</Text>
               )}
             </View>
           </View>
@@ -335,7 +342,7 @@ export default function PrayerLessonScreen() {
     <View key={index} style={styles.sectionBlock}>
       {block.title && (
         <View style={styles.tableTitleRow}>
-          <Text style={styles.sectionTitle}>{block.title}</Text>
+          <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
             <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
           )}
@@ -348,7 +355,7 @@ export default function PrayerLessonScreen() {
           return (
             <View key={i} style={[styles.prayerTimeCard, { borderLeftColor: color }]}>
               <View style={styles.prayerTimeHeader}>
-                <Text style={[styles.prayerTimeName, { color }]}>{row.name}</Text>
+                <Text style={[styles.prayerTimeName, { color }]}>{lc(row.name, row.nameFr)}</Text>
                 <Text style={styles.prayerTimeArabic}>{row.nameArabic}</Text>
                 <View style={[styles.rakaatBadge, { backgroundColor: color + '20' }]}>
                   <Text style={[styles.rakaatText, { color }]}>{row.rakaat} rak'ahs</Text>
@@ -357,23 +364,23 @@ export default function PrayerLessonScreen() {
               <View style={styles.prayerTimeDetails}>
                 <View style={styles.prayerTimeDetail}>
                   <Ionicons name="time-outline" size={12} color="#64748b" />
-                  <Text style={styles.prayerTimeDetailText}>{row.time}</Text>
+                  <Text style={styles.prayerTimeDetailText}>{lc(row.time, row.timeFr)}</Text>
                 </View>
                 <View style={styles.prayerTimeDetail}>
                   <Ionicons name="volume-medium-outline" size={12} color="#64748b" />
-                  <Text style={styles.prayerTimeDetailText}>{row.recitation}</Text>
+                  <Text style={styles.prayerTimeDetailText}>{lc(row.recitation, row.recitationFr)}</Text>
                 </View>
               </View>
               {(row.sunnahBefore || row.sunnahAfter) && (
                 <View style={styles.sunnahRow}>
                   {row.sunnahBefore && (
                     <Text style={styles.sunnahText}>
-                      {row.sunnahBefore} Sunnah before
+                      {row.sunnahBefore} {t('prayerFeature.sunnahBefore')}
                     </Text>
                   )}
                   {row.sunnahAfter && (
                     <Text style={styles.sunnahText}>
-                      {row.sunnahAfter} Sunnah after
+                      {row.sunnahAfter} {t('prayerFeature.sunnahAfter')}
                     </Text>
                   )}
                 </View>
@@ -419,7 +426,7 @@ export default function PrayerLessonScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.headerTitleText} numberOfLines={1}>
-            {lesson.title}
+            {lc(lesson.title, lesson.titleFr)}
           </Text>
           <Text style={styles.headerTitleArabic}>{lesson.titleArabic}</Text>
         </View>
@@ -476,7 +483,7 @@ export default function PrayerLessonScreen() {
               completed && styles.completeButtonTextActive,
             ]}
           >
-            {completed ? 'Completed' : 'Mark as Complete'}
+            {completed ? t('common.completed') : t('prayerFeature.markComplete')}
           </Text>
         </Pressable>
 

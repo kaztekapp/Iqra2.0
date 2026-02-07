@@ -10,6 +10,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'كَتَبَ',
     presentTense: 'يَكْتُبُ',
     meaning: 'to write',
+    meaningFr: 'écrire',
     level: 'beginner',
     conjugations: {
       past: {
@@ -66,10 +67,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'كَتَبْتُ رِسَالَةً', transliteration: 'katabtu risālatan', english: 'I wrote a letter', tense: 'past' },
-      { arabic: 'أَكْتُبُ الْوَاجِبَ', transliteration: 'aktubu al-wājiba', english: 'I write the homework', tense: 'present' },
-      { arabic: 'سَأَكْتُبُ كِتَابًا', transliteration: 'saʾaktubu kitāban', english: 'I will write a book', tense: 'future' },
-      { arabic: 'اُكْتُبْ اسْمَكَ!', transliteration: 'uktub ismaka!', english: 'Write your name!', tense: 'imperative' },
+      { arabic: 'كَتَبْتُ رِسَالَةً', transliteration: 'katabtu risālatan', english: 'I wrote a letter', french: 'J\'ai écrit une lettre', tense: 'past' },
+      { arabic: 'أَكْتُبُ الْوَاجِبَ', transliteration: 'aktubu al-wājiba', english: 'I write the homework', french: 'J\'écris les devoirs', tense: 'present' },
+      { arabic: 'سَأَكْتُبُ كِتَابًا', transliteration: 'saʾaktubu kitāban', english: 'I will write a book', french: 'J\'écrirai un livre', tense: 'future' },
+      { arabic: 'اُكْتُبْ اسْمَكَ!', transliteration: 'uktub ismaka!', english: 'Write your name!', french: 'Écris ton nom !', tense: 'imperative' },
     ],
   },
 
@@ -82,6 +83,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'قَرَأَ',
     presentTense: 'يَقْرَأُ',
     meaning: 'to read',
+    meaningFr: 'lire',
     level: 'beginner',
     conjugations: {
       past: {
@@ -138,10 +140,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'قَرَأْتُ الْقُرْآنَ', transliteration: 'qaraʾtu al-qurʾān', english: 'I read the Quran', tense: 'past' },
-      { arabic: 'أَقْرَأُ كِتَابًا كُلَّ أُسْبُوعٍ', transliteration: 'aqraʾu kitāban kulla usbūʿ', english: 'I read a book every week', tense: 'present' },
-      { arabic: 'سَأَقْرَأُ الْجَرِيدَةَ غَدًا', transliteration: 'saʾaqraʾu al-jarīdata ghadan', english: 'I will read the newspaper tomorrow', tense: 'future' },
-      { arabic: 'اِقْرَأْ بِصَوْتٍ عَالٍ!', transliteration: 'iqraʾ bi-ṣawtin ʿālin!', english: 'Read aloud!', tense: 'imperative' },
+      { arabic: 'قَرَأْتُ الْقُرْآنَ', transliteration: 'qaraʾtu al-qurʾān', english: 'I read the Quran', french: 'J\'ai lu le Coran', tense: 'past' },
+      { arabic: 'أَقْرَأُ كِتَابًا كُلَّ أُسْبُوعٍ', transliteration: 'aqraʾu kitāban kulla usbūʿ', english: 'I read a book every week', french: 'Je lis un livre chaque semaine', tense: 'present' },
+      { arabic: 'سَأَقْرَأُ الْجَرِيدَةَ غَدًا', transliteration: 'saʾaqraʾu al-jarīdata ghadan', english: 'I will read the newspaper tomorrow', french: 'Je lirai le journal demain', tense: 'future' },
+      { arabic: 'اِقْرَأْ بِصَوْتٍ عَالٍ!', transliteration: 'iqraʾ bi-ṣawtin ʿālin!', english: 'Read aloud!', french: 'Lis à voix haute !', tense: 'imperative' },
     ],
   },
 
@@ -154,6 +156,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'ذَهَبَ',
     presentTense: 'يَذْهَبُ',
     meaning: 'to go',
+    meaningFr: 'aller',
     level: 'beginner',
     conjugations: {
       past: {
@@ -210,10 +213,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'ذَهَبْتُ إِلَى الْمَدْرَسَةِ', transliteration: 'dhahabtu ilā al-madrasa', english: 'I went to school', tense: 'past' },
-      { arabic: 'أَذْهَبُ إِلَى الْعَمَلِ كُلَّ يَوْمٍ', transliteration: 'adh·habu ilā al-ʿamal kulla yawm', english: 'I go to work every day', tense: 'present' },
-      { arabic: 'سَأَذْهَبُ إِلَى السُّوقِ', transliteration: 'saʾadh·habu ilā as-sūq', english: 'I will go to the market', tense: 'future' },
-      { arabic: 'اِذْهَبْ إِلَى غُرْفَتِكَ!', transliteration: 'idh·hab ilā ghurfatika!', english: 'Go to your room!', tense: 'imperative' },
+      { arabic: 'ذَهَبْتُ إِلَى الْمَدْرَسَةِ', transliteration: 'dhahabtu ilā al-madrasa', english: 'I went to school', french: 'Je suis allé à l\'école', tense: 'past' },
+      { arabic: 'أَذْهَبُ إِلَى الْعَمَلِ كُلَّ يَوْمٍ', transliteration: 'adh·habu ilā al-ʿamal kulla yawm', english: 'I go to work every day', french: 'Je vais au travail chaque jour', tense: 'present' },
+      { arabic: 'سَأَذْهَبُ إِلَى السُّوقِ', transliteration: 'saʾadh·habu ilā as-sūq', english: 'I will go to the market', french: 'J\'irai au marché', tense: 'future' },
+      { arabic: 'اِذْهَبْ إِلَى غُرْفَتِكَ!', transliteration: 'idh·hab ilā ghurfatika!', english: 'Go to your room!', french: 'Va dans ta chambre !', tense: 'imperative' },
     ],
   },
 
@@ -226,6 +229,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'أَكَلَ',
     presentTense: 'يَأْكُلُ',
     meaning: 'to eat',
+    meaningFr: 'manger',
     level: 'beginner',
     conjugations: {
       past: {
@@ -282,10 +286,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'أَكَلْتُ الْفَطُورَ', transliteration: 'akaltu al-faṭūr', english: 'I ate breakfast', tense: 'past' },
-      { arabic: 'آكُلُ الْفَاكِهَةَ كُلَّ يَوْمٍ', transliteration: 'ākulu al-fākiha kulla yawm', english: 'I eat fruit every day', tense: 'present' },
-      { arabic: 'سَآكُلُ الْعَشَاءَ فِي الْمَطْعَمِ', transliteration: 'saʾākulu al-ʿashāʾ fī al-maṭʿam', english: 'I will eat dinner at the restaurant', tense: 'future' },
-      { arabic: 'كُلْ خُضَارَكَ!', transliteration: 'kul khuḍāraka!', english: 'Eat your vegetables!', tense: 'imperative' },
+      { arabic: 'أَكَلْتُ الْفَطُورَ', transliteration: 'akaltu al-faṭūr', english: 'I ate breakfast', french: 'J\'ai mangé le petit-déjeuner', tense: 'past' },
+      { arabic: 'آكُلُ الْفَاكِهَةَ كُلَّ يَوْمٍ', transliteration: 'ākulu al-fākiha kulla yawm', english: 'I eat fruit every day', french: 'Je mange des fruits chaque jour', tense: 'present' },
+      { arabic: 'سَآكُلُ الْعَشَاءَ فِي الْمَطْعَمِ', transliteration: 'saʾākulu al-ʿashāʾ fī al-maṭʿam', english: 'I will eat dinner at the restaurant', french: 'Je dînerai au restaurant', tense: 'future' },
+      { arabic: 'كُلْ خُضَارَكَ!', transliteration: 'kul khuḍāraka!', english: 'Eat your vegetables!', french: 'Mange tes légumes !', tense: 'imperative' },
     ],
   },
 
@@ -298,6 +302,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'شَرِبَ',
     presentTense: 'يَشْرَبُ',
     meaning: 'to drink',
+    meaningFr: 'boire',
     level: 'beginner',
     conjugations: {
       past: {
@@ -354,10 +359,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'شَرِبْتُ الْمَاءَ', transliteration: 'sharibtu al-māʾ', english: 'I drank water', tense: 'past' },
-      { arabic: 'أَشْرَبُ الْقَهْوَةَ صَبَاحًا', transliteration: 'ashrabu al-qahwa ṣabāḥan', english: 'I drink coffee in the morning', tense: 'present' },
-      { arabic: 'سَأَشْرَبُ الشَّايَ', transliteration: 'saʾashrabu ash-shāy', english: 'I will drink tea', tense: 'future' },
-      { arabic: 'اِشْرَبْ حَلِيبَكَ!', transliteration: 'ishrab ḥalībaka!', english: 'Drink your milk!', tense: 'imperative' },
+      { arabic: 'شَرِبْتُ الْمَاءَ', transliteration: 'sharibtu al-māʾ', english: 'I drank water', french: 'J\'ai bu de l\'eau', tense: 'past' },
+      { arabic: 'أَشْرَبُ الْقَهْوَةَ صَبَاحًا', transliteration: 'ashrabu al-qahwa ṣabāḥan', english: 'I drink coffee in the morning', french: 'Je bois du café le matin', tense: 'present' },
+      { arabic: 'سَأَشْرَبُ الشَّايَ', transliteration: 'saʾashrabu ash-shāy', english: 'I will drink tea', french: 'Je boirai du thé', tense: 'future' },
+      { arabic: 'اِشْرَبْ حَلِيبَكَ!', transliteration: 'ishrab ḥalībaka!', english: 'Drink your milk!', french: 'Bois ton lait !', tense: 'imperative' },
     ],
   },
 
@@ -370,6 +375,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'فَعَلَ',
     presentTense: 'يَفْعَلُ',
     meaning: 'to do',
+    meaningFr: 'faire',
     level: 'beginner',
     conjugations: {
       past: {
@@ -426,10 +432,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'فَعَلْتُ ذَلِكَ', transliteration: 'faʿaltu dhālika', english: 'I did that', tense: 'past' },
-      { arabic: 'مَاذَا تَفْعَلُ؟', transliteration: 'mādhā tafʿalu?', english: 'What are you doing?', tense: 'present' },
-      { arabic: 'سَأَفْعَلُ مَا تُرِيدُ', transliteration: 'saʾafʿalu mā turīd', english: 'I will do what you want', tense: 'future' },
-      { arabic: 'اِفْعَلْ الْخَيْرَ!', transliteration: 'ifʿal al-khayr!', english: 'Do good!', tense: 'imperative' },
+      { arabic: 'فَعَلْتُ ذَلِكَ', transliteration: 'faʿaltu dhālika', english: 'I did that', french: 'J\'ai fait cela', tense: 'past' },
+      { arabic: 'مَاذَا تَفْعَلُ؟', transliteration: 'mādhā tafʿalu?', english: 'What are you doing?', french: 'Que fais-tu ?', tense: 'present' },
+      { arabic: 'سَأَفْعَلُ مَا تُرِيدُ', transliteration: 'saʾafʿalu mā turīd', english: 'I will do what you want', french: 'Je ferai ce que tu veux', tense: 'future' },
+      { arabic: 'اِفْعَلْ الْخَيْرَ!', transliteration: 'ifʿal al-khayr!', english: 'Do good!', french: 'Fais le bien !', tense: 'imperative' },
     ],
   },
 
@@ -442,6 +448,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'دَرَسَ',
     presentTense: 'يَدْرُسُ',
     meaning: 'to study',
+    meaningFr: 'étudier',
     level: 'beginner',
     conjugations: {
       past: {
@@ -498,10 +505,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'دَرَسْتُ الْعَرَبِيَّةَ', transliteration: 'darastu al-ʿarabiyya', english: 'I studied Arabic', tense: 'past' },
-      { arabic: 'أَدْرُسُ فِي الْجَامِعَةِ', transliteration: 'adrusu fī al-jāmiʿa', english: 'I study at the university', tense: 'present' },
-      { arabic: 'سَأَدْرُسُ الطِّبَّ', transliteration: 'saʾadrusu aṭ-ṭibb', english: 'I will study medicine', tense: 'future' },
-      { arabic: 'اُدْرُسْ جَيِّدًا!', transliteration: 'udrus jayyidan!', english: 'Study well!', tense: 'imperative' },
+      { arabic: 'دَرَسْتُ الْعَرَبِيَّةَ', transliteration: 'darastu al-ʿarabiyya', english: 'I studied Arabic', french: 'J\'ai étudié l\'arabe', tense: 'past' },
+      { arabic: 'أَدْرُسُ فِي الْجَامِعَةِ', transliteration: 'adrusu fī al-jāmiʿa', english: 'I study at the university', french: 'J\'étudie à l\'université', tense: 'present' },
+      { arabic: 'سَأَدْرُسُ الطِّبَّ', transliteration: 'saʾadrusu aṭ-ṭibb', english: 'I will study medicine', french: 'J\'étudierai la médecine', tense: 'future' },
+      { arabic: 'اُدْرُسْ جَيِّدًا!', transliteration: 'udrus jayyidan!', english: 'Study well!', french: 'Étudie bien !', tense: 'imperative' },
     ],
   },
 
@@ -514,6 +521,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'سَمِعَ',
     presentTense: 'يَسْمَعُ',
     meaning: 'to hear / to listen',
+    meaningFr: 'entendre / écouter',
     level: 'beginner',
     conjugations: {
       past: {
@@ -570,10 +578,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'سَمِعْتُ صَوْتًا', transliteration: 'samiʿtu ṣawtan', english: 'I heard a sound', tense: 'past' },
-      { arabic: 'أَسْمَعُ الْمُوسِيقَى', transliteration: 'asmaʿu al-mūsīqā', english: 'I listen to music', tense: 'present' },
-      { arabic: 'سَأَسْمَعُ الْأَخْبَارَ', transliteration: 'saʾasmaʿu al-akhbār', english: 'I will listen to the news', tense: 'future' },
-      { arabic: 'اِسْمَعْ لِي!', transliteration: 'ismaʿ lī!', english: 'Listen to me!', tense: 'imperative' },
+      { arabic: 'سَمِعْتُ صَوْتًا', transliteration: 'samiʿtu ṣawtan', english: 'I heard a sound', french: 'J\'ai entendu un son', tense: 'past' },
+      { arabic: 'أَسْمَعُ الْمُوسِيقَى', transliteration: 'asmaʿu al-mūsīqā', english: 'I listen to music', french: 'J\'écoute de la musique', tense: 'present' },
+      { arabic: 'سَأَسْمَعُ الْأَخْبَارَ', transliteration: 'saʾasmaʿu al-akhbār', english: 'I will listen to the news', french: 'J\'écouterai les nouvelles', tense: 'future' },
+      { arabic: 'اِسْمَعْ لِي!', transliteration: 'ismaʿ lī!', english: 'Listen to me!', french: 'Écoute-moi !', tense: 'imperative' },
     ],
   },
 
@@ -586,6 +594,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'عَرَفَ',
     presentTense: 'يَعْرِفُ',
     meaning: 'to know',
+    meaningFr: 'connaître',
     level: 'beginner',
     conjugations: {
       past: {
@@ -642,10 +651,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'عَرَفْتُ الْجَوَابَ', transliteration: 'ʿaraftu al-jawāb', english: 'I knew the answer', tense: 'past' },
-      { arabic: 'أَعْرِفُ هَذَا الرَّجُلَ', transliteration: 'aʿrifu hādhā ar-rajul', english: 'I know this man', tense: 'present' },
-      { arabic: 'سَأَعْرِفُ الْحَقِيقَةَ', transliteration: 'saʾaʿrifu al-ḥaqīqa', english: 'I will know the truth', tense: 'future' },
-      { arabic: 'اِعْرِفْ نَفْسَكَ!', transliteration: 'iʿrif nafsaka!', english: 'Know yourself!', tense: 'imperative' },
+      { arabic: 'عَرَفْتُ الْجَوَابَ', transliteration: 'ʿaraftu al-jawāb', english: 'I knew the answer', french: 'J\'ai connu la réponse', tense: 'past' },
+      { arabic: 'أَعْرِفُ هَذَا الرَّجُلَ', transliteration: 'aʿrifu hādhā ar-rajul', english: 'I know this man', french: 'Je connais cet homme', tense: 'present' },
+      { arabic: 'سَأَعْرِفُ الْحَقِيقَةَ', transliteration: 'saʾaʿrifu al-ḥaqīqa', english: 'I will know the truth', french: 'Je connaîtrai la vérité', tense: 'future' },
+      { arabic: 'اِعْرِفْ نَفْسَكَ!', transliteration: 'iʿrif nafsaka!', english: 'Know yourself!', french: 'Connais-toi toi-même !', tense: 'imperative' },
     ],
   },
 
@@ -658,6 +667,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'تَكَلَّمَ',
     presentTense: 'يَتَكَلَّمُ',
     meaning: 'to speak',
+    meaningFr: 'parler',
     level: 'beginner',
     conjugations: {
       past: {
@@ -714,10 +724,10 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'تَكَلَّمْتُ مَعَ الْمُدِيرِ', transliteration: 'takallmtu maʿa al-mudīr', english: 'I spoke with the manager', tense: 'past' },
-      { arabic: 'أَتَكَلَّمُ الْعَرَبِيَّةَ', transliteration: 'atakallamu al-ʿarabiyya', english: 'I speak Arabic', tense: 'present' },
-      { arabic: 'سَأَتَكَلَّمُ فِي الاِجْتِمَاعِ', transliteration: 'saʾatakallamu fī al-ijtimāʿ', english: 'I will speak in the meeting', tense: 'future' },
-      { arabic: 'تَكَلَّمْ بِبُطْءٍ!', transliteration: 'takallam bi-buṭʾ!', english: 'Speak slowly!', tense: 'imperative' },
+      { arabic: 'تَكَلَّمْتُ مَعَ الْمُدِيرِ', transliteration: 'takallmtu maʿa al-mudīr', english: 'I spoke with the manager', french: 'J\'ai parlé avec le directeur', tense: 'past' },
+      { arabic: 'أَتَكَلَّمُ الْعَرَبِيَّةَ', transliteration: 'atakallamu al-ʿarabiyya', english: 'I speak Arabic', french: 'Je parle arabe', tense: 'present' },
+      { arabic: 'سَأَتَكَلَّمُ فِي الاِجْتِمَاعِ', transliteration: 'saʾatakallamu fī al-ijtimāʿ', english: 'I will speak in the meeting', french: 'Je parlerai à la réunion', tense: 'future' },
+      { arabic: 'تَكَلَّمْ بِبُطْءٍ!', transliteration: 'takallam bi-buṭʾ!', english: 'Speak slowly!', french: 'Parle lentement !', tense: 'imperative' },
     ],
   },
 
@@ -730,6 +740,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'جَاءَ',
     presentTense: 'يَجِيءُ',
     meaning: 'to come',
+    meaningFr: 'venir',
     level: 'beginner',
     conjugations: {
       past: {
@@ -786,11 +797,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'جِئْتُ مُبَكِّرًا', transliteration: 'jiʾtu mubakkiran', english: 'I came early', tense: 'past' },
-      { arabic: 'جَاءَ الضَّيْفُ', transliteration: 'jāʾa aḍ-ḍayf', english: 'The guest came', tense: 'past' },
-      { arabic: 'أَجِيءُ كُلَّ يَوْمٍ', transliteration: 'ajīʾu kulla yawm', english: 'I come every day', tense: 'present' },
-      { arabic: 'سَأَجِيءُ غَدًا', transliteration: 'saʾajīʾu ghadan', english: 'I will come tomorrow', tense: 'future' },
-      { arabic: 'جِئْ هُنَا!', transliteration: 'jiʾ hunā!', english: 'Come here!', tense: 'imperative' },
+      { arabic: 'جِئْتُ مُبَكِّرًا', transliteration: 'jiʾtu mubakkiran', english: 'I came early', french: 'Je suis venu tôt', tense: 'past' },
+      { arabic: 'جَاءَ الضَّيْفُ', transliteration: 'jāʾa aḍ-ḍayf', english: 'The guest came', french: 'L\'invité est venu', tense: 'past' },
+      { arabic: 'أَجِيءُ كُلَّ يَوْمٍ', transliteration: 'ajīʾu kulla yawm', english: 'I come every day', french: 'Je viens chaque jour', tense: 'present' },
+      { arabic: 'سَأَجِيءُ غَدًا', transliteration: 'saʾajīʾu ghadan', english: 'I will come tomorrow', french: 'Je viendrai demain', tense: 'future' },
+      { arabic: 'جِئْ هُنَا!', transliteration: 'jiʾ hunā!', english: 'Come here!', french: 'Viens ici !', tense: 'imperative' },
     ],
   },
 
@@ -803,6 +814,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'رَأَى',
     presentTense: 'يَرَى',
     meaning: 'to see',
+    meaningFr: 'voir',
     level: 'beginner',
     conjugations: {
       past: {
@@ -859,11 +871,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'رَأَيْتُ صَدِيقِي', transliteration: 'raʾaytu ṣadīqī', english: 'I saw my friend', tense: 'past' },
-      { arabic: 'رَأَتْ الْفِيلْمَ', transliteration: 'raʾat al-fīlm', english: 'She saw the movie', tense: 'past' },
-      { arabic: 'أَرَى الْجَبَلَ', transliteration: 'arā al-jabal', english: 'I see the mountain', tense: 'present' },
-      { arabic: 'مَاذَا تَرَى؟', transliteration: 'mādhā tarā?', english: 'What do you see?', tense: 'present' },
-      { arabic: 'سَأَرَاكَ غَدًا', transliteration: 'saʾarāka ghadan', english: 'I will see you tomorrow', tense: 'future' },
+      { arabic: 'رَأَيْتُ صَدِيقِي', transliteration: 'raʾaytu ṣadīqī', english: 'I saw my friend', french: 'J\'ai vu mon ami', tense: 'past' },
+      { arabic: 'رَأَتْ الْفِيلْمَ', transliteration: 'raʾat al-fīlm', english: 'She saw the movie', french: 'Elle a vu le film', tense: 'past' },
+      { arabic: 'أَرَى الْجَبَلَ', transliteration: 'arā al-jabal', english: 'I see the mountain', french: 'Je vois la montagne', tense: 'present' },
+      { arabic: 'مَاذَا تَرَى؟', transliteration: 'mādhā tarā?', english: 'What do you see?', french: 'Que vois-tu ?', tense: 'present' },
+      { arabic: 'سَأَرَاكَ غَدًا', transliteration: 'saʾarāka ghadan', english: 'I will see you tomorrow', french: 'Je te verrai demain', tense: 'future' },
     ],
   },
 
@@ -876,6 +888,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'قَالَ',
     presentTense: 'يَقُولُ',
     meaning: 'to say',
+    meaningFr: 'dire',
     level: 'beginner',
     conjugations: {
       past: {
@@ -932,11 +945,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'قُلْتُ الْحَقِيقَةَ', transliteration: 'qultu al-ḥaqīqa', english: 'I said the truth', tense: 'past' },
-      { arabic: 'قَالَ لِي', transliteration: 'qāla lī', english: 'He said to me', tense: 'past' },
-      { arabic: 'مَاذَا تَقُولُ؟', transliteration: 'mādhā taqūlu?', english: 'What are you saying?', tense: 'present' },
-      { arabic: 'أَقُولُ لَكَ', transliteration: 'aqūlu laka', english: 'I tell you', tense: 'present' },
-      { arabic: 'قُلْ بِسْمِ اللهِ!', transliteration: 'qul bismillāh!', english: 'Say Bismillah!', tense: 'imperative' },
+      { arabic: 'قُلْتُ الْحَقِيقَةَ', transliteration: 'qultu al-ḥaqīqa', english: 'I said the truth', french: 'J\'ai dit la vérité', tense: 'past' },
+      { arabic: 'قَالَ لِي', transliteration: 'qāla lī', english: 'He said to me', french: 'Il m\'a dit', tense: 'past' },
+      { arabic: 'مَاذَا تَقُولُ؟', transliteration: 'mādhā taqūlu?', english: 'What are you saying?', french: 'Que dis-tu ?', tense: 'present' },
+      { arabic: 'أَقُولُ لَكَ', transliteration: 'aqūlu laka', english: 'I tell you', french: 'Je te dis', tense: 'present' },
+      { arabic: 'قُلْ بِسْمِ اللهِ!', transliteration: 'qul bismillāh!', english: 'Say Bismillah!', french: 'Dis Bismillah !', tense: 'imperative' },
     ],
   },
 
@@ -949,6 +962,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'أَخَذَ',
     presentTense: 'يَأْخُذُ',
     meaning: 'to take',
+    meaningFr: 'prendre',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1005,11 +1019,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'أَخَذْتُ الْكِتَابَ', transliteration: 'akhadhtu al-kitāb', english: 'I took the book', tense: 'past' },
-      { arabic: 'أَخَذَ الْقَلَمَ', transliteration: 'akhadha al-qalam', english: 'He took the pen', tense: 'past' },
-      { arabic: 'آخُذُ دَرْسًا', transliteration: 'ākhudhu darsan', english: 'I take a lesson', tense: 'present' },
-      { arabic: 'سَآخُذُ الْحَقِيبَةَ', transliteration: 'saʾākhudhu al-ḥaqība', english: 'I will take the bag', tense: 'future' },
-      { arabic: 'خُذْ هَذَا!', transliteration: 'khudh hādhā!', english: 'Take this!', tense: 'imperative' },
+      { arabic: 'أَخَذْتُ الْكِتَابَ', transliteration: 'akhadhtu al-kitāb', english: 'I took the book', french: 'J\'ai pris le livre', tense: 'past' },
+      { arabic: 'أَخَذَ الْقَلَمَ', transliteration: 'akhadha al-qalam', english: 'He took the pen', french: 'Il a pris le stylo', tense: 'past' },
+      { arabic: 'آخُذُ دَرْسًا', transliteration: 'ākhudhu darsan', english: 'I take a lesson', french: 'Je prends un cours', tense: 'present' },
+      { arabic: 'سَآخُذُ الْحَقِيبَةَ', transliteration: 'saʾākhudhu al-ḥaqība', english: 'I will take the bag', french: 'Je prendrai le sac', tense: 'future' },
+      { arabic: 'خُذْ هَذَا!', transliteration: 'khudh hādhā!', english: 'Take this!', french: 'Prends ceci !', tense: 'imperative' },
     ],
   },
 
@@ -1022,6 +1036,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'أَعْطَى',
     presentTense: 'يُعْطِي',
     meaning: 'to give',
+    meaningFr: 'donner',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1078,11 +1093,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'أَعْطَيْتُهُ الْمَالَ', transliteration: 'aʿṭaytuhu al-māl', english: 'I gave him the money', tense: 'past' },
-      { arabic: 'أَعْطَتْنِي هَدِيَّةً', transliteration: 'aʿṭatnī hadiyya', english: 'She gave me a gift', tense: 'past' },
-      { arabic: 'أُعْطِيكَ نَصِيحَةً', transliteration: 'uʿṭīka naṣīḥa', english: 'I give you advice', tense: 'present' },
-      { arabic: 'سَأُعْطِيكَ الْجَوَابَ', transliteration: 'saʾuʿṭīka al-jawāb', english: 'I will give you the answer', tense: 'future' },
-      { arabic: 'أَعْطِنِي الْكِتَابَ!', transliteration: 'aʿṭinī al-kitāb!', english: 'Give me the book!', tense: 'imperative' },
+      { arabic: 'أَعْطَيْتُهُ الْمَالَ', transliteration: 'aʿṭaytuhu al-māl', english: 'I gave him the money', french: 'Je lui ai donné l\'argent', tense: 'past' },
+      { arabic: 'أَعْطَتْنِي هَدِيَّةً', transliteration: 'aʿṭatnī hadiyya', english: 'She gave me a gift', french: 'Elle m\'a donné un cadeau', tense: 'past' },
+      { arabic: 'أُعْطِيكَ نَصِيحَةً', transliteration: 'uʿṭīka naṣīḥa', english: 'I give you advice', french: 'Je te donne un conseil', tense: 'present' },
+      { arabic: 'سَأُعْطِيكَ الْجَوَابَ', transliteration: 'saʾuʿṭīka al-jawāb', english: 'I will give you the answer', french: 'Je te donnerai la réponse', tense: 'future' },
+      { arabic: 'أَعْطِنِي الْكِتَابَ!', transliteration: 'aʿṭinī al-kitāb!', english: 'Give me the book!', french: 'Donne-moi le livre !', tense: 'imperative' },
     ],
   },
 
@@ -1095,6 +1110,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'نَامَ',
     presentTense: 'يَنَامُ',
     meaning: 'to sleep',
+    meaningFr: 'dormir',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1151,11 +1167,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'نِمْتُ بَاكِرًا', transliteration: 'nimtu bākiran', english: 'I slept early', tense: 'past' },
-      { arabic: 'نَامَ الطِّفْلُ', transliteration: 'nāma aṭ-ṭifl', english: 'The child slept', tense: 'past' },
-      { arabic: 'أَنَامُ ثَمَانِ سَاعَاتٍ', transliteration: 'anāmu thamān sāʿāt', english: 'I sleep eight hours', tense: 'present' },
-      { arabic: 'سَأَنَامُ الْآنَ', transliteration: 'saʾanāmu al-ān', english: 'I will sleep now', tense: 'future' },
-      { arabic: 'نَمْ جَيِّدًا!', transliteration: 'nam jayyidan!', english: 'Sleep well!', tense: 'imperative' },
+      { arabic: 'نِمْتُ بَاكِرًا', transliteration: 'nimtu bākiran', english: 'I slept early', french: 'J\'ai dormi tôt', tense: 'past' },
+      { arabic: 'نَامَ الطِّفْلُ', transliteration: 'nāma aṭ-ṭifl', english: 'The child slept', french: 'L\'enfant a dormi', tense: 'past' },
+      { arabic: 'أَنَامُ ثَمَانِ سَاعَاتٍ', transliteration: 'anāmu thamān sāʿāt', english: 'I sleep eight hours', french: 'Je dors huit heures', tense: 'present' },
+      { arabic: 'سَأَنَامُ الْآنَ', transliteration: 'saʾanāmu al-ān', english: 'I will sleep now', french: 'Je vais dormir maintenant', tense: 'future' },
+      { arabic: 'نَمْ جَيِّدًا!', transliteration: 'nam jayyidan!', english: 'Sleep well!', french: 'Dors bien !', tense: 'imperative' },
     ],
   },
 
@@ -1168,6 +1184,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'فَتَحَ',
     presentTense: 'يَفْتَحُ',
     meaning: 'to open',
+    meaningFr: 'ouvrir',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1224,11 +1241,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'فَتَحْتُ الْبَابَ', transliteration: 'fataḥtu al-bāb', english: 'I opened the door', tense: 'past' },
-      { arabic: 'فَتَحَتِ النَّافِذَةَ', transliteration: 'fataḥat an-nāfidha', english: 'She opened the window', tense: 'past' },
-      { arabic: 'أَفْتَحُ الْكِتَابَ', transliteration: 'aftaḥu al-kitāb', english: 'I open the book', tense: 'present' },
-      { arabic: 'سَأَفْتَحُ الْمَتْجَرَ', transliteration: 'saʾaftaḥu al-matjar', english: 'I will open the store', tense: 'future' },
-      { arabic: 'اِفْتَحْ عَيْنَيْكَ!', transliteration: 'iftaḥ ʿaynayka!', english: 'Open your eyes!', tense: 'imperative' },
+      { arabic: 'فَتَحْتُ الْبَابَ', transliteration: 'fataḥtu al-bāb', english: 'I opened the door', french: 'J\'ai ouvert la porte', tense: 'past' },
+      { arabic: 'فَتَحَتِ النَّافِذَةَ', transliteration: 'fataḥat an-nāfidha', english: 'She opened the window', french: 'Elle a ouvert la fenêtre', tense: 'past' },
+      { arabic: 'أَفْتَحُ الْكِتَابَ', transliteration: 'aftaḥu al-kitāb', english: 'I open the book', french: 'J\'ouvre le livre', tense: 'present' },
+      { arabic: 'سَأَفْتَحُ الْمَتْجَرَ', transliteration: 'saʾaftaḥu al-matjar', english: 'I will open the store', french: 'J\'ouvrirai le magasin', tense: 'future' },
+      { arabic: 'اِفْتَحْ عَيْنَيْكَ!', transliteration: 'iftaḥ ʿaynayka!', english: 'Open your eyes!', french: 'Ouvre tes yeux !', tense: 'imperative' },
     ],
   },
 
@@ -1241,6 +1258,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'أَغْلَقَ',
     presentTense: 'يُغْلِقُ',
     meaning: 'to close',
+    meaningFr: 'fermer',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1297,11 +1315,11 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'أَغْلَقْتُ الْبَابَ', transliteration: 'aghlaqtu al-bāb', english: 'I closed the door', tense: 'past' },
-      { arabic: 'أَغْلَقَ الْمَتْجَرَ', transliteration: 'aghlaqa al-matjar', english: 'He closed the store', tense: 'past' },
-      { arabic: 'أُغْلِقُ النَّافِذَةَ', transliteration: 'ughliqu an-nāfidha', english: 'I close the window', tense: 'present' },
-      { arabic: 'سَأُغْلِقُ الْهَاتِفَ', transliteration: 'saʾughliqu al-hātif', english: 'I will close/turn off the phone', tense: 'future' },
-      { arabic: 'أَغْلِقِ الْبَابَ!', transliteration: 'aghliq al-bāb!', english: 'Close the door!', tense: 'imperative' },
+      { arabic: 'أَغْلَقْتُ الْبَابَ', transliteration: 'aghlaqtu al-bāb', english: 'I closed the door', french: 'J\'ai fermé la porte', tense: 'past' },
+      { arabic: 'أَغْلَقَ الْمَتْجَرَ', transliteration: 'aghlaqa al-matjar', english: 'He closed the store', french: 'Il a fermé le magasin', tense: 'past' },
+      { arabic: 'أُغْلِقُ النَّافِذَةَ', transliteration: 'ughliqu an-nāfidha', english: 'I close the window', french: 'Je ferme la fenêtre', tense: 'present' },
+      { arabic: 'سَأُغْلِقُ الْهَاتِفَ', transliteration: 'saʾughliqu al-hātif', english: 'I will close/turn off the phone', french: 'Je fermerai/éteindrai le téléphone', tense: 'future' },
+      { arabic: 'أَغْلِقِ الْبَابَ!', transliteration: 'aghliq al-bāb!', english: 'Close the door!', french: 'Ferme la porte !', tense: 'imperative' },
     ],
   },
 
@@ -1314,6 +1332,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'أَحَبَّ',
     presentTense: 'يُحِبُّ',
     meaning: 'to love / to like',
+    meaningFr: 'aimer',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1370,12 +1389,12 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'أَحْبَبْتُهَا', transliteration: 'aḥbabtuhā', english: 'I loved her', tense: 'past' },
-      { arabic: 'أَحَبَّ الْعَرَبِيَّةَ', transliteration: 'aḥabba al-ʿarabiyya', english: 'He loved Arabic', tense: 'past' },
-      { arabic: 'أُحِبُّكَ', transliteration: 'uḥibbuka', english: 'I love you (m)', tense: 'present' },
-      { arabic: 'أُحِبُّ الْقِرَاءَةَ', transliteration: 'uḥibbu al-qirāʾa', english: 'I love reading', tense: 'present' },
-      { arabic: 'هَلْ تُحِبُّ الْقَهْوَةَ؟', transliteration: 'hal tuḥibbu al-qahwa?', english: 'Do you like coffee?', tense: 'present' },
-      { arabic: 'سَأُحِبُّهُ دَائِمًا', transliteration: 'saʾuḥibbuhu dāʾiman', english: 'I will love him always', tense: 'future' },
+      { arabic: 'أَحْبَبْتُهَا', transliteration: 'aḥbabtuhā', english: 'I loved her', french: 'Je l\'ai aimée', tense: 'past' },
+      { arabic: 'أَحَبَّ الْعَرَبِيَّةَ', transliteration: 'aḥabba al-ʿarabiyya', english: 'He loved Arabic', french: 'Il a aimé l\'arabe', tense: 'past' },
+      { arabic: 'أُحِبُّكَ', transliteration: 'uḥibbuka', english: 'I love you (m)', french: 'Je t\'aime (m.)', tense: 'present' },
+      { arabic: 'أُحِبُّ الْقِرَاءَةَ', transliteration: 'uḥibbu al-qirāʾa', english: 'I love reading', french: 'J\'aime la lecture', tense: 'present' },
+      { arabic: 'هَلْ تُحِبُّ الْقَهْوَةَ؟', transliteration: 'hal tuḥibbu al-qahwa?', english: 'Do you like coffee?', french: 'Aimes-tu le café ?', tense: 'present' },
+      { arabic: 'سَأُحِبُّهُ دَائِمًا', transliteration: 'saʾuḥibbuhu dāʾiman', english: 'I will love him always', french: 'Je l\'aimerai toujours', tense: 'future' },
     ],
   },
 
@@ -1388,6 +1407,7 @@ export const arabicVerbs: ArabicVerb[] = [
     pastTense: 'فَهِمَ',
     presentTense: 'يَفْهَمُ',
     meaning: 'to understand',
+    meaningFr: 'comprendre',
     level: 'beginner',
     conjugations: {
       past: {
@@ -1444,12 +1464,12 @@ export const arabicVerbs: ArabicVerb[] = [
       },
     },
     examples: [
-      { arabic: 'فَهِمْتُ الدَّرْسَ', transliteration: 'fahimtu ad-dars', english: 'I understood the lesson', tense: 'past' },
-      { arabic: 'فَهِمَتِ الْمَسْأَلَةَ', transliteration: 'fahimat al-masʾala', english: 'She understood the problem', tense: 'past' },
-      { arabic: 'أَفْهَمُ الْعَرَبِيَّةَ', transliteration: 'afhamu al-ʿarabiyya', english: 'I understand Arabic', tense: 'present' },
-      { arabic: 'لَا أَفْهَمُ', transliteration: 'lā afhamu', english: 'I don\'t understand', tense: 'present' },
-      { arabic: 'هَلْ تَفْهَمُ؟', transliteration: 'hal tafhamu?', english: 'Do you understand?', tense: 'present' },
-      { arabic: 'سَأَفْهَمُ لَاحِقًا', transliteration: 'saʾafhamu lāḥiqan', english: 'I will understand later', tense: 'future' },
+      { arabic: 'فَهِمْتُ الدَّرْسَ', transliteration: 'fahimtu ad-dars', english: 'I understood the lesson', french: 'J\'ai compris la leçon', tense: 'past' },
+      { arabic: 'فَهِمَتِ الْمَسْأَلَةَ', transliteration: 'fahimat al-masʾala', english: 'She understood the problem', french: 'Elle a compris le problème', tense: 'past' },
+      { arabic: 'أَفْهَمُ الْعَرَبِيَّةَ', transliteration: 'afhamu al-ʿarabiyya', english: 'I understand Arabic', french: 'Je comprends l\'arabe', tense: 'present' },
+      { arabic: 'لَا أَفْهَمُ', transliteration: 'lā afhamu', english: 'I don\'t understand', french: 'Je ne comprends pas', tense: 'present' },
+      { arabic: 'هَلْ تَفْهَمُ؟', transliteration: 'hal tafhamu?', english: 'Do you understand?', french: 'Comprends-tu ?', tense: 'present' },
+      { arabic: 'سَأَفْهَمُ لَاحِقًا', transliteration: 'saʾafhamu lāḥiqan', english: 'I will understand later', french: 'Je comprendrai plus tard', tense: 'future' },
     ],
   },
 ];

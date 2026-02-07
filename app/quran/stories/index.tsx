@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, TextInput, StyleSheet } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { PROPHETS, TOTAL_PROPHETS } from '../../../src/data/arabic/prophets';
 import { QURAN_STORIES, TOTAL_QURAN_STORIES } from '../../../src/data/arabic/quranStories';
 import { ProphetCard } from '../../../src/components/prophetStories';
@@ -15,6 +17,8 @@ import { QuranStoryListItem } from '../../../src/types/quranStories';
 type TabType = 'prophets' | 'other';
 
 export default function StoriesScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [activeTab, setActiveTab] = useState<TabType>('prophets');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -62,17 +66,17 @@ export default function StoriesScreen() {
 
       return {
         id: prophet.id,
-        nameEnglish: prophet.nameEnglish,
+        nameEnglish: lc(prophet.nameEnglish, prophet.nameFrench),
         nameArabic: prophet.nameArabic,
         order: prophet.order,
-        title: prophet.title,
-        summary: prophet.summary,
+        title: lc(prophet.title, prophet.titleFr),
+        summary: lc(prophet.summary, prophet.summaryFr),
         isCompleted: isStoryCompleted(prophet.id),
         progress: completionPercent,
         estimatedReadTime: prophet.estimatedReadTime,
       };
     });
-  }, [filteredProphets, getStoryProgress, isStoryCompleted]);
+  }, [filteredProphets, getStoryProgress, isStoryCompleted, lc]);
 
   // Transform Quran stories to list items with progress
   const quranStoryListItems: QuranStoryListItem[] = useMemo(() => {
@@ -82,18 +86,18 @@ export default function StoriesScreen() {
 
       return {
         id: story.id,
-        titleEnglish: story.titleEnglish,
+        titleEnglish: lc(story.titleEnglish, story.titleFrench),
         titleArabic: story.titleArabic,
         order: story.order,
         category: story.category,
-        description: story.description,
+        description: lc(story.description, story.descriptionFr),
         isCompleted,
         progress: isCompleted ? 100 : progress.percentComplete,
         estimatedReadTime: story.estimatedReadTime,
         icon: story.icon,
       };
     });
-  }, [filteredQuranStories, getQuranStoryProgress, isQuranStoryCompleted]);
+  }, [filteredQuranStories, getQuranStoryProgress, isQuranStoryCompleted, lc]);
 
   const prophetStoriesCompleted = getTotalStoriesCompleted();
   const quranStoriesCompleted = getTotalQuranStoriesCompleted();
@@ -118,7 +122,7 @@ export default function StoriesScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Quran Stories</Text>
+          <Text style={styles.title}>{t('storiesFeature.title')}</Text>
           <Text style={styles.titleArabic}>قصص القرآن</Text>
         </View>
         <View style={{ width: 40 }} />
@@ -136,7 +140,7 @@ export default function StoriesScreen() {
             color={activeTab === 'prophets' ? '#8b5cf6' : '#64748b'}
           />
           <Text style={[styles.tabText, activeTab === 'prophets' && styles.activeTabText]}>
-            Prophets
+            {t('storiesFeature.prophets')}
           </Text>
           <View style={[styles.tabBadge, activeTab === 'prophets' && styles.activeTabBadge]}>
             <Text style={[styles.tabBadgeText, activeTab === 'prophets' && styles.activeTabBadgeText]}>
@@ -154,7 +158,7 @@ export default function StoriesScreen() {
             color={activeTab === 'other' ? '#8b5cf6' : '#64748b'}
           />
           <Text style={[styles.tabText, activeTab === 'other' && styles.activeTabText]}>
-            Other Stories
+            {t('storiesFeature.otherStories')}
           </Text>
           <View style={[styles.tabBadge, activeTab === 'other' && styles.activeTabBadge]}>
             <Text style={[styles.tabBadgeText, activeTab === 'other' && styles.activeTabBadgeText]}>
@@ -174,12 +178,12 @@ export default function StoriesScreen() {
             </View>
             <View style={styles.progressDetails}>
               <Text style={styles.progressTitle}>
-                {activeTab === 'prophets' ? 'Prophet Stories' : 'Quran Stories'} Completed
+                {activeTab === 'prophets' ? t('storiesFeature.prophetStories') : t('storiesFeature.quranStories')} {t('common.completed')}
               </Text>
               <Text style={styles.progressSubtitle}>
                 {activeTab === 'prophets'
-                  ? 'Learn about the prophets mentioned in the Quran'
-                  : 'Discover other remarkable stories from the Quran'}
+                  ? t('storiesFeature.learnAboutProphets')
+                  : t('storiesFeature.discoverStories')}
               </Text>
             </View>
           </View>
@@ -197,7 +201,7 @@ export default function StoriesScreen() {
             <Ionicons name="search" size={18} color="#64748b" />
             <TextInput
               style={styles.searchInput}
-              placeholder={activeTab === 'prophets' ? 'Search prophets...' : 'Search stories...'}
+              placeholder={activeTab === 'prophets' ? t('storiesFeature.searchProphets') : t('storiesFeature.searchStories')}
               placeholderTextColor="#64748b"
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -217,8 +221,8 @@ export default function StoriesScreen() {
             prophetListItems.length === 0 ? (
               <View style={styles.emptyState}>
                 <Ionicons name="search-outline" size={48} color="#475569" />
-                <Text style={styles.emptyStateText}>No prophets found</Text>
-                <Text style={styles.emptyStateSubtext}>Try a different search term</Text>
+                <Text style={styles.emptyStateText}>{t('storiesFeature.noProphetsFound')}</Text>
+                <Text style={styles.emptyStateSubtext}>{t('storiesFeature.tryDifferentSearch')}</Text>
               </View>
             ) : (
               prophetListItems.map((prophet) => (
@@ -233,8 +237,8 @@ export default function StoriesScreen() {
             quranStoryListItems.length === 0 ? (
               <View style={styles.emptyState}>
                 <Ionicons name="search-outline" size={48} color="#475569" />
-                <Text style={styles.emptyStateText}>No stories found</Text>
-                <Text style={styles.emptyStateSubtext}>Try a different search term</Text>
+                <Text style={styles.emptyStateText}>{t('storiesFeature.noStoriesFound')}</Text>
+                <Text style={styles.emptyStateSubtext}>{t('storiesFeature.tryDifferentSearch')}</Text>
               </View>
             ) : (
               quranStoryListItems.map((story) => (

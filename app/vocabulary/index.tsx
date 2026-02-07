@@ -2,10 +2,14 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { vocabularyThemes } from '../../src/data/arabic/vocabulary';
 import { useProgressStore } from '../../src/stores/progressStore';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 
 export default function VocabularyScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { progress, getVocabularyCompletionPercent, getVocabularyReviewStats } = useProgressStore();
   const startedThemes = progress.vocabularyProgress.themesStarted;
   const completedThemes = progress.vocabularyProgress.themesCompleted;
@@ -27,7 +31,7 @@ export default function VocabularyScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Vocabulary</Text>
+            <Text style={styles.title}>{t('vocabulary.title')}</Text>
             <Text style={styles.titleArabic}>الْمُفْرَدَات</Text>
           </View>
         </View>
@@ -37,30 +41,30 @@ export default function VocabularyScreen() {
           <View style={styles.progressStats}>
             <View style={styles.progressStat}>
               <Text style={styles.progressStatValue}>{wordsLearned}</Text>
-              <Text style={styles.progressStatLabel}>Words Learned</Text>
+              <Text style={styles.progressStatLabel}>{t('vocabulary.wordsLearned')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={styles.progressStatValue}>
                 {completedThemes.length}/{vocabularyThemes.length}
               </Text>
-              <Text style={styles.progressStatLabel}>Themes Complete</Text>
+              <Text style={styles.progressStatLabel}>{t('vocabulary.themesComplete')}</Text>
             </View>
             <View style={styles.progressDivider} />
             <View style={styles.progressStat}>
               <Text style={styles.progressStatValue}>
                 {getVocabularyCompletionPercent()}%
               </Text>
-              <Text style={styles.progressStatLabel}>Overall</Text>
+              <Text style={styles.progressStatLabel}>{t('vocabulary.overall')}</Text>
             </View>
           </View>
         </View>
 
         {/* Theme Grid */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Vocabulary Themes</Text>
+          <Text style={styles.sectionTitle}>{t('vocabulary.vocabularyThemes')}</Text>
           <Text style={styles.sectionSubtitle}>
-            Master essential words organized by topic
+            {t('vocabulary.themesSubtitle')}
           </Text>
 
           <View style={styles.themeGrid}>
@@ -77,10 +81,10 @@ export default function VocabularyScreen() {
                   >
                     <Text style={styles.themeIcon}>{theme.icon}</Text>
                   </View>
-                  <Text style={styles.themeName}>{theme.name}</Text>
+                  <Text style={styles.themeName}>{lc(theme.name, theme.nameFr)}</Text>
                   <Text style={styles.themeNameAr}>{theme.nameArabic}</Text>
                   <View style={styles.themeFooter}>
-                    <Text style={styles.themeWordCount}>{theme.wordCount} words</Text>
+                    <Text style={styles.themeWordCount}>{t('vocabulary.wordsCount', { count: theme.wordCount })}</Text>
                     {status === 'completed' && (
                       <View style={styles.completedBadge}>
                         <Ionicons name="checkmark-circle" size={14} color="#10b981" />
@@ -113,10 +117,10 @@ export default function VocabularyScreen() {
                   <Ionicons name="timer" size={28} color="#6366f1" />
                 </View>
                 <View style={styles.reviewText}>
-                  <Text style={styles.reviewTitle}>Spaced Review</Text>
+                  <Text style={styles.reviewTitle}>{t('vocabulary.spacedReview')}</Text>
                   <Text style={styles.reviewTitleArabic}>المراجعة المتكررة</Text>
                   <Text style={styles.reviewDesc}>
-                    {reviewStats.dueToday} word{reviewStats.dueToday !== 1 ? 's' : ''} due for review
+                    {t('vocabulary.wordsDueReview', { count: reviewStats.dueToday })}
                   </Text>
                 </View>
                 <View style={styles.reviewBadge}>
@@ -126,11 +130,11 @@ export default function VocabularyScreen() {
               <View style={styles.reviewStats}>
                 <View style={styles.reviewStatItem}>
                   <Text style={styles.reviewStatValue}>{reviewStats.learned}</Text>
-                  <Text style={styles.reviewStatLabel}>Learning</Text>
+                  <Text style={styles.reviewStatLabel}>{t('vocabulary.learning')}</Text>
                 </View>
                 <View style={styles.reviewStatItem}>
                   <Text style={[styles.reviewStatValue, { color: '#22c55e' }]}>{reviewStats.mastered}</Text>
-                  <Text style={styles.reviewStatLabel}>Mastered</Text>
+                  <Text style={styles.reviewStatLabel}>{t('common.mastered')}</Text>
                 </View>
               </View>
             </Pressable>
@@ -139,7 +143,7 @@ export default function VocabularyScreen() {
 
         {/* Quick Practice */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Text style={styles.sectionTitle}>Practice Mode</Text>
+          <Text style={styles.sectionTitle}>{t('vocabulary.practiceMode')}</Text>
 
           {/* SRS Review - always visible */}
           <Pressable
@@ -151,11 +155,11 @@ export default function VocabularyScreen() {
                 <Ionicons name="timer" size={28} color="#6366f1" />
               </View>
               <View style={styles.practiceText}>
-                <Text style={styles.practiceTitle}>Spaced Review</Text>
+                <Text style={styles.practiceTitle}>{t('vocabulary.spacedReview')}</Text>
                 <Text style={styles.practiceDesc}>
                   {reviewStats.dueToday > 0
-                    ? `${reviewStats.dueToday} word${reviewStats.dueToday !== 1 ? 's' : ''} due today`
-                    : 'No words due - all caught up!'}
+                    ? t('vocabulary.wordsDueToday', { count: reviewStats.dueToday })
+                    : t('vocabulary.noDueWords')}
                 </Text>
               </View>
               {reviewStats.dueToday > 0 && (
@@ -176,9 +180,9 @@ export default function VocabularyScreen() {
                 <Ionicons name="layers" size={28} color="#D4AF37" />
               </View>
               <View style={styles.practiceText}>
-                <Text style={styles.practiceTitle}>Flashcards</Text>
+                <Text style={styles.practiceTitle}>{t('vocabulary.flashcards')}</Text>
                 <Text style={styles.practiceDesc}>
-                  Review all vocabulary with interactive flashcards
+                  {t('vocabulary.flashcardsDesc')}
                 </Text>
               </View>
               <Ionicons name="chevron-forward" size={24} color="#64748b" />
@@ -194,9 +198,9 @@ export default function VocabularyScreen() {
                 <Ionicons name="mic" size={28} color="#10b981" />
               </View>
               <View style={styles.practiceText}>
-                <Text style={styles.practiceTitle}>Speaking Practice</Text>
+                <Text style={styles.practiceTitle}>{t('vocabulary.speakingPractice')}</Text>
                 <Text style={styles.practiceDesc}>
-                  Record yourself and improve pronunciation
+                  {t('vocabulary.speakingPracticeDesc')}
                 </Text>
               </View>
               <Ionicons name="chevron-forward" size={24} color="#64748b" />

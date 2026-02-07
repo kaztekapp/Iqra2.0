@@ -2,6 +2,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { QUIZ_CATEGORIES } from '../../../src/data/arabic/quran/quizzes';
 import { QuizCategoryInfo } from '../../../src/types/quran';
 
@@ -11,18 +13,20 @@ interface CategoryCardProps {
 }
 
 function CategoryCard({ category, onPress }: CategoryCardProps) {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   return (
     <Pressable style={styles.categoryCard} onPress={onPress}>
       <View style={[styles.categoryIcon, { backgroundColor: `${category.color}20` }]}>
         <Ionicons name={category.icon as any} size={28} color={category.color} />
       </View>
       <View style={styles.categoryInfo}>
-        <Text style={styles.categoryName}>{category.nameEnglish}</Text>
+        <Text style={styles.categoryName}>{lc(category.nameEnglish, category.nameFrench)}</Text>
         <Text style={styles.categoryNameArabic}>{category.nameArabic}</Text>
-        <Text style={styles.categoryDesc}>{category.description}</Text>
+        <Text style={styles.categoryDesc}>{lc(category.description, category.descriptionFr)}</Text>
         <View style={styles.questionCount}>
           <Ionicons name="help-circle-outline" size={14} color="#64748b" />
-          <Text style={styles.questionCountText}>{category.questionCount} questions</Text>
+          <Text style={styles.questionCountText}>{category.questionCount} {t('quranQuiz.questions')}</Text>
         </View>
       </View>
       <Ionicons name="chevron-forward" size={20} color="#64748b" />
@@ -31,6 +35,7 @@ function CategoryCard({ category, onPress }: CategoryCardProps) {
 }
 
 export default function QuizCategoriesScreen() {
+  const { t } = useTranslation();
   const handleCategoryPress = (categoryId: string) => {
     // Juz category has its own dedicated learning screen with Learn/Quiz tabs
     if (categoryId === 'juz') {
@@ -59,7 +64,7 @@ export default function QuizCategoriesScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerTitle}>
-            <Text style={styles.title}>Quran Quizzes</Text>
+            <Text style={styles.title}>{t('quranQuiz.title')}</Text>
             <Text style={styles.titleArabic}>اختبارات القرآن</Text>
           </View>
           <View style={{ width: 40 }} />
@@ -68,15 +73,15 @@ export default function QuizCategoriesScreen() {
         {/* Intro Card */}
         <View style={styles.introCard}>
           <Ionicons name="trophy" size={32} color="#f59e0b" />
-          <Text style={styles.introTitle}>Test Your Knowledge</Text>
+          <Text style={styles.introTitle}>{t('quranQuiz.testYourKnowledge')}</Text>
           <Text style={styles.introDesc}>
-            Challenge yourself with quizzes about Surahs, Ayahs, Tajweed, and more!
+            {t('quranQuiz.challengeDescription')}
           </Text>
         </View>
 
         {/* Categories */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Choose a Category</Text>
+          <Text style={styles.sectionTitle}>{t('quranQuiz.chooseCategory')}</Text>
           {QUIZ_CATEGORIES.map((category) => (
             <CategoryCard
               key={category.id}

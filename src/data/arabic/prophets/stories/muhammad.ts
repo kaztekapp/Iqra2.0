@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference }
 export const muhammadStory: Prophet = {
   id: 'muhammad',
   nameEnglish: 'Muhammad ﷺ',
+  nameFrench: 'Muhammad ﷺ',
   nameArabic: 'محمد',
   order: 25,
   title: 'The Seal of the Prophets',
+  titleFr: 'Le Sceau des Prophètes',
   titleArabic: 'خاتم النبيين',
   summary: "Prophet Muhammad ﷺ is the final messenger of Allah, sent as a mercy to all worlds. Born in Makkah in the Year of the Elephant (570 CE), orphaned young, he grew to be known as Al-Amin (The Trustworthy). At 40, he received the first revelation in Cave Hira, beginning 23 years of prophethood. He endured persecution in Makkah, migrated to Madinah, established the first Islamic state, and returned to conquer Makkah peacefully. His companions transformed from a persecuted few to the leaders of Arabia. His life (Sira) and teachings (Sunnah) provide the complete model for human existence. The Quran revealed to him remains unchanged as Allah's final guidance to humanity.",
+  summaryFr: "Le Prophète Muhammad ﷺ est le dernier messager d'Allah, envoyé comme miséricorde pour tous les mondes. Né à La Mecque l'Année de l'Éléphant (570 ap. J.-C.), orphelin très jeune, il devint connu sous le nom d'Al-Amin (Le Digne de Confiance). À 40 ans, il reçut la première révélation dans la grotte de Hira, commençant 23 ans de prophétie. Il endura la persécution à La Mecque, émigra à Médine, établit le premier État islamique et revint conquérir La Mecque pacifiquement. Ses compagnons passèrent d'une poignée de persécutés aux dirigeants de l'Arabie. Sa vie (Sira) et ses enseignements (Sunna) fournissent le modèle complet pour l'existence humaine. Le Coran qui lui fut révélé reste inchangé comme la guidance finale d'Allah pour l'humanité.",
   hasSubStories: false,
   lessons: [
     'Trust in Allah through the darkest times brings ultimate victory',
@@ -20,6 +23,14 @@ export const muhammadStory: Prophet = {
     'Brotherhood in faith transcends tribal and racial bonds',
     'Forgiveness is more powerful than revenge',
     'The message of all prophets culminates in Islam',
+  ],
+  lessonsFr: [
+    'La confiance en Allah dans les moments les plus sombres mène à la victoire ultime',
+    'Le meilleur caractère s\'acquiert par la patience et la persévérance',
+    'Le vrai leadership combine miséricorde et justice',
+    'La fraternité dans la foi transcende les liens tribaux et raciaux',
+    'Le pardon est plus puissant que la vengeance',
+    'Le message de tous les prophètes culmine dans l\'Islam',
   ],
   estimatedReadTime: 45,
   quranMentions: 4,
@@ -34,18 +45,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "The story of Prophet Muhammad ﷺ begins long before his birth. He descended from a noble lineage - the Quraysh tribe, the custodians of the Ka'bah built by Ibrahim and Ismail. Within Quraysh, he belonged to Banu Hashim, known for their honor, generosity, and the privilege of providing water to pilgrims. His grandfather, Abdul Muttalib, was the chief of Makkah who rediscovered the well of Zamzam.",
+    contentFr: "L'histoire du Prophète Muhammad ﷺ commence bien avant sa naissance. Il descendait d'une noble lignée — la tribu de Quraysh, les gardiens de la Ka'bah construite par Ibrahim et Ismaïl. Au sein de Quraysh, il appartenait aux Banu Hashim, connus pour leur honneur, leur générosité et le privilège de fournir de l'eau aux pèlerins. Son grand-père, Abdul Muttalib, était le chef de La Mecque qui redécouvrit le puits de Zamzam.",
   },
   {
     id: 'muhammad-2',
     type: 'narrative',
     order: 2,
     content: "The year of the Prophet's birth was marked by a miraculous event. Abraha, the Abyssinian ruler of Yemen, built a grand cathedral to divert Arab pilgrims from the Ka'bah. When his plan failed, he marched toward Makkah with a massive army and war elephants to destroy the Sacred House. The Makkans, vastly outnumbered, fled to the mountains. Abdul Muttalib famously said: 'I am only the lord of the camels. The House has its own Lord who will protect it.'",
+    contentFr: "L'année de la naissance du Prophète fut marquée par un événement miraculeux. Abraha, le souverain abyssinien du Yémen, construisit une grande cathédrale pour détourner les pèlerins arabes de la Ka'bah. Quand son plan échoua, il marcha vers La Mecque avec une armée massive et des éléphants de guerre pour détruire la Maison Sacrée. Les Mecquois, largement surpassés en nombre, fuirent dans les montagnes. Abdul Muttalib dit sa célèbre phrase : « Je ne suis que le maître des chameaux. La Maison a son propre Seigneur qui la protégera. »",
   },
   {
     id: 'muhammad-3',
     type: 'quran_source',
     order: 3,
     content: "Allah describes how He destroyed the army of the elephant.",
+    contentFr: "Allah décrit comment Il détruisit l'armée de l'éléphant.",
     source: {
       type: 'quran',
       surahNumber: 105,
@@ -55,6 +69,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 5,
       arabicText: 'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ۝ أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ ۝ وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ۝ تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ ۝ فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ',
       translation: 'Have you not considered how your Lord dealt with the companions of the elephant? Did He not make their plan into misguidance? And He sent against them birds in flocks, striking them with stones of hard clay, and He made them like eaten straw.',
+      translationFr: "N'as-tu pas vu comment ton Seigneur a agi avec les gens de l'éléphant ? N'a-t-Il pas rendu leur ruse complètement vaine ? Et envoyé sur eux des oiseaux par vagues successives, qui leur lançaient des pierres d'argile dure, et les a rendus semblables à de la paille mâchée.",
     } as QuranReference,
   },
   {
@@ -62,12 +77,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: "Allah sent flocks of birds carrying stones of baked clay, which rained down upon Abraha's army, destroying them completely. This miraculous protection of the Ka'bah, just before the Prophet's birth, signified that Allah was preparing the way for the final messenger. The Arabs marked this as the Year of the Elephant ('Am al-Fil), and it became a reference point for dating events.",
+    contentFr: "Allah envoya des vols d'oiseaux portant des pierres d'argile cuite, qui s'abattirent sur l'armée d'Abraha, les détruisant complètement. Cette protection miraculeuse de la Ka'bah, juste avant la naissance du Prophète, signifiait qu'Allah préparait la voie pour le dernier messager. Les Arabes marquèrent cela comme l'Année de l'Éléphant ('Am al-Fil), et cela devint un point de référence pour dater les événements.",
   },
   {
     id: 'muhammad-5',
     type: 'narrative',
     order: 5,
     content: "Muhammad's father, Abdullah ibn Abdul Muttalib, was known for his striking beauty and noble character. Before Muhammad's birth, Abdullah traveled to Syria on a trading journey. On his return, he stopped in Yathrib (later Madinah) where he fell ill and passed away. He was buried there, never seeing his son. Aminah bint Wahb, Muhammad's mother, was left a widow carrying the future prophet.",
+    contentFr: "Le père de Muhammad, Abdullah ibn Abdul Muttalib, était connu pour sa beauté frappante et son noble caractère. Avant la naissance de Muhammad, Abdullah voyagea en Syrie pour le commerce. À son retour, il s'arrêta à Yathrib (plus tard Médine) où il tomba malade et mourut. Il y fut enterré, n'ayant jamais vu son fils. Aminah bint Wahb, la mère de Muhammad, resta veuve portant le futur prophète.",
   },
 
   // ===== SECTION 2: HIS BIRTH AND EARLY CHILDHOOD =====
@@ -76,18 +93,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: "Muhammad ﷺ was born on a Monday, the 12th of Rabi' al-Awwal, in the Year of the Elephant (approximately 570 CE). His mother Aminah reported seeing a light emanating from her that illuminated the palaces of Syria. This light represented the guidance he would bring to the world. Abdul Muttalib, overjoyed at his grandson's birth, named him Muhammad - 'the praised one' - a name virtually unknown among Arabs at that time.",
+    contentFr: "Muhammad ﷺ naquit un lundi, le 12 Rabi' al-Awwal, en l'Année de l'Éléphant (environ 570 ap. J.-C.). Sa mère Aminah rapporta avoir vu une lumière émanant d'elle qui illumina les palais de Syrie. Cette lumière représentait la guidance qu'il apporterait au monde. Abdul Muttalib, ravi de la naissance de son petit-fils, le nomma Muhammad — « le loué » — un nom pratiquement inconnu parmi les Arabes à cette époque.",
   },
   {
     id: 'muhammad-7',
     type: 'hadith_source',
     order: 7,
     content: "The Prophet ﷺ spoke about his blessed birth and lineage.",
+    contentFr: "Le Prophète ﷺ parla de sa naissance bénie et de sa lignée.",
     source: {
       type: 'hadith',
       collection: 'muslim',
       narrator: 'Wathilah ibn al-Asqa',
       arabicText: 'إِنَّ اللَّهَ اصْطَفَى كِنَانَةَ مِنْ وَلَدِ إِسْمَاعِيلَ وَاصْطَفَى قُرَيْشًا مِنْ كِنَانَةَ وَاصْطَفَى مِنْ قُرَيْشٍ بَنِي هَاشِمٍ وَاصْطَفَانِي مِنْ بَنِي هَاشِمٍ',
       translation: "Allah chose Kinanah from the children of Ismail, and He chose Quraysh from Kinanah, and He chose Banu Hashim from Quraysh, and He chose me from Banu Hashim.",
+      translationFr: "Allah choisit Kinanah parmi les enfants d'Ismaïl, et Il choisit Quraysh parmi Kinanah, et Il choisit les Banu Hashim parmi Quraysh, et Il me choisit parmi les Banu Hashim.",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -96,18 +116,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 8,
     content: "Following Arab custom, the infant Muhammad was given to a wet nurse from the desert, where the air was pure and Arabic was spoken in its most eloquent form. Halimah bint Abi Dhuayb, from the tribe of Banu Sa'd, became his nursing mother. Though initially hesitant to take an orphan (since orphans meant less payment), she found that from the moment she took Muhammad, blessings filled her life - her thin camel gave abundant milk, and prosperity came to her household.",
+    contentFr: "Suivant la coutume arabe, le nourrisson Muhammad fut confié à une nourrice du désert, où l'air était pur et l'arabe parlé dans sa forme la plus éloquente. Halimah bint Abi Dhuayb, de la tribu des Banu Sa'd, devint sa mère nourricière. Bien qu'initialement hésitante à prendre un orphelin (les orphelins signifiant moins de paiement), elle constata que dès le moment où elle prit Muhammad, les bénédictions remplirent sa vie — sa chamelle maigre donna du lait en abondance, et la prospérité vint à son foyer.",
   },
   {
     id: 'muhammad-9',
     type: 'narrative',
     order: 9,
     content: "During his time with Banu Sa'd, a remarkable incident occurred. While young Muhammad was playing with other children, two figures in white (angels) came to him, laid him down, opened his chest, removed his heart, extracted a black clot from it, washed his heart with Zamzam water, and returned it. This 'opening of the chest' purified him from any inclination toward evil. The other children ran to Halimah crying that Muhammad had been killed, but they found him standing, pale but unharmed.",
+    contentFr: "Pendant son séjour chez les Banu Sa'd, un incident remarquable se produisit. Tandis que le jeune Muhammad jouait avec d'autres enfants, deux figures en blanc (des anges) vinrent à lui, le couchèrent, ouvrirent sa poitrine, retirèrent son cœur, en extrayèrent un caillot noir, lavèrent son cœur avec l'eau de Zamzam et le remirent en place. Cette « ouverture de la poitrine » le purifia de toute inclination vers le mal. Les autres enfants coururent vers Halimah en pleurant que Muhammad avait été tué, mais ils le trouvèrent debout, pâle mais indemne.",
   },
   {
     id: 'muhammad-10',
     type: 'quran_source',
     order: 10,
     content: "Allah references the expansion of the Prophet's chest.",
+    contentFr: "Allah fait référence à l'expansion de la poitrine du Prophète.",
     source: {
       type: 'quran',
       surahNumber: 94,
@@ -117,6 +140,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 3,
       arabicText: 'أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ۝ وَوَضَعْنَا عَنكَ وِزْرَكَ ۝ الَّذِي أَنقَضَ ظَهْرَكَ',
       translation: 'Did We not expand for you your breast? And We removed from you your burden, which had weighed upon your back.',
+      translationFr: "N'avons-Nous pas ouvert pour toi ta poitrine ? Et Ne t'avons-Nous pas déchargé du fardeau qui pesait sur ton dos ?",
     } as QuranReference,
   },
   {
@@ -124,12 +148,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 11,
     content: "Frightened by this incident, Halimah returned Muhammad to his mother Aminah when he was about five years old. Aminah took him to visit his father's grave in Yathrib and to meet his relatives there. On the return journey, she fell ill at a place called Abwa. She passed away there, leaving six-year-old Muhammad an orphan of both parents. He would remember this loss throughout his life; years later, visiting her grave moved him to tears.",
+    contentFr: "Effrayée par cet incident, Halimah rendit Muhammad à sa mère Aminah quand il avait environ cinq ans. Aminah l'emmena visiter la tombe de son père à Yathrib et rencontrer ses proches là-bas. Au retour, elle tomba malade dans un endroit appelé Abwa. Elle y mourut, laissant Muhammad, âgé de six ans, orphelin des deux parents. Il se souviendrait de cette perte toute sa vie ; des années plus tard, la visite de sa tombe le fit pleurer.",
   },
   {
     id: 'muhammad-12',
     type: 'quran_source',
     order: 12,
     content: "Allah reminds the Prophet of how He cared for him as an orphan.",
+    contentFr: "Allah rappelle au Prophète comment Il a pris soin de lui en tant qu'orphelin.",
     source: {
       type: 'quran',
       surahNumber: 93,
@@ -139,6 +165,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 8,
       arabicText: 'أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ ۝ وَوَجَدَكَ ضَالًّا فَهَدَىٰ ۝ وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ',
       translation: 'Did He not find you an orphan and give [you] refuge? And He found you lost and guided [you]. And He found you poor and made [you] self-sufficient.',
+      translationFr: "Ne t'a-t-Il pas trouvé orphelin et t'a donné un refuge ? Et Il t'a trouvé égaré et t'a guidé. Et Il t'a trouvé pauvre et t'a enrichi.",
     } as QuranReference,
   },
   {
@@ -146,6 +173,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: "Muhammad's grandfather, Abdul Muttalib, now took him in. The elderly chief deeply loved his grandson, allowing him to sit on his cushion - an honor given to no one else. But when Muhammad was eight, Abdul Muttalib also passed away. On his deathbed, he entrusted Muhammad to his son Abu Talib, who would remain the Prophet's protector and supporter for the next forty years, despite never embracing Islam.",
+    contentFr: "Le grand-père de Muhammad, Abdul Muttalib, le prit alors en charge. Le chef âgé aimait profondément son petit-fils, lui permettant de s'asseoir sur son coussin — un honneur accordé à personne d'autre. Mais quand Muhammad eut huit ans, Abdul Muttalib mourut aussi. Sur son lit de mort, il confia Muhammad à son fils Abu Talib, qui resterait le protecteur et le soutien du Prophète pendant les quarante années suivantes, bien qu'il n'ait jamais embrassé l'Islam.",
   },
 
   // ===== SECTION 3: YOUTH AND EARLY MANHOOD =====
@@ -154,18 +182,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 14,
     content: "Abu Talib was not wealthy, so young Muhammad worked to support himself. He tended sheep in the hills around Makkah - a profession shared by many prophets before him. This humble work taught him patience, responsibility, and care for the weak. He would later say that Allah never sent a prophet who was not a shepherd.",
+    contentFr: "Abu Talib n'était pas riche, alors le jeune Muhammad travailla pour subvenir à ses besoins. Il garda des moutons dans les collines autour de La Mecque — un métier partagé par de nombreux prophètes avant lui. Ce travail humble lui enseigna la patience, la responsabilité et le soin des faibles. Il dirait plus tard qu'Allah n'a jamais envoyé de prophète qui n'ait été berger.",
   },
   {
     id: 'muhammad-15',
     type: 'hadith_source',
     order: 15,
     content: "The Prophet ﷺ mentioned that he worked as a shepherd.",
+    contentFr: "Le Prophète ﷺ mentionna qu'il avait travaillé comme berger.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Hurairah',
       arabicText: 'مَا بَعَثَ اللَّهُ نَبِيًّا إِلَّا رَعَى الْغَنَمَ فَقَالَ أَصْحَابُهُ وَأَنْتَ فَقَالَ نَعَمْ كُنْتُ أَرْعَاهَا عَلَى قَرَارِيطَ لِأَهْلِ مَكَّةَ',
       translation: "The Prophet ﷺ said, 'Allah did not send any prophet except that he tended sheep.' His companions asked, 'And you?' He replied, 'Yes, I used to tend them for a few qirats for the people of Makkah.'",
+      translationFr: "Le Prophète ﷺ dit : « Allah n'a envoyé aucun prophète sans qu'il ait gardé des moutons. » Ses compagnons demandèrent : « Et toi ? » Il répondit : « Oui, je les gardais pour quelques qirats pour les gens de La Mecque. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -174,24 +205,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 16,
     content: "When Muhammad was twelve, Abu Talib took him on a trading journey to Syria. At Busra, a Christian monk named Bahira noticed the caravan and, unusually, invited them to a meal. Bahira recognized signs of prophethood in young Muhammad - including the seal of prophethood between his shoulders - that matched descriptions in his scriptures. He advised Abu Talib to protect the boy from the Jews, who might harm him, and to take him back to Makkah quickly.",
+    contentFr: "Quand Muhammad eut douze ans, Abu Talib l'emmena dans un voyage commercial en Syrie. À Busra, un moine chrétien nommé Bahira remarqua la caravane et, fait inhabituel, les invita à un repas. Bahira reconnut des signes de prophétie chez le jeune Muhammad — notamment le sceau de la prophétie entre ses épaules — qui correspondaient aux descriptions dans ses écritures. Il conseilla à Abu Talib de protéger le garçon et de le ramener rapidement à La Mecque.",
   },
   {
     id: 'muhammad-17',
     type: 'narrative',
     order: 17,
     content: "As Muhammad grew into manhood, he earned a reputation that distinguished him from all others in Makkah. While his peers engaged in the vices common to pre-Islamic Arabia - drinking, gambling, and immorality - Muhammad remained pure. He never worshipped idols, never drank wine, and never engaged in any shameful act. The Makkans called him 'Al-Amin' (The Trustworthy) and 'As-Sadiq' (The Truthful).",
+    contentFr: "En grandissant, Muhammad acquit une réputation qui le distinguait de tous les autres à La Mecque. Tandis que ses pairs s'adonnaient aux vices communs de l'Arabie préislamique — l'alcool, les jeux de hasard et l'immoralité — Muhammad resta pur. Il n'adora jamais d'idoles, ne but jamais de vin et ne commit jamais d'acte honteux. Les Mecquois l'appelèrent « Al-Amin » (Le Digne de Confiance) et « As-Sadiq » (Le Véridique).",
   },
   {
     id: 'muhammad-18',
     type: 'narrative',
     order: 18,
     content: "In his youth, Muhammad participated in the 'Hilf al-Fudul' (The Alliance of Virtue) - a pact among several Quraysh clans to protect the oppressed, help the poor, and ensure justice for travelers wronged in Makkah. Years later, as a prophet, he said he would still honor this pact if called upon, showing that Islam upholds justice and human rights established before revelation.",
+    contentFr: "Dans sa jeunesse, Muhammad participa au « Hilf al-Fudul » (L'Alliance de la Vertu) — un pacte entre plusieurs clans de Quraysh pour protéger les opprimés, aider les pauvres et assurer la justice pour les voyageurs lésés à La Mecque. Des années plus tard, en tant que prophète, il dit qu'il honorerait encore ce pacte si on le lui demandait, montrant que l'Islam soutient la justice et les droits humains établis avant la révélation.",
   },
   {
     id: 'muhammad-19',
     type: 'narrative',
     order: 19,
     content: "When Muhammad was about 35, the Quraysh rebuilt the Ka'bah after a flood damaged it. A dispute arose over who would have the honor of placing the Black Stone (al-Hajar al-Aswad) back in its corner. The tribes nearly came to blows until they agreed that the next person to enter the mosque would decide. That person was Muhammad. He placed the stone on a cloth, had representatives from each tribe hold the edges, and together they lifted it into place. Then he set it with his own hands - a solution that united rather than divided.",
+    contentFr: "Quand Muhammad avait environ 35 ans, les Quraysh reconstruisirent la Ka'bah après qu'une inondation l'eut endommagée. Un différend surgit sur qui aurait l'honneur de replacer la Pierre Noire (al-Hajar al-Aswad) dans son coin. Les tribus faillirent en venir aux mains jusqu'à ce qu'elles conviennent que la prochaine personne à entrer dans la mosquée déciderait. Cette personne fut Muhammad. Il plaça la pierre sur un tissu, fit tenir les bords par des représentants de chaque tribu, et ensemble ils la soulevèrent. Puis il la posa de ses propres mains — une solution qui unit plutôt que de diviser.",
   },
 
   // ===== SECTION 4: MARRIAGE TO KHADIJAH =====
@@ -200,24 +235,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: "Khadijah bint Khuwaylid was a noble widow of Makkah, known for her intelligence, wealth, and virtue. She hired Muhammad, then 25, to lead her trading caravan to Syria. Her servant Maysarah accompanied him and returned with glowing reports of Muhammad's honesty, his profitable trading, and strange signs - clouds shading him from the sun, and a monk's prophecy about his future. Impressed by his character, Khadijah, who was about 40, proposed marriage through an intermediary.",
+    contentFr: "Khadijah bint Khuwaylid était une noble veuve de La Mecque, connue pour son intelligence, sa richesse et sa vertu. Elle engagea Muhammad, alors âgé de 25 ans, pour diriger sa caravane commerciale vers la Syrie. Son serviteur Maysarah l'accompagna et revint avec des rapports élogieux sur l'honnêteté de Muhammad, son commerce profitable et des signes étranges — des nuages l'ombrageant du soleil et la prophétie d'un moine sur son avenir. Impressionnée par son caractère, Khadijah, qui avait environ 40 ans, proposa le mariage par l'intermédiaire d'un tiers.",
   },
   {
     id: 'muhammad-21',
     type: 'narrative',
     order: 21,
     content: "Their marriage was blessed. Khadijah became Muhammad's confidante, supporter, and closest companion for the next 25 years. She bore him six children: two sons (Al-Qasim and Abdullah, both died young) and four daughters (Zaynab, Ruqayyah, Umm Kulthum, and Fatimah). The Prophet never took another wife while Khadijah lived, and he remembered her with love and tears for the rest of his life.",
+    contentFr: "Leur mariage fut béni. Khadijah devint la confidente, le soutien et la compagne la plus proche de Muhammad pendant les 25 années suivantes. Elle lui donna six enfants : deux fils (Al-Qasim et Abdullah, tous deux morts jeunes) et quatre filles (Zaynab, Ruqayyah, Umm Kulthum et Fatimah). Le Prophète ne prit jamais d'autre épouse du vivant de Khadijah, et il se souvint d'elle avec amour et larmes pour le reste de sa vie.",
   },
   {
     id: 'muhammad-22',
     type: 'hadith_source',
     order: 22,
     content: "The Prophet ﷺ described his deep love for Khadijah.",
+    contentFr: "Le Prophète ﷺ décrivit son amour profond pour Khadijah.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Aisha',
       arabicText: 'مَا غِرْتُ عَلَى أَحَدٍ مِنْ نِسَاءِ النَّبِيِّ صلى الله عليه وسلم مَا غِرْتُ عَلَى خَدِيجَةَ وَمَا رَأَيْتُهَا وَلَكِنْ كَانَ النَّبِيُّ صلى الله عليه وسلم يُكْثِرُ ذِكْرَهَا',
       translation: "Aisha said, 'I was never as jealous of any of the Prophet's wives as I was of Khadijah, though I never saw her. But the Prophet ﷺ used to mention her very often.'",
+      translationFr: "Aïsha dit : « Je n'ai jamais été aussi jalouse d'aucune des épouses du Prophète que de Khadijah, bien que je ne l'aie jamais vue. Mais le Prophète ﷺ la mentionnait très souvent. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -228,18 +267,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 23,
     content: "As Muhammad approached forty, a change came over him. He became increasingly disturbed by the idolatry, injustice, and moral decay in Makkah. He began seeking solitude in a cave on Jabal an-Nur (Mountain of Light), called Hira, about three miles from Makkah. There, he would spend days and nights in contemplation, taking provisions prepared by Khadijah, searching for truth in the silence of the mountain.",
+    contentFr: "Alors que Muhammad approchait de la quarantaine, un changement s'opéra en lui. Il fut de plus en plus troublé par l'idolâtrie, l'injustice et la décadence morale à La Mecque. Il commença à chercher la solitude dans une grotte sur le Jabal an-Nur (Montagne de la Lumière), appelée Hira, à environ cinq kilomètres de La Mecque. Là, il passait des jours et des nuits en contemplation, emportant des provisions préparées par Khadijah, cherchant la vérité dans le silence de la montagne.",
   },
   {
     id: 'muhammad-24',
     type: 'narrative',
     order: 24,
     content: "It was during Ramadan, in his fortieth year, that everything changed. One night, while Muhammad was alone in the cave, the Angel Jibril (Gabriel) appeared before him in his true angelic form. The angel commanded: 'Iqra!' (Read/Recite!). Muhammad replied that he could not read. Jibril embraced him tightly, pressed him until he could barely bear it, released him, and again commanded: 'Read!' This happened three times.",
+    contentFr: "Ce fut pendant le Ramadan, dans sa quarantième année, que tout changea. Une nuit, alors que Muhammad était seul dans la grotte, l'Ange Jibril (Gabriel) apparut devant lui dans sa véritable forme angélique. L'ange ordonna : « Iqra ! » (Lis/Récite !). Muhammad répondit qu'il ne savait pas lire. Jibril l'étreignit fermement, le pressa jusqu'à ce qu'il puisse à peine le supporter, le relâcha et ordonna à nouveau : « Lis ! » Cela se produisit trois fois.",
   },
   {
     id: 'muhammad-25',
     type: 'quran_source',
     order: 25,
     content: "The first words of revelation to be sent down to humanity.",
+    contentFr: "Les premiers mots de révélation descendus à l'humanité.",
     source: {
       type: 'quran',
       surahNumber: 96,
@@ -249,6 +291,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 5,
       arabicText: 'اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ۝ خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ ۝ اقْرَأْ وَرَبُّكَ الْأَكْرَمُ ۝ الَّذِي عَلَّمَ بِالْقَلَمِ ۝ عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ',
       translation: 'Read in the name of your Lord who created - created man from a clinging substance. Read, and your Lord is the Most Generous - Who taught by the pen - taught man that which he knew not.',
+      translationFr: "Lis au nom de ton Seigneur qui a créé — qui a créé l'homme d'une adhérence. Lis, et ton Seigneur est le Très Généreux — qui a enseigné par le calame — a enseigné à l'homme ce qu'il ne savait pas.",
     } as QuranReference,
   },
   {
@@ -256,12 +299,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'hadith_source',
     order: 26,
     content: "The Prophet ﷺ described this life-changing moment.",
+    contentFr: "Le Prophète ﷺ décrivit ce moment qui changea sa vie.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Aisha',
       arabicText: 'فَرَجَعَ بِهَا رَسُولُ اللَّهِ صلى الله عليه وسلم يَرْجُفُ فُؤَادُهُ فَدَخَلَ عَلَى خَدِيجَةَ بِنْتِ خُوَيْلِدٍ فَقَالَ زَمِّلُونِي زَمِّلُونِي فَزَمَّلُوهُ حَتَّى ذَهَبَ عَنْهُ الرَّوْعُ',
       translation: "The Messenger of Allah ﷺ returned with the revelation, his heart trembling. He entered upon Khadijah and said, 'Cover me! Cover me!' They covered him until his fear subsided.",
+      translationFr: "Le Messager d'Allah ﷺ revint avec la révélation, le cœur tremblant. Il entra chez Khadijah et dit : « Couvrez-moi ! Couvrez-moi ! » Ils le couvrirent jusqu'à ce que sa peur se dissipe.",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -270,24 +315,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 27,
     content: "Muhammad rushed home, his heart pounding, unsure of what had happened. He cried to Khadijah: 'Cover me! Cover me!' She wrapped him in a cloak as he shivered. When he calmed, he told her what happened and expressed his fear. Khadijah's response was a turning point: 'Never! By Allah, Allah will never disgrace you. You maintain family ties, bear the burden of the weak, help the poor, honor guests, and assist those in distress.'",
+    contentFr: "Muhammad se précipita chez lui, le cœur battant, incertain de ce qui s'était passé. Il cria à Khadijah : « Couvrez-moi ! Couvrez-moi ! » Elle l'enveloppa dans un manteau tandis qu'il frissonnait. Quand il se calma, il lui raconta ce qui s'était passé et exprima sa peur. La réponse de Khadijah fut un tournant : « Jamais ! Par Allah, Allah ne te déshonorera jamais. Tu maintiens les liens de parenté, tu portes le fardeau des faibles, tu aides les pauvres, tu honores les invités et tu assistes ceux en détresse. »",
   },
   {
     id: 'muhammad-28',
     type: 'narrative',
     order: 28,
     content: "Khadijah then took Muhammad to her cousin Waraqah ibn Nawfal, an elderly Christian scholar who had studied the scriptures. After hearing what happened, Waraqah declared: 'This is the same Namus (Jibril) that Allah sent to Musa. I wish I were young! I wish I could be alive when your people drive you out.' Muhammad asked, 'Will they really drive me out?' Waraqah replied, 'Yes, no man has ever brought what you bring except that he was treated with hostility.'",
+    contentFr: "Khadijah emmena alors Muhammad chez son cousin Waraqah ibn Nawfal, un savant chrétien âgé qui avait étudié les écritures. Après avoir entendu ce qui s'était passé, Waraqah déclara : « C'est le même Namus (Jibril) qu'Allah a envoyé à Moussa. J'aurais aimé être jeune ! J'aurais aimé être en vie quand ton peuple te chassera. » Muhammad demanda : « Vont-ils vraiment me chasser ? » Waraqah répondit : « Oui, aucun homme n'a jamais apporté ce que tu apportes sans être traité avec hostilité. »",
   },
   {
     id: 'muhammad-29',
     type: 'narrative',
     order: 29,
     content: "After this initial revelation, there was a pause (called fatrah) - a period when no new revelation came. This was a test for Muhammad, who feared he had been abandoned. He would climb mountains in distress. Then revelation resumed with powerful reassurance, commanding him to rise and warn.",
+    contentFr: "Après cette révélation initiale, il y eut une pause (appelée fatrah) — une période où aucune nouvelle révélation ne vint. Ce fut une épreuve pour Muhammad, qui craignait d'avoir été abandonné. Il montait sur les montagnes en détresse. Puis la révélation reprit avec une puissante assurance, lui ordonnant de se lever et d'avertir.",
   },
   {
     id: 'muhammad-30',
     type: 'quran_source',
     order: 30,
     content: "Allah commanded the Prophet to rise and warn.",
+    contentFr: "Allah ordonna au Prophète de se lever et d'avertir.",
     source: {
       type: 'quran',
       surahNumber: 74,
@@ -297,6 +346,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 7,
       arabicText: 'يَا أَيُّهَا الْمُدَّثِّرُ ۝ قُمْ فَأَنذِرْ ۝ وَرَبَّكَ فَكَبِّرْ ۝ وَثِيَابَكَ فَطَهِّرْ ۝ وَالرُّجْزَ فَاهْجُرْ ۝ وَلَا تَمْنُن تَسْتَكْثِرُ ۝ وَلِرَبِّكَ فَاصْبِرْ',
       translation: 'O you who covers himself [with a garment], arise and warn. And your Lord glorify. And your clothing purify. And uncleanliness avoid. And do not confer favor to acquire more. But for your Lord be patient.',
+      translationFr: "Ô toi qui te couvres [d'un vêtement], lève-toi et avertis. Et ton Seigneur, glorifie-Le. Et tes vêtements, purifie-les. Et l'abomination, fuis-la. Et ne donne pas dans le but de recevoir davantage. Et pour ton Seigneur, sois patient.",
     } as QuranReference,
   },
 
@@ -306,18 +356,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: "The first person to believe in Muhammad's prophethood was Khadijah - the first Muslim. She never doubted, never hesitated. Her immediate acceptance provided Muhammad with crucial emotional and practical support. She spent her wealth supporting the mission, comforted him when discouraged, and remained steadfast until her death. She holds the unique honor of being greeted by Allah through Jibril.",
+    contentFr: "La première personne à croire en la prophétie de Muhammad fut Khadijah — la première musulmane. Elle ne douta jamais, n'hésita jamais. Son acceptation immédiate fournit à Muhammad un soutien émotionnel et pratique crucial. Elle dépensa sa richesse pour soutenir la mission, le réconforta quand il était découragé, et resta ferme jusqu'à sa mort. Elle détient l'honneur unique d'avoir été saluée par Allah à travers Jibril.",
   },
   {
     id: 'muhammad-32',
     type: 'hadith_source',
     order: 32,
     content: "Jibril brought glad tidings to Khadijah.",
+    contentFr: "Jibril apporta de bonnes nouvelles à Khadijah.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Hurairah',
       arabicText: 'أَتَى جِبْرِيلُ النَّبِيَّ صلى الله عليه وسلم فَقَالَ يَا رَسُولَ اللَّهِ هَذِهِ خَدِيجَةُ قَدْ أَتَتْ مَعَهَا إِنَاءٌ فِيهِ إِدَامٌ أَوْ طَعَامٌ أَوْ شَرَابٌ فَإِذَا هِيَ أَتَتْكَ فَاقْرَأْ عَلَيْهَا السَّلاَمَ مِنْ رَبِّهَا وَمِنِّي وَبَشِّرْهَا بِبَيْتٍ فِي الْجَنَّةِ',
       translation: "Jibril came to the Prophet ﷺ and said, 'O Messenger of Allah, Khadijah is coming with a vessel containing food. When she comes to you, convey to her the greeting of peace from her Lord and from me, and give her glad tidings of a house in Paradise.'",
+      translationFr: "Jibril vint au Prophète ﷺ et dit : « Ô Messager d'Allah, Khadijah vient avec un récipient contenant de la nourriture. Quand elle viendra à toi, transmets-lui le salut de paix de son Seigneur et de moi, et annonce-lui la bonne nouvelle d'une maison au Paradis. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -326,24 +379,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 33,
     content: "The next to believe was Ali ibn Abi Talib, the Prophet's young cousin who lived in his household. He was about ten years old - the first child to accept Islam. When he saw Muhammad and Khadijah praying, he asked what they were doing. Muhammad explained the message of Islam, and Ali, after a night of reflection, declared his faith the next morning.",
+    contentFr: "Le suivant à croire fut Ali ibn Abi Talib, le jeune cousin du Prophète qui vivait dans son foyer. Il avait environ dix ans — le premier enfant à accepter l'Islam. Quand il vit Muhammad et Khadijah prier, il demanda ce qu'ils faisaient. Muhammad expliqua le message de l'Islam, et Ali, après une nuit de réflexion, déclara sa foi le lendemain matin.",
   },
   {
     id: 'muhammad-34',
     type: 'narrative',
     order: 34,
     content: "Zayd ibn Harithah, a freed slave whom Muhammad had adopted as a son, was the next to believe - the first freed slave to embrace Islam. Then came Abu Bakr as-Siddiq, the Prophet's closest friend and peer, the first free adult man outside the Prophet's household to accept the message. Abu Bakr's acceptance was immediate and unwavering - he never hesitated for a moment.",
+    contentFr: "Zayd ibn Harithah, un esclave affranchi que Muhammad avait adopté comme fils, fut le suivant à croire — le premier esclave affranchi à embrasser l'Islam. Puis vint Abu Bakr as-Siddiq, l'ami le plus proche du Prophète, le premier homme adulte libre en dehors du foyer du Prophète à accepter le message. L'acceptation d'Abu Bakr fut immédiate et inébranlable — il n'hésita jamais un instant.",
   },
   {
     id: 'muhammad-35',
     type: 'hadith_source',
     order: 35,
     content: "The Prophet ﷺ praised Abu Bakr's immediate acceptance.",
+    contentFr: "Le Prophète ﷺ loua l'acceptation immédiate d'Abu Bakr.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Darda',
       arabicText: 'مَا دَعَوْتُ أَحَدًا إِلَى الإِسْلاَمِ إِلاَّ كَانَتْ فِيهِ عِنْدَهُ كَبْوَةٌ وَنَظَرٌ وَتَرَدُّدٌ إِلاَّ مَا كَانَ مِنْ أَبِي بَكْرٍ مَا عَكَمَ عَنْهُ حِينَ ذَكَرْتُهُ لَهُ وَمَا تَرَدَّدَ فِيهِ',
       translation: "The Prophet ﷺ said, 'I never invited anyone to Islam except that he showed some hesitation and reconsideration, except for Abu Bakr. He did not hesitate when I mentioned it to him, nor did he waver.'",
+      translationFr: "Le Prophète ﷺ dit : « Je n'ai jamais invité quiconque à l'Islam sans qu'il montre une certaine hésitation et reconsidération, sauf Abu Bakr. Il n'hésita pas quand je le lui mentionnai, et il ne vacilla pas. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -352,18 +409,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 36,
     content: "Abu Bakr, a wealthy and respected merchant, immediately began inviting others to Islam. Through his efforts, some of the greatest companions accepted: Uthman ibn Affan (who would become the third caliph), Zubayr ibn al-Awwam, Abdur-Rahman ibn Awf, Sa'd ibn Abi Waqqas, and Talha ibn Ubaydullah. These early converts formed the nucleus of the Muslim community.",
+    contentFr: "Abu Bakr, un commerçant riche et respecté, commença immédiatement à inviter d'autres à l'Islam. Grâce à ses efforts, certains des plus grands compagnons acceptèrent : Uthman ibn Affan (qui deviendrait le troisième calife), Zubayr ibn al-Awwam, Abdur-Rahman ibn Awf, Sa'd ibn Abi Waqqas et Talha ibn Ubaydullah. Ces premiers convertis formèrent le noyau de la communauté musulmane.",
   },
   {
     id: 'muhammad-37',
     type: 'narrative',
     order: 37,
     content: "For three years, the Prophet ﷺ called to Islam secretly, meeting believers in the house of Al-Arqam ibn Abi al-Arqam near Mount Safa. The number of Muslims slowly grew to about forty. They prayed in hidden valleys, learned the Quran as it was revealed, and formed bonds of brotherhood that would change history. Then came the command to proclaim the message openly.",
+    contentFr: "Pendant trois ans, le Prophète ﷺ appela à l'Islam secrètement, rencontrant les croyants dans la maison d'Al-Arqam ibn Abi al-Arqam près du Mont Safa. Le nombre de musulmans grandit lentement jusqu'à environ quarante. Ils priaient dans des vallées cachées, apprenaient le Coran au fur et à mesure de sa révélation, et formèrent des liens de fraternité qui changeraient l'histoire. Puis vint l'ordre de proclamer le message ouvertement.",
   },
   {
     id: 'muhammad-38',
     type: 'quran_source',
     order: 38,
     content: "Allah commanded the Prophet to warn his closest relatives first.",
+    contentFr: "Allah ordonna au Prophète d'avertir d'abord ses proches parents.",
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -373,6 +433,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 216,
       arabicText: 'وَأَنذِرْ عَشِيرَتَكَ الْأَقْرَبِينَ ۝ وَاخْفِضْ جَنَاحَكَ لِمَنِ اتَّبَعَكَ مِنَ الْمُؤْمِنِينَ ۝ فَإِنْ عَصَوْكَ فَقُلْ إِنِّي بَرِيءٌ مِّمَّا تَعْمَلُونَ',
       translation: 'And warn your closest kindred. And lower your wing to those who follow you of the believers. And if they disobey you, then say, "Indeed, I am disassociated from what you are doing."',
+      translationFr: "Et avertis les gens qui te sont les plus proches. Et abaisse ton aile pour ceux des croyants qui te suivent. Et s'ils te désobéissent, alors dis : « Je me désavoue de ce que vous faites. »",
     } as QuranReference,
   },
   {
@@ -380,12 +441,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 39,
     content: "The Prophet ﷺ climbed Mount Safa and called out to the clans of Quraysh. When they gathered, he asked: 'If I told you there was an army behind this mountain about to attack, would you believe me?' They replied, 'Yes, we have never known you to lie.' He then said: 'I am a warner to you before a severe punishment.' His uncle Abu Lahab cursed him: 'May you perish! Is this why you gathered us?'",
+    contentFr: "Le Prophète ﷺ monta sur le Mont Safa et appela les clans de Quraysh. Quand ils se rassemblèrent, il demanda : « Si je vous disais qu'il y a une armée derrière cette montagne prête à attaquer, me croiriez-vous ? » Ils répondirent : « Oui, nous ne t'avons jamais connu mentir. » Il dit alors : « Je suis un avertisseur pour vous avant un châtiment sévère. » Son oncle Abu Lahab le maudit : « Que tu périsses ! Est-ce pour cela que tu nous as rassemblés ? »",
   },
   {
     id: 'muhammad-40',
     type: 'quran_source',
     order: 40,
     content: "Allah revealed a surah about Abu Lahab and his wife.",
+    contentFr: "Allah révéla une sourate au sujet d'Abu Lahab et de sa femme.",
     source: {
       type: 'quran',
       surahNumber: 111,
@@ -395,6 +458,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 5,
       arabicText: 'تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ۝ مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ ۝ سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ ۝ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ۝ فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ',
       translation: 'May the hands of Abu Lahab be ruined, and ruined is he. His wealth will not avail him or that which he gained. He will burn in a Fire of blazing flame. And his wife - the carrier of firewood. Around her neck is a rope of twisted fiber.',
+      translationFr: "Que périssent les mains d'Abu Lahab, et qu'il périsse lui-même. Ses biens ne lui serviront à rien, ni ce qu'il a acquis. Il sera brûlé dans un Feu aux flammes ardentes. De même sa femme — la porteuse de bois. À son cou une corde de fibres tressées.",
     } as QuranReference,
   },
 
@@ -404,36 +468,42 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 41,
     content: "When Islam became public, persecution began. The Quraysh could not accept a message that declared their ancestors in hellfire, their idols worthless, and all people equal before one God. At first, they tried mockery, calling Muhammad a madman, a poet, a sorcerer. When that failed, they turned to torture and economic pressure.",
+    contentFr: "Quand l'Islam devint public, la persécution commença. Les Quraysh ne pouvaient accepter un message qui déclarait leurs ancêtres en enfer, leurs idoles sans valeur, et tous les gens égaux devant un seul Dieu. D'abord, ils essayèrent la moquerie, appelant Muhammad un fou, un poète, un sorcier. Quand cela échoua, ils passèrent à la torture et à la pression économique.",
   },
   {
     id: 'muhammad-42',
     type: 'narrative',
     order: 42,
     content: "The poor and enslaved Muslims suffered most. Bilal ibn Rabah, an Abyssinian slave, was tortured by his master Umayyah ibn Khalaf. He would drag Bilal out at midday, place a huge rock on his chest under the scorching sun, and demand he renounce Islam. Bilal only repeated: 'Ahad! Ahad!' (One! One! - affirming Allah's oneness). Abu Bakr purchased and freed him.",
+    contentFr: "Les musulmans pauvres et esclaves souffrirent le plus. Bilal ibn Rabah, un esclave abyssinien, fut torturé par son maître Umayyah ibn Khalaf. Il traînait Bilal dehors à midi, plaçait une énorme pierre sur sa poitrine sous le soleil brûlant, et exigeait qu'il renonce à l'Islam. Bilal ne répétait que : « Ahad ! Ahad ! » (Un ! Un ! — affirmant l'unicité d'Allah). Abu Bakr l'acheta et le libéra.",
   },
   {
     id: 'muhammad-43',
     type: 'narrative',
     order: 43,
     content: "Sumayyah bint Khayyat became the first martyr in Islam. She, her husband Yasir, and son Ammar were tortured by Abu Jahl. When she refused to renounce her faith, Abu Jahl killed her with a spear. Yasir also died from torture. The Prophet ﷺ, unable to stop their torment, would pass by and say: 'Patience, O family of Yasir! Your appointment is Paradise.'",
+    contentFr: "Sumayyah bint Khayyat devint la première martyre de l'Islam. Elle, son mari Yasir et leur fils Ammar furent torturés par Abu Jahl. Quand elle refusa de renoncer à sa foi, Abu Jahl la tua d'un coup de lance. Yasir mourut aussi sous la torture. Le Prophète ﷺ, incapable d'arrêter leur supplice, passait et disait : « Patience, ô famille de Yasir ! Votre rendez-vous est le Paradis. »",
   },
   {
     id: 'muhammad-44',
     type: 'narrative',
     order: 44,
     content: "Khabbab ibn al-Aratt was laid on burning coals until the fat of his back extinguished them. Zinnirah lost her eyesight from torture (which Allah later restored). Others were beaten, imprisoned, and denied food and water. The nobility Muslims like Uthman were pressured by their families. The Prophet ﷺ himself was mocked, had garbage thrown on him while praying, and was nearly strangled.",
+    contentFr: "Khabbab ibn al-Aratt fut couché sur des charbons ardents jusqu'à ce que la graisse de son dos les éteigne. Zinnirah perdit la vue à cause de la torture (qu'Allah restaura plus tard). D'autres furent battus, emprisonnés et privés de nourriture et d'eau. Les musulmans nobles comme Uthman furent pressés par leurs familles. Le Prophète ﷺ lui-même fut moqué, on lui jeta des ordures pendant sa prière, et il faillit être étranglé.",
   },
   {
     id: 'muhammad-45',
     type: 'hadith_source',
     order: 45,
     content: "The Prophet ﷺ was attacked while praying at the Ka'bah.",
+    contentFr: "Le Prophète ﷺ fut attaqué alors qu'il priait à la Ka'bah.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abdullah ibn Masud',
       arabicText: 'بَيْنَا رَسُولُ اللَّهِ صلى الله عليه وسلم قَائِمٌ يُصَلِّي عِنْدَ الْكَعْبَةِ وَجَمْعُ قُرَيْشٍ فِي مَجَالِسِهِمْ إِذْ قَالَ قَائِلٌ مِنْهُمْ أَلاَ تَنْظُرُونَ إِلَى هَذَا الْمُرَائِي أَيُّكُمْ يَقُومُ إِلَى جَزُورِ آلِ فُلاَنٍ فَيَعْمِدُ إِلَى فَرْثِهَا وَدَمِهَا وَسَلاَهَا فَيَجِيءُ بِهِ ثُمَّ يُمْهِلُهُ حَتَّى إِذَا سَجَدَ وَضَعَهُ بَيْنَ كَتِفَيْهِ',
       translation: "While the Messenger of Allah ﷺ was praying at the Ka'bah, a group of Quraysh were sitting nearby. One of them said, 'Who will bring the intestines and blood of a camel and put them on his back when he prostrates?' When he prostrated, they placed it on his back.",
+      translationFr: "Tandis que le Messager d'Allah ﷺ priait à la Ka'bah, un groupe de Quraysh était assis à proximité. L'un d'eux dit : « Qui apportera les entrailles et le sang d'un chameau et les mettra sur son dos quand il se prosternera ? » Quand il se prosterna, ils les placèrent sur son dos.",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -442,6 +512,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 46,
     content: "When this filth was placed on the Prophet's back during prostration, he could not rise due to its weight. His daughter Fatimah, still a young girl, came and removed it, crying and cursing the tormentors. Through all this, the Prophet ﷺ remained patient, never retaliating, trusting in Allah's plan.",
+    contentFr: "Quand cette saleté fut placée sur le dos du Prophète pendant sa prostration, il ne put se relever à cause de son poids. Sa fille Fatimah, encore une jeune fille, vint la retirer, pleurant et maudissant les tourmenteurs. Malgré tout cela, le Prophète ﷺ resta patient, ne se vengeant jamais, faisant confiance au plan d'Allah.",
   },
 
   // ===== SECTION 8: MIGRATION TO ABYSSINIA =====
@@ -450,18 +521,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 47,
     content: "As persecution intensified, the Prophet ﷺ advised some Muslims to migrate to Abyssinia (Ethiopia), ruled by a just Christian king called the Negus (Najashi). In the fifth year of prophethood, about fifteen Muslims made the first migration. Later, more followed until about eighty-three men and women had fled to this land of safety.",
+    contentFr: "Alors que la persécution s'intensifiait, le Prophète ﷺ conseilla à certains musulmans de migrer en Abyssinie (Éthiopie), gouvernée par un roi chrétien juste appelé le Négus (Najashi). La cinquième année de la prophétie, environ quinze musulmans firent la première migration. Plus tard, d'autres suivirent jusqu'à ce qu'environ quatre-vingt-trois hommes et femmes aient fui vers cette terre de sécurité.",
   },
   {
     id: 'muhammad-48',
     type: 'narrative',
     order: 48,
     content: "The Quraysh sent delegates to the Negus, demanding the Muslims' return. When the king summoned the Muslims, Ja'far ibn Abi Talib (the Prophet's cousin) spoke: 'O King, we were a people of ignorance, worshipping idols, eating dead animals, committing shameful deeds, cutting ties of kinship. Then Allah sent us a Messenger from among us, whose truthfulness and trustworthiness we knew. He called us to worship Allah alone...'",
+    contentFr: "Les Quraysh envoyèrent des délégués au Négus, exigeant le retour des musulmans. Quand le roi convoqua les musulmans, Ja'far ibn Abi Talib (le cousin du Prophète) parla : « Ô Roi, nous étions un peuple d'ignorance, adorant les idoles, mangeant des animaux morts, commettant des actes honteux, coupant les liens de parenté. Puis Allah nous envoya un Messager d'entre nous, dont nous connaissions la véracité et la fiabilité. Il nous appela à adorer Allah seul... »",
   },
   {
     id: 'muhammad-49',
     type: 'narrative',
     order: 49,
     content: "The Negus asked Ja'far to recite what had been revealed. Ja'far recited the opening verses of Surah Maryam, about Zakariya, Yahya, and the miraculous birth of Isa. The king wept until his beard was wet, as did his bishops. He declared: 'This and what Isa brought come from the same source.' He refused to hand over the Muslims, returned the Quraysh's gifts, and the Muslims remained under his protection.",
+    contentFr: "Le Négus demanda à Ja'far de réciter ce qui avait été révélé. Ja'far récita les premiers versets de la Sourate Maryam, sur Zakariya, Yahya et la naissance miraculeuse d'Issa. Le roi pleura jusqu'à ce que sa barbe soit mouillée, ainsi que ses évêques. Il déclara : « Ceci et ce qu'Issa a apporté proviennent de la même source. » Il refusa de livrer les musulmans, retourna les cadeaux des Quraysh, et les musulmans restèrent sous sa protection.",
   },
 
   // ===== SECTION 9: THE BOYCOTT =====
@@ -470,12 +544,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 50,
     content: "Frustrated that persecution was not working and that the Negus protected the Muslim emigrants, the Quraysh imposed a total boycott on Banu Hashim and Banu al-Muttalib. A document was written and hung in the Ka'bah, declaring that no one could marry, trade with, or sell food to these clans until they handed over Muhammad. For three years, the Muslims and their protectors lived in a narrow valley called Shi'b Abi Talib.",
+    contentFr: "Frustrés que la persécution ne fonctionnait pas et que le Négus protégeait les émigrés musulmans, les Quraysh imposèrent un boycott total aux Banu Hashim et aux Banu al-Muttalib. Un document fut écrit et accroché dans la Ka'bah, déclarant que personne ne pouvait se marier, commercer ou vendre de la nourriture à ces clans jusqu'à ce qu'ils livrent Muhammad. Pendant trois ans, les musulmans et leurs protecteurs vécurent dans une vallée étroite appelée Shi'b Abi Talib.",
   },
   {
     id: 'muhammad-51',
     type: 'narrative',
     order: 51,
     content: "The suffering was severe. Cries of hungry children could be heard outside the valley. Sa'd ibn Abi Waqqas recalled eating leather and leaves to survive. Some sympathetic Makkans secretly sent food, risking punishment. Finally, the boycott ended when termites ate the document except for the words 'In Your Name, O Allah.' Some Quraysh leaders, moved by conscience, tore up the remaining paper and ended the siege.",
+    contentFr: "La souffrance fut terrible. Les pleurs d'enfants affamés pouvaient être entendus à l'extérieur de la vallée. Sa'd ibn Abi Waqqas se souvenait avoir mangé du cuir et des feuilles pour survivre. Certains Mecquois compatissants envoyaient secrètement de la nourriture, risquant la punition. Finalement, le boycott prit fin quand les termites mangèrent le document sauf les mots « En Ton Nom, ô Allah ». Certains chefs de Quraysh, mus par leur conscience, déchirèrent le papier restant et mirent fin au siège.",
   },
 
   // ===== SECTION 10: THE YEAR OF SORROW =====
@@ -484,24 +560,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 52,
     content: "Shortly after the boycott ended, tragedy struck. Within weeks of each other, both Khadijah and Abu Talib died. The Prophet ﷺ called this the 'Year of Sorrow' (Aam al-Huzn). Khadijah, his beloved wife of 25 years, his first supporter and constant comfort, was gone. Abu Talib, though never Muslim, had protected him from the Quraysh. Now Muhammad stood alone.",
+    contentFr: "Peu après la fin du boycott, la tragédie frappa. À quelques semaines d'intervalle, Khadijah et Abu Talib moururent. Le Prophète ﷺ appela cela « l'Année de la Tristesse » (Aam al-Huzn). Khadijah, sa bien-aimée épouse depuis 25 ans, sa première partisane et son réconfort constant, était partie. Abu Talib, bien que jamais musulman, l'avait protégé des Quraysh. Maintenant Muhammad se tenait seul.",
   },
   {
     id: 'muhammad-53',
     type: 'narrative',
     order: 53,
     content: "With Abu Talib's death, persecution reached new heights. Abu Lahab, now head of Banu Hashim, withdrew clan protection from Muhammad. One man threw dust on the Prophet's head while he walked in the street. Seeking new allies, Muhammad ﷺ traveled to Ta'if, a city about 60 miles from Makkah, hoping its leaders would accept his message.",
+    contentFr: "Avec la mort d'Abu Talib, la persécution atteignit de nouveaux sommets. Abu Lahab, désormais chef des Banu Hashim, retira la protection du clan à Muhammad. Un homme jeta de la poussière sur la tête du Prophète alors qu'il marchait dans la rue. Cherchant de nouveaux alliés, Muhammad ﷺ se rendit à Ta'if, une ville à environ 100 kilomètres de La Mecque, espérant que ses dirigeants accepteraient son message.",
   },
   {
     id: 'muhammad-54',
     type: 'narrative',
     order: 54,
     content: "The leaders of Ta'if rejected him mockingly. Worse, they incited their slaves and children to chase him out of the city, throwing stones at him until his sandals filled with blood. He took shelter in a garden, exhausted and bleeding. There, he made his famous supplication, complaining only to Allah and asking if His displeasure was upon him - otherwise, he did not care about his suffering.",
+    contentFr: "Les dirigeants de Ta'if le rejetèrent avec moquerie. Pire, ils incitèrent leurs esclaves et enfants à le chasser de la ville, lui lançant des pierres jusqu'à ce que ses sandales se remplissent de sang. Il se réfugia dans un jardin, épuisé et ensanglanté. Là, il fit sa célèbre invocation, se plaignant uniquement à Allah et demandant si Son mécontentement était sur lui — sinon, il ne se souciait pas de sa souffrance.",
   },
   {
     id: 'muhammad-55',
     type: 'narrative',
     order: 55,
     content: "In this moment of utter defeat, Jibril came with the Angel of the Mountains, who offered to crush the people of Ta'if between two mountains. The Prophet ﷺ refused, saying: 'Rather, I hope that Allah will bring from their descendants people who will worship Allah alone and not associate anything with Him.' This was the character of the mercy to all worlds - even in his darkest hour, he prayed for his persecutors.",
+    contentFr: "Dans ce moment de défaite totale, Jibril vint avec l'Ange des Montagnes, qui proposa d'écraser les gens de Ta'if entre deux montagnes. Le Prophète ﷺ refusa, disant : « J'espère plutôt qu'Allah fera sortir de leur descendance des gens qui adoreront Allah seul sans Lui associer quoi que ce soit. » Tel était le caractère de la miséricorde pour tous les mondes — même dans son heure la plus sombre, il pria pour ses persécuteurs.",
   },
 
   // ===== SECTION 11: AL-ISRA AND AL-MI'RAJ =====
@@ -510,12 +590,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 56,
     content: "In this period of grief and hardship, Allah honored His prophet with the greatest miracle: the Night Journey and Ascension (al-Isra wa al-Mi'raj). One night, Jibril came to Muhammad ﷺ with the Buraq, a heavenly steed, and they traveled from Masjid al-Haram in Makkah to Masjid al-Aqsa in Jerusalem in an instant.",
+    contentFr: "Dans cette période de chagrin et d'épreuve, Allah honora Son prophète avec le plus grand miracle : le Voyage Nocturne et l'Ascension (al-Isra wa al-Mi'raj). Une nuit, Jibril vint à Muhammad ﷺ avec le Buraq, une monture céleste, et ils voyagèrent de la Mosquée Sacrée de La Mecque à la Mosquée Al-Aqsa à Jérusalem en un instant.",
   },
   {
     id: 'muhammad-57',
     type: 'quran_source',
     order: 57,
     content: "Allah describes the Night Journey to Jerusalem.",
+    contentFr: "Allah décrit le Voyage Nocturne vers Jérusalem.",
     source: {
       type: 'quran',
       surahNumber: 17,
@@ -525,6 +607,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 1,
       arabicText: 'سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى الَّذِي بَارَكْنَا حَوْلَهُ لِنُرِيَهُ مِنْ آيَاتِنَا ۚ إِنَّهُ هُوَ السَّمِيعُ الْبَصِيرُ',
       translation: 'Exalted is He who took His Servant by night from al-Masjid al-Haram to al-Masjid al-Aqsa, whose surroundings We have blessed, to show him of Our signs. Indeed, He is the Hearing, the Seeing.',
+      translationFr: "Gloire à Celui qui a fait voyager de nuit Son serviteur de la Mosquée Sacrée à la Mosquée Al-Aqsa dont Nous avons béni les alentours, afin de lui montrer de Nos signes. C'est Lui l'Audient, le Clairvoyant.",
     } as QuranReference,
   },
   {
@@ -532,18 +615,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 58,
     content: "At al-Aqsa, Muhammad ﷺ led all the prophets - Adam, Ibrahim, Musa, Isa, and others - in prayer. Then, from the rock at Jerusalem, he ascended through the seven heavens. In each heaven, he met prophets: Adam in the first, Yahya and Isa in the second, Yusuf in the third, Idris in the fourth, Harun in the fifth, Musa in the sixth, and Ibrahim in the seventh, reclining against al-Bayt al-Ma'mur (the Frequented House).",
+    contentFr: "À Al-Aqsa, Muhammad ﷺ dirigea tous les prophètes — Adam, Ibrahim, Moussa, Issa et d'autres — en prière. Puis, depuis le rocher de Jérusalem, il monta à travers les sept cieux. Dans chaque ciel, il rencontra des prophètes : Adam au premier, Yahya et Issa au deuxième, Youssouf au troisième, Idris au quatrième, Haroun au cinquième, Moussa au sixième, et Ibrahim au septième, adossé contre al-Bayt al-Ma'mur (la Maison Fréquentée).",
   },
   {
     id: 'muhammad-59',
     type: 'narrative',
     order: 59,
     content: "Muhammad ﷺ then ascended beyond the seven heavens to Sidrat al-Muntaha (the Lote Tree of the Utmost Boundary), where no creation had ever been. There, Allah spoke to him directly and ordained the five daily prayers. Initially fifty prayers were obligated, but on Musa's advice, Muhammad ﷺ returned to ask for reduction until they became five prayers with the reward of fifty.",
+    contentFr: "Muhammad ﷺ monta alors au-delà des sept cieux jusqu'au Sidrat al-Muntaha (le Lotus de la Limite Ultime), où aucune créature n'avait jamais été. Là, Allah lui parla directement et ordonna les cinq prières quotidiennes. Initialement cinquante prières furent obligées, mais sur le conseil de Moussa, Muhammad ﷺ revint demander une réduction jusqu'à ce qu'elles deviennent cinq prières avec la récompense de cinquante.",
   },
   {
     id: 'muhammad-60',
     type: 'quran_source',
     order: 60,
     content: "Allah describes what the Prophet saw in the highest heavens.",
+    contentFr: "Allah décrit ce que le Prophète vit dans les cieux les plus élevés.",
     source: {
       type: 'quran',
       surahNumber: 53,
@@ -553,6 +639,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 18,
       arabicText: 'وَلَقَدْ رَآهُ نَزْلَةً أُخْرَىٰ ۝ عِندَ سِدْرَةِ الْمُنتَهَىٰ ۝ عِندَهَا جَنَّةُ الْمَأْوَىٰ ۝ إِذْ يَغْشَى السِّدْرَةَ مَا يَغْشَىٰ ۝ مَا زَاغَ الْبَصَرُ وَمَا طَغَىٰ ۝ لَقَدْ رَأَىٰ مِنْ آيَاتِ رَبِّهِ الْكُبْرَىٰ',
       translation: 'And he certainly saw him in another descent, at the Lote Tree of the Utmost Boundary - near it is the Garden of Refuge - when there covered the Lote Tree that which covered [it]. The sight [of the Prophet] did not swerve, nor did it transgress [its limit]. He certainly saw of the greatest signs of his Lord.',
+      translationFr: "Et il l'a certes vu lors d'une autre descente, au Lotus de la Limite Ultime — près de lui se trouve le Jardin du Refuge — quand le Lotus fut couvert de ce qui le couvrit. La vue [du Prophète] n'a ni dévié ni outrepassé [sa limite]. Il a certes vu les plus grands signes de son Seigneur.",
     } as QuranReference,
   },
   {
@@ -560,6 +647,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 61,
     content: "When Muhammad ﷺ told the Quraysh about this journey, they mocked him, thinking they had finally caught him in an obvious lie. Abu Jahl ran to Abu Bakr, expecting him to abandon Muhammad. But Abu Bakr, without hesitation, said: 'If he said it, then it is true.' From that day, he was called 'As-Siddiq' (The Truthful, or The Great Believer). This journey strengthened Muhammad ﷺ for the challenges ahead.",
+    contentFr: "Quand Muhammad ﷺ raconta aux Quraysh ce voyage, ils se moquèrent de lui, pensant l'avoir enfin pris dans un mensonge évident. Abu Jahl courut vers Abu Bakr, s'attendant à ce qu'il abandonne Muhammad. Mais Abu Bakr, sans hésitation, dit : « S'il l'a dit, alors c'est vrai. » À partir de ce jour, il fut appelé « As-Siddiq » (Le Véridique, ou Le Grand Croyant). Ce voyage renforça Muhammad ﷺ pour les défis à venir.",
   },
 
   // ===== SECTION 12: THE PLEDGES OF AQABA =====
@@ -568,18 +656,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 62,
     content: "Every year, Arabs from various tribes came to Makkah for pilgrimage. Muhammad ﷺ would approach them, calling them to Islam. Most rejected him, but in the 11th year of prophethood, six men from Yathrib listened. They were from the Khazraj tribe, and they recognized that Muhammad fit the descriptions their Jewish neighbors had given of an expected prophet. They returned to Yathrib and spread Islam.",
+    contentFr: "Chaque année, des Arabes de diverses tribus venaient à La Mecque pour le pèlerinage. Muhammad ﷺ les approchait, les appelant à l'Islam. La plupart le rejetèrent, mais la onzième année de la prophétie, six hommes de Yathrib écoutèrent. Ils étaient de la tribu des Khazraj, et ils reconnurent que Muhammad correspondait aux descriptions que leurs voisins juifs avaient données d'un prophète attendu. Ils retournèrent à Yathrib et répandirent l'Islam.",
   },
   {
     id: 'muhammad-63',
     type: 'narrative',
     order: 63,
     content: "The following year, twelve men came from Yathrib and pledged allegiance to Muhammad at Aqaba, near Mina. This was the First Pledge of Aqaba - they pledged to worship none but Allah, avoid theft, fornication, killing their children, and slander, and to obey the Prophet in what was right. Muhammad sent Mus'ab ibn Umayr with them to teach Islam, and within a year, Islam had spread to nearly every household in Yathrib.",
+    contentFr: "L'année suivante, douze hommes vinrent de Yathrib et prêtèrent allégeance à Muhammad à Aqaba, près de Mina. Ce fut le Premier Serment d'Aqaba — ils s'engagèrent à n'adorer que Allah, à éviter le vol, la fornication, le meurtre de leurs enfants et la calomnie, et à obéir au Prophète dans ce qui était juste. Muhammad envoya Mus'ab ibn Umayr avec eux pour enseigner l'Islam, et en un an, l'Islam s'était répandu dans presque chaque foyer de Yathrib.",
   },
   {
     id: 'muhammad-64',
     type: 'narrative',
     order: 64,
     content: "In the 13th year of prophethood, seventy-three men and two women came for the Second Pledge of Aqaba. In the darkness of night at Aqaba, they pledged to protect Muhammad as they would protect their own families, to fight for Islam, and to offer him refuge. This was effectively a pledge of war against the Quraysh. The way was now open for migration to Yathrib.",
+    contentFr: "La treizième année de la prophétie, soixante-treize hommes et deux femmes vinrent pour le Second Serment d'Aqaba. Dans l'obscurité de la nuit à Aqaba, ils s'engagèrent à protéger Muhammad comme ils protégeraient leurs propres familles, à combattre pour l'Islam et à lui offrir refuge. C'était effectivement un engagement de guerre contre les Quraysh. La voie était désormais ouverte pour la migration vers Yathrib.",
   },
 
   // ===== SECTION 13: THE HIJRAH =====
@@ -588,12 +679,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 65,
     content: "The Quraysh, learning of the pledges, decided to assassinate Muhammad before he could escape. They planned to have a young man from each clan strike him simultaneously, spreading the blood-guilt so that Banu Hashim could not take revenge on any single clan. Jibril informed the Prophet ﷺ of the plot and gave him permission to emigrate.",
+    contentFr: "Les Quraysh, apprenant les serments, décidèrent d'assassiner Muhammad avant qu'il ne puisse s'échapper. Ils planifièrent qu'un jeune homme de chaque clan le frappe simultanément, répartissant la culpabilité du sang pour que les Banu Hashim ne puissent se venger d'aucun clan. Jibril informa le Prophète ﷺ du complot et lui donna la permission d'émigrer.",
   },
   {
     id: 'muhammad-66',
     type: 'quran_source',
     order: 66,
     content: "Allah revealed their plot against the Prophet.",
+    contentFr: "Allah révéla leur complot contre le Prophète.",
     source: {
       type: 'quran',
       surahNumber: 8,
@@ -603,6 +696,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 30,
       arabicText: 'وَإِذْ يَمْكُرُ بِكَ الَّذِينَ كَفَرُوا لِيُثْبِتُوكَ أَوْ يَقْتُلُوكَ أَوْ يُخْرِجُوكَ ۚ وَيَمْكُرُونَ وَيَمْكُرُ اللَّهُ ۖ وَاللَّهُ خَيْرُ الْمَاكِرِينَ',
       translation: 'And [remember] when those who disbelieved plotted against you to restrain you or kill you or evict you. But they plan, and Allah plans. And Allah is the best of planners.',
+      translationFr: "Et [rappelle-toi] quand les mécréants complotaient contre toi pour t'emprisonner, te tuer ou t'expulser. Ils rusent, et Allah ruse. Et Allah est le meilleur des stratèges.",
     } as QuranReference,
   },
   {
@@ -610,18 +704,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 67,
     content: "The Prophet ﷺ asked Ali to sleep in his bed that night, covered in his green cloak. He told Ali to return items people had entrusted to him - even his enemies still trusted him with their valuables. As the assassins surrounded his house, waiting for dawn, Muhammad ﷺ walked out past them, reciting Surah Ya-Sin. Allah blinded their eyes, and he passed through them undetected.",
+    contentFr: "Le Prophète ﷺ demanda à Ali de dormir dans son lit cette nuit-là, couvert de son manteau vert. Il dit à Ali de rendre les objets que les gens lui avaient confiés — même ses ennemis lui faisaient encore confiance avec leurs biens. Tandis que les assassins entouraient sa maison, attendant l'aube, Muhammad ﷺ sortit en passant devant eux, récitant la Sourate Ya-Sin. Allah aveugla leurs yeux, et il passa entre eux sans être détecté.",
   },
   {
     id: 'muhammad-68',
     type: 'narrative',
     order: 68,
     content: "Muhammad ﷺ went to Abu Bakr's house, and together they headed south (away from Madinah) to the Cave of Thawr. They hid there for three days while the Quraysh searched for them. The search party came to the very mouth of the cave, but Allah had sent a spider to weave its web across the entrance and a dove to nest there - signs that no one had entered recently. Abu Bakr feared for the Prophet, but Muhammad ﷺ reassured him.",
+    contentFr: "Muhammad ﷺ se rendit chez Abu Bakr, et ensemble ils partirent vers le sud (loin de Médine) vers la Grotte de Thawr. Ils s'y cachèrent pendant trois jours tandis que les Quraysh les cherchaient. Le groupe de recherche arriva à l'entrée même de la grotte, mais Allah avait envoyé une araignée tisser sa toile à l'entrée et une colombe y nicher — signes que personne n'y était entré récemment. Abu Bakr craignait pour le Prophète, mais Muhammad ﷺ le rassura.",
   },
   {
     id: 'muhammad-69',
     type: 'quran_source',
     order: 69,
     content: "Allah describes this moment in the cave.",
+    contentFr: "Allah décrit ce moment dans la grotte.",
     source: {
       type: 'quran',
       surahNumber: 9,
@@ -631,6 +728,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 40,
       arabicText: 'إِلَّا تَنصُرُوهُ فَقَدْ نَصَرَهُ اللَّهُ إِذْ أَخْرَجَهُ الَّذِينَ كَفَرُوا ثَانِيَ اثْنَيْنِ إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا',
       translation: "If you do not aid him - Allah has already aided him when those who disbelieved had driven him out [of Makkah] as one of two, when they were in the cave and he said to his companion, 'Do not grieve; indeed Allah is with us.'",
+      translationFr: "Si vous ne lui portez pas secours — Allah l'a déjà secouru quand les mécréants l'avaient chassé [de La Mecque] comme le deuxième de deux, quand ils étaient dans la grotte et qu'il disait à son compagnon : « Ne sois pas triste ; certes Allah est avec nous. »",
     } as QuranReference,
   },
   {
@@ -638,12 +736,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 70,
     content: "After three days, they emerged and took a coastal route north, guided by Abdullah ibn Urayqit, a non-Muslim they trusted. Suraqah ibn Malik, lured by the bounty on Muhammad's head, pursued them. Three times his horse stumbled and sank into the sand. Realizing this was divine protection, he asked for a promise of safety and later secretly helped them escape. Muhammad ﷺ prophesied that Suraqah would one day wear the bracelets of the Persian emperor - which came true years later.",
+    contentFr: "Après trois jours, ils émergèrent et prirent une route côtière vers le nord, guidés par Abdullah ibn Urayqit, un non-musulman en qui ils avaient confiance. Suraqah ibn Malik, attiré par la prime sur la tête de Muhammad, les poursuivit. Trois fois son cheval trébucha et s'enfonça dans le sable. Réalisant qu'il s'agissait d'une protection divine, il demanda une promesse de sécurité et les aida secrètement à s'échapper. Muhammad ﷺ prophétisa que Suraqah porterait un jour les bracelets de l'empereur perse — ce qui se réalisa des années plus tard.",
   },
   {
     id: 'muhammad-71',
     type: 'narrative',
     order: 71,
     content: "The people of Yathrib had been eagerly awaiting the Prophet. Every day, they would go out looking toward Makkah. When Muhammad ﷺ finally arrived at Quba (on the outskirts of Yathrib) on Monday, 12th Rabi' al-Awwal (September 622 CE), the joy was indescribable. Children sang in the streets: 'The full moon has risen over us, from the hills of Wada'. We must give thanks as long as anyone calls to Allah.' Yathrib would forever after be called Madinah an-Nabi - the City of the Prophet, or simply Madinah.",
+    contentFr: "Les habitants de Yathrib attendaient le Prophète avec impatience. Chaque jour, ils sortaient regarder vers La Mecque. Quand Muhammad ﷺ arriva enfin à Quba (aux abords de Yathrib) le lundi 12 Rabi' al-Awwal (septembre 622 ap. J.-C.), la joie fut indescriptible. Les enfants chantaient dans les rues : « La pleine lune s'est levée sur nous, depuis les collines de Wada. Nous devons rendre grâce tant que quelqu'un appelle à Allah. » Yathrib serait à jamais appelée Madinah an-Nabi — la Ville du Prophète, ou simplement Médine.",
   },
 
   // ===== SECTION 14: ESTABLISHING THE MUSLIM COMMUNITY =====
@@ -652,24 +752,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 72,
     content: "The Prophet ﷺ stayed at Quba for several days and established the first mosque built in Islam - Masjid Quba. Then he proceeded to Madinah. Everyone wanted him to stay at their home, but he let his camel walk freely, saying it was under Allah's command. The camel stopped at a plot of land, and there Muhammad ﷺ built Masjid an-Nabawi (the Prophet's Mosque), working alongside his companions carrying bricks.",
+    contentFr: "Le Prophète ﷺ resta à Quba pendant plusieurs jours et établit la première mosquée construite en Islam — Masjid Quba. Puis il se rendit à Médine. Tout le monde voulait l'accueillir chez soi, mais il laissa sa chamelle marcher librement, disant qu'elle était sous le commandement d'Allah. La chamelle s'arrêta sur un terrain, et là Muhammad ﷺ construisit Masjid an-Nabawi (la Mosquée du Prophète), travaillant aux côtés de ses compagnons portant des briques.",
   },
   {
     id: 'muhammad-73',
     type: 'narrative',
     order: 73,
     content: "One of the Prophet's first acts was to establish brotherhood (mu'akhah) between the Muhajiroon (emigrants from Makkah) and the Ansar (helpers of Madinah). Each emigrant was paired with a helper who would share his wealth, his home, even offer to divorce one of his wives so the emigrant could marry. This bond transcended blood ties and created a community united by faith.",
+    contentFr: "L'un des premiers actes du Prophète fut d'établir la fraternité (mu'akhah) entre les Muhajiroon (émigrés de La Mecque) et les Ansar (auxiliaires de Médine). Chaque émigré fut jumelé avec un auxiliaire qui partagerait sa richesse, sa maison, et offrirait même de divorcer l'une de ses femmes pour que l'émigré puisse se marier. Ce lien transcendait les liens du sang et créait une communauté unie par la foi.",
   },
   {
     id: 'muhammad-74',
     type: 'hadith_source',
     order: 74,
     content: "The Ansar's generosity was exemplary.",
+    contentFr: "La générosité des Ansar était exemplaire.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abdur-Rahman ibn Awf',
       arabicText: 'آخَى النَّبِيُّ صلى الله عليه وسلم بَيْنِي وَبَيْنَ سَعْدِ بْنِ الرَّبِيعِ فَقَالَ سَعْدٌ إِنِّي أَكْثَرُ الأَنْصَارِ مَالاً فَأَقْسِمُ لَكَ نِصْفَ مَالِي وَانْظُرْ أَىَّ زَوْجَتَىَّ هَوِيتَ نَزَلْتُ لَكَ عَنْهَا',
       translation: "The Prophet ﷺ made brotherhood between me and Sa'd ibn ar-Rabi. Sa'd said, 'I am the wealthiest among the Ansar, so I will divide my wealth in half with you. Look at which of my two wives you prefer, and I will divorce her for you.'",
+      translationFr: "Le Prophète ﷺ établit la fraternité entre moi et Sa'd ibn ar-Rabi. Sa'd dit : « Je suis le plus riche parmi les Ansar, je vais donc diviser ma richesse en deux avec toi. Regarde laquelle de mes deux épouses tu préfères, et je divorcerai d'elle pour toi. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -678,6 +782,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 75,
     content: "The Prophet ﷺ also established the Constitution of Madinah (Sahifat al-Madinah), a remarkable document that organized relations between Muslims, Jews, and other groups. It guaranteed freedom of religion, established mutual defense, and created a unified civic community. The Jews were included as part of this community, with their religion and property protected as long as they honored the pact.",
+    contentFr: "Le Prophète ﷺ établit également la Constitution de Médine (Sahifat al-Madinah), un document remarquable qui organisait les relations entre musulmans, juifs et autres groupes. Elle garantissait la liberté de religion, établissait une défense mutuelle et créait une communauté civique unifiée. Les juifs étaient inclus dans cette communauté, leur religion et leurs biens étant protégés tant qu'ils respectaient le pacte.",
   },
 
   // ===== SECTION 15: THE BATTLE OF BADR =====
@@ -686,18 +791,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 76,
     content: "In Ramadan of the second year after Hijrah (624 CE), came the first major confrontation. The Muslims intercepted a large Quraysh caravan returning from Syria. The caravan escaped, but the Quraysh army of about 1,000 soldiers marched to confront the Muslims. The Prophet ﷺ consulted his companions. The Ansar, led by Sa'd ibn Mu'adh, pledged to fight even if he led them into the sea.",
+    contentFr: "En Ramadan de la deuxième année après l'Hégire (624 ap. J.-C.), survint la première grande confrontation. Les musulmans interceptèrent une grande caravane des Quraysh revenant de Syrie. La caravane s'échappa, mais l'armée Quraysh d'environ 1 000 soldats marcha pour affronter les musulmans. Le Prophète ﷺ consulta ses compagnons. Les Ansar, menés par Sa'd ibn Mu'adh, s'engagèrent à combattre même s'il les menait dans la mer.",
   },
   {
     id: 'muhammad-77',
     type: 'narrative',
     order: 77,
     content: "At Badr, 313 Muslims faced over 1,000 Quraysh warriors. The night before, rain fell - a burden on the Quraysh in their valley but firming the ground for the Muslims. The Prophet ﷺ spent the night in prayer, weeping and supplicating: 'O Allah, if this small group is destroyed, You will not be worshipped on earth.' Abu Bakr reassured him that Allah would fulfill His promise.",
+    contentFr: "À Badr, 313 musulmans affrontèrent plus de 1 000 guerriers Quraysh. La nuit précédente, la pluie tomba — un fardeau pour les Quraysh dans leur vallée mais raffermissant le sol pour les musulmans. Le Prophète ﷺ passa la nuit en prière, pleurant et suppliant : « Ô Allah, si ce petit groupe est détruit, Tu ne seras plus adoré sur terre. » Abu Bakr le rassura qu'Allah accomplirait Sa promesse.",
   },
   {
     id: 'muhammad-78',
     type: 'quran_source',
     order: 78,
     content: "Allah sent angels to support the believers at Badr.",
+    contentFr: "Allah envoya des anges pour soutenir les croyants à Badr.",
     source: {
       type: 'quran',
       surahNumber: 8,
@@ -707,6 +815,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 10,
       arabicText: 'إِذْ تَسْتَغِيثُونَ رَبَّكُمْ فَاسْتَجَابَ لَكُمْ أَنِّي مُمِدُّكُم بِأَلْفٍ مِّنَ الْمَلَائِكَةِ مُرْدِفِينَ ۝ وَمَا جَعَلَهُ اللَّهُ إِلَّا بُشْرَىٰ وَلِتَطْمَئِنَّ بِهِ قُلُوبُكُمْ ۚ وَمَا النَّصْرُ إِلَّا مِنْ عِندِ اللَّهِ',
       translation: "Remember when you asked help of your Lord, and He answered you, 'Indeed, I will reinforce you with a thousand from the angels, following one another.' And Allah made it not except as good tidings and so that your hearts would be assured thereby. And victory is not except from Allah.",
+      translationFr: "Quand vous imploriez le secours de votre Seigneur, et qu'Il vous répondit : « Je vais vous renforcer d'un millier d'anges, se suivant les uns les autres. » Et Allah ne le fit que comme bonne nouvelle et pour que vos coeurs soient rassurés. Et la victoire ne vient que d'Allah.",
     } as QuranReference,
   },
   {
@@ -714,12 +823,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 79,
     content: "The battle was swift and decisive. Despite being outnumbered three to one, the Muslims achieved a stunning victory. Seventy Quraysh leaders were killed, including Abu Jahl, the 'Pharaoh of this ummah.' Seventy were captured. The Muslims lost only fourteen. This victory established the Muslims as a serious power and vindicated years of patient suffering in Makkah.",
+    contentFr: "La bataille fut rapide et décisive. Bien qu'inférieurs en nombre de trois contre un, les musulmans remportèrent une victoire éclatante. Soixante-dix chefs Quraysh furent tués, dont Abu Jahl, le « Pharaon de cette oumma ». Soixante-dix furent capturés. Les musulmans ne perdirent que quatorze hommes. Cette victoire établit les musulmans comme une puissance sérieuse et justifia des années de souffrance patiente à La Mecque.",
   },
   {
     id: 'muhammad-80',
     type: 'quran_source',
     order: 80,
     content: "Allah reminded the believers of His help at Badr.",
+    contentFr: "Allah rappela aux croyants Son aide à Badr.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -729,6 +840,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 123,
       arabicText: 'وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ ۖ فَاتَّقُوا اللَّهَ لَعَلَّكُمْ تَشْكُرُونَ',
       translation: 'And already had Allah given you victory at Badr while you were few in number. Then fear Allah; perhaps you will be grateful.',
+      translationFr: "Allah vous a déjà donné la victoire à Badr alors que vous étiez en petit nombre. Craignez donc Allah ; peut-être serez-vous reconnaissants.",
     } as QuranReference,
   },
 
@@ -738,24 +850,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 81,
     content: "A year later, the Quraysh returned for revenge with 3,000 soldiers. The Muslims, about 1,000 strong, marched to meet them at Mount Uhud. Before the battle, Abdullah ibn Ubayy (the chief hypocrite) withdrew with 300 men, reducing the Muslim force to 700. The Prophet ﷺ positioned fifty archers on a hill with strict orders not to leave their posts under any circumstances.",
+    contentFr: "Un an plus tard, les Quraysh revinrent pour se venger avec 3 000 soldats. Les musulmans, environ 1 000, marchèrent pour les affronter au Mont Uhud. Avant la bataille, Abdullah ibn Ubayy (le chef des hypocrites) se retira avec 300 hommes, réduisant les forces musulmanes à 700. Le Prophète ﷺ positionna cinquante archers sur une colline avec l'ordre strict de ne pas quitter leur poste en aucune circonstance.",
   },
   {
     id: 'muhammad-82',
     type: 'narrative',
     order: 82,
     content: "Initially, the Muslims were winning. The Quraysh fled, and it seemed like another Badr. But the archers, seeing the enemy retreat, abandoned their posts to collect spoils, ignoring their commander's protests. Khalid ibn al-Walid, then fighting for the Quraysh, saw the opening and attacked from behind. The tide turned. In the chaos, a rumor spread that Muhammad ﷺ had been killed.",
+    contentFr: "Initialement, les musulmans étaient en train de gagner. Les Quraysh s'enfuirent, et cela semblait être un autre Badr. Mais les archers, voyant l'ennemi battre en retraite, abandonnèrent leurs postes pour ramasser le butin, ignorant les protestations de leur commandant. Khalid ibn al-Walid, combattant alors pour les Quraysh, vit l'ouverture et attaqua par derrière. Le cours de la bataille changea. Dans le chaos, une rumeur se répandit que Muhammad ﷺ avait été tué.",
   },
   {
     id: 'muhammad-83',
     type: 'narrative',
     order: 83,
     content: "The Prophet ﷺ was not dead, but he was wounded. A stone broke his tooth and cut his face. He fell into a pit and was struck on the head. Rings from his helmet were driven into his cheek. His companions formed a human shield around him. Seventy Muslims were martyred, including the Prophet's uncle Hamzah, whose body was mutilated by Hind bint Utbah.",
+    contentFr: "Le Prophète ﷺ n'était pas mort, mais il était blessé. Une pierre brisa sa dent et entailla son visage. Il tomba dans une fosse et fut frappé à la tête. Les anneaux de son casque s'enfoncèrent dans sa joue. Ses compagnons formèrent un bouclier humain autour de lui. Soixante-dix musulmans furent martyrisés, dont l'oncle du Prophète Hamzah, dont le corps fut mutilé par Hind bint Utbah.",
   },
   {
     id: 'muhammad-84',
     type: 'quran_source',
     order: 84,
     content: "Allah addressed what happened at Uhud.",
+    contentFr: "Allah s'adressa à ce qui s'est passé à Uhud.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -765,6 +881,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 152,
       arabicText: 'وَلَقَدْ صَدَقَكُمُ اللَّهُ وَعْدَهُ إِذْ تَحُسُّونَهُم بِإِذْنِهِ ۖ حَتَّىٰ إِذَا فَشِلْتُمْ وَتَنَازَعْتُمْ فِي الْأَمْرِ وَعَصَيْتُم مِّن بَعْدِ مَا أَرَاكُم مَّا تُحِبُّونَ',
       translation: 'And Allah had certainly fulfilled His promise to you when you were killing them by His permission until [the time] when you lost courage and fell to disputing about the order and disobeyed after He had shown you that which you love.',
+      translationFr: "Et Allah a certes tenu Sa promesse envers vous quand, par Sa permission, vous les exterminiez, jusqu'au moment où vous avez fléchi, disputé à propos de l'ordre et désobéi après qu'Il vous eut montré ce que vous aimiez.",
     } as QuranReference,
   },
   {
@@ -772,6 +889,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 85,
     content: "Uhud was a harsh lesson. Victory belongs to Allah, and disobedience has consequences. Yet the Prophet ﷺ's response was remarkable. When asked to curse the Quraysh, he said: 'I was not sent to curse. I was sent as a mercy.' He prayed: 'O Allah, forgive my people, for they do not know.' Even for those who wounded him and killed his beloved uncle.",
+    contentFr: "Uhud fut une dure leçon. La victoire appartient à Allah, et la désobéissance a des conséquences. Pourtant, la réponse du Prophète ﷺ fut remarquable. Quand on lui demanda de maudire les Quraysh, il dit : « Je n'ai pas été envoyé pour maudire. J'ai été envoyé comme miséricorde. » Il pria : « Ô Allah, pardonne à mon peuple, car ils ne savent pas. » Même pour ceux qui l'avaient blessé et tué son oncle bien-aimé.",
   },
 
   // ===== SECTION 17: THE BATTLE OF THE TRENCH =====
@@ -780,18 +898,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 86,
     content: "In the fifth year, the largest army Arabia had ever seen - about 10,000 warriors from Quraysh, Ghatafan, and other tribes - marched on Madinah. Salman al-Farsi, a Persian companion, suggested digging a trench around the city, a tactic unknown to the Arabs. The Muslims, including the Prophet ﷺ himself, dug day and night, often hungry, tying stones to their stomachs to ease the pangs of hunger.",
+    contentFr: "La cinquième année, la plus grande armée que l'Arabie ait jamais vue — environ 10 000 guerriers des Quraysh, Ghatafan et d'autres tribus — marcha sur Médine. Salman al-Farsi, un compagnon perse, suggéra de creuser un fossé autour de la ville, une tactique inconnue des Arabes. Les musulmans, y compris le Prophète ﷺ lui-même, creusèrent jour et nuit, souvent affamés, attachant des pierres sur leurs ventres pour apaiser les douleurs de la faim.",
   },
   {
     id: 'muhammad-87',
     type: 'narrative',
     order: 87,
     content: "The coalition besieged Madinah for about a month. Meanwhile, the Jewish tribe of Banu Qurayza, who had a treaty with the Muslims, was persuaded to betray them and attack from within. The situation was desperate - enemies on all sides, food scarce, morale low. But the Prophet ﷺ remained steadfast, and the Muslims held their positions.",
+    contentFr: "La coalition assiégea Médine pendant environ un mois. Pendant ce temps, la tribu juive des Banu Qurayza, qui avait un traité avec les musulmans, fut persuadée de les trahir et d'attaquer de l'intérieur. La situation était désespérée — des ennemis de tous côtés, la nourriture rare, le moral bas. Mais le Prophète ﷺ resta ferme, et les musulmans tinrent leurs positions.",
   },
   {
     id: 'muhammad-88',
     type: 'quran_source',
     order: 88,
     content: "Allah described the severity of the test.",
+    contentFr: "Allah décrivit la sévérité de l'épreuve.",
     source: {
       type: 'quran',
       surahNumber: 33,
@@ -801,6 +922,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 11,
       arabicText: 'إِذْ جَاءُوكُم مِّن فَوْقِكُمْ وَمِنْ أَسْفَلَ مِنكُمْ وَإِذْ زَاغَتِ الْأَبْصَارُ وَبَلَغَتِ الْقُلُوبُ الْحَنَاجِرَ وَتَظُنُّونَ بِاللَّهِ الظُّنُونَا ۝ هُنَالِكَ ابْتُلِيَ الْمُؤْمِنُونَ وَزُلْزِلُوا زِلْزَالًا شَدِيدًا',
       translation: '[Remember] when they came at you from above you and from below you, and when eyes shifted [in fear], and hearts reached the throats, and you assumed about Allah [various] assumptions. There the believers were tested and shaken with a severe shaking.',
+      translationFr: "[Rappelez-vous] quand ils vous vinrent d'en haut et d'en bas, et quand les regards se troublèrent [de peur], et que les coeurs remontèrent aux gorges, et que vous faisiez sur Allah toutes sortes de suppositions. Là, les croyants furent éprouvés et secoués d'un violent séisme.",
     } as QuranReference,
   },
   {
@@ -808,6 +930,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 89,
     content: "Allah sent His aid. Nu'aym ibn Mas'ud, a secret Muslim in the enemy camp, sowed distrust between the Quraysh and Banu Qurayza. Then Allah sent a fierce, cold wind that uprooted tents, extinguished fires, and terrified the enemy. Abu Sufyan declared: 'O Quraysh, we cannot stay. Our horses and camels are dying, and the wind has left us nothing.' The coalition retreated, never to threaten Madinah again.",
+    contentFr: "Allah envoya Son secours. Nu'aym ibn Mas'ud, un musulman secret dans le camp ennemi, sema la méfiance entre les Quraysh et les Banu Qurayza. Puis Allah envoya un vent violent et glacial qui arracha les tentes, éteignit les feux et terrorisa l'ennemi. Abu Sufyan déclara : « Ô Quraysh, nous ne pouvons rester. Nos chevaux et nos chameaux meurent, et le vent ne nous a rien laissé. » La coalition se retira, ne menaçant plus jamais Médine.",
   },
 
   // ===== SECTION 18: TREATY OF HUDAYBIYYAH =====
@@ -816,18 +939,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 90,
     content: "In the sixth year, the Prophet ﷺ saw in a dream that he was performing Umrah. He set out with about 1,400 companions, wearing ihram and carrying no weapons except travel swords. But the Quraysh blocked them at Hudaybiyyah, refusing to let them enter Makkah. Negotiations began, and the Prophet ﷺ sent Uthman as an envoy. When Uthman was delayed, rumors spread that he had been killed.",
+    contentFr: "La sixième année, le Prophète ﷺ vit en rêve qu'il accomplissait la Omra. Il partit avec environ 1 400 compagnons, portant l'ihram et ne portant pas d'armes sauf des épées de voyage. Mais les Quraysh les bloquèrent à Hudaybiyyah, refusant de les laisser entrer à La Mecque. Les négociations commencèrent, et le Prophète ﷺ envoya Uthman comme émissaire. Quand Uthman fut retardé, des rumeurs se répandirent qu'il avait été tué.",
   },
   {
     id: 'muhammad-91',
     type: 'narrative',
     order: 91,
     content: "The Prophet ﷺ called for a pledge under a tree - the Pledge of Ridwan (Divine Pleasure). The companions pledged to fight to the death if necessary. Allah was pleased with them, and Uthman returned safely. Negotiations resumed, leading to the Treaty of Hudaybiyyah: a ten-year truce, with Muslims returning this year but allowed to perform Umrah the next.",
+    contentFr: "Le Prophète ﷺ appela à un serment sous un arbre — le Serment de Ridwan (Agrément Divin). Les compagnons s'engagèrent à combattre jusqu'à la mort si nécessaire. Allah fut satisfait d'eux, et Uthman revint sain et sauf. Les négociations reprirent, aboutissant au Traité de Hudaybiyyah : une trêve de dix ans, les musulmans repartant cette année mais autorisés à accomplir la Omra l'année suivante.",
   },
   {
     id: 'muhammad-92',
     type: 'quran_source',
     order: 92,
     content: "Allah called this apparent setback a clear victory.",
+    contentFr: "Allah qualifia ce revers apparent de victoire éclatante.",
     source: {
       type: 'quran',
       surahNumber: 48,
@@ -837,6 +963,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 3,
       arabicText: 'إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا ۝ لِّيَغْفِرَ لَكَ اللَّهُ مَا تَقَدَّمَ مِن ذَنبِكَ وَمَا تَأَخَّرَ وَيُتِمَّ نِعْمَتَهُ عَلَيْكَ وَيَهْدِيَكَ صِرَاطًا مُّسْتَقِيمًا ۝ وَيَنصُرَكَ اللَّهُ نَصْرًا عَزِيزًا',
       translation: 'Indeed, We have given you a clear conquest, that Allah may forgive for you what preceded of your sin and what will follow and complete His favor upon you and guide you to a straight path, and [that] Allah may aid you with a mighty victory.',
+      translationFr: "En vérité, Nous t'avons accordé une victoire éclatante, afin qu'Allah te pardonne tes péchés passés et futurs, qu'Il parachève Son bienfait sur toi et te guide sur un droit chemin, et qu'Allah te donne un puissant secours.",
     } as QuranReference,
   },
   {
@@ -844,6 +971,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 93,
     content: "Some companions were devastated - they had come for Umrah and were returning without it, with seemingly unfavorable terms. But the Prophet ﷺ saw what they could not. The treaty brought peace, allowing Islam to spread freely. In the two years following Hudaybiyyah, more people embraced Islam than in all the previous years combined. The 'clear victory' became apparent.",
+    contentFr: "Certains compagnons étaient dévastés — ils étaient venus pour la Omra et repartaient sans l'accomplir, avec des termes apparemment défavorables. Mais le Prophète ﷺ voyait ce qu'ils ne pouvaient voir. Le traité apporta la paix, permettant à l'Islam de se répandre librement. Dans les deux années suivant Hudaybiyyah, plus de gens embrassèrent l'Islam que dans toutes les années précédentes combinées. La « victoire éclatante » devint évidente.",
   },
 
   // ===== SECTION 19: LETTERS TO KINGS AND RULERS =====
@@ -852,12 +980,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 94,
     content: "With peace secured, the Prophet ﷺ sent letters to the rulers of the world, inviting them to Islam. He wrote to Heraclius (Byzantine emperor), Khosrow II (Persian emperor), the Negus of Abyssinia, the Muqawqis of Egypt, and others. His seal read 'Muhammad Rasulullah' (Muhammad, Messenger of Allah). These letters announced that Islam was not just for Arabs but for all humanity.",
+    contentFr: "La paix assurée, le Prophète ﷺ envoya des lettres aux dirigeants du monde, les invitant à l'Islam. Il écrivit à Héraclius (empereur byzantin), Khosrow II (empereur perse), le Négus d'Abyssinie, le Muqawqis d'Égypte et d'autres. Son sceau portait « Muhammad Rasulullah » (Muhammad, Messager d'Allah). Ces lettres annonçaient que l'Islam n'était pas seulement pour les Arabes mais pour toute l'humanité.",
   },
   {
     id: 'muhammad-95',
     type: 'narrative',
     order: 95,
     content: "The responses varied. The Negus accepted Islam. Heraclius reportedly acknowledged Muhammad's prophethood but feared his people. Khosrow arrogantly tore the letter, and the Prophet ﷺ prophesied that his kingdom would be torn apart - which happened within a decade. The Muqawqis sent gifts, including Maria the Copt, who became the mother of the Prophet's son Ibrahim.",
+    contentFr: "Les réponses varièrent. Le Négus accepta l'Islam. Héraclius aurait reconnu la prophétie de Muhammad mais craignait son peuple. Khosrow déchira arrogamment la lettre, et le Prophète ﷺ prophétisa que son royaume serait déchiré — ce qui se produisit en moins d'une décennie. Le Muqawqis envoya des cadeaux, dont Maria la Copte, qui devint la mère du fils du Prophète, Ibrahim.",
   },
 
   // ===== SECTION 20: THE CONQUEST OF MAKKAH =====
@@ -866,36 +996,42 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 96,
     content: "In the eighth year, the Quraysh violated the Treaty of Hudaybiyyah by supporting an attack on a tribe allied with the Muslims. The Prophet ﷺ prepared for what would be the final confrontation. He gathered 10,000 believers - the largest Muslim army yet - and marched toward Makkah, keeping his destination secret to avoid bloodshed.",
+    contentFr: "La huitième année, les Quraysh violèrent le Traité de Hudaybiyyah en soutenant une attaque contre une tribu alliée aux musulmans. Le Prophète ﷺ prépara ce qui serait la confrontation finale. Il rassembla 10 000 croyants — la plus grande armée musulmane à ce jour — et marcha vers La Mecque, gardant sa destination secrète pour éviter le bain de sang.",
   },
   {
     id: 'muhammad-97',
     type: 'narrative',
     order: 97,
     content: "Abu Sufyan, the Quraysh leader who had fought the Muslims for twenty years, came to negotiate. When he saw the vast Muslim camp, his resistance crumbled. He met the Prophet ﷺ, who offered amnesty to anyone who entered Abu Sufyan's house, stayed in their own homes, or sought refuge in the Ka'bah. Abu Sufyan accepted Islam that night.",
+    contentFr: "Abu Sufyan, le chef des Quraysh qui avait combattu les musulmans pendant vingt ans, vint négocier. Quand il vit le vaste camp musulman, sa résistance s'effondra. Il rencontra le Prophète ﷺ, qui offrit l'amnistie à quiconque entrerait dans la maison d'Abu Sufyan, resterait chez soi ou chercherait refuge dans la Ka'bah. Abu Sufyan accepta l'Islam cette nuit-là.",
   },
   {
     id: 'muhammad-98',
     type: 'narrative',
     order: 98,
     content: "The next day, 20th Ramadan 8 AH (January 630 CE), Muhammad ﷺ entered Makkah - the city that had persecuted him, starved his followers, driven him out, and tried to kill him. He entered with his head bowed in humility, reciting Surah Al-Fath. The conquest was almost bloodless; only a small group of diehards resisted and were quickly subdued.",
+    contentFr: "Le lendemain, le 20 Ramadan 8 AH (janvier 630 ap. J.-C.), Muhammad ﷺ entra dans La Mecque — la ville qui l'avait persécuté, affamé ses fidèles, chassé et tenté de le tuer. Il entra la tête baissée en humilité, récitant la Sourate Al-Fath. La conquête fut presque sans effusion de sang ; seul un petit groupe d'irréductibles résista et fut rapidement maîtrisé.",
   },
   {
     id: 'muhammad-99',
     type: 'narrative',
     order: 99,
     content: "The Quraysh gathered at the Ka'bah, terrified, remembering how they had treated Muhammad and his followers. The Prophet ﷺ asked: 'O Quraysh, what do you think I will do with you?' They replied: 'You are a noble brother, son of a noble brother.' He said: 'Go, you are free' (Idhabu fa antum at-tulaqa). After twenty years of conflict, he forgave them all.",
+    contentFr: "Les Quraysh se rassemblèrent à la Ka'bah, terrifiés, se souvenant de la façon dont ils avaient traité Muhammad et ses fidèles. Le Prophète ﷺ demanda : « Ô Quraysh, que pensez-vous que je vais faire de vous ? » Ils répondirent : « Tu es un noble frère, fils d'un noble frère. » Il dit : « Allez, vous êtes libres » (Idhabu fa antum at-tulaqa). Après vingt ans de conflit, il leur pardonna à tous.",
   },
   {
     id: 'muhammad-100',
     type: 'hadith_source',
     order: 100,
     content: "The Prophet ﷺ cleansed the Ka'bah of idols.",
+    contentFr: "Le Prophète ﷺ purifia la Ka'bah des idoles.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abdullah ibn Masud',
       arabicText: 'دَخَلَ النَّبِيُّ صلى الله عليه وسلم مَكَّةَ وَحَوْلَ الْبَيْتِ سِتُّونَ وَثَلاَثُمِائَةِ نُصُبٍ فَجَعَلَ يَطْعُنُهَا بِعُودٍ فِي يَدِهِ وَيَقُولُ جَاءَ الْحَقُّ وَزَهَقَ الْبَاطِلُ إِنَّ الْبَاطِلَ كَانَ زَهُوقًا',
       translation: "The Prophet ﷺ entered Makkah and around the Ka'bah were three hundred and sixty idols. He started striking them with a stick in his hand, saying, 'Truth has come, and falsehood has departed. Indeed, falsehood is ever bound to depart.'",
+      translationFr: "Le Prophète ﷺ entra à La Mecque et autour de la Ka'bah se trouvaient trois cent soixante idoles. Il commença à les frapper avec un bâton dans sa main, disant : « La vérité est venue, et le faux a disparu. Certes, le faux est voué à disparaître. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -904,6 +1040,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 101,
     content: "The Prophet recited this verse as he destroyed the idols.",
+    contentFr: "Le Prophète récita ce verset en détruisant les idoles.",
     source: {
       type: 'quran',
       surahNumber: 17,
@@ -913,6 +1050,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 81,
       arabicText: 'وَقُلْ جَاءَ الْحَقُّ وَزَهَقَ الْبَاطِلُ ۚ إِنَّ الْبَاطِلَ كَانَ زَهُوقًا',
       translation: 'And say, "Truth has come, and falsehood has departed. Indeed is falsehood, [by nature], ever bound to depart."',
+      translationFr: "Et dis : « La vérité est venue et le faux a disparu. Certes, le faux est, par nature, voué à disparaître. »",
     } as QuranReference,
   },
   {
@@ -920,6 +1058,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 102,
     content: "Among those who accepted Islam at the conquest were some of the Prophet's former enemies: Abu Sufyan and his wife Hind (who had mutilated Hamzah's body), Ikrimah ibn Abu Jahl (son of the 'Pharaoh' of this ummah), and Wahshi (who had killed Hamzah). The Prophet ﷺ forgave them all. Even Hind, whom he specifically forgave, became a sincere Muslim. Khalid ibn al-Walid, who had inflicted the defeat at Uhud, had already accepted Islam and became one of history's greatest Muslim generals.",
+    contentFr: "Parmi ceux qui acceptèrent l'Islam lors de la conquête se trouvaient certains des anciens ennemis du Prophète : Abu Sufyan et sa femme Hind (qui avait mutilé le corps de Hamzah), Ikrimah ibn Abu Jahl (fils du « Pharaon » de cette oumma), et Wahshi (qui avait tué Hamzah). Le Prophète ﷺ leur pardonna à tous. Même Hind, à qui il pardonna spécifiquement, devint une musulmane sincère. Khalid ibn al-Walid, qui avait infligé la défaite à Uhud, avait déjà accepté l'Islam et devint l'un des plus grands généraux musulmans de l'histoire.",
   },
 
   // ===== SECTION 21: THE FAREWELL PILGRIMAGE =====
@@ -928,24 +1067,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 103,
     content: "In the tenth year after Hijrah (632 CE), the Prophet ﷺ announced he would perform Hajj. Muslims from all over Arabia came to join him - over 100,000 gathered in Makkah. This would be his only Hajj and his last. He taught every ritual by example, saying: 'Take your rites from me, for I do not know if I will perform Hajj after this year.'",
+    contentFr: "La dixième année après l'Hégire (632 ap. J.-C.), le Prophète ﷺ annonça qu'il accomplirait le Hajj. Des musulmans de toute l'Arabie vinrent le rejoindre — plus de 100 000 se rassemblèrent à La Mecque. Ce serait son seul Hajj et le dernier. Il enseigna chaque rituel par l'exemple, disant : « Apprenez de moi vos rites, car je ne sais pas si j'accomplirai le Hajj après cette année. »",
   },
   {
     id: 'muhammad-104',
     type: 'narrative',
     order: 104,
     content: "On the 9th of Dhul Hijjah, at Arafat, the Prophet ﷺ delivered the Farewell Sermon (Khutbat al-Wada'). Standing on his camel, he addressed the largest gathering he would ever speak to. His voice echoed across the valley as others repeated his words to those far away.",
+    contentFr: "Le 9 Dhul Hijjah, à Arafat, le Prophète ﷺ prononça le Sermon d'Adieu (Khutbat al-Wada'). Debout sur sa chamelle, il s'adressa au plus grand rassemblement auquel il parlerait jamais. Sa voix résonna à travers la vallée tandis que d'autres répétaient ses paroles à ceux qui étaient au loin.",
   },
   {
     id: 'muhammad-105',
     type: 'hadith_source',
     order: 105,
     content: "The Prophet ﷺ declared fundamental principles in his Farewell Sermon.",
+    contentFr: "Le Prophète ﷺ déclara des principes fondamentaux dans son Sermon d'Adieu.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Bakrah',
       arabicText: 'إِنَّ دِمَاءَكُمْ وَأَمْوَالَكُمْ وَأَعْرَاضَكُمْ حَرَامٌ عَلَيْكُمْ كَحُرْمَةِ يَوْمِكُمْ هَذَا فِي شَهْرِكُمْ هَذَا فِي بَلَدِكُمْ هَذَا',
       translation: "The Prophet ﷺ said, 'Your blood, your property, and your honor are sacred to you, like the sacredness of this day of yours, in this month of yours, in this city of yours.'",
+      translationFr: "Le Prophète ﷺ dit : « Vos sangs, vos biens et votre honneur sont sacrés pour vous, comme la sacralité de ce jour qui est le vôtre, en ce mois qui est le vôtre, dans cette cité qui est la vôtre. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -954,18 +1097,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 106,
     content: "He proclaimed the equality of all people: 'O people, your Lord is One, and your father is one. All of you are from Adam, and Adam was from dust. An Arab has no superiority over a non-Arab, nor does a non-Arab have superiority over an Arab. A white has no superiority over a black, nor does a black have superiority over a white - except by piety and good action.'",
+    contentFr: "Il proclama l'égalité de tous les êtres humains : « Ô gens, votre Seigneur est Un, et votre père est un. Vous êtes tous issus d'Adam, et Adam fut créé de poussière. Un Arabe n'a aucune supériorité sur un non-Arabe, ni un non-Arabe sur un Arabe. Un blanc n'a aucune supériorité sur un noir, ni un noir sur un blanc — sauf par la piété et les bonnes actions. »",
   },
   {
     id: 'muhammad-107',
     type: 'narrative',
     order: 107,
     content: "He abolished the customs of jahiliyyah (pre-Islamic ignorance), commanded good treatment of women ('Fear Allah regarding women, for you have taken them with Allah's trust'), forbade usury (riba), and established that every Muslim is a brother to every other Muslim. He told them: 'I have left with you what, if you hold fast to it, you will never go astray: the Book of Allah and my Sunnah.'",
+    contentFr: "Il abolit les coutumes de la jahiliyyah (l'ignorance pré-islamique), ordonna le bon traitement des femmes (« Craignez Allah concernant les femmes, car vous les avez prises avec la confiance d'Allah »), interdit l'usure (riba) et établit que chaque musulman est un frère pour tout autre musulman. Il leur dit : « Je vous ai laissé ce qui, si vous vous y accrochez, ne vous égarera jamais : le Livre d'Allah et ma Sunnah. »",
   },
   {
     id: 'muhammad-108',
     type: 'quran_source',
     order: 108,
     content: "During this pilgrimage, Allah declared the religion complete.",
+    contentFr: "Durant ce pèlerinage, Allah déclara la religion complète.",
     source: {
       type: 'quran',
       surahNumber: 5,
@@ -975,6 +1121,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 3,
       arabicText: 'الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا',
       translation: 'This day I have perfected for you your religion and completed My favor upon you and have approved for you Islam as religion.',
+      translationFr: "Aujourd'hui, J'ai parachevé pour vous votre religion, et accompli sur vous Mon bienfait. Et J'agrée l'Islam comme religion pour vous.",
     } as QuranReference,
   },
   {
@@ -982,6 +1129,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 109,
     content: "When this verse was revealed, Umar wept. He understood that perfection means completion, and completion means the end is near. The Prophet's mission was accomplished. The message had been delivered. The example had been set. What remained was for the ummah to carry it forward.",
+    contentFr: "Quand ce verset fut révélé, Umar pleura. Il comprit que la perfection signifie l'achèvement, et l'achèvement signifie que la fin est proche. La mission du Prophète était accomplie. Le message avait été délivré. L'exemple avait été donné. Il restait à la oumma de le porter en avant.",
   },
 
   // ===== SECTION 22: HIS FINAL DAYS AND DEATH =====
@@ -990,30 +1138,35 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 110,
     content: "After returning to Madinah, the Prophet ﷺ fell ill. His fever was severe, and he suffered greatly. He spent his last days in the room of Aisha, his beloved wife. He continued to lead prayers as long as he could, then asked Abu Bakr to lead in his place. Even in his final illness, he sought forgiveness from anyone he might have wronged and settled any debts.",
+    contentFr: "Après son retour à Médine, le Prophète ﷺ tomba malade. Sa fièvre était intense, et il souffrit beaucoup. Il passa ses derniers jours dans la chambre d'Aisha, sa femme bien-aimée. Il continua à diriger les prières aussi longtemps qu'il le put, puis demanda à Abu Bakr de diriger à sa place. Même dans sa dernière maladie, il chercha le pardon de quiconque il aurait pu léser et régla toutes ses dettes.",
   },
   {
     id: 'muhammad-111',
     type: 'narrative',
     order: 111,
     content: "Three days before his death, the Prophet ﷺ gave a sermon warning against taking graves as places of worship, as the Christians had done with their prophets. He freed all his slaves and gave away all his property in charity. He had nothing of worldly value - this was the chosen poverty of the best of creation.",
+    contentFr: "Trois jours avant sa mort, le Prophète ﷺ prononça un sermon avertissant contre le fait de prendre les tombes comme lieux de culte, comme les chrétiens l'avaient fait avec leurs prophètes. Il libéra tous ses esclaves et donna tous ses biens en charité. Il ne possédait rien de valeur mondaine — c'était la pauvreté choisie de la meilleure des créatures.",
   },
   {
     id: 'muhammad-112',
     type: 'narrative',
     order: 112,
     content: "On the last morning, Monday 12th Rabi' al-Awwal, 11 AH (June 8, 632 CE), the Prophet ﷺ lifted the curtain and looked out at his companions praying Fajr, led by Abu Bakr. He smiled at the sight - his mission accomplished, his ummah established. He lowered the curtain and lay back.",
+    contentFr: "Le dernier matin, lundi 12 Rabi' al-Awwal, 11 AH (8 juin 632 ap. J.-C.), le Prophète ﷺ souleva le rideau et regarda ses compagnons prier le Fajr, dirigés par Abu Bakr. Il sourit à cette vue — sa mission accomplie, sa oumma établie. Il baissa le rideau et se recoucha.",
   },
   {
     id: 'muhammad-113',
     type: 'hadith_source',
     order: 113,
     content: "Aisha described the Prophet's final moments.",
+    contentFr: "Aisha décrivit les derniers moments du Prophète.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Aisha',
       arabicText: 'تُوُفِّيَ النَّبِيُّ صلى الله عليه وسلم فِي بَيْتِي وَفِي يَوْمِي وَبَيْنَ سَحْرِي وَنَحْرِي وَكَانَتْ إِحْدَانَا تُعَوِّذُهُ بِدُعَاءٍ إِذَا مَرِضَ فَذَهَبْتُ أُعَوِّذُهُ فَرَفَعَ رَأْسَهُ إِلَى السَّمَاءِ وَقَالَ فِي الرَّفِيقِ الأَعْلَى فِي الرَّفِيقِ الأَعْلَى',
       translation: "The Prophet ﷺ passed away in my house, on my day, between my chest and my neck. When I would recite protective supplications over him in his illness, he raised his head toward the sky and said, 'With the Highest Companion, with the Highest Companion.'",
+      translationFr: "Le Prophète ﷺ mourut dans ma maison, en mon jour, entre ma poitrine et mon cou. Quand je récitais des invocations de protection sur lui durant sa maladie, il leva la tête vers le ciel et dit : « Avec le Compagnon le Plus Haut, avec le Compagnon le Plus Haut. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -1022,24 +1175,28 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 114,
     content: "Jibril had come and asked permission to enter - something he had never done before. He gave the Prophet ﷺ a choice: to remain in this world or to join Allah. Muhammad ﷺ chose Allah. His blessed soul departed with the words 'with the Highest Companion' (fil Rafiq al-A'la) on his lips, his head resting on Aisha's chest. He was 63 years old.",
+    contentFr: "Jibril était venu et avait demandé la permission d'entrer — chose qu'il n'avait jamais faite auparavant. Il donna au Prophète ﷺ le choix : rester dans ce monde ou rejoindre Allah. Muhammad ﷺ choisit Allah. Son âme bénie partit avec les mots « avec le Compagnon le Plus Haut » (fil Rafiq al-A'la) sur ses lèvres, sa tête reposant sur la poitrine d'Aisha. Il avait 63 ans.",
   },
   {
     id: 'muhammad-115',
     type: 'narrative',
     order: 115,
     content: "The news spread, and Madinah was struck with grief unlike anything before or since. Umar, in shock, declared that anyone who said Muhammad was dead would be killed - Muhammad had just gone to meet his Lord like Musa did and would return. Then Abu Bakr arrived, kissed the Prophet's forehead, and emerged to address the people.",
+    contentFr: "La nouvelle se répandit, et Médine fut frappée d'un chagrin sans pareil, ni avant ni après. Umar, sous le choc, déclara que quiconque dirait que Muhammad était mort serait tué — Muhammad était simplement allé rencontrer son Seigneur comme Moussa et reviendrait. Puis Abu Bakr arriva, embrassa le front du Prophète et sortit pour s'adresser aux gens.",
   },
   {
     id: 'muhammad-116',
     type: 'narrative',
     order: 116,
     content: "Abu Bakr recited: 'Muhammad is not but a messenger. [Other] messengers have passed on before him. So if he was to die or be killed, would you turn back on your heels?' (Quran 3:144). He then said: 'Whoever worshipped Muhammad, know that Muhammad has died. But whoever worships Allah, know that Allah is Ever-Living and never dies.' Umar collapsed, saying: 'It was as if I had never heard this verse before.'",
+    contentFr: "Abu Bakr récita : « Muhammad n'est qu'un messager. Des messagers sont passés avant lui. S'il mourait ou était tué, retourneriez-vous sur vos talons ? » (Coran 3:144). Puis il dit : « Quiconque adorait Muhammad, sachez que Muhammad est mort. Mais quiconque adore Allah, sachez qu'Allah est le Vivant et ne meurt jamais. » Umar s'effondra, disant : « C'était comme si je n'avais jamais entendu ce verset auparavant. »",
   },
   {
     id: 'muhammad-117',
     type: 'quran_source',
     order: 117,
     content: "Abu Bakr recited this verse at the Prophet's death.",
+    contentFr: "Abu Bakr récita ce verset à la mort du Prophète.",
     source: {
       type: 'quran',
       surahNumber: 3,
@@ -1049,6 +1206,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 144,
       arabicText: 'وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ الرُّسُلُ ۚ أَفَإِن مَّاتَ أَوْ قُتِلَ انقَلَبْتُمْ عَلَىٰ أَعْقَابِكُمْ ۚ وَمَن يَنقَلِبْ عَلَىٰ عَقِبَيْهِ فَلَن يَضُرَّ اللَّهَ شَيْئًا',
       translation: 'Muhammad is not but a messenger. [Other] messengers have passed on before him. So if he was to die or be killed, would you turn back on your heels? And he who turns back on his heels will never harm Allah at all.',
+      translationFr: "Muhammad n'est qu'un messager. Des messagers sont passés avant lui. S'il mourait ou était tué, retourneriez-vous sur vos talons ? Et quiconque retourne sur ses talons ne nuira en rien à Allah.",
     } as QuranReference,
   },
 
@@ -1058,18 +1216,21 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 118,
     content: "What kind of man was Muhammad ﷺ? Aisha said his character was 'the Quran' - he embodied its teachings perfectly. He was kind to children, gentle with women, generous to the poor, patient with his enemies, and humble before Allah. He mended his own clothes, milked his own goats, and sat on the ground with servants. No one who knew him could deny his nobility.",
+    contentFr: "Quel genre d'homme était Muhammad ﷺ ? Aisha dit que son caractère était « le Coran » — il incarnait ses enseignements parfaitement. Il était bon envers les enfants, doux avec les femmes, généreux envers les pauvres, patient avec ses ennemis et humble devant Allah. Il raccommodait ses propres vêtements, trayait ses propres chèvres et s'asseyait par terre avec les serviteurs. Personne qui le connaissait ne pouvait nier sa noblesse.",
   },
   {
     id: 'muhammad-119',
     type: 'hadith_source',
     order: 119,
     content: "The Prophet ﷺ described his own position with perfect humility.",
+    contentFr: "Le Prophète ﷺ décrivit sa propre position avec une humilité parfaite.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Umar ibn al-Khattab',
       arabicText: 'لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ فَإِنَّمَا أَنَا عَبْدُهُ فَقُولُوا عَبْدُ اللَّهِ وَرَسُولُهُ',
       translation: "The Prophet ﷺ said, 'Do not exaggerate in praising me as the Christians praised the son of Maryam. I am only His slave, so say: the slave of Allah and His Messenger.'",
+      translationFr: "Le Prophète ﷺ dit : « Ne m'exaltez pas comme les chrétiens ont exalté le fils de Maryam. Je ne suis que Son serviteur, alors dites : le serviteur d'Allah et Son Messager. »",
       grade: 'sahih',
     } as HadithReference,
   },
@@ -1078,12 +1239,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 120,
     content: "He forgave those who persecuted him. He fed those who starved him. He prayed for those who cursed him. When the people of Ta'if stoned him, he refused to have them destroyed. When Makkah fell, he forgave its people. When his Jewish neighbor who used to throw garbage on him fell ill, he visited her - and she accepted Islam. This was the mercy to all worlds.",
+    contentFr: "Il pardonna à ceux qui le persécutèrent. Il nourrit ceux qui l'affamèrent. Il pria pour ceux qui le maudirent. Quand les gens de Ta'if le lapidèrent, il refusa de les faire détruire. Quand La Mecque tomba, il pardonna à son peuple. Quand sa voisine juive qui lui jetait des ordures tomba malade, il lui rendit visite — et elle accepta l'Islam. C'était la miséricorde pour tous les mondes.",
   },
   {
     id: 'muhammad-121',
     type: 'quran_source',
     order: 121,
     content: "Allah described the Prophet's noble character.",
+    contentFr: "Allah décrivit le noble caractère du Prophète.",
     source: {
       type: 'quran',
       surahNumber: 68,
@@ -1093,6 +1256,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 4,
       arabicText: 'وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ',
       translation: 'And indeed, you are of a great moral character.',
+      translationFr: "Et tu es certes d'un caractère moral éminent.",
     } as QuranReference,
   },
   {
@@ -1100,6 +1264,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 122,
     content: "Allah declared the Prophet a mercy to all creation.",
+    contentFr: "Allah déclara le Prophète miséricorde pour toute la création.",
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -1109,6 +1274,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 107,
       arabicText: 'وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ',
       translation: 'And We have not sent you, [O Muhammad], except as a mercy to the worlds.',
+      translationFr: "Et Nous ne t'avons envoyé, [ô Muhammad], qu'en miséricorde pour les mondes.",
     } as QuranReference,
   },
   {
@@ -1116,6 +1282,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 123,
     content: "Muhammad ﷺ is the final prophet, the seal of prophethood.",
+    contentFr: "Muhammad ﷺ est le dernier prophète, le sceau de la prophétie.",
     source: {
       type: 'quran',
       surahNumber: 33,
@@ -1125,6 +1292,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 40,
       arabicText: 'مَّا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِّن رِّجَالِكُمْ وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ ۗ وَكَانَ اللَّهُ بِكُلِّ شَيْءٍ عَلِيمًا',
       translation: 'Muhammad is not the father of [any] one of your men, but [he is] the Messenger of Allah and seal of the prophets. And ever is Allah, of all things, Knowing.',
+      translationFr: "Muhammad n'est le père d'aucun de vos hommes, mais [il est] le Messager d'Allah et le sceau des prophètes. Et Allah est de toute chose Omniscient.",
     } as QuranReference,
   },
   {
@@ -1132,12 +1300,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 124,
     content: "His legacy is unmatched. Within a century of his death, Islam had spread from Spain to China. The Quran he received remains unchanged - memorized by millions, recited in every prayer, studied by scholars for 14 centuries. His Sunnah is preserved in meticulous detail - how he prayed, how he ate, how he treated others, how he smiled. He left no wealth, but billions call him master.",
+    contentFr: "Son héritage est inégalé. En un siècle après sa mort, l'Islam s'était répandu de l'Espagne à la Chine. Le Coran qu'il reçut reste inchangé — mémorisé par des millions, récité dans chaque prière, étudié par les savants depuis 14 siècles. Sa Sunnah est préservée dans un détail méticuleux — comment il priait, comment il mangeait, comment il traitait les autres, comment il souriait. Il ne laissa aucune richesse, mais des milliards l'appellent maître.",
   },
   {
     id: 'muhammad-125',
     type: 'quran_source',
     order: 125,
     content: "Allah commands believers to follow the Prophet's example.",
+    contentFr: "Allah ordonne aux croyants de suivre l'exemple du Prophète.",
     source: {
       type: 'quran',
       surahNumber: 33,
@@ -1147,6 +1317,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 21,
       arabicText: 'لَّقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا',
       translation: 'There has certainly been for you in the Messenger of Allah an excellent pattern for anyone whose hope is in Allah and the Last Day and [who] remembers Allah often.',
+      translationFr: "Vous avez certes dans le Messager d'Allah un excellent modèle pour quiconque espère en Allah et au Jour Dernier et invoque Allah fréquemment.",
     } as QuranReference,
   },
   {
@@ -1154,6 +1325,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 126,
     content: "Allah and His angels send blessings upon the Prophet.",
+    contentFr: "Allah et Ses anges envoient des bénédictions sur le Prophète.",
     source: {
       type: 'quran',
       surahNumber: 33,
@@ -1163,6 +1335,7 @@ const muhammadStoryContent: StoryContentBlock[] = [
       ayahEnd: 56,
       arabicText: 'إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا',
       translation: 'Indeed, Allah confers blessing upon the Prophet, and His angels [ask Him to do so]. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.',
+      translationFr: "Certes, Allah et Ses anges prient sur le Prophète. Ô vous qui croyez, priez sur lui et saluez-le d'un salut de paix.",
     } as QuranReference,
   },
   {
@@ -1170,12 +1343,14 @@ const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 127,
     content: "Prophet Muhammad ﷺ - the orphan of Makkah who became the leader of Arabia. The unlettered one through whom the most eloquent book was revealed. The mercy to all worlds. The seal of the prophets. The beloved of Allah. The one whom every Muslim greets with 'peace and blessings be upon him' multiple times each day. The prophetic chain that began with Adam ends with him, and his message endures until the Day of Judgment.",
+    contentFr: "Le Prophète Muhammad ﷺ — l'orphelin de La Mecque qui devint le chef de l'Arabie. L'illettré par qui le livre le plus éloquent fut révélé. La miséricorde pour tous les mondes. Le sceau des prophètes. Le bien-aimé d'Allah. Celui que chaque musulman salue par « paix et bénédictions sur lui » plusieurs fois par jour. La chaîne prophétique qui commença avec Adam se termine avec lui, et son message perdure jusqu'au Jour du Jugement.",
   },
   {
     id: 'muhammad-128',
     type: 'narrative',
     order: 128,
     content: "May Allah's peace and blessings be upon him, upon his family - Khadijah who believed first, Aisha who transmitted his teachings, Fatimah who was dearest to him, Ali who grew in his home, Hassan and Hussain whom he loved. And upon his companions - Abu Bakr the Truthful, Umar the Distinguisher, Uthman of the Two Lights, and all who believed, migrated, fought, and sacrificed. And upon all who follow his path with goodness until the Last Day. Allahumma salli wa sallim ala nabiyyina Muhammad.",
+    contentFr: "Que la paix et les bénédictions d'Allah soient sur lui, sur sa famille — Khadijah qui crut la première, Aisha qui transmit ses enseignements, Fatimah qui lui était la plus chère, Ali qui grandit dans sa maison, Hassan et Hussain qu'il aimait. Et sur ses compagnons — Abu Bakr le Véridique, Umar le Distingueur, Uthman des Deux Lumières, et tous ceux qui crurent, émigrèrent, combattirent et se sacrifièrent. Et sur tous ceux qui suivent son chemin avec bonté jusqu'au Jour Dernier. Allahumma salli wa sallim ala nabiyyina Muhammad.",
   },
 ];
 

@@ -3,6 +3,8 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getAllPrayerLessons } from '../../../src/data/arabic/prayer';
 import { usePrayerStore } from '../../../src/stores/prayerStore';
 import { PrayerCategory, PrayerLesson } from '../../../src/types/prayer';
@@ -10,6 +12,8 @@ import { PrayerCategory, PrayerLesson } from '../../../src/types/prayer';
 type TabFilter = 'prayer_guide' | 'sujud_sahw';
 
 export default function PrayerIndexScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const { tab } = useLocalSearchParams<{ tab?: string }>();
   const [activeTab, setActiveTab] = useState<TabFilter>(
     tab === 'sujud-sahw' ? 'sujud_sahw' : 'prayer_guide'
@@ -35,7 +39,7 @@ export default function PrayerIndexScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Prayer Practice</Text>
+          <Text style={styles.title}>{t('prayerFeature.title')}</Text>
           <Text style={styles.titleArabic}>تعلم الصلاة</Text>
         </View>
         <View style={styles.headerSpacer} />
@@ -47,9 +51,9 @@ export default function PrayerIndexScreen() {
           <Ionicons name="checkmark-done-circle" size={28} color="#10b981" />
         </View>
         <View style={styles.progressContent}>
-          <Text style={styles.progressTitle}>Progress</Text>
+          <Text style={styles.progressTitle}>{t('prayerFeature.progress')}</Text>
           <Text style={styles.progressSubtitle}>
-            {completedCount} of {lessons.length} lessons completed
+            {completedCount} {t('prayerFeature.ofLessons', { total: lessons.length })}
           </Text>
         </View>
         <View style={styles.progressPercent}>
@@ -76,7 +80,7 @@ export default function PrayerIndexScreen() {
               activeTab === 'prayer_guide' && styles.tabTextActiveGreen,
             ]}
           >
-            Prayer Guide
+            {t('prayerFeature.prayerGuide')}
           </Text>
           <View style={[styles.tabBadge, activeTab === 'prayer_guide' && styles.tabBadgeActiveGreen]}>
             <Text style={[styles.tabBadgeText, activeTab === 'prayer_guide' && styles.tabBadgeTextActiveGreen]}>5</Text>
@@ -97,7 +101,7 @@ export default function PrayerIndexScreen() {
               activeTab === 'sujud_sahw' && styles.tabTextActiveGold,
             ]}
           >
-            Correcting Mistakes
+            {t('prayerFeature.correctingMistakes')}
           </Text>
           <View style={[styles.tabBadge, activeTab === 'sujud_sahw' && styles.tabBadgeActiveGold]}>
             <Text style={[styles.tabBadgeText, activeTab === 'sujud_sahw' && styles.tabBadgeTextActiveGold]}>2</Text>
@@ -130,21 +134,21 @@ export default function PrayerIndexScreen() {
               </View>
               <View style={styles.lessonContent}>
                 <View style={styles.lessonNameRow}>
-                  <Text style={styles.lessonTitle}>{lesson.title}</Text>
+                  <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
                   <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
                 </View>
                 <Text style={styles.lessonDescription} numberOfLines={2}>
-                  {lesson.description}
+                  {lc(lesson.description, lesson.descriptionFr)}
                 </Text>
                 <View style={styles.lessonMeta}>
                   <View style={styles.lessonMetaItem}>
                     <Ionicons name="time-outline" size={12} color="#64748b" />
-                    <Text style={styles.lessonMetaText}>{lesson.estimatedMinutes} min</Text>
+                    <Text style={styles.lessonMetaText}>{lesson.estimatedMinutes} {t('prayerFeature.min')}</Text>
                   </View>
                   <View style={styles.lessonMetaItem}>
                     <Ionicons name={lesson.icon as any} size={12} color="#64748b" />
                     <Text style={styles.lessonMetaText}>
-                      {lesson.content.length} sections
+                      {lesson.content.length} {t('prayerFeature.sections')}
                     </Text>
                   </View>
                 </View>

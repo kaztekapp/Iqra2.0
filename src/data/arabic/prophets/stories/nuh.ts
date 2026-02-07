@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference }
 export const nuhStory: Prophet = {
   id: 'nuh',
   nameEnglish: 'Nuh',
+  nameFrench: 'Nouh',
   nameArabic: 'نوح',
   order: 3,
   title: 'The Grateful Servant',
+  titleFr: 'Le serviteur reconnaissant',
   titleArabic: 'العبد الشكور',
   summary: 'One of the greatest prophets, Nuh preached to his people for 950 years. When they persisted in disbelief, Allah commanded him to build an ark. The Great Flood destroyed the disbelievers, and Nuh and the believers were saved.',
+  summaryFr: 'L\'un des plus grands prophètes, Nouh prêcha à son peuple pendant 950 ans. Lorsqu\'ils persistèrent dans la mécréance, Allah lui ordonna de construire une arche. Le Grand Déluge détruisit les mécréants, et Nouh ainsi que les croyants furent sauvés.',
   hasSubStories: false,
   lessons: [
     'Patience in calling people to truth, even for centuries',
@@ -21,6 +24,15 @@ export const nuhStory: Prophet = {
     'Gratitude to Allah is a distinguishing quality of the righteous',
     'Allah\'s punishment is severe for those who persist in disbelief',
     'The promise of Allah always comes true',
+  ],
+  lessonsFr: [
+    'La patience dans l\'appel à la vérité, même pendant des siècles',
+    'La confiance en Allah même quand les autres se moquent et ridiculisent',
+    'Le salut ne vient que par l\'obéissance à Allah',
+    'Les liens familiaux ne priment pas sur la foi - chaque âme est responsable',
+    'La gratitude envers Allah est une qualité distinctive des vertueux',
+    'Le châtiment d\'Allah est sévère pour ceux qui persistent dans la mécréance',
+    'La promesse d\'Allah se réalise toujours',
   ],
   estimatedReadTime: 35,
   quranMentions: 43,
@@ -35,18 +47,21 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: 'After the time of Prophet Idris, generations passed and humanity began to stray from the path of monotheism. People started worshipping idols, and the pure religion of Adam was corrupted. It was then that Allah, the Most Merciful, sent one of the mightiest prophets in history - Nuh, peace be upon him.',
+    contentFr: 'Après l\'époque du Prophète Idris, des générations passèrent et l\'humanité commença à s\'éloigner du chemin du monothéisme. Les gens se mirent à adorer des idoles, et la religion pure d\'Adam fut corrompue. C\'est alors qu\'Allah, le Très Miséricordieux, envoya l\'un des plus grands prophètes de l\'histoire - Nouh, paix sur lui.',
   },
   {
     id: 'nuh-2',
     type: 'narrative',
     order: 2,
     content: 'Prophet Nuh was a descendant of Prophet Idris, and according to scholars, he was born about one thousand years after Adam. He was known for his patience, his gratitude to Allah, and his unwavering commitment to his mission. Allah chose him to guide his people back to the worship of One God.',
+    contentFr: 'Le Prophète Nouh était un descendant du Prophète Idris, et selon les savants, il naquit environ mille ans après Adam. Il était connu pour sa patience, sa gratitude envers Allah et son engagement indéfectible dans sa mission. Allah le choisit pour guider son peuple vers l\'adoration d\'un Dieu unique.',
   },
   {
     id: 'nuh-3',
     type: 'quran_source',
     order: 3,
     content: 'Allah sent Nuh as a clear warner to his people.',
+    contentFr: 'Allah envoya Nouh comme avertisseur clair à son peuple.',
     source: {
       type: 'quran',
       surahNumber: 71,
@@ -56,6 +71,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 3,
       arabicText: 'إِنَّا أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِ أَنْ أَنذِرْ قَوْمَكَ مِن قَبْلِ أَن يَأْتِيَهُمْ عَذَابٌ أَلِيمٌ ﴿١﴾ قَالَ يَا قَوْمِ إِنِّي لَكُمْ نَذِيرٌ مُّبِينٌ ﴿٢﴾ أَنِ اعْبُدُوا اللَّهَ وَاتَّقُوهُ وَأَطِيعُونِ ﴿٣﴾',
       translation: 'Indeed, We sent Nuh to his people, [saying], "Warn your people before there comes to them a painful punishment." He said, "O my people, indeed I am to you a clear warner, [Saying], Worship Allah, fear Him, and obey me."',
+      translationFr: 'Nous avons envoyé Nouh à son peuple : « Avertis ton peuple avant que ne leur vienne un châtiment douloureux. » Il dit : « Ô mon peuple, je suis pour vous un avertisseur clair. Adorez Allah, craignez-Le et obéissez-moi. »',
     } as QuranReference,
   },
   {
@@ -63,12 +79,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 4,
     content: 'The message of Nuh was simple and clear - the same message of all prophets: worship Allah alone, abandon the false idols, and prepare for the Day of Judgment. He promised his people that if they believed and repented, Allah would forgive their sins and grant them blessings.',
+    contentFr: 'Le message de Nouh était simple et clair - le même message de tous les prophètes : adorez Allah seul, abandonnez les fausses idoles et préparez-vous pour le Jour du Jugement. Il promit à son peuple que s\'ils croyaient et se repentaient, Allah leur pardonnerait leurs péchés et leur accorderait des bienfaits.',
   },
   {
     id: 'nuh-5',
     type: 'quran_source',
     order: 5,
     content: 'Nuh promised forgiveness and blessings for those who believe.',
+    contentFr: 'Nouh promit le pardon et les bienfaits à ceux qui croient.',
     source: {
       type: 'quran',
       surahNumber: 71,
@@ -78,6 +96,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 12,
       arabicText: 'فَقُلْتُ اسْتَغْفِرُوا رَبَّكُمْ إِنَّهُ كَانَ غَفَّارًا ﴿١٠﴾ يُرْسِلِ السَّمَاءَ عَلَيْكُم مِّدْرَارًا ﴿١١﴾ وَيُمْدِدْكُم بِأَمْوَالٍ وَبَنِينَ وَيَجْعَل لَّكُمْ جَنَّاتٍ وَيَجْعَل لَّكُمْ أَنْهَارًا ﴿١٢﴾',
       translation: 'And said, "Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver. He will send [rain from] the sky upon you in continuing showers. And give you increase in wealth and children and provide for you gardens and provide for you rivers."',
+      translationFr: 'Et j\'ai dit : « Implorez le pardon de votre Seigneur. Il est certes Grand Pardonneur. Il vous enverra du ciel des pluies abondantes. Il vous accordera des biens et des enfants, et vous assignera des jardins et vous assignera des rivières. »',
     } as QuranReference,
   },
 
@@ -87,12 +106,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 6,
     content: 'The people of Nuh had fallen into idol worship through a gradual corruption of truth. Originally, they had righteous ancestors whose memories they honored. But over time, Shaytan deceived them into making statues of these righteous people, and eventually they began worshipping the statues themselves.',
+    contentFr: 'Le peuple de Nouh était tombé dans l\'idolâtrie à travers une corruption graduelle de la vérité. À l\'origine, ils avaient des ancêtres pieux dont ils honoraient la mémoire. Mais avec le temps, Shaytan les trompa en leur faisant ériger des statues de ces personnes pieuses, et finalement ils se mirent à adorer les statues elles-mêmes.',
   },
   {
     id: 'nuh-7',
     type: 'quran_source',
     order: 7,
     content: 'The names of the idols worshipped by Nuh\'s people.',
+    contentFr: 'Les noms des idoles adorées par le peuple de Nouh.',
     source: {
       type: 'quran',
       surahNumber: 71,
@@ -102,6 +123,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 23,
       arabicText: 'وَقَالُوا لَا تَذَرُنَّ آلِهَتَكُمْ وَلَا تَذَرُنَّ وَدًّا وَلَا سُوَاعًا وَلَا يَغُوثَ وَيَعُوقَ وَنَسْرًا',
       translation: 'And they said, "Never leave your gods and never leave Wadd or Suwa\' or Yaghuth and Ya\'uq and Nasr."',
+      translationFr: 'Et ils ont dit : « N\'abandonnez jamais vos divinités et n\'abandonnez jamais Wadd, ni Souwa\', ni Yaghouth, ni Ya\'ouq, ni Nasr. »',
     } as QuranReference,
   },
   {
@@ -109,12 +131,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'hadith_source',
     order: 8,
     content: 'The Prophet Muhammad explained the origin of these idols.',
+    contentFr: 'Le Prophète Muhammad expliqua l\'origine de ces idoles.',
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Ibn Abbas',
       arabicText: 'صَارَتِ الأَوْثَانُ الَّتِي كَانَتْ فِي قَوْمِ نُوحٍ فِي الْعَرَبِ بَعْدُ، أَمَّا وَدٌّ فَكَانَتْ لِكَلْبٍ بِدَوْمَةِ الْجَنْدَلِ، وَأَمَّا سُوَاعٌ فَكَانَتْ لِهُذَيْلٍ، وَأَمَّا يَغُوثُ فَكَانَتْ لِمُرَادٍ',
       translation: 'The idols that were among the people of Nuh later came to be among the Arabs. Wadd was for Kalb at Dawmat al-Jandal, Suwa\' was for Hudhayl, and Yaghuth was for Murad...',
+      translationFr: 'Les idoles qui se trouvaient parmi le peuple de Nouh se retrouvèrent plus tard chez les Arabes. Wadd était pour les Kalb à Dawmat al-Jandal, Souwa\' était pour les Houdhayl, et Yaghouth était pour les Mourad...',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -123,6 +147,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 9,
     content: 'These five names - Wadd, Suwa\', Yaghuth, Ya\'uq, and Nasr - were originally the names of righteous people from the time between Adam and Nuh. When they died, Shaytan suggested to their people to make statues of them as a reminder of their piety. Generations later, these statues became objects of worship.',
+    contentFr: 'Ces cinq noms - Wadd, Souwa\', Yaghouth, Ya\'ouq et Nasr - étaient à l\'origine les noms de personnes pieuses de l\'époque entre Adam et Nouh. Lorsqu\'ils moururent, Shaytan suggéra à leur peuple de fabriquer des statues à leur effigie en souvenir de leur piété. Des générations plus tard, ces statues devinrent des objets d\'adoration.',
   },
 
   // ============ PART 3: 950 YEARS OF PREACHING ============
@@ -131,12 +156,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 10,
     content: 'Prophet Nuh called his people to Allah for an astonishing period of time. For nine hundred and fifty years, he invited them to the truth, never tiring, never giving up. Day and night, in public and in private, he delivered his message with patience and wisdom.',
+    contentFr: 'Le Prophète Nouh appela son peuple vers Allah pendant une période stupéfiante. Pendant neuf cent cinquante ans, il les invita à la vérité, sans jamais se lasser, sans jamais abandonner. Jour et nuit, en public et en privé, il délivra son message avec patience et sagesse.',
   },
   {
     id: 'nuh-11',
     type: 'quran_source',
     order: 11,
     content: 'The duration of Nuh\'s mission.',
+    contentFr: 'La durée de la mission de Nouh.',
     source: {
       type: 'quran',
       surahNumber: 29,
@@ -146,6 +173,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 14,
       arabicText: 'وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا فَأَخَذَهُمُ الطُّوفَانُ وَهُمْ ظَالِمُونَ',
       translation: 'And We certainly sent Nuh to his people, and he remained among them a thousand years minus fifty years, and the flood seized them while they were wrongdoers.',
+      translationFr: 'Et Nous avons certes envoyé Nouh vers son peuple. Il demeura parmi eux mille ans, moins cinquante années. Puis le déluge les emporta alors qu\'ils étaient injustes.',
     } as QuranReference,
   },
   {
@@ -153,12 +181,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 12,
     content: 'Nuh tried every possible approach to reach his people. He called them openly in public gatherings, and he spoke to them privately one by one. He reasoned with them about the signs of Allah in creation, reminded them of their blessings, and warned them of the consequences of disbelief.',
+    contentFr: 'Nouh essaya toutes les approches possibles pour atteindre son peuple. Il les appela ouvertement dans les assemblées publiques, et il leur parla en privé, un par un. Il raisonna avec eux au sujet des signes d\'Allah dans la création, leur rappela leurs bienfaits et les avertit des conséquences de la mécréance.',
   },
   {
     id: 'nuh-13',
     type: 'quran_source',
     order: 13,
     content: 'Nuh describes his tireless efforts.',
+    contentFr: 'Nouh décrit ses efforts inlassables.',
     source: {
       type: 'quran',
       surahNumber: 71,
@@ -168,6 +198,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 9,
       arabicText: 'قَالَ رَبِّ إِنِّي دَعَوْتُ قَوْمِي لَيْلًا وَنَهَارًا ﴿٥﴾ فَلَمْ يَزِدْهُمْ دُعَائِي إِلَّا فِرَارًا ﴿٦﴾ وَإِنِّي كُلَّمَا دَعَوْتُهُمْ لِتَغْفِرَ لَهُمْ جَعَلُوا أَصَابِعَهُمْ فِي آذَانِهِمْ وَاسْتَغْشَوْا ثِيَابَهُمْ وَأَصَرُّوا وَاسْتَكْبَرُوا اسْتِكْبَارًا ﴿٧﴾ ثُمَّ إِنِّي دَعَوْتُهُمْ جِهَارًا ﴿٨﴾ ثُمَّ إِنِّي أَعْلَنتُ لَهُمْ وَأَسْرَرْتُ لَهُمْ إِسْرَارًا ﴿٩﴾',
       translation: 'He said, "My Lord, indeed I invited my people [to truth] night and day. But my invitation increased them not except in flight. And indeed, every time I invited them that You may forgive them, they put their fingers in their ears, covered themselves with their garments, persisted, and were arrogant with [great] arrogance. Then I invited them publicly. Then I announced to them and [also] confided to them secretly."',
+      translationFr: 'Il dit : « Seigneur, j\'ai appelé mon peuple nuit et jour. Mais mon appel n\'a fait qu\'accroître leur fuite. Et chaque fois que je les ai appelés pour que Tu leur pardonnes, ils ont mis leurs doigts dans leurs oreilles, se sont couverts de leurs vêtements, ont persisté et se sont enflés d\'un grand orgueil. Puis je les ai appelés ouvertement. Puis je leur ai fait des proclamations publiques et leur ai parlé en secret. »',
     } as QuranReference,
   },
 
@@ -177,12 +208,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 14,
     content: 'Despite his immense efforts, the vast majority of Nuh\'s people rejected his message. The wealthy and powerful leaders were the most obstinate, looking down upon the poor believers who followed Nuh. They demanded that Nuh drive away these humble followers if he wanted them to listen.',
+    contentFr: 'Malgré ses immenses efforts, la grande majorité du peuple de Nouh rejeta son message. Les dirigeants riches et puissants étaient les plus obstinés, méprisant les pauvres croyants qui suivaient Nouh. Ils exigèrent que Nouh chasse ces humbles adeptes s\'il voulait qu\'ils l\'écoutent.',
   },
   {
     id: 'nuh-15',
     type: 'quran_source',
     order: 15,
     content: 'The leaders rejected Nuh and looked down on his followers.',
+    contentFr: 'Les dirigeants rejetèrent Nouh et méprisèrent ses adeptes.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -192,6 +225,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'فَقَالَ الْمَلَأُ الَّذِينَ كَفَرُوا مِن قَوْمِهِ مَا نَرَاكَ إِلَّا بَشَرًا مِّثْلَنَا وَمَا نَرَاكَ اتَّبَعَكَ إِلَّا الَّذِينَ هُمْ أَرَاذِلُنَا بَادِيَ الرَّأْيِ وَمَا نَرَىٰ لَكُمْ عَلَيْنَا مِن فَضْلٍ بَلْ نَظُنُّكُمْ كَاذِبِينَ',
       translation: 'So the eminent among those who disbelieved from his people said, "We do not see you but as a man like ourselves, and we do not see you followed except by those who are the lowest of us [and] at first impression, and we do not see in you over us any merit; rather, we think you are liars."',
+      translationFr: 'Les notables de son peuple qui avaient mécru dirent : « Nous ne voyons en toi qu\'un homme comme nous, et nous voyons que seuls les plus vils d\'entre nous t\'ont suivi à première vue. Et nous ne voyons en vous aucun mérite par rapport à nous. Nous pensons plutôt que vous êtes des menteurs. »',
     } as QuranReference,
   },
   {
@@ -199,12 +233,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 16,
     content: 'Nuh refused to abandon his humble followers. He told his people that he could not judge people by their wealth or status - that was for Allah alone. He reminded them that faith, not worldly position, was what truly mattered. His followers might be poor, but their faith made them more honorable than any wealthy disbeliever.',
+    contentFr: 'Nouh refusa d\'abandonner ses humbles adeptes. Il dit à son peuple qu\'il ne pouvait juger les gens selon leur richesse ou leur statut - cela appartenait à Allah seul. Il leur rappela que la foi, et non la position mondaine, était ce qui comptait vraiment. Ses adeptes étaient peut-être pauvres, mais leur foi les rendait plus honorables que n\'importe quel mécréant fortuné.',
   },
   {
     id: 'nuh-17',
     type: 'quran_source',
     order: 17,
     content: 'Nuh defends his followers.',
+    contentFr: 'Nouh défend ses adeptes.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -214,6 +250,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 31,
       arabicText: 'وَيَا قَوْمِ لَا أَسْأَلُكُمْ عَلَيْهِ مَالًا ۖ إِنْ أَجْرِيَ إِلَّا عَلَى اللَّهِ ۚ وَمَا أَنَا بِطَارِدِ الَّذِينَ آمَنُوا ۚ إِنَّهُم مُّلَاقُو رَبِّهِمْ وَلَٰكِنِّي أَرَاكُمْ قَوْمًا تَجْهَلُونَ ﴿٢٩﴾ وَيَا قَوْمِ مَن يَنصُرُنِي مِنَ اللَّهِ إِن طَرَدتُّهُمْ ۚ أَفَلَا تَذَكَّرُونَ ﴿٣٠﴾',
       translation: '"And O my people, I ask not of you for it any wealth. My reward is not but from Allah. And I am not one to drive away those who have believed. Indeed, they will meet their Lord, but I see that you are a people behaving ignorantly. And O my people, who would protect me from Allah if I drove them away? Then will you not be reminded?"',
+      translationFr: '« Ô mon peuple, je ne vous demande pas de richesse en retour. Ma récompense n\'incombe qu\'à Allah. Et je ne suis pas celui qui chasse les croyants. Ils rencontreront certes leur Seigneur, mais je vois que vous êtes un peuple ignorant. Et ô mon peuple, qui me protégerait d\'Allah si je les chassais ? Ne vous rappelez-vous donc pas ? »',
     } as QuranReference,
   },
   {
@@ -221,12 +258,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 18,
     content: 'The disbelievers mocked Nuh, saying he was just a man like them, with no special powers. They called him mad and demanded miracles. They said their fathers had worshipped these idols, and they would continue to do so. Their hearts had become so hardened that no argument could penetrate them.',
+    contentFr: 'Les mécréants se moquèrent de Nouh, disant qu\'il n\'était qu\'un homme comme eux, sans pouvoirs spéciaux. Ils le traitèrent de fou et exigèrent des miracles. Ils dirent que leurs pères avaient adoré ces idoles et qu\'ils continueraient à le faire. Leurs cœurs étaient devenus si endurcis qu\'aucun argument ne pouvait les pénétrer.',
   },
   {
     id: 'nuh-19',
     type: 'quran_source',
     order: 19,
     content: 'The disbelievers mocked and threatened Nuh.',
+    contentFr: 'Les mécréants se moquèrent de Nouh et le menacèrent.',
     source: {
       type: 'quran',
       surahNumber: 26,
@@ -236,6 +275,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 118,
       arabicText: 'قَالُوا لَئِن لَّمْ تَنتَهِ يَا نُوحُ لَتَكُونَنَّ مِنَ الْمَرْجُومِينَ ﴿١١٦﴾ قَالَ رَبِّ إِنَّ قَوْمِي كَذَّبُونِ ﴿١١٧﴾ فَافْتَحْ بَيْنِي وَبَيْنَهُمْ فَتْحًا وَنَجِّنِي وَمَن مَّعِيَ مِنَ الْمُؤْمِنِينَ ﴿١١٨﴾',
       translation: 'They said, "If you do not desist, O Nuh, you will surely be of those who are stoned." He said, "My Lord, indeed my people have denied me. Then judge between me and them with decisive judgment and save me and those with me of the believers."',
+      translationFr: 'Ils dirent : « Si tu ne cesses pas, ô Nouh, tu seras certainement du nombre des lapidés. » Il dit : « Seigneur, mon peuple m\'a traité de menteur. Tranche donc clairement entre moi et eux, et sauve-moi ainsi que ceux qui sont avec moi parmi les croyants. »',
     } as QuranReference,
   },
 
@@ -245,12 +285,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: 'After nearly a millennium of patient preaching, Allah revealed to Nuh a devastating truth: no more of his people would believe. Those who were destined to accept the truth had already done so. The rest had sealed their own fates through persistent rejection.',
+    contentFr: 'Après près d\'un millénaire de prêche patient, Allah révéla à Nouh une vérité accablante : plus personne parmi son peuple ne croirait. Ceux qui étaient destinés à accepter la vérité l\'avaient déjà fait. Les autres avaient scellé leur propre destin par un rejet persistant.',
   },
   {
     id: 'nuh-21',
     type: 'quran_source',
     order: 21,
     content: 'Allah informs Nuh that no more will believe.',
+    contentFr: 'Allah informe Nouh que plus personne ne croira.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -260,6 +302,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 36,
       arabicText: 'وَأُوحِيَ إِلَىٰ نُوحٍ أَنَّهُ لَن يُؤْمِنَ مِن قَوْمِكَ إِلَّا مَن قَدْ آمَنَ فَلَا تَبْتَئِسْ بِمَا كَانُوا يَفْعَلُونَ',
       translation: 'And it was revealed to Nuh that, "No one will believe from your people except those who have already believed, so do not be distressed by what they have been doing."',
+      translationFr: 'Et il fut révélé à Nouh : « Aucun de ton peuple ne croira, sauf ceux qui ont déjà cru. Ne t\'attriste donc pas de ce qu\'ils faisaient. »',
     } as QuranReference,
   },
   {
@@ -267,12 +310,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 22,
     content: 'With this knowledge, Nuh finally prayed against his people. This was not a hasty prayer of frustration, but came after 950 years of patience and after Allah\'s own declaration that no more would believe. Nuh prayed that Allah would not leave a single disbeliever on Earth.',
+    contentFr: 'Fort de cette connaissance, Nouh invoqua finalement Allah contre son peuple. Ce n\'était pas une prière hâtive de frustration, mais elle intervint après 950 ans de patience et après la déclaration d\'Allah Lui-même que plus personne ne croirait. Nouh pria Allah de ne laisser aucun mécréant sur Terre.',
   },
   {
     id: 'nuh-23',
     type: 'quran_source',
     order: 23,
     content: 'Nuh prays against his people.',
+    contentFr: 'Nouh invoque Allah contre son peuple.',
     source: {
       type: 'quran',
       surahNumber: 71,
@@ -282,6 +327,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 27,
       arabicText: 'وَقَالَ نُوحٌ رَّبِّ لَا تَذَرْ عَلَى الْأَرْضِ مِنَ الْكَافِرِينَ دَيَّارًا ﴿٢٦﴾ إِنَّكَ إِن تَذَرْهُمْ يُضِلُّوا عِبَادَكَ وَلَا يَلِدُوا إِلَّا فَاجِرًا كَفَّارًا ﴿٢٧﴾',
       translation: 'And Nuh said, "My Lord, do not leave upon the earth from among the disbelievers an inhabitant. Indeed, if You leave them, they will mislead Your servants and not beget except [every] wicked one and [confirmed] disbeliever."',
+      translationFr: 'Et Nouh dit : « Seigneur, ne laisse sur la terre aucun des mécréants. Si Tu les laisses, ils égareront Tes serviteurs et n\'engendreront que des pervers et des mécréants endurcis. »',
     } as QuranReference,
   },
 
@@ -291,12 +337,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 24,
     content: 'Allah accepted Nuh\'s prayer and commanded him to build an ark - a massive ship that would carry the believers and pairs of animals to safety. Allah taught Nuh how to construct this vessel, guiding him in every detail. This was no ordinary boat; it was a vessel of salvation.',
+    contentFr: 'Allah accepta la prière de Nouh et lui ordonna de construire une arche - un immense navire qui transporterait les croyants et des couples d\'animaux en sécurité. Allah enseigna à Nouh comment construire ce vaisseau, le guidant dans chaque détail. Ce n\'était pas un bateau ordinaire ; c\'était un vaisseau de salut.',
   },
   {
     id: 'nuh-25',
     type: 'quran_source',
     order: 25,
     content: 'Allah commands Nuh to build the ark.',
+    contentFr: 'Allah ordonne à Nouh de construire l\'arche.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -306,6 +354,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'وَاصْنَعِ الْفُلْكَ بِأَعْيُنِنَا وَوَحْيِنَا وَلَا تُخَاطِبْنِي فِي الَّذِينَ ظَلَمُوا ۚ إِنَّهُم مُّغْرَقُونَ',
       translation: '"And construct the ship under Our observation and Our inspiration and do not address Me concerning those who have wronged; indeed, they are [to be] drowned."',
+      translationFr: '« Et construis l\'arche sous Nos yeux et d\'après Notre révélation. Et ne M\'interpelle plus au sujet de ceux qui ont été injustes, car ils seront noyés. »',
     } as QuranReference,
   },
   {
@@ -313,12 +362,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 26,
     content: 'Nuh began building the ark far from any sea or large body of water. His people watched in amazement and mockery. They laughed at the sight of an old man building a ship in the middle of dry land. "Has he gone mad?" they jeered. "Why is he building a boat where there is no water?"',
+    contentFr: 'Nouh commença à construire l\'arche loin de toute mer ou étendue d\'eau. Son peuple regardait avec étonnement et moquerie. Ils riaient à la vue d\'un vieil homme construisant un navire en pleine terre sèche. « Est-il devenu fou ? » raillaient-ils. « Pourquoi construit-il un bateau là où il n\'y a pas d\'eau ? »',
   },
   {
     id: 'nuh-27',
     type: 'quran_source',
     order: 27,
     content: 'The disbelievers mock Nuh as he builds the ark.',
+    contentFr: 'Les mécréants se moquent de Nouh pendant qu\'il construit l\'arche.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -328,6 +379,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 38,
       arabicText: 'وَيَصْنَعُ الْفُلْكَ وَكُلَّمَا مَرَّ عَلَيْهِ مَلَأٌ مِّن قَوْمِهِ سَخِرُوا مِنْهُ ۚ قَالَ إِن تَسْخَرُوا مِنَّا فَإِنَّا نَسْخَرُ مِنكُمْ كَمَا تَسْخَرُونَ',
       translation: 'And he constructed the ship, and whenever an assembly of the eminent of his people passed by him, they ridiculed him. He said, "If you ridicule us, then we will ridicule you just as you ridicule."',
+      translationFr: 'Et il construisait l\'arche. Et chaque fois que des notables de son peuple passaient près de lui, ils se moquaient de lui. Il dit : « Si vous vous moquez de nous, nous nous moquerons de vous comme vous vous moquez. »',
     } as QuranReference,
   },
   {
@@ -335,6 +387,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 28,
     content: 'Nuh responded to their mockery with calm confidence. He warned them that they would soon know who would be covered with a punishment that would disgrace them and upon whom would descend an enduring punishment. He knew that Allah\'s promise was true, and the flood was coming.',
+    contentFr: 'Nouh répondit à leurs moqueries avec un calme assuré. Il les avertit qu\'ils sauraient bientôt sur qui s\'abattrait un châtiment qui les couvrirait de honte et sur qui descendrait un châtiment durable. Il savait que la promesse d\'Allah était vraie et que le déluge arrivait.',
   },
 
   // ============ PART 7: THE FLOOD BEGINS ============
@@ -343,12 +396,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 29,
     content: 'When the ark was complete, Allah gave Nuh the sign to begin boarding. The sign was that water would gush forth from a clay oven - an impossible occurrence that signaled the beginning of the great deluge. When Nuh saw this sign, he knew the time had come.',
+    contentFr: 'Lorsque l\'arche fut achevée, Allah donna à Nouh le signe pour commencer l\'embarquement. Le signe était que l\'eau jaillirait d\'un four en argile - un événement impossible qui annonçait le début du grand déluge. Quand Nouh vit ce signe, il sut que le moment était venu.',
   },
   {
     id: 'nuh-30',
     type: 'quran_source',
     order: 30,
     content: 'The sign of the flood beginning.',
+    contentFr: 'Le signe du début du déluge.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -358,6 +413,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 40,
       arabicText: 'حَتَّىٰ إِذَا جَاءَ أَمْرُنَا وَفَارَ التَّنُّورُ قُلْنَا احْمِلْ فِيهَا مِن كُلٍّ زَوْجَيْنِ اثْنَيْنِ وَأَهْلَكَ إِلَّا مَن سَبَقَ عَلَيْهِ الْقَوْلُ وَمَنْ آمَنَ ۚ وَمَا آمَنَ مَعَهُ إِلَّا قَلِيلٌ',
       translation: '[So it was], until when Our command came and the oven overflowed, We said, "Load upon the ship of each [creature] two mates and your family, except those about whom the word has preceded, and [include] whoever has believed." But none had believed with him, except a few.',
+      translationFr: 'Puis, lorsque Notre commandement vint et que le four se mit à bouillonner, Nous dîmes : « Charge [dans l\'arche] un couple de chaque espèce, ainsi que ta famille, sauf ceux contre qui la parole a déjà été prononcée, et ceux qui ont cru. » Or, ceux qui avaient cru avec lui étaient peu nombreux.',
     } as QuranReference,
   },
   {
@@ -365,18 +421,21 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: 'Nuh loaded the ark with a pair of every animal species and the believing members of his family. Tragically, the number of believers after 950 years of preaching was very small - some scholars say only about eighty people. Among the disbelievers who refused to board were Nuh\'s own wife and one of his sons.',
+    contentFr: 'Nouh chargea l\'arche avec un couple de chaque espèce animale et les membres croyants de sa famille. Tragiquement, le nombre de croyants après 950 ans de prédication était très réduit - certains savants estiment qu\'il n\'y avait qu\'environ quatre-vingts personnes. Parmi les mécréants qui refusèrent d\'embarquer se trouvaient la propre femme de Nouh et l\'un de ses fils.',
   },
   {
     id: 'nuh-32',
     type: 'narrative',
     order: 32,
     content: 'Then the skies opened with unprecedented fury. Rain poured down in torrents while water burst forth from the earth below. The heavens and the earth combined to produce a flood of unimaginable proportions.',
+    contentFr: 'Puis les cieux s\'ouvrirent avec une fureur sans précédent. La pluie se déversa en torrents tandis que l\'eau jaillissait de la terre en dessous. Les cieux et la terre se combinèrent pour produire un déluge aux proportions inimaginables.',
   },
   {
     id: 'nuh-33',
     type: 'quran_source',
     order: 33,
     content: 'The flood described.',
+    contentFr: 'La description du déluge.',
     source: {
       type: 'quran',
       surahNumber: 54,
@@ -386,6 +445,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 12,
       arabicText: 'فَفَتَحْنَا أَبْوَابَ السَّمَاءِ بِمَاءٍ مُّنْهَمِرٍ ﴿١١﴾ وَفَجَّرْنَا الْأَرْضَ عُيُونًا فَالْتَقَى الْمَاءُ عَلَىٰ أَمْرٍ قَدْ قُدِرَ ﴿١٢﴾',
       translation: 'Then We opened the gates of the heaven with rain pouring down. And caused the earth to burst with springs, and the waters met for a matter already predestined.',
+      translationFr: 'Nous ouvrîmes alors les portes du ciel à une eau torrentielle. Et fîmes jaillir de la terre des sources. Les eaux se rencontrèrent pour une chose qui avait été décrétée.',
     } as QuranReference,
   },
 
@@ -395,12 +455,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 34,
     content: 'One of the most heart-wrenching moments in this story involves Nuh\'s son who refused to believe. As the waters rose and the ark began to float, Nuh saw his son standing apart from the believers. His fatherly heart ached, and he called out to his son to join them.',
+    contentFr: 'L\'un des moments les plus déchirants de cette histoire concerne le fils de Nouh qui refusa de croire. Alors que les eaux montaient et que l\'arche commençait à flotter, Nouh vit son fils se tenant à l\'écart des croyants. Son cœur de père souffrait, et il appela son fils à les rejoindre.',
   },
   {
     id: 'nuh-35',
     type: 'quran_source',
     order: 35,
     content: 'Nuh calls to his son.',
+    contentFr: 'Nouh appelle son fils.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -410,6 +472,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 43,
       arabicText: 'وَهِيَ تَجْرِي بِهِمْ فِي مَوْجٍ كَالْجِبَالِ وَنَادَىٰ نُوحٌ ابْنَهُ وَكَانَ فِي مَعْزِلٍ يَا بُنَيَّ ارْكَب مَّعَنَا وَلَا تَكُن مَّعَ الْكَافِرِينَ ﴿٤٢﴾ قَالَ سَآوِي إِلَىٰ جَبَلٍ يَعْصِمُنِي مِنَ الْمَاءِ ۚ قَالَ لَا عَاصِمَ الْيَوْمَ مِنْ أَمْرِ اللَّهِ إِلَّا مَن رَّحِمَ ۚ وَحَالَ بَيْنَهُمَا الْمَوْجُ فَكَانَ مِنَ الْمُغْرَقِينَ ﴿٤٣﴾',
       translation: 'And it sailed with them through waves like mountains, and Nuh called to his son who was apart [from them], "O my son, come aboard with us and be not with the disbelievers." [But] he said, "I will take refuge on a mountain to protect me from the water." [Nuh] said, "There is no protector today from the decree of Allah, except for whom He gives mercy." And the waves came between them, and he was among the drowned.',
+      translationFr: 'Et elle voguait avec eux au milieu de vagues semblables à des montagnes. Et Nouh appela son fils, qui se tenait à l\'écart : « Ô mon fils, monte avec nous et ne sois pas avec les mécréants. » Il répondit : « Je me réfugierai sur une montagne qui me protégera de l\'eau. » [Nouh] dit : « Il n\'y a aujourd\'hui aucun protecteur contre le décret d\'Allah, sauf pour celui à qui Il fait miséricorde. » Et les vagues s\'interposèrent entre eux, et il fut parmi les noyés.',
     } as QuranReference,
   },
   {
@@ -417,18 +480,21 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 36,
     content: 'The son\'s arrogant reply shows the mindset of the disbelievers. He thought he could save himself by climbing a mountain, not understanding that this flood was not an ordinary natural disaster. This was Allah\'s decree, and no mountain, no matter how high, could provide refuge from it.',
+    contentFr: 'La réponse arrogante du fils montre l\'état d\'esprit des mécréants. Il pensait pouvoir se sauver en escaladant une montagne, ne comprenant pas que ce déluge n\'était pas une catastrophe naturelle ordinaire. C\'était le décret d\'Allah, et aucune montagne, aussi haute soit-elle, ne pouvait offrir de refuge.',
   },
   {
     id: 'nuh-37',
     type: 'narrative',
     order: 37,
     content: 'After the flood, Nuh\'s heart was still heavy with grief for his son. He called out to Allah, saying that his son was part of his family, and Allah had promised to save his family. But Allah corrected Nuh\'s understanding.',
+    contentFr: 'Après le déluge, le cœur de Nouh était encore lourd de chagrin pour son fils. Il implora Allah, disant que son fils faisait partie de sa famille et qu\'Allah avait promis de sauver sa famille. Mais Allah corrigea la compréhension de Nouh.',
   },
   {
     id: 'nuh-38',
     type: 'quran_source',
     order: 38,
     content: 'Allah explains that Nuh\'s son was not truly of his family.',
+    contentFr: 'Allah explique que le fils de Nouh ne faisait pas véritablement partie de sa famille.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -438,6 +504,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 46,
       arabicText: 'وَنَادَىٰ نُوحٌ رَّبَّهُ فَقَالَ رَبِّ إِنَّ ابْنِي مِنْ أَهْلِي وَإِنَّ وَعْدَكَ الْحَقُّ وَأَنتَ أَحْكَمُ الْحَاكِمِينَ ﴿٤٥﴾ قَالَ يَا نُوحُ إِنَّهُ لَيْسَ مِنْ أَهْلِكَ ۖ إِنَّهُ عَمَلٌ غَيْرُ صَالِحٍ ۖ فَلَا تَسْأَلْنِ مَا لَيْسَ لَكَ بِهِ عِلْمٌ ۖ إِنِّي أَعِظُكَ أَن تَكُونَ مِنَ الْجَاهِلِينَ ﴿٤٦﴾',
       translation: 'And Nuh called to his Lord and said, "My Lord, indeed my son is of my family; and indeed, Your promise is true; and You are the most just of judges!" He said, "O Nuh, indeed he is not of your family; indeed, he is [one whose] work was other than righteous, so ask Me not for that about which you have no knowledge. Indeed, I advise you, lest you be among the ignorant."',
+      translationFr: 'Et Nouh implora son Seigneur et dit : « Seigneur, mon fils fait partie de ma famille, et certes Ta promesse est vérité, et Tu es le plus juste des juges. » Il dit : « Ô Nouh, il ne fait pas partie de ta famille, car son œuvre n\'était pas vertueuse. Ne Me demande donc pas ce dont tu n\'as aucune connaissance. Je t\'exhorte afin que tu ne sois pas du nombre des ignorants. »',
     } as QuranReference,
   },
   {
@@ -445,6 +512,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 39,
     content: 'This powerful exchange teaches a profound lesson: in Islam, true family bonds are based on faith, not just blood. Nuh\'s disbelieving son, despite being his biological offspring, was not considered part of his "family" in the spiritual sense. Faith creates bonds stronger than blood.',
+    contentFr: 'Cet échange puissant enseigne une leçon profonde : en Islam, les véritables liens familiaux sont fondés sur la foi, et non uniquement sur le sang. Le fils mécréant de Nouh, bien qu\'étant son enfant biologique, n\'était pas considéré comme faisant partie de sa « famille » au sens spirituel. La foi crée des liens plus forts que ceux du sang.',
   },
 
   // ============ PART 9: THE FLOOD ENDS ============
@@ -453,12 +521,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 40,
     content: 'The ark sailed on the mountainous waves, protected by Allah. Inside, Nuh and the believers put their trust completely in their Lord. They had witnessed the destruction of an entire civilization, but they were safe in the care of the Almighty.',
+    contentFr: 'L\'arche voguait sur les vagues hautes comme des montagnes, protégée par Allah. À l\'intérieur, Nouh et les croyants plaçaient leur confiance entièrement en leur Seigneur. Ils avaient été témoins de la destruction d\'une civilisation entière, mais ils étaient en sécurité sous la protection du Tout-Puissant.',
   },
   {
     id: 'nuh-41',
     type: 'quran_source',
     order: 41,
     content: 'The ark sailed under Allah\'s protection.',
+    contentFr: 'L\'arche voguait sous la protection d\'Allah.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -468,6 +538,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 41,
       arabicText: 'وَقَالَ ارْكَبُوا فِيهَا بِسْمِ اللَّهِ مَجْرَاهَا وَمُرْسَاهَا ۚ إِنَّ رَبِّي لَغَفُورٌ رَّحِيمٌ',
       translation: 'And [Nuh] said, "Embark therein; in the name of Allah is its course and its anchorage. Indeed, my Lord is Forgiving and Merciful."',
+      translationFr: 'Et [Nouh] dit : « Montez dedans. Au nom d\'Allah sera sa course et son ancrage. Mon Seigneur est certes Pardonneur et Miséricordieux. »',
     } as QuranReference,
   },
   {
@@ -475,12 +546,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 42,
     content: 'When Allah willed, the flood came to an end. The sky ceased its rain, and the earth absorbed its water. The ark came to rest upon Mount Judi, a mountain believed to be in the region of modern-day Turkey. A new chapter of human history was about to begin.',
+    contentFr: 'Quand Allah le voulut, le déluge prit fin. Le ciel cessa sa pluie et la terre absorba son eau. L\'arche se posa sur le Mont Judi, une montagne que l\'on croit située dans la région de la Turquie actuelle. Un nouveau chapitre de l\'histoire humaine allait commencer.',
   },
   {
     id: 'nuh-43',
     type: 'quran_source',
     order: 43,
     content: 'The flood ends and the ark rests on Mount Judi.',
+    contentFr: 'Le déluge prend fin et l\'arche se pose sur le Mont Judi.',
     source: {
       type: 'quran',
       surahNumber: 11,
@@ -490,6 +563,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 44,
       arabicText: 'وَقِيلَ يَا أَرْضُ ابْلَعِي مَاءَكِ وَيَا سَمَاءُ أَقْلِعِي وَغِيضَ الْمَاءُ وَقُضِيَ الْأَمْرُ وَاسْتَوَتْ عَلَى الْجُودِيِّ ۖ وَقِيلَ بُعْدًا لِّلْقَوْمِ الظَّالِمِينَ',
       translation: 'And it was said, "O earth, swallow your water, and O sky, withhold [your rain]." And the water subsided, and the matter was accomplished, and the ship came to rest on [Mount] Judi. And it was said, "Away with the wrongdoing people."',
+      translationFr: 'Et il fut dit : « Ô terre, absorbe ton eau ! Et toi, ô ciel, cesse [ta pluie] ! » L\'eau baissa, l\'affaire fut accomplie, et l\'arche s\'installa sur le [Mont] Judi. Et il fut dit : « Que disparaissent les gens injustes ! »',
     } as QuranReference,
   },
 
@@ -499,18 +573,21 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 44,
     content: 'After the flood, Nuh descended from the ark with the believers. They were the new beginning of humanity, the righteous remnant from whom all future generations would descend. Nuh was filled with gratitude to Allah for this salvation.',
+    contentFr: 'Après le déluge, Nouh descendit de l\'arche avec les croyants. Ils étaient le nouveau commencement de l\'humanité, le reste vertueux dont descendraient toutes les générations futures. Nouh était empli de gratitude envers Allah pour ce salut.',
   },
   {
     id: 'nuh-45',
     type: 'narrative',
     order: 45,
     content: 'Allah describes Nuh with one of the most beautiful titles: "Abd Shakur" - the Grateful Servant. Despite the hardships he faced, despite losing most of his people and even his own son, Nuh remained grateful to Allah. He recognized that every blessing, including his salvation, was from Allah alone.',
+    contentFr: 'Allah décrit Nouh avec l\'un des plus beaux titres : « Abd Shakour » - le Serviteur Reconnaissant. Malgré les épreuves qu\'il affronta, malgré la perte de la plupart de son peuple et même de son propre fils, Nouh resta reconnaissant envers Allah. Il reconnaissait que chaque bienfait, y compris son salut, venait d\'Allah seul.',
   },
   {
     id: 'nuh-46',
     type: 'quran_source',
     order: 46,
     content: 'Nuh is described as the grateful servant.',
+    contentFr: 'Nouh est décrit comme le serviteur reconnaissant.',
     source: {
       type: 'quran',
       surahNumber: 17,
@@ -520,6 +597,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 3,
       arabicText: 'ذُرِّيَّةَ مَنْ حَمَلْنَا مَعَ نُوحٍ ۚ إِنَّهُ كَانَ عَبْدًا شَكُورًا',
       translation: '[O] descendants of those We carried [in the ship] with Nuh. Indeed, he was a grateful servant.',
+      translationFr: '[Ô] descendants de ceux que Nous avons transportés [dans l\'arche] avec Nouh. Il était certes un serviteur reconnaissant.',
     } as QuranReference,
   },
   {
@@ -527,12 +605,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'hadith_source',
     order: 47,
     content: 'The Prophet Muhammad described Nuh on the Day of Judgment.',
+    contentFr: 'Le Prophète Muhammad décrivit Nouh au Jour du Jugement.',
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Abu Hurairah',
       arabicText: 'يَجْمَعُ اللَّهُ النَّاسَ يَوْمَ الْقِيَامَةِ فَيَقُولُونَ لَوِ اسْتَشْفَعْنَا إِلَى رَبِّنَا فَيَأْتُونَ آدَمَ فَيَقُولُونَ أَنْتَ أَبُو النَّاسِ، فَيَقُولُ لَسْتُ لَهَا، وَلَكِنْ عَلَيْكُمْ بِنُوحٍ فَإِنَّهُ أَوَّلُ رَسُولٍ بَعَثَهُ اللَّهُ إِلَى أَهْلِ الأَرْضِ',
       translation: 'Allah will gather the people on the Day of Resurrection, and they will say, "Let us seek intercession with our Lord." So they will come to Adam and say, "You are the father of mankind." He will say, "I am not fit for that, but go to Nuh, for he was the first messenger Allah sent to the people of the Earth."',
+      translationFr: 'Allah rassemblera les gens au Jour de la Résurrection, et ils diront : « Cherchons l\'intercession auprès de notre Seigneur. » Ils iront vers Adam et diront : « Tu es le père de l\'humanité. » Il dira : « Je ne suis pas apte à cela, mais allez vers Nouh, car il fut le premier messager qu\'Allah envoya aux habitants de la Terre. »',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -543,12 +623,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 48,
     content: 'Prophet Nuh is called the "Second Father of Mankind" because all humans alive today are descendants of those who were saved on the ark. After Adam, Nuh represents a new beginning for humanity - a purified start after the cleansing flood.',
+    contentFr: 'Le Prophète Nouh est appelé le « Second Père de l\'humanité » car tous les humains vivants aujourd\'hui sont des descendants de ceux qui furent sauvés dans l\'arche. Après Adam, Nouh représente un nouveau commencement pour l\'humanité - un départ purifié après le déluge purificateur.',
   },
   {
     id: 'nuh-49',
     type: 'quran_source',
     order: 49,
     content: 'All humanity descends from those on the ark.',
+    contentFr: 'Toute l\'humanité descend de ceux qui étaient dans l\'arche.',
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -558,6 +640,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 77,
       arabicText: 'وَجَعَلْنَا ذُرِّيَّتَهُ هُمُ الْبَاقِينَ',
       translation: 'And We made his descendants those remaining [on the earth].',
+      translationFr: 'Et Nous fîmes de sa descendance les survivants [sur la terre].',
     } as QuranReference,
   },
   {
@@ -565,12 +648,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 50,
     content: 'The story of Nuh is referenced throughout the Quran more than any other prophet\'s story except Musa (Moses). It serves as a powerful reminder of Allah\'s justice and mercy, and of the consequences of persistent disbelief.',
+    contentFr: 'L\'histoire de Nouh est référencée dans tout le Coran plus que celle de tout autre prophète, à l\'exception de Moussa (Moïse). Elle sert de rappel puissant de la justice et de la miséricorde d\'Allah, et des conséquences de la mécréance persistante.',
   },
   {
     id: 'nuh-51',
     type: 'quran_source',
     order: 51,
     content: 'The ark was left as a sign for future generations.',
+    contentFr: 'L\'arche fut laissée comme signe pour les générations futures.',
     source: {
       type: 'quran',
       surahNumber: 54,
@@ -580,6 +665,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 15,
       arabicText: 'وَلَقَد تَّرَكْنَاهَا آيَةً فَهَلْ مِن مُّدَّكِرٍ',
       translation: 'And We left it as a sign, so is there any who will remember?',
+      translationFr: 'Et Nous l\'avons laissée comme signe. Y a-t-il donc quelqu\'un pour se rappeler ?',
     } as QuranReference,
   },
 
@@ -589,30 +675,35 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 52,
     content: 'The story of Prophet Nuh teaches us patience beyond measure. He called his people to Allah for 950 years without losing hope or abandoning his mission. In our lives, when we face rejection or difficulty in practicing our faith, we should remember Nuh\'s perseverance.',
+    contentFr: 'L\'histoire du Prophète Nouh nous enseigne une patience sans mesure. Il appela son peuple vers Allah pendant 950 ans sans perdre espoir ni abandonner sa mission. Dans nos vies, lorsque nous faisons face au rejet ou à la difficulté dans la pratique de notre foi, nous devons nous rappeler la persévérance de Nouh.',
   },
   {
     id: 'nuh-53',
     type: 'narrative',
     order: 53,
     content: 'Another profound lesson is that salvation comes only through obedience to Allah, not through family connections or worldly resources. Nuh\'s son was not saved by being the prophet\'s child, and no mountain could protect those who rejected faith. Only the ark - obedience to Allah\'s command - provided safety.',
+    contentFr: 'Une autre leçon profonde est que le salut ne vient que par l\'obéissance à Allah, et non par les liens familiaux ou les ressources mondaines. Le fils de Nouh ne fut pas sauvé parce qu\'il était l\'enfant du prophète, et aucune montagne ne put protéger ceux qui rejetèrent la foi. Seule l\'arche - l\'obéissance au commandement d\'Allah - offrit la sécurité.',
   },
   {
     id: 'nuh-54',
     type: 'narrative',
     order: 54,
     content: 'The story also teaches us about gratitude. Despite losing his son and watching his entire community perish, Nuh was called "the grateful servant." True gratitude means recognizing Allah\'s blessings even in the midst of trial, knowing that He is wise and just in all His decrees.',
+    contentFr: 'L\'histoire nous enseigne aussi la gratitude. Malgré la perte de son fils et le spectacle de la destruction de toute sa communauté, Nouh fut appelé « le serviteur reconnaissant ». La vraie gratitude signifie reconnaître les bienfaits d\'Allah même au milieu de l\'épreuve, sachant qu\'Il est sage et juste dans tous Ses décrets.',
   },
   {
     id: 'nuh-55',
     type: 'hadith_source',
     order: 55,
     content: 'The Prophet Muhammad taught about gratitude.',
+    contentFr: 'Le Prophète Muhammad enseigna au sujet de la gratitude.',
     source: {
       type: 'hadith',
       collection: 'tirmidhi',
       narrator: 'Abu Hurairah',
       arabicText: 'انْظُرُوا إِلَى مَنْ أَسْفَلَ مِنْكُمْ وَلاَ تَنْظُرُوا إِلَى مَنْ هُوَ فَوْقَكُمْ فَهُوَ أَجْدَرُ أَنْ لاَ تَزْدَرُوا نِعْمَةَ اللَّهِ عَلَيْكُمْ',
       translation: 'Look at those below you and do not look at those above you, for that is more likely to prevent you from belittling the blessings of Allah upon you.',
+      translationFr: 'Regardez ceux qui sont en dessous de vous et ne regardez pas ceux qui sont au-dessus de vous, car cela est plus à même de vous empêcher de dénigrer les bienfaits d\'Allah sur vous.',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -621,12 +712,14 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 56,
     content: 'Finally, the story of Nuh reminds us that Allah\'s promise always comes true. He promised to punish the disbelievers, and He did. He promised to save the believers, and He did. In our own lives, we must trust that Allah\'s promises - of reward for the righteous and consequences for wrongdoers - will be fulfilled.',
+    contentFr: 'Enfin, l\'histoire de Nouh nous rappelle que la promesse d\'Allah se réalise toujours. Il promit de punir les mécréants, et Il le fit. Il promit de sauver les croyants, et Il le fit. Dans nos propres vies, nous devons avoir confiance que les promesses d\'Allah - de récompense pour les vertueux et de conséquences pour les injustes - seront accomplies.',
   },
   {
     id: 'nuh-57',
     type: 'quran_source',
     order: 57,
     content: 'Peace upon Nuh.',
+    contentFr: 'Paix sur Nouh.',
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -636,6 +729,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
       ayahEnd: 79,
       arabicText: 'سَلَامٌ عَلَىٰ نُوحٍ فِي الْعَالَمِينَ',
       translation: 'Peace upon Nuh among the worlds.',
+      translationFr: 'Paix sur Nouh dans tout l\'univers.',
     } as QuranReference,
   },
   {
@@ -643,6 +737,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 58,
     content: 'May Allah have mercy upon Prophet Nuh, the grateful servant, the first of the great messengers. May we learn from his patience, his perseverance, and his gratitude. And may peace and blessings be upon all the prophets of Allah, from Adam to Muhammad, peace be upon them all.',
+    contentFr: 'Qu\'Allah ait pitié du Prophète Nouh, le serviteur reconnaissant, le premier des grands messagers. Puissions-nous apprendre de sa patience, de sa persévérance et de sa gratitude. Et que la paix et les bénédictions soient sur tous les prophètes d\'Allah, d\'Adam à Muhammad, paix sur eux tous.',
   },
 ];
 

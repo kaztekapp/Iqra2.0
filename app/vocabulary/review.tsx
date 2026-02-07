@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -29,6 +31,8 @@ const RATING_DESCRIPTIONS: Record<ReviewRating, { label: string; color: string; 
 };
 
 export default function VocabularyReviewScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const {
     showVowels,
     getDueVocabularyReviews,
@@ -112,14 +116,13 @@ export default function VocabularyReviewScreen() {
           <View style={styles.emptyIcon}>
             <Ionicons name="checkmark-done-circle" size={64} color="#22c55e" />
           </View>
-          <Text style={styles.emptyTitle}>All Caught Up!</Text>
+          <Text style={styles.emptyTitle}>{t('vocabulary.allCaughtUp')}</Text>
           <Text style={styles.emptyTitleArabic}>لا مراجعات اليوم</Text>
           <Text style={styles.emptySubtitle}>
-            No vocabulary words are due for review right now.
-            Learn new words to add them to your review queue.
+            {t('vocabulary.noReviewsDue')}
           </Text>
           <Pressable style={styles.backButton} onPress={() => router.back()}>
-            <Text style={styles.backButtonText}>Back to Vocabulary</Text>
+            <Text style={styles.backButtonText}>{t('vocabulary.backToVocabulary')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -139,34 +142,34 @@ export default function VocabularyReviewScreen() {
           <View style={styles.completeIcon}>
             <Ionicons name="trophy" size={64} color="#D4AF37" />
           </View>
-          <Text style={styles.completeTitle}>Review Complete!</Text>
+          <Text style={styles.completeTitle}>{t('vocabulary.reviewComplete')}</Text>
           <Text style={styles.completeTitleArabic}>اكتملت المراجعة</Text>
 
           <View style={styles.statsCard}>
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{stats.correct}</Text>
-              <Text style={styles.statLabel}>Correct</Text>
+              <Text style={styles.statLabel}>{t('common.correct')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#f59e0b' }]}>
                 {stats.incorrect}
               </Text>
-              <Text style={styles.statLabel}>Need Practice</Text>
+              <Text style={styles.statLabel}>{t('vocabulary.needPractice')}</Text>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <Text style={[styles.statValue, { color: '#6366f1' }]}>
                 {accuracy}%
               </Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
+              <Text style={styles.statLabel}>{t('common.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{stats.totalXp} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.totalXp })}</Text>
 
           <Pressable style={styles.doneButton} onPress={() => router.back()}>
-            <Text style={styles.doneButtonText}>Done</Text>
+            <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -177,7 +180,7 @@ export default function VocabularyReviewScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -193,7 +196,7 @@ export default function VocabularyReviewScreen() {
           <Ionicons name="close" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Spaced Review</Text>
+          <Text style={styles.headerTitle}>{t('vocabulary.spacedReview')}</Text>
           <Text style={styles.headerProgress}>
             {currentIndex + 1} / {dueReviews.length}
           </Text>
@@ -238,13 +241,13 @@ export default function VocabularyReviewScreen() {
                 <Ionicons name="volume-high" size={28} color={isSpeaking ? "#ffffff" : "#D4AF37"} />
               </Pressable>
             </View>
-            <Text style={styles.tapHint}>Tap to reveal answer</Text>
+            <Text style={styles.tapHint}>{t('vocabulary.tapToReveal')}</Text>
           </Animated.View>
 
           {/* Back of Card (English) */}
           <Animated.View style={[styles.card, styles.cardBack, backAnimatedStyle]}>
             <View style={styles.cardContent}>
-              <Text style={styles.cardEnglish}>{currentWord.english}</Text>
+              <Text style={styles.cardEnglish}>{lc(currentWord.english, currentWord.french)}</Text>
               <View style={styles.backArabic}>
                 <Text style={styles.backArabicText}>
                   {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
@@ -256,12 +259,12 @@ export default function VocabularyReviewScreen() {
                     {currentWord.exampleSentence.arabic}
                   </Text>
                   <Text style={styles.exampleEnglish}>
-                    {currentWord.exampleSentence.english}
+                    {lc(currentWord.exampleSentence.english, currentWord.exampleSentence.french)}
                   </Text>
                 </View>
               )}
             </View>
-            <Text style={styles.rateHint}>Rate how well you remembered</Text>
+            <Text style={styles.rateHint}>{t('vocabulary.rateHint')}</Text>
           </Animated.View>
         </Pressable>
       </View>
@@ -269,7 +272,7 @@ export default function VocabularyReviewScreen() {
       {/* Rating Buttons - Only show when flipped */}
       {isFlipped && (
         <View style={styles.ratingContainer}>
-          <Text style={styles.ratingTitle}>How well did you remember?</Text>
+          <Text style={styles.ratingTitle}>{t('vocabulary.howWellRemember')}</Text>
           <View style={styles.ratingButtons}>
             {([0, 1, 2, 3, 4, 5] as ReviewRating[]).map((rating) => {
               const config = RATING_DESCRIPTIONS[rating];

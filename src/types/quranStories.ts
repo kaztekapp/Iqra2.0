@@ -16,6 +16,7 @@ export interface QuranReference {
   ayahEnd: number;
   arabicText: string;
   translation: string;
+  translationFr?: string;
 }
 
 export interface HadithReference {
@@ -24,6 +25,7 @@ export interface HadithReference {
   narrator: string;
   arabicText: string;
   translation: string;
+  translationFr?: string;
   grade?: string;
 }
 
@@ -34,18 +36,23 @@ export interface StoryContentBlock {
   type: 'narrative' | 'quran_source' | 'hadith_source';
   order: number;
   content: string;
+  contentFr?: string;
   source?: SourceReference;
 }
 
 export interface QuranStory {
   id: string;
   titleEnglish: string;
+  titleFrench?: string;
   titleArabic: string;
   order: number;
   category: StoryCategory;
   description: string;
+  descriptionFr?: string;
   summary: string;
+  summaryFr?: string;
   lessons: string[];
+  lessonsFr?: string[];
   estimatedReadTime: number;
   quranMentions: number;
   icon: string;
@@ -60,10 +67,12 @@ export interface QuranStory {
 export interface QuranStoryListItem {
   id: string;
   titleEnglish: string;
+  titleFrench?: string;
   titleArabic: string;
   order: number;
   category: StoryCategory;
   description: string;
+  descriptionFr?: string;
   isCompleted: boolean;
   progress: number;
   estimatedReadTime: number;
@@ -78,10 +87,10 @@ export interface QuranStoryProgress {
   lastReadAt: Date | null;
 }
 
-export const STORY_CATEGORY_LABELS: Record<StoryCategory, { english: string; arabic: string }> = {
-  righteous_people: { english: 'Righteous People', arabic: 'الصالحون' },
-  groups_nations: { english: 'Groups & Nations', arabic: 'الأمم والجماعات' },
-  historical_events: { english: 'Historical Events', arabic: 'أحداث تاريخية' },
-  parables: { english: 'Parables', arabic: 'أمثال' },
-  individuals: { english: 'Individuals', arabic: 'شخصيات' },
+export const STORY_CATEGORY_LABELS: Record<StoryCategory, { english: string; french: string; arabic: string }> = {
+  righteous_people: { english: 'Righteous People', french: 'Les Pieux', arabic: 'الصالحون' },
+  groups_nations: { english: 'Groups & Nations', french: 'Groupes & Nations', arabic: 'الأمم والجماعات' },
+  historical_events: { english: 'Historical Events', french: 'Événements Historiques', arabic: 'أحداث تاريخية' },
+  parables: { english: 'Parables', french: 'Paraboles', arabic: 'أمثال' },
+  individuals: { english: 'Individuals', french: 'Individus', arabic: 'شخصيات' },
 };

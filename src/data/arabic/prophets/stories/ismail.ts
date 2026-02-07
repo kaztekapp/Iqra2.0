@@ -7,11 +7,14 @@ import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference }
 export const ismailStory: Prophet = {
   id: 'ismail',
   nameEnglish: 'Ismail',
+  nameFrench: 'Ismail',
   nameArabic: 'إسماعيل',
   order: 8,
   title: 'The Sacrificed One',
+  titleFr: 'Le sacrifié',
   titleArabic: 'الذبيح',
   summary: 'Prophet Ismail was the firstborn son of Prophet Ibrahim and Hajar. As an infant, he was taken with his mother to the barren valley of Makkah by divine command. There, the miraculous spring of Zamzam emerged to save them. Ismail is most renowned for his supreme submission to Allah when he willingly agreed to be sacrificed by his father, an act of obedience that Allah rewarded by substituting a ram. Together with his father, he built the sacred Kaaba, and he became the ancestor of the Arab nation and ultimately of Prophet Muhammad ﷺ.',
+  summaryFr: 'Le prophète Ismail était le premier fils du prophète Ibrahim et de Hajar. Nourrisson, il fut emmené avec sa mère dans la vallée aride de La Mecque par ordre divin. Là, la source miraculeuse de Zamzam jaillit pour les sauver. Ismail est surtout connu pour sa soumission suprême à Allah lorsqu\'il accepta volontiers d\'être sacrifié par son père, un acte d\'obéissance qu\'Allah récompensa en substituant un bélier. Avec son père, il construisit la sacrée Kaaba, et il devint l\'ancêtre de la nation arabe et finalement du prophète Muhammad ﷺ.',
   hasSubStories: false,
   lessons: [
     'True submission to Allah means accepting His will even in the most difficult tests',
@@ -19,6 +22,13 @@ export const ismailStory: Prophet = {
     'Parents and children supporting each other in obedience to Allah',
     'The importance of the Kaaba as the first house of worship',
     'Honoring promises and being trustworthy in conveying the message',
+  ],
+  lessonsFr: [
+    'La vraie soumission à Allah signifie accepter Sa volonté même dans les épreuves les plus difficiles',
+    'La patience et la confiance en Allah pendant les difficultés mènent à des provisions miraculeuses',
+    'Parents et enfants se soutenant mutuellement dans l\'obéissance à Allah',
+    'L\'importance de la Kaaba comme première maison d\'adoration',
+    'Honorer ses promesses et être digne de confiance dans la transmission du message',
   ],
   estimatedReadTime: 18,
   quranMentions: 12,
@@ -32,12 +42,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 1,
     content: "Prophet Ibrahim had longed for a child for many years. In his old age, Allah blessed him with a son through his wife Hajar. This child was named Ismail, meaning 'Allah hears,' for Allah had heard Ibrahim's prayers for offspring.",
+    contentFr: "Le prophète Ibrahim avait désiré un enfant pendant de nombreuses années. Dans sa vieillesse, Allah le bénit d'un fils par l'intermédiaire de sa femme Hajar. Cet enfant fut nommé Ismail, signifiant « Allah entend », car Allah avait entendu les prières d'Ibrahim pour une descendance.",
   },
   {
     id: 'ismail-2',
     type: 'quran_source',
     order: 2,
     content: "Ibrahim had prayed earnestly to Allah for righteous children.",
+    contentFr: "Ibrahim avait prié Allah avec ferveur pour avoir des enfants vertueux.",
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -47,6 +59,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 101,
       arabicText: 'رَبِّ هَبْ لِي مِنَ الصَّالِحِينَ ۝ فَبَشَّرْنَاهُ بِغُلَامٍ حَلِيمٍ',
       translation: '"My Lord, grant me [a child] from among the righteous." So We gave him good tidings of a forbearing boy.',
+      translationFr: '« Mon Seigneur, accorde-moi [un enfant] parmi les vertueux. » Nous lui annonçâmes donc la bonne nouvelle d\'un garçon longanime.',
     } as QuranReference,
   },
   {
@@ -54,12 +67,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 3,
     content: "By divine command, Ibrahim was instructed to take Hajar and the infant Ismail to a barren, uninhabited valley in Arabia - the place that would become Makkah. This was a profound test of faith, leaving his beloved wife and firstborn son in a desert with no water, no vegetation, and no people.",
+    contentFr: "Par ordre divin, Ibrahim reçut l'instruction d'emmener Hajar et le nourrisson Ismail dans une vallée aride et inhabitée d'Arabie - le lieu qui deviendrait La Mecque. C'était une profonde épreuve de foi, laissant sa femme bien-aimée et son premier-né dans un désert sans eau, sans végétation et sans habitants.",
   },
   {
     id: 'ismail-4',
     type: 'quran_source',
     order: 4,
     content: "Ibrahim later described this valley in his prayer to Allah.",
+    contentFr: "Ibrahim décrivit plus tard cette vallée dans sa prière à Allah.",
     source: {
       type: 'quran',
       surahNumber: 14,
@@ -69,6 +84,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 37,
       arabicText: 'رَّبَّنَا إِنِّي أَسْكَنتُ مِن ذُرِّيَّتِي بِوَادٍ غَيْرِ ذِي زَرْعٍ عِندَ بَيْتِكَ الْمُحَرَّمِ رَبَّنَا لِيُقِيمُوا الصَّلَاةَ فَاجْعَلْ أَفْئِدَةً مِّنَ النَّاسِ تَهْوِي إِلَيْهِمْ وَارْزُقْهُم مِّنَ الثَّمَرَاتِ لَعَلَّهُمْ يَشْكُرُونَ',
       translation: '"Our Lord, I have settled some of my descendants in an uncultivated valley near Your sacred House, our Lord, that they may establish prayer. So make hearts among the people incline toward them and provide for them from the fruits that they might be grateful."',
+      translationFr: '« Notre Seigneur, j\'ai établi une partie de ma descendance dans une vallée sans culture, près de Ta Maison sacrée, notre Seigneur, afin qu\'ils accomplissent la prière. Fais donc que les cœurs des gens s\'inclinent vers eux et pourvois-les de fruits afin qu\'ils soient reconnaissants. »',
     } as QuranReference,
   },
   {
@@ -76,24 +92,28 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 5,
     content: "When Ibrahim left them with only a bag of dates and a water skin, Hajar asked him, 'O Ibrahim, where are you going, leaving us in this valley where there is no person and nothing?' She repeated this several times, but he did not respond. Finally she asked, 'Has Allah commanded you to do this?' He said, 'Yes.' She replied with complete trust, 'Then He will not neglect us.'",
+    contentFr: "Lorsqu'Ibrahim les quitta avec seulement un sac de dattes et une outre d'eau, Hajar lui demanda : « Ô Ibrahim, où vas-tu, nous laissant dans cette vallée où il n'y a personne ni rien ? » Elle répéta cela plusieurs fois, mais il ne répondit pas. Finalement elle demanda : « Est-ce Allah qui t'a ordonné cela ? » Il dit : « Oui. » Elle répondit avec une confiance totale : « Alors Il ne nous abandonnera pas. »",
   },
   {
     id: 'ismail-6',
     type: 'narrative',
     order: 6,
     content: "After Ibrahim departed, Hajar and baby Ismail were alone in the scorching desert. The water soon ran out, and the infant began to cry from thirst. His mother, desperate to find help, ran between the hills of Safa and Marwa seven times, searching for water or any sign of travelers.",
+    contentFr: "Après le départ d'Ibrahim, Hajar et le bébé Ismail se retrouvèrent seuls dans le désert brûlant. L'eau s'épuisa rapidement, et le nourrisson se mit à pleurer de soif. Sa mère, désespérée de trouver de l'aide, courut entre les collines de Safa et Marwa sept fois, cherchant de l'eau ou tout signe de voyageurs.",
   },
   {
     id: 'ismail-7',
     type: 'hadith_source',
     order: 7,
     content: "The Prophet Muhammad ﷺ narrated the story of Hajar and the emergence of Zamzam.",
+    contentFr: "Le Prophète Muhammad ﷺ raconta l'histoire de Hajar et l'émergence de Zamzam.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Ibn Abbas',
       arabicText: 'فَوَجَدَتْ مَلَكًا عِنْدَ مَوْضِعِ زَمْزَمَ فَبَحَثَ بِعَقِبِهِ حَتَّى ظَهَرَ الْمَاءُ',
       translation: 'She found nobody. When she reached the Marwa for the last time, she heard a voice. She said, "Silence!" and listened attentively. She heard the voice again and said, "O, whoever you may be! You have made me hear your voice; have you got something to help me?" She saw an angel at the place of Zamzam, digging the earth with his heel till water flowed out. She started to make something like a basin around it using her hands.',
+      translationFr: 'Elle ne trouva personne. Lorsqu\'elle atteignit Marwa pour la dernière fois, elle entendit une voix. Elle dit : « Silence ! » et écouta attentivement. Elle entendit à nouveau la voix et dit : « Ô qui que tu sois ! Tu m\'as fait entendre ta voix ; as-tu quelque chose pour m\'aider ? » Elle vit un ange à l\'emplacement de Zamzam, creusant la terre avec son talon jusqu\'à ce que l\'eau jaillisse. Elle commença à former une sorte de bassin autour avec ses mains.',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -102,18 +122,21 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 8,
     content: "The angel Jibril had struck the ground with his wing near the infant Ismail, and a spring of water gushed forth. This was the blessed well of Zamzam, which continues to flow to this day and has provided water to millions of pilgrims throughout history.",
+    contentFr: "L'ange Jibril avait frappé le sol de son aile près du nourrisson Ismail, et une source d'eau jaillit. C'était le puits béni de Zamzam, qui continue de couler à ce jour et a fourni de l'eau à des millions de pèlerins à travers l'histoire.",
   },
   {
     id: 'ismail-9',
     type: 'hadith_source',
     order: 9,
     content: "The Prophet ﷺ mentioned how the tribe of Jurhum came to settle there.",
+    contentFr: "Le Prophète ﷺ mentionna comment la tribu de Jurhum vint s'y installer.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Ibn Abbas',
       arabicText: 'فَرَأَوْا طَيْرًا عَائِفًا فَقَالُوا إِنَّ هَذَا الطَّيْرَ لَيَدُورُ عَلَى مَاءٍ',
       translation: 'Some people of the tribe of Jurhum, passing through the bottom of the valley, saw birds hovering over a place. They said, "These birds must be hovering over water." They sent a messenger who found water and returned to inform them. Then they all came and asked Hajar\'s permission to stay. She agreed, and they settled there.',
+      translationFr: 'Des gens de la tribu de Jurhum, passant par le fond de la vallée, virent des oiseaux tournoyer au-dessus d\'un endroit. Ils dirent : « Ces oiseaux doivent tournoyer au-dessus de l\'eau. » Ils envoyèrent un messager qui trouva de l\'eau et revint les informer. Alors ils vinrent tous et demandèrent à Hajar la permission de rester. Elle accepta, et ils s\'y installèrent.',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -122,18 +145,21 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 10,
     content: "The running of Hajar between Safa and Marwa became commemorated as one of the essential rites of Hajj, performed by millions of Muslims each year. Allah honored her desperate search for water by making it an act of worship until the Day of Judgment.",
+    contentFr: "La course de Hajar entre Safa et Marwa fut commémorée comme l'un des rites essentiels du Hajj, accompli par des millions de musulmans chaque année. Allah honora sa recherche désespérée d'eau en en faisant un acte d'adoration jusqu'au Jour du Jugement.",
   },
   {
     id: 'ismail-11',
     type: 'narrative',
     order: 11,
     content: "When Ismail grew old enough to work alongside his father, Ibrahim received a vision in his dream - he was commanded to sacrifice his beloved son. For a prophet, dreams are a form of revelation. This was the ultimate test of Ibrahim's submission to Allah, and it would also test Ismail's faith.",
+    contentFr: "Lorsqu'Ismail fut assez grand pour travailler aux côtés de son père, Ibrahim reçut une vision dans son rêve - il lui fut ordonné de sacrifier son fils bien-aimé. Pour un prophète, les rêves sont une forme de révélation. C'était l'épreuve ultime de la soumission d'Ibrahim à Allah, et elle allait aussi mettre à l'épreuve la foi d'Ismail.",
   },
   {
     id: 'ismail-12',
     type: 'quran_source',
     order: 12,
     content: "Allah describes this momentous event in the Quran.",
+    contentFr: "Allah décrit cet événement capital dans le Coran.",
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -143,6 +169,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 102,
       arabicText: 'فَلَمَّا بَلَغَ مَعَهُ السَّعْيَ قَالَ يَا بُنَيَّ إِنِّي أَرَىٰ فِي الْمَنَامِ أَنِّي أَذْبَحُكَ فَانظُرْ مَاذَا تَرَىٰ ۚ قَالَ يَا أَبَتِ افْعَلْ مَا تُؤْمَرُ ۖ سَتَجِدُنِي إِن شَاءَ اللَّهُ مِنَ الصَّابِرِينَ',
       translation: 'And when he reached with him [the age of] exertion, he said, "O my son, indeed I have seen in a dream that I [must] sacrifice you, so see what you think." He said, "O my father, do as you are commanded. You will find me, if Allah wills, of the steadfast."',
+      translationFr: 'Puis quand celui-ci fut en âge de l\'accompagner, [Ibrahim] dit : « Ô mon fils, je me vois en songe en train de t\'immoler. Vois donc ce que tu en penses. » Il dit : « Ô mon cher père, fais ce qui t\'est commandé. Tu me trouveras, si Allah le veut, du nombre des endurants. »',
     } as QuranReference,
   },
   {
@@ -150,12 +177,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: "What a remarkable response from a young boy! Ismail did not question, complain, or flee. Instead, he encouraged his father to fulfill Allah's command and promised to be patient. This response demonstrated the depth of faith that Ibrahim had instilled in his son and Ismail's own pure submission to Allah.",
+    contentFr: "Quelle réponse remarquable de la part d'un jeune garçon ! Ismail ne questionna pas, ne se plaignit pas et ne s'enfuit pas. Au contraire, il encouragea son père à accomplir l'ordre d'Allah et promit d'être patient. Cette réponse démontrait la profondeur de la foi qu'Ibrahim avait instillée en son fils et la pure soumission d'Ismail à Allah.",
   },
   {
     id: 'ismail-14',
     type: 'quran_source',
     order: 14,
     content: "Both father and son submitted completely to Allah's will.",
+    contentFr: "Père et fils se soumirent complètement à la volonté d'Allah.",
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -165,6 +194,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 105,
       arabicText: 'فَلَمَّا أَسْلَمَا وَتَلَّهُ لِلْجَبِينِ ۝ وَنَادَيْنَاهُ أَن يَا إِبْرَاهِيمُ ۝ قَدْ صَدَّقْتَ الرُّؤْيَا ۚ إِنَّا كَذَٰلِكَ نَجْزِي الْمُحْسِنِينَ',
       translation: 'And when they had both submitted and he put him down upon his forehead, We called to him, "O Ibrahim, you have fulfilled the vision." Indeed, We thus reward the doers of good.',
+      translationFr: 'Puis quand tous deux se furent soumis et qu\'il l\'eut jeté sur le front, Nous l\'appelâmes : « Ô Ibrahim, tu as confirmé la vision. » C\'est ainsi que Nous récompensons les bienfaisants.',
     } as QuranReference,
   },
   {
@@ -172,12 +202,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 15,
     content: "At the moment when Ibrahim laid his son down and was about to fulfill the sacrifice, Allah called out to him that he had passed the test. Their willingness to submit completely was what Allah sought - not the actual sacrifice. This was indeed the most clear and difficult test.",
+    contentFr: "Au moment où Ibrahim coucha son fils et s'apprêtait à accomplir le sacrifice, Allah l'appela pour lui dire qu'il avait réussi l'épreuve. Leur volonté de se soumettre complètement était ce qu'Allah recherchait - pas le sacrifice lui-même. C'était véritablement l'épreuve la plus claire et la plus difficile.",
   },
   {
     id: 'ismail-16',
     type: 'quran_source',
     order: 16,
     content: "Allah described this as a clear trial and ransomed Ismail with a great sacrifice.",
+    contentFr: "Allah décrivit cela comme une épreuve manifeste et racheta Ismail par un sacrifice solennel.",
     source: {
       type: 'quran',
       surahNumber: 37,
@@ -187,6 +219,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 107,
       arabicText: 'إِنَّ هَٰذَا لَهُوَ الْبَلَاءُ الْمُبِينُ ۝ وَفَدَيْنَاهُ بِذِبْحٍ عَظِيمٍ',
       translation: 'Indeed, this was the clear trial. And We ransomed him with a great sacrifice.',
+      translationFr: 'C\'était là certes l\'épreuve manifeste. Et Nous le rachetâmes par un sacrifice solennel.',
     } as QuranReference,
   },
   {
@@ -194,18 +227,21 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 17,
     content: "Allah sent a ram from Paradise to be sacrificed in Ismail's place. This event is commemorated every year during Eid al-Adha, when Muslims around the world sacrifice animals in remembrance of Ibrahim and Ismail's supreme act of submission to Allah.",
+    contentFr: "Allah envoya un bélier du Paradis pour être sacrifié à la place d'Ismail. Cet événement est commémoré chaque année lors de l'Aïd al-Adha, quand les musulmans du monde entier sacrifient des animaux en souvenir de l'acte suprême de soumission d'Ibrahim et d'Ismail à Allah.",
   },
   {
     id: 'ismail-18',
     type: 'narrative',
     order: 18,
     content: "After the test of sacrifice, Allah commanded Ibrahim to build the Kaaba - the first house of worship established for mankind. Ibrahim returned to Makkah, and together with his son Ismail, they raised the foundations of the Sacred House.",
+    contentFr: "Après l'épreuve du sacrifice, Allah ordonna à Ibrahim de construire la Kaaba - la première maison d'adoration établie pour l'humanité. Ibrahim retourna à La Mecque, et ensemble avec son fils Ismail, ils élevèrent les fondations de la Maison Sacrée.",
   },
   {
     id: 'ismail-19',
     type: 'quran_source',
     order: 19,
     content: "Allah describes Ibrahim and Ismail building the Kaaba.",
+    contentFr: "Allah décrit Ibrahim et Ismail construisant la Kaaba.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -215,6 +251,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 127,
       arabicText: 'وَإِذْ يَرْفَعُ إِبْرَاهِيمُ الْقَوَاعِدَ مِنَ الْبَيْتِ وَإِسْمَاعِيلُ رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ',
       translation: 'And [mention] when Ibrahim was raising the foundations of the House and [with him] Ismail, [saying], "Our Lord, accept [this] from us. Indeed You are the Hearing, the Knowing."',
+      translationFr: 'Et quand Ibrahim et Ismail élevaient les assises de la Maison : « Notre Seigneur, accepte ceci de notre part. Tu es certes l\'Audient, l\'Omniscient. »',
     } as QuranReference,
   },
   {
@@ -222,12 +259,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 20,
     content: "Father and son worked together in this blessed task, with Ibrahim standing on a stone (Maqam Ibrahim) to reach the higher portions while Ismail handed him the stones. As they built, they made beautiful supplications to Allah.",
+    contentFr: "Père et fils travaillèrent ensemble à cette tâche bénie, Ibrahim se tenant sur une pierre (Maqam Ibrahim) pour atteindre les parties les plus hautes tandis qu'Ismail lui passait les pierres. Pendant qu'ils construisaient, ils adressèrent de belles invocations à Allah.",
   },
   {
     id: 'ismail-21',
     type: 'quran_source',
     order: 21,
     content: "They prayed for themselves and their descendants.",
+    contentFr: "Ils prièrent pour eux-mêmes et leur descendance.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -237,6 +276,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 128,
       arabicText: 'رَبَّنَا وَاجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِن ذُرِّيَّتِنَا أُمَّةً مُّسْلِمَةً لَّكَ وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَا ۖ إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ',
       translation: '"Our Lord, and make us Muslims [in submission] to You and from our descendants a Muslim nation [in submission] to You. And show us our rites and accept our repentance. Indeed, You are the Accepting of repentance, the Merciful."',
+      translationFr: '« Notre Seigneur, fais de nous des soumis à Toi et de notre descendance une communauté soumise à Toi. Montre-nous nos rites et accepte notre repentir. Tu es certes l\'Accueillant au repentir, le Miséricordieux. »',
     } as QuranReference,
   },
   {
@@ -244,6 +284,7 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 22,
     content: "They also prayed for a messenger to be sent from their descendants.",
+    contentFr: "Ils prièrent aussi pour qu'un messager soit envoyé parmi leur descendance.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -253,6 +294,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 129,
       arabicText: 'رَبَّنَا وَابْعَثْ فِيهِمْ رَسُولًا مِّنْهُمْ يَتْلُو عَلَيْهِمْ آيَاتِكَ وَيُعَلِّمُهُمُ الْكِتَابَ وَالْحِكْمَةَ وَيُزَكِّيهِمْ ۚ إِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ',
       translation: '"Our Lord, and send among them a messenger from themselves who will recite to them Your verses and teach them the Book and wisdom and purify them. Indeed, You are the Exalted in Might, the Wise."',
+      translationFr: '« Notre Seigneur, envoie parmi eux un messager issu d\'eux qui leur récitera Tes versets, leur enseignera le Livre et la sagesse, et les purifiera. Tu es certes le Puissant, le Sage. »',
     } as QuranReference,
   },
   {
@@ -260,18 +302,21 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 23,
     content: "This prayer was answered thousands of years later with the coming of Prophet Muhammad ﷺ, a descendant of Ismail. The Kaaba that Ibrahim and Ismail built remains the qiblah (direction of prayer) for Muslims and the destination of the annual Hajj pilgrimage.",
+    contentFr: "Cette prière fut exaucée des milliers d'années plus tard avec la venue du Prophète Muhammad ﷺ, un descendant d'Ismail. La Kaaba que construisirent Ibrahim et Ismail demeure la qibla (direction de prière) pour les musulmans et la destination du pèlerinage annuel du Hajj.",
   },
   {
     id: 'ismail-24',
     type: 'narrative',
     order: 24,
     content: "Allah honored Ismail by mentioning his noble qualities in the Quran. He was known for being true to his promises and diligent in calling his family to prayer and worship.",
+    contentFr: "Allah honora Ismail en mentionnant ses nobles qualités dans le Coran. Il était connu pour être fidèle à ses promesses et assidu à appeler sa famille à la prière et à l'adoration.",
   },
   {
     id: 'ismail-25',
     type: 'quran_source',
     order: 25,
     content: "Allah describes Ismail's praiseworthy characteristics.",
+    contentFr: "Allah décrit les caractéristiques louables d'Ismail.",
     source: {
       type: 'quran',
       surahNumber: 19,
@@ -281,6 +326,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 55,
       arabicText: 'وَاذْكُرْ فِي الْكِتَابِ إِسْمَاعِيلَ ۚ إِنَّهُ كَانَ صَادِقَ الْوَعْدِ وَكَانَ رَسُولًا نَّبِيًّا ۝ وَكَانَ يَأْمُرُ أَهْلَهُ بِالصَّلَاةِ وَالزَّكَاةِ وَكَانَ عِندَ رَبِّهِ مَرْضِيًّا',
       translation: 'And mention in the Book, Ismail. Indeed, he was true to his promise, and he was a messenger and a prophet. And he used to enjoin on his family prayer and zakah and was to his Lord pleasing.',
+      translationFr: 'Et mentionne dans le Livre Ismail. Il était fidèle à sa promesse, et c\'était un messager et un prophète. Et il commandait à sa famille la prière et la zakât, et il était agréé auprès de son Seigneur.',
     } as QuranReference,
   },
   {
@@ -288,12 +334,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 26,
     content: "Being 'true to his promise' (صادق الوعد) was such a defining trait that it became synonymous with Ismail's name. He fulfilled every commitment he made, whether to Allah or to people. This trustworthiness is essential for anyone who carries the message of truth.",
+    contentFr: "Être « fidèle à sa promesse » (صادق الوعد) était un trait si caractéristique qu'il devint synonyme du nom d'Ismail. Il honorait chaque engagement pris, que ce soit envers Allah ou envers les gens. Cette fiabilité est essentielle pour quiconque porte le message de vérité.",
   },
   {
     id: 'ismail-27',
     type: 'quran_source',
     order: 27,
     content: "Allah also counted Ismail among the patient and the righteous.",
+    contentFr: "Allah compta aussi Ismail parmi les patients et les vertueux.",
     source: {
       type: 'quran',
       surahNumber: 21,
@@ -303,6 +351,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 86,
       arabicText: 'وَإِسْمَاعِيلَ وَإِدْرِيسَ وَذَا الْكِفْلِ ۖ كُلٌّ مِّنَ الصَّابِرِينَ ۝ وَأَدْخَلْنَاهُمْ فِي رَحْمَتِنَا ۖ إِنَّهُم مِّنَ الصَّالِحِينَ',
       translation: 'And [mention] Ismail and Idris and Dhul-Kifl; all were of the patient. And We admitted them into Our mercy. Indeed, they were of the righteous.',
+      translationFr: 'Et Ismail, et Idris, et Dhul-Kifl ; tous étaient du nombre des endurants. Et Nous les fîmes entrer dans Notre miséricorde. Ils étaient certes du nombre des vertueux.',
     } as QuranReference,
   },
   {
@@ -310,6 +359,7 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 28,
     content: "Ismail was also mentioned among the chosen and outstanding.",
+    contentFr: "Ismail fut aussi mentionné parmi les élus et les excellents.",
     source: {
       type: 'quran',
       surahNumber: 38,
@@ -319,6 +369,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 48,
       arabicText: 'وَاذْكُرْ إِسْمَاعِيلَ وَالْيَسَعَ وَذَا الْكِفْلِ ۖ وَكُلٌّ مِّنَ الْأَخْيَارِ',
       translation: 'And remember Ismail, Elisha and Dhul-Kifl, and all are among the outstanding.',
+      translationFr: 'Et rappelle-toi Ismail, Elisée et Dhul-Kifl, et tous sont parmi les excellents.',
     } as QuranReference,
   },
   {
@@ -326,12 +377,14 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 29,
     content: "Ismail lived in Makkah, married from the tribe of Jurhum, and had twelve sons who became the ancestors of the Arab tribes. He continued his father's mission of calling people to worship Allah alone and teaching them the rites of pilgrimage.",
+    contentFr: "Ismail vécut à La Mecque, épousa une femme de la tribu de Jurhum, et eut douze fils qui devinrent les ancêtres des tribus arabes. Il poursuivit la mission de son père d'appeler les gens à adorer Allah seul et de leur enseigner les rites du pèlerinage.",
   },
   {
     id: 'ismail-30',
     type: 'quran_source',
     order: 30,
     content: "The covenant with Ibrahim included both his sons.",
+    contentFr: "L'alliance avec Ibrahim incluait ses deux fils.",
     source: {
       type: 'quran',
       surahNumber: 2,
@@ -341,6 +394,7 @@ const ismailStoryContent: StoryContentBlock[] = [
       ayahEnd: 133,
       arabicText: 'أَمْ كُنتُمْ شُهَدَاءَ إِذْ حَضَرَ يَعْقُوبَ الْمَوْتُ إِذْ قَالَ لِبَنِيهِ مَا تَعْبُدُونَ مِن بَعْدِي قَالُوا نَعْبُدُ إِلَٰهَكَ وَإِلَٰهَ آبَائِكَ إِبْرَاهِيمَ وَإِسْمَاعِيلَ وَإِسْحَاقَ إِلَٰهًا وَاحِدًا وَنَحْنُ لَهُ مُسْلِمُونَ',
       translation: 'Or were you witnesses when death approached Yaqub, when he said to his sons, "What will you worship after me?" They said, "We will worship your God and the God of your fathers, Ibrahim and Ismail and Ishaq - one God. And we are Muslims [in submission] to Him."',
+      translationFr: 'Étiez-vous témoins quand la mort se présenta à Yaqub et qu\'il dit à ses fils : « Qu\'adorerez-vous après moi ? » Ils répondirent : « Nous adorerons ton Dieu et le Dieu de tes pères, Ibrahim, Ismail et Ishaq, un Dieu unique. Et nous Lui sommes soumis. »',
     } as QuranReference,
   },
   {
@@ -348,18 +402,21 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 31,
     content: "Prophet Ismail lived for approximately 137 years. He was buried next to his mother Hajar in the Hijr (the semi-circular area adjacent to the Kaaba). His greatest legacy was preserved through his descendants - the Arab tribes who would, generations later, receive the final Prophet Muhammad ﷺ.",
+    contentFr: "Le prophète Ismail vécut environ 137 ans. Il fut enterré à côté de sa mère Hajar dans le Hijr (la zone semi-circulaire adjacente à la Kaaba). Son plus grand héritage fut préservé à travers ses descendants - les tribus arabes qui, des générations plus tard, accueilleraient le dernier Prophète Muhammad ﷺ.",
   },
   {
     id: 'ismail-32',
     type: 'hadith_source',
     order: 32,
     content: "The Prophet Muhammad ﷺ confirmed his lineage to Ismail.",
+    contentFr: "Le Prophète Muhammad ﷺ confirma sa lignée remontant à Ismail.",
     source: {
       type: 'hadith',
       collection: 'bukhari',
       narrator: 'Salama bin Al-Akwa',
       arabicText: 'يَا بَنِي إِسْمَاعِيلَ ارْمُوا فَإِنَّ أَبَاكُمْ كَانَ رَامِيًا',
       translation: 'The Prophet ﷺ passed by some people of the tribe of Aslam who were practicing archery. He said, "O children of Ismail! Practice archery as your father was a skilled archer."',
+      translationFr: 'Le Prophète ﷺ passa devant des gens de la tribu d\'Aslam qui s\'exerçaient au tir à l\'arc. Il dit : « Ô enfants d\'Ismail ! Exercez-vous au tir à l\'arc car votre père était un archer habile. »',
       grade: 'sahih',
     } as HadithReference,
   },
@@ -368,6 +425,7 @@ const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 33,
     content: "Through Ismail, the prayer of Ibrahim was answered. The barren valley became the blessed city of Makkah, home to the Sacred Mosque. The rites of Hajj that Ibrahim and Ismail established continue to this day, with millions of Muslims following in their footsteps each year, commemorating their sacrifice, devotion, and complete submission to Allah.",
+    contentFr: "Par Ismail, la prière d'Ibrahim fut exaucée. La vallée aride devint la ville bénie de La Mecque, abritant la Mosquée Sacrée. Les rites du Hajj qu'Ibrahim et Ismail établirent perdurent à ce jour, avec des millions de musulmans suivant leurs pas chaque année, commémorant leur sacrifice, leur dévotion et leur soumission complète à Allah.",
   },
 ];
 
