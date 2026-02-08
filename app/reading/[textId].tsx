@@ -261,7 +261,7 @@ export default function ReadingDetailScreen() {
   const { textId } = useLocalSearchParams<{ textId: string }>();
   const { startReading, completeReading, addXp, updateStreak } = useProgressStore();
 
-  const { speak, speakSlow, isSpeaking } = useArabicSpeech();
+  const { speak, speakSlow, stop, isSpeaking } = useArabicSpeech();
   const text = readingContent[textId || ''];
 
   const [isPlayingAll, setIsPlayingAll] = useState(false);
@@ -275,18 +275,27 @@ export default function ReadingDetailScreen() {
     if (textId) {
       startReading(textId);
     }
+    return () => {
+      stop();
+      isPlayingAllRef.current = false;
+    };
   }, [textId]);
 
-  // Play a single sentence
+  // Play or stop a single sentence
   const handlePlaySentence = useCallback((index: number) => {
     if (!text) return;
+    if (currentPlayingIndex === index && isSpeaking) {
+      stop();
+      setCurrentPlayingIndex(null);
+      return;
+    }
     setCurrentPlayingIndex(index);
     if (isSlowMode) {
       speakSlow(text.paragraphs[index].arabic);
     } else {
       speak(text.paragraphs[index].arabic);
     }
-  }, [text, speak, speakSlow, isSlowMode]);
+  }, [text, speak, speakSlow, stop, isSlowMode, currentPlayingIndex, isSpeaking]);
 
   // Play all sentences sequentially
   const handlePlayAll = useCallback(async () => {
@@ -295,6 +304,7 @@ export default function ReadingDetailScreen() {
     if (isPlayingAll) {
       // Stop playback
       isPlayingAllRef.current = false;
+      stop();
       setIsPlayingAll(false);
       setCurrentPlayingIndex(null);
     } else {
@@ -325,7 +335,7 @@ export default function ReadingDetailScreen() {
       setIsPlayingAll(false);
       setCurrentPlayingIndex(null);
     }
-  }, [text, speak, speakSlow, isPlayingAll, isSlowMode]);
+  }, [text, speak, speakSlow, stop, isPlayingAll, isSlowMode]);
 
   const handleComplete = () => {
     if (textId) {

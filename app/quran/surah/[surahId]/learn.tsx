@@ -350,21 +350,15 @@ export default function LearnModeScreen() {
             />
           </View>
 
-          {/* Hint Button */}
-          {!showHint && (
-            <Pressable style={styles.hintButton} onPress={handleShowHint}>
-              <Ionicons name="bulb-outline" size={18} color="#f59e0b" />
-              <Text style={styles.hintButtonText}>{t('surahLearnMode.showTransliteration')}</Text>
-            </Pressable>
-          )}
-
-          {/* Hint Content */}
-          {showHint && (
-            <View style={styles.hintContent}>
-              <Text style={styles.transliteration}>{currentAyah.transliteration}</Text>
-              <Text style={styles.translation}>{currentAyah.translation}</Text>
+          {/* Auto-Advance Toggle */}
+          <Pressable style={styles.autoAdvanceRow} onPress={toggleAutoAdvance}>
+            <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
+              {t('surahLearnMode.autoAdvance')}
+            </Text>
+            <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
+              <View style={[styles.toggleThumb, autoAdvance && styles.toggleThumbActive]} />
             </View>
-          )}
+          </Pressable>
         </View>
 
         {/* Audio Controls */}
@@ -383,7 +377,7 @@ export default function LearnModeScreen() {
             <Ionicons
               name={showRangeSelector ? "chevron-up" : "chevron-down"}
               size={18}
-              color="#64748b"
+              color="#cbd5e1"
             />
           </Pressable>
 
@@ -562,19 +556,6 @@ export default function LearnModeScreen() {
               ))}
             </View>
           </View>
-
-          {/* Auto-Advance Toggle */}
-          <Pressable style={styles.autoAdvanceRow} onPress={toggleAutoAdvance}>
-            <View style={styles.autoAdvanceInfo}>
-              <Ionicons name="play-forward" size={18} color={autoAdvance ? '#10b981' : '#64748b'} />
-              <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
-                {t('surahLearnMode.autoAdvance')}
-              </Text>
-            </View>
-            <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
-              <View style={[styles.toggleThumb, autoAdvance && styles.toggleThumbActive]} />
-            </View>
-          </Pressable>
 
           {/* Current Repeat Progress */}
           {audioState !== 'idle' && repeatCount > 1 && (
@@ -770,10 +751,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 16,
+    backgroundColor: '#334155',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#334155',
   },
   rangeSelectorInfo: {
     flexDirection: 'row',
@@ -782,7 +764,7 @@ const styles = StyleSheet.create({
   },
   rangeSelectorTitle: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
   },
   rangeControls: {
@@ -884,19 +866,17 @@ const styles = StyleSheet.create({
   autoAdvanceRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    alignSelf: 'center',
+    gap: 10,
+    marginTop: 16,
     paddingTop: 16,
-    marginTop: 4,
     borderTopWidth: 1,
     borderTopColor: '#334155',
-  },
-  autoAdvanceInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    width: '100%',
+    justifyContent: 'center',
   },
   autoAdvanceLabel: {
-    color: '#64748b',
+    color: '#94a3b8',
     fontSize: 14,
   },
   autoAdvanceLabelActive: {
