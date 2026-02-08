@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -16,6 +17,7 @@ import { Exercise } from '../../src/types/arabic';
 import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 
 export default function VerbsQuizPracticeScreen() {
+  const { t } = useTranslation();
   const quizExercises = verbExercises.filter(ex => ex.type !== 'writing');
 
   const { addXp, updateStreak, recordExerciseResult } = useProgressStore();
@@ -39,9 +41,9 @@ export default function VerbsQuizPracticeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>No quiz exercises available</Text>
+          <Text style={styles.errorText}>{t('verbQuiz.noQuizExercises')}</Text>
           <Pressable style={styles.backLink} onPress={() => router.back()}>
-            <Text style={styles.backLinkText}>Go back</Text>
+            <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -166,36 +168,36 @@ export default function VerbsQuizPracticeScreen() {
             />
           </View>
           <Text style={styles.completeTitle}>
-            {accuracy >= 80 ? 'Excellent!' : accuracy >= 50 ? 'Good Job!' : 'Keep Practicing!'}
+            {accuracy >= 80 ? t('verbQuiz.excellent') : accuracy >= 50 ? t('verbQuiz.goodJob') : t('verbQuiz.keepPracticing')}
           </Text>
-          <Text style={styles.completeSubtitle}>Verb Quiz Practice</Text>
+          <Text style={styles.completeSubtitle}>{t('verbQuiz.verbQuizPractice')}</Text>
 
           <View style={styles.resultsCard}>
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.correct}</Text>
-              <Text style={styles.resultLabel}>Correct</Text>
+              <Text style={styles.resultLabel}>{t('verbQuiz.correct')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={styles.resultValue}>{score.total - score.correct}</Text>
-              <Text style={styles.resultLabel}>Wrong</Text>
+              <Text style={styles.resultLabel}>{t('verbQuiz.wrong')}</Text>
             </View>
             <View style={styles.resultDivider} />
             <View style={styles.resultItem}>
               <Text style={[styles.resultValue, { color: '#ec4899' }]}>{accuracy}%</Text>
-              <Text style={styles.resultLabel}>Accuracy</Text>
+              <Text style={styles.resultLabel}>{t('verbQuiz.accuracy')}</Text>
             </View>
           </View>
 
-          <Text style={styles.xpEarned}>+{xpEarned} XP earned!</Text>
+          <Text style={styles.xpEarned}>{t('verbQuiz.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
             <Pressable style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color="#ec4899" />
-              <Text style={styles.retryButtonText}>Try Again</Text>
+              <Text style={styles.retryButtonText}>{t('verbQuiz.tryAgain')}</Text>
             </Pressable>
             <Pressable style={styles.doneButton} onPress={() => router.back()}>
-              <Text style={styles.doneButtonText}>Done</Text>
+              <Text style={styles.doneButtonText}>{t('verbQuiz.done')}</Text>
             </Pressable>
           </View>
         </View>
@@ -211,7 +213,7 @@ export default function VerbsQuizPracticeScreen() {
             <Ionicons name="close" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>Verb Quiz</Text>
+            <Text style={styles.headerTitle}>{t('verbQuiz.title')}</Text>
             <Text style={styles.headerProgress}>
               {currentIndex + 1} / {quizExercises.length}
             </Text>
@@ -306,13 +308,13 @@ export default function VerbsQuizPracticeScreen() {
                   color={isCorrect ? '#22c55e' : '#ef4444'}
                 />
                 <Text style={[styles.feedbackTitle, isCorrect ? styles.feedbackTitleCorrect : styles.feedbackTitleWrong]}>
-                  {isCorrect ? 'Correct!' : 'Not quite...'}
+                  {isCorrect ? t('verbQuiz.correctFeedback') : t('verbQuiz.notQuite')}
                 </Text>
               </View>
 
               {!isCorrect && isFillBlank && (
                 <View style={styles.correctAnswerBox}>
-                  <Text style={styles.correctAnswerLabel}>Correct answer:</Text>
+                  <Text style={styles.correctAnswerLabel}>{t('verbQuiz.correctAnswer')}</Text>
                   <Text style={styles.correctAnswerText}>
                     {(currentExercise.correctAnswer as string[])[0]}
                   </Text>
@@ -345,7 +347,7 @@ export default function VerbsQuizPracticeScreen() {
         <View style={styles.actionContainer}>
           <Pressable style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
-              {currentIndex < quizExercises.length - 1 ? 'Next Question' : 'See Results'}
+              {currentIndex < quizExercises.length - 1 ? t('verbQuiz.nextQuestion') : t('verbQuiz.seeResults')}
             </Text>
             <Ionicons name="arrow-forward" size={20} color="#ffffff" />
           </Pressable>

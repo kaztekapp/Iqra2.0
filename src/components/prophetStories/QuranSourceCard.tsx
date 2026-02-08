@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { QuranReference } from '../../types/prophetStories';
+import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 
 interface QuranSourceCardProps {
   source: QuranReference;
@@ -16,6 +17,7 @@ export function QuranSourceCard({
   isLoading = false,
   onPlayArabic,
 }: QuranSourceCardProps) {
+  const { lc } = useLocalizedContent();
   const ayahRange = source.ayahStart === source.ayahEnd
     ? `${source.ayahStart}`
     : `${source.ayahStart}-${source.ayahEnd}`;
@@ -59,8 +61,8 @@ export function QuranSourceCard({
         ))}
       </View>
 
-      {/* English Translation */}
-      <Text style={styles.translation}>{source.translation}</Text>
+      {/* Translation */}
+      <Text style={styles.translation}>{lc(source.translation, source.translationFr)}</Text>
     </View>
   );
 }

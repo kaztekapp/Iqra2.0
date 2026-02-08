@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { HadithReference, HadithCollection, HadithGrade } from '../../types/prophetStories';
+import { useLocalizedContent } from '../../hooks/useLocalizedContent';
+import { useTranslation } from 'react-i18next';
 
 interface HadithSourceCardProps {
   source: HadithReference;
@@ -35,6 +37,8 @@ const GRADE_LABELS: Record<HadithGrade, string> = {
 };
 
 export function HadithSourceCard({ source }: HadithSourceCardProps) {
+  const { lc } = useLocalizedContent();
+  const { t } = useTranslation();
   const collectionName = COLLECTION_NAMES[source.collection];
   const gradeColor = source.grade ? GRADE_COLORS[source.grade] : '#64748b';
   const gradeLabel = source.grade ? GRADE_LABELS[source.grade] : null;
@@ -63,7 +67,7 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
       {source.narrator && (
         <View style={styles.narratorContainer}>
           <Ionicons name="person-outline" size={12} color="#94a3b8" />
-          <Text style={styles.narratorText}>Narrated by {source.narrator}</Text>
+          <Text style={styles.narratorText}>{t('stories.narratedBy', { narrator: source.narrator })}</Text>
         </View>
       )}
 
@@ -76,8 +80,8 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
         </View>
       )}
 
-      {/* English Translation */}
-      <Text style={styles.translation}>"{source.translation}"</Text>
+      {/* Translation */}
+      <Text style={styles.translation}>"{lc(source.translation, source.translationFr)}"</Text>
     </View>
   );
 }

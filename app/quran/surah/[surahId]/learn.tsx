@@ -8,8 +8,10 @@ import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState } from '../../../../src/services/quranAudioService';
+import { useTranslation } from 'react-i18next';
 
 export default function LearnModeScreen() {
+  const { t } = useTranslation();
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
 
   const surah = getSurahById(surahId);
@@ -61,7 +63,7 @@ export default function LearnModeScreen() {
   if (!surah) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Surah not found</Text>
+        <Text style={styles.errorText}>{t('surahLearnMode.surahNotFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -71,7 +73,7 @@ export default function LearnModeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#10b981" />
-          <Text style={styles.loadingText}>Loading verses...</Text>
+          <Text style={styles.loadingText}>{t('surahLearnMode.loadingVerses')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -288,7 +290,7 @@ export default function LearnModeScreen() {
         </Pressable>
         <View style={styles.headerCenter}>
           <Text style={styles.surahName}>{surah.nameArabic}</Text>
-          <Text style={styles.subtitle}>Learn Mode</Text>
+          <Text style={styles.subtitle}>{t('surahLearnMode.learnMode')}</Text>
         </View>
         <View style={styles.headerStats}>
           <Text style={styles.statsText}>
@@ -307,7 +309,7 @@ export default function LearnModeScreen() {
         <View style={styles.instructionCard}>
           <Ionicons name="information-circle" size={20} color="#10b981" />
           <Text style={styles.instructionText}>
-            Listen and practice reciting the ayah
+            {t('surahLearnMode.listenAndPractice')}
           </Text>
         </View>
 
@@ -352,7 +354,7 @@ export default function LearnModeScreen() {
           {!showHint && (
             <Pressable style={styles.hintButton} onPress={handleShowHint}>
               <Ionicons name="bulb-outline" size={18} color="#f59e0b" />
-              <Text style={styles.hintButtonText}>Show Transliteration</Text>
+              <Text style={styles.hintButtonText}>{t('surahLearnMode.showTransliteration')}</Text>
             </Pressable>
           )}
 
@@ -375,7 +377,7 @@ export default function LearnModeScreen() {
             <View style={styles.rangeSelectorInfo}>
               <Ionicons name="options" size={18} color="#10b981" />
               <Text style={styles.rangeSelectorTitle}>
-                Verse Range: {startVerse} - {endVerse}
+                {t('surahLearnMode.verseRange')} {startVerse} - {endVerse}
               </Text>
             </View>
             <Ionicons
@@ -389,7 +391,7 @@ export default function LearnModeScreen() {
             <View style={styles.rangeControls}>
               {/* Start Verse */}
               <View style={styles.rangeRow}>
-                <Text style={styles.rangeLabel}>Start</Text>
+                <Text style={styles.rangeLabel}>{t('surahLearnMode.start')}</Text>
                 <View style={styles.rangeInputContainer}>
                   <Pressable
                     style={[styles.rangeButton, startVerse <= 1 && styles.rangeButtonDisabled]}
@@ -433,7 +435,7 @@ export default function LearnModeScreen() {
 
               {/* End Verse */}
               <View style={styles.rangeRow}>
-                <Text style={styles.rangeLabel}>End</Text>
+                <Text style={styles.rangeLabel}>{t('surahLearnMode.end')}</Text>
                 <View style={styles.rangeInputContainer}>
                   <Pressable
                     style={[styles.rangeButton, endVerse <= startVerse && styles.rangeButtonDisabled]}
@@ -490,7 +492,7 @@ export default function LearnModeScreen() {
                     endVerseRef.current = end;
                   }}
                 >
-                  <Text style={styles.quickSelectText}>Next 5</Text>
+                  <Text style={styles.quickSelectText}>{t('surahLearnMode.next5')}</Text>
                 </Pressable>
                 <Pressable
                   style={styles.quickSelectButton}
@@ -503,7 +505,7 @@ export default function LearnModeScreen() {
                     endVerseRef.current = ayahs.length;
                   }}
                 >
-                  <Text style={styles.quickSelectText}>Reset</Text>
+                  <Text style={styles.quickSelectText}>{t('surahLearnMode.reset')}</Text>
                 </Pressable>
               </View>
             </View>
@@ -511,7 +513,7 @@ export default function LearnModeScreen() {
 
           {/* Speed Control */}
           <View style={[styles.controlSection, { marginTop: showRangeSelector ? 20 : 0 }]}>
-            <Text style={styles.controlLabel}>Speed</Text>
+            <Text style={styles.controlLabel}>{t('surahLearnMode.speed')}</Text>
             <View style={styles.controlButtons}>
               {SPEED_OPTIONS.map((speed) => (
                 <Pressable
@@ -537,7 +539,7 @@ export default function LearnModeScreen() {
 
           {/* Repeat Control */}
           <View style={styles.controlSection}>
-            <Text style={styles.controlLabel}>Repeat</Text>
+            <Text style={styles.controlLabel}>{t('surahLearnMode.repeat')}</Text>
             <View style={styles.controlButtons}>
               {REPEAT_OPTIONS.map((count) => (
                 <Pressable
@@ -566,7 +568,7 @@ export default function LearnModeScreen() {
             <View style={styles.autoAdvanceInfo}>
               <Ionicons name="play-forward" size={18} color={autoAdvance ? '#10b981' : '#64748b'} />
               <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
-                Auto-advance to next verse
+                {t('surahLearnMode.autoAdvance')}
               </Text>
             </View>
             <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
@@ -594,7 +596,7 @@ export default function LearnModeScreen() {
           disabled={currentAyahIndex === 0}
         >
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          <Text style={styles.navButtonText}>Previous</Text>
+          <Text style={styles.navButtonText}>{t('surahLearnMode.previous')}</Text>
         </Pressable>
 
         <Pressable
@@ -602,7 +604,7 @@ export default function LearnModeScreen() {
           onPress={handleNext}
         >
           <Text style={styles.nextButtonText}>
-            {currentAyahIndex >= ayahs.length - 1 ? 'Finish' : 'Next'}
+            {currentAyahIndex >= ayahs.length - 1 ? t('surahLearnMode.finish') : t('surahLearnMode.next')}
           </Text>
           <Ionicons name="arrow-forward" size={24} color="#ffffff" />
         </Pressable>

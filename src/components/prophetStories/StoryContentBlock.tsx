@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/prophetStories';
 import { QuranSourceCard } from './QuranSourceCard';
 import { HadithSourceCard } from './HadithSourceCard';
+import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 
 interface StoryContentBlockProps {
   block: ContentBlock;
@@ -19,10 +20,12 @@ export function StoryContentBlock({
   isQuranPlaying = false,
   isQuranLoading = false,
 }: StoryContentBlockProps) {
+  const { lc } = useLocalizedContent();
+
   if (block.type === 'narrative') {
     return (
       <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
-        <Text style={styles.narrativeText}>{block.content}</Text>
+        <Text style={styles.narrativeText}>{lc(block.content, block.contentFr)}</Text>
       </View>
     );
   }

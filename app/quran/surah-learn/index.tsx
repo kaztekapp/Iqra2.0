@@ -12,6 +12,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { SURAHS } from '../../../src/data/arabic/quran/surahs';
 import {
   getTotalSets,
@@ -42,6 +44,8 @@ function SurahFlashcard({
   currentIndex: number;
   totalCount: number;
 }) {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const flipAnim = useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
@@ -100,11 +104,11 @@ function SurahFlashcard({
               style={styles.cardGradient}
             >
               <Text style={styles.cardLabel}>سُورَة رَقْم</Text>
-              <Text style={styles.cardLabelEn}>Surah Number</Text>
+              <Text style={styles.cardLabelEn}>{t('surahLearn.surahNumber')}</Text>
               <Text style={styles.cardNumber}>{surah.surahNumber}</Text>
               <View style={styles.tapHint}>
                 <Ionicons name="sync" size={16} color="rgba(255,255,255,0.6)" />
-                <Text style={styles.tapHintText}>Tap to flip</Text>
+                <Text style={styles.tapHintText}>{t('surahLearn.tapToFlip')}</Text>
               </View>
             </LinearGradient>
           </Animated.View>
@@ -123,7 +127,7 @@ function SurahFlashcard({
 
               {/* Meaning */}
               <View style={styles.meaningContainer}>
-                <Text style={styles.meaningText}>{surah.meaning}</Text>
+                <Text style={styles.meaningText}>{lc(surah.meaning, surah.meaningFr)}</Text>
               </View>
 
               {/* Details Row */}
@@ -133,14 +137,16 @@ function SurahFlashcard({
                 </View>
                 <View style={styles.detailBox}>
                   <Text style={styles.detailBoxLabel}>
-                    {surah.revelationType === 'Meccan' ? 'مَكِّيَّة - Meccan' : 'مَدَنِيَّة - Medinan'}
+                    {surah.revelationType === 'Meccan'
+                      ? `مَكِّيَّة - ${t('surahLearn.meccan')}`
+                      : `مَدَنِيَّة - ${t('surahLearn.medinan')}`}
                   </Text>
                 </View>
               </View>
 
               <View style={styles.tapHint}>
                 <Ionicons name="sync" size={16} color="rgba(255,255,255,0.6)" />
-                <Text style={styles.tapHintText}>Tap to flip</Text>
+                <Text style={styles.tapHintText}>{t('surahLearn.tapToFlip')}</Text>
               </View>
             </LinearGradient>
           </Animated.View>
@@ -160,7 +166,7 @@ function SurahFlashcard({
             color={currentIndex === 0 ? '#475569' : '#ffffff'}
           />
           <Text style={[styles.navButtonText, currentIndex === 0 && styles.navButtonTextDisabled]}>
-            Previous
+            {t('common.previous')}
           </Text>
         </Pressable>
         <Pressable
@@ -169,7 +175,7 @@ function SurahFlashcard({
           disabled={currentIndex === totalCount - 1}
         >
           <Text style={[styles.navButtonText, currentIndex === totalCount - 1 && styles.navButtonTextDisabled]}>
-            Next
+            {t('common.next')}
           </Text>
           <Ionicons
             name="chevron-forward"
@@ -247,6 +253,7 @@ function QuizSetCard({
   questionCount: number;
   onPress: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Pressable style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
@@ -254,7 +261,7 @@ function QuizSetCard({
       </View>
       <View style={styles.quizSetInfo}>
         <Text style={styles.quizSetName}>{setName}</Text>
-        <Text style={styles.quizSetCount}>{questionCount} questions</Text>
+        <Text style={styles.quizSetCount}>{questionCount} {t('surahLearn.questions')}</Text>
       </View>
       <Ionicons name="play-circle" size={28} color="#10b981" />
     </Pressable>
@@ -264,6 +271,7 @@ function QuizSetCard({
 type FilterType = 'all' | 'meccan' | 'medinan';
 
 export default function SurahLearnScreen() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabType>('learn');
   const [selectedRange, setSelectedRange] = useState('all');
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('all');
@@ -341,7 +349,7 @@ export default function SurahLearnScreen() {
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.title}>Surah & Structure</Text>
+          <Text style={styles.title}>{t('surahLearn.title')}</Text>
           <Text style={styles.titleArabic}>السُّوَر والتَّرْكِيب</Text>
         </View>
         <View style={{ width: 40 }} />
@@ -380,7 +388,7 @@ export default function SurahLearnScreen() {
                 activeTab === 'learn' && styles.tabTextActive,
               ]}
             >
-              Learn
+              {t('surahLearn.learn')}
             </Text>
           </Pressable>
           <Pressable
@@ -398,7 +406,7 @@ export default function SurahLearnScreen() {
                 activeTab === 'quiz' && styles.tabTextActive,
               ]}
             >
-              Quiz
+              {t('surahLearn.quiz')}
             </Text>
           </Pressable>
         </View>
@@ -415,7 +423,7 @@ export default function SurahLearnScreen() {
                 onPress={() => handleFilterChange('all')}
               >
                 <Text style={[styles.filterButtonText, selectedFilter === 'all' && styles.filterButtonTextActive]}>
-                  All 114
+                  {t('surahLearn.all114')}
                 </Text>
               </Pressable>
               <Pressable
@@ -423,7 +431,7 @@ export default function SurahLearnScreen() {
                 onPress={() => handleFilterChange('meccan')}
               >
                 <Text style={[styles.filterButtonText, selectedFilter === 'meccan' && styles.filterButtonTextActive]}>
-                  Meccan 86
+                  {t('surahLearn.meccan86')}
                 </Text>
               </Pressable>
               <Pressable
@@ -431,7 +439,7 @@ export default function SurahLearnScreen() {
                 onPress={() => handleFilterChange('medinan')}
               >
                 <Text style={[styles.filterButtonText, selectedFilter === 'medinan' && styles.filterButtonTextActive]}>
-                  Medinan 28
+                  {t('surahLearn.medinan28')}
                 </Text>
               </Pressable>
             </View>
@@ -465,7 +473,7 @@ export default function SurahLearnScreen() {
               }}
             >
               <Ionicons name="shuffle" size={20} color="#10b981" />
-              <Text style={styles.shuffleButtonText}>Shuffle</Text>
+              <Text style={styles.shuffleButtonText}>{t('surahLearn.shuffle')}</Text>
             </Pressable>
 
             <View style={{ height: 100 }} />
@@ -478,9 +486,9 @@ export default function SurahLearnScreen() {
               <View style={styles.quizHeaderIcon}>
                 <Ionicons name="trophy" size={40} color="#f59e0b" />
               </View>
-              <Text style={styles.quizHeaderTitle}>Test Your Knowledge</Text>
+              <Text style={styles.quizHeaderTitle}>{t('surahLearn.testYourKnowledge')}</Text>
               <Text style={styles.quizHeaderSubtitle}>
-                Challenge yourself with {totalSets} sets of questions about all 114 Surahs
+                {t('surahLearn.challengeDescription', { count: totalSets })}
               </Text>
             </View>
 
@@ -488,10 +496,10 @@ export default function SurahLearnScreen() {
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Ionicons name="list" size={20} color="#10b981" />
-                <Text style={styles.sectionTitle}>Quiz Sets</Text>
+                <Text style={styles.sectionTitle}>{t('surahLearn.quizSets')}</Text>
               </View>
               <Text style={styles.sectionSubtitle}>
-                Complete each set to master Surah knowledge
+                {t('surahLearn.completeEachSet')}
               </Text>
 
               {Array.from({ length: totalSets }).map((_, index) => {
@@ -521,9 +529,9 @@ export default function SurahLearnScreen() {
               >
                 <Ionicons name="shuffle" size={24} color="#ffffff" />
                 <View style={styles.randomQuizText}>
-                  <Text style={styles.randomQuizTitle}>Random Quiz</Text>
+                  <Text style={styles.randomQuizTitle}>{t('surahLearn.randomQuiz')}</Text>
                   <Text style={styles.randomQuizSubtitle}>
-                    Mix of all questions
+                    {t('surahLearn.mixOfAll')}
                   </Text>
                 </View>
                 <Ionicons name="arrow-forward" size={24} color="#ffffff" />

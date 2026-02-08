@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { arabicVerbs, getVerbById } from '../../../src/data/arabic/verbs/conjugations';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -48,6 +49,7 @@ const personLabels = {
 };
 
 export default function VerbDetailScreen() {
+  const { t } = useTranslation();
   const { verbId } = useLocalSearchParams<{ verbId: string }>();
   const { speak, isSpeaking } = useArabicSpeech();
   const [activeTense, setActiveTense] = useState<TenseType>('past');
@@ -57,7 +59,7 @@ export default function VerbDetailScreen() {
   if (!verb) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Verb not found</Text>
+        <Text style={styles.errorText}>{t('verbDetail.verbNotFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -99,25 +101,25 @@ export default function VerbDetailScreen() {
         <View style={styles.infoCard}>
           <View style={styles.infoRow}>
             <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Root</Text>
+              <Text style={styles.infoLabel}>{t('verbDetail.root')}</Text>
               <Text style={styles.infoValue}>{verb.root}</Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Form</Text>
+              <Text style={styles.infoLabel}>{t('verbDetail.form')}</Text>
               <Text style={styles.infoValue}>{verb.form}</Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Level</Text>
+              <Text style={styles.infoLabel}>{t('verbDetail.level')}</Text>
               <Text style={styles.infoValue}>{verb.level}</Text>
             </View>
           </View>
           <View style={styles.infoRow}>
             <Pressable style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
-              <Text style={styles.tensePreviewLabel}>Past</Text>
+              <Text style={styles.tensePreviewLabel}>{t('verbDetail.past')}</Text>
               <Text style={styles.tensePreviewValue}>{verb.pastTense}</Text>
             </Pressable>
             <Pressable style={styles.tensePreview} onPress={() => speak(verb.presentTense)}>
-              <Text style={styles.tensePreviewLabel}>Present</Text>
+              <Text style={styles.tensePreviewLabel}>{t('verbDetail.present')}</Text>
               <Text style={styles.tensePreviewValue}>{verb.presentTense}</Text>
             </Pressable>
           </View>
@@ -157,7 +159,7 @@ export default function VerbDetailScreen() {
         {/* Conjugation Table */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: tenseColors[activeTense] }]}>
-            {tenseLabels[activeTense].en} Tense Conjugations
+            {t('verbDetail.tenseConjugations', { tense: tenseLabels[activeTense].en })}
           </Text>
 
           <View style={styles.conjugationTable}>
@@ -186,7 +188,7 @@ export default function VerbDetailScreen() {
         {/* Examples */}
         {getExamplesForTense(activeTense).length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Examples</Text>
+            <Text style={styles.sectionTitle}>{t('verbDetail.examples')}</Text>
             {getExamplesForTense(activeTense).map((example, idx) => (
               <Pressable
                 key={idx}
@@ -205,7 +207,7 @@ export default function VerbDetailScreen() {
 
         {/* All Examples Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>All Examples</Text>
+          <Text style={styles.sectionTitle}>{t('verbDetail.allExamples')}</Text>
           {verb.examples?.map((example, idx) => (
             <Pressable
               key={idx}

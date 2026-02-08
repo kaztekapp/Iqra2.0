@@ -11,25 +11,29 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { useGrammarQuizStore } from '../../src/stores/grammarQuizStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { generateGrammarQuiz, getTotalGrammarQuestions } from '../../src/lib/grammarQuizApi';
 import { DEFAULT_GRAMMAR_QUIZ_CONFIG } from '../../src/types/grammarQuiz';
 import { playArabicAudio } from '../../src/lib/arabicVocabularyApi';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
 const TIME_PER_QUESTION = 30;
 
 export default function GrammarQuizScreen() {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const [screenState, setScreenState] = useState<ScreenState>('loading');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [fillBlankAnswer, setFillBlankAnswer] = useState('');
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
   const [quizResult, setQuizResult] = useState<{ passed: boolean; xpEarned: number } | null>(null);
-  const [loadingMessage, setLoadingMessage] = useState('Preparing grammar quiz...');
+  const [loadingMessage, setLoadingMessage] = useState(t('grammarQuiz.preparingQuiz'));
 
   const {
     currentQuestions,
@@ -73,11 +77,11 @@ export default function GrammarQuizScreen() {
   const generateNewQuiz = useCallback(async () => {
     setScreenState('loading');
     setLoading(true);
-    setLoadingMessage('Loading grammar exercises...');
+    setLoadingMessage(t('grammarQuiz.loadingExercises'));
 
     try {
-      setTimeout(() => setLoadingMessage('Selecting questions...'), 500);
-      setTimeout(() => setLoadingMessage('Shuffling answers...'), 1000);
+      setTimeout(() => setLoadingMessage(t('grammarQuiz.selectingQuestions')), 500);
+      setTimeout(() => setLoadingMessage(t('grammarQuiz.shufflingAnswers')), 1000);
 
       const questions = await generateGrammarQuiz({
         questionCount: 10,
@@ -204,7 +208,7 @@ export default function GrammarQuizScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
           <ActivityIndicator size="large" color="#D4AF37" />
-          <Text style={styles.loadingText}>Loading Grammar Quiz</Text>
+          <Text style={styles.loadingText}>{t('grammarQuiz.loadingQuiz')}</Text>
           <Text style={styles.loadingSubtext}>{loadingMessage}</Text>
         </View>
       </SafeAreaView>
@@ -221,7 +225,7 @@ export default function GrammarQuizScreen() {
 
         <View style={styles.centerContent}>
           <Ionicons name="book" size={64} color="#D4AF37" />
-          <Text style={styles.title}>Arabic Grammar Quiz</Text>
+          <Text style={styles.title}>{t('grammarQuiz.title')}</Text>
           <Text style={styles.titleArabic}>اختبار قواعد اللغة العربية</Text>
 
           {error ? (
@@ -229,21 +233,21 @@ export default function GrammarQuizScreen() {
               <Ionicons name="warning" size={24} color="#f97316" />
               <Text style={styles.errorText}>{error}</Text>
               <Pressable style={styles.retryButton} onPress={generateNewQuiz}>
-                <Text style={styles.retryButtonText}>Try Again</Text>
+                <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
               </Pressable>
             </View>
           ) : attempts > 0 ? (
             <View style={styles.attemptInfo}>
               <Text style={styles.attemptText}>
-                Same quiz until you pass ({DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore}%)
+                {t('grammarQuiz.sameQuizUntilPass', { score: DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore })}
               </Text>
               <View style={styles.statsRow}>
                 <View style={styles.statBox}>
-                  <Text style={styles.statLabel}>Attempts</Text>
+                  <Text style={styles.statLabel}>{t('grammarQuiz.attempts')}</Text>
                   <Text style={styles.statValue}>{attempts}</Text>
                 </View>
                 <View style={styles.statBox}>
-                  <Text style={styles.statLabel}>Best Score</Text>
+                  <Text style={styles.statLabel}>{t('grammarQuiz.bestScore')}</Text>
                   <Text style={styles.statValueHighlight}>{bestScore}%</Text>
                 </View>
               </View>
@@ -251,20 +255,20 @@ export default function GrammarQuizScreen() {
           ) : (
             <View style={styles.infoBox}>
               <Text style={styles.subtitle}>
-                10 grammar questions{'\n'}Pass with {DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore}% to earn XP
+                {t('grammarQuiz.grammarQuestions')}{'\n'}{t('grammarQuiz.passWithScore', { score: DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore })}
               </Text>
               <View style={styles.featureList}>
                 <View style={styles.featureItem}>
                   <Ionicons name="library" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>{quizStats.total} total questions available</Text>
+                  <Text style={styles.featureText}>{t('grammarQuiz.totalQuestionsAvailable', { count: quizStats.total })}</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <Ionicons name="help-circle" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>Multiple choice & fill-in-blank</Text>
+                  <Text style={styles.featureText}>{t('grammarQuiz.multipleChoiceFillBlank')}</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <Ionicons name="layers" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>All difficulty levels</Text>
+                  <Text style={styles.featureText}>{t('grammarQuiz.allDifficultyLevels')}</Text>
                 </View>
               </View>
             </View>
@@ -273,7 +277,7 @@ export default function GrammarQuizScreen() {
           {!error && (
             <Pressable style={styles.startButton} onPress={handleStartQuiz}>
               <Text style={styles.startButtonText}>
-                {attempts > 0 ? 'Try Again' : 'Start Quiz'}
+                {attempts > 0 ? t('common.tryAgain') : t('grammarQuiz.startQuiz')}
               </Text>
               <Ionicons name="arrow-forward" size={20} color="#0f172a" />
             </Pressable>
@@ -360,13 +364,13 @@ export default function GrammarQuizScreen() {
             )}
             <Text style={styles.questionText}>
               {currentQuestion.type === 'fill_blank'
-                ? `Complete the sentence: "${currentQuestion.question.split(/[=→]/)[0]?.trim() || currentQuestion.question}"`
-                : currentQuestion.question.split(/[=→]/)[0]?.trim() || currentQuestion.question}
+                ? `${t('grammarQuiz.completeTheSentence')} "${lc(currentQuestion.question, currentQuestion.questionFr).split(/[=→]/)[0]?.trim() || lc(currentQuestion.question, currentQuestion.questionFr)}"`
+                : lc(currentQuestion.question, currentQuestion.questionFr).split(/[=→]/)[0]?.trim() || lc(currentQuestion.question, currentQuestion.questionFr)}
             </Text>
             {currentQuestion.hint && screenState === 'playing' && (
               <View style={styles.hintBox}>
                 <Ionicons name="bulb-outline" size={16} color="#D4AF37" />
-                <Text style={styles.hintText}>{currentQuestion.hint}</Text>
+                <Text style={styles.hintText}>{lc(currentQuestion.hint, currentQuestion.hintFr)}</Text>
               </View>
             )}
           </View>
@@ -399,7 +403,7 @@ export default function GrammarQuizScreen() {
                     disabled={screenState === 'feedback'}
                   >
                     <View style={styles.optionContent}>
-                      <Text style={textStyle}>{option.text}</Text>
+                      <Text style={textStyle}>{lc(option.text, option.textFr)}</Text>
                       {hasArabic && (
                         <Pressable
                           style={styles.optionAudioButton}
@@ -468,12 +472,12 @@ export default function GrammarQuizScreen() {
                   onPress={handleSubmitFillBlank}
                   disabled={!fillBlankAnswer.trim()}
                 >
-                  <Text style={styles.submitButtonText}>Submit</Text>
+                  <Text style={styles.submitButtonText}>{t('common.submit')}</Text>
                 </Pressable>
               )}
               {screenState === 'feedback' && !isCorrect && (
                 <View style={styles.correctAnswerBox}>
-                  <Text style={styles.correctAnswerLabel}>Correct answer:</Text>
+                  <Text style={styles.correctAnswerLabel}>{t('grammarQuiz.correctAnswerLabel')}</Text>
                   <View style={styles.correctAnswerRow}>
                     <Text style={styles.correctAnswerText}>
                       {Array.isArray(currentQuestion.correctAnswer)
@@ -507,7 +511,7 @@ export default function GrammarQuizScreen() {
                   color={isCorrect ? '#22c55e' : '#ef4444'}
                 />
                 <Text style={[styles.feedbackText, isCorrect ? styles.feedbackTextCorrect : styles.feedbackTextWrong]}>
-                  {isCorrect ? 'Correct!' : 'Incorrect'}
+                  {isCorrect ? t('grammarQuiz.correctFeedback') : t('grammarQuiz.incorrectFeedback')}
                 </Text>
               </View>
 
@@ -515,9 +519,9 @@ export default function GrammarQuizScreen() {
                 <View style={styles.explanationCard}>
                   <View style={styles.explanationHeader}>
                     <Ionicons name="book" size={18} color="#D4AF37" />
-                    <Text style={styles.explanationTitle}>Learn This Rule</Text>
+                    <Text style={styles.explanationTitle}>{t('grammarQuiz.learnThisRule')}</Text>
                   </View>
-                  <Text style={styles.explanationText}>{currentQuestion.explanation}</Text>
+                  <Text style={styles.explanationText}>{lc(currentQuestion.explanation, currentQuestion.explanationFr)}</Text>
 
                   {/* Extract and play the first Arabic phrase from explanation */}
                   {/[\u0600-\u06FF]/.test(currentQuestion.explanation) && (
@@ -539,7 +543,7 @@ export default function GrammarQuizScreen() {
                       }}
                     >
                       <Ionicons name="volume-high" size={18} color="#ffffff" />
-                      <Text style={styles.listenButtonText}>Listen to Arabic</Text>
+                      <Text style={styles.listenButtonText}>{t('grammarQuiz.listenToArabic')}</Text>
                     </Pressable>
                   )}
                 </View>
@@ -547,7 +551,7 @@ export default function GrammarQuizScreen() {
 
               <Pressable style={styles.nextButton} onPress={handleNext}>
                 <Text style={styles.nextButtonText}>
-                  {currentIndex >= currentQuestions.length - 1 ? 'See Results' : 'Next Question'}
+                  {currentIndex >= currentQuestions.length - 1 ? t('grammarQuiz.seeResults') : t('grammarQuiz.nextQuestion')}
                 </Text>
               </Pressable>
             </View>
@@ -573,7 +577,7 @@ export default function GrammarQuizScreen() {
               color={quizResult.passed ? '#D4AF37' : '#94a3b8'}
             />
             <Text style={styles.resultTitle}>
-              {quizResult.passed ? 'Quiz Passed!' : 'Keep Practicing!'}
+              {quizResult.passed ? t('grammarQuiz.quizPassed') : t('grammarQuiz.keepPracticing')}
             </Text>
             <Text style={styles.resultTitleArabic}>
               {quizResult.passed ? 'أحسنت!' : 'استمر في التدريب!'}
@@ -584,47 +588,48 @@ export default function GrammarQuizScreen() {
           <View style={styles.resultsStatsRow}>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{accuracy}%</Text>
-              <Text style={styles.resultStatLabel}>Accuracy</Text>
+              <Text style={styles.resultStatLabel}>{t('grammarQuiz.accuracy')}</Text>
             </View>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{correctCount}/{currentQuestions.length}</Text>
-              <Text style={styles.resultStatLabel}>Correct</Text>
+              <Text style={styles.resultStatLabel}>{t('grammarQuiz.correct')}</Text>
             </View>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{maxStreak}</Text>
-              <Text style={styles.resultStatLabel}>Best Streak</Text>
+              <Text style={styles.resultStatLabel}>{t('grammarQuiz.bestStreak')}</Text>
             </View>
             {quizResult.passed && (
               <View style={styles.resultStatBox}>
                 <Text style={[styles.resultStatValue, styles.xpValue]}>+{quizResult.xpEarned}</Text>
-                <Text style={styles.resultStatLabel}>XP Earned</Text>
+                <Text style={styles.resultStatLabel}>{t('grammarQuiz.xpEarned')}</Text>
               </View>
             )}
           </View>
 
           {!quizResult.passed && (
             <Text style={styles.passMessage}>
-              Score {DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore}% or higher to pass and earn XP
+              {t('grammarQuiz.scoreToPass', { score: DEFAULT_GRAMMAR_QUIZ_CONFIG.passingScore })}
             </Text>
           )}
 
           {/* Questions Review */}
           <View style={styles.reviewSection}>
-            <Text style={styles.reviewTitle}>Review All Answers</Text>
+            <Text style={styles.reviewTitle}>{t('grammarQuiz.reviewAllAnswers')}</Text>
 
             {currentQuestions.map((question, index) => {
               const answer = currentAnswers[index];
               const wasCorrect = answer?.isCorrect ?? false;
 
-              let userAnswer = 'No answer';
+              let userAnswer = t('grammarQuiz.noAnswer');
               let correctAnswer = '';
 
               if (question.type === 'multiple_choice' && question.options) {
                 const selectedOpt = question.options.find((o) => o.id === answer?.selectedAnswer);
-                userAnswer = selectedOpt?.text || 'No answer';
-                correctAnswer = question.options.find((o) => o.isCorrect)?.text || '';
+                userAnswer = lc(selectedOpt?.text || '', selectedOpt?.textFr) || t('grammarQuiz.noAnswer');
+                const correctOpt = question.options.find((o) => o.isCorrect);
+                correctAnswer = lc(correctOpt?.text || '', correctOpt?.textFr) || '';
               } else {
-                userAnswer = answer?.selectedAnswer || 'No answer';
+                userAnswer = answer?.selectedAnswer || t('grammarQuiz.noAnswer');
                 correctAnswer = Array.isArray(question.correctAnswer)
                   ? question.correctAnswer[0]
                   : question.correctAnswer;
@@ -638,13 +643,13 @@ export default function GrammarQuizScreen() {
                       size={20}
                       color={wasCorrect ? '#22c55e' : '#ef4444'}
                     />
-                    <Text style={styles.reviewQuestionNum}>Question {index + 1}</Text>
+                    <Text style={styles.reviewQuestionNum}>{t('grammarQuiz.questionNumber', { number: index + 1 })}</Text>
                     <View style={styles.reviewLevelBadge}>
                       <Text style={styles.reviewLevelText}>{question.level}</Text>
                     </View>
                   </View>
 
-                  <Text style={styles.reviewQuestion}>{question.question}</Text>
+                  <Text style={styles.reviewQuestion}>{lc(question.question, question.questionFr)}</Text>
 
                   {question.questionArabic && (
                     <View style={styles.reviewArabicRow}>
@@ -660,7 +665,7 @@ export default function GrammarQuizScreen() {
 
                   <View style={styles.reviewAnswers}>
                     <View style={styles.reviewAnswerRow}>
-                      <Text style={styles.reviewAnswerLabel}>Your answer:</Text>
+                      <Text style={styles.reviewAnswerLabel}>{t('grammarQuiz.yourAnswer')}</Text>
                       <View style={styles.reviewAnswerContent}>
                         <Text style={[
                           styles.reviewAnswerValue,
@@ -681,7 +686,7 @@ export default function GrammarQuizScreen() {
 
                     {!wasCorrect && (
                       <View style={styles.reviewAnswerRow}>
-                        <Text style={styles.reviewAnswerLabel}>Correct answer:</Text>
+                        <Text style={styles.reviewAnswerLabel}>{t('grammarQuiz.correctAnswer')}</Text>
                         <View style={styles.reviewAnswerContent}>
                           <Text style={[styles.reviewAnswerValue, styles.reviewAnswerCorrect]}>
                             {correctAnswer}
@@ -701,7 +706,7 @@ export default function GrammarQuizScreen() {
 
                   {question.explanation && (
                     <View style={styles.reviewExplanationBox}>
-                      <Text style={styles.reviewExplanation}>{question.explanation}</Text>
+                      <Text style={styles.reviewExplanation}>{lc(question.explanation, question.explanationFr)}</Text>
                       {/[\u0600-\u06FF]/.test(question.explanation) && (
                         <Pressable
                           style={styles.reviewListenButton}
@@ -719,7 +724,7 @@ export default function GrammarQuizScreen() {
                           }}
                         >
                           <Ionicons name="volume-high" size={14} color="#D4AF37" />
-                          <Text style={styles.reviewListenText}>Listen</Text>
+                          <Text style={styles.reviewListenText}>{t('grammarQuiz.listen')}</Text>
                         </Pressable>
                       )}
                     </View>
@@ -733,16 +738,16 @@ export default function GrammarQuizScreen() {
           <View style={styles.resultActions}>
             {quizResult.passed ? (
               <Pressable style={styles.startButton} onPress={generateNewQuiz}>
-                <Text style={styles.startButtonText}>New Quiz</Text>
+                <Text style={styles.startButtonText}>{t('grammarQuiz.newQuiz')}</Text>
               </Pressable>
             ) : (
               <Pressable style={styles.startButton} onPress={handleTryAgain}>
-                <Text style={styles.startButtonText}>Try Again</Text>
+                <Text style={styles.startButtonText}>{t('grammarQuiz.tryAgain')}</Text>
               </Pressable>
             )}
 
             <Pressable style={styles.backTextButton} onPress={handleGoBack}>
-              <Text style={styles.backTextButtonLabel}>Back to Community</Text>
+              <Text style={styles.backTextButtonLabel}>{t('grammarQuiz.backToCommunity')}</Text>
             </Pressable>
           </View>
         </ScrollView>

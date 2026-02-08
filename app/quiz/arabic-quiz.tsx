@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { useArabicQuizStore } from '../../src/stores/arabicQuizStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useCommunityStore } from '../../src/stores/communityStore';
@@ -20,12 +21,13 @@ import { DEFAULT_QUIZ_CONFIG } from '../../src/types/arabicQuiz';
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
 export default function ArabicQuizScreen() {
+  const { t } = useTranslation();
   const [screenState, setScreenState] = useState<ScreenState>('loading');
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [timeLeft, setTimeLeft] = useState(DEFAULT_QUIZ_CONFIG.timePerQuestion);
   const [quizResult, setQuizResult] = useState<{ passed: boolean; xpEarned: number } | null>(null);
-  const [loadingMessage, setLoadingMessage] = useState('Preparing your quiz...');
+  const [loadingMessage, setLoadingMessage] = useState(t('arabicQuiz.preparingQuiz'));
 
   const {
     currentQuestions,
@@ -93,12 +95,12 @@ export default function ArabicQuizScreen() {
   const generateNewQuiz = useCallback(async () => {
     setScreenState('loading');
     setLoading(true);
-    setLoadingMessage('Fetching vocabulary from dictionary...');
+    setLoadingMessage(t('arabicQuiz.fetchingVocabulary'));
 
     try {
       // Simulate progress messages
-      setTimeout(() => setLoadingMessage('Translating words to Arabic...'), 1500);
-      setTimeout(() => setLoadingMessage('Generating quiz questions...'), 3000);
+      setTimeout(() => setLoadingMessage(t('arabicQuiz.translatingWords')), 1500);
+      setTimeout(() => setLoadingMessage(t('arabicQuiz.generatingQuestions')), 3000);
 
       const { questions } = await generateArabicQuiz(10, true);
       setQuestions(questions);
@@ -202,12 +204,12 @@ export default function ArabicQuizScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
           <ActivityIndicator size="large" color="#D4AF37" />
-          <Text style={styles.loadingText}>Loading Quiz</Text>
+          <Text style={styles.loadingText}>{t('arabicQuiz.loadingQuiz')}</Text>
           <Text style={styles.loadingSubtext}>{loadingMessage}</Text>
           <View style={styles.loadingTips}>
             <Ionicons name="bulb-outline" size={16} color="#94a3b8" />
             <Text style={styles.loadingTipText}>
-              Words are fetched from dictionary APIs and translated to Arabic
+              {t('arabicQuiz.loadingTip')}
             </Text>
           </View>
         </View>
@@ -225,7 +227,7 @@ export default function ArabicQuizScreen() {
 
         <View style={styles.centerContent}>
           <Ionicons name="school" size={64} color="#D4AF37" />
-          <Text style={styles.title}>Arabic Vocabulary Quiz</Text>
+          <Text style={styles.title}>{t('arabicQuiz.title')}</Text>
           <Text style={styles.titleArabic}>اختبار المفردات العربية</Text>
 
           {error ? (
@@ -233,21 +235,21 @@ export default function ArabicQuizScreen() {
               <Ionicons name="warning" size={24} color="#f97316" />
               <Text style={styles.errorText}>{error}</Text>
               <Pressable style={styles.retryButton} onPress={generateNewQuiz}>
-                <Text style={styles.retryButtonText}>Try Again</Text>
+                <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
               </Pressable>
             </View>
           ) : attempts > 0 ? (
             <View style={styles.attemptInfo}>
               <Text style={styles.attemptText}>
-                Same quiz until you pass ({DEFAULT_QUIZ_CONFIG.passingScore}%)
+                {t('arabicQuiz.sameQuizUntilPass', { score: DEFAULT_QUIZ_CONFIG.passingScore })}
               </Text>
               <View style={styles.statsRow}>
                 <View style={styles.statBox}>
-                  <Text style={styles.statLabel}>Attempts</Text>
+                  <Text style={styles.statLabel}>{t('arabicQuiz.attempts')}</Text>
                   <Text style={styles.statValue}>{attempts}</Text>
                 </View>
                 <View style={styles.statBox}>
-                  <Text style={styles.statLabel}>Best Score</Text>
+                  <Text style={styles.statLabel}>{t('arabicQuiz.bestScore')}</Text>
                   <Text style={styles.statValueHighlight}>{bestScore}%</Text>
                 </View>
               </View>
@@ -255,20 +257,20 @@ export default function ArabicQuizScreen() {
           ) : (
             <View style={styles.infoBox}>
               <Text style={styles.subtitle}>
-                10 vocabulary questions{'\n'}Pass with {DEFAULT_QUIZ_CONFIG.passingScore}% to unlock new words
+                {t('arabicQuiz.vocabQuestions')}{'\n'}{t('arabicQuiz.passWithScore', { score: DEFAULT_QUIZ_CONFIG.passingScore })}
               </Text>
               <View style={styles.featureList}>
                 <View style={styles.featureItem}>
                   <Ionicons name="shuffle" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>Random words from dictionary</Text>
+                  <Text style={styles.featureText}>{t('arabicQuiz.randomWords')}</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <Ionicons name="book" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>Detailed explanations</Text>
+                  <Text style={styles.featureText}>{t('arabicQuiz.detailedExplanations')}</Text>
                 </View>
                 <View style={styles.featureItem}>
                   <Ionicons name="refresh" size={16} color="#818cf8" />
-                  <Text style={styles.featureText}>New words when you pass</Text>
+                  <Text style={styles.featureText}>{t('arabicQuiz.newWordsWhenPass')}</Text>
                 </View>
               </View>
             </View>
@@ -277,7 +279,7 @@ export default function ArabicQuizScreen() {
           {!error && (
             <Pressable style={styles.startButton} onPress={handleStartQuiz}>
               <Text style={styles.startButtonText}>
-                {attempts > 0 ? 'Try Again' : 'Start Quiz'}
+                {attempts > 0 ? t('common.tryAgain') : t('arabicQuiz.startQuiz')}
               </Text>
               <Ionicons name="arrow-forward" size={20} color="#0f172a" />
             </Pressable>
@@ -340,7 +342,11 @@ export default function ArabicQuizScreen() {
                 </Pressable>
               </View>
             )}
-            <Text style={styles.questionText}>{currentQuestion.question}</Text>
+            <Text style={styles.questionText}>
+              {currentQuestion.direction === 'arabicToEnglish'
+                ? t('arabicQuiz.whatDoesThisMean')
+                : t('arabicQuiz.howDoYouSay', { word: currentQuestion.word.english })}
+            </Text>
           </View>
 
           {/* Options */}
@@ -382,13 +388,13 @@ export default function ArabicQuizScreen() {
                   color={isCorrect ? '#22c55e' : '#ef4444'}
                 />
                 <Text style={[styles.feedbackText, isCorrect ? styles.feedbackTextCorrect : styles.feedbackTextWrong]}>
-                  {isCorrect ? 'Correct!' : 'Incorrect'}
+                  {isCorrect ? t('arabicQuiz.correctFeedback') : t('arabicQuiz.incorrectFeedback')}
                 </Text>
               </View>
 
               {/* Detailed Explanation Card */}
               <View style={styles.explanationCard}>
-                <Text style={styles.explanationTitle}>Learn this word</Text>
+                <Text style={styles.explanationTitle}>{t('arabicQuiz.learnThisWord')}</Text>
 
                 <View style={styles.wordDisplay}>
                   <Pressable
@@ -406,7 +412,7 @@ export default function ArabicQuizScreen() {
                   <View style={styles.tipBox}>
                     <View style={styles.tipHeader}>
                       <Ionicons name="volume-high" size={16} color="#818cf8" />
-                      <Text style={styles.tipLabel}>Pronunciation</Text>
+                      <Text style={styles.tipLabel}>{t('arabicQuiz.pronunciation')}</Text>
                     </View>
                     <Text style={styles.tipText}>{currentQuestion.explanation.pronunciationTip}</Text>
                   </View>
@@ -416,7 +422,7 @@ export default function ArabicQuizScreen() {
                   <View style={styles.tipBox}>
                     <View style={styles.tipHeader}>
                       <Ionicons name="bulb" size={16} color="#D4AF37" />
-                      <Text style={styles.tipLabel}>Memory Tip</Text>
+                      <Text style={styles.tipLabel}>{t('arabicQuiz.memoryTip')}</Text>
                     </View>
                     <Text style={styles.tipText}>{currentQuestion.explanation.memoryTip}</Text>
                   </View>
@@ -425,7 +431,7 @@ export default function ArabicQuizScreen() {
 
               <Pressable style={styles.nextButton} onPress={handleNext}>
                 <Text style={styles.nextButtonText}>
-                  {currentIndex >= currentQuestions.length - 1 ? 'See Results' : 'Next Question'}
+                  {currentIndex >= currentQuestions.length - 1 ? t('arabicQuiz.seeResults') : t('arabicQuiz.nextQuestion')}
                 </Text>
               </Pressable>
             </View>
@@ -451,14 +457,14 @@ export default function ArabicQuizScreen() {
               color={quizResult.passed ? '#D4AF37' : '#94a3b8'}
             />
             <Text style={styles.resultTitle}>
-              {quizResult.passed ? 'Quiz Passed!' : 'Keep Practicing!'}
+              {quizResult.passed ? t('arabicQuiz.quizPassed') : t('arabicQuiz.keepPracticing')}
             </Text>
             <Text style={styles.resultTitleArabic}>
               {quizResult.passed ? 'أحسنت!' : 'استمر في التدريب!'}
             </Text>
             {quizResult.passed && (
               <Text style={styles.newWordsMessage}>
-                New words will be unlocked next quiz!
+                {t('arabicQuiz.newWordsUnlocked')}
               </Text>
             )}
           </View>
@@ -467,38 +473,38 @@ export default function ArabicQuizScreen() {
           <View style={styles.resultsStatsRow}>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{accuracy}%</Text>
-              <Text style={styles.resultStatLabel}>Accuracy</Text>
+              <Text style={styles.resultStatLabel}>{t('arabicQuiz.accuracy')}</Text>
             </View>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{correctCount}/{currentQuestions.length}</Text>
-              <Text style={styles.resultStatLabel}>Correct</Text>
+              <Text style={styles.resultStatLabel}>{t('arabicQuiz.correct')}</Text>
             </View>
             <View style={styles.resultStatBox}>
               <Text style={styles.resultStatValue}>{maxStreak}</Text>
-              <Text style={styles.resultStatLabel}>Best Streak</Text>
+              <Text style={styles.resultStatLabel}>{t('arabicQuiz.bestStreak')}</Text>
             </View>
             {quizResult.passed && (
               <View style={styles.resultStatBox}>
                 <Text style={[styles.resultStatValue, styles.xpValue]}>+{quizResult.xpEarned}</Text>
-                <Text style={styles.resultStatLabel}>XP Earned</Text>
+                <Text style={styles.resultStatLabel}>{t('arabicQuiz.xpEarned')}</Text>
               </View>
             )}
           </View>
 
           {!quizResult.passed && (
             <Text style={styles.passMessage}>
-              Score {DEFAULT_QUIZ_CONFIG.passingScore}% or higher to pass and earn XP
+              {t('arabicQuiz.scoreToPass', { score: DEFAULT_QUIZ_CONFIG.passingScore })}
             </Text>
           )}
 
           {/* Questions Review */}
           <View style={styles.reviewSection}>
-            <Text style={styles.reviewTitle}>Review All Answers</Text>
+            <Text style={styles.reviewTitle}>{t('arabicQuiz.reviewAllAnswers')}</Text>
 
             {currentQuestions.map((question, index) => {
               const answer = currentAnswers[index];
               const wasCorrect = answer?.isCorrect ?? false;
-              const userAnswer = answer?.selectedIndex >= 0 ? question.options[answer.selectedIndex] : 'No answer';
+              const userAnswer = answer?.selectedIndex >= 0 ? question.options[answer.selectedIndex] : t('arabicQuiz.noAnswer');
               const correctAnswer = question.options[question.correctIndex];
 
               return (
@@ -509,10 +515,14 @@ export default function ArabicQuizScreen() {
                       size={20}
                       color={wasCorrect ? '#22c55e' : '#ef4444'}
                     />
-                    <Text style={styles.reviewQuestionNum}>Question {index + 1}</Text>
+                    <Text style={styles.reviewQuestionNum}>{t('arabicQuiz.questionNumber', { number: index + 1 })}</Text>
                   </View>
 
-                  <Text style={styles.reviewQuestion}>{question.question}</Text>
+                  <Text style={styles.reviewQuestion}>
+                    {question.direction === 'arabicToEnglish'
+                      ? t('arabicQuiz.whatDoesThisMean')
+                      : t('arabicQuiz.howDoYouSay', { word: question.word.english })}
+                  </Text>
 
                   {question.questionArabic && (
                     <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
@@ -520,7 +530,7 @@ export default function ArabicQuizScreen() {
 
                   <View style={styles.reviewAnswers}>
                     <View style={styles.reviewAnswerRow}>
-                      <Text style={styles.reviewAnswerLabel}>Your answer:</Text>
+                      <Text style={styles.reviewAnswerLabel}>{t('arabicQuiz.yourAnswer')}</Text>
                       <Text style={[
                         styles.reviewAnswerValue,
                         wasCorrect ? styles.reviewAnswerCorrect : styles.reviewAnswerWrong
@@ -531,7 +541,7 @@ export default function ArabicQuizScreen() {
 
                     {!wasCorrect && (
                       <View style={styles.reviewAnswerRow}>
-                        <Text style={styles.reviewAnswerLabel}>Correct answer:</Text>
+                        <Text style={styles.reviewAnswerLabel}>{t('arabicQuiz.correctAnswer')}</Text>
                         <Text style={[styles.reviewAnswerValue, styles.reviewAnswerCorrect]}>
                           {correctAnswer}
                         </Text>
@@ -567,16 +577,16 @@ export default function ArabicQuizScreen() {
           <View style={styles.resultActions}>
             {quizResult.passed ? (
               <Pressable style={styles.startButton} onPress={generateNewQuiz}>
-                <Text style={styles.startButtonText}>New Quiz (New Words)</Text>
+                <Text style={styles.startButtonText}>{t('arabicQuiz.newQuizNewWords')}</Text>
               </Pressable>
             ) : (
               <Pressable style={styles.startButton} onPress={handleTryAgain}>
-                <Text style={styles.startButtonText}>Try Again (Same Words)</Text>
+                <Text style={styles.startButtonText}>{t('arabicQuiz.tryAgainSameWords')}</Text>
               </Pressable>
             )}
 
             <Pressable style={styles.backTextButton} onPress={handleGoBack}>
-              <Text style={styles.backTextButtonLabel}>Back to Community</Text>
+              <Text style={styles.backTextButtonLabel}>{t('arabicQuiz.backToCommunity')}</Text>
             </Pressable>
           </View>
         </ScrollView>

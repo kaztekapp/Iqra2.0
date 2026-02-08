@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 interface PracticeCardProps {
   title: string;
@@ -32,39 +33,41 @@ function PracticeCard({ title, titleArabic, description, icon, color, route }: P
 }
 
 export default function PracticeScreen() {
+  const { t } = useTranslation();
+
   const practiceOptions = [
     {
       id: 'handwriting',
-      title: 'Handwriting Practice',
+      title: t('practiceScreen.handwritingPractice'),
       titleArabic: 'الْخَطُّ الْيَدَوِي',
-      description: 'Draw Arabic letters by hand and get instant feedback',
+      description: t('practiceScreen.handwritingDesc'),
       icon: 'pencil' as const,
       color: '#ec4899',
       route: '/alphabet/writing-practice',
     },
     {
       id: 'typing',
-      title: 'Keyboard Typing',
+      title: t('practiceScreen.keyboardTyping'),
       titleArabic: 'الْكِتَابَةُ بِالْمِفْتَاح',
-      description: 'Type Arabic words and sentences using the keyboard',
+      description: t('practiceScreen.keyboardTypingDesc'),
       icon: 'keypad' as const,
       color: '#14b8a6',
       route: '/exercise/typing-practice',
     },
     {
       id: 'listening',
-      title: 'Listening Practice',
+      title: t('practiceScreen.listeningPractice'),
       titleArabic: 'تَدْرِيبُ الاِسْتِمَاع',
-      description: 'Listen to Arabic audio and test your comprehension',
+      description: t('practiceScreen.listeningPracticeDesc'),
       icon: 'headset' as const,
       color: '#8b5cf6',
       route: '/exercise/listening',
     },
     {
       id: 'speaking',
-      title: 'Speaking Practice',
+      title: t('practiceScreen.speakingPractice'),
       titleArabic: 'تَدْرِيبُ التَّحَدُّث',
-      description: 'Practice pronunciation with speech recognition',
+      description: t('practiceScreen.speakingPracticeDesc'),
       icon: 'mic' as const,
       color: '#f59e0b',
       route: '/speaking',
@@ -80,7 +83,7 @@ export default function PracticeScreen() {
             <Ionicons name="arrow-back" size={24} color="#ffffff" />
           </Pressable>
           <View style={styles.headerText}>
-            <Text style={styles.title}>Practice</Text>
+            <Text style={styles.title}>{t('practiceScreen.title')}</Text>
             <Text style={styles.titleArabic}>التَّدْرِيب</Text>
           </View>
         </View>
@@ -90,15 +93,15 @@ export default function PracticeScreen() {
           <View style={styles.introIcon}>
             <Ionicons name="fitness" size={32} color="#ec4899" />
           </View>
-          <Text style={styles.introTitle}>Build Your Skills</Text>
+          <Text style={styles.introTitle}>{t('practiceScreen.buildYourSkills')}</Text>
           <Text style={styles.introText}>
-            Practice makes perfect! Choose from different exercises to strengthen your Arabic writing, typing, listening, and speaking skills.
+            {t('practiceScreen.buildYourSkillsDesc')}
           </Text>
         </View>
 
         {/* Practice Options */}
         <View style={styles.practiceSection}>
-          <Text style={styles.sectionTitle}>Practice Exercises</Text>
+          <Text style={styles.sectionTitle}>{t('practiceScreen.practiceExercises')}</Text>
           {practiceOptions.map((option) => (
             <PracticeCard
               key={option.id}
@@ -116,9 +119,9 @@ export default function PracticeScreen() {
         <View style={styles.tipCard}>
           <Ionicons name="bulb" size={24} color="#D4AF37" />
           <View style={styles.tipContent}>
-            <Text style={styles.tipTitle}>Daily Practice Tip</Text>
+            <Text style={styles.tipTitle}>{t('practiceScreen.dailyPracticeTip')}</Text>
             <Text style={styles.tipText}>
-              Consistent practice is key! Try to spend at least 10-15 minutes daily on different exercises to see the best results.
+              {t('practiceScreen.dailyPracticeTipText')}
             </Text>
           </View>
         </View>

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/quranStories';
+import { useLocalizedContent } from '../../hooks/useLocalizedContent';
+import { useTranslation } from 'react-i18next';
 
 interface StoryContentBlockProps {
   block: ContentBlock;
@@ -23,6 +25,7 @@ function QuranSourceCard({
   isLoading?: boolean;
   onPlayArabic?: () => void;
 }) {
+  const { lc } = useLocalizedContent();
   const ayahRange = source.ayahStart === source.ayahEnd
     ? `${source.ayahStart}`
     : `${source.ayahStart}-${source.ayahEnd}`;
@@ -64,13 +67,15 @@ function QuranSourceCard({
         ))}
       </View>
 
-      <Text style={quranStyles.translation}>{source.translation}</Text>
+      <Text style={quranStyles.translation}>{lc(source.translation, source.translationFr)}</Text>
     </View>
   );
 }
 
 // Hadith Source Card Component
 function HadithSourceCard({ source }: { source: HadithReference }) {
+  const { lc } = useLocalizedContent();
+  const { t } = useTranslation();
   return (
     <View style={hadithStyles.container}>
       <View style={hadithStyles.header}>
@@ -90,7 +95,7 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
       {source.narrator && (
         <View style={hadithStyles.narratorContainer}>
           <Ionicons name="person-outline" size={12} color="#94a3b8" />
-          <Text style={hadithStyles.narratorText}>Narrated by {source.narrator}</Text>
+          <Text style={hadithStyles.narratorText}>{t('stories.narratedBy', { narrator: source.narrator })}</Text>
         </View>
       )}
 
@@ -102,7 +107,7 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
         </View>
       )}
 
-      <Text style={hadithStyles.translation}>"{source.translation}"</Text>
+      <Text style={hadithStyles.translation}>"{lc(source.translation, source.translationFr)}"</Text>
     </View>
   );
 }
@@ -114,10 +119,12 @@ export function StoryContentBlock({
   isQuranPlaying = false,
   isQuranLoading = false,
 }: StoryContentBlockProps) {
+  const { lc } = useLocalizedContent();
+
   if (block.type === 'narrative') {
     return (
       <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
-        <Text style={styles.narrativeText}>{block.content}</Text>
+        <Text style={styles.narrativeText}>{lc(block.content, block.contentFr)}</Text>
       </View>
     );
   }

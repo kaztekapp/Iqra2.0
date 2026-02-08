@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { arabicVerbs } from '../../src/data/arabic/verbs/conjugations';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -88,6 +89,7 @@ const tenseData: Record<TenseType, TenseInfo> = {
 };
 
 export default function TenseDetailScreen() {
+  const { t } = useTranslation();
   const { tenseId } = useLocalSearchParams<{ tenseId: string }>();
   const { speak, isSpeaking } = useArabicSpeech();
   const [selectedVerb, setSelectedVerb] = useState<string | null>(null);
@@ -97,7 +99,7 @@ export default function TenseDetailScreen() {
   if (!tense) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Tense not found</Text>
+        <Text style={styles.errorText}>{t('verbTense.tenseNotFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -136,23 +138,23 @@ export default function TenseDetailScreen() {
         {/* Pattern Explanation */}
         {tenseId === 'past' && (
           <View style={styles.patternCard}>
-            <Text style={styles.patternTitle}>Pattern Recognition</Text>
+            <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
             <Text style={styles.patternText}>
-              Past tense endings: <Text style={styles.highlight}>ـتُ</Text> (I), <Text style={styles.highlight}>ـتَ</Text> (you m), <Text style={styles.highlight}>ـتِ</Text> (you f), <Text style={styles.highlight}>ـنَا</Text> (we), <Text style={styles.highlight}>ـوا</Text> (they)
+              {t('verbTense.pastTenseEndings')} <Text style={styles.highlight}>ـتُ</Text> (I), <Text style={styles.highlight}>ـتَ</Text> (you m), <Text style={styles.highlight}>ـتِ</Text> (you f), <Text style={styles.highlight}>ـنَا</Text> (we), <Text style={styles.highlight}>ـوا</Text> (they)
             </Text>
           </View>
         )}
         {tenseId === 'present' && (
           <View style={styles.patternCard}>
-            <Text style={styles.patternTitle}>Pattern Recognition</Text>
+            <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
             <Text style={styles.patternText}>
-              Present prefixes: <Text style={styles.highlight}>أَ</Text> (I), <Text style={styles.highlight}>تَ</Text> (you/she), <Text style={styles.highlight}>يَ</Text> (he/they), <Text style={styles.highlight}>نَ</Text> (we)
+              {t('verbTense.presentPrefixes')} <Text style={styles.highlight}>أَ</Text> (I), <Text style={styles.highlight}>تَ</Text> (you/she), <Text style={styles.highlight}>يَ</Text> (he/they), <Text style={styles.highlight}>نَ</Text> (we)
             </Text>
           </View>
         )}
         {tenseId === 'future' && (
           <View style={styles.patternCard}>
-            <Text style={styles.patternTitle}>Pattern Recognition</Text>
+            <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
             <Text style={styles.patternText}>
               Future = <Text style={styles.highlight}>سَـ</Text> + present tense. Example: يَكْتُبُ → <Text style={styles.highlight}>سَـ</Text>يَكْتُبُ
             </Text>
@@ -160,7 +162,7 @@ export default function TenseDetailScreen() {
         )}
         {tenseId === 'imperative' && (
           <View style={styles.patternCard}>
-            <Text style={styles.patternTitle}>Pattern Recognition</Text>
+            <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
             <Text style={styles.patternText}>
               Commands drop the present prefix and may add <Text style={styles.highlight}>اِ</Text> at the start. Only for "you" forms!
             </Text>
@@ -169,7 +171,7 @@ export default function TenseDetailScreen() {
 
         {/* Verbs List */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>All Verbs in {tense.title}</Text>
+          <Text style={styles.sectionTitle}>{t('verbTense.allVerbsIn', { tense: tense.title })}</Text>
 
           {arabicVerbs.map((verb) => (
             <View key={verb.id} style={styles.verbCard}>
@@ -190,7 +192,7 @@ export default function TenseDetailScreen() {
                   </Pressable>
                   <View>
                     <Text style={styles.verbMeaning}>{verb.meaning}</Text>
-                    <Text style={styles.verbRoot}>Root: {verb.root}</Text>
+                    <Text style={styles.verbRoot}>{t('verbTense.root')} {verb.root}</Text>
                   </View>
                 </View>
                 <Ionicons
@@ -228,7 +230,7 @@ export default function TenseDetailScreen() {
                   {/* Examples */}
                   {getExamplesForTense(verb).length > 0 && (
                     <View style={styles.examplesSection}>
-                      <Text style={styles.examplesTitle}>Examples</Text>
+                      <Text style={styles.examplesTitle}>{t('verbTense.examples')}</Text>
                       {getExamplesForTense(verb).map((example, idx) => (
                         <Pressable
                           key={idx}
