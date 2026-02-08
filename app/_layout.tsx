@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Updates from 'expo-updates';
 import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { useSettingsStore } from '../src/stores/settingsStore';
@@ -40,6 +41,23 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontError) throw fontError;
   }, [fontError]);
+
+  // Force check for OTA updates on launch
+  useEffect(() => {
+    async function checkForUpdates() {
+      if (__DEV__) return;
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (e) {
+        // Silently fail - don't block the app
+      }
+    }
+    checkForUpdates();
+  }, []);
 
   // Sync persisted language with i18next
   useEffect(() => {
