@@ -78,7 +78,7 @@ export default function RootLayout() {
 
     if (!hasCompletedOnboarding && !inOnboarding) {
       router.replace('/(onboarding)/language');
-    } else if (hasCompletedOnboarding && !isAuthenticated && inOnboarding) {
+    } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth) {
       router.replace('/auth');
     }
   }, [authReady, fontsLoaded, hasCompletedOnboarding, isAuthenticated, segments]);
