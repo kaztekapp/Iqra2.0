@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +16,7 @@ import { TOTAL_PRAYER_LESSONS } from '../../src/types/prayer';
 
 export default function QuranScreen() {
   const { t } = useTranslation();
+  const progress = useQuranStore((s) => s.progress);
   const {
     getOverallCompletionPercent,
     getTotalSurahsCompleted,
@@ -27,11 +29,11 @@ export default function QuranScreen() {
   const { getMemorizedCount } = useDuasStore();
   const { getCompletedCount: getPrayerCompletedCount } = usePrayerStore();
 
-  const overallProgress = getOverallCompletionPercent();
+  const overallProgress = useMemo(() => getOverallCompletionPercent(), [progress]);
+  const surahsCompleted = useMemo(() => getTotalSurahsCompleted(), [progress]);
+  const juzCompleted = useMemo(() => getJuzCompleted(), [progress]);
+  const hizbCompleted = useMemo(() => getHizbCompleted(), [progress]);
   const duasMemorized = getMemorizedCount();
-  const surahsCompleted = getTotalSurahsCompleted();
-  const juzCompleted = getJuzCompleted();
-  const hizbCompleted = getHizbCompleted();
   const prophetStoriesCompleted = getProphetStoriesCompleted();
   const quranStoriesCompleted = getQuranStoriesCompleted();
   const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;

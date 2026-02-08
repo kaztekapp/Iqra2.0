@@ -1,8 +1,8 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, TextInput } from 'react-native';
+import { View, Text, FlatList, Pressable, StyleSheet, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SURAHS } from '../../../src/data/arabic/quran/surahs';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
@@ -11,8 +11,8 @@ import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 const normalizeText = (text: string): string => {
   return text
     .toLowerCase()
-    .replace(/['-]/g, '') // Remove apostrophes and hyphens
-    .replace(/^(al|an|as|at|ash|adh|az)\s*/i, '') // Remove common prefixes
+    .replace(/['-]/g, '')
+    .replace(/^(al|an|as|at|ash|adh|az)\s*/i, '')
     .trim();
 };
 
@@ -20,49 +20,49 @@ export default function AllSurahsScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  const filteredSurahs = SURAHS.filter((surah) => {
-    if (searchQuery === '') return true;
+  const handleSearchChange = useCallback((text: string) => {
+    setSearchQuery(text);
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => setDebouncedQuery(text), 300);
+  }, []);
 
-    const query = normalizeText(searchQuery);
-    const queryLower = searchQuery.toLowerCase();
+  useEffect(() => {
+    return () => { if (debounceTimer.current) clearTimeout(debounceTimer.current); };
+  }, []);
 
-    // Check surah number (exact or starts with)
-    if (surah.surahNumber.toString() === searchQuery ||
-        surah.surahNumber.toString().startsWith(searchQuery)) {
+  const filteredSurahs = useMemo(() => SURAHS.filter((surah) => {
+    if (debouncedQuery === '') return true;
+
+    const query = normalizeText(debouncedQuery);
+    const queryLower = debouncedQuery.toLowerCase();
+
+    if (surah.surahNumber.toString() === debouncedQuery ||
+        surah.surahNumber.toString().startsWith(debouncedQuery)) {
       return true;
     }
 
-    // Check Arabic name
-    if (surah.nameArabic.includes(searchQuery)) {
-      return true;
-    }
+    if (surah.nameArabic.includes(debouncedQuery)) return true;
 
-    // Check English name (normalized)
     const normalizedEnglish = normalizeText(surah.nameEnglish);
     if (normalizedEnglish.includes(query) || surah.nameEnglish.toLowerCase().includes(queryLower)) {
       return true;
     }
 
-    // Check transliteration (normalized)
     const normalizedTranslit = normalizeText(surah.nameTransliteration);
     if (normalizedTranslit.includes(query) || surah.nameTransliteration.toLowerCase().includes(queryLower)) {
       return true;
     }
 
-    // Check meaning
-    if (surah.meaning.toLowerCase().includes(queryLower)) {
-      return true;
-    }
+    if (surah.meaning.toLowerCase().includes(queryLower)) return true;
 
-    // Check common alternative names (e.g., "fatiha" for "Al-Fatihah", "baqara" for "Al-Baqarah")
     const simpleName = surah.nameEnglish.replace(/^(Al-|An-|As-|At-|Ash-|Adh-|Az-)/i, '').toLowerCase();
-    if (simpleName.startsWith(query) || simpleName.includes(query)) {
-      return true;
-    }
+    if (simpleName.startsWith(query) || simpleName.includes(query)) return true;
 
     return false;
-  });
+  }), [debouncedQuery]);
 
   const handleSurahPress = (surahId: string) => {
     router.push(`/quran/surah/${surahId}` as any);
@@ -93,10 +93,10 @@ export default function AllSurahsScreen() {
             placeholder={t('allSurahsFeature.searchPlaceholder')}
             placeholderTextColor="#64748b"
             value={searchQuery}
-            onChangeText={setSearchQuery}
+            onChangeText={handleSearchChange}
           />
           {searchQuery.length > 0 && (
-            <Pressable onPress={() => setSearchQuery('')}>
+            <Pressable onPress={() => { setSearchQuery(''); setDebouncedQuery(''); }}>
               <Ionicons name="close-circle" size={20} color="#64748b" />
             </Pressable>
           )}
@@ -105,10 +105,17 @@ export default function AllSurahsScreen() {
 
 
       {/* Surah List */}
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-        {filteredSurahs.map((surah) => (
+      <FlatList
+        data={filteredSurahs}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        initialNumToRender={15}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        renderItem={({ item: surah }) => (
           <Pressable
-            key={surah.id}
             style={styles.surahCard}
             onPress={() => handleSurahPress(surah.id)}
           >
@@ -143,9 +150,8 @@ export default function AllSurahsScreen() {
             </View>
             <Ionicons name="chevron-forward" size={20} color="#64748b" />
           </Pressable>
-        ))}
-        <View style={{ height: 100 }} />
-      </ScrollView>
+        )}
+      />
     </SafeAreaView>
   );
 }

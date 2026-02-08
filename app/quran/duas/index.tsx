@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -125,20 +125,23 @@ export default function DuasListScreen() {
       </ScrollView>
 
       {/* Duas List */}
-      <ScrollView
+      <FlatList
+        data={duaListItems}
+        keyExtractor={(item) => item.id}
         style={styles.listContainer}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
-      >
-        {duaListItems.map((dua) => (
+        initialNumToRender={10}
+        maxToRenderPerBatch={8}
+        windowSize={5}
+        renderItem={({ item: dua }) => (
           <DuaCard
-            key={dua.id}
             dua={dua}
             onPress={() => handleDuaPress(dua.id)}
           />
-        ))}
-        <View style={{ height: 40 }} />
-      </ScrollView>
+        )}
+        ListFooterComponent={<View style={{ height: 40 }} />}
+      />
     </SafeAreaView>
   );
 }

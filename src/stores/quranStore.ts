@@ -15,6 +15,16 @@ import {
 import { SURAHS } from '../data/arabic/quran';
 import { DEFAULT_RECITER_ID } from '../data/arabic/quran/reciters';
 
+// Precompute juz/hizb lookup maps once instead of filtering on every call
+const SURAHS_BY_JUZ = new Map<number, typeof SURAHS>();
+const SURAHS_BY_HIZB = new Map<number, typeof SURAHS>();
+for (const surah of SURAHS) {
+  if (!SURAHS_BY_JUZ.has(surah.juz)) SURAHS_BY_JUZ.set(surah.juz, []);
+  SURAHS_BY_JUZ.get(surah.juz)!.push(surah);
+  if (!SURAHS_BY_HIZB.has(surah.hizb)) SURAHS_BY_HIZB.set(surah.hizb, []);
+  SURAHS_BY_HIZB.get(surah.hizb)!.push(surah);
+}
+
 interface QuranState {
   progress: QuranProgress;
 
@@ -694,51 +704,33 @@ export const useQuranStore = create<QuranState>()(
       // Juz & Hizb Progress
       getJuzCompleted: () => {
         const { surahProgress } = get().progress;
-        const completedJuz = new Set<number>();
-
-        // Group surahs by Juz and check completion
-        for (let juz = 1; juz <= 30; juz++) {
-          const surahsInJuz = SURAHS.filter((s) => s.juz === juz);
-          const allCompleted = surahsInJuz.every((s) => {
-            const progress = surahProgress[s.id];
-            return progress?.status === 'completed';
-          });
-          if (allCompleted && surahsInJuz.length > 0) {
-            completedJuz.add(juz);
+        let count = 0;
+        for (const [, surahsInJuz] of SURAHS_BY_JUZ) {
+          if (surahsInJuz.every((s) => surahProgress[s.id]?.status === 'completed')) {
+            count++;
           }
         }
-
-        return completedJuz.size;
+        return count;
       },
 
       getHizbCompleted: () => {
         const { surahProgress } = get().progress;
-        const completedHizb = new Set<number>();
-
-        // Group surahs by Hizb and check completion
-        for (let hizb = 1; hizb <= 60; hizb++) {
-          const surahsInHizb = SURAHS.filter((s) => s.hizb === hizb);
-          const allCompleted = surahsInHizb.every((s) => {
-            const progress = surahProgress[s.id];
-            return progress?.status === 'completed';
-          });
-          if (allCompleted && surahsInHizb.length > 0) {
-            completedHizb.add(hizb);
+        let count = 0;
+        for (const [, surahsInHizb] of SURAHS_BY_HIZB) {
+          if (surahsInHizb.every((s) => surahProgress[s.id]?.status === 'completed')) {
+            count++;
           }
         }
-
-        return completedHizb.size;
+        return count;
       },
 
       getJuzProgress: (juzNumber: number) => {
         const { surahProgress } = get().progress;
-        const surahsInJuz = SURAHS.filter((s) => s.juz === juzNumber);
-
-        if (surahsInJuz.length === 0) return 0;
+        const surahsInJuz = SURAHS_BY_JUZ.get(juzNumber);
+        if (!surahsInJuz || surahsInJuz.length === 0) return 0;
 
         const totalProgress = surahsInJuz.reduce((total, s) => {
-          const progress = surahProgress[s.id];
-          return total + (progress?.completionPercent || 0);
+          return total + (surahProgress[s.id]?.completionPercent || 0);
         }, 0);
 
         return Math.round(totalProgress / surahsInJuz.length);
@@ -746,13 +738,11 @@ export const useQuranStore = create<QuranState>()(
 
       getHizbProgress: (hizbNumber: number) => {
         const { surahProgress } = get().progress;
-        const surahsInHizb = SURAHS.filter((s) => s.hizb === hizbNumber);
-
-        if (surahsInHizb.length === 0) return 0;
+        const surahsInHizb = SURAHS_BY_HIZB.get(hizbNumber);
+        if (!surahsInHizb || surahsInHizb.length === 0) return 0;
 
         const totalProgress = surahsInHizb.reduce((total, s) => {
-          const progress = surahProgress[s.id];
-          return total + (progress?.completionPercent || 0);
+          return total + (surahProgress[s.id]?.completionPercent || 0);
         }, 0);
 
         return Math.round(totalProgress / surahsInHizb.length);
