@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 export default function TabLayout() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const bottomPadding = Platform.OS === 'ios' ? 28 : Math.max(insets.bottom, 10);
+  const bottomPadding = Platform.OS === 'ios' ? 28 : Math.max(insets.bottom, 24);
 
   return (
     <Tabs

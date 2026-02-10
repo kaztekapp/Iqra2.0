@@ -3,7 +3,9 @@ import '../src/i18n';
 import { useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as NavigationBar from 'expo-navigation-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
@@ -57,6 +59,14 @@ export default function RootLayout() {
       }
     }
     checkForUpdates();
+  }, []);
+
+  // Set Android navigation bar color to match tab bar
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync('#1e293b');
+      NavigationBar.setButtonStyleAsync('light');
+    }
   }, []);
 
   // Sync persisted language with i18next
