@@ -222,14 +222,13 @@ const quranStyles = StyleSheet.create({
     flexDirection: 'row-reverse',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    marginBottom: 20,
-    paddingBottom: 8,
+    marginBottom: 14,
     gap: 8,
   },
   arabicWord: {
     color: '#ffffff',
     fontSize: 22,
-    lineHeight: 40,
+    lineHeight: 44,
   },
   translation: {
     color: '#cbd5e1',

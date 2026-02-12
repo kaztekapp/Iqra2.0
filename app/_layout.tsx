@@ -49,28 +49,13 @@ export default function RootLayout() {
     async function checkForUpdates() {
       if (__DEV__) return;
       try {
-        console.log('[UPDATE] Checking for updates...');
-        console.log('[UPDATE] Current update ID:', Updates.updateId);
-        console.log('[UPDATE] Channel:', Updates.channel);
-        console.log('[UPDATE] Runtime version:', Updates.runtimeVersion);
-
         const update = await Updates.checkForUpdateAsync();
-        console.log('[UPDATE] Check result:', update);
-
         if (update.isAvailable) {
-          console.log('[UPDATE] Update available! Fetching...');
           await Updates.fetchUpdateAsync();
-          console.log('[UPDATE] Update fetched! Reloading...');
           await Updates.reloadAsync();
-        } else {
-          console.log('[UPDATE] No update available');
         }
       } catch (e) {
-        console.error('[UPDATE] Error:', e);
-        // Show error alert in development
-        if (__DEV__) {
-          alert('Update check failed: ' + (e as Error).message);
-        }
+        // Silently fail - don't block the app
       }
     }
     checkForUpdates();

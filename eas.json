@@ -10,7 +10,6 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview",
       "env": {
         "EXPO_PUBLIC_SUPABASE_URL": "https://afrqicwexpogxnxmofff.supabase.co",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmcnFpY3dleHBvZ3hueG1vZmZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzNzIzMDIsImV4cCI6MjA4NTk0ODMwMn0.86V0CRYJRSVaWNrqVQr4MGK_CES0gTSFRrG7NIj9k4I"
