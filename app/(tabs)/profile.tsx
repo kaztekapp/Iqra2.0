@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ import { audioCacheService } from '../../src/services/audioCacheService';
 import { useNetworkStatus } from '../../src/hooks/useNetworkStatus';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { signOut } from '../../src/services/authService';
+import * as Updates from 'expo-updates';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -39,13 +40,100 @@ export default function ProfileScreen() {
   const { isConnected } = useNetworkStatus();
   const [cacheSize, setCacheSize] = useState('0 B');
 
+  // Update diagnostics
+  const [updateInfo, setUpdateInfo] = useState<{
+    currentId: string | null;
+    channel: string | null;
+    runtimeVersion: string | null;
+    isUpdateAvailable: boolean | null;
+    isChecking: boolean;
+    lastCheckTime: string | null;
+    error: string | null;
+  }>({
+    currentId: null,
+    channel: null,
+    runtimeVersion: null,
+    isUpdateAvailable: null,
+    isChecking: false,
+    lastCheckTime: null,
+    error: null,
+  });
+
   useEffect(() => {
     updateCacheSize();
+    loadUpdateInfo();
   }, []);
 
   useEffect(() => {
     setCacheSize(audioCacheService.formatBytes(totalCacheSize));
   }, [totalCacheSize]);
+
+  const loadUpdateInfo = async () => {
+    try {
+      const currentUpdateId = Updates.updateId || 'embedded';
+      const channel = Updates.channel || 'none';
+      const runtimeVersion = Updates.runtimeVersion || 'unknown';
+
+      setUpdateInfo(prev => ({
+        ...prev,
+        currentId: currentUpdateId,
+        channel: channel,
+        runtimeVersion: runtimeVersion,
+      }));
+    } catch (e) {
+      setUpdateInfo(prev => ({
+        ...prev,
+        error: 'Failed to load update info',
+      }));
+    }
+  };
+
+  const handleCheckForUpdates = async () => {
+    setUpdateInfo(prev => ({ ...prev, isChecking: true, error: null }));
+
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      const now = new Date().toLocaleTimeString();
+
+      setUpdateInfo(prev => ({
+        ...prev,
+        isUpdateAvailable: update.isAvailable,
+        lastCheckTime: now,
+        isChecking: false,
+      }));
+
+      if (update.isAvailable) {
+        Alert.alert(
+          'Update Available',
+          'An update is available. Would you like to download and install it now?',
+          [
+            { text: 'Later', style: 'cancel' },
+            {
+              text: 'Update Now',
+              onPress: async () => {
+                try {
+                  await Updates.fetchUpdateAsync();
+                  await Updates.reloadAsync();
+                } catch (e: any) {
+                  Alert.alert('Update Failed', e.message);
+                }
+              },
+            },
+          ]
+        );
+      } else {
+        Alert.alert('No Updates', 'You are running the latest version.');
+      }
+    } catch (e: any) {
+      setUpdateInfo(prev => ({
+        ...prev,
+        isChecking: false,
+        error: e.message || 'Unknown error',
+        lastCheckTime: new Date().toLocaleTimeString(),
+      }));
+      Alert.alert('Update Check Failed', e.message || 'Unknown error');
+    }
+  };
 
   const handleClearCache = () => {
     Alert.alert(
@@ -368,6 +456,64 @@ export default function ProfileScreen() {
                 <Text style={styles.clearCacheText}>{t('profile.clearDownloadedAudio')}</Text>
               </Pressable>
             )}
+          </View>
+        </View>
+
+        {/* Update Diagnostics */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>App Updates</Text>
+          <View style={styles.updateCard}>
+            <View style={styles.updateInfoRow}>
+              <Text style={styles.updateLabel}>Channel:</Text>
+              <Text style={styles.updateValue}>{updateInfo.channel || 'Loading...'}</Text>
+            </View>
+            <View style={styles.updateInfoRow}>
+              <Text style={styles.updateLabel}>Runtime Version:</Text>
+              <Text style={styles.updateValue}>{updateInfo.runtimeVersion || 'Loading...'}</Text>
+            </View>
+            <View style={styles.updateInfoRow}>
+              <Text style={styles.updateLabel}>Current Update ID:</Text>
+              <Text style={styles.updateValue} numberOfLines={1}>
+                {updateInfo.currentId ? updateInfo.currentId.substring(0, 20) + '...' : 'Loading...'}
+              </Text>
+            </View>
+            {updateInfo.lastCheckTime && (
+              <View style={styles.updateInfoRow}>
+                <Text style={styles.updateLabel}>Last Check:</Text>
+                <Text style={styles.updateValue}>{updateInfo.lastCheckTime}</Text>
+              </View>
+            )}
+            {updateInfo.isUpdateAvailable !== null && (
+              <View style={styles.updateInfoRow}>
+                <Text style={styles.updateLabel}>Update Available:</Text>
+                <Text style={[
+                  styles.updateValue,
+                  { color: updateInfo.isUpdateAvailable ? '#10b981' : '#94a3b8' }
+                ]}>
+                  {updateInfo.isUpdateAvailable ? 'Yes' : 'No'}
+                </Text>
+              </View>
+            )}
+            {updateInfo.error && (
+              <View style={styles.updateError}>
+                <Ionicons name="warning" size={16} color="#ef4444" />
+                <Text style={styles.updateErrorText}>{updateInfo.error}</Text>
+              </View>
+            )}
+            <Pressable
+              style={styles.checkUpdateButton}
+              onPress={handleCheckForUpdates}
+              disabled={updateInfo.isChecking}
+            >
+              {updateInfo.isChecking ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <>
+                  <Ionicons name="refresh" size={18} color="#ffffff" />
+                  <Text style={styles.checkUpdateButtonText}>Check for Updates</Text>
+                </>
+              )}
+            </Pressable>
           </View>
         </View>
 
@@ -1012,6 +1158,61 @@ const styles = StyleSheet.create({
   },
   clearCacheText: {
     color: '#f59e0b',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  // Update diagnostic styles
+  updateCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+  },
+  updateInfoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  updateLabel: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  updateValue: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '600',
+    flex: 1,
+    textAlign: 'right',
+    marginLeft: 12,
+  },
+  updateError: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ef444420',
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 8,
+    marginBottom: 8,
+    gap: 8,
+  },
+  updateErrorText: {
+    color: '#ef4444',
+    fontSize: 12,
+    flex: 1,
+  },
+  checkUpdateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#10b981',
+    paddingVertical: 12,
+    borderRadius: 12,
+    marginTop: 12,
+    gap: 8,
+  },
+  checkUpdateButtonText: {
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
   },

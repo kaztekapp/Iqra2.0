@@ -47,15 +47,31 @@ export default function RootLayout() {
   // Force check for OTA updates on launch
   useEffect(() => {
     async function checkForUpdates() {
-      if (__DEV__) return;
+      if (__DEV__) {
+        console.log('[UPDATE] Skipping update check in development mode');
+        return;
+      }
+
       try {
+        console.log('[UPDATE] Checking for updates...');
+        console.log('[UPDATE] Current update ID:', Updates.updateId || 'embedded');
+        console.log('[UPDATE] Channel:', Updates.channel || 'none');
+        console.log('[UPDATE] Runtime version:', Updates.runtimeVersion || 'unknown');
+
         const update = await Updates.checkForUpdateAsync();
+        console.log('[UPDATE] Check result:', JSON.stringify(update));
+
         if (update.isAvailable) {
+          console.log('[UPDATE] Update available! Fetching...');
           await Updates.fetchUpdateAsync();
+          console.log('[UPDATE] Update fetched! Reloading app...');
           await Updates.reloadAsync();
+        } else {
+          console.log('[UPDATE] No update available - app is up to date');
         }
-      } catch (e) {
-        // Silently fail - don't block the app
+      } catch (e: any) {
+        console.error('[UPDATE] Error checking for updates:', e.message || e);
+        // Don't block the app, but log the error
       }
     }
     checkForUpdates();
