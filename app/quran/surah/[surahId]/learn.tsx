@@ -39,6 +39,7 @@ export default function LearnModeScreen() {
   const [startVerseInput, setStartVerseInput] = useState('1');
   const [endVerseInput, setEndVerseInput] = useState(String(ayahs.length || 1));
   const [showRangeSelector, setShowRangeSelector] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   // Use ref to track values in callbacks (avoids stale closure)
   const currentRepeatRef = useRef(0);
@@ -320,13 +321,110 @@ export default function LearnModeScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Instructions */}
-        <View style={styles.instructionCard}>
-          <Ionicons name="information-circle" size={20} color="#10b981" />
-          <Text style={styles.instructionText}>
-            {t('surahLearnMode.listenAndPractice')}
-          </Text>
-        </View>
+        {/* How to Use Guide */}
+        <Pressable
+          style={styles.guideHeader}
+          onPress={() => setShowGuide(!showGuide)}
+        >
+          <View style={styles.guideHeaderLeft}>
+            <View style={styles.guideIconBg}>
+              <Ionicons name="book-outline" size={16} color="#10b981" />
+            </View>
+            <Text style={styles.guideHeaderText}>{t('surahLearnMode.howToUse')}</Text>
+          </View>
+          <Ionicons
+            name={showGuide ? 'chevron-up' : 'chevron-down'}
+            size={18}
+            color="#6b6b60"
+          />
+        </Pressable>
+
+        {showGuide && (
+          <View style={styles.guideContent}>
+            {/* Play/Pause */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="play" size={14} color="#10b981" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guidePlayPauseTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guidePlayPauseDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Speed */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="speedometer-outline" size={14} color="#f59e0b" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideSpeedTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideSpeedDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Repeat */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="repeat" size={14} color="#14b8a6" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideRepeatTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideRepeatDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Auto-Advance */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="arrow-forward" size={14} color="#fb923c" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideAutoAdvanceTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideAutoAdvanceDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Verse Range */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="options-outline" size={14} color="#34d399" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideVerseRangeTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideVerseRangeDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Navigation */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="swap-horizontal" size={14} color="#a3a398" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideNavigationTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideNavigationDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Background Playback */}
+            <View style={styles.guideItem}>
+              <View style={styles.guideItemIcon}>
+                <Ionicons name="musical-notes-outline" size={14} color="#2dd4bf" />
+              </View>
+              <View style={styles.guideItemText}>
+                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideBackgroundTitle')}</Text>
+                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideBackgroundDesc')}</Text>
+              </View>
+            </View>
+
+            {/* Tip */}
+            <View style={styles.guideTip}>
+              <Ionicons name="bulb-outline" size={16} color="#fbbf24" />
+              <Text style={styles.guideTipText}>{t('surahLearnMode.guideTip')}</Text>
+            </View>
+          </View>
+        )}
 
         {/* Ayah Card */}
         <View style={styles.ayahCard}>
@@ -671,19 +769,86 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  instructionCard: {
+  guideHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#10b98115',
+    justifyContent: 'space-between',
+    backgroundColor: '#1e1e1a',
     borderRadius: 12,
-    padding: 12,
+    borderWidth: 1,
+    borderColor: '#2a2a24',
+    padding: 14,
     marginTop: 16,
+  },
+  guideHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
   },
-  instructionText: {
-    color: '#94a3b8',
-    fontSize: 13,
+  guideIconBg: {
+    width: 30,
+    height: 30,
+    borderRadius: 8,
+    backgroundColor: '#10b98115',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  guideHeaderText: {
+    color: '#f5f5f0',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  guideContent: {
+    backgroundColor: '#1e1e1a',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#2a2a24',
+    padding: 16,
+    marginTop: 8,
+    gap: 16,
+  },
+  guideItem: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  guideItemIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    backgroundColor: '#161613',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
+  },
+  guideItemText: {
     flex: 1,
+    gap: 3,
+  },
+  guideItemTitle: {
+    color: '#f5f5f0',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  guideItemDesc: {
+    color: '#a3a398',
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  guideTip: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    backgroundColor: '#fbbf2410',
+    borderRadius: 10,
+    padding: 12,
+    marginTop: 4,
+  },
+  guideTipText: {
+    color: '#fbbf24',
+    fontSize: 13,
+    lineHeight: 19,
+    flex: 1,
+    fontStyle: 'italic',
   },
   ayahCard: {
     backgroundColor: '#1e293b',
