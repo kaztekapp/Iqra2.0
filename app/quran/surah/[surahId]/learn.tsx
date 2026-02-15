@@ -7,7 +7,8 @@ import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
-import { quranAudioService, AudioState } from '../../../../src/services/quranAudioService';
+import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
+import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 
 export default function LearnModeScreen() {
@@ -18,6 +19,11 @@ export default function LearnModeScreen() {
   const { ayahs, isLoading: isLoadingAyahs } = useQuranSurah(surahId);
 
   const { progress, isAyahLearned } = useQuranStore();
+  const { currentlyPlaying, setCurrentlyPlaying, updatePlaybackState, clearPlayer } = useAudioPlayerStore();
+
+  // Get current reciter info for the mini player
+  const currentReciterId = progress.settings.reciterId as ReciterId;
+  const currentReciter = QURAN_RECITERS[currentReciterId] || QURAN_RECITERS['mishary-alafasy'];
 
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
@@ -53,12 +59,7 @@ export default function LearnModeScreen() {
     }
   }, [ayahs.length]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      quranAudioService.stop();
-    };
-  }, []);
+  // No cleanup on unmount — let the mini player continue playback after leaving
 
   if (!surah) {
     return (
@@ -106,6 +107,7 @@ export default function LearnModeScreen() {
         }, 500);
       } else {
         setAudioState('idle');
+        updatePlaybackState({ isPlaying: false, isPaused: false, isLoading: false });
       }
     }
   };
@@ -142,16 +144,33 @@ export default function LearnModeScreen() {
 
   // Play specific ayah by number (used for auto-advance)
   const playAyahByNumber = async (ayahNumber: number) => {
+    // Update global audio player so mini player shows
+    setCurrentlyPlaying({
+      surahId: surah.id,
+      surahNumber: surah.surahNumber,
+      surahNameArabic: surah.nameArabic,
+      surahNameEnglish: surah.nameEnglish,
+      ayahNumber,
+      totalAyahs: surah.ayahCount,
+      reciterName: currentReciter.nameEnglish,
+      reciterNameArabic: currentReciter.nameArabic,
+      isPlayingAll: false,
+    });
+
     await quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
       rate: playbackSpeed,
       onStateChange: (state) => {
         setAudioState(state);
+        if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
+        else if (state === 'playing') updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
+        else if (state === 'paused') updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
       },
       onComplete: handleAudioComplete,
       onError: () => {
         setAudioState('idle');
         currentRepeatRef.current = 0;
         setCurrentRepeat(0);
+        clearPlayer();
       },
     });
   };
@@ -164,16 +183,39 @@ export default function LearnModeScreen() {
       setCurrentRepeat(0);
     }
 
+    // Update global audio player so mini player shows
+    setCurrentlyPlaying({
+      surahId: surah.id,
+      surahNumber: surah.surahNumber,
+      surahNameArabic: surah.nameArabic,
+      surahNameEnglish: surah.nameEnglish,
+      ayahNumber: currentAyah.ayahNumber,
+      totalAyahs: surah.ayahCount,
+      reciterName: currentReciter.nameEnglish,
+      reciterNameArabic: currentReciter.nameArabic,
+      isPlayingAll: false,
+    });
+
     await quranAudioService.togglePlayPause(surah.surahNumber, currentAyah.ayahNumber, {
       rate: playbackSpeed,
       onStateChange: (state) => {
         setAudioState(state);
+        if (state === 'idle') {
+          clearPlayer();
+        } else if (state === 'loading') {
+          updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
+        } else if (state === 'playing') {
+          updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
+        } else if (state === 'paused') {
+          updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
+        }
       },
       onComplete: handleAudioComplete,
       onError: () => {
         setAudioState('idle');
         currentRepeatRef.current = 0;
         setCurrentRepeat(0);
+        clearPlayer();
       },
     });
   };
@@ -183,16 +225,28 @@ export default function LearnModeScreen() {
     const ayahToPlay = ayahs[currentAyahIndexRef.current];
     if (!ayahToPlay) return;
 
+    // Update mini player ayah number
+    const store = useAudioPlayerStore.getState();
+    if (store.currentlyPlaying) {
+      useAudioPlayerStore.setState({
+        currentlyPlaying: { ...store.currentlyPlaying, ayahNumber: ayahToPlay.ayahNumber },
+      });
+    }
+
     await quranAudioService.playAyah(surah.surahNumber, ayahToPlay.ayahNumber, {
       rate: playbackSpeed,
       onStateChange: (state) => {
         setAudioState(state);
+        if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
+        else if (state === 'playing') updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
+        else if (state === 'paused') updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
       },
       onComplete: handleAudioComplete,
       onError: () => {
         setAudioState('idle');
         currentRepeatRef.current = 0;
         setCurrentRepeat(0);
+        clearPlayer();
       },
     });
   };
@@ -253,8 +307,10 @@ export default function LearnModeScreen() {
 
   const handleNext = () => {
     quranAudioService.stop();
+    clearPlayer();
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
+    setAudioState('idle');
 
     if (currentAyahIndex >= ayahs.length - 1) {
       // At last verse of surah - finish
@@ -270,8 +326,10 @@ export default function LearnModeScreen() {
 
   const handlePrevious = () => {
     quranAudioService.stop();
+    clearPlayer();
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
+    setAudioState('idle');
 
     if (currentAyahIndex > 0) {
       const prevIndex = currentAyahIndex - 1;
@@ -569,8 +627,8 @@ export default function LearnModeScreen() {
         </View>
       </ScrollView>
 
-      {/* Navigation */}
-      <View style={styles.navigation}>
+      {/* Navigation — extra bottom padding when mini player is visible */}
+      <View style={[styles.navigation, currentlyPlaying && styles.navigationWithPlayer]}>
         <Pressable
           style={[styles.navButton, currentAyahIndex === 0 && styles.navButtonDisabled]}
           onPress={handlePrevious}
@@ -922,6 +980,9 @@ const styles = StyleSheet.create({
     gap: 12,
     borderTopWidth: 1,
     borderTopColor: '#1e293b',
+  },
+  navigationWithPlayer: {
+    paddingBottom: 70,
   },
   navButton: {
     flex: 1,
