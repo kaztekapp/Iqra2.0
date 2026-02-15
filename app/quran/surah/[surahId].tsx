@@ -9,7 +9,7 @@ import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
-import { useAudioPlayerStore } from '../../../src/stores/audioPlayerStore';
+import { useAudioPlayerStore, advanceToNextSurah } from '../../../src/stores/audioPlayerStore';
 
 export default function SurahDetailScreen() {
   const { t } = useTranslation();
@@ -197,13 +197,13 @@ export default function SurahDetailScreen() {
           // Chain immediately — no gap keeps audio session alive for background playback
           playAyahAtIndex(nextIndex);
         } else {
-          // Finished all ayahs in this surah — let mini player handle next surah
+          // Finished all ayahs — hand off to shared continuous playback for next surah
           isPlayingAllRef.current = false;
           setIsPlayingAll(false);
           setCurrentPlayingAyah(null);
           setActiveAyahId(null);
           setAudioState('idle');
-          // Don't clearPlayer — mini player's onComplete will advance to next surah
+          advanceToNextSurah();
         }
       },
       onError: () => {

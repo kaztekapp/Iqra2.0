@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useSegments } from 'expo-router';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAudioPlayerStore } from '../../stores/audioPlayerStore';
+import { useAudioPlayerStore, startContinuousPlay, advanceToNextSurah } from '../../stores/audioPlayerStore';
 import { quranAudioService } from '../../services/quranAudioService';
 import { getSurahByNumber } from '../../data/arabic/quran';
 
@@ -78,73 +78,16 @@ export function MiniAudioPlayer() {
     clearPlayer();
   };
 
-  // Auto-advance to next surah when current one finishes
-  const advanceToNextSurah = (currentSurahNumber: number) => {
-    if (currentSurahNumber >= 114) {
-      // Reached end of Quran
-      updatePlaybackState({ isPlaying: false, isPaused: false, isLoading: false });
-      clearPlayer();
-      return;
-    }
-
-    const nextSurah = getSurahByNumber(currentSurahNumber + 1);
-    if (!nextSurah) {
-      clearPlayer();
-      return;
-    }
-
-    const store = useAudioPlayerStore.getState();
-    setCurrentlyPlaying({
-      surahId: nextSurah.id,
-      surahNumber: nextSurah.surahNumber,
-      surahNameArabic: nextSurah.nameArabic,
-      surahNameEnglish: nextSurah.nameEnglish,
-      ayahNumber: 1,
-      totalAyahs: nextSurah.ayahCount,
-      reciterName: store.currentlyPlaying?.reciterName || '',
-      reciterNameArabic: store.currentlyPlaying?.reciterNameArabic || '',
-      isPlayingAll: true,
-    });
-
-    playAyahContinuously(nextSurah.surahNumber, 1, nextSurah.ayahCount);
-  };
-
-  // Play an ayah and auto-advance to the next one
-  const playAyahContinuously = async (surahNumber: number, ayahNumber: number, totalAyahs: number) => {
-    const store = useAudioPlayerStore.getState();
-    if (store.currentlyPlaying) {
-      setCurrentlyPlaying({ ...store.currentlyPlaying, ayahNumber });
-    }
-    updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
-
-    await quranAudioService.playAyah(surahNumber, ayahNumber, {
-      onStateChange: (state) => {
-        if (state === 'playing') updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
-        else if (state === 'paused') updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
-      },
-      onComplete: () => {
-        // Chain immediately — no gap keeps the audio session alive for background playback
-        if (ayahNumber < totalAyahs) {
-          playAyahContinuously(surahNumber, ayahNumber + 1, totalAyahs);
-        } else {
-          // Surah finished — auto-advance to next surah
-          advanceToNextSurah(surahNumber);
-        }
-      },
-      onError: () => clearPlayer(),
-    });
-  };
+  // Use shared continuous playback functions from audioPlayerStore
 
   const handlePreviousAyah = async () => {
     if (!currentlyPlaying || currentlyPlaying.ayahNumber <= 1) return;
-    const newAyah = currentlyPlaying.ayahNumber - 1;
-    playAyahContinuously(currentlyPlaying.surahNumber, newAyah, currentlyPlaying.totalAyahs);
+    startContinuousPlay(currentlyPlaying.surahNumber, currentlyPlaying.ayahNumber - 1, currentlyPlaying.totalAyahs);
   };
 
   const handleNextAyah = async () => {
     if (!currentlyPlaying || currentlyPlaying.ayahNumber >= currentlyPlaying.totalAyahs) return;
-    const newAyah = currentlyPlaying.ayahNumber + 1;
-    playAyahContinuously(currentlyPlaying.surahNumber, newAyah, currentlyPlaying.totalAyahs);
+    startContinuousPlay(currentlyPlaying.surahNumber, currentlyPlaying.ayahNumber + 1, currentlyPlaying.totalAyahs);
   };
 
   const handlePreviousSurah = async () => {
@@ -152,6 +95,7 @@ export function MiniAudioPlayer() {
     const prevSurah = getSurahByNumber(currentlyPlaying.surahNumber - 1);
     if (!prevSurah) return;
 
+    await quranAudioService.stop();
     setCurrentlyPlaying({
       surahId: prevSurah.id,
       surahNumber: prevSurah.surahNumber,
@@ -163,18 +107,7 @@ export function MiniAudioPlayer() {
       reciterNameArabic: currentlyPlaying.reciterNameArabic,
       isPlayingAll: true,
     });
-    updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
-    await quranAudioService.stop();
-
-    if (router.canGoBack()) {
-      router.replace(`/quran/surah/${prevSurah.id}` as any);
-    } else {
-      router.push(`/quran/surah/${prevSurah.id}` as any);
-    }
-
-    setTimeout(() => {
-      playAyahContinuously(prevSurah.surahNumber, 1, prevSurah.ayahCount);
-    }, 500);
+    startContinuousPlay(prevSurah.surahNumber, 1, prevSurah.ayahCount);
   };
 
   const handleNextSurah = async () => {
@@ -182,6 +115,7 @@ export function MiniAudioPlayer() {
     const nextSurah = getSurahByNumber(currentlyPlaying.surahNumber + 1);
     if (!nextSurah) return;
 
+    await quranAudioService.stop();
     setCurrentlyPlaying({
       surahId: nextSurah.id,
       surahNumber: nextSurah.surahNumber,
@@ -193,18 +127,7 @@ export function MiniAudioPlayer() {
       reciterNameArabic: currentlyPlaying.reciterNameArabic,
       isPlayingAll: true,
     });
-    updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
-    await quranAudioService.stop();
-
-    if (router.canGoBack()) {
-      router.replace(`/quran/surah/${nextSurah.id}` as any);
-    } else {
-      router.push(`/quran/surah/${nextSurah.id}` as any);
-    }
-
-    setTimeout(() => {
-      playAyahContinuously(nextSurah.surahNumber, 1, nextSurah.ayahCount);
-    }, 500);
+    startContinuousPlay(nextSurah.surahNumber, 1, nextSurah.ayahCount);
   };
 
   const handleNavigateToSurah = () => {

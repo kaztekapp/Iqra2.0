@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { quranAudioService } from '../services/quranAudioService';
+import { getSurahByNumber } from '../data/arabic/quran/surahs';
 
 export interface CurrentlyPlaying {
   surahId: string;
@@ -49,3 +51,75 @@ export const useAudioPlayerStore = create<AudioPlayerState>()((set) => ({
       progress: 0,
     }),
 }));
+
+/**
+ * Shared continuous playback — plays ayah by ayah, auto-advances surahs.
+ * Can be called from any component or callback (no React context needed).
+ */
+export function startContinuousPlay(surahNumber: number, ayahNumber: number, totalAyahs: number) {
+  const store = useAudioPlayerStore.getState();
+
+  // Update current ayah in store
+  if (store.currentlyPlaying) {
+    useAudioPlayerStore.setState({
+      currentlyPlaying: { ...store.currentlyPlaying, ayahNumber },
+      isLoading: true,
+      isPlaying: false,
+      isPaused: false,
+    });
+  }
+
+  quranAudioService.playAyah(surahNumber, ayahNumber, {
+    onStateChange: (state) => {
+      if (state === 'playing') useAudioPlayerStore.setState({ isPlaying: true, isLoading: false, isPaused: false });
+      else if (state === 'paused') useAudioPlayerStore.setState({ isPaused: true, isLoading: false, isPlaying: false });
+    },
+    onComplete: () => {
+      if (ayahNumber < totalAyahs) {
+        // Next ayah in same surah
+        startContinuousPlay(surahNumber, ayahNumber + 1, totalAyahs);
+      } else {
+        // Advance to next surah
+        advanceToNextSurah();
+      }
+    },
+    onError: () => {
+      useAudioPlayerStore.getState().clearPlayer();
+    },
+  });
+}
+
+/**
+ * Advance to the next surah and continue playing.
+ */
+export function advanceToNextSurah() {
+  const store = useAudioPlayerStore.getState();
+  const currentSurahNumber = store.currentlyPlaying?.surahNumber;
+
+  if (!currentSurahNumber || currentSurahNumber >= 114) {
+    store.clearPlayer();
+    return;
+  }
+
+  const nextSurah = getSurahByNumber(currentSurahNumber + 1);
+  if (!nextSurah) {
+    store.clearPlayer();
+    return;
+  }
+
+  useAudioPlayerStore.setState({
+    currentlyPlaying: {
+      surahId: nextSurah.id,
+      surahNumber: nextSurah.surahNumber,
+      surahNameArabic: nextSurah.nameArabic,
+      surahNameEnglish: nextSurah.nameEnglish,
+      ayahNumber: 1,
+      totalAyahs: nextSurah.ayahCount,
+      reciterName: store.currentlyPlaying?.reciterName || '',
+      reciterNameArabic: store.currentlyPlaying?.reciterNameArabic || '',
+      isPlayingAll: true,
+    },
+  });
+
+  startContinuousPlay(nextSurah.surahNumber, 1, nextSurah.ayahCount);
+}
