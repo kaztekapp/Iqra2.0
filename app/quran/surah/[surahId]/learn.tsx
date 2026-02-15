@@ -8,7 +8,7 @@ import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
-import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
+import { useAudioPlayerStore, startContinuousPlay } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 
 export default function LearnModeScreen() {
@@ -41,6 +41,7 @@ export default function LearnModeScreen() {
   const [showRangeSelector, setShowRangeSelector] = useState(false);
 
   // Use ref to track values in callbacks (avoids stale closure)
+  const isMountedRef = useRef(true);
   const currentRepeatRef = useRef(0);
   const repeatCountRef = useRef(1);
   const autoAdvanceRef = useRef(false);
@@ -59,7 +60,12 @@ export default function LearnModeScreen() {
     }
   }, [ayahs.length]);
 
-  // No cleanup on unmount — let the mini player continue playback after leaving
+  // On unmount: mark unmounted so callbacks hand off to startContinuousPlay
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   if (!surah) {
     return (
@@ -85,6 +91,23 @@ export default function LearnModeScreen() {
 
   // Handle repeat completion
   const handleAudioComplete = () => {
+    // If screen unmounted, hand off to startContinuousPlay for background playback
+    if (!isMountedRef.current) {
+      const store = useAudioPlayerStore.getState();
+      if (store.currentlyPlaying) {
+        const { surahNumber, ayahNumber, totalAyahs } = store.currentlyPlaying;
+        // Set isPlayingAll so mini player shows continuous controls
+        useAudioPlayerStore.setState({
+          currentlyPlaying: { ...store.currentlyPlaying, isPlayingAll: true },
+        });
+        // Chain immediately to next ayah — no gap keeps audio session alive
+        if (ayahNumber < totalAyahs) {
+          startContinuousPlay(surahNumber, ayahNumber + 1, totalAyahs);
+        }
+      }
+      return;
+    }
+
     const current = currentRepeatRef.current;
     const total = repeatCountRef.current;
 
