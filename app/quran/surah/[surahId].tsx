@@ -62,12 +62,13 @@ export default function SurahDetailScreen() {
     setShowReciterModal(false);
   }, [setReciter]);
 
-  // Don't stop audio on unmount - let mini player handle it
+  // Sync screen with currently playing surah (handles background auto-advance)
+  const currentlyPlayingSurahId = useAudioPlayerStore((s) => s.currentlyPlaying?.surahId);
   useEffect(() => {
-    return () => {
-      // Audio continues playing in background via mini player
-    };
-  }, []);
+    if (currentlyPlayingSurahId && currentlyPlayingSurahId !== surahId) {
+      router.replace(`/quran/surah/${currentlyPlayingSurahId}` as any);
+    }
+  }, [currentlyPlayingSurahId, surahId]);
 
   // Play/Pause ayah using reciter audio - must be before any returns
   const handlePlayAyah = useCallback(async (ayahId: string, ayahNumber: number) => {
