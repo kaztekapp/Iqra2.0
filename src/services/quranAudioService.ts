@@ -3,6 +3,7 @@
 
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
+import { getSurahByNumber } from '../data/arabic/quran/surahs';
 
 // Available reciters with their audio base URLs from EveryAyah.com
 // Format: https://everyayah.com/data/{reciter_folder}/{surah_number}{ayah_number}.mp3
@@ -209,19 +210,13 @@ class QuranAudioService {
       return;
     }
     this.isTransitioning = true;
+    this.stoppedByUser = false;
 
     try {
-      // Stop any current playback first
-      await this.stop();
+      // Swap player without dropping the audio session — keeps background alive
+      this.releasePlayer();
 
-      // Periodically reset audio configuration to prevent accumulating issues
-      this.playCount++;
-      if (this.playCount > 20) {
-        this.isAudioConfigured = false;
-        this.playCount = 0;
-      }
-
-      // Configure audio session (only done once, failures are non-fatal)
+      // Configure audio session (cached after first call, only reconfigures on error)
       await this.configureAudio().catch(() => {
         // Audio config failure is non-fatal, playback may still work
       });
@@ -245,6 +240,25 @@ class QuranAudioService {
 
       // Set playback rate
       this.player.setPlaybackRate(rate);
+
+      // Enable lock screen controls with Now Playing metadata
+      try {
+        const reciter = QURAN_RECITERS[options?.reciterId || this.currentReciter];
+        const surah = getSurahByNumber(surahNumber);
+        const title = surah
+          ? `${surah.nameEnglish}: ${ayahNumber}`
+          : `Surah ${surahNumber}: ${ayahNumber}`;
+        this.player.setActiveForLockScreen(true, {
+          title,
+          artist: reciter.nameEnglish,
+          albumTitle: 'Quran',
+        }, {
+          showSeekForward: true,
+          showSeekBackward: true,
+        });
+      } catch {
+        // Lock screen controls may not be available (e.g. on simulators)
+      }
 
       // Listen for playback status
       this.statusSubscription = this.player.addListener('playbackStatusUpdate', (status) => {
@@ -374,8 +388,7 @@ class QuranAudioService {
           });
         });
 
-        // Small gap between ayahs
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        // No gap between ayahs — keeps audio session alive for background playback
       }
     }
 
@@ -415,6 +428,11 @@ class QuranAudioService {
     // Release the player
     if (this.player) {
       try {
+        this.player.clearLockScreenControls();
+      } catch {
+        // Ignore lock screen cleanup errors
+      }
+      try {
         this.player.pause();
       } catch {
         // Ignore pause errors
@@ -435,16 +453,20 @@ class QuranAudioService {
     // Notify the current listener that audio was stopped
     const stateCallback = this.onStateChangeCallback;
 
+    // Mark as stopped so playAyahRange loops can exit
+    this.stoppedByUser = true;
+
     // Release player resources
     this.releasePlayer();
 
-    // Reset all state
+    // Reset playback state but keep audio config (avoids reconfiguration overhead)
     this.audioState = 'idle';
     this.currentSurah = null;
     this.currentAyah = null;
     this.onCompleteCallback = null;
     this.onErrorCallback = null;
     this.onStateChangeCallback = null;
+    this.isTransitioning = false;
 
     // Call the callback after clearing to notify UI
     stateCallback?.('idle');

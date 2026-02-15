@@ -9,6 +9,7 @@ import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
+import { useAudioPlayerStore } from '../../../src/stores/audioPlayerStore';
 
 export default function SurahDetailScreen() {
   const { t } = useTranslation();
@@ -44,6 +45,12 @@ export default function SurahDetailScreen() {
     setReciter,
   } = useQuranStore();
 
+  const {
+    setCurrentlyPlaying,
+    updatePlaybackState,
+    clearPlayer,
+  } = useAudioPlayerStore();
+
   // Get current reciter info
   const currentReciterId = progress.settings.reciterId as ReciterId;
   const currentReciter = QURAN_RECITERS[currentReciterId] || QURAN_RECITERS['mishary-alafasy'];
@@ -55,16 +62,29 @@ export default function SurahDetailScreen() {
     setShowReciterModal(false);
   }, [setReciter]);
 
-  // Cleanup on unmount
+  // Don't stop audio on unmount - let mini player handle it
   useEffect(() => {
     return () => {
-      quranAudioService.stop();
+      // Audio continues playing in background via mini player
     };
   }, []);
 
   // Play/Pause ayah using reciter audio - must be before any returns
   const handlePlayAyah = useCallback(async (ayahId: string, ayahNumber: number) => {
     if (!surah) return;
+
+    // Update global audio player state
+    setCurrentlyPlaying({
+      surahId: surah.id,
+      surahNumber: surah.surahNumber,
+      surahNameArabic: surah.nameArabic,
+      surahNameEnglish: surah.nameEnglish,
+      ayahNumber,
+      totalAyahs: surah.ayahCount,
+      reciterName: currentReciter.nameEnglish,
+      reciterNameArabic: currentReciter.nameArabic,
+      isPlayingAll: false,
+    });
 
     // Use togglePlayPause for smart play/pause behavior
     await quranAudioService.togglePlayPause(surah.surahNumber, ayahNumber, {
@@ -73,20 +93,26 @@ export default function SurahDetailScreen() {
         setAudioState(state);
         if (state === 'idle') {
           setActiveAyahId(null);
+          clearPlayer();
         } else {
           setActiveAyahId(ayahId);
+          if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
+          else if (state === 'playing') updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
+          else if (state === 'paused') updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
         }
       },
       onComplete: () => {
         setActiveAyahId(null);
         setAudioState('idle');
+        clearPlayer();
       },
       onError: () => {
         setActiveAyahId(null);
         setAudioState('idle');
+        clearPlayer();
       },
     });
-  }, [surah, progress.settings.playbackSpeed]);
+  }, [surah, currentReciter, progress.settings.playbackSpeed, setCurrentlyPlaying, updatePlaybackState, clearPlayer]);
 
   // Get surah progress - must call after useQuranStore
   const surahProgress = surah
@@ -137,6 +163,19 @@ export default function SurahDetailScreen() {
     setCurrentPlayingAyah(ayah.ayahNumber);
     setActiveAyahId(ayah.id);
 
+    // Update global audio player state
+    setCurrentlyPlaying({
+      surahId: surah.id,
+      surahNumber: surah.surahNumber,
+      surahNameArabic: surah.nameArabic,
+      surahNameEnglish: surah.nameEnglish,
+      ayahNumber: ayah.ayahNumber,
+      totalAyahs: surah.ayahCount,
+      reciterName: currentReciter.nameEnglish,
+      reciterNameArabic: currentReciter.nameArabic,
+      isPlayingAll: true,
+    });
+
     // Auto-scroll to the current ayah
     scrollToAyah(ayah.id);
 
@@ -144,6 +183,9 @@ export default function SurahDetailScreen() {
       rate: progress.settings.playbackSpeed,
       onStateChange: (state) => {
         setAudioState(state);
+        if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
+        else if (state === 'playing') updatePlaybackState({ isPlaying: true, isLoading: false, isPaused: false });
+        else if (state === 'paused') updatePlaybackState({ isPaused: true, isLoading: false, isPlaying: false });
       },
       onComplete: () => {
         // Check if we should continue to next ayah
@@ -151,17 +193,16 @@ export default function SurahDetailScreen() {
 
         const nextIndex = currentPlayingIndexRef.current + 1;
         if (nextIndex < ayahs.length) {
-          // Play next ayah after a short delay
-          setTimeout(() => {
-            playAyahAtIndex(nextIndex);
-          }, 300);
+          // Chain immediately — no gap keeps audio session alive for background playback
+          playAyahAtIndex(nextIndex);
         } else {
-          // Finished all ayahs
+          // Finished all ayahs in this surah — let mini player handle next surah
           isPlayingAllRef.current = false;
           setIsPlayingAll(false);
           setCurrentPlayingAyah(null);
           setActiveAyahId(null);
           setAudioState('idle');
+          // Don't clearPlayer — mini player's onComplete will advance to next surah
         }
       },
       onError: () => {
@@ -170,9 +211,10 @@ export default function SurahDetailScreen() {
         setCurrentPlayingAyah(null);
         setActiveAyahId(null);
         setAudioState('idle');
+        clearPlayer();
       },
     });
-  }, [surah, ayahs, progress.settings.playbackSpeed]);
+  }, [surah, surahId, ayahs, currentReciter, progress.settings.playbackSpeed, setCurrentlyPlaying, updatePlaybackState, clearPlayer]);
 
   // Play/Stop entire surah
   const handlePlayAllToggle = useCallback(async () => {
@@ -186,13 +228,14 @@ export default function SurahDetailScreen() {
       setCurrentPlayingAyah(null);
       setActiveAyahId(null);
       setAudioState('idle');
+      clearPlayer();
     } else {
       // Start playing all ayahs from the beginning
       isPlayingAllRef.current = true;
       setIsPlayingAll(true);
       playAyahAtIndex(0);
     }
-  }, [surah, isPlayingAll, audioState, playAyahAtIndex]);
+  }, [surah, isPlayingAll, audioState, playAyahAtIndex, clearPlayer]);
 
   // Navigation to previous/next surah
   const handlePreviousSurah = useCallback(() => {

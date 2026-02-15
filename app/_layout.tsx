@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured } from '../src/lib/supabase';
+import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -165,6 +166,7 @@ export default function RootLayout() {
         <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
         <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
       </Stack>
+      <MiniAudioPlayer />
     </GestureHandlerRootView>
   );
 }
