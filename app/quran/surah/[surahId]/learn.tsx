@@ -49,6 +49,7 @@ export default function LearnModeScreen() {
   const startVerseRef = useRef(1);
   const endVerseRef = useRef(ayahs.length || 1);
   const isPlayingRef = useRef(false);
+  const playbackSpeedRef = useRef(playbackSpeed);
 
   const currentAyah = ayahs[currentAyahIndex];
 
@@ -114,7 +115,7 @@ export default function LearnModeScreen() {
     });
 
     quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
-      rate: playbackSpeed,
+      rate: playbackSpeedRef.current,
       onStateChange: (state) => {
         setAudioState(state);
         if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
@@ -223,6 +224,7 @@ export default function LearnModeScreen() {
 
   const handleSpeedChange = (speed: number) => {
     setPlaybackSpeed(speed);
+    playbackSpeedRef.current = speed;
     quranAudioService.setRate(speed);
   };
 

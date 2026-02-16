@@ -51,6 +51,8 @@ export default function SurahDetailScreen() {
     clearPlayer,
   } = useAudioPlayerStore();
 
+  const playbackSpeedRef = useRef(progress.settings.playbackSpeed);
+
   // Get current reciter info
   const currentReciterId = progress.settings.reciterId as ReciterId;
   const currentReciter = QURAN_RECITERS[currentReciterId] || QURAN_RECITERS['mishary-alafasy'];
@@ -89,7 +91,7 @@ export default function SurahDetailScreen() {
 
     // Use togglePlayPause for smart play/pause behavior
     await quranAudioService.togglePlayPause(surah.surahNumber, ayahNumber, {
-      rate: progress.settings.playbackSpeed,
+      rate: playbackSpeedRef.current,
       onStateChange: (state) => {
         setAudioState(state);
         if (state === 'idle') {
@@ -143,6 +145,7 @@ export default function SurahDetailScreen() {
   }, [surahId, surahProgress.bookmarkedAyahs, unbookmarkAyah, bookmarkAyah]);
 
   const handleSpeedChange = useCallback((speed: number) => {
+    playbackSpeedRef.current = speed;
     useQuranStore.getState().setPlaybackSpeed(speed as 0.75 | 1 | 1.25 | 1.5 | 1.75);
     quranAudioService.setRate(speed);
   }, []);
@@ -181,7 +184,7 @@ export default function SurahDetailScreen() {
     scrollToAyah(ayah.id);
 
     await quranAudioService.playAyah(surah.surahNumber, ayah.ayahNumber, {
-      rate: progress.settings.playbackSpeed,
+      rate: playbackSpeedRef.current,
       onStateChange: (state) => {
         setAudioState(state);
         if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
