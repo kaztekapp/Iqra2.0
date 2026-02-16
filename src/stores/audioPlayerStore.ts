@@ -12,6 +12,7 @@ export interface CurrentlyPlaying {
   reciterName: string;
   reciterNameArabic: string;
   isPlayingAll: boolean;
+  source?: 'surah' | 'learn';
 }
 
 interface AudioPlayerState {

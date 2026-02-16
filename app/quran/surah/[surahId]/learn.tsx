@@ -110,6 +110,7 @@ export default function LearnModeScreen() {
       reciterName: currentReciter.nameEnglish,
       reciterNameArabic: currentReciter.nameArabic,
       isPlayingAll: true,
+      source: 'learn',
     });
 
     quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
@@ -159,12 +160,15 @@ export default function LearnModeScreen() {
               playLearnAyah(nextAyah.ayahNumber);
             }
           } else {
-            // No auto-advance — hand off to startContinuousPlay
-            // so background playback continues through remaining ayahs
+            // No auto-advance — continue through surah but stop at the end
             if (ayahNumber < surah.ayahCount) {
-              startContinuousPlay(surah.surahNumber, ayahNumber + 1, surah.ayahCount);
+              const nextIdx = currentAyahIndexRef.current + 1;
+              currentAyahIndexRef.current = nextIdx;
+              setCurrentAyahIndex(nextIdx);
+              setShowHint(false);
+              playLearnAyah(ayahNumber + 1);
             } else {
-              // Surah finished
+              // Surah finished — stop
               isPlayingRef.current = false;
               setAudioState('idle');
               clearPlayer();
@@ -258,42 +262,6 @@ export default function LearnModeScreen() {
       const newIndex = validVerse - 1;
       currentAyahIndexRef.current = newIndex;
       setCurrentAyahIndex(newIndex);
-    }
-  };
-
-  const handleNext = () => {
-    isPlayingRef.current = false;
-    quranAudioService.stop();
-    clearPlayer();
-    currentRepeatRef.current = 0;
-    setCurrentRepeat(0);
-    setAudioState('idle');
-
-    if (currentAyahIndex >= ayahs.length - 1) {
-      // At last verse of surah - finish
-      router.back();
-    } else {
-      // Go to next verse
-      const nextIndex = currentAyahIndex + 1;
-      currentAyahIndexRef.current = nextIndex;
-      setCurrentAyahIndex(nextIndex);
-      setShowHint(false);
-    }
-  };
-
-  const handlePrevious = () => {
-    isPlayingRef.current = false;
-    quranAudioService.stop();
-    clearPlayer();
-    currentRepeatRef.current = 0;
-    setCurrentRepeat(0);
-    setAudioState('idle');
-
-    if (currentAyahIndex > 0) {
-      const prevIndex = currentAyahIndex - 1;
-      currentAyahIndexRef.current = prevIndex;
-      setCurrentAyahIndex(prevIndex);
-      setShowHint(false);
     }
   };
 
@@ -396,17 +364,6 @@ export default function LearnModeScreen() {
               </View>
             </View>
 
-            {/* Navigation */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="swap-horizontal" size={14} color="#a3a398" />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideNavigationTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideNavigationDesc')}</Text>
-              </View>
-            </View>
-
             {/* Background Playback */}
             <View style={styles.guideItem}>
               <View style={styles.guideItemIcon}>
@@ -434,9 +391,9 @@ export default function LearnModeScreen() {
             </View>
             <Pressable
               style={[
-                styles.playButton,
-                audioState === 'playing' && styles.playButtonActive,
-                audioState === 'paused' && styles.playButtonPaused,
+                styles.ayahPlayButton,
+                audioState === 'playing' && styles.ayahPlayButtonActive,
+                audioState === 'paused' && styles.ayahPlayButtonPaused,
               ]}
               onPress={toggleAyahAudio}
               disabled={audioState === 'loading'}
@@ -446,8 +403,8 @@ export default function LearnModeScreen() {
               ) : (
                 <Ionicons
                   name={getPlayIcon() as any}
-                  size={20}
-                  color="#10b981"
+                  size={18}
+                  color={audioState === 'playing' ? '#ffffff' : audioState === 'paused' ? '#f59e0b' : '#10b981'}
                 />
               )}
             </Pressable>
@@ -463,15 +420,6 @@ export default function LearnModeScreen() {
             />
           </View>
 
-          {/* Auto-Advance Toggle */}
-          <Pressable style={styles.autoAdvanceRow} onPress={toggleAutoAdvance}>
-            <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
-              {t('surahLearnMode.autoAdvance')}
-            </Text>
-            <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
-              <View style={[styles.toggleThumb, autoAdvance && styles.toggleThumbActive]} />
-            </View>
-          </Pressable>
         </View>
 
         {/* Audio Controls */}
@@ -680,29 +628,20 @@ export default function LearnModeScreen() {
             </View>
           )}
         </View>
-      </ScrollView>
 
-      {/* Navigation — extra bottom padding when mini player is visible */}
-      <View style={[styles.navigation, currentlyPlaying && styles.navigationWithPlayer]}>
+        {/* Auto-Advance Toggle */}
         <Pressable
-          style={[styles.navButton, currentAyahIndex === 0 && styles.navButtonDisabled]}
-          onPress={handlePrevious}
-          disabled={currentAyahIndex === 0}
+          style={styles.bottomAutoAdvance}
+          onPress={toggleAutoAdvance}
         >
-          <Ionicons name="arrow-back" size={24} color="#ffffff" />
-          <Text style={styles.navButtonText}>{t('surahLearnMode.previous')}</Text>
-        </Pressable>
-
-        <Pressable
-          style={styles.nextButton}
-          onPress={handleNext}
-        >
-          <Text style={styles.nextButtonText}>
-            {currentAyahIndex >= ayahs.length - 1 ? t('surahLearnMode.finish') : t('surahLearnMode.next')}
+          <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
+            {t('surahLearnMode.autoAdvance')}
           </Text>
-          <Ionicons name="arrow-forward" size={24} color="#ffffff" />
+          <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
+            <View style={[styles.toggleThumb, autoAdvance && styles.toggleThumbActive]} />
+          </View>
         </Pressable>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -773,12 +712,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#2a2a24',
     padding: 14,
-    marginTop: 16,
+    marginTop: 12,
   },
   guideHeaderLeft: {
     flexDirection: 'row',
@@ -799,10 +736,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   guideContent: {
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#2a2a24',
     padding: 16,
     marginTop: 8,
     gap: 16,
@@ -854,7 +789,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e293b',
     borderRadius: 20,
     padding: 20,
-    marginTop: 20,
+    marginTop: 12,
   },
   ayahHeader: {
     flexDirection: 'row',
@@ -874,17 +809,6 @@ const styles = StyleSheet.create({
     color: '#10b981',
     fontSize: 14,
     fontWeight: 'bold',
-  },
-  playButton: {
-    padding: 8,
-  },
-  playButtonActive: {
-    backgroundColor: '#10b98120',
-    borderRadius: 8,
-  },
-  playButtonPaused: {
-    backgroundColor: '#f59e0b20',
-    borderRadius: 8,
   },
   arabicContainer: {
     marginBottom: 20,
@@ -924,8 +848,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e293b',
     borderRadius: 16,
     padding: 20,
-    marginTop: 20,
-    marginBottom: 100,
+    marginTop: 12,
   },
   rangeSelectorHeader: {
     flexDirection: 'row',
@@ -1043,17 +966,16 @@ const styles = StyleSheet.create({
   controlButtonTextActive: {
     color: '#ffffff',
   },
-  autoAdvanceRow: {
+  bottomAutoAdvance: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
-    gap: 10,
-    marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#334155',
-    width: '100%',
     justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    marginTop: 12,
+    marginBottom: 80,
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
   },
   autoAdvanceLabel: {
     color: '#94a3b8',
@@ -1095,48 +1017,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  navigation: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    gap: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#1e293b',
-  },
-  navigationWithPlayer: {
-    paddingBottom: 70,
-  },
-  navButton: {
-    flex: 1,
-    flexDirection: 'row',
+  ayahPlayButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#10b98120',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
-    backgroundColor: '#1e293b',
-    borderRadius: 12,
-    paddingVertical: 14,
   },
-  navButtonDisabled: {
-    opacity: 0.5,
-  },
-  navButtonText: {
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  nextButton: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
+  ayahPlayButtonActive: {
     backgroundColor: '#10b981',
-    borderRadius: 12,
-    paddingVertical: 14,
   },
-  nextButtonText: {
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '600',
+  ayahPlayButtonPaused: {
+    backgroundColor: '#f59e0b20',
   },
 });

@@ -132,7 +132,11 @@ export function MiniAudioPlayer() {
 
   const handleNavigateToSurah = () => {
     if (currentlyPlaying) {
-      router.push(`/quran/surah/${currentlyPlaying.surahId}` as any);
+      if (currentlyPlaying.source === 'learn') {
+        router.push(`/quran/surah/${currentlyPlaying.surahId}/learn` as any);
+      } else {
+        router.push(`/quran/surah/${currentlyPlaying.surahId}` as any);
+      }
     }
   };
 
@@ -184,16 +188,15 @@ export function MiniAudioPlayer() {
 
         {/* Controls */}
         <View style={styles.controls}>
-          {/* Previous Surah */}
-          <Pressable
-            style={[styles.skipButton, currentlyPlaying.surahNumber <= 1 && styles.disabledButton]}
-            disabled={currentlyPlaying.surahNumber <= 1}
-            onPress={(e) => { e.stopPropagation(); handlePreviousSurah(); }}
-          >
-            <Ionicons name="play-skip-back" size={14} color={currentlyPlaying.surahNumber > 1 ? '#a3a398' : '#3a3a32'} />
-          </Pressable>
-
-          {/* Previous Ayah */}
+          {currentlyPlaying.source !== 'learn' && (
+            <Pressable
+              style={[styles.skipButton, currentlyPlaying.surahNumber <= 1 && styles.disabledButton]}
+              disabled={currentlyPlaying.surahNumber <= 1}
+              onPress={(e) => { e.stopPropagation(); handlePreviousSurah(); }}
+            >
+              <Ionicons name="play-skip-back" size={14} color={currentlyPlaying.surahNumber > 1 ? '#a3a398' : '#3a3a32'} />
+            </Pressable>
+          )}
           <Pressable
             style={[styles.controlButton, currentlyPlaying.ayahNumber <= 1 && styles.disabledButton]}
             disabled={currentlyPlaying.ayahNumber <= 1}
@@ -201,8 +204,6 @@ export function MiniAudioPlayer() {
           >
             <Ionicons name="chevron-back" size={18} color={currentlyPlaying.ayahNumber > 1 ? '#f5f5f0' : '#3a3a32'} />
           </Pressable>
-
-          {/* Play/Pause */}
           <Pressable
             style={styles.playPauseButton}
             onPress={(e) => { e.stopPropagation(); handlePlayPause(); }}
@@ -217,8 +218,6 @@ export function MiniAudioPlayer() {
               <Ionicons name={isPlaying ? 'pause' : 'play'} size={20} color="#ffffff" />
             )}
           </Pressable>
-
-          {/* Next Ayah */}
           <Pressable
             style={[styles.controlButton, currentlyPlaying.ayahNumber >= currentlyPlaying.totalAyahs && styles.disabledButton]}
             disabled={currentlyPlaying.ayahNumber >= currentlyPlaying.totalAyahs}
@@ -226,17 +225,15 @@ export function MiniAudioPlayer() {
           >
             <Ionicons name="chevron-forward" size={18} color={currentlyPlaying.ayahNumber < currentlyPlaying.totalAyahs ? '#f5f5f0' : '#3a3a32'} />
           </Pressable>
-
-          {/* Next Surah */}
-          <Pressable
-            style={[styles.skipButton, currentlyPlaying.surahNumber >= 114 && styles.disabledButton]}
-            disabled={currentlyPlaying.surahNumber >= 114}
-            onPress={(e) => { e.stopPropagation(); handleNextSurah(); }}
-          >
-            <Ionicons name="play-skip-forward" size={14} color={currentlyPlaying.surahNumber < 114 ? '#a3a398' : '#3a3a32'} />
-          </Pressable>
-
-          {/* Close */}
+          {currentlyPlaying.source !== 'learn' && (
+            <Pressable
+              style={[styles.skipButton, currentlyPlaying.surahNumber >= 114 && styles.disabledButton]}
+              disabled={currentlyPlaying.surahNumber >= 114}
+              onPress={(e) => { e.stopPropagation(); handleNextSurah(); }}
+            >
+              <Ionicons name="play-skip-forward" size={14} color={currentlyPlaying.surahNumber < 114 ? '#a3a398' : '#3a3a32'} />
+            </Pressable>
+          )}
           <Pressable
             style={styles.closeButton}
             onPress={(e) => { e.stopPropagation(); handleClose(); }}
@@ -327,20 +324,20 @@ const styles = StyleSheet.create({
   controls: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 8,
   },
   skipButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
   controlButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     backgroundColor: '#2a2a24',
     alignItems: 'center',
     justifyContent: 'center',
@@ -349,22 +346,22 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   playPauseButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: '#10b981',
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 2,
+    marginHorizontal: 4,
   },
   closeButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 2,
+    marginLeft: 4,
   },
   loadingIndicator: {
     flexDirection: 'row',

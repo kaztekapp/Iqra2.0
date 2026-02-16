@@ -787,8 +787,6 @@ export default {
     guideAutoAdvanceDesc: 'Activez pour passer automatiquement au verset suivant après les répétitions. Apprentissage en boucle sans les mains.',
     guideVerseRangeTitle: 'Plage de versets',
     guideVerseRangeDesc: 'Concentrez-vous sur un ensemble spécifique de versets. Définissez le début et la fin, ou utilisez "5 suivants" pour sélectionner rapidement.',
-    guideNavigationTitle: 'Navigation',
-    guideNavigationDesc: 'Utilisez les boutons Précédent et Suivant en bas pour naviguer entre les versets manuellement.',
     guideBackgroundTitle: 'Lecture en arrière-plan',
     guideBackgroundDesc: 'L\'audio continue quand vous quittez cet écran ou verrouillez votre téléphone. Utilisez le mini lecteur pour contrôler la lecture.',
     guideTip: 'Astuce : Commencez à 0.75x et 3x répétitions pour les nouveaux versets, puis augmentez la vitesse.',

@@ -787,8 +787,6 @@ export default {
     guideAutoAdvanceDesc: 'Turn this on to automatically move to the next verse after repeats finish. Hands-free learning loop.',
     guideVerseRangeTitle: 'Verse Range',
     guideVerseRangeDesc: 'Focus on a specific set of verses. Set start and end verses, or use "Next 5" to quickly select a small batch.',
-    guideNavigationTitle: 'Navigation',
-    guideNavigationDesc: 'Use the Previous and Next buttons at the bottom to move between verses manually.',
     guideBackgroundTitle: 'Background Playback',
     guideBackgroundDesc: 'Audio keeps playing when you leave this screen or lock your phone. Use the mini player to control playback from anywhere.',
     guideTip: 'Tip: Start with 0.75x speed and 3x repeat for new verses, then increase speed as you improve.',
