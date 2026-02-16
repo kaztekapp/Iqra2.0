@@ -874,4 +874,13 @@ export default {
   stories: {
     narratedBy: 'Narrated by {{narrator}}',
   },
+  legal: {
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    effectiveDate: 'Effective Date',
+    contactUs: 'Questions? Contact us',
+    legal: 'Legal',
+    agreePrefix: 'By continuing, you agree to our',
+    and: 'and',
+  },
 } as const;

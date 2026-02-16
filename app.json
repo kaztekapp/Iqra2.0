@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "Iqra2.0",
+    "name": "IQra2.0",
     "slug": "iqra2",
     "version": "1.0.0",
+    "description": "IQra2.0 — Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, study Quran with audio recitations, and practice prayer.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "iqra2",
@@ -11,30 +12,28 @@
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#4f46e5"
+      "backgroundColor": "#0f172a"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.iqra2.app",
       "infoPlist": {
         "UIBackgroundModes": [
-          "audio",
           "audio"
         ],
-        "NSSpeechRecognitionUsageDescription": "Allow $(PRODUCT_NAME) to use speech recognition.",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to use the microphone."
+        "NSSpeechRecognitionUsageDescription": "IQra2.0 uses speech recognition to check your Arabic pronunciation during speaking practice.",
+        "NSMicrophoneUsageDescription": "IQra2.0 uses the microphone to record your voice during pronunciation practice.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#4f46e5"
+        "backgroundColor": "#0f172a"
       },
       "package": "com.iqra2.app",
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ]

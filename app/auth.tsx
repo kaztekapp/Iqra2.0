@@ -274,6 +274,22 @@ export default function AuthScreen() {
           <TouchableOpacity style={styles.skipButton} activeOpacity={0.7} onPress={() => router.replace('/(tabs)')}>
             <Text style={styles.skipText}>{t('common.skip')}</Text>
           </TouchableOpacity>
+
+          {/* Legal Footer */}
+          <View style={styles.legalFooter}>
+            <Text style={styles.legalText}>
+              {t('legal.agreePrefix')}{' '}
+            </Text>
+            <View style={styles.legalLinks}>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/terms-of-service' as any)}>
+                <Text style={styles.legalLink}>{t('legal.termsOfService')}</Text>
+              </TouchableOpacity>
+              <Text style={styles.legalText}> {t('legal.and')} </Text>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/privacy-policy' as any)}>
+                <Text style={styles.legalLink}>{t('legal.privacyPolicy')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
 
@@ -528,6 +544,31 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontSize: 14,
     fontWeight: '500',
+  },
+
+  // Legal footer
+  legalFooter: {
+    alignItems: 'center',
+    paddingTop: 8,
+    paddingBottom: 16,
+    paddingHorizontal: 20,
+  },
+  legalLinks: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  legalText: {
+    color: '#64748b',
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  legalLink: {
+    color: '#818cf8',
+    fontSize: 12,
+    fontWeight: '500',
+    lineHeight: 18,
   },
 
   // Modal

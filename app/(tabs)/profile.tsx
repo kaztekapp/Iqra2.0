@@ -10,10 +10,12 @@ import { audioCacheService } from '../../src/services/audioCacheService';
 import { useNetworkStatus } from '../../src/hooks/useNetworkStatus';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { signOut } from '../../src/services/authService';
+import { useRouter, Href } from 'expo-router';
 import * as Updates from 'expo-updates';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const { language, setLanguage, isAuthenticated } = useSettingsStore();
 
   const {
@@ -572,6 +574,34 @@ export default function ProfileScreen() {
           </View>
         </View>
 
+        {/* Legal */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('legal.legal')}</Text>
+          <View style={styles.settingsCard}>
+            <Pressable
+              style={styles.legalRow}
+              onPress={() => router.push('/privacy-policy' as Href)}
+            >
+              <View style={styles.settingLeft}>
+                <Ionicons name="shield-checkmark-outline" size={22} color="#94a3b8" />
+                <Text style={styles.settingTitle}>{t('legal.privacyPolicy')}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color="#64748b" />
+            </Pressable>
+            <View style={styles.settingDivider} />
+            <Pressable
+              style={styles.legalRow}
+              onPress={() => router.push('/terms-of-service' as Href)}
+            >
+              <View style={styles.settingLeft}>
+                <Ionicons name="document-text-outline" size={22} color="#94a3b8" />
+                <Text style={styles.settingTitle}>{t('legal.termsOfService')}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color="#64748b" />
+            </Pressable>
+          </View>
+        </View>
+
         {/* Log Out */}
         {isAuthenticated && (
           <View style={styles.section}>
@@ -848,6 +878,12 @@ const styles = StyleSheet.create({
   languageOptionTextActive: {
     color: '#818cf8',
     fontWeight: '600',
+  },
+  legalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
   },
   logOutButton: {
     flexDirection: 'row',

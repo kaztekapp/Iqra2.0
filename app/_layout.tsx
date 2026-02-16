@@ -120,10 +120,12 @@ export default function RootLayout() {
     const inOnboarding = segments[0] === '(onboarding)';
     const inAuth = segments[0] === 'auth';
     const inTabs = segments[0] === '(tabs)';
+    const seg = segments[0] as string;
+    const inLegal = seg === 'privacy-policy' || seg === 'terms-of-service';
 
     if (!hasCompletedOnboarding && !inOnboarding) {
       router.replace('/(onboarding)/language');
-    } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth) {
+    } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth && !inLegal) {
       router.replace('/auth');
     }
   }, [authReady, fontsLoaded, hasCompletedOnboarding, isAuthenticated, segments]);
@@ -165,6 +167,8 @@ export default function RootLayout() {
         <Stack.Screen name="reading/[textId]" />
         <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
         <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
+        <Stack.Screen name="privacy-policy" />
+        <Stack.Screen name="terms-of-service" />
       </Stack>
       <MiniAudioPlayer />
     </GestureHandlerRootView>
