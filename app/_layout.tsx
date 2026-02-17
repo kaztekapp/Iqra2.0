@@ -136,8 +136,7 @@ export default function RootLayout() {
 
   const appReady = authReady && updateComplete;
 
-  // Hide splash screen as soon as app is ready
-  useEffect(() => {
+  const onLayoutRootView = useCallback(() => {
     if (appReady) {
       SplashScreen.hideAsync().catch(() => {});
       quranAudioService.warmUp();
@@ -145,11 +144,11 @@ export default function RootLayout() {
   }, [appReady]);
 
   if (!appReady) {
-    return null;
+    return <View style={{ flex: 1, backgroundColor: '#0f172a' }} />;
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#0f172a' }} onLayout={onLayoutRootView}>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
