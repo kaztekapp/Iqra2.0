@@ -1,9 +1,9 @@
 import "../global.css";
 import '../src/i18n';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useFonts } from 'expo-font';
@@ -123,19 +123,21 @@ export default function RootLayout() {
     }
   }, [authReady, fontsLoaded, hasCompletedOnboarding, isAuthenticated, segments]);
 
-  useEffect(() => {
-    if (fontsLoaded && authReady && updateComplete) {
+  const appReady = fontsLoaded && authReady && updateComplete;
+
+  const onLayoutRootView = useCallback(() => {
+    if (appReady) {
       SplashScreen.hideAsync();
       quranAudioService.warmUp();
     }
-  }, [fontsLoaded, authReady, updateComplete]);
+  }, [appReady]);
 
-  if (!fontsLoaded || !authReady || !updateComplete) {
+  if (!appReady) {
     return null;
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
