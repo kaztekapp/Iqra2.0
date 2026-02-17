@@ -34,6 +34,7 @@ export default function RootLayout() {
   const setSession = useSettingsStore((s) => s.setSession);
 
   const [authReady, setAuthReady] = useState(false);
+  const [updateComplete, setUpdateComplete] = useState(false);
 
   const [fontsLoaded, fontError] = useFonts({
     // Add Amiri fonts here when available
@@ -45,34 +46,26 @@ export default function RootLayout() {
     if (fontError) throw fontError;
   }, [fontError]);
 
-  // Force check for OTA updates on launch
+  // Force check for OTA updates on launch — keep splash visible until done
   useEffect(() => {
     async function checkForUpdates() {
       if (__DEV__) {
-        console.log('[UPDATE] Skipping update check in development mode');
+        setUpdateComplete(true);
         return;
       }
 
       try {
-        console.log('[UPDATE] Checking for updates...');
-        console.log('[UPDATE] Current update ID:', Updates.updateId || 'embedded');
-        console.log('[UPDATE] Channel:', Updates.channel || 'none');
-        console.log('[UPDATE] Runtime version:', Updates.runtimeVersion || 'unknown');
-
         const update = await Updates.checkForUpdateAsync();
-        console.log('[UPDATE] Check result:', JSON.stringify(update));
 
         if (update.isAvailable) {
-          console.log('[UPDATE] Update available! Fetching...');
           await Updates.fetchUpdateAsync();
-          console.log('[UPDATE] Update fetched! Reloading app...');
           await Updates.reloadAsync();
-        } else {
-          console.log('[UPDATE] No update available - app is up to date');
+          // reloadAsync restarts the app, so we won't reach here
         }
       } catch (e: any) {
         console.error('[UPDATE] Error checking for updates:', e.message || e);
-        // Don't block the app, but log the error
+      } finally {
+        setUpdateComplete(true);
       }
     }
     checkForUpdates();
@@ -131,13 +124,13 @@ export default function RootLayout() {
   }, [authReady, fontsLoaded, hasCompletedOnboarding, isAuthenticated, segments]);
 
   useEffect(() => {
-    if (fontsLoaded && authReady) {
+    if (fontsLoaded && authReady && updateComplete) {
       SplashScreen.hideAsync();
       quranAudioService.warmUp();
     }
-  }, [fontsLoaded, authReady]);
+  }, [fontsLoaded, authReady, updateComplete]);
 
-  if (!fontsLoaded || !authReady) {
+  if (!fontsLoaded || !authReady || !updateComplete) {
     return null;
   }
 
