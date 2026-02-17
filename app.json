@@ -49,7 +49,15 @@
       "expo-audio",
       "expo-speech-recognition",
       "expo-localization",
-      "expo-navigation-bar"
+      "expo-navigation-bar",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0f172a",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 280
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -61,7 +69,9 @@
       }
     },
     "owner": "kaztekapp",
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "updates": {
       "url": "https://u.expo.dev/f639ca75-6743-41f7-a5f6-ea439df68672"
     }
