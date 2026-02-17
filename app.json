@@ -49,15 +49,7 @@
       "expo-audio",
       "expo-speech-recognition",
       "expo-localization",
-      "expo-navigation-bar",
-      [
-        "expo-splash-screen",
-        {
-          "backgroundColor": "#0f172a",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 280
-        }
-      ]
+      "expo-navigation-bar"
     ],
     "experiments": {
       "typedRoutes": true
