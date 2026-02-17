@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert, ActivityIndicator, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -237,8 +237,14 @@ export default function ProfileScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>{t('profile.title')}</Text>
-          <Text style={styles.titleArabic}>الْمَلَفُّ الشَّخْصِي</Text>
+          <View>
+            <Text style={styles.title}>{t('profile.title')}</Text>
+            <Text style={styles.titleArabic}>الْمَلَفُّ الشَّخْصِي</Text>
+          </View>
+          <Image
+            source={require('../../assets/images/icon.png')}
+            style={styles.appIcon}
+          />
         </View>
 
         {/* User Level Card */}
@@ -675,9 +681,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f172a',
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 20,
+  },
+  appIcon: {
+    width: 68,
+    height: 68,
+    borderRadius: 16,
+    marginTop: -8,
   },
   title: {
     fontSize: 28,

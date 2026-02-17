@@ -226,6 +226,8 @@ export default {
     signInSubtitle: 'Connectez-vous pour continuer votre apprentissage',
     createAccount: 'Cr\u00e9er votre compte',
     signUpSubtitle: 'Commencez votre parcours d\'apprentissage',
+    confirmEmail: 'Confirmer l\'e-mail',
+    emailsDoNotMatch: 'Les adresses e-mail ne correspondent pas.',
   },
   alphabet: {
     title: 'Alphabet Arabe',

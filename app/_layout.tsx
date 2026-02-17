@@ -6,13 +6,12 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { useSettingsStore } from '../src/stores/settingsStore';
-import { supabase, isSupabaseConfigured } from '../src/lib/supabase';
+import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
 
 export { ErrorBoundary } from 'expo-router';
@@ -21,7 +20,7 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const { i18n } = useTranslation();
@@ -36,15 +35,14 @@ export default function RootLayout() {
   const [authReady, setAuthReady] = useState(false);
   const [updateComplete, setUpdateComplete] = useState(false);
 
-  const [fontsLoaded, fontError] = useFonts({
-    // Add Amiri fonts here when available
-    // 'Amiri': require('../assets/fonts/Amiri-Regular.ttf'),
-    // 'Amiri-Bold': require('../assets/fonts/Amiri-Bold.ttf'),
-  });
-
+  // Hard fallback: force app ready after 5s no matter what
   useEffect(() => {
-    if (fontError) throw fontError;
-  }, [fontError]);
+    const fallback = setTimeout(() => {
+      setAuthReady(true);
+      setUpdateComplete(true);
+    }, 5000);
+    return () => clearTimeout(fallback);
+  }, []);
 
   // Force check for OTA updates on launch — keep splash visible until done
   useEffect(() => {
@@ -74,8 +72,8 @@ export default function RootLayout() {
   // Set Android navigation bar color to match tab bar
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#1e293b');
-      NavigationBar.setButtonStyleAsync('light');
+      NavigationBar.setBackgroundColorAsync('#1e293b').catch(() => {});
+      NavigationBar.setButtonStyleAsync('light').catch(() => {});
     }
   }, []);
 
@@ -89,13 +87,23 @@ export default function RootLayout() {
   // Listen to Supabase auth state changes
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) {
-      // Supabase not configured - skip auth, allow app to work without it
       setAuthReady(true);
       return;
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // Timeout: if auth check hangs, proceed anyway after 3s
+    const timeout = setTimeout(() => setAuthReady(true), 3000);
+
+    safeGetSession().then((session) => {
+      clearTimeout(timeout);
       setSession(session);
+      setAuthReady(true);
+      // Start auto-refresh only after initial session is validated
+      if (session) {
+        supabase!.auth.startAutoRefresh();
+      }
+    }).catch(() => {
+      clearTimeout(timeout);
       setAuthReady(true);
     });
 
@@ -103,12 +111,15 @@ export default function RootLayout() {
       setSession(session);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      clearTimeout(timeout);
+      subscription.unsubscribe();
+    };
   }, []);
 
   // Route protection
   useEffect(() => {
-    if (!authReady || !fontsLoaded) return;
+    if (!authReady) return;
 
     const inOnboarding = segments[0] === '(onboarding)';
     const inAuth = segments[0] === 'auth';
@@ -121,13 +132,14 @@ export default function RootLayout() {
     } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth && !inLegal) {
       router.replace('/auth');
     }
-  }, [authReady, fontsLoaded, hasCompletedOnboarding, isAuthenticated, segments]);
+  }, [authReady, hasCompletedOnboarding, isAuthenticated, segments]);
 
-  const appReady = fontsLoaded && authReady && updateComplete;
+  const appReady = authReady && updateComplete;
 
-  const onLayoutRootView = useCallback(() => {
+  // Hide splash screen as soon as app is ready
+  useEffect(() => {
     if (appReady) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch(() => {});
       quranAudioService.warmUp();
     }
   }, [appReady]);
@@ -137,7 +149,7 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="light" />
       <Stack
         screenOptions={{

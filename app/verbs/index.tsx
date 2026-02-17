@@ -18,20 +18,20 @@ export default function VerbsScreen() {
 
   const tenseCategories = [
     {
-      id: 'past',
-      title: t('verbs.pastTense'),
-      titleArabic: 'الْمَاضِي',
-      description: t('verbs.pastTenseDesc'),
-      icon: 'time-outline' as const,
-      color: '#10b981',
-    },
-    {
       id: 'present',
       title: t('verbs.presentTense'),
       titleArabic: 'الْمُضَارِع',
       description: t('verbs.presentTenseDesc'),
       icon: 'reload-outline' as const,
       color: '#6366f1',
+    },
+    {
+      id: 'past',
+      title: t('verbs.pastTense'),
+      titleArabic: 'الْمَاضِي',
+      description: t('verbs.pastTenseDesc'),
+      icon: 'time-outline' as const,
+      color: '#10b981',
     },
     {
       id: 'future',
@@ -81,7 +81,7 @@ export default function VerbsScreen() {
           <Text style={styles.sectionTitle}>{t('verbs.verbLessons')}</Text>
           <Text style={styles.sectionSubtitle}>{t('verbs.verbLessonsDesc')}</Text>
           <View style={styles.lessonsGrid}>
-            {verbLessons.map((lesson, index) => (
+            {[...verbLessons].sort((a, b) => a.order - b.order).map((lesson, index) => (
               <Pressable
                 key={lesson.id}
                 style={styles.lessonCard}
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   },
   categoryTitleArabic: {
     fontSize: 14,
-    color: '#10b981',
+    color: '#D4AF37',
     marginTop: 2,
   },
   categoryDescription: {
@@ -499,7 +499,7 @@ const styles = StyleSheet.create({
   },
   lessonTitleArabic: {
     fontSize: 13,
-    color: '#10b981',
+    color: '#D4AF37',
     marginTop: 2,
   },
   lessonDescription: {

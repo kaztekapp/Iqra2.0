@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -120,12 +120,12 @@ export default function HomeScreen() {
       route: '/vocabulary',
     },
     {
-      id: 'practice',
-      title: t('home.practice'),
-      titleArabic: 'تَدْرِيب',
-      icon: 'pencil' as const,
-      color: '#ec4899',
-      route: '/practice',
+      id: 'grammar',
+      title: t('learn.grammar'),
+      titleArabic: 'الْقَوَاعِد',
+      icon: 'git-branch' as const,
+      color: '#22c55e',
+      route: '/grammar',
     },
   ];
 
@@ -138,14 +138,10 @@ export default function HomeScreen() {
             <Text style={styles.greeting}>{t('home.greeting')}</Text>
             <Text style={styles.greetingEnglish}>{t('home.greetingEnglish')}</Text>
           </View>
-          <View style={styles.logoBadge}>
-            <View style={styles.logoBadgeInner}>
-              <Text style={styles.logoArabic}>اقْرَأ</Text>
-            </View>
-            <View style={styles.logoVersionBadge}>
-              <Text style={styles.logoVersion}>2.0</Text>
-            </View>
-          </View>
+          <Image
+            source={require('../../assets/images/icon.png')}
+            style={styles.appIcon}
+          />
         </View>
 
         {/* Stats Overview */}
@@ -275,44 +271,11 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     marginTop: 4,
   },
-  logoBadge: {
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoBadgeInner: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#D4AF37',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#D4AF37',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  logoArabic: {
-    color: '#ffffff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  logoVersionBadge: {
-    position: 'absolute',
-    bottom: -4,
-    right: -4,
-    backgroundColor: '#1e293b',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#D4AF37',
-  },
-  logoVersion: {
-    color: '#ffffff',
-    fontSize: 10,
-    fontWeight: 'bold',
+  appIcon: {
+    width: 68,
+    height: 68,
+    borderRadius: 16,
+    marginTop: -8,
   },
   statsCard: {
     backgroundColor: '#1e293b',

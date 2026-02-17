@@ -6,11 +6,16 @@ function getClient() {
   return supabase;
 }
 
-export async function signUpWithEmail(email: string, password: string) {
-  const { data, error } = await getClient().auth.signUp({ email, password });
+export async function signUpWithEmail(email: string, password: string, fullName?: string) {
+  const { data, error } = await getClient().auth.signUp({
+    email,
+    password,
+    options: fullName ? { data: { full_name: fullName } } : undefined,
+  });
   if (error) throw error;
   return data;
 }
+
 
 export async function signInWithEmail(email: string, password: string) {
   const { data, error } = await getClient().auth.signInWithPassword({ email, password });

@@ -226,6 +226,8 @@ export default {
     signInSubtitle: 'Sign in to continue your learning journey',
     createAccount: 'Create your account',
     signUpSubtitle: 'Start your Arabic & Quran learning journey',
+    confirmEmail: 'Confirm Email',
+    emailsDoNotMatch: 'Email addresses do not match.',
   },
   alphabet: {
     title: 'Arabic Alphabet',

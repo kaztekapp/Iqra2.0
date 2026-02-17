@@ -443,11 +443,11 @@ export default function SurahDetailScreen() {
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
         <Pressable style={styles.primaryButton} onPress={handleLearn}>
-          <Ionicons name="school" size={20} color="#10b981" />
+          <Ionicons name="school" size={20} color="#D4AF37" />
           <Text style={styles.primaryButtonText}>{t('surahFeature.learn')}</Text>
         </Pressable>
         <Pressable style={styles.secondaryButton} onPress={handleWrite}>
-          <Ionicons name="pencil" size={20} color="#10b981" />
+          <Ionicons name="pencil" size={20} color="#D4AF37" />
           <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
         </Pressable>
       </View>
@@ -849,7 +849,7 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     flex: 1,
-    backgroundColor: '#10b98120',
+    backgroundColor: '#D4AF3735',
     borderRadius: 12,
     paddingVertical: 14,
     flexDirection: 'row',
@@ -858,13 +858,13 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   primaryButtonText: {
-    color: '#10b981',
+    color: '#D4AF37',
     fontSize: 15,
     fontWeight: '600',
   },
   secondaryButton: {
     flex: 1,
-    backgroundColor: '#10b98120',
+    backgroundColor: '#D4AF3735',
     borderRadius: 12,
     paddingVertical: 14,
     flexDirection: 'row',
@@ -873,7 +873,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   secondaryButtonText: {
-    color: '#10b981',
+    color: '#D4AF37',
     fontSize: 14,
     fontWeight: '600',
   },

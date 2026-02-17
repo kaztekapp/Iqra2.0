@@ -239,7 +239,7 @@ export const verbLessons: GrammarLesson[] = [
     descriptionFr: 'Maîtriser la conjugaison au passé - ajouter des suffixes pour décrire les actions accomplies',
     level: 'beginner',
     category: 'verbs',
-    order: 2,
+    order: 3,
     exercises: [],
     content: [
       // Introduction
@@ -379,7 +379,7 @@ export const verbLessons: GrammarLesson[] = [
     descriptionFr: 'Apprendre la conjugaison au présent - préfixes et suffixes pour les actions en cours',
     level: 'beginner',
     category: 'verbs',
-    order: 3,
+    order: 2,
     exercises: [],
     content: [
       // Introduction

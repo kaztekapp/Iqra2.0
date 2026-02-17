@@ -11,6 +11,7 @@ export default function AuthScreen() {
   const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,10 @@ export default function AuthScreen() {
       Alert.alert(t('common.error'), t('auth.passwordMinLength'));
       return false;
     }
+    if (isSignUp && email.toLowerCase() !== confirmEmail.toLowerCase()) {
+      Alert.alert(t('common.error'), t('auth.emailsDoNotMatch'));
+      return false;
+    }
     if (isSignUp && password !== confirmPassword) {
       Alert.alert(t('common.error'), t('auth.passwordsDoNotMatch'));
       return false;
@@ -54,8 +59,9 @@ export default function AuthScreen() {
     setLoading(true);
     try {
       if (isSignUp) {
-        await signUpWithEmail(email, password);
-        Alert.alert('', t('auth.signUpSuccess'));
+        await signUpWithEmail(email, password, fullName.trim());
+        await signInWithEmail(email, password);
+        router.replace('/(tabs)');
       } else {
         await signInWithEmail(email, password);
         router.replace('/(tabs)');
@@ -88,6 +94,7 @@ export default function AuthScreen() {
   const switchMode = () => {
     setMode(isSignUp ? 'signIn' : 'signUp');
     setFullName('');
+    setConfirmEmail('');
     setConfirmPassword('');
   };
 
@@ -170,6 +177,22 @@ export default function AuthScreen() {
               />
             </View>
 
+            {/* Confirm Email (signup only) */}
+            {isSignUp && (
+              <View style={styles.inputBox}>
+                <Ionicons name="mail-outline" size={20} color="#64748b" />
+                <TextInput
+                  style={styles.input}
+                  placeholder={t('auth.confirmEmail')}
+                  placeholderTextColor="#475569"
+                  value={confirmEmail}
+                  onChangeText={setConfirmEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+            )}
+
             {/* Password */}
             <View style={styles.inputBox}>
               <Ionicons name="lock-closed-outline" size={20} color="#64748b" />
@@ -231,7 +254,7 @@ export default function AuthScreen() {
                     {isSignUp ? t('auth.signUp') : t('auth.signIn')}
                   </Text>
                   <View style={styles.submitIcon}>
-                    <Ionicons name="arrow-forward" size={18} color="#10b981" />
+                    <Ionicons name="arrow-forward" size={18} color="#D4AF37" />
                   </View>
                 </>
               )}
@@ -404,7 +427,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toggleActive: {
-    backgroundColor: '#334155',
+    backgroundColor: '#D4AF37',
   },
   toggleText: {
     color: '#64748b',
@@ -412,7 +435,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   toggleTextActive: {
-    color: '#ffffff',
+    color: '#0f172a',
+    fontWeight: '700',
   },
 
   // Inputs
@@ -445,7 +469,7 @@ const styles = StyleSheet.create({
 
   // Submit
   submitButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#D4AF37',
     paddingVertical: 16,
     borderRadius: 14,
     flexDirection: 'row',
@@ -455,7 +479,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   submitText: {
-    color: '#ffffff',
+    color: '#0f172a',
     fontSize: 16,
     fontWeight: '700',
     marginRight: 10,
@@ -464,7 +488,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#0f172a',
     alignItems: 'center',
     justifyContent: 'center',
   },

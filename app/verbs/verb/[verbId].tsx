@@ -52,7 +52,7 @@ export default function VerbDetailScreen() {
   const { t } = useTranslation();
   const { verbId } = useLocalSearchParams<{ verbId: string }>();
   const { speak, isSpeaking } = useArabicSpeech();
-  const [activeTense, setActiveTense] = useState<TenseType>('past');
+  const [activeTense, setActiveTense] = useState<TenseType>('present');
 
   const verb = getVerbById(verbId);
 
@@ -114,20 +114,20 @@ export default function VerbDetailScreen() {
             </View>
           </View>
           <View style={styles.infoRow}>
-            <Pressable style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
-              <Text style={styles.tensePreviewLabel}>{t('verbDetail.past')}</Text>
-              <Text style={styles.tensePreviewValue}>{verb.pastTense}</Text>
-            </Pressable>
             <Pressable style={styles.tensePreview} onPress={() => speak(verb.presentTense)}>
               <Text style={styles.tensePreviewLabel}>{t('verbDetail.present')}</Text>
               <Text style={styles.tensePreviewValue}>{verb.presentTense}</Text>
+            </Pressable>
+            <Pressable style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
+              <Text style={styles.tensePreviewLabel}>{t('verbDetail.past')}</Text>
+              <Text style={styles.tensePreviewValue}>{verb.pastTense}</Text>
             </Pressable>
           </View>
         </View>
 
         {/* Tense Tabs */}
         <View style={styles.tenseTabs}>
-          {(['past', 'present', 'future', 'imperative'] as TenseType[]).map((tense) => (
+          {(['present', 'past', 'future', 'imperative'] as TenseType[]).map((tense) => (
             <Pressable
               key={tense}
               style={[

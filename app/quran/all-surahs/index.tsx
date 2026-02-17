@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   surahNameEnglish: {
-    color: '#10b981',
+    color: '#D4AF37',
     fontSize: 14,
   },
   surahMeaning: {
