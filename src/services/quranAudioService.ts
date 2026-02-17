@@ -273,8 +273,8 @@ class QuranAudioService {
           if (status.playing && this.audioState !== 'playing') {
             this.audioState = 'playing';
           } else if (!status.playing && this.audioState === 'playing') {
-            // Check if finished or just paused
-            const isFinished = status.currentTime > 0 && status.currentTime >= (status.duration || 0) - 0.1;
+            // Check if finished or just paused (duration must be valid to avoid false positives during rate changes)
+            const isFinished = status.duration > 0 && status.currentTime > 0 && status.currentTime >= status.duration - 0.1;
             if (isFinished) {
               // Store callback before cleanup
               const completeCallback = this.onCompleteCallback;
@@ -299,7 +299,7 @@ class QuranAudioService {
             isLoaded: status.isLoaded,
             positionMillis: status.currentTime * 1000,
             durationMillis: (status.duration || 0) * 1000,
-            didJustFinish: !status.playing && status.currentTime > 0 && status.currentTime >= (status.duration || 0) - 0.1,
+            didJustFinish: !status.playing && status.duration > 0 && status.currentTime > 0 && status.currentTime >= status.duration - 0.1,
           });
         }
       });
