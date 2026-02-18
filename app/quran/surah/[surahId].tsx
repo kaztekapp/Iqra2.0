@@ -122,6 +122,7 @@ export default function SurahDetailScreen() {
       reciterName: currentReciter.nameEnglish,
       reciterNameArabic: currentReciter.nameArabic,
       isPlayingAll: false,
+      source: 'surah',
     });
 
     // Use togglePlayPause for smart play/pause behavior
@@ -213,6 +214,7 @@ export default function SurahDetailScreen() {
       reciterName: currentReciter.nameEnglish,
       reciterNameArabic: currentReciter.nameArabic,
       isPlayingAll: true,
+      source: 'surah',
     });
 
     // Auto-scroll to the current ayah
