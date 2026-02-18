@@ -40,6 +40,7 @@ export default function GrammarScreen() {
 
   const beginnerLessons = grammarLessons.filter((l) => l.level === 'beginner');
   const intermediateLessons = grammarLessons.filter((l) => l.level === 'intermediate');
+  const advancedLessons = grammarLessons.filter((l) => l.level === 'advanced');
 
   const getLessonStatus = (lessonId: string) => {
     if (completedLessons.includes(lessonId)) return 'completed';
@@ -124,13 +125,52 @@ export default function GrammarScreen() {
         </View>
 
         {/* Intermediate Section */}
-        <View style={[styles.section, { marginBottom: 100 }]}>
+        <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>{t('common.intermediate')}</Text>
             <Text style={styles.sectionTitleAr}>الْمُتَوَسِّط</Text>
           </View>
 
           {intermediateLessons.map((lesson) => {
+            const status = getLessonStatus(lesson.id);
+            return (
+              <Pressable
+                key={lesson.id}
+                style={styles.lessonCard}
+                onPress={() => router.push(`/grammar/${lesson.id}` as any)}
+              >
+                <View
+                  style={[styles.lessonIcon, { backgroundColor: lesson.color + '20' }]}
+                >
+                  <Ionicons name={lesson.icon as any} size={24} color={lesson.color} />
+                </View>
+                <View style={styles.lessonContent}>
+                  <View style={styles.lessonHeader}>
+                    <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
+                    {status === 'completed' && (
+                      <Ionicons name="checkmark-circle" size={20} color="#22c55e" />
+                    )}
+                    {status === 'in_progress' && (
+                      <Ionicons name="time" size={20} color="#D4AF37" />
+                    )}
+                  </View>
+                  <Text style={styles.lessonTitleAr}>{lesson.titleArabic}</Text>
+                  <Text style={styles.lessonDesc}>{lc(lesson.description, lesson.descriptionFr)}</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#64748b" />
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {/* Advanced Section */}
+        <View style={[styles.section, { marginBottom: 100 }]}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>{t('common.advanced')}</Text>
+            <Text style={styles.sectionTitleAr}>الْمُتَقَدِّم</Text>
+          </View>
+
+          {advancedLessons.map((lesson) => {
             const status = getLessonStatus(lesson.id);
             return (
               <Pressable
