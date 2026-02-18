@@ -31,7 +31,7 @@ export default function AuthScreen() {
       Alert.alert(t('common.error'), t('auth.emailRequired'));
       return false;
     }
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       Alert.alert(t('common.error'), t('auth.invalidEmail'));
       return false;
     }
@@ -39,7 +39,11 @@ export default function AuthScreen() {
       Alert.alert(t('common.error'), t('auth.passwordRequired'));
       return false;
     }
-    if (password.length < 6) {
+    if (isSignUp && (password.length < 7 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password) || !/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password))) {
+      Alert.alert(t('common.error'), t('auth.passwordMinLength'));
+      return false;
+    }
+    if (!isSignUp && password.length < 6) {
       Alert.alert(t('common.error'), t('auth.passwordMinLength'));
       return false;
     }
@@ -67,7 +71,16 @@ export default function AuthScreen() {
         router.replace('/(tabs)');
       }
     } catch (err: any) {
-      Alert.alert(t('common.error'), err.message || 'Something went wrong');
+      const msg = (err.message || '').toLowerCase();
+      let userMessage = t('auth.genericError');
+      if (msg.includes('invalid login') || msg.includes('invalid password') || msg.includes('unauthorized')) {
+        userMessage = t('auth.invalidCredentials');
+      } else if (msg.includes('already registered') || msg.includes('duplicate') || msg.includes('already exists')) {
+        userMessage = t('auth.emailAlreadyRegistered');
+      } else if (msg.includes('network') || msg.includes('fetch')) {
+        userMessage = t('auth.networkError');
+      }
+      Alert.alert(t('common.error'), userMessage);
     } finally {
       setLoading(false);
     }
@@ -85,7 +98,7 @@ export default function AuthScreen() {
       setShowResetModal(false);
       setResetEmail('');
     } catch (err: any) {
-      Alert.alert(t('common.error'), err.message || 'Something went wrong');
+      Alert.alert(t('common.error'), t('auth.genericError'));
     } finally {
       setLoading(false);
     }
@@ -131,6 +144,8 @@ export default function AuthScreen() {
                 style={[styles.toggleButton, !isSignUp && styles.toggleActive]}
                 activeOpacity={0.7}
                 onPress={() => !loading && setMode('signIn')}
+                accessibilityRole="button"
+                accessibilityLabel={t('auth.signIn')}
               >
                 <Text style={[styles.toggleText, !isSignUp && styles.toggleTextActive]}>
                   {t('auth.signIn')}
@@ -140,6 +155,8 @@ export default function AuthScreen() {
                 style={[styles.toggleButton, isSignUp && styles.toggleActive]}
                 activeOpacity={0.7}
                 onPress={() => !loading && setMode('signUp')}
+                accessibilityRole="button"
+                accessibilityLabel={t('auth.signUp')}
               >
                 <Text style={[styles.toggleText, isSignUp && styles.toggleTextActive]}>
                   {t('auth.signUp')}
@@ -159,6 +176,7 @@ export default function AuthScreen() {
                   onChangeText={setFullName}
                   autoCapitalize="words"
                   autoComplete="name"
+                  accessibilityLabel={t('auth.fullName')}
                 />
               </View>
             )}
@@ -175,6 +193,7 @@ export default function AuthScreen() {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoComplete="email"
+                accessibilityLabel={t('auth.email')}
               />
             </View>
 
@@ -190,6 +209,7 @@ export default function AuthScreen() {
                   onChangeText={setConfirmEmail}
                   keyboardType="email-address"
                   autoCapitalize="none"
+                  accessibilityLabel={t('auth.confirmEmail')}
                 />
               </View>
             )}
@@ -205,8 +225,14 @@ export default function AuthScreen() {
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"
+                accessibilityLabel={t('auth.password')}
               />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)} activeOpacity={0.6}>
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                activeOpacity={0.6}
+                accessibilityRole="button"
+                accessibilityLabel={showPassword ? "Hide password" : "Show password"}
+              >
                 <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
               </TouchableOpacity>
             </View>
@@ -223,8 +249,14 @@ export default function AuthScreen() {
                   onChangeText={setConfirmPassword}
                   secureTextEntry={!showConfirmPassword}
                   autoCapitalize="none"
+                  accessibilityLabel={t('auth.confirmPassword')}
                 />
-                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} activeOpacity={0.6}>
+                <TouchableOpacity
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                  activeOpacity={0.6}
+                  accessibilityRole="button"
+                  accessibilityLabel={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                >
                   <Ionicons name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
                 </TouchableOpacity>
               </View>
@@ -235,6 +267,8 @@ export default function AuthScreen() {
               <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={() => { setResetEmail(email); setShowResetModal(true); }}
+                accessibilityRole="button"
+                accessibilityLabel={t('auth.forgotPassword')}
               >
                 <Text style={styles.forgotText}>{t('auth.forgotPassword')}</Text>
               </TouchableOpacity>
@@ -246,6 +280,8 @@ export default function AuthScreen() {
               activeOpacity={0.8}
               onPress={handleSubmit}
               disabled={loading}
+              accessibilityRole="button"
+              accessibilityLabel={isSignUp ? t('auth.signUp') : t('auth.signIn')}
             >
               {loading ? (
                 <ActivityIndicator color="#ffffff" />
@@ -266,7 +302,12 @@ export default function AuthScreen() {
               <Text style={styles.switchText}>
                 {isSignUp ? t('auth.haveAccount') : t('auth.noAccount')}
               </Text>
-              <TouchableOpacity activeOpacity={0.7} onPress={switchMode}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={switchMode}
+                accessibilityRole="button"
+                accessibilityLabel={isSignUp ? t('auth.signIn') : t('auth.signUp')}
+              >
                 <Text style={styles.switchLink}>
                   {isSignUp ? t('auth.signIn') : t('auth.signUp')}
                 </Text>
@@ -282,13 +323,23 @@ export default function AuthScreen() {
           </View>
 
           {/* Social */}
-          <TouchableOpacity style={styles.socialButton} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.socialButton}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={t('auth.continueWithGoogle')}
+          >
             <Ionicons name="logo-google" size={20} color="#ffffff" />
             <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
           </TouchableOpacity>
 
           {Platform.OS === 'ios' && (
-            <TouchableOpacity style={styles.appleButton} activeOpacity={0.7}>
+            <TouchableOpacity
+              style={styles.appleButton}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={t('auth.continueWithApple')}
+            >
               <Ionicons name="logo-apple" size={22} color="#ffffff" />
               <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
             </TouchableOpacity>
@@ -300,11 +351,21 @@ export default function AuthScreen() {
               {t('legal.agreePrefix')}{' '}
             </Text>
             <View style={styles.legalLinks}>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/terms-of-service' as any)}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => router.push('/terms-of-service' as any)}
+                accessibilityRole="button"
+                accessibilityLabel={t('legal.termsOfService')}
+              >
                 <Text style={styles.legalLink}>{t('legal.termsOfService')}</Text>
               </TouchableOpacity>
               <Text style={styles.legalText}> {t('legal.and')} </Text>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/privacy-policy' as any)}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => router.push('/privacy-policy' as any)}
+                accessibilityRole="button"
+                accessibilityLabel={t('legal.privacyPolicy')}
+              >
                 <Text style={styles.legalLink}>{t('legal.privacyPolicy')}</Text>
               </TouchableOpacity>
             </View>
@@ -331,6 +392,7 @@ export default function AuthScreen() {
                 onChangeText={setResetEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                accessibilityLabel={t('auth.email')}
               />
             </View>
             <TouchableOpacity
@@ -338,6 +400,8 @@ export default function AuthScreen() {
               activeOpacity={0.8}
               onPress={handleResetPassword}
               disabled={loading}
+              accessibilityRole="button"
+              accessibilityLabel={t('auth.sendResetLink')}
             >
               {loading ? (
                 <ActivityIndicator color="#ffffff" />
@@ -345,7 +409,12 @@ export default function AuthScreen() {
                 <Text style={styles.submitText}>{t('auth.sendResetLink')}</Text>
               )}
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => setShowResetModal(false)}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => setShowResetModal(false)}
+              accessibilityRole="button"
+              accessibilityLabel={t('common.cancel')}
+            >
               <Text style={styles.cancelText}>{t('common.cancel')}</Text>
             </TouchableOpacity>
           </View>

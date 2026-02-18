@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet, Animated, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useSegments } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAudioPlayerStore, startContinuousPlay, advanceToNextSurah } from '../../stores/audioPlayerStore';
 import { quranAudioService } from '../../services/quranAudioService';
@@ -35,30 +35,25 @@ export function MiniAudioPlayer() {
 
   // Animate in/out
   useEffect(() => {
-    if (currentlyPlaying) {
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        useNativeDriver: true,
-        tension: 80,
-        friction: 12,
-      }).start();
-    } else {
-      Animated.spring(slideAnim, {
-        toValue: 100,
-        useNativeDriver: true,
-        tension: 80,
-        friction: 12,
-      }).start();
-    }
+    const anim = Animated.spring(slideAnim, {
+      toValue: currentlyPlaying ? 0 : 100,
+      useNativeDriver: true,
+      tension: 80,
+      friction: 12,
+    });
+    anim.start();
+    return () => anim.stop();
   }, [currentlyPlaying, isPlaying, isPaused, isLoading]);
 
   // Animate progress bar
   useEffect(() => {
-    Animated.timing(progressAnim, {
+    const anim = Animated.timing(progressAnim, {
       toValue: progress,
       duration: 200,
       useNativeDriver: false,
-    }).start();
+    });
+    anim.start();
+    return () => anim.stop();
   }, [progress]);
 
   const handlePlayPause = async () => {
@@ -163,7 +158,7 @@ export function MiniAudioPlayer() {
       </View>
 
       {/* Main Content */}
-      <Pressable style={styles.content} onPress={handleNavigateToSurah}>
+      <Pressable style={styles.content} onPress={handleNavigateToSurah} accessibilityRole="button" accessibilityLabel={`Now playing ${currentlyPlaying.surahNameEnglish}, ayah ${currentlyPlaying.ayahNumber}. Tap to open surah`}>
         {/* Ayah Number Badge */}
         <View style={styles.ayahBadge}>
           <Text style={styles.ayahNumberText}>{currentlyPlaying.ayahNumber}</Text>
@@ -193,6 +188,8 @@ export function MiniAudioPlayer() {
               style={[styles.skipButton, currentlyPlaying.surahNumber <= 1 && styles.disabledButton]}
               disabled={currentlyPlaying.surahNumber <= 1}
               onPress={(e) => { e.stopPropagation(); handlePreviousSurah(); }}
+              accessibilityRole="button"
+              accessibilityLabel="Previous surah"
             >
               <Ionicons name="play-skip-back" size={14} color={currentlyPlaying.surahNumber > 1 ? '#a3a398' : '#3a3a32'} />
             </Pressable>
@@ -201,12 +198,16 @@ export function MiniAudioPlayer() {
             style={[styles.controlButton, currentlyPlaying.ayahNumber <= 1 && styles.disabledButton]}
             disabled={currentlyPlaying.ayahNumber <= 1}
             onPress={(e) => { e.stopPropagation(); handlePreviousAyah(); }}
+            accessibilityRole="button"
+            accessibilityLabel="Previous ayah"
           >
             <Ionicons name="chevron-back" size={18} color={currentlyPlaying.ayahNumber > 1 ? '#f5f5f0' : '#3a3a32'} />
           </Pressable>
           <Pressable
             style={styles.playPauseButton}
             onPress={(e) => { e.stopPropagation(); handlePlayPause(); }}
+            accessibilityRole="button"
+            accessibilityLabel={isPlaying ? 'Pause' : 'Play'}
           >
             {isLoading ? (
               <View style={styles.loadingIndicator}>
@@ -222,6 +223,8 @@ export function MiniAudioPlayer() {
             style={[styles.controlButton, currentlyPlaying.ayahNumber >= currentlyPlaying.totalAyahs && styles.disabledButton]}
             disabled={currentlyPlaying.ayahNumber >= currentlyPlaying.totalAyahs}
             onPress={(e) => { e.stopPropagation(); handleNextAyah(); }}
+            accessibilityRole="button"
+            accessibilityLabel="Next ayah"
           >
             <Ionicons name="chevron-forward" size={18} color={currentlyPlaying.ayahNumber < currentlyPlaying.totalAyahs ? '#f5f5f0' : '#3a3a32'} />
           </Pressable>
@@ -230,6 +233,8 @@ export function MiniAudioPlayer() {
               style={[styles.skipButton, currentlyPlaying.surahNumber >= 114 && styles.disabledButton]}
               disabled={currentlyPlaying.surahNumber >= 114}
               onPress={(e) => { e.stopPropagation(); handleNextSurah(); }}
+              accessibilityRole="button"
+              accessibilityLabel="Next surah"
             >
               <Ionicons name="play-skip-forward" size={14} color={currentlyPlaying.surahNumber < 114 ? '#a3a398' : '#3a3a32'} />
             </Pressable>
@@ -237,6 +242,8 @@ export function MiniAudioPlayer() {
           <Pressable
             style={styles.closeButton}
             onPress={(e) => { e.stopPropagation(); handleClose(); }}
+            accessibilityRole="button"
+            accessibilityLabel="Close audio player"
           >
             <Ionicons name="close" size={18} color="#6b6b60" />
           </Pressable>

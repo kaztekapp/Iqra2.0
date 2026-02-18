@@ -173,6 +173,8 @@ export default function HomeScreen() {
           <Pressable
             style={styles.continueCard}
             onPress={() => router.push(currentModule.route as any)}
+            accessibilityRole="button"
+            accessibilityLabel={`${t('home.continueLearning')}: ${getModuleName()}`}
           >
             <View style={styles.continueContent}>
               <View style={[styles.continueIcon, { backgroundColor: currentModule.color + '20' }]}>
@@ -202,6 +204,8 @@ export default function HomeScreen() {
                 key={action.id}
                 style={styles.actionCard}
                 onPress={() => router.push(action.route as any)}
+                accessibilityRole="button"
+                accessibilityLabel={action.title}
               >
                 <View style={[styles.actionIcon, { backgroundColor: action.color + '20' }]}>
                   <Ionicons name={action.icon} size={24} color={action.color} />

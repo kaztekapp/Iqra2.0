@@ -97,14 +97,14 @@ export default function QuranScreen() {
         {/* Quick Actions - 2x2 Grid */}
         <View style={styles.quickActionsGrid}>
           <View style={styles.quickActionsRow}>
-            <Pressable style={styles.actionCardGrid} onPress={handleLearnQuranPress}>
+            <Pressable style={styles.actionCardGrid} onPress={handleLearnQuranPress} accessibilityRole="button" accessibilityLabel={t('quran.quranTitle')}>
               <View style={[styles.actionIcon, { backgroundColor: '#3b82f620' }]}>
                 <Ionicons name="book" size={24} color="#3b82f6" />
               </View>
               <Text style={styles.actionTitle}>{t('quran.quranTitle')}</Text>
               <Text style={styles.actionDesc}>{t('quran.allSurahs')}</Text>
             </Pressable>
-            <Pressable style={styles.actionCardGrid} onPress={handleStoriesPress}>
+            <Pressable style={styles.actionCardGrid} onPress={handleStoriesPress} accessibilityRole="button" accessibilityLabel={t('quran.stories')}>
               <View style={[styles.actionIcon, { backgroundColor: '#8b5cf620' }]}>
                 <Ionicons name="library" size={24} color="#8b5cf6" />
               </View>
@@ -116,7 +116,7 @@ export default function QuranScreen() {
             </Pressable>
           </View>
           <View style={styles.quickActionsRow}>
-            <Pressable style={styles.actionCardGrid} onPress={handleDuasPress}>
+            <Pressable style={styles.actionCardGrid} onPress={handleDuasPress} accessibilityRole="button" accessibilityLabel={t('quran.duas')}>
               <View style={[styles.actionIcon, { backgroundColor: '#f59e0b20' }]}>
                 <Ionicons name="hand-left" size={24} color="#f59e0b" />
               </View>
@@ -126,7 +126,7 @@ export default function QuranScreen() {
               <Text style={styles.actionTitle}>{t('quran.duas')}</Text>
               <Text style={styles.actionDesc}>{t('quran.propheticPrayers')}</Text>
             </Pressable>
-            <Pressable style={styles.actionCardGrid} onPress={handleQuizPress}>
+            <Pressable style={styles.actionCardGrid} onPress={handleQuizPress} accessibilityRole="button" accessibilityLabel={t('quran.quizzes')}>
               <View style={[styles.actionIcon, { backgroundColor: '#06b6d420' }]}>
                 <Ionicons name="help-circle" size={24} color="#06b6d4" />
               </View>
@@ -145,7 +145,7 @@ export default function QuranScreen() {
             </View>
             <Text style={styles.practiceSectionTitleArabic}>العبادات</Text>
           </View>
-          <Pressable style={styles.practiceCardWide} onPress={handlePrayerPress}>
+          <Pressable style={styles.practiceCardWide} onPress={handlePrayerPress} accessibilityRole="button" accessibilityLabel={t('quran.prayerPractice')}>
             <View style={[styles.practiceCardIcon, { backgroundColor: '#10b98120' }]}>
               <Ionicons name="body" size={24} color="#10b981" />
             </View>

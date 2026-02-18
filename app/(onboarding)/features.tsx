@@ -69,7 +69,13 @@ export default function FeaturesScreen() {
     <SafeAreaView style={styles.container}>
       {/* Skip button */}
       <View style={styles.topBar}>
-        <TouchableOpacity style={styles.skipButton} activeOpacity={0.7} onPress={handleSkip}>
+        <TouchableOpacity
+          style={styles.skipButton}
+          activeOpacity={0.7}
+          onPress={handleSkip}
+          accessibilityRole="button"
+          accessibilityLabel={t('common.skip')}
+        >
           <Text style={styles.skipText}>{t('common.skip')}</Text>
         </TouchableOpacity>
       </View>
@@ -114,6 +120,8 @@ export default function FeaturesScreen() {
           style={[styles.nextButton, { backgroundColor: activeColor }]}
           activeOpacity={0.8}
           onPress={handleNext}
+          accessibilityRole="button"
+          accessibilityLabel={isLast ? t('common.continue') : t('common.next')}
         >
           <Text style={styles.nextButtonText}>
             {isLast ? t('common.continue') : t('common.next')}

@@ -60,6 +60,8 @@ export default function GoalsScreen() {
                 ]}
                 activeOpacity={0.7}
                 onPress={() => toggleGoal(goal.id)}
+                accessibilityRole="button"
+                accessibilityLabel={`${t(goal.labelKey)}${isSelected ? ', selected' : ''}`}
               >
                 <View
                   style={[
@@ -101,6 +103,8 @@ export default function GoalsScreen() {
           ]}
           activeOpacity={0.8}
           onPress={handleContinue}
+          accessibilityRole="button"
+          accessibilityLabel={t('common.continue')}
         >
           <Text style={[styles.continueText, !hasSelection && { opacity: 0.4 }]}>
             {t('common.continue')}

@@ -459,7 +459,7 @@ export default function ProfileScreen() {
               </View>
             </View>
             {downloadedSurahsCount > 0 && (
-              <Pressable style={styles.clearCacheButton} onPress={handleClearCache}>
+              <Pressable style={styles.clearCacheButton} onPress={handleClearCache} accessibilityRole="button" accessibilityLabel={t('profile.clearDownloadedAudio')}>
                 <Ionicons name="trash-outline" size={18} color="#f59e0b" />
                 <Text style={styles.clearCacheText}>{t('profile.clearDownloadedAudio')}</Text>
               </Pressable>
@@ -512,6 +512,9 @@ export default function ProfileScreen() {
               style={styles.checkUpdateButton}
               onPress={handleCheckForUpdates}
               disabled={updateInfo.isChecking}
+              accessibilityRole="button"
+              accessibilityLabel="Check for updates"
+              accessibilityState={{ disabled: updateInfo.isChecking }}
             >
               {updateInfo.isChecking ? (
                 <ActivityIndicator size="small" color="#ffffff" />
@@ -543,6 +546,8 @@ export default function ProfileScreen() {
                 onValueChange={setShowVowels}
                 trackColor={{ false: '#334155', true: '#6366f1' }}
                 thumbColor={showVowels ? '#ffffff' : '#94a3b8'}
+                accessibilityLabel={t('profile.showVowelMarks')}
+                accessibilityRole="switch"
               />
             </View>
 
@@ -561,6 +566,9 @@ export default function ProfileScreen() {
               <Pressable
                 style={[styles.languageOption, language === 'en' && styles.languageOptionActive]}
                 onPress={() => handleLanguageChange('en')}
+                accessibilityRole="button"
+                accessibilityLabel={t('profile.english')}
+                accessibilityState={{ selected: language === 'en' }}
               >
                 <Text style={[styles.languageOptionText, language === 'en' && styles.languageOptionTextActive]}>
                   {t('profile.english')}
@@ -570,6 +578,9 @@ export default function ProfileScreen() {
               <Pressable
                 style={[styles.languageOption, language === 'fr' && styles.languageOptionActive]}
                 onPress={() => handleLanguageChange('fr')}
+                accessibilityRole="button"
+                accessibilityLabel={t('profile.french')}
+                accessibilityState={{ selected: language === 'fr' }}
               >
                 <Text style={[styles.languageOptionText, language === 'fr' && styles.languageOptionTextActive]}>
                   {t('profile.french')}
@@ -587,6 +598,8 @@ export default function ProfileScreen() {
             <Pressable
               style={styles.legalRow}
               onPress={() => router.push('/privacy-policy' as Href)}
+              accessibilityRole="link"
+              accessibilityLabel={t('legal.privacyPolicy')}
             >
               <View style={styles.settingLeft}>
                 <Ionicons name="shield-checkmark-outline" size={22} color="#94a3b8" />
@@ -598,6 +611,8 @@ export default function ProfileScreen() {
             <Pressable
               style={styles.legalRow}
               onPress={() => router.push('/terms-of-service' as Href)}
+              accessibilityRole="link"
+              accessibilityLabel={t('legal.termsOfService')}
             >
               <View style={styles.settingLeft}>
                 <Ionicons name="document-text-outline" size={22} color="#94a3b8" />
@@ -611,7 +626,7 @@ export default function ProfileScreen() {
         {/* Log Out */}
         {isAuthenticated && (
           <View style={styles.section}>
-            <Pressable style={styles.logOutButton} onPress={handleLogOut}>
+            <Pressable style={styles.logOutButton} onPress={handleLogOut} accessibilityRole="button" accessibilityLabel={t('profile.logOut')}>
               <Ionicons name="log-out-outline" size={20} color="#f59e0b" />
               <Text style={styles.logOutButtonText}>{t('profile.logOut')}</Text>
             </Pressable>
@@ -625,6 +640,8 @@ export default function ProfileScreen() {
             onPress={() => {
               resetProgress();
             }}
+            accessibilityRole="button"
+            accessibilityLabel={t('profile.resetAllProgress')}
           >
             <Ionicons name="refresh" size={20} color="#ef4444" />
             <Text style={styles.resetButtonText}>{t('profile.resetAllProgress')}</Text>
@@ -665,7 +682,7 @@ export default function ProfileScreen() {
                 </View>
               </>
             )}
-            <Pressable style={styles.popupButton} onPress={clearNewAchievement}>
+            <Pressable style={styles.popupButton} onPress={clearNewAchievement} accessibilityRole="button" accessibilityLabel={t('common.continue')}>
               <Text style={styles.popupButtonText}>{t('common.continue')}</Text>
             </Pressable>
           </View>

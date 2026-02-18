@@ -22,6 +22,8 @@ export default function WelcomeScreen() {
           style={styles.button}
           activeOpacity={0.8}
           onPress={() => router.push('/(onboarding)/features')}
+          accessibilityRole="button"
+          accessibilityLabel={t('common.getStarted')}
         >
           <Text style={styles.buttonText}>{t('common.getStarted')}</Text>
           <View style={styles.buttonIcon}>

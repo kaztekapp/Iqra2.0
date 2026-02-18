@@ -325,7 +325,7 @@ export default function SurahDetailScreen() {
         <View style={styles.errorContainer}>
           <Ionicons name="cloud-offline" size={48} color="#64748b" />
           <Text style={styles.errorText}>{error}</Text>
-          <Pressable style={styles.retryButton} onPress={refetch}>
+          <Pressable style={styles.retryButton} onPress={refetch} accessibilityRole="button" accessibilityLabel="Retry loading surah">
             <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
           </Pressable>
         </View>
@@ -371,7 +371,7 @@ export default function SurahDetailScreen() {
     <>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable style={styles.backButton} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Go back">
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -383,6 +383,8 @@ export default function SurahDetailScreen() {
             style={[styles.navButton, surah.surahNumber <= 1 && styles.navButtonDisabled]}
             onPress={handlePreviousSurah}
             disabled={surah.surahNumber <= 1}
+            accessibilityRole="button"
+            accessibilityLabel="Previous surah"
           >
             <Ionicons
               name="chevron-back"
@@ -395,6 +397,8 @@ export default function SurahDetailScreen() {
             style={[styles.navButton, surah.surahNumber >= 114 && styles.navButtonDisabled]}
             onPress={handleNextSurah}
             disabled={surah.surahNumber >= 114}
+            accessibilityRole="button"
+            accessibilityLabel="Next surah"
           >
             <Ionicons
               name="chevron-forward"
@@ -425,7 +429,7 @@ export default function SurahDetailScreen() {
       </View>
 
       {/* Reciter Selector */}
-      <Pressable style={styles.reciterCard} onPress={() => setShowReciterModal(true)}>
+      <Pressable style={styles.reciterCard} onPress={() => setShowReciterModal(true)} accessibilityRole="button" accessibilityLabel={`${t('surahFeature.reciter')}: ${currentReciter.nameEnglish}. ${t('surahFeature.change')}`}>
         <View style={styles.reciterInfo}>
           <View style={styles.reciterIcon}>
             <Ionicons name="mic" size={20} color="#10b981" />
@@ -444,11 +448,11 @@ export default function SurahDetailScreen() {
 
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
-        <Pressable style={styles.primaryButton} onPress={handleLearn}>
+        <Pressable style={styles.primaryButton} onPress={handleLearn} accessibilityRole="button" accessibilityLabel={t('surahFeature.learn')}>
           <Ionicons name="school" size={20} color="#D4AF37" />
           <Text style={styles.primaryButtonText}>{t('surahFeature.learn')}</Text>
         </Pressable>
-        <Pressable style={styles.secondaryButton} onPress={handleWrite}>
+        <Pressable style={styles.secondaryButton} onPress={handleWrite} accessibilityRole="button" accessibilityLabel={t('surahFeature.write')}>
           <Ionicons name="pencil" size={20} color="#D4AF37" />
           <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
         </Pressable>
@@ -463,6 +467,8 @@ export default function SurahDetailScreen() {
             (isPlayingAll || audioState === 'playing') && styles.playAllButtonActive,
           ]}
           onPress={handlePlayAllToggle}
+          accessibilityRole="button"
+          accessibilityLabel={isPlayingAll || audioState === 'playing' ? t('surahFeature.stop') : t('surahFeature.playAll')}
         >
           {audioState === 'loading' && isPlayingAll ? (
             <ActivityIndicator size="small" color="#ffffff" />
@@ -485,6 +491,8 @@ export default function SurahDetailScreen() {
           <Pressable
             style={[styles.toggleButton, viewMode === 'cards' && styles.toggleButtonActive]}
             onPress={() => setViewMode('cards')}
+            accessibilityRole="button"
+            accessibilityLabel="Card view"
           >
             <Ionicons
               name="grid"
@@ -495,6 +503,8 @@ export default function SurahDetailScreen() {
           <Pressable
             style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
             onPress={() => setViewMode('list')}
+            accessibilityRole="button"
+            accessibilityLabel="List view"
           >
             <Ionicons
               name="list"
@@ -512,6 +522,8 @@ export default function SurahDetailScreen() {
     <Pressable
       style={styles.backToTopButton}
       onPress={() => flatListRef.current?.scrollToOffset({ offset: 0, animated: true })}
+      accessibilityRole="button"
+      accessibilityLabel={t('surahFeature.backToTop')}
     >
       <Ionicons name="arrow-up" size={18} color="#10b981" />
       <Text style={styles.backToTopText}>{t('surahFeature.backToTop')}</Text>
@@ -531,7 +543,7 @@ export default function SurahDetailScreen() {
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{t('surahFeature.selectReciter')}</Text>
-              <Pressable onPress={() => setShowReciterModal(false)}>
+              <Pressable onPress={() => setShowReciterModal(false)} accessibilityRole="button" accessibilityLabel="Close reciter selection">
                 <Ionicons name="close" size={24} color="#ffffff" />
               </Pressable>
             </View>
@@ -544,6 +556,8 @@ export default function SurahDetailScreen() {
                     currentReciterId === reciter.id && styles.reciterOptionActive,
                   ]}
                   onPress={() => handleReciterChange(reciter.id as ReciterId)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Select reciter ${reciter.nameEnglish}`}
                 >
                   <View style={styles.reciterOptionInfo}>
                     <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>

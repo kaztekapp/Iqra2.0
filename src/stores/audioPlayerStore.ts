@@ -59,16 +59,15 @@ export const useAudioPlayerStore = create<AudioPlayerState>()((set) => ({
  */
 export function startContinuousPlay(surahNumber: number, ayahNumber: number, totalAyahs: number) {
   const store = useAudioPlayerStore.getState();
+  if (!store.currentlyPlaying) return;
 
   // Update current ayah in store
-  if (store.currentlyPlaying) {
-    useAudioPlayerStore.setState({
-      currentlyPlaying: { ...store.currentlyPlaying, ayahNumber },
-      isLoading: true,
-      isPlaying: false,
-      isPaused: false,
-    });
-  }
+  useAudioPlayerStore.setState({
+    currentlyPlaying: { ...store.currentlyPlaying, ayahNumber },
+    isLoading: true,
+    isPlaying: false,
+    isPaused: false,
+  });
 
   quranAudioService.playAyah(surahNumber, ayahNumber, {
     onStateChange: (state) => {
@@ -87,6 +86,9 @@ export function startContinuousPlay(surahNumber: number, ayahNumber: number, tot
     onError: () => {
       useAudioPlayerStore.getState().clearPlayer();
     },
+  }).catch(() => {
+    // Safety net — prevent unhandled promise rejection from crashing the app
+    useAudioPlayerStore.getState().clearPlayer();
   });
 }
 
@@ -95,14 +97,19 @@ export function startContinuousPlay(surahNumber: number, ayahNumber: number, tot
  */
 export function advanceToNextSurah() {
   const store = useAudioPlayerStore.getState();
-  const currentSurahNumber = store.currentlyPlaying?.surahNumber;
-
-  if (!currentSurahNumber || currentSurahNumber >= 114) {
+  if (!store.currentlyPlaying) {
     store.clearPlayer();
     return;
   }
 
-  const nextSurah = getSurahByNumber(currentSurahNumber + 1);
+  const { surahNumber, reciterName, reciterNameArabic } = store.currentlyPlaying;
+
+  if (surahNumber >= 114) {
+    store.clearPlayer();
+    return;
+  }
+
+  const nextSurah = getSurahByNumber(surahNumber + 1);
   if (!nextSurah) {
     store.clearPlayer();
     return;
@@ -116,8 +123,8 @@ export function advanceToNextSurah() {
       surahNameEnglish: nextSurah.nameEnglish,
       ayahNumber: 1,
       totalAyahs: nextSurah.ayahCount,
-      reciterName: store.currentlyPlaying?.reciterName || '',
-      reciterNameArabic: store.currentlyPlaying?.reciterNameArabic || '',
+      reciterName,
+      reciterNameArabic,
       isPlayingAll: true,
     },
   });

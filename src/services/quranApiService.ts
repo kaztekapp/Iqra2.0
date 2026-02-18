@@ -4,6 +4,21 @@
 import { Ayah, Surah, QuranWord } from '../types/quran';
 
 const QURAN_API_BASE = 'https://api.quran.com/api/v4';
+const FETCH_TIMEOUT = 15000;
+
+async function fetchWithTimeout(url: string): Promise<Response> {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    return response;
+  } finally {
+    clearTimeout(id);
+  }
+}
 
 // Surah metadata (this is static and verified) - All 114 Surahs
 export const SURAH_METADATA: Record<number, Omit<Surah, 'id'>> = {
@@ -169,13 +184,13 @@ class QuranApiService {
     try {
       // Fetch verses with word-by-word data
       // fields: verse-level text fields, word_fields: word-level text fields
-      const versesResponse = await fetch(
+      const versesResponse = await fetchWithTimeout(
         `${QURAN_API_BASE}/verses/by_chapter/${surahNumber}?language=en&words=true&fields=text_uthmani,text_imlaei&word_fields=text_uthmani,text_imlaei,transliteration,translation&per_page=286`
       );
       const versesData: QuranApiResponse<QuranApiVerse> = await versesResponse.json();
 
       // Fetch translations (Sahih International - resource_id: 131)
-      const translationResponse = await fetch(
+      const translationResponse = await fetchWithTimeout(
         `${QURAN_API_BASE}/quran/translations/131?chapter_number=${surahNumber}`
       );
       const translationData: QuranApiResponse<any> = await translationResponse.json();
@@ -227,7 +242,7 @@ class QuranApiService {
    */
   async fetchAyah(surahNumber: number, ayahNumber: number): Promise<Ayah | null> {
     try {
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${QURAN_API_BASE}/verses/by_key/${surahNumber}:${ayahNumber}?language=en&words=true&fields=text_uthmani,text_imlaei&word_fields=text_uthmani,text_imlaei,transliteration,translation`
       );
       const data: QuranApiResponse<QuranApiVerse> = await response.json();
@@ -273,7 +288,7 @@ class QuranApiService {
    */
   async fetchTransliteration(surahNumber: number): Promise<Map<number, string[]>> {
     try {
-      const response = await fetch(
+      const response = await fetchWithTimeout(
         `${QURAN_API_BASE}/quran/verses/uthmani?chapter_number=${surahNumber}`
       );
       const data = await response.json();
@@ -456,10 +471,10 @@ class QuranApiService {
   }
 
   private cleanTranslation(text: string): string {
-    // Remove HTML tags and footnote markers
+    // Remove footnote markers (full <sup>...</sup> with content) first, then remaining tags
     return text
-      .replace(/<[^>]*>/g, '')
       .replace(/<sup[^>]*>.*?<\/sup>/g, '')
+      .replace(/<[^>]*>/g, '')
       .trim();
   }
 }

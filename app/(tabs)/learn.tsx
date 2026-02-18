@@ -42,6 +42,9 @@ function ModuleCard({
       style={[styles.moduleCard, locked && styles.moduleCardLocked]}
       onPress={handlePress}
       disabled={locked}
+      accessibilityRole="button"
+      accessibilityLabel={`${title}${locked ? ', locked' : ''}`}
+      accessibilityState={{ disabled: locked }}
     >
       <View style={styles.moduleHeader}>
         <View style={[styles.moduleIcon, { backgroundColor: color + '20' }]}>

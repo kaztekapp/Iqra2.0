@@ -75,6 +75,8 @@ export function AyahCard({
     <Pressable
       style={[styles.container, isLearned && styles.containerLearned]}
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Ayah ${ayah.ayahNumber}`}
     >
       {/* Header with Ayah Number and Actions */}
       <View style={styles.header}>
@@ -87,7 +89,7 @@ export function AyahCard({
               <Ionicons name="heart" size={16} color="#8b5cf6" />
             </View>
           )}
-          <Pressable style={styles.actionButton} onPress={onBookmark}>
+          <Pressable style={styles.actionButton} onPress={onBookmark} accessibilityRole="button" accessibilityLabel={isBookmarked ? `Remove bookmark from ayah ${ayah.ayahNumber}` : `Bookmark ayah ${ayah.ayahNumber}`}>
             <Ionicons
               name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
               size={20}
@@ -98,6 +100,8 @@ export function AyahCard({
             style={getPlayButtonStyle()}
             onPress={onPlay}
             disabled={isLoading}
+            accessibilityRole="button"
+            accessibilityLabel={isPlaying ? `Pause ayah ${ayah.ayahNumber}` : isPaused ? `Resume ayah ${ayah.ayahNumber}` : `Play ayah ${ayah.ayahNumber}`}
           >
             {isLoading ? (
               <ActivityIndicator size="small" color="#ffffff" />
@@ -140,6 +144,8 @@ export function AyahCard({
               ]}
               onPress={handleSpeedDecrease}
               disabled={playbackSpeed <= SPEED_OPTIONS[0]}
+              accessibilityRole="button"
+              accessibilityLabel="Decrease playback speed"
             >
               <Ionicons
                 name="remove"
@@ -157,6 +163,8 @@ export function AyahCard({
               ]}
               onPress={handleSpeedIncrease}
               disabled={playbackSpeed >= SPEED_OPTIONS[SPEED_OPTIONS.length - 1]}
+              accessibilityRole="button"
+              accessibilityLabel="Increase playback speed"
             >
               <Ionicons
                 name="add"
@@ -199,6 +207,8 @@ export function AyahListItem({
     <Pressable
       style={[styles.listItem, isLearned && styles.listItemLearned]}
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Ayah ${ayah.ayahNumber}`}
     >
       <View style={styles.listItemNumber}>
         <Text style={styles.listItemNumberText}>{ayah.ayahNumber}</Text>

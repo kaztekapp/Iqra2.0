@@ -72,7 +72,7 @@ export default function AllSurahsScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable style={styles.backButton} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Go back">
           <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -94,9 +94,10 @@ export default function AllSurahsScreen() {
             placeholderTextColor="#64748b"
             value={searchQuery}
             onChangeText={handleSearchChange}
+            accessibilityLabel={t('allSurahsFeature.searchPlaceholder')}
           />
           {searchQuery.length > 0 && (
-            <Pressable onPress={() => { setSearchQuery(''); setDebouncedQuery(''); }}>
+            <Pressable onPress={() => { setSearchQuery(''); setDebouncedQuery(''); }} accessibilityRole="button" accessibilityLabel="Clear search">
               <Ionicons name="close-circle" size={20} color="#64748b" />
             </Pressable>
           )}
@@ -118,6 +119,8 @@ export default function AllSurahsScreen() {
           <Pressable
             style={styles.surahCard}
             onPress={() => handleSurahPress(surah.id)}
+            accessibilityRole="button"
+            accessibilityLabel={`Surah ${surah.surahNumber}, ${surah.nameEnglish}`}
           >
             <View style={styles.surahNumber}>
               <Text style={styles.surahNumberText}>{surah.surahNumber}</Text>

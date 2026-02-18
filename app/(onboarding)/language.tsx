@@ -53,6 +53,8 @@ export default function LanguageScreen() {
               style={styles.card}
               activeOpacity={0.7}
               onPress={() => handleSelect(lang.code)}
+              accessibilityRole="button"
+              accessibilityLabel={`Select ${lang.label}`}
             >
               <Text style={styles.flag}>{lang.flag}</Text>
               <View style={styles.cardTextSection}>

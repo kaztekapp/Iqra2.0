@@ -271,7 +271,7 @@ export default function LearnModeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable style={styles.closeButton} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Close learn mode">
           <Ionicons name="close" size={24} color="#ffffff" />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -295,6 +295,8 @@ export default function LearnModeScreen() {
         <Pressable
           style={styles.guideHeader}
           onPress={() => setShowGuide(!showGuide)}
+          accessibilityRole="button"
+          accessibilityLabel={showGuide ? `${t('surahLearnMode.howToUse')}, collapse` : `${t('surahLearnMode.howToUse')}, expand`}
         >
           <View style={styles.guideHeaderLeft}>
             <View style={styles.guideIconBg}>
@@ -399,6 +401,8 @@ export default function LearnModeScreen() {
               ]}
               onPress={toggleAyahAudio}
               disabled={audioState === 'loading'}
+              accessibilityRole="button"
+              accessibilityLabel={audioState === 'playing' ? 'Pause ayah audio' : audioState === 'paused' ? 'Resume ayah audio' : 'Play ayah audio'}
             >
               {audioState === 'loading' ? (
                 <ActivityIndicator color="#10b981" size="small" />
@@ -430,6 +434,8 @@ export default function LearnModeScreen() {
           <Pressable
             style={styles.rangeSelectorHeader}
             onPress={() => setShowRangeSelector(!showRangeSelector)}
+            accessibilityRole="button"
+            accessibilityLabel={showRangeSelector ? `${t('surahLearnMode.verseRange')}, collapse` : `${t('surahLearnMode.verseRange')}, expand`}
           >
             <View style={styles.rangeSelectorInfo}>
               <Ionicons name="options" size={18} color="#10b981" />
@@ -454,6 +460,8 @@ export default function LearnModeScreen() {
                     style={[styles.rangeButton, startVerse <= 1 && styles.rangeButtonDisabled]}
                     onPress={() => handleStartVerseChange(startVerse - 1)}
                     disabled={startVerse <= 1}
+                    accessibilityRole="button"
+                    accessibilityLabel="Decrease start verse"
                   >
                     <Ionicons name="remove" size={16} color={startVerse <= 1 ? '#475569' : '#ffffff'} />
                   </Pressable>
@@ -479,11 +487,14 @@ export default function LearnModeScreen() {
                     keyboardType="number-pad"
                     selectTextOnFocus
                     maxLength={3}
+                    accessibilityLabel="Start verse number"
                   />
                   <Pressable
                     style={[styles.rangeButton, startVerse >= endVerse && styles.rangeButtonDisabled]}
                     onPress={() => handleStartVerseChange(startVerse + 1)}
                     disabled={startVerse >= endVerse}
+                    accessibilityRole="button"
+                    accessibilityLabel="Increase start verse"
                   >
                     <Ionicons name="add" size={16} color={startVerse >= endVerse ? '#475569' : '#ffffff'} />
                   </Pressable>
@@ -498,6 +509,8 @@ export default function LearnModeScreen() {
                     style={[styles.rangeButton, endVerse <= startVerse && styles.rangeButtonDisabled]}
                     onPress={() => handleEndVerseChange(endVerse - 1)}
                     disabled={endVerse <= startVerse}
+                    accessibilityRole="button"
+                    accessibilityLabel="Decrease end verse"
                   >
                     <Ionicons name="remove" size={16} color={endVerse <= startVerse ? '#475569' : '#ffffff'} />
                   </Pressable>
@@ -523,11 +536,14 @@ export default function LearnModeScreen() {
                     keyboardType="number-pad"
                     selectTextOnFocus
                     maxLength={3}
+                    accessibilityLabel="End verse number"
                   />
                   <Pressable
                     style={[styles.rangeButton, endVerse >= ayahs.length && styles.rangeButtonDisabled]}
                     onPress={() => handleEndVerseChange(endVerse + 1)}
                     disabled={endVerse >= ayahs.length}
+                    accessibilityRole="button"
+                    accessibilityLabel="Increase end verse"
                   >
                     <Ionicons name="add" size={16} color={endVerse >= ayahs.length ? '#475569' : '#ffffff'} />
                   </Pressable>
@@ -548,6 +564,8 @@ export default function LearnModeScreen() {
                     startVerseRef.current = start;
                     endVerseRef.current = end;
                   }}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('surahLearnMode.next5')}
                 >
                   <Text style={styles.quickSelectText}>{t('surahLearnMode.next5')}</Text>
                 </Pressable>
@@ -561,6 +579,8 @@ export default function LearnModeScreen() {
                     startVerseRef.current = 1;
                     endVerseRef.current = ayahs.length;
                   }}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('surahLearnMode.reset')}
                 >
                   <Text style={styles.quickSelectText}>{t('surahLearnMode.reset')}</Text>
                 </Pressable>
@@ -580,6 +600,8 @@ export default function LearnModeScreen() {
                     playbackSpeed === speed && styles.controlButtonActive,
                   ]}
                   onPress={() => handleSpeedChange(speed)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Playback speed ${speed}x`}
                 >
                   <Text
                     style={[
@@ -606,6 +628,8 @@ export default function LearnModeScreen() {
                     repeatCount === count && styles.controlButtonActive,
                   ]}
                   onPress={() => handleRepeatChange(count)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Repeat ${count} times`}
                 >
                   <Text
                     style={[
@@ -635,6 +659,8 @@ export default function LearnModeScreen() {
         <Pressable
           style={styles.bottomAutoAdvance}
           onPress={toggleAutoAdvance}
+          accessibilityRole="button"
+          accessibilityLabel={`${t('surahLearnMode.autoAdvance')}, ${autoAdvance ? 'on' : 'off'}`}
         >
           <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
             {t('surahLearnMode.autoAdvance')}

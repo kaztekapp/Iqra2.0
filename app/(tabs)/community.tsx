@@ -23,7 +23,7 @@ const ShortcutCard = ({
   subtitle?: string;
   onPress: () => void;
 }) => (
-  <Pressable style={styles.shortcutCard} onPress={onPress}>
+  <Pressable style={styles.shortcutCard} onPress={onPress} accessibilityRole="button" accessibilityLabel={title}>
     <View style={[styles.shortcutIconContainer, { backgroundColor: `${color}20` }]}>
       <Ionicons name={icon as any} size={32} color={color} />
     </View>
@@ -56,7 +56,7 @@ export default function CommunityScreen() {
   const communityStats = getCommunityStats(progress.totalXp);
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.content}
