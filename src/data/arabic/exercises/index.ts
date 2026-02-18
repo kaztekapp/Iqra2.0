@@ -3,12 +3,14 @@ import alphabetExercises from './alphabetExercises';
 import vocabularyExercises from './vocabularyExercises';
 import grammarExercises from './grammarExercises';
 import verbExercises from './verbExercises';
+import grammarExercises2 from './grammarExercises2';
 
 // Combine all exercises
 export const exercises: Exercise[] = [
   ...alphabetExercises,
   ...vocabularyExercises,
   ...grammarExercises,
+  ...grammarExercises2,
   ...verbExercises,
 ];
 
@@ -210,6 +212,27 @@ export const getExercisesForGrammarLesson = (lessonId: string): Exercise[] => {
       'ex-grammar-20-9', 'ex-grammar-20-10', 'ex-grammar-20-11', 'ex-grammar-20-12', 'ex-grammar-20-13',
       'ex-grammar-20-14', 'ex-grammar-20-15', 'ex-grammar-20-16', 'ex-grammar-20-17', 'ex-grammar-20-18'
     ],
+    // Lessons 21-40 (5 exercises each)
+    'grammar-21': ['ex-grammar-21-1', 'ex-grammar-21-2', 'ex-grammar-21-3', 'ex-grammar-21-4', 'ex-grammar-21-5'],
+    'grammar-22': ['ex-grammar-22-1', 'ex-grammar-22-2', 'ex-grammar-22-3', 'ex-grammar-22-4', 'ex-grammar-22-5'],
+    'grammar-23': ['ex-grammar-23-1', 'ex-grammar-23-2', 'ex-grammar-23-3', 'ex-grammar-23-4', 'ex-grammar-23-5'],
+    'grammar-24': ['ex-grammar-24-1', 'ex-grammar-24-2', 'ex-grammar-24-3', 'ex-grammar-24-4', 'ex-grammar-24-5'],
+    'grammar-25': ['ex-grammar-25-1', 'ex-grammar-25-2', 'ex-grammar-25-3', 'ex-grammar-25-4', 'ex-grammar-25-5'],
+    'grammar-26': ['ex-grammar-26-1', 'ex-grammar-26-2', 'ex-grammar-26-3', 'ex-grammar-26-4', 'ex-grammar-26-5'],
+    'grammar-27': ['ex-grammar-27-1', 'ex-grammar-27-2', 'ex-grammar-27-3', 'ex-grammar-27-4', 'ex-grammar-27-5'],
+    'grammar-28': ['ex-grammar-28-1', 'ex-grammar-28-2', 'ex-grammar-28-3', 'ex-grammar-28-4', 'ex-grammar-28-5'],
+    'grammar-29': ['ex-grammar-29-1', 'ex-grammar-29-2', 'ex-grammar-29-3', 'ex-grammar-29-4', 'ex-grammar-29-5'],
+    'grammar-30': ['ex-grammar-30-1', 'ex-grammar-30-2', 'ex-grammar-30-3', 'ex-grammar-30-4', 'ex-grammar-30-5'],
+    'grammar-31': ['ex-grammar-31-1', 'ex-grammar-31-2', 'ex-grammar-31-3', 'ex-grammar-31-4', 'ex-grammar-31-5'],
+    'grammar-32': ['ex-grammar-32-1', 'ex-grammar-32-2', 'ex-grammar-32-3', 'ex-grammar-32-4', 'ex-grammar-32-5'],
+    'grammar-33': ['ex-grammar-33-1', 'ex-grammar-33-2', 'ex-grammar-33-3', 'ex-grammar-33-4', 'ex-grammar-33-5'],
+    'grammar-34': ['ex-grammar-34-1', 'ex-grammar-34-2', 'ex-grammar-34-3', 'ex-grammar-34-4', 'ex-grammar-34-5'],
+    'grammar-35': ['ex-grammar-35-1', 'ex-grammar-35-2', 'ex-grammar-35-3', 'ex-grammar-35-4', 'ex-grammar-35-5'],
+    'grammar-36': ['ex-grammar-36-1', 'ex-grammar-36-2', 'ex-grammar-36-3', 'ex-grammar-36-4', 'ex-grammar-36-5'],
+    'grammar-37': ['ex-grammar-37-1', 'ex-grammar-37-2', 'ex-grammar-37-3', 'ex-grammar-37-4', 'ex-grammar-37-5'],
+    'grammar-38': ['ex-grammar-38-1', 'ex-grammar-38-2', 'ex-grammar-38-3', 'ex-grammar-38-4', 'ex-grammar-38-5'],
+    'grammar-39': ['ex-grammar-39-1', 'ex-grammar-39-2', 'ex-grammar-39-3', 'ex-grammar-39-4', 'ex-grammar-39-5'],
+    'grammar-40': ['ex-grammar-40-1', 'ex-grammar-40-2', 'ex-grammar-40-3', 'ex-grammar-40-4', 'ex-grammar-40-5'],
   };
 
   const exerciseIds = lessonExerciseMap[lessonId] || [];
@@ -253,3 +276,4 @@ export { alphabetExercises } from './alphabetExercises';
 export { vocabularyExercises } from './vocabularyExercises';
 export { grammarExercises } from './grammarExercises';
 export { verbExercises } from './verbExercises';
+export { grammarExercises2 } from './grammarExercises2';
