@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -111,9 +111,10 @@ export default function AuthScreen() {
         >
           {/* Header */}
           <View style={styles.header}>
-            <View style={styles.logoBadge}>
-              <Text style={styles.logoArabic}>اقْرَأ</Text>
-            </View>
+            <Image
+              source={require('../assets/images/adaptive-icon.png')}
+              style={styles.logoImage}
+            />
             <Text style={styles.headerTitle}>
               {isSignUp ? t('auth.createAccount') : t('auth.welcomeBack')}
             </Text>
@@ -293,11 +294,6 @@ export default function AuthScreen() {
             </TouchableOpacity>
           )}
 
-          {/* Skip */}
-          <TouchableOpacity style={styles.skipButton} activeOpacity={0.7} onPress={() => router.replace('/(tabs)')}>
-            <Text style={styles.skipText}>{t('common.skip')}</Text>
-          </TouchableOpacity>
-
           {/* Legal Footer */}
           <View style={styles.legalFooter}>
             <Text style={styles.legalText}>
@@ -368,35 +364,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
     paddingHorizontal: 24,
-    paddingBottom: 40,
+    paddingBottom: 10,
+    marginTop: -20,
   },
 
   // Header
   header: {
     alignItems: 'center',
-    paddingTop: 32,
-    marginBottom: 28,
+    paddingTop: 0,
+    marginBottom: 4,
   },
-  logoBadge: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: '#D4AF37',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  logoArabic: {
-    color: '#ffffff',
-    fontSize: 24,
-    fontWeight: 'bold',
+  logoImage: {
+    width: 190,
+    height: 190,
+    marginBottom: -10,
   },
   headerTitle: {
     color: '#ffffff',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 6,
+    marginBottom: 2,
   },
   headerSubtitle: {
     color: '#94a3b8',
@@ -408,8 +398,8 @@ const styles = StyleSheet.create({
   formCard: {
     backgroundColor: '#1e293b',
     borderRadius: 20,
-    padding: 20,
-    marginBottom: 24,
+    padding: 16,
+    marginBottom: 10,
   },
 
   // Toggle
@@ -418,11 +408,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f172a',
     borderRadius: 12,
     padding: 4,
-    marginBottom: 20,
+    marginBottom: 14,
   },
   toggleButton: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -448,14 +438,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#334155',
     paddingHorizontal: 14,
-    marginBottom: 14,
+    marginBottom: 12,
     gap: 10,
   },
   input: {
     flex: 1,
     color: '#ffffff',
     fontSize: 15,
-    paddingVertical: 14,
+    paddingVertical: 12,
   },
 
   // Forgot
@@ -470,13 +460,13 @@ const styles = StyleSheet.create({
   // Submit
   submitButton: {
     backgroundColor: '#D4AF37',
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 14,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
-    marginTop: 4,
+    marginBottom: 12,
+    marginTop: 2,
   },
   submitText: {
     color: '#0f172a',
@@ -514,7 +504,7 @@ const styles = StyleSheet.create({
   dividerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   dividerLine: {
     flex: 1,
@@ -533,41 +523,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#1e293b',
-    paddingVertical: 14,
+    paddingVertical: 12,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#334155',
     gap: 10,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   appleButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#000000',
-    paddingVertical: 14,
+    paddingVertical: 12,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#333333',
     gap: 10,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   socialText: {
     color: '#ffffff',
     fontSize: 15,
     fontWeight: '600',
-  },
-
-  // Skip
-  skipButton: {
-    alignItems: 'center',
-    paddingVertical: 14,
-    marginTop: 4,
-  },
-  skipText: {
-    color: '#64748b',
-    fontSize: 14,
-    fontWeight: '500',
   },
 
   // Legal footer
