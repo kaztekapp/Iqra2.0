@@ -242,7 +242,7 @@ export default function ProfileScreen() {
             <Text style={styles.titleArabic}>الْمَلَفُّ الشَّخْصِي</Text>
           </View>
           <Image
-            source={require('../../assets/images/icon.png')}
+            source={require('../../assets/images/adaptive-icon.png')}
             style={styles.appIcon}
           />
         </View>

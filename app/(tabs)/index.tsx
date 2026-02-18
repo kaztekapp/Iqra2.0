@@ -139,7 +139,7 @@ export default function HomeScreen() {
             <Text style={styles.greetingEnglish}>{t('home.greetingEnglish')}</Text>
           </View>
           <Image
-            source={require('../../assets/images/icon.png')}
+            source={require('../../assets/images/adaptive-icon.png')}
             style={styles.appIcon}
           />
         </View>
