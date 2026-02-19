@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 
+// Feature flag: set to true once Google/Apple OAuth credentials are configured
+const ENABLE_SOCIAL_LOGIN = false;
+
 export default function AuthScreen() {
   const { t } = useTranslation();
   const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
@@ -358,50 +361,57 @@ export default function AuthScreen() {
             </View>
           </View>
 
-          {/* Divider */}
-          <View style={styles.dividerRow}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>{t('common.or')}</Text>
-            <View style={styles.dividerLine} />
-          </View>
+          {/* Social Login - Hidden until OAuth credentials are configured.
+              To re-enable: set ENABLE_SOCIAL_LOGIN to true and configure:
+              1. Google: Set EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID & EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID in .env
+              2. Apple: Enable Sign in with Apple capability in Apple Developer portal
+              3. Supabase: Enable Google & Apple providers in Supabase Auth settings */}
+          {ENABLE_SOCIAL_LOGIN && (
+            <>
+              <View style={styles.dividerRow}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>{t('common.or')}</Text>
+                <View style={styles.dividerLine} />
+              </View>
 
-          {/* Social */}
-          <TouchableOpacity
-            style={[styles.socialButton, isAnyLoading && { opacity: 0.7 }]}
-            activeOpacity={0.7}
-            onPress={handleGoogleSignIn}
-            disabled={isAnyLoading}
-            accessibilityRole="button"
-            accessibilityLabel={t('auth.continueWithGoogle')}
-          >
-            {socialLoading === 'google' ? (
-              <ActivityIndicator color="#ffffff" size="small" />
-            ) : (
-              <>
-                <Ionicons name="logo-google" size={20} color="#ffffff" />
-                <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
-              </>
-            )}
-          </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.socialButton, isAnyLoading && { opacity: 0.7 }]}
+                activeOpacity={0.7}
+                onPress={handleGoogleSignIn}
+                disabled={isAnyLoading}
+                accessibilityRole="button"
+                accessibilityLabel={t('auth.continueWithGoogle')}
+              >
+                {socialLoading === 'google' ? (
+                  <ActivityIndicator color="#ffffff" size="small" />
+                ) : (
+                  <>
+                    <Ionicons name="logo-google" size={20} color="#ffffff" />
+                    <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
+                  </>
+                )}
+              </TouchableOpacity>
 
-          {Platform.OS === 'ios' && (
-            <TouchableOpacity
-              style={[styles.appleButton, isAnyLoading && { opacity: 0.7 }]}
-              activeOpacity={0.7}
-              onPress={handleAppleSignIn}
-              disabled={isAnyLoading}
-              accessibilityRole="button"
-              accessibilityLabel={t('auth.continueWithApple')}
-            >
-              {socialLoading === 'apple' ? (
-                <ActivityIndicator color="#ffffff" size="small" />
-              ) : (
-                <>
-                  <Ionicons name="logo-apple" size={22} color="#ffffff" />
-                  <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
-                </>
+              {Platform.OS === 'ios' && (
+                <TouchableOpacity
+                  style={[styles.appleButton, isAnyLoading && { opacity: 0.7 }]}
+                  activeOpacity={0.7}
+                  onPress={handleAppleSignIn}
+                  disabled={isAnyLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('auth.continueWithApple')}
+                >
+                  {socialLoading === 'apple' ? (
+                    <ActivityIndicator color="#ffffff" size="small" />
+                  ) : (
+                    <>
+                      <Ionicons name="logo-apple" size={22} color="#ffffff" />
+                      <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
               )}
-            </TouchableOpacity>
+            </>
           )}
 
           {/* Legal Footer */}
