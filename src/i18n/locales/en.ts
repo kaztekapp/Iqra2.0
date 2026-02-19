@@ -235,7 +235,7 @@ export default {
     resetPassword: 'Reset Password',
     resetPasswordDesc: 'Enter your email to receive a password reset link',
     sendResetLink: 'Send Reset Link',
-    resetSent: 'Password reset link sent! Check your email.',
+    resetSent: 'Password reset link sent! Check your email. If you don\'t see it, check your spam folder.',
     signUpSuccess: 'Account created! Please check your email to confirm.',
     emailRequired: 'Email is required',
     passwordRequired: 'Password is required',

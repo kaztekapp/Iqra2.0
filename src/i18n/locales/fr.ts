@@ -235,7 +235,7 @@ export default {
     resetPassword: 'R\u00e9initialiser le Mot de Passe',
     resetPasswordDesc: 'Entrez votre e-mail pour recevoir un lien de r\u00e9initialisation',
     sendResetLink: 'Envoyer le Lien',
-    resetSent: 'Lien de r\u00e9initialisation envoy\u00e9 ! V\u00e9rifiez votre e-mail.',
+    resetSent: 'Lien de r\u00e9initialisation envoy\u00e9 ! V\u00e9rifiez votre e-mail. Si vous ne le trouvez pas, v\u00e9rifiez vos spams.',
     signUpSuccess: 'Compte cr\u00e9\u00e9 ! V\u00e9rifiez votre e-mail pour confirmer.',
     emailRequired: 'L\'e-mail est requis',
     passwordRequired: 'Le mot de passe est requis',
