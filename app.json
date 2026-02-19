@@ -72,7 +72,8 @@
         "@sentry/react-native/expo",
         {
           "organization": "kaztekapp",
-          "project": "iqra2"
+          "project": "iqra2",
+          "uploadSourceMaps": false
         }
       ]
     ],
