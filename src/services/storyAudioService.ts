@@ -453,6 +453,16 @@ class StoryAudioService {
       rate,
       pitch,
       voice: this.bestVoice || undefined,
+      onDone: () => {
+        this.isSpeaking = false;
+        this.isPaused = false;
+        options?.onDone?.();
+      },
+      onError: (error) => {
+        this.isSpeaking = false;
+        this.isPaused = false;
+        options?.onError?.(error);
+      },
     });
 
     // Wait for speech to complete by polling
@@ -460,7 +470,6 @@ class StoryAudioService {
 
     this.isSpeaking = false;
     this.isPaused = false;
-    console.log('Speech completed');
   }
 
   private async waitForSpeechEnd(): Promise<void> {

@@ -44,6 +44,9 @@ export default {
     all: 'Tous',
     min: 'min',
     more: '+{{count}} de plus',
+    crashTitle: 'Une erreur est survenue',
+    crashMessage: "L'application a rencontr\u00e9 une erreur inattendue. Veuillez red\u00e9marrer.",
+    restartApp: "Red\u00e9marrer l'application",
   },
   tabs: {
     home: 'Accueil',
@@ -232,6 +235,7 @@ export default {
     signUpSubtitle: 'Commencez votre parcours d\'apprentissage',
     confirmEmail: 'Confirmer l\'e-mail',
     emailsDoNotMatch: 'Les adresses e-mail ne correspondent pas.',
+    googlePlayServicesError: 'Google Play Services n\'est pas disponible sur cet appareil.',
   },
   alphabet: {
     title: 'Alphabet Arabe',

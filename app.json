@@ -60,7 +60,21 @@
           "imageWidth": 280
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-apple-authentication",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.GOOGLE_IOS_CLIENT_ID"
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "kaztekapp",
+          "project": "iqra2"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

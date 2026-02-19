@@ -260,7 +260,7 @@ class QuranAudioService {
         // Lock screen controls may not be available (e.g. on simulators)
       }
 
-      // Listen for playback status
+      // Listen for playback status — stored so releasePlayer() can clean it up on error
       this.statusSubscription = this.player.addListener('playbackStatusUpdate', (status) => {
         // Update loading state when audio is loaded
         if (status.isLoaded && this.audioState === 'loading') {

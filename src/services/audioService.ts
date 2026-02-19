@@ -462,10 +462,13 @@ class AudioService {
   async testAudioOutput(): Promise<void> {
     try {
       await this.configureAudio();
-      // Test audio using TTS
-      Speech.speak('Test', { language: 'en-US', rate: 1.0 });
+      Speech.speak('Test', {
+        language: 'en-US',
+        rate: 1.0,
+        onError: (error) => console.warn('TTS test error:', error),
+      });
     } catch (error) {
-      console.log('Audio test error:', error);
+      console.warn('Audio test error:', error);
     }
   }
 
@@ -474,6 +477,7 @@ class AudioService {
     Speech.speak('Hello, testing audio', {
       language: 'en-US',
       rate: 0.8,
+      onError: (error) => console.warn('TTS test error:', error),
     });
   }
 }

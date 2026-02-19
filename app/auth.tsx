@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { signUpWithEmail, signInWithEmail, resetPassword } from '../src/services/authService';
+import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 
 export default function AuthScreen() {
   const { t } = useTranslation();
@@ -15,12 +15,14 @@ export default function AuthScreen() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<'google' | 'apple' | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
 
   const isSignUp = mode === 'signUp';
+  const isAnyLoading = loading || socialLoading !== null;
 
   const validate = () => {
     if (isSignUp && !fullName.trim()) {
@@ -59,7 +61,7 @@ export default function AuthScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!validate()) return;
+    if (!validate() || isAnyLoading) return;
     setLoading(true);
     try {
       if (isSignUp) {
@@ -111,6 +113,47 @@ export default function AuthScreen() {
     setConfirmPassword('');
   };
 
+  const handleGoogleSignIn = async () => {
+    if (isAnyLoading) return;
+    setSocialLoading('google');
+    try {
+      await signInWithGoogle();
+      router.replace('/(tabs)');
+    } catch (err: any) {
+      // statusCodes.SIGN_IN_CANCELLED = '12501', IN_PROGRESS = '12502'
+      const code = err?.code;
+      if (code === '12501' || code === 'SIGN_IN_CANCELLED') return;
+      if (code === '12502' || code === 'IN_PROGRESS') return;
+
+      const msg = (err.message || '').toLowerCase();
+      if (msg.includes('canceled') || msg.includes('cancelled')) return;
+      if (msg.includes('play services')) {
+        Alert.alert(t('common.error'), t('auth.googlePlayServicesError'));
+      } else {
+        Alert.alert(t('common.error'), t('auth.genericError'));
+      }
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
+  const handleAppleSignIn = async () => {
+    if (isAnyLoading) return;
+    setSocialLoading('apple');
+    try {
+      await signInWithApple();
+      router.replace('/(tabs)');
+    } catch (err: any) {
+      // ERR_REQUEST_CANCELED = user dismissed the Apple prompt
+      if (err?.code === 'ERR_REQUEST_CANCELED' || err?.code === 'ERR_CANCELED') return;
+      const msg = (err.message || '').toLowerCase();
+      if (msg.includes('canceled') || msg.includes('cancelled')) return;
+      Alert.alert(t('common.error'), t('auth.genericError'));
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -143,7 +186,7 @@ export default function AuthScreen() {
               <TouchableOpacity
                 style={[styles.toggleButton, !isSignUp && styles.toggleActive]}
                 activeOpacity={0.7}
-                onPress={() => !loading && setMode('signIn')}
+                onPress={() => !isAnyLoading && setMode('signIn')}
                 accessibilityRole="button"
                 accessibilityLabel={t('auth.signIn')}
               >
@@ -154,7 +197,7 @@ export default function AuthScreen() {
               <TouchableOpacity
                 style={[styles.toggleButton, isSignUp && styles.toggleActive]}
                 activeOpacity={0.7}
-                onPress={() => !loading && setMode('signUp')}
+                onPress={() => !isAnyLoading && setMode('signUp')}
                 accessibilityRole="button"
                 accessibilityLabel={t('auth.signUp')}
               >
@@ -276,10 +319,10 @@ export default function AuthScreen() {
 
             {/* Submit */}
             <TouchableOpacity
-              style={[styles.submitButton, loading && { opacity: 0.7 }]}
+              style={[styles.submitButton, isAnyLoading && { opacity: 0.7 }]}
               activeOpacity={0.8}
               onPress={handleSubmit}
-              disabled={loading}
+              disabled={isAnyLoading}
               accessibilityRole="button"
               accessibilityLabel={isSignUp ? t('auth.signUp') : t('auth.signIn')}
             >
@@ -324,24 +367,40 @@ export default function AuthScreen() {
 
           {/* Social */}
           <TouchableOpacity
-            style={styles.socialButton}
+            style={[styles.socialButton, isAnyLoading && { opacity: 0.7 }]}
             activeOpacity={0.7}
+            onPress={handleGoogleSignIn}
+            disabled={isAnyLoading}
             accessibilityRole="button"
             accessibilityLabel={t('auth.continueWithGoogle')}
           >
-            <Ionicons name="logo-google" size={20} color="#ffffff" />
-            <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
+            {socialLoading === 'google' ? (
+              <ActivityIndicator color="#ffffff" size="small" />
+            ) : (
+              <>
+                <Ionicons name="logo-google" size={20} color="#ffffff" />
+                <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
+              </>
+            )}
           </TouchableOpacity>
 
           {Platform.OS === 'ios' && (
             <TouchableOpacity
-              style={styles.appleButton}
+              style={[styles.appleButton, isAnyLoading && { opacity: 0.7 }]}
               activeOpacity={0.7}
+              onPress={handleAppleSignIn}
+              disabled={isAnyLoading}
               accessibilityRole="button"
               accessibilityLabel={t('auth.continueWithApple')}
             >
-              <Ionicons name="logo-apple" size={22} color="#ffffff" />
-              <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
+              {socialLoading === 'apple' ? (
+                <ActivityIndicator color="#ffffff" size="small" />
+              ) : (
+                <>
+                  <Ionicons name="logo-apple" size={22} color="#ffffff" />
+                  <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
+                </>
+              )}
             </TouchableOpacity>
           )}
 

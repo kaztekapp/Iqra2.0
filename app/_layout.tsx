@@ -1,5 +1,6 @@
 import "../global.css";
 import '../src/i18n';
+import * as Sentry from '@sentry/react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -13,6 +14,14 @@ import { quranAudioService } from '../src/services/quranAudioService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
+import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  enabled: !__DEV__,
+  tracesSampleRate: 0.2,
+  sendDefaultPii: false,
+});
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -20,7 +29,9 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.preventAutoHideAsync().catch((e) => {
+  Sentry.captureException(e);
+});
 
 export default function RootLayout() {
   const { i18n } = useTranslation();
@@ -72,8 +83,8 @@ export default function RootLayout() {
   // Set Android navigation bar color to match tab bar
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#1e293b').catch(() => {});
-      NavigationBar.setButtonStyleAsync('light').catch(() => {});
+      NavigationBar.setBackgroundColorAsync('#1e293b').catch((e) => Sentry.captureException(e));
+      NavigationBar.setButtonStyleAsync('light').catch((e) => Sentry.captureException(e));
     }
   }, []);
 
@@ -102,7 +113,8 @@ export default function RootLayout() {
       if (session) {
         supabase!.auth.startAutoRefresh();
       }
-    }).catch(() => {
+    }).catch((e) => {
+      Sentry.captureException(e);
       clearTimeout(timeout);
       setAuthReady(true);
     });
@@ -138,7 +150,7 @@ export default function RootLayout() {
 
   const onLayoutRootView = useCallback(() => {
     if (appReady) {
-      SplashScreen.hideAsync().catch(() => {});
+      SplashScreen.hideAsync().catch((e) => Sentry.captureException(e));
       quranAudioService.warmUp();
     }
   }, [appReady]);
@@ -148,35 +160,37 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#0f172a' }} onLayout={onLayoutRootView}>
-      <StatusBar style="light" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: '#0f172a' },
-          animation: 'slide_from_right',
-        }}
-      >
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="auth" />
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen name="alphabet/index" />
-        <Stack.Screen name="alphabet/[letterId]" />
-        <Stack.Screen name="alphabet/writing-practice" />
-        <Stack.Screen name="vocabulary/index" />
-        <Stack.Screen name="vocabulary/[themeId]" />
-        <Stack.Screen name="vocabulary/flashcards" />
-        <Stack.Screen name="grammar/index" />
-        <Stack.Screen name="grammar/[lessonId]" />
-        <Stack.Screen name="reading/index" />
-        <Stack.Screen name="reading/[textId]" />
-        <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
-        <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
-        <Stack.Screen name="privacy-policy" />
-        <Stack.Screen name="terms-of-service" />
-      </Stack>
-      <MiniAudioPlayer />
-    </GestureHandlerRootView>
+    <AppErrorBoundary>
+      <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#0f172a' }} onLayout={onLayoutRootView}>
+        <StatusBar style="light" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: '#0f172a' },
+            animation: 'slide_from_right',
+          }}
+        >
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="auth" />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="alphabet/index" />
+          <Stack.Screen name="alphabet/[letterId]" />
+          <Stack.Screen name="alphabet/writing-practice" />
+          <Stack.Screen name="vocabulary/index" />
+          <Stack.Screen name="vocabulary/[themeId]" />
+          <Stack.Screen name="vocabulary/flashcards" />
+          <Stack.Screen name="grammar/index" />
+          <Stack.Screen name="grammar/[lessonId]" />
+          <Stack.Screen name="reading/index" />
+          <Stack.Screen name="reading/[textId]" />
+          <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
+          <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
+          <Stack.Screen name="privacy-policy" />
+          <Stack.Screen name="terms-of-service" />
+        </Stack>
+        <MiniAudioPlayer />
+      </GestureHandlerRootView>
+    </AppErrorBoundary>
   );
 }

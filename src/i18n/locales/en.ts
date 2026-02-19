@@ -44,6 +44,9 @@ export default {
     all: 'All',
     min: 'min',
     more: '+{{count}} more',
+    crashTitle: 'Something went wrong',
+    crashMessage: 'The app encountered an unexpected error. Please try restarting.',
+    restartApp: 'Restart App',
   },
   tabs: {
     home: 'Home',
@@ -232,6 +235,7 @@ export default {
     signUpSubtitle: 'Start your Arabic & Quran learning journey',
     confirmEmail: 'Confirm Email',
     emailsDoNotMatch: 'Email addresses do not match.',
+    googlePlayServicesError: 'Google Play Services is not available on this device.',
   },
   alphabet: {
     title: 'Arabic Alphabet',

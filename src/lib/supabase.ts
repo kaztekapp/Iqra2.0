@@ -42,26 +42,39 @@ const secureStorage = {
     }
   },
   setItem: async (key: string, value: string): Promise<void> => {
-    try {
-      if (value.length <= CHUNK_SIZE) {
-        await SecureStore.setItemAsync(key, value);
-        await clearChunks(key);
-      } else {
-        // Remove direct key, write chunks
-        await SecureStore.deleteItemAsync(key).catch(() => {});
-        for (let i = 0; i < value.length; i += CHUNK_SIZE) {
-          await SecureStore.setItemAsync(CHUNK_KEY(key, Math.floor(i / CHUNK_SIZE)), value.slice(i, i + CHUNK_SIZE));
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        if (value.length <= CHUNK_SIZE) {
+          await SecureStore.setItemAsync(key, value);
+          await clearChunks(key);
+        } else {
+          // Remove direct key, write chunks
+          await SecureStore.deleteItemAsync(key).catch(() => {});
+          for (let i = 0; i < value.length; i += CHUNK_SIZE) {
+            await SecureStore.setItemAsync(CHUNK_KEY(key, Math.floor(i / CHUNK_SIZE)), value.slice(i, i + CHUNK_SIZE));
+          }
+          // Verify last chunk was written (guard against partial failure)
+          const lastIdx = Math.ceil(value.length / CHUNK_SIZE) - 1;
+          const verify = await SecureStore.getItemAsync(CHUNK_KEY(key, lastIdx));
+          if (verify === null) throw new Error('Chunked write verification failed');
+          // Remove leftover old chunks
+          const totalChunks = Math.ceil(value.length / CHUNK_SIZE);
+          for (let i = totalChunks; ; i++) {
+            const old = await SecureStore.getItemAsync(CHUNK_KEY(key, i));
+            if (old === null) break;
+            await SecureStore.deleteItemAsync(CHUNK_KEY(key, i));
+          }
         }
-        // Remove leftover old chunks
-        const totalChunks = Math.ceil(value.length / CHUNK_SIZE);
-        for (let i = totalChunks; ; i++) {
-          const old = await SecureStore.getItemAsync(CHUNK_KEY(key, i));
-          if (old === null) break;
-          await SecureStore.deleteItemAsync(CHUNK_KEY(key, i));
+        return; // Success — exit retry loop
+      } catch (e) {
+        if (attempt === 0) {
+          // First failure on chunked write — clear and retry
+          await clearChunks(key);
+          await SecureStore.deleteItemAsync(key).catch(() => {});
+          continue;
         }
+        console.warn('SecureStore setItem error:', e);
       }
-    } catch (e) {
-      console.warn('SecureStore setItem error:', e);
     }
   },
   removeItem: async (key: string): Promise<void> => {
