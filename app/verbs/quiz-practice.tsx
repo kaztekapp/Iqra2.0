@@ -514,6 +514,11 @@ const styles = StyleSheet.create({
     borderColor: '#ef4444',
     backgroundColor: '#ef444420',
   },
+  fillBlankAnswerText: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: 'right' as const,
+  },
   checkButton: {
     backgroundColor: '#ec4899',
     borderRadius: 16,

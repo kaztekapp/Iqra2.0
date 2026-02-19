@@ -1,6 +1,6 @@
 import { Exercise } from '../../../types/arabic';
 
-const grammarExercises2: Exercise[] = [
+export const grammarExercises2: Exercise[] = [
   // ===== Lesson 21: The Future Tense =====
   {
     id: 'ex-grammar-21-1',

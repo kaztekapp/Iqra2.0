@@ -106,25 +106,25 @@ export default function ProfileScreen() {
 
       if (update.isAvailable) {
         Alert.alert(
-          'Update Available',
-          'An update is available. Would you like to download and install it now?',
+          t('profile.updateAvailableTitle'),
+          t('profile.updateAvailableMessage'),
           [
-            { text: 'Later', style: 'cancel' },
+            { text: t('profile.later'), style: 'cancel' },
             {
-              text: 'Update Now',
+              text: t('profile.updateNow'),
               onPress: async () => {
                 try {
                   await Updates.fetchUpdateAsync();
                   await Updates.reloadAsync();
                 } catch (e: any) {
-                  Alert.alert('Update Failed', e.message);
+                  Alert.alert(t('profile.updateFailed'), e.message);
                 }
               },
             },
           ]
         );
       } else {
-        Alert.alert('No Updates', 'You are running the latest version.');
+        Alert.alert(t('profile.noUpdatesTitle'), t('profile.noUpdatesMessage'));
       }
     } catch (e: any) {
       setUpdateInfo(prev => ({
@@ -133,7 +133,7 @@ export default function ProfileScreen() {
         error: e.message || 'Unknown error',
         lastCheckTime: new Date().toLocaleTimeString(),
       }));
-      Alert.alert('Update Check Failed', e.message || 'Unknown error');
+      Alert.alert(t('profile.updateCheckFailed'), e.message || 'Unknown error');
     }
   };
 
@@ -469,36 +469,36 @@ export default function ProfileScreen() {
 
         {/* Update Diagnostics */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>App Updates</Text>
+          <Text style={styles.sectionTitle}>{t('profile.appUpdates')}</Text>
           <View style={styles.updateCard}>
             <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>Channel:</Text>
-              <Text style={styles.updateValue}>{updateInfo.channel || 'Loading...'}</Text>
+              <Text style={styles.updateLabel}>{t('profile.channel')}:</Text>
+              <Text style={styles.updateValue}>{updateInfo.channel || t('common.loading')}</Text>
             </View>
             <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>Runtime Version:</Text>
-              <Text style={styles.updateValue}>{updateInfo.runtimeVersion || 'Loading...'}</Text>
+              <Text style={styles.updateLabel}>{t('profile.runtimeVersion')}:</Text>
+              <Text style={styles.updateValue}>{updateInfo.runtimeVersion || t('common.loading')}</Text>
             </View>
             <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>Current Update ID:</Text>
+              <Text style={styles.updateLabel}>{t('profile.currentUpdateId')}:</Text>
               <Text style={styles.updateValue} numberOfLines={1}>
-                {updateInfo.currentId ? updateInfo.currentId.substring(0, 20) + '...' : 'Loading...'}
+                {updateInfo.currentId ? updateInfo.currentId.substring(0, 20) + '...' : t('common.loading')}
               </Text>
             </View>
             {updateInfo.lastCheckTime && (
               <View style={styles.updateInfoRow}>
-                <Text style={styles.updateLabel}>Last Check:</Text>
+                <Text style={styles.updateLabel}>{t('profile.lastCheck')}:</Text>
                 <Text style={styles.updateValue}>{updateInfo.lastCheckTime}</Text>
               </View>
             )}
             {updateInfo.isUpdateAvailable !== null && (
               <View style={styles.updateInfoRow}>
-                <Text style={styles.updateLabel}>Update Available:</Text>
+                <Text style={styles.updateLabel}>{t('profile.updateAvailableLabel')}:</Text>
                 <Text style={[
                   styles.updateValue,
                   { color: updateInfo.isUpdateAvailable ? '#10b981' : '#94a3b8' }
                 ]}>
-                  {updateInfo.isUpdateAvailable ? 'Yes' : 'No'}
+                  {updateInfo.isUpdateAvailable ? t('profile.yes') : t('profile.no')}
                 </Text>
               </View>
             )}
@@ -513,7 +513,7 @@ export default function ProfileScreen() {
               onPress={handleCheckForUpdates}
               disabled={updateInfo.isChecking}
               accessibilityRole="button"
-              accessibilityLabel="Check for updates"
+              accessibilityLabel={t('profile.checkForUpdates')}
               accessibilityState={{ disabled: updateInfo.isChecking }}
             >
               {updateInfo.isChecking ? (
@@ -521,7 +521,7 @@ export default function ProfileScreen() {
               ) : (
                 <>
                   <Ionicons name="refresh" size={18} color="#ffffff" />
-                  <Text style={styles.checkUpdateButtonText}>Check for Updates</Text>
+                  <Text style={styles.checkUpdateButtonText}>{t('profile.checkForUpdates')}</Text>
                 </>
               )}
             </Pressable>

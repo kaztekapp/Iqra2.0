@@ -89,7 +89,7 @@ export default function LetterDetailScreen() {
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
             onPress={() => {
               // Speak the letter name for better pronunciation
-              console.log('Audio button pressed for letter:', letter.nameArabic);
+              __DEV__ && console.log('Audio button pressed for letter:', letter.nameArabic);
               speakSlow(letter.nameArabic);
             }}
           >

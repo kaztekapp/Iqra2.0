@@ -30,7 +30,7 @@ class AudioService {
       });
       this.audioConfigured = true;
     } catch (error) {
-      console.log('Audio config error:', error);
+      __DEV__ && console.log('Audio config error:', error);
     }
   }
 
@@ -46,12 +46,12 @@ class AudioService {
         v.language.startsWith('ar') || v.language.includes('Arab')
       );
 
-      console.log('=== Arabic voices found:', arabicVoices.length, '===');
+      __DEV__ && console.log('=== Arabic voices found:', arabicVoices.length, '===');
       arabicVoices.forEach(v => {
-        console.log(`  Voice: ${v.identifier}`);
-        console.log(`    Name: ${v.name || 'N/A'}`);
-        console.log(`    Language: ${v.language}`);
-        console.log(`    Quality: ${v.quality}`);
+        __DEV__ && console.log(`  Voice: ${v.identifier}`);
+        __DEV__ && console.log(`    Name: ${v.name || 'N/A'}`);
+        __DEV__ && console.log(`    Language: ${v.language}`);
+        __DEV__ && console.log(`    Quality: ${v.quality}`);
       });
 
       // iOS Arabic voice names (case-insensitive matching)
@@ -102,16 +102,16 @@ class AudioService {
       const maleVoices = arabicVoices.filter(isMaleVoice);
       const unidentifiedVoices = arabicVoices.filter(v => !isFemaleVoice(v) && !isMaleVoice(v));
 
-      console.log('Female voices:', femaleVoices.map(v => v.identifier));
-      console.log('Male voices:', maleVoices.map(v => v.identifier));
-      console.log('Unidentified voices:', unidentifiedVoices.map(v => v.identifier));
+      __DEV__ && console.log('Female voices:', femaleVoices.map(v => v.identifier));
+      __DEV__ && console.log('Male voices:', maleVoices.map(v => v.identifier));
+      __DEV__ && console.log('Unidentified voices:', unidentifiedVoices.map(v => v.identifier));
 
       // Assign female voice
       if (femaleVoices.length > 0) {
         const selected = selectBest(femaleVoices);
         if (selected) {
           this.femaleVoice = selected.identifier;
-          console.log('✓ Selected FEMALE voice:', selected.identifier);
+          __DEV__ && console.log('✓ Selected FEMALE voice:', selected.identifier);
         }
       }
 
@@ -120,7 +120,7 @@ class AudioService {
         const selected = selectBest(maleVoices);
         if (selected) {
           this.maleVoice = selected.identifier;
-          console.log('✓ Selected MALE voice:', selected.identifier);
+          __DEV__ && console.log('✓ Selected MALE voice:', selected.identifier);
         }
       }
 
@@ -131,39 +131,39 @@ class AudioService {
           this.femaleVoice = arabicVoices[0].identifier;
           this.maleVoice = arabicVoices[0].identifier;
           this.hasMultipleVoices = false;
-          console.log('Only one voice available, using for both:', arabicVoices[0].identifier);
+          __DEV__ && console.log('Only one voice available, using for both:', arabicVoices[0].identifier);
         } else {
           // Use first for female, second for male (arbitrary assignment)
           const sorted = [...arabicVoices].sort((a, b) => a.identifier.localeCompare(b.identifier));
           this.femaleVoice = sorted[0].identifier;
           this.maleVoice = sorted[1].identifier;
           this.hasMultipleVoices = true;
-          console.log('Assigned first voice as female:', this.femaleVoice);
-          console.log('Assigned second voice as male:', this.maleVoice);
+          __DEV__ && console.log('Assigned first voice as female:', this.femaleVoice);
+          __DEV__ && console.log('Assigned second voice as male:', this.maleVoice);
         }
       } else if (!this.femaleVoice && this.maleVoice) {
         // Only found male, use it for female too
         this.femaleVoice = this.maleVoice;
         this.hasMultipleVoices = false;
-        console.log('No female voice found, using male for both');
+        __DEV__ && console.log('No female voice found, using male for both');
       } else if (this.femaleVoice && !this.maleVoice) {
         // Only found female, use it for male too
         this.maleVoice = this.femaleVoice;
         this.hasMultipleVoices = false;
-        console.log('No male voice found, using female for both');
+        __DEV__ && console.log('No male voice found, using female for both');
       } else if (this.femaleVoice && this.maleVoice) {
         // Both found
         this.hasMultipleVoices = this.femaleVoice !== this.maleVoice;
-        console.log('Both voices found, different:', this.hasMultipleVoices);
+        __DEV__ && console.log('Both voices found, different:', this.hasMultipleVoices);
       }
 
       if (!this.femaleVoice && !this.maleVoice) {
-        console.log('⚠ No Arabic voice found, using system default');
+        __DEV__ && console.log('⚠ No Arabic voice found, using system default');
       }
 
       this.voiceInitialized = true;
     } catch (error) {
-      console.log('Voice search error:', error);
+      __DEV__ && console.log('Voice search error:', error);
       this.voiceInitialized = true;
     }
   }
@@ -171,7 +171,7 @@ class AudioService {
   // Set preferred voice gender
   setVoiceGender(gender: VoiceGender): void {
     this.preferredGender = gender;
-    console.log('Voice gender set to:', gender);
+    __DEV__ && console.log('Voice gender set to:', gender);
   }
 
   // Get current voice gender preference
@@ -184,9 +184,9 @@ class AudioService {
     const temp = this.femaleVoice;
     this.femaleVoice = this.maleVoice;
     this.maleVoice = temp;
-    console.log('Voices swapped!');
-    console.log('  Female voice now:', this.femaleVoice);
-    console.log('  Male voice now:', this.maleVoice);
+    __DEV__ && console.log('Voices swapped!');
+    __DEV__ && console.log('  Female voice now:', this.femaleVoice);
+    __DEV__ && console.log('  Male voice now:', this.maleVoice);
   }
 
   // Reset voice initialization to re-detect voices
@@ -194,7 +194,7 @@ class AudioService {
     this.voiceInitialized = false;
     this.femaleVoice = null;
     this.maleVoice = null;
-    console.log('Voice initialization reset');
+    __DEV__ && console.log('Voice initialization reset');
   }
 
   // Get current voice assignments for debugging
@@ -386,13 +386,13 @@ class AudioService {
         language: 'ar-SA',
         rate: rate,
         pitch: 1.0,
-        onStart: () => console.log('Speaking:', text, '-> processed:', processedText),
+        onStart: () => __DEV__ && console.log('Speaking:', text, '-> processed:', processedText),
         onDone: () => {
           this.isSpeaking = false;
           onDone?.();
         },
         onError: (error) => {
-          console.log('TTS error:', error);
+          __DEV__ && console.log('TTS error:', error);
           this.isSpeaking = false;
           onError?.(error);
         },
@@ -404,12 +404,12 @@ class AudioService {
 
       if (selectedVoice) {
         speechOptions.voice = selectedVoice;
-        console.log('Using', useGender, 'voice:', selectedVoice);
+        __DEV__ && console.log('Using', useGender, 'voice:', selectedVoice);
       }
 
       Speech.speak(processedText, speechOptions);
     } catch (error) {
-      console.log('Speak error:', error);
+      __DEV__ && console.log('Speak error:', error);
       this.isSpeaking = false;
       onError?.(error);
     }
@@ -427,7 +427,7 @@ class AudioService {
     try {
       await Speech.stop();
     } catch (error) {
-      console.log('Stop error:', error);
+      __DEV__ && console.log('Stop error:', error);
     }
     this.isSpeaking = false;
   }
@@ -449,13 +449,13 @@ class AudioService {
   async listArabicVoices(): Promise<void> {
     const voices = await Speech.getAvailableVoicesAsync();
     const arabic = voices.filter(v => v.language.startsWith('ar'));
-    console.log('=== Available Arabic Voices ===');
+    __DEV__ && console.log('=== Available Arabic Voices ===');
     arabic.forEach(v => {
-      console.log(`${v.name || v.identifier}`);
-      console.log(`  ID: ${v.identifier}`);
-      console.log(`  Language: ${v.language}`);
-      console.log(`  Quality: ${v.quality}`);
-      console.log('---');
+      __DEV__ && console.log(`${v.name || v.identifier}`);
+      __DEV__ && console.log(`  ID: ${v.identifier}`);
+      __DEV__ && console.log(`  Language: ${v.language}`);
+      __DEV__ && console.log(`  Quality: ${v.quality}`);
+      __DEV__ && console.log('---');
     });
   }
 
@@ -465,10 +465,10 @@ class AudioService {
       Speech.speak('Test', {
         language: 'en-US',
         rate: 1.0,
-        onError: (error) => console.warn('TTS test error:', error),
+        onError: (error) => __DEV__ && console.warn('TTS test error:', error),
       });
     } catch (error) {
-      console.warn('Audio test error:', error);
+      __DEV__ && console.warn('Audio test error:', error);
     }
   }
 
@@ -477,7 +477,7 @@ class AudioService {
     Speech.speak('Hello, testing audio', {
       language: 'en-US',
       rate: 0.8,
-      onError: (error) => console.warn('TTS test error:', error),
+      onError: (error) => __DEV__ && console.warn('TTS test error:', error),
     });
   }
 }

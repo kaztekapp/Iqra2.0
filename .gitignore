@@ -44,3 +44,8 @@ credentials.json
 # generated native folders
 /ios
 /android
+
+# test/research artifacts
+WHISPER-QURAN-TEST-RESULTS.md
+scripts/test-whisper*
+scripts/react-native-whisper-example.tsx

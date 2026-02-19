@@ -246,7 +246,7 @@ export const useArabicQuizStore = create<ArabicQuizState>()(
       onRehydrateStorage: () => (state) => {
         // Clear old quiz questions if version changed
         if (state && state.dataVersion !== QUIZ_DATA_VERSION) {
-          console.log('Quiz data version changed, clearing old questions...');
+          __DEV__ && console.log('Quiz data version changed, clearing old questions...');
           state.currentQuestions = [];
           state.currentAnswers = [];
           state.attempts = 0;

@@ -32,7 +32,8 @@ export type HadithCollection =
   | 'nasai'
   | 'ibn_majah'
   | 'ahmad'
-  | 'malik';
+  | 'malik'
+  | 'quran';
 
 export const HADITH_COLLECTION_NAMES: Record<HadithCollection, string> = {
   bukhari: 'Sahih al-Bukhari',
@@ -43,6 +44,7 @@ export const HADITH_COLLECTION_NAMES: Record<HadithCollection, string> = {
   ibn_majah: 'Sunan Ibn Majah',
   ahmad: 'Musnad Ahmad',
   malik: 'Muwatta Imam Malik',
+  quran: 'Al-Quran Al-Kareem',
 };
 
 // ============ Core Dua Types ============

@@ -118,7 +118,7 @@ class StoryAudioService {
     try {
       await setAudioModeAsync({ playsInSilentMode: true, interruptionMode: 'duckOthers' });
       this.audioConfigured = true;
-    } catch (e) { console.log('Audio config error:', e); }
+    } catch (e) { __DEV__ && console.log('Audio config error:', e); }
   }
 
   private async findBestVoice(): Promise<void> {
@@ -127,8 +127,8 @@ class StoryAudioService {
       const voices = await Speech.getAvailableVoicesAsync();
       const english = voices.filter(v => v.language.startsWith('en-US') || v.language.startsWith('en-GB'));
 
-      console.log('Available English voices:');
-      english.forEach(v => console.log(`  ${v.identifier} (${v.quality})`));
+      __DEV__ && console.log('Available English voices:');
+      english.forEach(v => __DEV__ && console.log(`  ${v.identifier} (${v.quality})`));
 
       // Find best voices - prefer enhanced quality voices
       const findVoice = (names: string[], preferEnhanced = true) => {
@@ -160,10 +160,10 @@ class StoryAudioService {
       // Use same voice for quotes to keep consistency
       this.secondaryVoice = this.bestVoice;
 
-      console.log('Selected voice:', this.bestVoice);
+      __DEV__ && console.log('Selected voice:', this.bestVoice);
       this.voiceInitialized = true;
     } catch (e) {
-      console.log('Voice error:', e);
+      __DEV__ && console.log('Voice error:', e);
       this.voiceInitialized = true;
     }
   }
@@ -440,7 +440,7 @@ class StoryAudioService {
       return;
     }
 
-    console.log('Speaking text:', cleanedText.substring(0, 50) + '...');
+    __DEV__ && console.log('Speaking text:', cleanedText.substring(0, 50) + '...');
 
     const rate = SPEED_MULTIPLIERS[this.currentSpeed];
     const pitch = 1.05;
@@ -484,7 +484,7 @@ class StoryAudioService {
           return;
         }
       } catch (e) {
-        console.log('Poll error:', e);
+        __DEV__ && console.log('Poll error:', e);
         return;
       }
       await new Promise(r => setTimeout(r, 300));
@@ -533,7 +533,7 @@ class StoryAudioService {
   async listEnglishVoices(): Promise<void> {
     const voices = await Speech.getAvailableVoicesAsync();
     voices.filter(v => v.language.startsWith('en')).forEach(v => {
-      console.log(`${v.identifier} | ${v.quality}`);
+      __DEV__ && console.log(`${v.identifier} | ${v.quality}`);
     });
   }
 }

@@ -51,7 +51,7 @@ export default function SurahDetailScreen() {
     clearPlayer,
   } = useAudioPlayerStore();
 
-  const playbackSpeedRef = useRef(progress.settings.playbackSpeed);
+  const playbackSpeedRef = useRef<number>(progress.settings.playbackSpeed);
 
   // Get current reciter info
   const currentReciterId = progress.settings.reciterId as ReciterId;

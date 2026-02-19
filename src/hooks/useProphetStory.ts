@@ -143,19 +143,19 @@ export function useProphetStory(prophetId: string | undefined): UseProphetStoryR
       if (isPlayingRef.current) return;
       isPlayingRef.current = true;
 
-      console.log(`Starting playback from index ${startIndex}, total blocks: ${currentContent.length}`);
+      __DEV__ && console.log(`Starting playback from index ${startIndex}, total blocks: ${currentContent.length}`);
 
       for (let i = startIndex; i < currentContent.length; i++) {
         if (!isPlayingRef.current) {
-          console.log('Playback stopped');
+          __DEV__ && console.log('Playback stopped');
           break;
         }
 
         const block = currentContent[i];
-        console.log(`Processing block ${i}, type: ${block?.type}`);
+        __DEV__ && console.log(`Processing block ${i}, type: ${block?.type}`);
 
         if (!block || block.type !== 'narrative') {
-          console.log(`Block ${i} is not narrative, skipping`);
+          __DEV__ && console.log(`Block ${i} is not narrative, skipping`);
           setCurrentBlockIndex(i);
           await new Promise(r => setTimeout(r, 300));
           continue;
@@ -164,13 +164,13 @@ export function useProphetStory(prophetId: string | undefined): UseProphetStoryR
         setCurrentBlockIndex(i);
         setPlaybackState('playing');
 
-        console.log(`Speaking block ${i}: ${block.content.substring(0, 30)}...`);
+        __DEV__ && console.log(`Speaking block ${i}: ${block.content.substring(0, 30)}...`);
 
         try {
           await storyAudioService.speak(block.content, playbackSpeed);
-          console.log(`Block ${i} finished`);
+          __DEV__ && console.log(`Block ${i} finished`);
         } catch (e) {
-          console.log(`Block ${i} error:`, e);
+          __DEV__ && console.log(`Block ${i} error:`, e);
         }
 
         // Pause between paragraphs
@@ -179,7 +179,7 @@ export function useProphetStory(prophetId: string | undefined): UseProphetStoryR
         }
       }
 
-      console.log('All blocks finished');
+      __DEV__ && console.log('All blocks finished');
       isPlayingRef.current = false;
       setPlaybackState('idle');
     },

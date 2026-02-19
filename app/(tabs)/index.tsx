@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -102,7 +103,7 @@ export default function HomeScreen() {
     }
   };
 
-  const quickActions = [
+  const quickActions = useMemo(() => [
     {
       id: 'alphabet',
       title: t('home.alphabet'),
@@ -127,7 +128,7 @@ export default function HomeScreen() {
       color: '#22c55e',
       route: '/grammar',
     },
-  ];
+  ], [t]);
 
   return (
     <SafeAreaView style={styles.container}>

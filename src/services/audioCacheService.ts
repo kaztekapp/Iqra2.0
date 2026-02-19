@@ -1,7 +1,8 @@
 import * as FileSystem from 'expo-file-system';
+import { Paths } from 'expo-file-system';
 
 // Cache directory for audio files
-const AUDIO_CACHE_DIR = `${FileSystem.documentDirectory ?? ''}quran-audio/`;
+const AUDIO_CACHE_DIR = `${Paths.document.uri}quran-audio/`;
 
 interface CacheStatus {
   isCached: boolean;

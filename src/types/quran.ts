@@ -205,7 +205,7 @@ export interface ReviewSessionItem {
 
 export interface QuranSettings {
   reciterId: string;
-  playbackSpeed: 0.5 | 0.75 | 1 | 1.25;
+  playbackSpeed: 0.5 | 0.75 | 1 | 1.25 | 1.5 | 1.75;
   repeatCount: 1 | 3 | 5 | 10 | 0; // 0 = infinite
   showTransliteration: boolean;
   showTranslation: boolean;

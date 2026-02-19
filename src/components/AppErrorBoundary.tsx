@@ -1,0 +1,134 @@
+import React, { Component, type ErrorInfo, type ReactNode } from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as Updates from 'expo-updates';
+import * as Sentry from '@sentry/react-native';
+import i18n from 'i18next';
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+export class AppErrorBoundary extends Component<Props, State> {
+  state: State = { hasError: false };
+
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[ErrorBoundary] Caught error:', error.message);
+    Sentry.captureException(error, {
+      contexts: { react: { componentStack: info.componentStack ?? undefined } },
+    });
+  }
+
+  handleRestart = async () => {
+    try {
+      if (!__DEV__) {
+        await Updates.reloadAsync();
+      } else {
+        this.setState({ hasError: false });
+      }
+    } catch {
+      this.setState({ hasError: false });
+    }
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.card}>
+            <View style={styles.iconContainer}>
+              <Ionicons name="warning-outline" size={48} color="#f59e0b" />
+            </View>
+
+            <Text style={styles.title}>{i18n.t('profile.errorBoundaryTitle')}</Text>
+            <Text style={styles.titleArabic}>حدث خطأ ما</Text>
+
+            <Text style={styles.message}>
+              {i18n.t('profile.errorBoundaryMessage')}
+            </Text>
+
+            <Pressable style={styles.button} onPress={this.handleRestart}>
+              <Ionicons name="refresh" size={20} color="#ffffff" />
+              <Text style={styles.buttonText}>{i18n.t('profile.restartApp')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0f172a',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  card: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#334155',
+    padding: 32,
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 360,
+  },
+  iconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#f1f5f9',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  titleArabic: {
+    fontSize: 18,
+    color: '#D4AF37',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  message: {
+    fontSize: 14,
+    color: '#94a3b8',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 28,
+  },
+  button: {
+    backgroundColor: '#10b981',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+    width: '100%',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+});

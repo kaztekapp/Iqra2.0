@@ -31,7 +31,7 @@ export function useAudioPlayer(): UseAudioPlayerReturn {
       player.pause();
       player.seekTo(0);
     } catch (err) {
-      console.log('Error stopping audio:', err);
+      __DEV__ && console.log('Error stopping audio:', err);
     }
     setIsPlaying(false);
   }, [player]);

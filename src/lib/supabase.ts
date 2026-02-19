@@ -37,7 +37,7 @@ const secureStorage = {
       }
       return result || null;
     } catch (e) {
-      console.warn('SecureStore getItem error:', e);
+      __DEV__ && console.warn('SecureStore getItem error:', e);
       return null;
     }
   },
@@ -73,7 +73,7 @@ const secureStorage = {
           await SecureStore.deleteItemAsync(key).catch(() => {});
           continue;
         }
-        console.warn('SecureStore setItem error:', e);
+        __DEV__ && console.warn('SecureStore setItem error:', e);
       }
     }
   },
@@ -81,7 +81,7 @@ const secureStorage = {
     try {
       await SecureStore.deleteItemAsync(key);
     } catch (e) {
-      console.warn('SecureStore removeItem error:', e);
+      __DEV__ && console.warn('SecureStore removeItem error:', e);
     }
     await clearChunks(key);
   },

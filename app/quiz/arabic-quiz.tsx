@@ -352,18 +352,19 @@ export default function ArabicQuizScreen() {
           {/* Options */}
           <View style={styles.optionsContainer}>
             {currentQuestion.options.map((option, index) => {
-              let optionStyle = [styles.optionButton];
-              let textStyle = [styles.optionText];
+              const isCorrectOption = screenState === 'feedback' && index === currentQuestion.correctIndex;
+              const isWrongOption = screenState === 'feedback' && index === selectedOptionIndex && !isCorrect;
 
-              if (screenState === 'feedback') {
-                if (index === currentQuestion.correctIndex) {
-                  optionStyle.push(styles.optionCorrect);
-                  textStyle.push(styles.optionTextCorrect);
-                } else if (index === selectedOptionIndex && !isCorrect) {
-                  optionStyle.push(styles.optionWrong);
-                  textStyle.push(styles.optionTextWrong);
-                }
-              }
+              const optionStyle = [
+                styles.optionButton,
+                isCorrectOption && styles.optionCorrect,
+                isWrongOption && styles.optionWrong,
+              ];
+              const textStyle = [
+                styles.optionText,
+                isCorrectOption && styles.optionTextCorrect,
+                isWrongOption && styles.optionTextWrong,
+              ];
 
               return (
                 <Pressable

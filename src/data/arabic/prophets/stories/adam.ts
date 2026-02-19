@@ -98,12 +98,12 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, expliqua l\'origine de l\'argile d\'Adam.',
     source: {
       type: 'hadith',
-      collection: 'Sunan At-Tirmidhi',
+      collection: 'tirmidhi',
       narrator: 'Abu Musa al-Ash\'ari',
       arabicText: 'إِنَّ اللَّهَ خَلَقَ آدَمَ مِنْ قَبْضَةٍ قَبَضَهَا مِنْ جَمِيعِ الأَرْضِ فَجَاءَ بَنُو آدَمَ عَلَى قَدْرِ الأَرْضِ جَاءَ مِنْهُمُ الأَحْمَرُ وَالأَبْيَضُ وَالأَسْوَدُ وَبَيْنَ ذَلِكَ وَالسَّهْلُ وَالْحَزْنُ وَالْخَبِيثُ وَالطَّيِّبُ',
       translation: 'Allah created Adam from a handful of dust taken from different parts of the earth. So the children of Adam have been created according to the composition of the earth: some red, some white, some black, and colors in between. And some are easy-going and some are difficult, some are evil and some are good.',
       translationFr: 'Allah créa Adam à partir d\'une poignée de poussière prise de différentes parties de la terre. Ainsi les enfants d\'Adam ont été créés selon la composition de la terre : certains rouges, certains blancs, certains noirs, et des couleurs intermédiaires. Et certains sont faciles à vivre et d\'autres difficiles, certains sont mauvais et d\'autres sont bons.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
   {
@@ -146,11 +146,11 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, décrivit la rencontre d\'Iblis avec la forme d\'Adam.',
     source: {
       type: 'hadith',
-      collection: 'Sahih Muslim',
+      collection: 'muslim',
       narrator: 'Anas ibn Malik',
       translation: 'When Allah fashioned Adam in Paradise, He left him as long as He wished to leave him. Iblis went around him to see what he was. When he found him to be hollow from within, he recognized that he had been created as a being who would not be able to control himself.',
       translationFr: 'Lorsqu\'Allah façonna Adam au Paradis, Il le laissa aussi longtemps qu\'Il le souhaita. Iblis tourna autour de lui pour voir ce qu\'il était. Quand il le trouva creux de l\'intérieur, il reconnut qu\'il avait été créé comme un être qui ne serait pas capable de se maîtriser.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
   {
@@ -211,12 +211,12 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, décrivit la stature magnifique d\'Adam.',
     source: {
       type: 'hadith',
-      collection: 'Sahih al-Bukhari',
+      collection: 'bukhari',
       narrator: 'Abu Hurayrah',
       arabicText: 'خَلَقَ اللَّهُ آدَمَ وَطُولُهُ سِتُّونَ ذِرَاعًا',
       translation: 'Allah created Adam in his complete form, his height being sixty cubits (approximately 90 feet). Then Allah said to him, "Go and greet that group of angels sitting there, and listen to what they will say in reply to your greeting, for that will be your greeting and the greeting of your offspring." Adam went and said: "As-Salamu Alaikum (Peace be upon you)." The angels said: "As-Salamu Alaika wa Rahmatullahi (Peace be upon you and the Mercy of Allah)." So they added the words "wa Rahmatullahi."',
       translationFr: 'Allah créa Adam dans sa forme complète, sa taille étant de soixante coudées (environ 27 mètres). Puis Allah lui dit : « Va saluer ce groupe d\'anges assis là-bas, et écoute ce qu\'ils diront en réponse à ton salut, car ce sera ta salutation et celle de ta descendance. » Adam alla et dit : « As-Salamu Alaikum (Paix sur vous). » Les anges répondirent : « As-Salamu Alaika wa Rahmatullahi (Paix sur toi et la Miséricorde d\'Allah). » Ils ajoutèrent ainsi les mots « wa Rahmatullahi ».',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
 
@@ -442,12 +442,12 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, expliqua cela davantage.',
     source: {
       type: 'hadith',
-      collection: 'Sahih Muslim',
+      collection: 'muslim',
       narrator: 'Abu Hurayrah',
       arabicText: 'مَا مِنْ مَوْلُودٍ إِلَّا يُولَدُ عَلَى الْفِطْرَةِ',
       translation: 'Every child is born upon the natural disposition (fitrah). Then his parents make him a Jew, a Christian, or a Magian.',
       translationFr: 'Chaque enfant naît selon la disposition naturelle (fitrah). Ce sont ensuite ses parents qui en font un juif, un chrétien ou un mage.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
 
@@ -485,11 +485,11 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, parla de la création de la femme.',
     source: {
       type: 'hadith',
-      collection: 'Sahih al-Bukhari',
+      collection: 'bukhari',
       narrator: 'Abu Hurayrah',
       translation: 'Treat women kindly. Woman has been created from a rib, and the most curved part of the rib is its upper part. If you try to straighten it, you will break it; and if you leave it, it will remain curved. So treat women kindly.',
       translationFr: 'Traitez les femmes avec bonté. La femme a été créée d\'une côte, et la partie la plus courbée de la côte est sa partie supérieure. Si vous essayez de la redresser, vous la briserez ; et si vous la laissez, elle restera courbée. Traitez donc les femmes avec bonté.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
   {
@@ -840,12 +840,12 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, expliqua la gravité de ce premier meurtre.',
     source: {
       type: 'hadith',
-      collection: 'Sahih al-Bukhari',
+      collection: 'bukhari',
       narrator: 'Abdullah ibn Mas\'ud',
       arabicText: 'لَا تُقْتَلُ نَفْسٌ ظُلْمًا إِلَّا كَانَ عَلَى ابْنِ آدَمَ الأَوَّلِ كِفْلٌ مِنْ دَمِهَا',
       translation: 'No soul is wrongfully killed except that a portion of the sin is upon the first son of Adam, because he was the first to establish the tradition of murder.',
       translationFr: 'Aucune âme n\'est tuée injustement sans qu\'une part du péché n\'incombe au premier fils d\'Adam, car il fut le premier à instaurer la tradition du meurtre.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
 
@@ -865,11 +865,11 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, parla de la durée de vie d\'Adam.',
     source: {
       type: 'hadith',
-      collection: 'Sunan At-Tirmidhi',
+      collection: 'tirmidhi',
       narrator: 'Abu Hurayrah',
       translation: 'When Allah created Adam, He wiped his back and every soul that He would create from him until the Day of Resurrection fell from his back. He placed between the eyes of every person a flash of light. Then He presented them to Adam, who said, "O Lord, who are these?" He said, "These are your offspring." Adam saw one of them whose flash of light between his eyes amazed him, so he said, "O Lord, who is this?" He said, "This is a man from the last nations of your offspring called Dawud (David)." Adam said, "Lord, how long did You make his lifespan?" He said, "Sixty years." Adam said, "O Lord, increase his lifespan from my lifespan by forty years." When Adam\'s lifespan was ending, the Angel of Death came to him. Adam said, "Do I not have forty years remaining?" He said, "Did you not give them to your son Dawud?" Adam denied it, and his offspring denied. Adam forgot, and his offspring forgot. Adam sinned, and his offspring sinned.',
       translationFr: 'Lorsqu\'Allah créa Adam, Il passa Sa main sur son dos et chaque âme qu\'Il allait créer de lui jusqu\'au Jour de la Résurrection tomba de son dos. Il plaça entre les yeux de chaque personne un éclat de lumière. Puis Il les présenta à Adam, qui dit : « Ô Seigneur, qui sont ceux-ci ? » Il dit : « Ce sont tes descendants. » Adam vit l\'un d\'entre eux dont l\'éclat de lumière entre ses yeux l\'émerveilla, et il dit : « Ô Seigneur, qui est celui-ci ? » Il dit : « C\'est un homme des dernières nations de ta descendance appelé Dawoud (David). » Adam dit : « Seigneur, combien as-Tu fait durer sa vie ? » Il dit : « Soixante ans. » Adam dit : « Ô Seigneur, augmente sa durée de vie de quarante ans pris sur la mienne. » Quand la durée de vie d\'Adam touchait à sa fin, l\'Ange de la Mort vint à lui. Adam dit : « Ne me reste-t-il pas quarante ans ? » Il dit : « Ne les as-tu pas donnés à ton fils Dawoud ? » Adam le nia, et sa descendance nia. Adam oublia, et sa descendance oublia. Adam pécha, et sa descendance pécha.',
-      grade: 'Hasan',
+      grade: 'hasan',
     } as HadithReference,
   },
   {
@@ -887,11 +887,11 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Les funérailles d\'Adam par les anges.',
     source: {
       type: 'hadith',
-      collection: 'Reported in various books of Seerah',
+      collection: 'other',
       narrator: 'Ubayy ibn Ka\'b',
       translation: 'When Adam was dying, the angels brought him shrouding and embalming from Paradise. When Adam passed away, the angels washed him, shrouded him, embalmed him, dug his grave, prayed upon him, and buried him. Then they said: "O children of Adam, this is your tradition."',
       translationFr: 'Lorsqu\'Adam était mourant, les anges lui apportèrent un linceul et de l\'embaumement du Paradis. Quand Adam décéda, les anges le lavèrent, l\'enveloppèrent dans le linceul, l\'embaumèrent, creusèrent sa tombe, prièrent sur lui et l\'enterrèrent. Puis ils dirent : « Ô enfants d\'Adam, voici votre tradition. »',
-      grade: 'Hasan',
+      grade: 'hasan',
     } as HadithReference,
   },
 
@@ -961,12 +961,12 @@ export const adamStoryContent: StoryContentBlock[] = [
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, nous donna espoir concernant le repentir.',
     source: {
       type: 'hadith',
-      collection: 'Sahih Muslim',
+      collection: 'muslim',
       narrator: 'Abu Hurayrah',
       arabicText: 'وَالَّذِي نَفْسِي بِيَدِهِ لَوْ لَمْ تُذْنِبُوا لَذَهَبَ اللَّهُ بِكُمْ وَلَجَاءَ بِقَوْمٍ يُذْنِبُونَ فَيَسْتَغْفِرُونَ اللَّهَ فَيَغْفِرُ لَهُمْ',
       translation: 'By Him in Whose Hand is my soul, if you did not commit sins, Allah would replace you with people who would commit sins and then seek forgiveness from Allah, and He would forgive them.',
       translationFr: 'Par Celui qui détient mon âme dans Sa main, si vous ne commettiez pas de péchés, Allah vous remplacerait par des gens qui commettraient des péchés puis demanderaient pardon à Allah, et Il leur pardonnerait.',
-      grade: 'Sahih',
+      grade: 'sahih',
     } as HadithReference,
   },
   {

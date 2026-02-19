@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,7 +19,7 @@ interface ModuleCardProps {
   onPress: (moduleId: ModuleType, title: string) => void;
 }
 
-function ModuleCard({
+const ModuleCard = memo(function ModuleCard({
   moduleId,
   title,
   titleArabic,
@@ -77,7 +78,7 @@ function ModuleCard({
       </View>
     </Pressable>
   );
-}
+});
 
 export default function LearnScreen() {
   const { t } = useTranslation();
@@ -93,7 +94,11 @@ export default function LearnScreen() {
     });
   };
 
-  const modules = [
+  const alphabetProgress = getAlphabetCompletionPercent();
+  const grammarProgress = getGrammarCompletionPercent();
+  const vocabularyProgress = getVocabularyCompletionPercent();
+
+  const modules = useMemo(() => [
     {
       id: 'alphabet',
       title: t('learn.alphabetWriting'),
@@ -101,7 +106,7 @@ export default function LearnScreen() {
       description: t('learn.alphabetWritingDesc'),
       icon: 'text' as const,
       color: '#6366f1',
-      progress: getAlphabetCompletionPercent(),
+      progress: alphabetProgress,
       route: '/alphabet',
       locked: false,
     },
@@ -112,7 +117,7 @@ export default function LearnScreen() {
       description: t('learn.grammarDesc'),
       icon: 'git-branch' as const,
       color: '#22c55e',
-      progress: getGrammarCompletionPercent(),
+      progress: grammarProgress,
       route: '/grammar',
       locked: false,
     },
@@ -134,7 +139,7 @@ export default function LearnScreen() {
       description: t('learn.vocabularyDesc'),
       icon: 'library' as const,
       color: '#D4AF37',
-      progress: getVocabularyCompletionPercent(),
+      progress: vocabularyProgress,
       route: '/vocabulary',
       locked: false,
     },
@@ -160,7 +165,7 @@ export default function LearnScreen() {
       route: '/practice',
       locked: false,
     },
-  ];
+  ], [t, alphabetProgress, grammarProgress, vocabularyProgress]);
 
   return (
     <SafeAreaView style={styles.container}>

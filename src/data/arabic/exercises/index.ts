@@ -3,7 +3,7 @@ import alphabetExercises from './alphabetExercises';
 import vocabularyExercises from './vocabularyExercises';
 import grammarExercises from './grammarExercises';
 import verbExercises from './verbExercises';
-import grammarExercises2 from './grammarExercises2';
+import { grammarExercises2 } from './grammarExercises2';
 
 // Combine all exercises
 export const exercises: Exercise[] = [

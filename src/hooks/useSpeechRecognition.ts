@@ -10,7 +10,7 @@ try {
   useSpeechRecognitionEvent = speechRecognition.useSpeechRecognitionEvent;
 } catch (error) {
   // Module not available (e.g., in Expo Go)
-  console.log('expo-speech-recognition not available, using fallback mode');
+  __DEV__ && console.log('expo-speech-recognition not available, using fallback mode');
 }
 
 interface SpeechRecognitionState {

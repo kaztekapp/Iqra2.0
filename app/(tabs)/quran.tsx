@@ -33,12 +33,12 @@ export default function QuranScreen() {
   const surahsCompleted = useMemo(() => getTotalSurahsCompleted(), [progress]);
   const juzCompleted = useMemo(() => getJuzCompleted(), [progress]);
   const hizbCompleted = useMemo(() => getHizbCompleted(), [progress]);
-  const duasMemorized = getMemorizedCount();
-  const prophetStoriesCompleted = getProphetStoriesCompleted();
-  const quranStoriesCompleted = getQuranStoriesCompleted();
+  const duasMemorized = useMemo(() => getMemorizedCount(), [getMemorizedCount]);
+  const prophetStoriesCompleted = useMemo(() => getProphetStoriesCompleted(), [getProphetStoriesCompleted]);
+  const quranStoriesCompleted = useMemo(() => getQuranStoriesCompleted(), [getQuranStoriesCompleted]);
   const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
   const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
-  const prayerCompleted = getPrayerCompletedCount();
+  const prayerCompleted = useMemo(() => getPrayerCompletedCount(), [getPrayerCompletedCount]);
 
   const handleLearnQuranPress = () => {
     router.push('/quran/all-surahs' as any);

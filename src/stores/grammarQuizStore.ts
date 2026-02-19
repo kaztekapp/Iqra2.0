@@ -275,7 +275,7 @@ export const useGrammarQuizStore = create<GrammarQuizState>()(
       onRehydrateStorage: () => (state) => {
         // Clear old quiz questions if version changed
         if (state && state.dataVersion !== GRAMMAR_QUIZ_VERSION) {
-          console.log('Grammar quiz data version changed, clearing old questions...');
+          __DEV__ && console.log('Grammar quiz data version changed, clearing old questions...');
           state.currentQuestions = [];
           state.currentAnswers = [];
           state.attempts = 0;

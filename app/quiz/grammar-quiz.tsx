@@ -379,18 +379,19 @@ export default function GrammarQuizScreen() {
           {currentQuestion.type === 'multiple_choice' && currentQuestion.options && (
             <View style={styles.optionsContainer}>
               {currentQuestion.options.map((option) => {
-                let optionStyle = [styles.optionButton];
-                let textStyle = [styles.optionText];
+                const isCorrectOption = screenState === 'feedback' && option.isCorrect;
+                const isWrongOption = screenState === 'feedback' && option.id === selectedOptionId && !isCorrect;
 
-                if (screenState === 'feedback') {
-                  if (option.isCorrect) {
-                    optionStyle.push(styles.optionCorrect);
-                    textStyle.push(styles.optionTextCorrect);
-                  } else if (option.id === selectedOptionId && !isCorrect) {
-                    optionStyle.push(styles.optionWrong);
-                    textStyle.push(styles.optionTextWrong);
-                  }
-                }
+                const optionStyle = [
+                  styles.optionButton,
+                  isCorrectOption && styles.optionCorrect,
+                  isWrongOption && styles.optionWrong,
+                ];
+                const textStyle = [
+                  styles.optionText,
+                  isCorrectOption && styles.optionTextCorrect,
+                  isWrongOption && styles.optionTextWrong,
+                ];
 
                 // Check if option contains Arabic text (has Arabic Unicode characters)
                 const hasArabic = /[\u0600-\u06FF]/.test(option.text);
