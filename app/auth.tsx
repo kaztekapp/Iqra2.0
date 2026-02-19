@@ -44,11 +44,7 @@ export default function AuthScreen() {
       Alert.alert(t('common.error'), t('auth.passwordRequired'));
       return false;
     }
-    if (isSignUp && (password.length < 7 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password) || !/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password))) {
-      Alert.alert(t('common.error'), t('auth.passwordMinLength'));
-      return false;
-    }
-    if (!isSignUp && password.length < 6) {
+    if (isSignUp && password.length < 6) {
       Alert.alert(t('common.error'), t('auth.passwordMinLength'));
       return false;
     }
@@ -68,9 +64,14 @@ export default function AuthScreen() {
     setLoading(true);
     try {
       if (isSignUp) {
-        await signUpWithEmail(email, password, fullName.trim());
-        await signInWithEmail(email, password);
-        router.replace('/(tabs)');
+        const data = await signUpWithEmail(email, password, fullName.trim());
+        // If email confirmation is required, the session will be null
+        if (data.session) {
+          router.replace('/(tabs)');
+        } else {
+          Alert.alert(t('auth.checkEmail'), t('auth.confirmEmailSent'));
+          setMode('signIn');
+        }
       } else {
         await signInWithEmail(email, password);
         router.replace('/(tabs)');
