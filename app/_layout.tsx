@@ -119,8 +119,11 @@ export default function RootLayout() {
       setAuthReady(true);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
+      if (event === 'PASSWORD_RECOVERY') {
+        router.replace('/reset-password');
+      }
     });
 
     return () => {
@@ -138,10 +141,11 @@ export default function RootLayout() {
     const inTabs = segments[0] === '(tabs)';
     const seg = segments[0] as string;
     const inLegal = seg === 'privacy-policy' || seg === 'terms-of-service';
+    const inResetPassword = seg === 'reset-password';
 
     if (!hasCompletedOnboarding && !inOnboarding) {
       router.replace('/(onboarding)/language');
-    } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth && !inLegal) {
+    } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth && !inLegal && !inResetPassword) {
       router.replace('/auth');
     }
   }, [authReady, hasCompletedOnboarding, isAuthenticated, segments]);
@@ -186,6 +190,7 @@ export default function RootLayout() {
           <Stack.Screen name="reading/[textId]" />
           <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
           <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
+          <Stack.Screen name="reset-password" />
           <Stack.Screen name="privacy-policy" />
           <Stack.Screen name="terms-of-service" />
         </Stack>

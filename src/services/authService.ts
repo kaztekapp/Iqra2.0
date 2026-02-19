@@ -117,7 +117,17 @@ export async function signOut() {
 
 export async function resetPassword(email: string) {
   const { error } = await withTimeout(
-    getClient().auth.resetPasswordForEmail(email),
+    getClient().auth.resetPasswordForEmail(email, {
+      redirectTo: 'iqra2://reset-password',
+    }),
+    AUTH_TIMEOUT,
+  );
+  if (error) throw error;
+}
+
+export async function updatePassword(newPassword: string) {
+  const { error } = await withTimeout(
+    getClient().auth.updateUser({ password: newPassword }),
     AUTH_TIMEOUT,
   );
   if (error) throw error;

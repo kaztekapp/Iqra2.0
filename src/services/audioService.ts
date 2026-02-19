@@ -386,7 +386,7 @@ class AudioService {
         language: 'ar-SA',
         rate: rate,
         pitch: 1.0,
-        onStart: () => __DEV__ && console.log('Speaking:', text, '-> processed:', processedText),
+        onStart: () => { __DEV__ && console.log('Speaking:', text, '-> processed:', processedText); },
         onDone: () => {
           this.isSpeaking = false;
           onDone?.();
@@ -465,7 +465,7 @@ class AudioService {
       Speech.speak('Test', {
         language: 'en-US',
         rate: 1.0,
-        onError: (error) => __DEV__ && console.warn('TTS test error:', error),
+        onError: (error) => { __DEV__ && console.warn('TTS test error:', error); },
       });
     } catch (error) {
       __DEV__ && console.warn('Audio test error:', error);
@@ -477,7 +477,7 @@ class AudioService {
     Speech.speak('Hello, testing audio', {
       language: 'en-US',
       rate: 0.8,
-      onError: (error) => __DEV__ && console.warn('TTS test error:', error),
+      onError: (error) => { __DEV__ && console.warn('TTS test error:', error); },
     });
   }
 }
