@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
+import * as Linking from 'expo-linking';
 import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { adService } from '../src/services/adService';
@@ -132,6 +133,43 @@ export default function RootLayout() {
       clearTimeout(timeout);
       subscription.unsubscribe();
     };
+  }, []);
+
+  // Handle deep links for Supabase auth (password reset, email confirmation)
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) return;
+
+    function handleDeepLink(url: string) {
+      if (!url || !supabase) return;
+      try {
+        // Supabase appends tokens as hash fragment: iqra2://reset-password#access_token=...&refresh_token=...
+        const hashIndex = url.indexOf('#');
+        if (hashIndex === -1) return;
+
+        const fragment = url.substring(hashIndex + 1);
+        const params = new URLSearchParams(fragment);
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+
+        if (accessToken && refreshToken) {
+          supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        }
+      } catch (e) {
+        console.warn('[DeepLink] Failed to parse auth tokens:', e);
+      }
+    }
+
+    // Handle URL that opened the app (cold start)
+    Linking.getInitialURL().then((url) => {
+      if (url) handleDeepLink(url);
+    });
+
+    // Handle URLs while the app is already open (warm start)
+    const linkingSub = Linking.addEventListener('url', ({ url }) => {
+      handleDeepLink(url);
+    });
+
+    return () => linkingSub.remove();
   }, []);
 
   // Route protection

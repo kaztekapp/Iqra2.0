@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -74,88 +74,97 @@ export default function ResetPasswordScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerIcon}>
-            <Ionicons name="lock-open-outline" size={40} color="#D4AF37" />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+          bounces={false}
+        >
+          {/* Header */}
+          <View style={styles.header}>
+            <View style={styles.headerIcon}>
+              <Ionicons name="lock-open-outline" size={40} color="#D4AF37" />
+            </View>
+            <Text style={styles.title}>{t('auth.setNewPassword')}</Text>
+            <Text style={styles.subtitle}>{t('auth.setNewPasswordDesc')}</Text>
           </View>
-          <Text style={styles.title}>{t('auth.setNewPassword')}</Text>
-          <Text style={styles.subtitle}>{t('auth.setNewPasswordDesc')}</Text>
-        </View>
 
-        {/* Form */}
-        <View style={styles.formCard}>
-          {/* New Password */}
-          <View style={styles.inputBox}>
-            <Ionicons name="lock-closed-outline" size={20} color="#64748b" />
-            <TextInput
-              style={styles.input}
-              placeholder={t('auth.newPassword')}
-              placeholderTextColor="#475569"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
-              accessibilityLabel={t('auth.newPassword')}
-            />
+          {/* Form */}
+          <View style={styles.formCard}>
+            {/* New Password */}
+            <View style={styles.inputBox}>
+              <Ionicons name="lock-closed-outline" size={20} color="#64748b" />
+              <TextInput
+                style={styles.input}
+                placeholder={t('auth.newPassword')}
+                placeholderTextColor="#475569"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+                accessibilityLabel={t('auth.newPassword')}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                activeOpacity={0.6}
+                accessibilityRole="button"
+              >
+                <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Password Requirements */}
+            <View style={styles.requirements}>
+              <RequirementItem met={password.length >= 7} text={t('auth.req7Chars')} />
+              <RequirementItem met={/[A-Z]/.test(password)} text={t('auth.reqUppercase')} />
+              <RequirementItem met={/[a-z]/.test(password)} text={t('auth.reqLowercase')} />
+              <RequirementItem met={/\d/.test(password)} text={t('auth.reqNumber')} />
+              <RequirementItem met={/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password)} text={t('auth.reqSpecial')} />
+            </View>
+
+            {/* Confirm Password */}
+            <View style={styles.inputBox}>
+              <Ionicons name="shield-checkmark-outline" size={20} color="#64748b" />
+              <TextInput
+                style={styles.input}
+                placeholder={t('auth.confirmNewPassword')}
+                placeholderTextColor="#475569"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry={!showConfirmPassword}
+                autoCapitalize="none"
+                accessibilityLabel={t('auth.confirmNewPassword')}
+              />
+              <TouchableOpacity
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                activeOpacity={0.6}
+                accessibilityRole="button"
+              >
+                <Ionicons name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Submit */}
             <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              activeOpacity={0.6}
+              style={[styles.submitButton, loading && { opacity: 0.7 }]}
+              activeOpacity={0.8}
+              onPress={handleSubmit}
+              disabled={loading}
               accessibilityRole="button"
+              accessibilityLabel={t('auth.resetPassword')}
             >
-              <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
+              {loading ? (
+                <ActivityIndicator color="#0f172a" />
+              ) : (
+                <Text style={styles.submitText}>{t('auth.resetPassword')}</Text>
+              )}
             </TouchableOpacity>
           </View>
-
-          {/* Password Requirements */}
-          <View style={styles.requirements}>
-            <RequirementItem met={password.length >= 7} text={t('auth.req7Chars')} />
-            <RequirementItem met={/[A-Z]/.test(password)} text={t('auth.reqUppercase')} />
-            <RequirementItem met={/[a-z]/.test(password)} text={t('auth.reqLowercase')} />
-            <RequirementItem met={/\d/.test(password)} text={t('auth.reqNumber')} />
-            <RequirementItem met={/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password)} text={t('auth.reqSpecial')} />
-          </View>
-
-          {/* Confirm Password */}
-          <View style={styles.inputBox}>
-            <Ionicons name="shield-checkmark-outline" size={20} color="#64748b" />
-            <TextInput
-              style={styles.input}
-              placeholder={t('auth.confirmNewPassword')}
-              placeholderTextColor="#475569"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry={!showConfirmPassword}
-              autoCapitalize="none"
-              accessibilityLabel={t('auth.confirmNewPassword')}
-            />
-            <TouchableOpacity
-              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-              activeOpacity={0.6}
-              accessibilityRole="button"
-            >
-              <Ionicons name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#64748b" />
-            </TouchableOpacity>
-          </View>
-
-          {/* Submit */}
-          <TouchableOpacity
-            style={[styles.submitButton, loading && { opacity: 0.7 }]}
-            activeOpacity={0.8}
-            onPress={handleSubmit}
-            disabled={loading}
-            accessibilityRole="button"
-            accessibilityLabel={t('auth.resetPassword')}
-          >
-            {loading ? (
-              <ActivityIndicator color="#0f172a" />
-            ) : (
-              <Text style={styles.submitText}>{t('auth.resetPassword')}</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -179,9 +188,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f172a',
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 24,
+    paddingBottom: 40,
   },
   header: {
     alignItems: 'center',

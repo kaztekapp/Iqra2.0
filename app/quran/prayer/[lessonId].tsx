@@ -722,16 +722,17 @@ const styles = StyleSheet.create({
   tableCell: {
     flex: 1,
     paddingHorizontal: 4,
+    overflow: 'hidden',
   },
   tableHeaderText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '700',
     color: '#94a3b8',
   },
   tableCellText: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#cbd5e1',
-    lineHeight: 18,
+    lineHeight: 16,
   },
 
   // Examples Grid
@@ -987,6 +988,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     marginBottom: 8,
+    flexWrap: 'wrap',
   },
   prayerTimeName: {
     fontSize: 16,
@@ -1008,20 +1010,27 @@ const styles = StyleSheet.create({
   },
   prayerTimeDetails: {
     flexDirection: 'row',
-    gap: 16,
+    flexWrap: 'wrap',
+    gap: 6,
+    rowGap: 4,
   },
   prayerTimeDetail: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: 4,
+    flex: 1,
+    minWidth: '45%' as any,
   },
   prayerTimeDetailText: {
     fontSize: 12,
     color: '#94a3b8',
+    flexShrink: 1,
   },
   sunnahRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 12,
+    rowGap: 4,
     marginTop: 8,
     paddingTop: 8,
     borderTopWidth: 1,
@@ -1031,6 +1040,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#10b981',
     fontStyle: 'italic',
+    flexShrink: 1,
   },
 
   // Complete Button
