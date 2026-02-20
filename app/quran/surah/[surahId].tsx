@@ -7,14 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { getSurahById, getSurahByNumber } from '../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
-import { AyahCard, AyahListItem } from '../../../src/components/quran/AyahCard';
+import { AyahCard } from '../../../src/components/quran/AyahCard';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
 import { useAudioPlayerStore, advanceToNextSurah } from '../../../src/stores/audioPlayerStore';
+import { useAyahTranslations } from '../../../src/hooks/useAyahTranslations';
 
 export default function SurahDetailScreen() {
   const { t } = useTranslation();
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
-  const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [activeAyahId, setActiveAyahId] = useState<string | null>(null);
   const [audioState, setAudioState] = useState<AudioState>('idle');
   const [isPlayingAll, setIsPlayingAll] = useState(false);
@@ -34,6 +34,9 @@ export default function SurahDetailScreen() {
   // Fetch ayahs from API (verified Quran text)
   const { ayahs, isLoading, error, refetch } = useQuranSurah(surahId);
 
+  // Fetch translations based on user's language (EN or FR)
+  const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
+
   const {
     getSurahProgress,
     isAyahLearned,
@@ -43,6 +46,8 @@ export default function SurahDetailScreen() {
     unbookmarkAyah,
     progress,
     setReciter,
+    toggleTranslation,
+    toggleTransliteration,
   } = useQuranStore();
 
   const {
@@ -335,36 +340,31 @@ export default function SurahDetailScreen() {
 
   // Render item for FlatList
   const renderAyahItem = useCallback(({ item: ayah }: { item: typeof ayahs[0] }) => {
-    if (viewMode === 'cards') {
-      return (
-        <AyahCard
-          ayah={ayah}
-          showTransliteration={progress.settings.showTransliteration}
-          showTranslation={progress.settings.showTranslation}
-          showTajweed={progress.settings.showTajweedColors}
-          isLearned={isAyahLearned(surahId, ayah.id)}
-          isMemorized={isAyahMemorized(surahId, ayah.id)}
-          isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
-          isLoading={activeAyahId === ayah.id && audioState === 'loading'}
-          isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
-          isPaused={activeAyahId === ayah.id && audioState === 'paused'}
-          playbackSpeed={progress.settings.playbackSpeed}
-          onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
-          onBookmark={() => handleBookmark(ayah.id)}
-          onPress={() => handleAyahPress(ayah.id)}
-          onSpeedChange={handleSpeedChange}
-        />
-      );
-    }
+    // Override translation with language-specific version if available
+    const translatedAyah = langTranslations.size > 0
+      ? { ...ayah, translation: langTranslations.get(ayah.ayahNumber) || ayah.translation }
+      : ayah;
+
     return (
-      <AyahListItem
-        ayah={ayah}
+      <AyahCard
+        ayah={translatedAyah}
+        showTransliteration={progress.settings.showTransliteration}
+        showTranslation={progress.settings.showTranslation}
+        showTajweed={progress.settings.showTajweedColors}
         isLearned={isAyahLearned(surahId, ayah.id)}
         isMemorized={isAyahMemorized(surahId, ayah.id)}
+        isBookmarked={surahProgress.bookmarkedAyahs.includes(ayah.id)}
+        isLoading={activeAyahId === ayah.id && audioState === 'loading'}
+        isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
+        isPaused={activeAyahId === ayah.id && audioState === 'paused'}
+        playbackSpeed={progress.settings.playbackSpeed}
+        onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
+        onBookmark={() => handleBookmark(ayah.id)}
         onPress={() => handleAyahPress(ayah.id)}
+        onSpeedChange={handleSpeedChange}
       />
     );
-  }, [viewMode, progress.settings, surahId, surahProgress.bookmarkedAyahs, activeAyahId, audioState, isAyahLearned, isAyahMemorized, handlePlayAyah, handleBookmark, handleAyahPress, handleSpeedChange]);
+  }, [progress.settings, surahId, surahProgress.bookmarkedAyahs, activeAyahId, audioState, isAyahLearned, isAyahMemorized, handlePlayAyah, handleBookmark, handleAyahPress, handleSpeedChange, langTranslations]);
 
   // List header component
   const ListHeader = useCallback(() => (
@@ -449,11 +449,11 @@ export default function SurahDetailScreen() {
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
         <Pressable style={styles.primaryButton} onPress={handleLearn} accessibilityRole="button" accessibilityLabel={t('surahFeature.learn')}>
-          <Ionicons name="school" size={20} color="#D4AF37" />
+          <Ionicons name="school" size={20} color="#0f172a" />
           <Text style={styles.primaryButtonText}>{t('surahFeature.learn')}</Text>
         </Pressable>
         <Pressable style={styles.secondaryButton} onPress={handleWrite} accessibilityRole="button" accessibilityLabel={t('surahFeature.write')}>
-          <Ionicons name="pencil" size={20} color="#D4AF37" />
+          <Ionicons name="pencil" size={20} color="#0f172a" />
           <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
         </Pressable>
       </View>
@@ -487,35 +487,39 @@ export default function SurahDetailScreen() {
               : t('surahFeature.playAll')}
           </Text>
         </Pressable>
-        <View style={styles.toggleButtons}>
-          <Pressable
-            style={[styles.toggleButton, viewMode === 'cards' && styles.toggleButtonActive]}
-            onPress={() => setViewMode('cards')}
-            accessibilityRole="button"
-            accessibilityLabel="Card view"
-          >
-            <Ionicons
-              name="grid"
-              size={18}
-              color={viewMode === 'cards' ? '#ffffff' : '#64748b'}
-            />
-          </Pressable>
-          <Pressable
-            style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
-            onPress={() => setViewMode('list')}
-            accessibilityRole="button"
-            accessibilityLabel="List view"
-          >
-            <Ionicons
-              name="list"
-              size={18}
-              color={viewMode === 'list' ? '#ffffff' : '#64748b'}
-            />
-          </Pressable>
-        </View>
+        <Pressable
+          style={[
+            styles.translateButton,
+            (progress.settings.showTranslation || progress.settings.showTransliteration) && styles.translateButtonActive,
+          ]}
+          onPress={() => {
+            const isOn = progress.settings.showTranslation || progress.settings.showTransliteration;
+            if (isOn) {
+              if (progress.settings.showTranslation) toggleTranslation();
+              if (progress.settings.showTransliteration) toggleTransliteration();
+            } else {
+              if (!progress.settings.showTranslation) toggleTranslation();
+              if (!progress.settings.showTransliteration) toggleTransliteration();
+            }
+          }}
+          accessibilityRole="button"
+          accessibilityLabel={(progress.settings.showTranslation || progress.settings.showTransliteration) ? 'Hide translation' : 'Show translation'}
+        >
+          <Ionicons
+            name="language"
+            size={18}
+            color={(progress.settings.showTranslation || progress.settings.showTransliteration) ? '#ffffff' : '#64748b'}
+          />
+          <Text style={[
+            styles.translateButtonText,
+            (progress.settings.showTranslation || progress.settings.showTransliteration) && styles.translateButtonTextActive,
+          ]}>
+            {(progress.settings.showTranslation || progress.settings.showTransliteration) ? t('surahFeature.translationOn') : t('surahFeature.translationOff')}
+          </Text>
+        </Pressable>
       </View>
     </>
-  ), [surah, currentReciter, viewMode, isPlayingAll, audioState, currentPlayingAyah, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, t]);
+  ), [surah, currentReciter, isPlayingAll, audioState, currentPlayingAyah, progress.settings, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, toggleTranslation, toggleTransliteration, t]);
 
   // List footer component
   const ListFooter = useCallback(() => (
@@ -865,8 +869,8 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     flex: 1,
-    backgroundColor: '#D4AF3735',
-    borderRadius: 12,
+    backgroundColor: '#D4AF37',
+    borderRadius: 14,
     paddingVertical: 14,
     flexDirection: 'row',
     alignItems: 'center',
@@ -874,24 +878,24 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   primaryButtonText: {
-    color: '#D4AF37',
-    fontSize: 15,
-    fontWeight: '600',
+    color: '#0f172a',
+    fontSize: 16,
+    fontWeight: '700',
   },
   secondaryButton: {
     flex: 1,
-    backgroundColor: '#D4AF3735',
-    borderRadius: 12,
+    backgroundColor: '#D4AF37',
+    borderRadius: 14,
     paddingVertical: 14,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
+    gap: 8,
   },
   secondaryButtonText: {
-    color: '#D4AF37',
-    fontSize: 14,
-    fontWeight: '600',
+    color: '#0f172a',
+    fontSize: 16,
+    fontWeight: '700',
   },
   playAllButton: {
     flexDirection: 'row',
@@ -910,6 +914,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  translateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#334155',
+    borderRadius: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    gap: 5,
+  },
+  translateButtonActive: {
+    backgroundColor: '#10b981',
+  },
+  translateButtonText: {
+    color: '#64748b',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  translateButtonTextActive: {
+    color: '#ffffff',
+  },
   viewToggle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -923,18 +947,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  toggleButtons: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  toggleButton: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: '#1e293b',
-  },
-  toggleButtonActive: {
-    backgroundColor: '#10b981',
   },
   ayahsContainer: {
     paddingHorizontal: 12,

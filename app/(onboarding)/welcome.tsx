@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -10,9 +10,11 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoSection}>
-        <View style={styles.logoBadge}>
-          <Text style={styles.logoArabic}>اقْرَأ</Text>
-        </View>
+        <Image
+          source={require('../../assets/images/icon.png')}
+          style={styles.logoImage}
+          resizeMode="contain"
+        />
         <Text style={styles.appName}>Iqra 2.0</Text>
         <Text style={styles.tagline}>{t('onboarding.welcomeTagline')}</Text>
       </View>
@@ -46,19 +48,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 32,
   },
-  logoBadge: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#D4AF37',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 32,
-  },
-  logoArabic: {
-    color: '#ffffff',
-    fontSize: 40,
-    fontWeight: 'bold',
+  logoImage: {
+    width: 160,
+    height: 160,
+    borderRadius: 32,
+    marginBottom: 24,
   },
   appName: {
     color: '#ffffff',

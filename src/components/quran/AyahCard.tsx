@@ -129,7 +129,9 @@ export function AyahCard({
 
       {/* Translation */}
       {showTranslation && (
-        <Text style={styles.translation}>{ayah.translation}</Text>
+        <Text style={styles.translation}>
+          {ayah.translation || ayah.words.map(w => w.translation).join(' ')}
+        </Text>
       )}
 
       {/* Speed Controls - show when audio is active */}

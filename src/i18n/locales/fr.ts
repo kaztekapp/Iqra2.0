@@ -642,6 +642,11 @@ export default {
     steadyPaceForLearning: 'rythme régulier, pour apprendre',
     melodicArtistic: 'mélodique, artistique',
     surahNumber: 'Numéro de Sourate',
+    translation: 'Traduction',
+    transliteration: 'Translittération',
+    tajweed: 'Tajweed',
+    translationOn: 'Traduire',
+    translationOff: 'Traduire',
   },
   allSurahsFeature: {
     title: 'Toutes les Sourates',

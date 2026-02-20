@@ -284,6 +284,37 @@ class QuranApiService {
   }
 
   /**
+   * Fetch ayah-level translations for a surah in a given language
+   * Returns a Map of ayahNumber → translated text
+   */
+  async fetchSurahTranslations(surahNumber: number, language: 'en' | 'fr'): Promise<Map<number, string>> {
+    const resourceId = language === 'fr' ? 136 : 20;
+    const cacheKey = `translations-${surahNumber}-${language}`;
+    if (this.cache.has(cacheKey)) {
+      return this.cache.get(cacheKey);
+    }
+
+    try {
+      const response = await fetchWithTimeout(
+        `${QURAN_API_BASE}/quran/translations/${resourceId}?chapter_number=${surahNumber}`
+      );
+      const data: QuranApiResponse<any> = await response.json();
+
+      const translations = new Map<number, string>();
+      data.translations?.forEach((t: any, index: number) => {
+        // API returns translations in verse order, use index+1 as verse number
+        translations.set(index + 1, this.cleanTranslation(t.text));
+      });
+
+      this.cache.set(cacheKey, translations);
+      return translations;
+    } catch (error) {
+      console.error(`Error fetching translations for surah ${surahNumber} (${language}):`, error);
+      return new Map();
+    }
+  }
+
+  /**
    * Fetch word-by-word transliteration
    */
   async fetchTransliteration(surahNumber: number): Promise<Map<number, string[]>> {

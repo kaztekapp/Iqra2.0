@@ -754,6 +754,14 @@ export const useQuranStore = create<QuranState>()(
     {
       name: 'quran-progress-storage',
       storage: createJSONStorage(() => AsyncStorage),
+      version: 1,
+      migrate: (persisted: any, version: number) => {
+        if (version === 0 && persisted?.progress?.settings) {
+          persisted.progress.settings.showTranslation = true;
+          persisted.progress.settings.showTransliteration = true;
+        }
+        return persisted;
+      },
     }
   )
 );

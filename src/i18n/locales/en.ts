@@ -642,6 +642,11 @@ export default {
     steadyPaceForLearning: 'steady pace, for learning',
     melodicArtistic: 'melodic, artistic',
     surahNumber: 'Surah Number',
+    translation: 'Translation',
+    transliteration: 'Transliteration',
+    tajweed: 'Tajweed',
+    translationOn: 'Translate',
+    translationOff: 'Translate',
   },
   allSurahsFeature: {
     title: 'All Surahs',
