@@ -24,8 +24,7 @@ export default function ResetPasswordScreen() {
       password.length < 7 ||
       !/[A-Z]/.test(password) ||
       !/[a-z]/.test(password) ||
-      !/\d/.test(password) ||
-      !/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password)
+      !/\d/.test(password)
     ) {
       Alert.alert(t('common.error'), t('auth.passwordMinLength'));
       return false;
@@ -122,7 +121,6 @@ export default function ResetPasswordScreen() {
               <RequirementItem met={/[A-Z]/.test(password)} text={t('auth.reqUppercase')} />
               <RequirementItem met={/[a-z]/.test(password)} text={t('auth.reqLowercase')} />
               <RequirementItem met={/\d/.test(password)} text={t('auth.reqNumber')} />
-              <RequirementItem met={/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/.test(password)} text={t('auth.reqSpecial')} />
             </View>
 
             {/* Confirm Password */}
