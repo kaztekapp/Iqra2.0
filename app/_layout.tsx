@@ -139,10 +139,23 @@ export default function RootLayout() {
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase) return;
 
-    function handleDeepLink(url: string) {
+    let lastHandledUrl = '';
+
+    async function handleDeepLink(url: string) {
       if (!url || !supabase) return;
+      // Prevent replaying the same URL (e.g. on app restart)
+      if (url === lastHandledUrl) return;
+      lastHandledUrl = url;
+
       try {
-        // Supabase appends tokens as hash fragment: iqra2://reset-password#access_token=...&refresh_token=...
+        // PKCE flow: Supabase sends ?code=... as a query parameter
+        const codeMatch = url.match(/[?&]code=([^&#]+)/);
+        if (codeMatch) {
+          await supabase.auth.exchangeCodeForSession(codeMatch[1]);
+          return;
+        }
+
+        // Implicit flow: tokens in hash fragment #access_token=...&refresh_token=...
         const hashIndex = url.indexOf('#');
         if (hashIndex === -1) return;
 
@@ -152,10 +165,11 @@ export default function RootLayout() {
         const refreshToken = params.get('refresh_token');
 
         if (accessToken && refreshToken) {
-          supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+          await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
         }
-      } catch (e) {
-        console.warn('[DeepLink] Failed to parse auth tokens:', e);
+      } catch (e: any) {
+        // Stale/expired tokens — silently ignore, user can request a new reset
+        console.warn('[DeepLink] Auth token error:', e.message || e);
       }
     }
 
