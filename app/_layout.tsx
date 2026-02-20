@@ -11,6 +11,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Updates from 'expo-updates';
 import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
+import { adService } from '../src/services/adService';
+import { iapService } from '../src/services/iapService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
@@ -152,10 +154,20 @@ export default function RootLayout() {
 
   const appReady = authReady && updateComplete;
 
+  // Cleanup IAP listeners on unmount
+  useEffect(() => {
+    return () => {
+      iapService.cleanup();
+      adService.cleanup();
+    };
+  }, []);
+
   const onLayoutRootView = useCallback(() => {
     if (appReady) {
       SplashScreen.hideAsync().catch((e) => Sentry.captureException(e));
       quranAudioService.warmUp();
+      adService.initialize();
+      iapService.initialize();
     }
   }, [appReady]);
 

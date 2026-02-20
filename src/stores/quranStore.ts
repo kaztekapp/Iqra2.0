@@ -105,7 +105,7 @@ const initialSettings: QuranSettings = {
   showTransliteration: true,
   showTranslation: true,
   showTajweedColors: true,
-  autoAdvance: false,
+  autoAdvance: true,
   wordByWordMode: true,
 };
 

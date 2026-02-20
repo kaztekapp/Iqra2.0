@@ -31,7 +31,7 @@ export default function LearnModeScreen() {
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(progress.settings.playbackSpeed);
   const [repeatCount, setRepeatCount] = useState(1);
   const [currentRepeat, setCurrentRepeat] = useState(0);
-  const [autoAdvance, setAutoAdvance] = useState(false);
+  const [autoAdvance, setAutoAdvance] = useState(true);
 
   // Verse range selection (1-indexed verse numbers)
   const [startVerse, setStartVerse] = useState(1);
@@ -44,7 +44,7 @@ export default function LearnModeScreen() {
   // Use ref to track values in callbacks (avoids stale closure)
   const currentRepeatRef = useRef(0);
   const repeatCountRef = useRef(1);
-  const autoAdvanceRef = useRef(false);
+  const autoAdvanceRef = useRef(true);
   const currentAyahIndexRef = useRef(0);
   const startVerseRef = useRef(1);
   const endVerseRef = useRef(ayahs.length || 1);
@@ -942,6 +942,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderWidth: 1,
     borderColor: '#475569',
+    paddingVertical: 0,
+    paddingHorizontal: 4,
   },
   quickSelectRow: {
     flexDirection: 'row',

@@ -11,6 +11,7 @@ import { AyahCard } from '../../../src/components/quran/AyahCard';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
 import { useAudioPlayerStore, advanceToNextSurah } from '../../../src/stores/audioPlayerStore';
 import { useAyahTranslations } from '../../../src/hooks/useAyahTranslations';
+import { showInterstitialIfReady } from '../../../src/services/adService';
 
 export default function SurahDetailScreen() {
   const { t } = useTranslation();
@@ -27,6 +28,11 @@ export default function SurahDetailScreen() {
   const flatListRef = useRef<FlatList>(null);
   const ayahPositions = useRef<{ [key: string]: number }>({});
   const ayahsContainerOffset = useRef(0);
+
+  // Show interstitial ad on entry (frequency-capped every 4th navigation)
+  useEffect(() => {
+    showInterstitialIfReady();
+  }, []);
 
   // Get surah metadata from static data (always available)
   const surah = getSurahById(surahId);

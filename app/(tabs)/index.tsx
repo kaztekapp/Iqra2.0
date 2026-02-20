@@ -236,7 +236,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Tips Section */}
-        <View style={[styles.section, { marginBottom: 100 }]}>
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.tipOfTheDay')}</Text>
           <View style={styles.tipCard}>
             <View style={styles.tipIcon}>
@@ -248,6 +248,8 @@ export default function HomeScreen() {
             </View>
           </View>
         </View>
+
+        <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
   );

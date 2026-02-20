@@ -81,10 +81,17 @@ export default function AuthScreen() {
       let userMessage = t('auth.genericError');
       if (msg.includes('invalid login') || msg.includes('invalid password') || msg.includes('unauthorized')) {
         userMessage = t('auth.invalidCredentials');
+      } else if (msg.includes('email not confirmed')) {
+        userMessage = t('auth.emailNotConfirmed');
       } else if (msg.includes('already registered') || msg.includes('duplicate') || msg.includes('already exists')) {
         userMessage = t('auth.emailAlreadyRegistered');
-      } else if (msg.includes('network') || msg.includes('fetch')) {
+      } else if (msg.includes('network') || msg.includes('fetch') || msg.includes('timeout')) {
         userMessage = t('auth.networkError');
+      } else if (msg.includes('rate') || msg.includes('too many')) {
+        userMessage = t('auth.tooManyAttempts');
+      } else if (err.message) {
+        // Show actual error for unhandled cases
+        userMessage = err.message;
       }
       Alert.alert(t('common.error'), userMessage);
     } finally {
@@ -104,7 +111,14 @@ export default function AuthScreen() {
       setShowResetModal(false);
       setResetEmail('');
     } catch (err: any) {
-      Alert.alert(t('common.error'), t('auth.genericError'));
+      const msg = (err.message || '').toLowerCase();
+      let userMessage = t('auth.genericError');
+      if (msg.includes('rate') || msg.includes('too many')) {
+        userMessage = t('auth.tooManyAttempts');
+      } else if (err.message) {
+        userMessage = err.message;
+      }
+      Alert.alert(t('common.error'), userMessage);
     } finally {
       setLoading(false);
     }

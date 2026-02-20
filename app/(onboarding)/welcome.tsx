@@ -11,7 +11,7 @@ export default function WelcomeScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.logoSection}>
         <Image
-          source={require('../../assets/images/icon.png')}
+          source={require('../../assets/images/adaptive-icon.png')}
           style={styles.logoImage}
           resizeMode="contain"
         />
@@ -49,10 +49,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   logoImage: {
-    width: 160,
-    height: 160,
-    borderRadius: 32,
-    marginBottom: 24,
+    width: 190,
+    height: 190,
+    marginBottom: 16,
   },
   appName: {
     color: '#ffffff',

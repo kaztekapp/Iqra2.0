@@ -12,6 +12,9 @@ import { useSettingsStore } from '../../src/stores/settingsStore';
 import { signOut } from '../../src/services/authService';
 import { useRouter, Href } from 'expo-router';
 import * as Updates from 'expo-updates';
+import { useAdStore } from '../../src/stores/adStore';
+import { iapService } from '../../src/services/iapService';
+import { ENABLE_ADS } from '../../src/services/adService';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -174,6 +177,47 @@ export default function ProfileScreen() {
         },
       ]
     );
+  };
+
+  // Remove Ads / Premium
+  const isPremium = useAdStore((s) => s.isPremium);
+  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+  const [removeAdsPrice, setRemoveAdsPrice] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (ENABLE_ADS && !isPremium) {
+      iapService.getRemoveAdsProduct().then((product) => {
+        if (product) setRemoveAdsPrice(product.displayPrice);
+      });
+    }
+  }, [isPremium]);
+
+  const handlePurchaseRemoveAds = async () => {
+    setIsPurchasing(true);
+    try {
+      await iapService.purchaseRemoveAds();
+    } catch (e: any) {
+      Alert.alert(t('ads.purchaseError'), e.message || t('ads.purchaseErrorDesc'));
+    } finally {
+      setIsPurchasing(false);
+    }
+  };
+
+  const handleRestorePurchases = async () => {
+    setIsRestoring(true);
+    try {
+      const restored = await iapService.restorePurchases();
+      if (restored) {
+        Alert.alert(t('ads.restoreSuccess'), t('ads.restoreSuccessDesc'));
+      } else {
+        Alert.alert(t('ads.restoreNone'), t('ads.restoreNoneDesc'));
+      }
+    } catch (e: any) {
+      Alert.alert(t('ads.restoreError'), e.message || t('ads.restoreErrorDesc'));
+    } finally {
+      setIsRestoring(false);
+    }
   };
 
   const downloadedSurahsCount = Object.keys(downloadedSurahs).length;
@@ -623,6 +667,69 @@ export default function ProfileScreen() {
           </View>
         </View>
 
+        {/* Remove Ads */}
+        {ENABLE_ADS && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t('ads.removeAds')}</Text>
+            <View style={styles.storageCard}>
+              {isPremium ? (
+                <View style={styles.premiumBadgeRow}>
+                  <View style={styles.premiumBadgeIcon}>
+                    <Ionicons name="checkmark-circle" size={28} color="#10b981" />
+                  </View>
+                  <View style={styles.premiumBadgeInfo}>
+                    <Text style={styles.premiumBadgeTitle}>{t('ads.premiumActive')}</Text>
+                    <Text style={styles.premiumBadgeDesc}>{t('ads.premiumActiveDesc')}</Text>
+                  </View>
+                </View>
+              ) : (
+                <>
+                  <View style={styles.removeAdsHeader}>
+                    <View style={styles.removeAdsIcon}>
+                      <Ionicons name="shield-checkmark" size={24} color="#f59e0b" />
+                    </View>
+                    <View style={styles.removeAdsInfo}>
+                      <Text style={styles.storageTitle}>{t('ads.removeAdsTitle')}</Text>
+                      <Text style={styles.storageSize}>{t('ads.removeAdsDesc')}</Text>
+                    </View>
+                  </View>
+                  <Pressable
+                    style={styles.purchaseButton}
+                    onPress={handlePurchaseRemoveAds}
+                    disabled={isPurchasing}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('ads.removeAds')}
+                  >
+                    {isPurchasing ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <>
+                        <Ionicons name="cart" size={18} color="#ffffff" />
+                        <Text style={styles.purchaseButtonText}>
+                          {removeAdsPrice ? t('ads.purchaseFor', { price: removeAdsPrice }) : t('ads.removeAds')}
+                        </Text>
+                      </>
+                    )}
+                  </Pressable>
+                  <Pressable
+                    style={styles.restoreButton}
+                    onPress={handleRestorePurchases}
+                    disabled={isRestoring}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('ads.restorePurchases')}
+                  >
+                    {isRestoring ? (
+                      <ActivityIndicator size="small" color="#94a3b8" />
+                    ) : (
+                      <Text style={styles.restoreButtonText}>{t('ads.restorePurchases')}</Text>
+                    )}
+                  </Pressable>
+                </>
+              )}
+            </View>
+          </View>
+        )}
+
         {/* Log Out */}
         {isAuthenticated && (
           <View style={styles.section}>
@@ -634,7 +741,7 @@ export default function ProfileScreen() {
         )}
 
         {/* Reset Progress */}
-        <View style={[styles.section, { marginBottom: 100 }]}>
+        <View style={styles.section}>
           <Pressable
             style={styles.resetButton}
             onPress={() => {
@@ -647,6 +754,8 @@ export default function ProfileScreen() {
             <Text style={styles.resetButtonText}>{t('profile.resetAllProgress')}</Text>
           </Pressable>
         </View>
+
+        <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Achievement Popup Modal */}
@@ -1283,5 +1392,74 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
+  },
+  // Remove Ads styles
+  premiumBadgeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  premiumBadgeIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: '#10b98120',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  premiumBadgeInfo: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  premiumBadgeTitle: {
+    color: '#10b981',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  premiumBadgeDesc: {
+    color: '#94a3b8',
+    fontSize: 13,
+    marginTop: 2,
+  },
+  removeAdsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  removeAdsIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: '#f59e0b20',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  removeAdsInfo: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  purchaseButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f59e0b',
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginTop: 16,
+    gap: 8,
+  },
+  purchaseButtonText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  restoreButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    marginTop: 8,
+  },
+  restoreButtonText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });

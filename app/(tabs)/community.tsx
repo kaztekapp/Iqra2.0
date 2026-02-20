@@ -111,6 +111,8 @@ export default function CommunityScreen() {
             onPress={() => router.push('/community/challenges')}
           />
         </View>
+
+        <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
   );
