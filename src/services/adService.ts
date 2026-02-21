@@ -13,8 +13,10 @@ let unsubscribeLoaded: (() => void) | null = null;
 let unsubscribeClosed: (() => void) | null = null;
 
 // ── Lazy-load the AdMob SDK (only when ads are enabled) ──────────
+// String concatenation prevents Metro from statically resolving the module
 function getAdMob() {
-  return require('react-native-google-mobile-ads');
+  const pkg = 'react-native-' + 'google-mobile-ads';
+  return require(pkg);
 }
 
 function getInterstitialAdUnitId(): string {

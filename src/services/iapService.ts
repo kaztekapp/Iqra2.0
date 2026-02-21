@@ -10,8 +10,10 @@ let purchaseErrorSubscription: any = null;
 let isConnected = false;
 
 // ── Lazy-load react-native-iap (only when ads are enabled) ───────
+// String concatenation prevents Metro from statically resolving the module
 function getIAP() {
-  return require('react-native-iap');
+  const pkg = 'react-native-' + 'iap';
+  return require(pkg);
 }
 
 // ── Initialize ────────────────────────────────────────────────────
