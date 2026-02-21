@@ -124,7 +124,7 @@ export default function TajweedRuleDetailScreen() {
           setAudioState('idle');
         },
         onError: (error) => {
-          console.error('Audio error:', error);
+          __DEV__ && console.error('Audio error:', error);
           setPlayingExample(null);
           setAudioState('idle');
         },

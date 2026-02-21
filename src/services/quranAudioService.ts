@@ -336,7 +336,7 @@ class QuranAudioService {
 
       // Only log error after all retries have failed
       if (retryCount >= 3) {
-        console.error('Audio playback failed after retries:', errorMessage);
+        __DEV__ && console.error('Audio playback failed after retries:', errorMessage);
       }
 
       this.audioState = 'idle';

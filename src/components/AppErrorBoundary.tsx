@@ -21,7 +21,7 @@ export class AppErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('[ErrorBoundary] Caught error:', error.message);
+    __DEV__ && console.error('[ErrorBoundary] Caught error:', error.message);
     Sentry.captureException(error, {
       contexts: { react: { componentStack: info.componentStack ?? undefined } },
     });

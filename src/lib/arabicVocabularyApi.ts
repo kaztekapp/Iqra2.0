@@ -45,7 +45,7 @@ export async function playArabicAudio(arabicText: string): Promise<void> {
       voice: arabicVoice?.identifier,
     });
   } catch (error) {
-    console.error('Error playing Arabic audio:', error);
+    __DEV__ && console.error('Error playing Arabic audio:', error);
     // Fallback without voice selection
     try {
       await Speech.speak(arabicText, {
@@ -53,7 +53,7 @@ export async function playArabicAudio(arabicText: string): Promise<void> {
         rate: 0.75,
       });
     } catch (e) {
-      console.error('Fallback speech also failed:', e);
+      __DEV__ && console.error('Fallback speech also failed:', e);
     }
   }
 }
@@ -290,7 +290,7 @@ export async function getVocabularyForQuiz(count: number = 10): Promise<ArabicVo
     const shuffled = [...allWords].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   } catch (error) {
-    console.error('Error getting vocabulary:', error);
+    __DEV__ && console.error('Error getting vocabulary:', error);
     // Return directly from vocabulary list
     return fetchArabicVocabulary(count);
   }
@@ -325,7 +325,7 @@ async function cacheVocabulary(words: ArabicVocabularyWord[]): Promise<void> {
     };
     await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error('Error caching vocabulary:', error);
+    __DEV__ && console.error('Error caching vocabulary:', error);
   }
 }
 
@@ -333,6 +333,6 @@ export async function clearVocabularyCache(): Promise<void> {
   try {
     await AsyncStorage.removeItem(CACHE_KEY);
   } catch (error) {
-    console.error('Error clearing vocabulary cache:', error);
+    __DEV__ && console.error('Error clearing vocabulary cache:', error);
   }
 }

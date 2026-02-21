@@ -87,7 +87,7 @@ export function useVoiceRecording() {
         error: null,
       }));
     } catch (error) {
-      console.error('Failed to start recording:', error);
+      __DEV__ && console.error('Failed to start recording:', error);
       setState((prev) => ({ ...prev, error: 'Failed to start recording' }));
     }
   }, [recorder]);
@@ -102,7 +102,7 @@ export function useVoiceRecording() {
         recordingUri: uri,
       }));
     } catch (error) {
-      console.error('Failed to stop recording:', error);
+      __DEV__ && console.error('Failed to stop recording:', error);
       setState((prev) => ({
         ...prev,
         error: 'Failed to stop recording',
@@ -137,7 +137,7 @@ export function useVoiceRecording() {
         }
       }, 100);
     } catch (error) {
-      console.error('Failed to play recording:', error);
+      __DEV__ && console.error('Failed to play recording:', error);
       setState((prev) => ({ ...prev, isPlaying: false, error: 'Failed to play recording' }));
     }
   }, [state.recordingUri]);
@@ -153,7 +153,7 @@ export function useVoiceRecording() {
         setState((prev) => ({ ...prev, isPlaying: false }));
       }
     } catch (error) {
-      console.error('Failed to stop playback:', error);
+      __DEV__ && console.error('Failed to stop playback:', error);
     }
   }, []);
 

@@ -63,17 +63,11 @@
       "expo-secure-store",
       "expo-apple-authentication",
       [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps.GOOGLE_IOS_CLIENT_ID"
-        }
-      ],
-      [
         "@sentry/react-native/expo",
         {
           "organization": "kaztek-llc",
           "project": "iqra2",
-          "uploadSourceMaps": false
+          "uploadSourceMaps": true
         }
       ]
     ],

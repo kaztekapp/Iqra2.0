@@ -162,7 +162,7 @@ function useSpeechRecognitionNative() {
   });
 
   useSpeechRecognitionEvent?.('error', (event: any) => {
-    console.error('Speech recognition error:', event.error);
+    __DEV__ && console.error('Speech recognition error:', event.error);
     setState((prev) => ({
       ...prev,
       isListening: false,
@@ -204,7 +204,7 @@ function useSpeechRecognitionNative() {
           requiresOnDeviceRecognition: false,
         });
       } catch (error) {
-        console.error('Failed to start speech recognition:', error);
+        __DEV__ && console.error('Failed to start speech recognition:', error);
         setState((prev) => ({
           ...prev,
           isListening: false,
@@ -220,7 +220,7 @@ function useSpeechRecognitionNative() {
       await ExpoSpeechRecognitionModule?.stop();
       setState((prev) => ({ ...prev, isListening: false }));
     } catch (error) {
-      console.error('Failed to stop speech recognition:', error);
+      __DEV__ && console.error('Failed to stop speech recognition:', error);
     }
   }, []);
 

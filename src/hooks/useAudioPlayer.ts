@@ -51,7 +51,7 @@ export function useAudioPlayer(): UseAudioPlayerReturn {
       setCurrentUri(uri);
       player.play();
     } catch (err) {
-      console.error('Error playing audio:', err);
+      __DEV__ && console.error('Error playing audio:', err);
       setError('Failed to play audio');
     } finally {
       setIsLoading(false);
@@ -94,7 +94,7 @@ export function useLocalAudioPlayer(): UseAudioPlayerReturn {
       // Auto-stop after a delay (placeholder)
       setTimeout(() => setIsPlaying(false), 2000);
     } catch (err) {
-      console.error('Error playing audio:', err);
+      __DEV__ && console.error('Error playing audio:', err);
       setError('Failed to play audio');
     } finally {
       setIsLoading(false);

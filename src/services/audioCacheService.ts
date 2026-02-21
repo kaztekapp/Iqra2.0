@@ -31,7 +31,7 @@ class AudioCacheService {
       }
       this.initialized = true;
     } catch (error) {
-      console.error('Failed to initialize audio cache directory:', error);
+      __DEV__ && console.error('Failed to initialize audio cache directory:', error);
     }
   }
 
@@ -225,7 +225,7 @@ class AudioCacheService {
         }
       }
     } catch (error) {
-      console.error('Failed to delete surah cache:', error);
+      __DEV__ && console.error('Failed to delete surah cache:', error);
     }
   }
 
@@ -237,7 +237,7 @@ class AudioCacheService {
       await FileSystem.deleteAsync(AUDIO_CACHE_DIR, { idempotent: true });
       await FileSystem.makeDirectoryAsync(AUDIO_CACHE_DIR, { intermediates: true });
     } catch (error) {
-      console.error('Failed to clear audio cache:', error);
+      __DEV__ && console.error('Failed to clear audio cache:', error);
     }
   }
 

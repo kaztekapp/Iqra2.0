@@ -232,7 +232,7 @@ class QuranApiService {
       this.cache.set(cacheKey, ayahs);
       return ayahs;
     } catch (error) {
-      console.error(`Error fetching surah ${surahNumber}:`, error);
+      __DEV__ && console.error(`Error fetching surah ${surahNumber}:`, error);
       throw error;
     }
   }
@@ -278,7 +278,7 @@ class QuranApiService {
         tajweedRules: [],
       };
     } catch (error) {
-      console.error(`Error fetching ayah ${surahNumber}:${ayahNumber}:`, error);
+      __DEV__ && console.error(`Error fetching ayah ${surahNumber}:${ayahNumber}:`, error);
       return null;
     }
   }
@@ -309,7 +309,7 @@ class QuranApiService {
       this.cache.set(cacheKey, translations);
       return translations;
     } catch (error) {
-      console.error(`Error fetching translations for surah ${surahNumber} (${language}):`, error);
+      __DEV__ && console.error(`Error fetching translations for surah ${surahNumber} (${language}):`, error);
       return new Map();
     }
   }
@@ -329,7 +329,7 @@ class QuranApiService {
 
       return transliterations;
     } catch (error) {
-      console.error('Error fetching transliteration:', error);
+      __DEV__ && console.error('Error fetching transliteration:', error);
       return new Map();
     }
   }
@@ -364,7 +364,7 @@ class QuranApiService {
 
     await Promise.all(
       surahNumbers.map(num => this.fetchSurah(num).catch(err => {
-        console.error(`Failed to prefetch surah ${num}:`, err);
+        __DEV__ && console.error(`Failed to prefetch surah ${num}:`, err);
       }))
     );
   }
