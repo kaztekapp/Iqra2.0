@@ -58,29 +58,26 @@ export default function RootLayout() {
     return () => clearTimeout(fallback);
   }, []);
 
-  // Force check for OTA updates on launch — keep splash visible until done
+  // Check for OTA updates in the background — don't block app launch
   useEffect(() => {
-    async function checkForUpdates() {
-      if (__DEV__) {
-        setUpdateComplete(true);
-        return;
-      }
+    if (__DEV__) {
+      setUpdateComplete(true);
+      return;
+    }
+    setUpdateComplete(true); // Let app launch immediately
 
+    // Download update in background, apply on next launch
+    (async () => {
       try {
         const update = await Updates.checkForUpdateAsync();
-
         if (update.isAvailable) {
           await Updates.fetchUpdateAsync();
-          await Updates.reloadAsync();
-          // reloadAsync restarts the app, so we won't reach here
+          // Update will apply automatically on next app restart
         }
       } catch (e: any) {
-        console.error('[UPDATE] Error checking for updates:', e.message || e);
-      } finally {
-        setUpdateComplete(true);
+        Sentry.captureException(e);
       }
-    }
-    checkForUpdates();
+    })();
   }, []);
 
   // Set Android navigation bar color to match tab bar
