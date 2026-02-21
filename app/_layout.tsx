@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, View } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -66,13 +66,20 @@ export default function RootLayout() {
     }
     setUpdateComplete(true); // Let app launch immediately
 
-    // Download update in background, apply on next launch
+    // Download update in background, prompt to restart
     (async () => {
       try {
         const update = await Updates.checkForUpdateAsync();
         if (update.isAvailable) {
           await Updates.fetchUpdateAsync();
-          // Update will apply automatically on next app restart
+          Alert.alert(
+            'Update Available',
+            'A new version has been downloaded. Restart now to apply?',
+            [
+              { text: 'Later', style: 'cancel' },
+              { text: 'Restart', onPress: () => Updates.reloadAsync() },
+            ]
+          );
         }
       } catch (e: any) {
         Sentry.captureException(e);
