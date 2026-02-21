@@ -745,7 +745,14 @@ export default function ProfileScreen() {
           <Pressable
             style={styles.resetButton}
             onPress={() => {
-              resetProgress();
+              Alert.alert(
+                t('profile.resetAllProgress'),
+                t('profile.resetConfirmMessage'),
+                [
+                  { text: t('common.cancel'), style: 'cancel' },
+                  { text: t('profile.resetAllProgress'), style: 'destructive', onPress: resetProgress },
+                ]
+              );
             }}
             accessibilityRole="button"
             accessibilityLabel={t('profile.resetAllProgress')}

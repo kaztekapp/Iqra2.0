@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -65,9 +65,34 @@ const MODULES: Record<ModuleType, {
   },
 };
 
+const TIPS_COUNT = 5;
+
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, getAccuracy, lastAccessed } = useProgressStore();
+
+  // Rotate tip daily based on day of year
+  const tipIndex = useMemo(() => {
+    const now = new Date();
+    const dayOfYear = Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000);
+    return dayOfYear % TIPS_COUNT;
+  }, []);
+
+  // Total lessons completed across all modules
+  const totalLessons = useMemo(() =>
+    progress.alphabetProgress.lettersLearned.length +
+    progress.vocabularyProgress.themesCompleted.length +
+    progress.grammarProgress.lessonsCompleted.length +
+    progress.verbProgress.verbsLearned.length +
+    progress.readingProgress.textsCompleted.length,
+  [progress]);
+
+  // Overall progress percentage (simple average of alphabet + vocabulary)
+  const overallPercent = useMemo(() => {
+    const alpha = getAlphabetCompletionPercent();
+    const vocab = getVocabularyCompletionPercent();
+    return Math.round((alpha + vocab) / 2);
+  }, [progress]);
 
   // Get the module to display in Continue Learning
   const currentModule = MODULES[lastAccessed?.module || 'alphabet'];
@@ -218,19 +243,19 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Daily Goal */}
+        {/* Your Progress */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('home.dailyGoal')}</Text>
+          <Text style={styles.sectionTitle}>{t('common.yourProgress')}</Text>
           <View style={styles.goalCard}>
             <View style={styles.goalContent}>
               <Ionicons name="trophy" size={32} color="#D4AF37" />
               <View style={styles.goalText}>
-                <Text style={styles.goalTitle}>{t('home.completeLessonsToday')}</Text>
-                <Text style={styles.goalProgress}>{t('home.lessonsCompleted', { done: 0, total: 5 })}</Text>
+                <Text style={styles.goalTitle}>{progress.totalXp} XP</Text>
+                <Text style={styles.goalProgress}>{t('home.lessonsCompletedCount', { count: totalLessons })}</Text>
               </View>
             </View>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: '0%' }]} />
+              <View style={[styles.progressFill, { width: `${Math.min(overallPercent, 100)}%` }]} />
             </View>
           </View>
         </View>
@@ -243,8 +268,8 @@ export default function HomeScreen() {
               <Ionicons name="bulb" size={24} color="#D4AF37" />
             </View>
             <View style={styles.tipContent}>
-              <Text style={styles.tipTitle}>{t('home.tipTitle')}</Text>
-              <Text style={styles.tipText}>{t('home.tipText')}</Text>
+              <Text style={styles.tipTitle}>{t(`home.tips.${tipIndex}.title`)}</Text>
+              <Text style={styles.tipText}>{t(`home.tips.${tipIndex}.text`)}</Text>
             </View>
           </View>
         </View>
