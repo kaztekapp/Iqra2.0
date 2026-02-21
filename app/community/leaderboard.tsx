@@ -1,12 +1,14 @@
-import React, { useState, memo } from 'react';
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
+import React, { useState, useEffect, memo } from 'react';
+import { View, Text, ScrollView, StyleSheet, Pressable, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../src/stores/communityStore';
+import { useSettingsStore } from '../../src/stores/settingsStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { LeaderboardType, LeaderboardEntry } from '../../src/types/community';
+import * as communityService from '../../src/services/communityService';
 
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
@@ -67,16 +69,63 @@ const LeaderboardRow = memo(function LeaderboardRow({
   );
 });
 
+// Shimmer skeleton row for loading state
+const SkeletonRow = ({ delay = 0 }: { delay?: number }) => {
+  const opacity = React.useRef(new Animated.Value(0.3)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, { toValue: 0.7, duration: 800, delay, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 0.3, duration: 800, useNativeDriver: true }),
+      ])
+    );
+    animation.start();
+    return () => animation.stop();
+  }, [opacity, delay]);
+
+  return (
+    <Animated.View style={[styles.row, { opacity }]}>
+      <View style={[styles.rankBadge, styles.skeletonCircle]} />
+      <View style={styles.userInfo}>
+        <View style={[styles.skeletonBlock, { width: 100 }]} />
+        <View style={[styles.skeletonBlock, { width: 60, marginTop: 6 }]} />
+      </View>
+      <View style={[styles.skeletonBlock, { width: 50 }]} />
+    </Animated.View>
+  );
+};
+
+const LeaderboardSkeleton = () => (
+  <View style={styles.rankingsCard}>
+    {[0, 1, 2, 3, 4].map((i) => (
+      <SkeletonRow key={i} delay={i * 100} />
+    ))}
+  </View>
+);
+
 export default function LeaderboardScreen() {
   const { t } = useTranslation();
   const [currentType, setCurrentType] = useState<LeaderboardType>('weekly');
-  const { getLeaderboard } = useCommunityStore();
+  const { fetchLeaderboard, leaderboardEntries: entries, isLoadingLeaderboard } = useCommunityStore();
+  const userId = useSettingsStore((s) => s.user?.id);
   const { progress } = useProgressStore();
 
-  const entries = getLeaderboard(currentType, progress.totalXp, progress.currentStreak);
+  // Sync existing local progress to Supabase on first load
+  useEffect(() => {
+    if (userId && progress.totalXp > 0) {
+      communityService.syncProgress(userId, progress.totalXp, progress.currentStreak, progress.longestStreak);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    fetchLeaderboard(currentType, userId);
+  }, [currentType, userId]);
+
   const currentUserEntry = entries.find((e) => e.isCurrentUser);
   const topEntries = entries.slice(0, 10);
   const showUserBelowTop = currentUserEntry && currentUserEntry.rank > 10;
+  const isEmpty = !isLoadingLeaderboard && entries.length === 0;
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -117,67 +166,79 @@ export default function LeaderboardScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Top 3 Podium */}
-        {entries.length >= 3 && (
-          <View style={styles.podium}>
-            {/* 2nd Place */}
-            <View style={styles.podiumItem}>
-              <View style={[styles.podiumAvatar, styles.podiumSecond]}>
-                <Text style={styles.podiumEmoji}>🥈</Text>
-              </View>
-              <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[1].isCurrentUser ? t('community.you') : entries[1].name}
-              </Text>
-              <Text style={styles.podiumValue}>
-                {currentType === 'streaks' ? `${entries[1].streak}d` : `${entries[1].xp}`}
-              </Text>
-            </View>
-
-            {/* 1st Place */}
-            <View style={[styles.podiumItem, styles.podiumFirst]}>
-              <View style={[styles.podiumAvatar, styles.podiumGold]}>
-                <Text style={styles.podiumEmoji}>🥇</Text>
-              </View>
-              <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[0].isCurrentUser ? t('community.you') : entries[0].name}
-              </Text>
-              <Text style={styles.podiumValue}>
-                {currentType === 'streaks' ? `${entries[0].streak}d` : `${entries[0].xp}`}
-              </Text>
-            </View>
-
-            {/* 3rd Place */}
-            <View style={styles.podiumItem}>
-              <View style={[styles.podiumAvatar, styles.podiumThird]}>
-                <Text style={styles.podiumEmoji}>🥉</Text>
-              </View>
-              <Text style={styles.podiumName} numberOfLines={1}>
-                {entries[2].isCurrentUser ? t('community.you') : entries[2].name}
-              </Text>
-              <Text style={styles.podiumValue}>
-                {currentType === 'streaks' ? `${entries[2].streak}d` : `${entries[2].xp}`}
-              </Text>
-            </View>
+        {isLoadingLeaderboard ? (
+          <LeaderboardSkeleton />
+        ) : isEmpty ? (
+          <View style={styles.emptyContainer}>
+            <Ionicons name="trophy-outline" size={48} color="#334155" />
+            <Text style={styles.emptyTitle}>{t('community.noLearnersYet', { defaultValue: 'No learners yet' })}</Text>
+            <Text style={styles.emptySubtitle}>{t('community.startLearning', { defaultValue: 'Start learning to appear on the leaderboard!' })}</Text>
           </View>
-        )}
+        ) : (
+          <>
+            {/* Top 3 Podium */}
+            {entries.length >= 3 && (
+              <View style={styles.podium}>
+                {/* 2nd Place */}
+                <View style={styles.podiumItem}>
+                  <View style={[styles.podiumAvatar, styles.podiumSecond]}>
+                    <Text style={styles.podiumEmoji}>🥈</Text>
+                  </View>
+                  <Text style={styles.podiumName} numberOfLines={1}>
+                    {entries[1].isCurrentUser ? t('community.you') : entries[1].name}
+                  </Text>
+                  <Text style={styles.podiumValue}>
+                    {currentType === 'streaks' ? `${entries[1].streak}d` : `${entries[1].xp}`}
+                  </Text>
+                </View>
 
-        {/* Rankings List */}
-        <View style={styles.rankingsCard}>
-          {topEntries.slice(3).map((entry) => (
-            <LeaderboardRow key={entry.id} entry={entry} type={currentType} />
-          ))}
+                {/* 1st Place */}
+                <View style={[styles.podiumItem, styles.podiumFirst]}>
+                  <View style={[styles.podiumAvatar, styles.podiumGold]}>
+                    <Text style={styles.podiumEmoji}>🥇</Text>
+                  </View>
+                  <Text style={styles.podiumName} numberOfLines={1}>
+                    {entries[0].isCurrentUser ? t('community.you') : entries[0].name}
+                  </Text>
+                  <Text style={styles.podiumValue}>
+                    {currentType === 'streaks' ? `${entries[0].streak}d` : `${entries[0].xp}`}
+                  </Text>
+                </View>
 
-          {showUserBelowTop && currentUserEntry && (
-            <>
-              <View style={styles.separator}>
-                <View style={styles.separatorLine} />
-                <Text style={styles.separatorText}>• • •</Text>
-                <View style={styles.separatorLine} />
+                {/* 3rd Place */}
+                <View style={styles.podiumItem}>
+                  <View style={[styles.podiumAvatar, styles.podiumThird]}>
+                    <Text style={styles.podiumEmoji}>🥉</Text>
+                  </View>
+                  <Text style={styles.podiumName} numberOfLines={1}>
+                    {entries[2].isCurrentUser ? t('community.you') : entries[2].name}
+                  </Text>
+                  <Text style={styles.podiumValue}>
+                    {currentType === 'streaks' ? `${entries[2].streak}d` : `${entries[2].xp}`}
+                  </Text>
+                </View>
               </View>
-              <LeaderboardRow entry={currentUserEntry} type={currentType} />
-            </>
-          )}
-        </View>
+            )}
+
+            {/* Rankings List */}
+            <View style={styles.rankingsCard}>
+              {topEntries.slice(3).map((entry) => (
+                <LeaderboardRow key={entry.id} entry={entry} type={currentType} />
+              ))}
+
+              {showUserBelowTop && currentUserEntry && (
+                <>
+                  <View style={styles.separator}>
+                    <View style={styles.separatorLine} />
+                    <Text style={styles.separatorText}>• • •</Text>
+                    <View style={styles.separatorLine} />
+                  </View>
+                  <LeaderboardRow entry={currentUserEntry} type={currentType} />
+                </>
+              )}
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -393,5 +454,36 @@ const styles = StyleSheet.create({
     color: '#64748b',
     paddingHorizontal: 12,
     fontSize: 12,
+  },
+
+  // Skeleton
+  skeletonCircle: {
+    backgroundColor: '#334155',
+  },
+  skeletonBlock: {
+    height: 14,
+    backgroundColor: '#334155',
+    borderRadius: 7,
+  },
+
+  // Empty State
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+    paddingHorizontal: 40,
+  },
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#94a3b8',
+    marginTop: 16,
+  },
+  emptySubtitle: {
+    fontSize: 14,
+    color: '#64748b',
+    textAlign: 'center',
+    marginTop: 8,
+    lineHeight: 20,
   },
 });

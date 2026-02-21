@@ -37,6 +37,11 @@ CREATE POLICY "Users can insert own profile"
   ON public.user_profiles FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+-- Allow reading display_name/avatar for leaderboard
+CREATE POLICY "Users can view all profiles for leaderboard"
+  ON public.user_profiles FOR SELECT
+  USING (true);
+
 
 -- ========================
 -- 2. ARABIC LEARNING PROGRESS
@@ -76,6 +81,11 @@ CREATE POLICY "Users can upsert own arabic progress"
 CREATE POLICY "Users can update own arabic progress"
   ON public.user_arabic_progress FOR UPDATE
   USING (auth.uid() = user_id);
+
+-- Allow reading leaderboard-safe columns (total_xp, streaks) for all authenticated users
+CREATE POLICY "Users can view all progress for leaderboard"
+  ON public.user_arabic_progress FOR SELECT
+  USING (true);
 
 
 -- ========================
@@ -352,6 +362,11 @@ ALTER TABLE public.user_daily_log ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can manage own daily log"
   ON public.user_daily_log FOR ALL
   USING (auth.uid() = user_id);
+
+-- Allow reading daily log for community stats and weekly leaderboard
+CREATE POLICY "Users can view all daily logs for leaderboard"
+  ON public.user_daily_log FOR SELECT
+  USING (true);
 
 
 -- ============================================================

@@ -8,13 +8,16 @@ import {
   CommunityStats,
   CommunityAchievement,
 } from '../types/community';
-import { SIMULATED_USERS, simulateWeeklyXp } from '../data/community/simulatedUsers';
 import {
   getDailyChallengeForDate,
   getWeeklyChallengeForDate,
   getWeekendChallengeForDate,
   ChallengeTemplate,
 } from '../data/community/challenges';
+import * as communityService from '../services/communityService';
+import { useProgressStore } from './progressStore';
+import { useSettingsStore } from './settingsStore';
+import { supabase } from '../lib/supabase';
 
 interface CommunityState {
   // Challenge tracking
@@ -30,11 +33,19 @@ interface CommunityState {
   // Recent community achievements (simulated + real)
   communityAchievements: CommunityAchievement[];
 
+  // Leaderboard state (async from Supabase)
+  leaderboardEntries: LeaderboardEntry[];
+  isLoadingLeaderboard: boolean;
+
+  // Community stats state (async from Supabase)
+  communityStatsData: CommunityStats;
+  isLoadingStats: boolean;
+
   // Actions
   initializeChallenges: () => void;
   contributeToChallenge: (type: 'words' | 'lessons' | 'xp' | 'exercises', amount: number) => void;
-  getLeaderboard: (type: LeaderboardType, userXp: number, userStreak: number) => LeaderboardEntry[];
-  getCommunityStats: (userXp: number) => CommunityStats;
+  fetchLeaderboard: (type: LeaderboardType, userId?: string) => Promise<void>;
+  fetchCommunityStats: () => Promise<void>;
   addUserAchievement: (achievementTitle: string, achievementTitleArabic: string, icon: string) => void;
   getRecentAchievements: (userAchievements: { title: string; titleArabic: string; icon: string }[]) => CommunityAchievement[];
 }
@@ -79,40 +90,11 @@ const simulateCommunityProgress = (target: number, hoursElapsed: number, maxHour
   return Math.floor(target * progressRatio * randomFactor * achievementFactor);
 };
 
-// Generate simulated community achievements
-const generateSimulatedAchievements = (): CommunityAchievement[] => {
-  const achievements: CommunityAchievement[] = [];
-  const now = new Date();
-
-  // Sample achievements from simulated users
-  const sampleAchievements = [
-    { title: '30-Day Streak!', titleArabic: 'سلسلة 30 يوم!', icon: 'flame' },
-    { title: 'Completed Al-Baqarah', titleArabic: 'أكمل سورة البقرة', icon: 'book' },
-    { title: 'Mastered All Letters', titleArabic: 'أتقن جميع الحروف', icon: 'trophy' },
-    { title: '1000 XP Milestone', titleArabic: 'حصل على 1000 نقطة', icon: 'star' },
-    { title: 'Week Warrior', titleArabic: 'محارب الأسبوع', icon: 'flame' },
-  ];
-
-  // Pick 3-4 random simulated users and achievements
-  const shuffledUsers = [...SIMULATED_USERS].sort(() => Math.random() - 0.5).slice(0, 4);
-
-  shuffledUsers.forEach((user, index) => {
-    const achievement = sampleAchievements[index % sampleAchievements.length];
-    const hoursAgo = Math.floor(Math.random() * 24) + 1;
-    const timestamp = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000).toISOString();
-
-    achievements.push({
-      id: `sim_ach_${user.id}_${index}`,
-      type: 'community',
-      userName: user.name,
-      achievementTitle: achievement.title,
-      achievementTitleArabic: achievement.titleArabic,
-      icon: achievement.icon,
-      timestamp,
-    });
-  });
-
-  return achievements.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+const defaultStats: CommunityStats = {
+  activeLearnersTodayCount: 0,
+  totalWordsLearnedToday: 0,
+  totalXpEarnedToday: 0,
+  activeStreaksCount: 0,
 };
 
 export const useCommunityStore = create<CommunityState>()(
@@ -125,6 +107,10 @@ export const useCommunityStore = create<CommunityState>()(
       userDailyContribution: {},
       userWeeklyContribution: {},
       communityAchievements: [],
+      leaderboardEntries: [],
+      isLoadingLeaderboard: false,
+      communityStatsData: defaultStats,
+      isLoadingStats: false,
 
       initializeChallenges: () => {
         const today = new Date();
@@ -200,7 +186,6 @@ export const useCommunityStore = create<CommunityState>()(
           challengeLastUpdated: todayStr,
           userDailyContribution: newDailyContrib,
           userWeeklyContribution: newWeeklyContrib,
-          communityAchievements: generateSimulatedAchievements(),
         });
       },
 
@@ -256,105 +241,77 @@ export const useCommunityStore = create<CommunityState>()(
         });
       },
 
-      getLeaderboard: (type, userXp, userStreak) => {
-        const today = new Date();
-        const dayOfWeek = today.getDay() || 7; // 1-7, Sunday = 7
+      fetchLeaderboard: async (type, userId) => {
+        set({ isLoadingLeaderboard: true });
 
-        // Generate entries from simulated users
-        const entries: LeaderboardEntry[] = SIMULATED_USERS.map((user) => {
-          let value: number;
-
-          switch (type) {
-            case 'weekly':
-              value = simulateWeeklyXp(user, dayOfWeek);
-              break;
-            case 'streaks':
-              value = user.streakDays;
-              break;
-            case 'allTime':
-            default:
-              value = user.baseXp;
+        let entries: LeaderboardEntry[] = [];
+        try {
+          if (supabase) {
+            entries = await communityService.fetchLeaderboard(type, userId);
           }
-
-          return {
-            id: user.id,
-            name: user.name,
-            nameArabic: user.nameArabic,
-            xp: type === 'streaks' ? user.baseXp : value,
-            streak: user.streakDays,
-            rank: 0,
-            isCurrentUser: false,
-          };
-        });
-
-        // Add current user
-        let userValue: number;
-        switch (type) {
-          case 'weekly':
-            // Assume user started this week, use portion of total XP as weekly
-            userValue = Math.min(userXp, Math.floor(userXp * 0.15) + 50);
-            break;
-          case 'streaks':
-            userValue = userStreak;
-            break;
-          case 'allTime':
-          default:
-            userValue = userXp;
+        } catch (e) {
+          if (__DEV__) console.warn('[communityStore] fetchLeaderboard error:', e);
         }
 
-        entries.push({
-          id: 'current_user',
-          name: 'You',
-          nameArabic: 'أنت',
-          xp: type === 'streaks' ? userXp : userValue,
-          streak: userStreak,
-          rank: 0,
-          isCurrentUser: true,
-        });
+        // Always ensure current user appears with their local progress
+        const { progress } = useProgressStore.getState();
+        const user = useSettingsStore.getState().user;
+        const currentUserId = userId || user?.id;
 
-        // Sort based on type
-        if (type === 'streaks') {
-          entries.sort((a, b) => b.streak - a.streak);
-        } else {
-          entries.sort((a, b) => {
-            if (type === 'weekly') {
-              // For weekly, use the value we calculated
-              const aVal = a.isCurrentUser ? userValue : entries.find((e) => e.id === a.id)?.xp || 0;
-              const bVal = b.isCurrentUser ? userValue : entries.find((e) => e.id === b.id)?.xp || 0;
-              return bVal - aVal;
-            }
-            return b.xp - a.xp;
+        const alreadyInList = currentUserId && entries.some((e) => e.isCurrentUser);
+
+        if (!alreadyInList && progress.totalXp > 0) {
+          const userEntry: LeaderboardEntry = {
+            id: currentUserId || 'local_user',
+            name: 'You',
+            nameArabic: 'أنت',
+            xp: progress.totalXp,
+            streak: progress.currentStreak,
+            rank: 0,
+            isCurrentUser: true,
+          };
+          entries.push(userEntry);
+        }
+
+        // Re-sort and assign ranks
+        if (entries.length > 0) {
+          if (type === 'streaks') {
+            entries.sort((a, b) => b.streak - a.streak);
+          } else {
+            entries.sort((a, b) => b.xp - a.xp);
+          }
+          entries.forEach((entry, index) => {
+            entry.rank = index + 1;
           });
         }
 
-        // Assign ranks
-        entries.forEach((entry, index) => {
-          entry.rank = index + 1;
-        });
-
-        return entries;
+        set({ leaderboardEntries: entries, isLoadingLeaderboard: false });
       },
 
-      getCommunityStats: (userXp) => {
-        // Generate realistic-looking community stats
-        const baseActiveLearners = 800 + Math.floor(Math.random() * 400);
-        const hour = new Date().getHours();
+      fetchCommunityStats: async () => {
+        set({ isLoadingStats: true });
+        let stats = defaultStats;
+        try {
+          if (supabase) {
+            stats = await communityService.fetchCommunityStats();
+          }
+        } catch (e) {
+          if (__DEV__) console.warn('[communityStore] fetchCommunityStats error:', e);
+        }
 
-        // More learners during peak hours (evening)
-        const peakMultiplier =
-          hour >= 18 && hour <= 22 ? 1.5 : hour >= 8 && hour <= 12 ? 1.2 : 1.0;
+        // If Supabase returned zeros but user studied today, show at least 1
+        const { progress } = useProgressStore.getState();
+        const today = new Date().toISOString().split('T')[0];
+        if (stats.activeLearnersTodayCount === 0 && progress.lastStudyDate === today) {
+          stats = {
+            ...stats,
+            activeLearnersTodayCount: 1,
+            totalXpEarnedToday: progress.totalXp,
+            activeStreaksCount: progress.currentStreak > 0 ? 1 : 0,
+          };
+        }
 
-        const activeLearnersTodayCount = Math.floor(baseActiveLearners * peakMultiplier);
-        const totalWordsLearnedToday = Math.floor(activeLearnersTodayCount * 3.5);
-        const totalXpEarnedToday = Math.floor(activeLearnersTodayCount * 45);
-        const activeStreaksCount = Math.floor(activeLearnersTodayCount * 0.6);
-
-        return {
-          activeLearnersTodayCount,
-          totalWordsLearnedToday,
-          totalXpEarnedToday,
-          activeStreaksCount,
-        };
+        set({ communityStatsData: stats, isLoadingStats: false });
       },
 
       addUserAchievement: (achievementTitle, achievementTitleArabic, icon) => {

@@ -3,6 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ExerciseType, UserArabicProgress, ArabicLevel, VocabularyReviewItem, ReviewRating } from '../types/arabic';
 import { ACHIEVEMENTS, Achievement } from '../data/achievements';
+import * as communityService from '../services/communityService';
+import { useSettingsStore } from './settingsStore';
 
 export type ModuleType = 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading' | 'practice';
 
@@ -243,6 +245,14 @@ export const useProgressStore = create<ProgressState>()(
           },
         }));
         get().checkAchievements();
+
+        // Sync to Supabase (non-blocking)
+        const user = useSettingsStore.getState().user;
+        if (user) {
+          const { totalXp, currentStreak, longestStreak } = get().progress;
+          communityService.syncProgress(user.id, totalXp, currentStreak, longestStreak);
+          communityService.logDailyXp(user.id, amount);
+        }
       },
 
       updateStreak: () => {
@@ -263,15 +273,22 @@ export const useProgressStore = create<ProgressState>()(
           newStreak = state.progress.currentStreak + 1;
         }
 
+        const updatedLongestStreak = Math.max(newStreak, state.progress.longestStreak);
         set({
           progress: {
             ...state.progress,
             currentStreak: newStreak,
-            longestStreak: Math.max(newStreak, state.progress.longestStreak),
+            longestStreak: updatedLongestStreak,
             lastStudyDate: today,
           },
         });
         get().checkAchievements();
+
+        // Sync streak to Supabase (non-blocking)
+        const user = useSettingsStore.getState().user;
+        if (user) {
+          communityService.syncProgress(user.id, state.progress.totalXp, newStreak, updatedLongestStreak);
+        }
       },
 
       markLetterLearned: (letterId) => {
