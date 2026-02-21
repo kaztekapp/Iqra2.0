@@ -57,7 +57,7 @@ export default {
   },
   home: {
     greeting: '\u0645\u064E\u0631\u0652\u062D\u064E\u0628\u064B\u0627',
-    greetingEnglish: 'Welcome to Iqra',
+    greetingEnglish: 'Welcome to Iqra 2.0',
     yourProgress: 'Your Progress',
     totalXp: 'Total XP',
     alphabet: 'Alphabet',

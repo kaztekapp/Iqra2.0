@@ -1,17 +1,14 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Modal, Alert, ActivityIndicator, Image } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Alert, ActivityIndicator, Image, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { ACHIEVEMENTS, Achievement } from '../../src/data/achievements';
-import { useOfflineStore } from '../../src/stores/offlineStore';
-import { audioCacheService } from '../../src/services/audioCacheService';
-import { useNetworkStatus } from '../../src/hooks/useNetworkStatus';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { signOut } from '../../src/services/authService';
+import { getProfile, upsertProfile } from '../../src/services/profileService';
 import { useRouter, Href } from 'expo-router';
-import * as Updates from 'expo-updates';
 import { useAdStore } from '../../src/stores/adStore';
 import { iapService } from '../../src/services/iapService';
 import { ENABLE_ADS } from '../../src/services/adService';
@@ -23,12 +20,6 @@ export default function ProfileScreen() {
 
   const {
     progress,
-    showVowels,
-    setShowVowels,
-    getAlphabetCompletionPercent,
-    getVocabularyCompletionPercent,
-    getGrammarCompletionPercent,
-    getOverallLevel,
     getAccuracy,
     resetProgress,
     unlockedAchievements,
@@ -39,123 +30,6 @@ export default function ProfileScreen() {
 
   const unlockedList = getUnlockedAchievements();
   const lockedList = ACHIEVEMENTS.filter((a) => !unlockedAchievements.includes(a.id));
-
-  // Offline storage
-  const { totalCacheSize, downloadedSurahs, clearAllDownloads, updateCacheSize } = useOfflineStore();
-  const { isConnected } = useNetworkStatus();
-  const [cacheSize, setCacheSize] = useState('0 B');
-
-  // Update diagnostics
-  const [updateInfo, setUpdateInfo] = useState<{
-    currentId: string | null;
-    channel: string | null;
-    runtimeVersion: string | null;
-    isUpdateAvailable: boolean | null;
-    isChecking: boolean;
-    lastCheckTime: string | null;
-    error: string | null;
-  }>({
-    currentId: null,
-    channel: null,
-    runtimeVersion: null,
-    isUpdateAvailable: null,
-    isChecking: false,
-    lastCheckTime: null,
-    error: null,
-  });
-
-  useEffect(() => {
-    updateCacheSize();
-    loadUpdateInfo();
-  }, []);
-
-  useEffect(() => {
-    setCacheSize(audioCacheService.formatBytes(totalCacheSize));
-  }, [totalCacheSize]);
-
-  const loadUpdateInfo = async () => {
-    try {
-      const currentUpdateId = Updates.updateId || 'embedded';
-      const channel = Updates.channel || 'none';
-      const runtimeVersion = Updates.runtimeVersion || 'unknown';
-
-      setUpdateInfo(prev => ({
-        ...prev,
-        currentId: currentUpdateId,
-        channel: channel,
-        runtimeVersion: runtimeVersion,
-      }));
-    } catch (e) {
-      setUpdateInfo(prev => ({
-        ...prev,
-        error: 'Failed to load update info',
-      }));
-    }
-  };
-
-  const handleCheckForUpdates = async () => {
-    setUpdateInfo(prev => ({ ...prev, isChecking: true, error: null }));
-
-    try {
-      const update = await Updates.checkForUpdateAsync();
-      const now = new Date().toLocaleTimeString();
-
-      setUpdateInfo(prev => ({
-        ...prev,
-        isUpdateAvailable: update.isAvailable,
-        lastCheckTime: now,
-        isChecking: false,
-      }));
-
-      if (update.isAvailable) {
-        Alert.alert(
-          t('profile.updateAvailableTitle'),
-          t('profile.updateAvailableMessage'),
-          [
-            { text: t('profile.later'), style: 'cancel' },
-            {
-              text: t('profile.updateNow'),
-              onPress: async () => {
-                try {
-                  await Updates.fetchUpdateAsync();
-                  await Updates.reloadAsync();
-                } catch (e: any) {
-                  Alert.alert(t('profile.updateFailed'), e.message);
-                }
-              },
-            },
-          ]
-        );
-      } else {
-        Alert.alert(t('profile.noUpdatesTitle'), t('profile.noUpdatesMessage'));
-      }
-    } catch (e: any) {
-      setUpdateInfo(prev => ({
-        ...prev,
-        isChecking: false,
-        error: e.message || 'Unknown error',
-        lastCheckTime: new Date().toLocaleTimeString(),
-      }));
-      Alert.alert(t('profile.updateCheckFailed'), e.message || 'Unknown error');
-    }
-  };
-
-  const handleClearCache = () => {
-    Alert.alert(
-      t('profile.clearDownloadedTitle'),
-      t('profile.clearDownloadedMessage'),
-      [
-        { text: t('common.cancel'), style: 'cancel' },
-        {
-          text: t('profile.clear'),
-          style: 'destructive',
-          onPress: async () => {
-            await clearAllDownloads();
-          },
-        },
-      ]
-    );
-  };
 
   const handleLanguageChange = (lang: 'en' | 'fr') => {
     setLanguage(lang);
@@ -220,7 +94,52 @@ export default function ProfileScreen() {
     }
   };
 
-  const downloadedSurahsCount = Object.keys(downloadedSurahs).length;
+  // Profile info
+  const user = useSettingsStore((s) => s.user);
+  const [displayName, setDisplayName] = useState('');
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState('');
+  const [isSavingName, setIsSavingName] = useState(false);
+  const nameInputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (user?.id) {
+      getProfile(user.id)
+        .then((profile) => {
+          if (profile?.display_name) setDisplayName(profile.display_name);
+        })
+        .catch(() => {});
+    }
+  }, [user?.id]);
+
+  const handleEditName = () => {
+    setEditNameValue(displayName);
+    setIsEditingName(true);
+    setTimeout(() => nameInputRef.current?.focus(), 100);
+  };
+
+  const handleSaveName = async () => {
+    const trimmed = editNameValue.trim();
+    if (!trimmed || !user?.id) {
+      setIsEditingName(false);
+      return;
+    }
+    setIsSavingName(true);
+    try {
+      await upsertProfile(user.id, { display_name: trimmed });
+      setDisplayName(trimmed);
+      setIsEditingName(false);
+    } catch {
+      Alert.alert(t('common.error') || 'Error', t('profile.saveNameError') || 'Could not save name. Please try again.');
+    } finally {
+      setIsSavingName(false);
+    }
+  };
+
+  const handleCancelEditName = () => {
+    setIsEditingName(false);
+    setEditNameValue('');
+  };
 
   const getAchievementProgress = (achievement: Achievement): number => {
     const { type, value } = achievement.condition;
@@ -267,15 +186,6 @@ export default function ProfileScreen() {
     special: '#D4AF37',
   };
 
-  const levelLabels = {
-    beginner: { key: 'profile.beginner', ar: 'الْمُبْتَدِئ' },
-    intermediate: { key: 'profile.intermediate', ar: 'الْمُتَوَسِّط' },
-    advanced: { key: 'profile.advanced', ar: 'الْمُتَقَدِّم' },
-  };
-
-  const currentLevel = getOverallLevel();
-  const levelInfo = levelLabels[currentLevel];
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -291,91 +201,82 @@ export default function ProfileScreen() {
           />
         </View>
 
-        {/* User Level Card */}
-        <View style={styles.levelCard}>
-          <View style={styles.levelBadge}>
-            <Ionicons name="school" size={32} color="#D4AF37" />
+        {/* Profile Info Card */}
+        <View style={styles.profileCard}>
+          <View style={styles.profileAvatar}>
+            <Ionicons name="person-circle" size={56} color="#818cf8" />
           </View>
-          <View style={styles.levelInfo}>
-            <Text style={styles.levelLabel}>{t('profile.currentLevel')}</Text>
-            <Text style={styles.levelValue}>{t(levelInfo.key)}</Text>
-            <Text style={styles.levelArabic}>{levelInfo.ar}</Text>
-          </View>
-          <View style={styles.xpBadge}>
-            <Ionicons name="star" size={16} color="#f59e0b" />
-            <Text style={styles.xpText}>{progress.totalXp} XP</Text>
+          <View style={styles.profileInfo}>
+            {isEditingName ? (
+              <View style={styles.editNameRow}>
+                <TextInput
+                  ref={nameInputRef}
+                  style={styles.editNameInput}
+                  value={editNameValue}
+                  onChangeText={setEditNameValue}
+                  placeholder={t('profile.enterName') || 'Enter your name'}
+                  placeholderTextColor="#64748b"
+                  maxLength={50}
+                  autoCapitalize="words"
+                  returnKeyType="done"
+                  onSubmitEditing={handleSaveName}
+                />
+                <View style={styles.editNameActions}>
+                  {isSavingName ? (
+                    <ActivityIndicator size="small" color="#10b981" />
+                  ) : (
+                    <>
+                      <Pressable onPress={handleSaveName} style={styles.editNameBtn} accessibilityRole="button" accessibilityLabel="Save">
+                        <Ionicons name="checkmark" size={20} color="#10b981" />
+                      </Pressable>
+                      <Pressable onPress={handleCancelEditName} style={styles.editNameBtn} accessibilityRole="button" accessibilityLabel="Cancel">
+                        <Ionicons name="close" size={20} color="#ef4444" />
+                      </Pressable>
+                    </>
+                  )}
+                </View>
+              </View>
+            ) : (
+              <View style={styles.nameRow}>
+                <Text style={styles.profileName}>
+                  {displayName || user?.email?.split('@')[0] || t('profile.learner') || 'Learner'}
+                </Text>
+                <Pressable onPress={handleEditName} style={styles.editNameBtn} accessibilityRole="button" accessibilityLabel={t('profile.editName') || 'Edit name'}>
+                  <Ionicons name="pencil" size={16} color="#64748b" />
+                </Pressable>
+              </View>
+            )}
           </View>
         </View>
 
-        {/* Progress Overview */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('profile.learningProgress')}</Text>
-
-          <View style={styles.progressCard}>
-            <View style={styles.progressItem}>
-              <View style={styles.progressHeader}>
-                <Ionicons name="text" size={20} color="#6366f1" />
-                <Text style={styles.progressLabel}>{t('profile.alphabet')}</Text>
-              </View>
-              <View style={styles.progressBarContainer}>
-                <View style={styles.progressBarBg}>
-                  <View style={[styles.progressBarFill, { width: `${getAlphabetCompletionPercent()}%`, backgroundColor: '#6366f1' }]} />
-                </View>
-                <Text style={styles.progressPercent}>{getAlphabetCompletionPercent()}%</Text>
-              </View>
-            </View>
-
-            <View style={styles.progressItem}>
-              <View style={styles.progressHeader}>
-                <Ionicons name="library" size={20} color="#D4AF37" />
-                <Text style={styles.progressLabel}>{t('profile.vocabulary')}</Text>
-              </View>
-              <View style={styles.progressBarContainer}>
-                <View style={styles.progressBarBg}>
-                  <View style={[styles.progressBarFill, { width: `${getVocabularyCompletionPercent()}%`, backgroundColor: '#D4AF37' }]} />
-                </View>
-                <Text style={styles.progressPercent}>{getVocabularyCompletionPercent()}%</Text>
-              </View>
-            </View>
-
-            <View style={styles.progressItem}>
-              <View style={styles.progressHeader}>
-                <Ionicons name="git-branch" size={20} color="#22c55e" />
-                <Text style={styles.progressLabel}>{t('profile.grammar')}</Text>
-              </View>
-              <View style={styles.progressBarContainer}>
-                <View style={styles.progressBarBg}>
-                  <View style={[styles.progressBarFill, { width: `${getGrammarCompletionPercent()}%`, backgroundColor: '#22c55e' }]} />
-                </View>
-                <Text style={styles.progressPercent}>{getGrammarCompletionPercent()}%</Text>
-              </View>
-            </View>
+        {/* XP Card */}
+        <View style={styles.xpCard}>
+          <View style={styles.xpCardMain}>
+            <Ionicons name="star" size={28} color="#f59e0b" />
+            <Text style={styles.xpCardValue}>{progress.totalXp}</Text>
+            <Text style={styles.xpCardLabel}>XP</Text>
           </View>
-        </View>
-
-        {/* Statistics */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('profile.statistics')}</Text>
-          <View style={styles.statsGrid}>
-            <View style={styles.statCard}>
-              <Ionicons name="flame" size={24} color="#f59e0b" />
-              <Text style={styles.statValue}>{progress.currentStreak}</Text>
-              <Text style={styles.statLabel}>{t('profile.dayStreak')}</Text>
+          <View style={styles.xpCardDivider} />
+          <View style={styles.xpCardStats}>
+            <View style={styles.xpCardStat}>
+              <Ionicons name="flame" size={18} color="#f59e0b" />
+              <Text style={styles.xpCardStatValue}>{progress.currentStreak}</Text>
+              <Text style={styles.xpCardStatLabel}>{t('profile.dayStreak')}</Text>
             </View>
-            <View style={styles.statCard}>
-              <Ionicons name="trophy" size={24} color="#D4AF37" />
-              <Text style={styles.statValue}>{progress.longestStreak}</Text>
-              <Text style={styles.statLabel}>{t('profile.bestStreak')}</Text>
+            <View style={styles.xpCardStat}>
+              <Ionicons name="trophy" size={18} color="#D4AF37" />
+              <Text style={styles.xpCardStatValue}>{progress.longestStreak}</Text>
+              <Text style={styles.xpCardStatLabel}>{t('profile.bestStreak')}</Text>
             </View>
-            <View style={styles.statCard}>
-              <Ionicons name="checkmark-circle" size={24} color="#22c55e" />
-              <Text style={styles.statValue}>{progress.exerciseResults.totalCompleted}</Text>
-              <Text style={styles.statLabel}>{t('profile.exercises')}</Text>
+            <View style={styles.xpCardStat}>
+              <Ionicons name="checkmark-circle" size={18} color="#10b981" />
+              <Text style={styles.xpCardStatValue}>{progress.exerciseResults.totalCompleted}</Text>
+              <Text style={styles.xpCardStatLabel}>{t('profile.exercises')}</Text>
             </View>
-            <View style={styles.statCard}>
-              <Ionicons name="analytics" size={24} color="#6366f1" />
-              <Text style={styles.statValue}>{getAccuracy()}%</Text>
-              <Text style={styles.statLabel}>{t('profile.accuracy')}</Text>
+            <View style={styles.xpCardStat}>
+              <Ionicons name="analytics" size={18} color="#6366f1" />
+              <Text style={styles.xpCardStatValue}>{getAccuracy()}%</Text>
+              <Text style={styles.xpCardStatLabel}>{t('profile.accuracy')}</Text>
             </View>
           </View>
         </View>
@@ -477,126 +378,11 @@ export default function ProfileScreen() {
           )}
         </View>
 
-        {/* Offline Storage */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('profile.offlineStorage')}</Text>
-          <View style={styles.storageCard}>
-            <View style={styles.storageHeader}>
-              <View style={styles.storageIcon}>
-                <Ionicons name="cloud-download" size={24} color="#6366f1" />
-              </View>
-              <View style={styles.storageInfo}>
-                <Text style={styles.storageTitle}>{t('profile.downloadedContent')}</Text>
-                <Text style={styles.storageSize}>{t('profile.used', { size: cacheSize })}</Text>
-              </View>
-              {!isConnected && (
-                <View style={styles.offlineBadge}>
-                  <Ionicons name="cloud-offline" size={14} color="#ef4444" />
-                  <Text style={styles.offlineBadgeText}>{t('profile.offline')}</Text>
-                </View>
-              )}
-            </View>
-            <View style={styles.storageStats}>
-              <View style={styles.storageStat}>
-                <Text style={styles.storageStatValue}>{downloadedSurahsCount}</Text>
-                <Text style={styles.storageStatLabel}>{t('profile.surahsSaved')}</Text>
-              </View>
-            </View>
-            {downloadedSurahsCount > 0 && (
-              <Pressable style={styles.clearCacheButton} onPress={handleClearCache} accessibilityRole="button" accessibilityLabel={t('profile.clearDownloadedAudio')}>
-                <Ionicons name="trash-outline" size={18} color="#f59e0b" />
-                <Text style={styles.clearCacheText}>{t('profile.clearDownloadedAudio')}</Text>
-              </Pressable>
-            )}
-          </View>
-        </View>
-
-        {/* Update Diagnostics */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('profile.appUpdates')}</Text>
-          <View style={styles.updateCard}>
-            <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>{t('profile.channel')}:</Text>
-              <Text style={styles.updateValue}>{updateInfo.channel || t('common.loading')}</Text>
-            </View>
-            <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>{t('profile.runtimeVersion')}:</Text>
-              <Text style={styles.updateValue}>{updateInfo.runtimeVersion || t('common.loading')}</Text>
-            </View>
-            <View style={styles.updateInfoRow}>
-              <Text style={styles.updateLabel}>{t('profile.currentUpdateId')}:</Text>
-              <Text style={styles.updateValue} numberOfLines={1}>
-                {updateInfo.currentId ? updateInfo.currentId.substring(0, 20) + '...' : t('common.loading')}
-              </Text>
-            </View>
-            {updateInfo.lastCheckTime && (
-              <View style={styles.updateInfoRow}>
-                <Text style={styles.updateLabel}>{t('profile.lastCheck')}:</Text>
-                <Text style={styles.updateValue}>{updateInfo.lastCheckTime}</Text>
-              </View>
-            )}
-            {updateInfo.isUpdateAvailable !== null && (
-              <View style={styles.updateInfoRow}>
-                <Text style={styles.updateLabel}>{t('profile.updateAvailableLabel')}:</Text>
-                <Text style={[
-                  styles.updateValue,
-                  { color: updateInfo.isUpdateAvailable ? '#10b981' : '#94a3b8' }
-                ]}>
-                  {updateInfo.isUpdateAvailable ? t('profile.yes') : t('profile.no')}
-                </Text>
-              </View>
-            )}
-            {updateInfo.error && (
-              <View style={styles.updateError}>
-                <Ionicons name="warning" size={16} color="#ef4444" />
-                <Text style={styles.updateErrorText}>{updateInfo.error}</Text>
-              </View>
-            )}
-            <Pressable
-              style={styles.checkUpdateButton}
-              onPress={handleCheckForUpdates}
-              disabled={updateInfo.isChecking}
-              accessibilityRole="button"
-              accessibilityLabel={t('profile.checkForUpdates')}
-              accessibilityState={{ disabled: updateInfo.isChecking }}
-            >
-              {updateInfo.isChecking ? (
-                <ActivityIndicator size="small" color="#ffffff" />
-              ) : (
-                <>
-                  <Ionicons name="refresh" size={18} color="#ffffff" />
-                  <Text style={styles.checkUpdateButtonText}>{t('profile.checkForUpdates')}</Text>
-                </>
-              )}
-            </Pressable>
-          </View>
-        </View>
-
         {/* Settings */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
           <View style={styles.settingsCard}>
-            {/* Vowel Marks */}
-            <View style={styles.settingItem}>
-              <View style={styles.settingLeft}>
-                <Ionicons name="text-outline" size={22} color="#94a3b8" />
-                <View style={styles.settingText}>
-                  <Text style={styles.settingTitle}>{t('profile.showVowelMarks')}</Text>
-                  <Text style={styles.settingDesc}>{t('profile.showVowelMarksDesc')}</Text>
-                </View>
-              </View>
-              <Switch
-                value={showVowels}
-                onValueChange={setShowVowels}
-                trackColor={{ false: '#334155', true: '#6366f1' }}
-                thumbColor={showVowels ? '#ffffff' : '#94a3b8'}
-                accessibilityLabel={t('profile.showVowelMarks')}
-                accessibilityRole="switch"
-              />
-            </View>
-
             {/* Language Selector */}
-            <View style={styles.settingDivider} />
             <View style={styles.settingItem}>
               <View style={styles.settingLeft}>
                 <Ionicons name="language-outline" size={22} color="#94a3b8" />
@@ -837,55 +623,108 @@ const styles = StyleSheet.create({
     color: '#D4AF37',
     marginTop: 4,
   },
-  levelCard: {
+  profileCard: {
     backgroundColor: '#1e293b',
     marginHorizontal: 20,
     borderRadius: 16,
-    padding: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
   },
-  levelBadge: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#D4AF3720',
+  profileAvatar: {
+    width: 56,
+    height: 56,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  levelInfo: {
+  profileInfo: {
     flex: 1,
-    marginLeft: 16,
+    marginLeft: 12,
   },
-  levelLabel: {
-    fontSize: 12,
-    color: '#94a3b8',
-  },
-  levelValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginTop: 2,
-  },
-  levelArabic: {
-    fontSize: 16,
-    color: '#D4AF37',
-    marginTop: 2,
-  },
-  xpBadge: {
+  nameRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f59e0b20',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
   },
-  xpText: {
-    color: '#f59e0b',
+  profileName: {
+    fontSize: 18,
     fontWeight: 'bold',
-    fontSize: 14,
-    marginLeft: 4,
+    color: '#ffffff',
+  },
+  editNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  editNameInput: {
+    flex: 1,
+    backgroundColor: '#0f172a',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#334155',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    color: '#ffffff',
+    fontSize: 15,
+  },
+  editNameActions: {
+    flexDirection: 'row',
+    marginLeft: 8,
+    gap: 4,
+  },
+  editNameBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  xpCard: {
+    backgroundColor: '#1e293b',
+    marginHorizontal: 20,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#f59e0b25',
+  },
+  xpCardMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  xpCardValue: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#f5f5f0',
+  },
+  xpCardLabel: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#f59e0b',
+  },
+  xpCardDivider: {
+    height: 1,
+    backgroundColor: '#334155',
+    marginVertical: 16,
+  },
+  xpCardStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  xpCardStat: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  xpCardStatValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#f5f5f0',
+  },
+  xpCardStatLabel: {
+    fontSize: 11,
+    color: '#94a3b8',
   },
   section: {
     paddingHorizontal: 20,
@@ -896,71 +735,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     marginBottom: 12,
-  },
-  progressCard: {
-    backgroundColor: '#1e293b',
-    borderRadius: 16,
-    padding: 16,
-  },
-  progressItem: {
-    marginBottom: 16,
-  },
-  progressHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  progressLabel: {
-    color: '#ffffff',
-    fontSize: 14,
-    fontWeight: '600',
-    marginLeft: 10,
-  },
-  progressBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  progressBarBg: {
-    flex: 1,
-    height: 8,
-    backgroundColor: '#334155',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    borderRadius: 4,
-  },
-  progressPercent: {
-    color: '#94a3b8',
-    fontSize: 12,
-    marginLeft: 12,
-    width: 36,
-    textAlign: 'right',
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -6,
-  },
-  statCard: {
-    width: '48%',
-    backgroundColor: '#1e293b',
-    borderRadius: 16,
-    padding: 16,
-    alignItems: 'center',
-    margin: '1%',
-  },
-  statValue: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginTop: 8,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#94a3b8',
-    marginTop: 4,
   },
   settingsCard: {
     backgroundColor: '#1e293b',
@@ -1269,22 +1043,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
   },
-  storageHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  storageIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    backgroundColor: '#6366f120',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  storageInfo: {
-    flex: 1,
-    marginLeft: 12,
-  },
   storageTitle: {
     color: '#ffffff',
     fontSize: 15,
@@ -1294,111 +1052,6 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: 13,
     marginTop: 2,
-  },
-  offlineBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#ef444420',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    gap: 4,
-  },
-  offlineBadgeText: {
-    color: '#ef4444',
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  storageStats: {
-    flexDirection: 'row',
-    marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#334155',
-  },
-  storageStat: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  storageStatValue: {
-    color: '#6366f1',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  storageStatLabel: {
-    color: '#64748b',
-    fontSize: 12,
-    marginTop: 4,
-  },
-  clearCacheButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f59e0b20',
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginTop: 16,
-    gap: 8,
-  },
-  clearCacheText: {
-    color: '#f59e0b',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  // Update diagnostic styles
-  updateCard: {
-    backgroundColor: '#1e293b',
-    borderRadius: 16,
-    padding: 16,
-  },
-  updateInfoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  updateLabel: {
-    color: '#94a3b8',
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  updateValue: {
-    color: '#ffffff',
-    fontSize: 13,
-    fontWeight: '600',
-    flex: 1,
-    textAlign: 'right',
-    marginLeft: 12,
-  },
-  updateError: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#ef444420',
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 8,
-    marginBottom: 8,
-    gap: 8,
-  },
-  updateErrorText: {
-    color: '#ef4444',
-    fontSize: 12,
-    flex: 1,
-  },
-  checkUpdateButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#10b981',
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginTop: 12,
-    gap: 8,
-  },
-  checkUpdateButtonText: {
-    color: '#ffffff',
-    fontSize: 14,
-    fontWeight: '600',
   },
   // Remove Ads styles
   premiumBadgeRow: {

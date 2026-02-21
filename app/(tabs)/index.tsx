@@ -69,7 +69,7 @@ const TIPS_COUNT = 5;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, getAccuracy, lastAccessed } = useProgressStore();
+  const { progress, getAlphabetCompletionPercent, getVocabularyCompletionPercent, lastAccessed } = useProgressStore();
 
   // Rotate tip daily based on day of year
   const tipIndex = useMemo(() => {
@@ -170,26 +170,17 @@ export default function HomeScreen() {
           />
         </View>
 
-        {/* Stats Overview */}
-        <View style={styles.statsCard}>
-          <Text style={styles.statsTitle}>{t('home.yourProgress')}</Text>
-          <View style={styles.statsGrid}>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{progress.totalXp}</Text>
-              <Text style={styles.statLabel}>{t('home.totalXp')}</Text>
+        {/* Your Progress */}
+        <View style={styles.goalCard}>
+          <View style={styles.goalContent}>
+            <Ionicons name="trophy" size={32} color="#D4AF37" />
+            <View style={styles.goalText}>
+              <Text style={styles.goalTitle}>{progress.totalXp} XP</Text>
+              <Text style={styles.goalProgress}>{t('home.lessonsCompletedCount', { count: totalLessons })}</Text>
             </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{getAlphabetCompletionPercent()}%</Text>
-              <Text style={styles.statLabel}>{t('home.alphabet')}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{getVocabularyCompletionPercent()}%</Text>
-              <Text style={styles.statLabel}>{t('home.vocabulary')}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{getAccuracy()}%</Text>
-              <Text style={styles.statLabel}>{t('home.accuracy')}</Text>
-            </View>
+          </View>
+          <View style={styles.progressBar}>
+            <View style={[styles.progressFill, { width: `${Math.min(overallPercent, 100)}%` }]} />
           </View>
         </View>
 
@@ -243,23 +234,6 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Your Progress */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('common.yourProgress')}</Text>
-          <View style={styles.goalCard}>
-            <View style={styles.goalContent}>
-              <Ionicons name="trophy" size={32} color="#D4AF37" />
-              <View style={styles.goalText}>
-                <Text style={styles.goalTitle}>{progress.totalXp} XP</Text>
-                <Text style={styles.goalProgress}>{t('home.lessonsCompletedCount', { count: totalLessons })}</Text>
-              </View>
-            </View>
-            <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: `${Math.min(overallPercent, 100)}%` }]} />
-            </View>
-          </View>
-        </View>
-
         {/* Tips Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.tipOfTheDay')}</Text>
@@ -308,35 +282,6 @@ const styles = StyleSheet.create({
     height: 68,
     borderRadius: 16,
     marginTop: -8,
-  },
-  statsCard: {
-    backgroundColor: '#1e293b',
-    marginHorizontal: 20,
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 24,
-  },
-  statsTitle: {
-    color: '#94a3b8',
-    fontSize: 14,
-    marginBottom: 16,
-  },
-  statsGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statValue: {
-    color: '#ffffff',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  statLabel: {
-    color: '#64748b',
-    fontSize: 12,
-    marginTop: 4,
   },
   section: {
     paddingHorizontal: 20,
@@ -422,8 +367,10 @@ const styles = StyleSheet.create({
   },
   goalCard: {
     backgroundColor: '#1e293b',
+    marginHorizontal: 20,
     borderRadius: 16,
     padding: 20,
+    marginBottom: 24,
   },
   goalContent: {
     flexDirection: 'row',
