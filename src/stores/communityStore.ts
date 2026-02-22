@@ -19,6 +19,12 @@ import { useProgressStore } from './progressStore';
 import { useSettingsStore } from './settingsStore';
 import { supabase } from '../lib/supabase';
 
+// --- TTL Cache (not persisted) ---
+const CACHE_TTL_MS = 60_000;
+
+const _leaderboardCache: Record<string, { entries: LeaderboardEntry[]; fetchedAt: number }> = {};
+let _statsFetchedAt = 0;
+
 interface CommunityState {
   // Challenge tracking
   dailyChallenge: Challenge | null;
@@ -44,8 +50,8 @@ interface CommunityState {
   // Actions
   initializeChallenges: () => void;
   contributeToChallenge: (type: 'words' | 'lessons' | 'xp' | 'exercises', amount: number) => void;
-  fetchLeaderboard: (type: LeaderboardType, userId?: string) => Promise<void>;
-  fetchCommunityStats: () => Promise<void>;
+  fetchLeaderboard: (type: LeaderboardType, userId?: string, forceRefresh?: boolean) => Promise<void>;
+  fetchCommunityStats: (forceRefresh?: boolean) => Promise<void>;
   addUserAchievement: (achievementTitle: string, achievementTitleArabic: string, icon: string) => void;
   getRecentAchievements: (userAchievements: { title: string; titleArabic: string; icon: string }[]) => CommunityAchievement[];
 }
@@ -241,7 +247,14 @@ export const useCommunityStore = create<CommunityState>()(
         });
       },
 
-      fetchLeaderboard: async (type, userId) => {
+      fetchLeaderboard: async (type, userId, forceRefresh) => {
+        // Return cached data if fresh
+        const cached = _leaderboardCache[type];
+        if (!forceRefresh && cached && Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
+          set({ leaderboardEntries: cached.entries, isLoadingLeaderboard: false });
+          return;
+        }
+
         set({ isLoadingLeaderboard: true });
 
         let entries: LeaderboardEntry[] = [];
@@ -285,10 +298,18 @@ export const useCommunityStore = create<CommunityState>()(
           });
         }
 
+        // Update cache
+        _leaderboardCache[type] = { entries, fetchedAt: Date.now() };
+
         set({ leaderboardEntries: entries, isLoadingLeaderboard: false });
       },
 
-      fetchCommunityStats: async () => {
+      fetchCommunityStats: async (forceRefresh) => {
+        // Return cached data if fresh
+        if (!forceRefresh && _statsFetchedAt && Date.now() - _statsFetchedAt < CACHE_TTL_MS) {
+          return;
+        }
+
         set({ isLoadingStats: true });
         let stats = defaultStats;
         try {
@@ -311,6 +332,7 @@ export const useCommunityStore = create<CommunityState>()(
           };
         }
 
+        _statsFetchedAt = Date.now();
         set({ communityStatsData: stats, isLoadingStats: false });
       },
 

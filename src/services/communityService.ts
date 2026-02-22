@@ -40,46 +40,20 @@ export async function syncProgress(
 }
 
 /**
- * Upsert today's daily log row, incrementing xp_earned.
+ * Atomically upsert today's daily XP via a single RPC call.
  * Fire-and-forget — errors are silently logged.
  */
 export async function logDailyXp(userId: string, xpAmount: number) {
   try {
     const today = new Date().toISOString().split('T')[0];
 
-    // Try to fetch existing row for today
-    const { data: existing, error: fetchError } = await getClient()
-      .from('user_daily_log')
-      .select('id, xp_earned')
-      .eq('user_id', userId)
-      .eq('study_date', today)
-      .maybeSingle();
+    const { error } = await getClient().rpc('upsert_daily_xp', {
+      p_user_id: userId,
+      p_study_date: today,
+      p_xp_amount: xpAmount,
+    });
 
-    if (fetchError) {
-      if (__DEV__) console.warn('[communityService] logDailyXp fetch error:', fetchError.message);
-      return;
-    }
-
-    if (existing) {
-      // Update existing row
-      const { error } = await getClient()
-        .from('user_daily_log')
-        .update({ xp_earned: existing.xp_earned + xpAmount })
-        .eq('id', existing.id);
-
-      if (error && __DEV__) console.warn('[communityService] logDailyXp update error:', error.message);
-    } else {
-      // Insert new row
-      const { error } = await getClient()
-        .from('user_daily_log')
-        .insert({
-          user_id: userId,
-          study_date: today,
-          xp_earned: xpAmount,
-        });
-
-      if (error && __DEV__) console.warn('[communityService] logDailyXp insert error:', error.message);
-    }
+    if (error && __DEV__) console.warn('[communityService] logDailyXp RPC error:', error.message);
   } catch (e) {
     if (__DEV__) console.warn('[communityService] logDailyXp exception:', e);
   }

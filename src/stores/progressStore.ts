@@ -1,10 +1,47 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState, AppStateStatus } from 'react-native';
 import { ExerciseType, UserArabicProgress, ArabicLevel, VocabularyReviewItem, ReviewRating } from '../types/arabic';
 import { ACHIEVEMENTS, Achievement } from '../data/achievements';
 import * as communityService from '../services/communityService';
 import { useSettingsStore } from './settingsStore';
+
+// --- Debounced XP sync (30s flush) ---
+const FLUSH_INTERVAL_MS = 30_000;
+let _pendingXpDelta = 0;
+let _flushTimer: ReturnType<typeof setTimeout> | null = null;
+
+function _flushPendingSync() {
+  if (_flushTimer) {
+    clearTimeout(_flushTimer);
+    _flushTimer = null;
+  }
+  const delta = _pendingXpDelta;
+  _pendingXpDelta = 0;
+
+  const user = useSettingsStore.getState().user;
+  if (!user) return;
+
+  const { totalXp, currentStreak, longestStreak } = useProgressStore.getState().progress;
+  communityService.syncProgress(user.id, totalXp, currentStreak, longestStreak);
+
+  if (delta > 0) {
+    communityService.logDailyXp(user.id, delta);
+  }
+}
+
+function _scheduleFlush() {
+  if (_flushTimer) return; // already scheduled
+  _flushTimer = setTimeout(_flushPendingSync, FLUSH_INTERVAL_MS);
+}
+
+// Flush immediately when app goes to background
+AppState.addEventListener('change', (state: AppStateStatus) => {
+  if ((state === 'background' || state === 'inactive') && _pendingXpDelta > 0) {
+    _flushPendingSync();
+  }
+});
 
 export type ModuleType = 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading' | 'practice';
 
@@ -246,13 +283,9 @@ export const useProgressStore = create<ProgressState>()(
         }));
         get().checkAchievements();
 
-        // Sync to Supabase (non-blocking)
-        const user = useSettingsStore.getState().user;
-        if (user) {
-          const { totalXp, currentStreak, longestStreak } = get().progress;
-          communityService.syncProgress(user.id, totalXp, currentStreak, longestStreak);
-          communityService.logDailyXp(user.id, amount);
-        }
+        // Accumulate and debounce Supabase sync (flushes every 30s or on background)
+        _pendingXpDelta += amount;
+        _scheduleFlush();
       },
 
       updateStreak: () => {
@@ -262,6 +295,11 @@ export const useProgressStore = create<ProgressState>()(
 
         if (lastDate === today) {
           return;
+        }
+
+        // Flush any pending XP before streak sync to avoid stale totals
+        if (_pendingXpDelta > 0) {
+          _flushPendingSync();
         }
 
         const yesterday = new Date();
@@ -284,10 +322,11 @@ export const useProgressStore = create<ProgressState>()(
         });
         get().checkAchievements();
 
-        // Sync streak to Supabase (non-blocking)
+        // Sync streak to Supabase immediately (fires once per day)
         const user = useSettingsStore.getState().user;
         if (user) {
-          communityService.syncProgress(user.id, state.progress.totalXp, newStreak, updatedLongestStreak);
+          const { totalXp } = get().progress;
+          communityService.syncProgress(user.id, totalXp, newStreak, updatedLongestStreak);
         }
       },
 

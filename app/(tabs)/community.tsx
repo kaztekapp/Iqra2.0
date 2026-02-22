@@ -180,8 +180,8 @@ export default function CommunityScreen() {
     setRefreshing(true);
     initializeChallenges();
     await Promise.all([
-      fetchCommunityStats(),
-      fetchLeaderboard(lbType, userId),
+      fetchCommunityStats(true),
+      fetchLeaderboard(lbType, userId, true),
     ]);
     setRefreshing(false);
   }, [initializeChallenges, fetchCommunityStats, fetchLeaderboard, lbType, userId]);
