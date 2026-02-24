@@ -20,10 +20,18 @@ const keyboardRows = [
   ['ء', 'ظ', 'ط', 'ذ', 'د', 'ز', 'ر', 'و', 'ى'],
 ];
 
+// Hamza-carrier letters (needed for Quranic writing)
+const hamzaLetters = [
+  { key: 'أ', name: 'Alif Hamza Above' },
+  { key: 'إ', name: 'Alif Hamza Below' },
+  { key: 'ؤ', name: 'Waw Hamza' },
+  { key: 'ئ', name: 'Ya Hamza' },
+  { key: 'آ', name: 'Alif Maddah' },
+];
+
 // Quranic-specific marks (Uthmani script) - top row
 const quranicMarks = [
   { key: 'ٓ', name: 'Maddah' },
-  { key: 'ٰ', name: 'Alef Khanjariyah' },
   { key: 'ۡ', name: 'Sukun Qurani' },
   { key: 'ۢ', name: 'Meem Iqlab' },
   { key: 'ۥ', name: 'Small Waw' },
@@ -31,16 +39,23 @@ const quranicMarks = [
   { key: 'ٱ', name: 'Alef Wasla', isLetter: true },
 ];
 
-// Basic harakat (vowel marks)
+// Basic harakat (vowel marks) - row 1
 const basicHarakat = [
   { key: 'َ', name: 'Fatha' },
   { key: 'ُ', name: 'Damma' },
   { key: 'ِ', name: 'Kasra' },
   { key: 'ْ', name: 'Sukun' },
+  { key: 'ّ', name: 'Shadda' },
+  { key: 'ٰ', name: 'Superscript Alef' },
+];
+
+// Tanwin + hamza marks - row 2
+const extendedHarakat = [
   { key: 'ً', name: 'Tanwin Fath' },
   { key: 'ٌ', name: 'Tanwin Damm' },
   { key: 'ٍ', name: 'Tanwin Kasr' },
-  { key: 'ّ', name: 'Shadda' },
+  { key: '\u0654', name: 'Hamza Above' },
+  { key: '\u0655', name: 'Hamza Below' },
 ];
 
 export default function ArabicKeyboard({
@@ -84,9 +99,35 @@ export default function ArabicKeyboard({
         ))}
       </View>
 
+      {/* Hamza Carriers Row */}
+      <View style={styles.hamzaRow}>
+        {hamzaLetters.map((letter) => (
+          <Pressable
+            key={letter.key}
+            style={styles.hamzaKey}
+            onPress={() => onKeyPress(letter.key)}
+          >
+            <Text style={styles.hamzaKeyText}>{letter.key}</Text>
+          </Pressable>
+        ))}
+      </View>
+
       {/* Basic Harakat Row */}
       <View style={styles.harakatRow}>
         {basicHarakat.map((mark) => (
+          <Pressable
+            key={mark.key}
+            style={styles.vowelKey}
+            onPress={() => onKeyPress(mark.key)}
+          >
+            <Text style={styles.vowelKeyText}>ـ{mark.key}</Text>
+          </Pressable>
+        ))}
+      </View>
+
+      {/* Tanwin + Hamza Marks Row */}
+      <View style={styles.harakatRow}>
+        {extendedHarakat.map((mark) => (
           <Pressable
             key={mark.key}
             style={styles.vowelKey}
@@ -174,6 +215,25 @@ const styles = StyleSheet.create({
   quranicKeyText: {
     fontSize: 20,
     color: '#10b981',
+    textAlign: 'center',
+  },
+  hamzaRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 8,
+    gap: 8,
+  },
+  hamzaKey: {
+    backgroundColor: '#334155',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#f59e0b40',
+  },
+  hamzaKeyText: {
+    fontSize: 22,
+    color: '#f59e0b',
     textAlign: 'center',
   },
   harakatRow: {

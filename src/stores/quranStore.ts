@@ -58,6 +58,7 @@ interface QuranState {
   toggleTajweedColors: () => void;
   toggleAutoAdvance: () => void;
   toggleWordByWordMode: () => void;
+  setLastSelectedMethod: (methodId: string) => void;
 
   // Getters
   getSurahProgress: (surahId: string) => SurahProgress;
@@ -619,6 +620,14 @@ export const useQuranStore = create<QuranState>()(
               ...state.progress.settings,
               wordByWordMode: !state.progress.settings.wordByWordMode,
             },
+          },
+        })),
+
+      setLastSelectedMethod: (methodId: string) =>
+        set((state) => ({
+          progress: {
+            ...state.progress,
+            settings: { ...state.progress.settings, lastSelectedMethod: methodId },
           },
         })),
 

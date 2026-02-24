@@ -212,6 +212,7 @@ export interface QuranSettings {
   showTajweedColors: boolean;
   autoAdvance: boolean;
   wordByWordMode: boolean;
+  lastSelectedMethod?: string;
 }
 
 export interface Reciter {

@@ -14,8 +14,9 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import ArabicKeyboard from '../../../../src/components/arabic/ArabicKeyboard';
+import { getHintText } from '../../../../src/utils/arabicTextUtils';
 
-type WritingMode = 'with_reference' | 'from_memory';
+type WritingMode = 'hints_only' | 'with_reference';
 
 interface MistakeInfo {
   position: number;
@@ -212,7 +213,7 @@ export default function WritingExerciseScreen() {
   const { ayahs, isLoading } = useQuranSurah(surahId);
 
   const [selectedAyahIndex, setSelectedAyahIndex] = useState(0);
-  const [writingMode, setWritingMode] = useState<WritingMode>('with_reference');
+  const [writingMode, setWritingMode] = useState<WritingMode>('hints_only');
   const [userInput, setUserInput] = useState('');
   const [showAyahPicker, setShowAyahPicker] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -418,6 +419,19 @@ export default function WritingExerciseScreen() {
           {/* Mode Toggle */}
           <View style={styles.modeContainer}>
             <Pressable
+              style={[styles.modeButton, writingMode === 'hints_only' && styles.modeButtonActive]}
+              onPress={() => setWritingMode('hints_only')}
+            >
+              <Ionicons
+                name="eye-off"
+                size={18}
+                color={writingMode === 'hints_only' ? '#ffffff' : '#64748b'}
+              />
+              <Text style={[styles.modeText, writingMode === 'hints_only' && styles.modeTextActive]}>
+                From Memory
+              </Text>
+            </Pressable>
+            <Pressable
               style={[styles.modeButton, writingMode === 'with_reference' && styles.modeButtonActive]}
               onPress={() => setWritingMode('with_reference')}
             >
@@ -426,33 +440,30 @@ export default function WritingExerciseScreen() {
                 size={18}
                 color={writingMode === 'with_reference' ? '#ffffff' : '#64748b'}
               />
-              <Text
-                style={[
-                  styles.modeText,
-                  writingMode === 'with_reference' && styles.modeTextActive,
-                ]}
-              >
-                With Reference
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[styles.modeButton, writingMode === 'from_memory' && styles.modeButtonActive]}
-              onPress={() => setWritingMode('from_memory')}
-            >
-              <Ionicons
-                name="eye-off"
-                size={18}
-                color={writingMode === 'from_memory' ? '#ffffff' : '#64748b'}
-              />
-              <Text
-                style={[styles.modeText, writingMode === 'from_memory' && styles.modeTextActive]}
-              >
-                From Memory
+              <Text style={[styles.modeText, writingMode === 'with_reference' && styles.modeTextActive]}>
+                Show Ayah
               </Text>
             </Pressable>
           </View>
 
-          {/* Reference Ayah (if mode is with_reference) */}
+          {/* First-letter hints (from memory mode) */}
+          {writingMode === 'hints_only' && selectedAyah && (
+            <View style={styles.hintCard}>
+              <View style={styles.referenceHeader}>
+                <Ionicons name="bulb-outline" size={16} color="#f59e0b" />
+                <Text style={styles.hintLabel}>First Letter Hints</Text>
+              </View>
+              <View style={styles.hintWordsRow}>
+                {selectedAyah.words.map((word, i) => (
+                  <Text key={word.id || i} style={styles.hintWordText}>
+                    {getHintText(word.text)}
+                  </Text>
+                ))}
+              </View>
+            </View>
+          )}
+
+          {/* Full ayah reference (show ayah mode) */}
           {writingMode === 'with_reference' && selectedAyah && (
             <View style={styles.referenceCard}>
               <View style={styles.referenceHeader}>
@@ -865,6 +876,32 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 40,
     textAlign: 'right',
+  },
+  // Hint Card (from_memory mode)
+  hintCard: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: '#f59e0b',
+  },
+  hintLabel: {
+    color: '#f59e0b',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  hintWordsRow: {
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  hintWordText: {
+    color: '#D4AF37',
+    fontSize: 22,
+    lineHeight: 40,
+    opacity: 0.85,
   },
   // Input Card
   inputCard: {

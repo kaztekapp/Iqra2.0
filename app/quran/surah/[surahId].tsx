@@ -171,9 +171,8 @@ export default function SurahDetailScreen() {
 
   // Handler functions
   const handleLearn = useCallback(() => {
-    startSurah(surahId);
-    router.push(`/quran/surah/${surahId}/learn` as any);
-  }, [surahId, startSurah]);
+    router.push(`/quran/surah/${surahId}/methods` as any);
+  }, [surahId]);
 
   const handleWrite = useCallback(() => {
     router.push(`/quran/surah/${surahId}/write` as any);
