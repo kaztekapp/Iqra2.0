@@ -20,42 +20,34 @@ const keyboardRows = [
   ['ء', 'ظ', 'ط', 'ذ', 'د', 'ز', 'ر', 'و', 'ى'],
 ];
 
-// Hamza-carrier letters (needed for Quranic writing)
-const hamzaLetters = [
-  { key: 'أ', name: 'Alif Hamza Above' },
-  { key: 'إ', name: 'Alif Hamza Below' },
-  { key: 'ؤ', name: 'Waw Hamza' },
-  { key: 'ئ', name: 'Ya Hamza' },
-  { key: 'آ', name: 'Alif Maddah' },
+// Row 1: All diacritics / tashkeel (combining marks that go ON letters)
+const diacritics = [
+  { key: 'َ', display: 'ـَ' },   // Fatha
+  { key: 'ُ', display: 'ـُ' },   // Damma
+  { key: 'ِ', display: 'ـِ' },   // Kasra
+  { key: 'ْ', display: 'ـْ' },   // Sukun
+  { key: 'ّ', display: 'ـّ' },   // Shadda
+  { key: 'ً', display: 'ـً' },   // Tanwin Fath
+  { key: 'ٌ', display: 'ـٌ' },   // Tanwin Damm
+  { key: 'ٍ', display: 'ـٍ' },   // Tanwin Kasr
+  { key: 'ٰ', display: 'ـٰ' },   // Superscript Alef
+  { key: '\u0654', display: 'ـٔ' }, // Hamza Above
+  { key: '\u0655', display: 'ـٕ' }, // Hamza Below
 ];
 
-// Quranic-specific marks (Uthmani script) - top row
-const quranicMarks = [
-  { key: 'ٓ', name: 'Maddah' },
-  { key: 'ۡ', name: 'Sukun Qurani' },
-  { key: 'ۢ', name: 'Meem Iqlab' },
-  { key: 'ۥ', name: 'Small Waw' },
-  { key: 'ۦ', name: 'Small Ya' },
-  { key: 'ٱ', name: 'Alef Wasla', isLetter: true },
-];
-
-// Basic harakat (vowel marks) - row 1
-const basicHarakat = [
-  { key: 'َ', name: 'Fatha' },
-  { key: 'ُ', name: 'Damma' },
-  { key: 'ِ', name: 'Kasra' },
-  { key: 'ْ', name: 'Sukun' },
-  { key: 'ّ', name: 'Shadda' },
-  { key: 'ٰ', name: 'Superscript Alef' },
-];
-
-// Tanwin + hamza marks - row 2
-const extendedHarakat = [
-  { key: 'ً', name: 'Tanwin Fath' },
-  { key: 'ٌ', name: 'Tanwin Damm' },
-  { key: 'ٍ', name: 'Tanwin Kasr' },
-  { key: '\u0654', name: 'Hamza Above' },
-  { key: '\u0655', name: 'Hamza Below' },
+// Row 2: Special letters (hamza carriers) + Quranic marks
+const specialChars = [
+  { key: 'أ', display: 'أ', isLetter: true },   // Alif Hamza Above
+  { key: 'إ', display: 'إ', isLetter: true },   // Alif Hamza Below
+  { key: 'ؤ', display: 'ؤ', isLetter: true },   // Waw Hamza
+  { key: 'ئ', display: 'ئ', isLetter: true },   // Ya Hamza
+  { key: 'آ', display: 'آ', isLetter: true },   // Alif Maddah
+  { key: 'ٱ', display: 'ٱ', isLetter: true },   // Alif Wasla
+  { key: 'ٓ', display: 'ـٓ', isLetter: false },  // Maddah
+  { key: 'ۡ', display: 'ـۡ', isLetter: false },  // Sukun Qurani
+  { key: 'ۢ', display: 'ـۢ', isLetter: false },  // Meem Iqlab
+  { key: 'ۥ', display: 'ـۥ', isLetter: false },  // Small Waw
+  { key: 'ۦ', display: 'ـۦ', isLetter: false },  // Small Ya
 ];
 
 export default function ArabicKeyboard({
@@ -67,15 +59,23 @@ export default function ArabicKeyboard({
   onCursorRight,
 }: ArabicKeyboardProps) {
   const keyWidth = (SCREEN_WIDTH - 24) / 11 - 3;
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handlePressIn = (handler: (() => void) | undefined) => {
     if (!handler) return;
     handler();
-    intervalRef.current = setInterval(handler, 100);
+    // Delay before repeat starts so quick taps only fire once
+    timeoutRef.current = setTimeout(() => {
+      intervalRef.current = setInterval(handler, 100);
+    }, 400);
   };
 
   const handlePressOut = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -84,56 +84,30 @@ export default function ArabicKeyboard({
 
   return (
     <View style={styles.container}>
-      {/* Quranic Marks Row */}
-      <View style={styles.quranicRow}>
-        {quranicMarks.map((mark) => (
+      {/* Row 1: Diacritics / Tashkeel */}
+      <View style={styles.specialRow}>
+        {diacritics.map((item) => (
           <Pressable
-            key={mark.key}
-            style={styles.quranicKey}
-            onPress={() => onKeyPress(mark.key)}
+            key={item.key}
+            style={[styles.specialKey, { width: keyWidth, height: keyWidth * 1.35 }]}
+            onPress={() => onKeyPress(item.key)}
           >
-            <Text style={styles.quranicKeyText}>
-              {mark.isLetter ? mark.key : `ـ${mark.key}`}
+            <Text style={styles.diacriticText}>{item.display}</Text>
+          </Pressable>
+        ))}
+      </View>
+
+      {/* Row 2: Hamza carriers + Quranic marks */}
+      <View style={styles.specialRow}>
+        {specialChars.map((item) => (
+          <Pressable
+            key={item.key}
+            style={[styles.specialKey, { width: keyWidth, height: keyWidth * 1.35 }]}
+            onPress={() => onKeyPress(item.key)}
+          >
+            <Text style={[styles.specialCharText, item.isLetter && styles.letterText]}>
+              {item.display}
             </Text>
-          </Pressable>
-        ))}
-      </View>
-
-      {/* Hamza Carriers Row */}
-      <View style={styles.hamzaRow}>
-        {hamzaLetters.map((letter) => (
-          <Pressable
-            key={letter.key}
-            style={styles.hamzaKey}
-            onPress={() => onKeyPress(letter.key)}
-          >
-            <Text style={styles.hamzaKeyText}>{letter.key}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      {/* Basic Harakat Row */}
-      <View style={styles.harakatRow}>
-        {basicHarakat.map((mark) => (
-          <Pressable
-            key={mark.key}
-            style={styles.vowelKey}
-            onPress={() => onKeyPress(mark.key)}
-          >
-            <Text style={styles.vowelKeyText}>ـ{mark.key}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      {/* Tanwin + Hamza Marks Row */}
-      <View style={styles.harakatRow}>
-        {extendedHarakat.map((mark) => (
-          <Pressable
-            key={mark.key}
-            style={styles.vowelKey}
-            onPress={() => onKeyPress(mark.key)}
-          >
-            <Text style={styles.vowelKeyText}>ـ{mark.key}</Text>
           </Pressable>
         ))}
       </View>
@@ -151,7 +125,10 @@ export default function ArabicKeyboard({
             </Pressable>
           ))}
           {rowIndex === keyboardRows.length - 1 && (
-            <Pressable style={styles.backspaceKey} onPress={onBackspace}>
+            <Pressable
+              style={[styles.backspaceKey, { height: keyWidth * 1.4 }]}
+              onPress={onBackspace}
+            >
               <Ionicons name="backspace" size={22} color="#ffffff" />
             </Pressable>
           )}
@@ -193,71 +170,44 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1e293b',
     paddingHorizontal: 3,
-    paddingTop: 10,
+    paddingTop: 8,
     paddingBottom: 4,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
-  quranicRow: {
+  // Special rows (diacritics + special chars) - same width grid as main keys
+  specialRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 8,
-    gap: 8,
+    marginBottom: 5,
+    gap: 3,
   },
-  quranicKey: {
-    backgroundColor: '#1e3a5f',
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#10b98140',
+  specialKey: {
+    backgroundColor: '#293548',
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  quranicKeyText: {
+  diacriticText: {
+    fontSize: 22,
+    color: '#D4AF37',
+    textAlign: 'center',
+  },
+  specialCharText: {
     fontSize: 20,
     color: '#10b981',
     textAlign: 'center',
   },
-  hamzaRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 8,
-    gap: 8,
-  },
-  hamzaKey: {
-    backgroundColor: '#334155',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#f59e0b40',
-  },
-  hamzaKeyText: {
+  letterText: {
     fontSize: 22,
     color: '#f59e0b',
-    textAlign: 'center',
   },
-  harakatRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 8,
-    gap: 8,
-  },
-  vowelKey: {
-    backgroundColor: '#334155',
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  vowelKeyText: {
-    fontSize: 20,
-    color: '#D4AF37',
-    textAlign: 'center',
-  },
+  // Main keyboard rows
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 8,
-    gap: 5,
+    marginBottom: 5,
+    gap: 3,
   },
   key: {
     backgroundColor: '#334155',
@@ -269,17 +219,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#ffffff',
   },
+  // Bottom row
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 6,
+    marginTop: 4,
     paddingHorizontal: 4,
-    gap: 8,
+    gap: 4,
   },
   arrowKey: {
     backgroundColor: '#475569',
     paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -287,7 +238,6 @@ const styles = StyleSheet.create({
   backspaceKey: {
     backgroundColor: '#ef4444',
     paddingHorizontal: 16,
-    paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -296,7 +246,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#334155',
     marginHorizontal: 4,
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -308,7 +258,7 @@ const styles = StyleSheet.create({
   submitKey: {
     backgroundColor: '#22c55e',
     paddingHorizontal: 28,
-    paddingVertical: 16,
+    paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

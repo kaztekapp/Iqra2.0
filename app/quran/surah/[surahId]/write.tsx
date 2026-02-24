@@ -224,6 +224,7 @@ export default function WritingExerciseScreen() {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [inputAreaY, setInputAreaY] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
+  const innerTapRef = useRef(false);
 
   // Blinking cursor effect
   useEffect(() => {
@@ -490,6 +491,11 @@ export default function WritingExerciseScreen() {
             <Pressable
               style={[styles.textDisplay, isKeyboardVisible && styles.textDisplayFocused]}
               onPress={() => {
+                // Skip if an inner character was tapped (prevents event bubbling conflict)
+                if (innerTapRef.current) {
+                  innerTapRef.current = false;
+                  return;
+                }
                 setIsKeyboardVisible(true);
                 handleTextTap(userInput.length);
               }}
@@ -500,6 +506,7 @@ export default function WritingExerciseScreen() {
                 )}
                 {userInput.split('').map((char, index) => (
                   <Text key={`char-${index}`} onPress={() => {
+                    innerTapRef.current = true;
                     setIsKeyboardVisible(true);
                     handleTextTap(index + 1);
                   }}>
