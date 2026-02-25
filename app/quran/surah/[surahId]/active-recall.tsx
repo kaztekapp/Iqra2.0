@@ -67,6 +67,10 @@ export default function ActiveRecallScreen() {
   // Audio state
   const [audioState, setAudioState] = useState<AudioState>('idle');
   const audioStateRef = useRef<AudioState>('idle');
+  const isMountedRef = useRef(true);
+
+  // Timeout ref for handleRate cleanup
+  const rateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Streak state
   const [sessionStreak, setSessionStreak] = useState(0);
@@ -79,10 +83,12 @@ export default function ActiveRecallScreen() {
     : '';
   const showTajweed = progress.settings.showTajweedColors;
 
-  // Stop audio on unmount
+  // Stop audio and clear rate timeout on unmount
   useEffect(() => {
     return () => {
+      isMountedRef.current = false;
       quranAudioService.stop();
+      if (rateTimeoutRef.current) clearTimeout(rateTimeoutRef.current);
     };
   }, []);
 
@@ -113,15 +119,15 @@ export default function ActiveRecallScreen() {
 
     quranAudioService.playAyah(surah.surahNumber, currentAyah.ayahNumber, {
       onStateChange: (state) => {
-        setAudioState(state);
+        if (isMountedRef.current) setAudioState(state);
         audioStateRef.current = state;
       },
       onComplete: () => {
-        setAudioState('idle');
+        if (isMountedRef.current) setAudioState('idle');
         audioStateRef.current = 'idle';
       },
       onError: () => {
-        setAudioState('idle');
+        if (isMountedRef.current) setAudioState('idle');
         audioStateRef.current = 'idle';
       },
     });
@@ -130,29 +136,31 @@ export default function ActiveRecallScreen() {
   // Generate blank indices for fill-blank mode
   const generatedBlanks = useMemo(() => {
     if (!currentAyah || mode !== 'fill_blank') return [];
-    const indices: number[] = [];
     const words = currentAyah.words;
+    const minBlanks = Math.min(words.length, Math.max(2, Math.ceil(words.length * 0.4)));
+    const indices: number[] = [];
     for (let i = 0; i < words.length; i++) {
       if (Math.random() < 0.50) {
         indices.push(i);
       }
     }
-    // Ensure at least one blank
-    if (indices.length === 0 && words.length > 0) {
-      indices.push(Math.floor(Math.random() * words.length));
+    // Ensure minimum blanks
+    while (indices.length < minBlanks) {
+      const rand = Math.floor(Math.random() * words.length);
+      if (!indices.includes(rand)) indices.push(rand);
     }
     return indices;
   }, [currentAyahIndex, mode, currentAyah?.id, fillBlankSubMode]);
 
   // Sync blankIndices state when generated blanks change
-  useMemo(() => {
+  useEffect(() => {
     setBlankIndices(generatedBlanks);
     setFilledWords({});
     setSelectedBlankIndex(null);
     setIsChecked(false);
   }, [generatedBlanks]);
 
-  // Shuffled word bank for fill-blank (Arabic or translation based on sub-mode)
+  // Shuffled word bank for fill-blank with distractors from nearby ayahs
   const wordBank = useMemo(() => {
     if (!currentAyah || mode !== 'fill_blank') return [];
 
@@ -162,15 +170,36 @@ export default function ActiveRecallScreen() {
       text: isMeaning
         ? (currentAyah.words[i]?.translation ?? '')
         : (currentAyah.words[i]?.text ?? ''),
+      isDistractor: false,
     }));
+
+    // Add distractors from neighboring ayahs
+    const correctTexts = new Set(blankedWords.map((w) => w.text));
+    const distractors: { index: number; text: string; isDistractor: boolean }[] = [];
+    const numDistractors = Math.min(3, Math.max(1, Math.ceil(blankedWords.length * 0.5)));
+
+    for (let offset = 1; offset <= 3 && distractors.length < numDistractors; offset++) {
+      for (const delta of [offset, -offset]) {
+        const neighbor = ayahs[currentAyahIndex + delta];
+        if (!neighbor) continue;
+        for (const word of neighbor.words) {
+          if (distractors.length >= numDistractors) break;
+          const text = isMeaning ? (word.translation ?? '') : (word.text ?? '');
+          if (text && !correctTexts.has(text) && !distractors.some((d) => d.text === text)) {
+            distractors.push({ index: -1, text, isDistractor: true });
+          }
+        }
+      }
+    }
+
     // Fisher-Yates shuffle
-    const shuffled = [...blankedWords];
+    const shuffled = [...blankedWords, ...distractors];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [blankIndices, currentAyah?.id, mode, fillBlankSubMode]);
+  }, [blankIndices, currentAyah?.id, mode, fillBlankSubMode, ayahs, currentAyahIndex]);
 
   // Words that are still available in the bank (not yet placed)
   const availableBank = useMemo(() => {
@@ -246,10 +275,12 @@ export default function ActiveRecallScreen() {
     }
 
     // Advance to next ayah after a short delay
-    setTimeout(() => {
-      if (currentAyahIndex < ayahs.length - 1) {
-        setCurrentAyahIndex((prev) => prev + 1);
-      }
+    if (rateTimeoutRef.current) clearTimeout(rateTimeoutRef.current);
+    rateTimeoutRef.current = setTimeout(() => {
+      setCurrentAyahIndex((prev) => {
+        if (prev < ayahs.length - 1) return prev + 1;
+        return prev;
+      });
       resetState();
     }, 800);
   }, [currentAyah, currentAyahIndex, ayahs.length, surahId, resetState]);
@@ -479,7 +510,8 @@ export default function ActiveRecallScreen() {
           </>
         ) : (
           <>
-            {/* Arabic Fill: Arabic words with blanks */}
+            {/* Arabic Fill: translation hint + Arabic words with blanks */}
+            <Text style={styles.meaningContextTranslation}>{ayahTranslation}</Text>
             <View style={styles.wordRow}>
               {words.map((word, i) => {
                 const isBlanked = blankIndices.includes(i);
@@ -582,11 +614,6 @@ export default function ActiveRecallScreen() {
           </View>
           {renderAudioButton()}
         </View>
-
-        {/* Translation hint before reveal */}
-        {!isRevealed && (
-          <Text style={styles.translationHint}>{ayahTranslation}</Text>
-        )}
 
         <View style={styles.wordRow}>
           {words.slice(0, splitAt).map((word, i) => (
@@ -810,7 +837,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   errorText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 100,
@@ -823,7 +850,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
+    borderBottomColor: '#334155',
   },
   closeButton: {
     padding: 8,
@@ -849,7 +876,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   ayahCounterText: {
-    color: '#6b6b60',
+    color: '#94a3b8',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -891,7 +918,7 @@ const styles = StyleSheet.create({
   modeTabsScroll: {
     maxHeight: 52,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
+    borderBottomColor: '#334155',
   },
   modeTabsContent: {
     paddingHorizontal: 16,
@@ -911,7 +938,7 @@ const styles = StyleSheet.create({
     borderColor: METHOD_COLOR,
   },
   modeTabText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 13,
     fontWeight: '600',
   },
@@ -940,7 +967,7 @@ const styles = StyleSheet.create({
     backgroundColor: `${METHOD_COLOR}25`,
   },
   subModeTabText: {
-    color: '#6b6b60',
+    color: '#94a3b8',
     fontSize: 12,
     fontWeight: '600',
   },
@@ -991,7 +1018,7 @@ const styles = StyleSheet.create({
 
   // Translation hint (shown before reveal)
   translationHint: {
-    color: '#6b6b60',
+    color: '#94a3b8',
     fontSize: 13,
     textAlign: 'center',
     lineHeight: 20,
@@ -1026,7 +1053,7 @@ const styles = StyleSheet.create({
     lineHeight: 48,
   },
   ellipsis: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 28,
     lineHeight: 48,
   },
@@ -1060,7 +1087,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid' as const,
   },
   blankText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 22,
     lineHeight: 36,
     textAlign: 'center',
@@ -1084,7 +1111,7 @@ const styles = StyleSheet.create({
     borderColor: '#334155',
   },
   meaningSlotText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 12,
     textAlign: 'center',
   },
@@ -1101,12 +1128,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   meaningBlankText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 12,
     textAlign: 'center',
   },
   meaningContextTranslation: {
-    color: '#6b6b60',
+    color: '#94a3b8',
     fontSize: 12,
     textAlign: 'center',
     lineHeight: 18,
@@ -1116,7 +1143,7 @@ const styles = StyleSheet.create({
 
   // Instruction text
   instructionText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 13,
     textAlign: 'center',
     marginBottom: 16,
@@ -1152,7 +1179,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   translationText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 14,
     textAlign: 'center',
     lineHeight: 22,
@@ -1191,7 +1218,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   detailExpected: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 12,
     textAlign: 'center',
   },
@@ -1205,7 +1232,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#334155',
   },
   wordBankLabel: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 12,
     fontWeight: '600',
     textTransform: 'uppercase',
@@ -1290,7 +1317,7 @@ const styles = StyleSheet.create({
     writingDirection: 'rtl',
   },
   breakdownWordTranslit: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 11,
     fontStyle: 'italic',
     marginBottom: 2,
@@ -1367,7 +1394,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 14,
     borderTopWidth: 1,
-    borderTopColor: '#1e293b',
+    borderTopColor: '#334155',
   },
   navButton: {
     width: 44,
@@ -1383,7 +1410,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   navCounter: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 14,
     fontWeight: '600',
   },

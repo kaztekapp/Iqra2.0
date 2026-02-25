@@ -6,17 +6,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
-      }
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
-      "env": {
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
-      },
       "android": {
         "credentialsSource": "remote",
         "buildType": "apk"

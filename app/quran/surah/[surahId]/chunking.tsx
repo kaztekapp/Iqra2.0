@@ -128,6 +128,8 @@ export default function ChunkingScreen() {
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
   const language = useSettingsStore((s) => s.language);
 
+  const isMountedRef = useRef(true);
+
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [audioState, setAudioState] = useState<AudioState>('idle');
@@ -163,6 +165,7 @@ export default function ChunkingScreen() {
   // Stop audio on unmount or ayah change
   useEffect(() => {
     return () => {
+      isMountedRef.current = false;
       quranAudioService.stop();
     };
   }, []);
@@ -194,15 +197,15 @@ export default function ChunkingScreen() {
 
     quranAudioService.playAyah(surah.surahNumber, currentAyah.ayahNumber, {
       onStateChange: (state) => {
-        setAudioState(state);
+        if (isMountedRef.current) setAudioState(state);
         audioStateRef.current = state;
       },
       onComplete: () => {
-        setAudioState('idle');
+        if (isMountedRef.current) setAudioState('idle');
         audioStateRef.current = 'idle';
       },
       onError: () => {
-        setAudioState('idle');
+        if (isMountedRef.current) setAudioState('idle');
         audioStateRef.current = 'idle';
       },
     });
@@ -255,7 +258,7 @@ export default function ChunkingScreen() {
     if (currentStepIndex >= steps.length && steps.length > 0) {
       setCurrentStepIndex(steps.length - 1);
     }
-  }, [steps.length, currentStepIndex]);
+  }, [steps.length]);
 
   // ============ Step label ============
 

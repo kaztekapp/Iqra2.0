@@ -2,7 +2,6 @@ import React, { Component, type ErrorInfo, type ReactNode } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Updates from 'expo-updates';
-import * as Sentry from '@sentry/react-native';
 import i18n from 'i18next';
 
 interface Props {
@@ -21,10 +20,7 @@ export class AppErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    __DEV__ && console.error('[ErrorBoundary] Caught error:', error.message);
-    Sentry.captureException(error, {
-      contexts: { react: { componentStack: info.componentStack ?? undefined } },
-    });
+    __DEV__ && console.error('[ErrorBoundary] Caught error:', error.message, info.componentStack);
   }
 
   handleRestart = async () => {

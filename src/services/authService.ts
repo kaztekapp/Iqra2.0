@@ -8,12 +8,11 @@ function getClient() {
 
 /** Race a promise against a timeout. Throws on timeout. */
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Network timeout. Please check your connection.')), ms),
-    ),
-  ]);
+  let timeoutId: ReturnType<typeof setTimeout>;
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error('Network timeout. Please check your connection.')), ms);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
 }
 
 const AUTH_TIMEOUT = 15_000;
@@ -52,6 +51,9 @@ export async function signInWithGoogle() {
         webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
         iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
       });
+    }).catch((err) => {
+      googleConfigurePromise = null;
+      throw err;
     });
   }
   await googleConfigurePromise;
@@ -118,7 +120,7 @@ export async function signOut() {
 export async function resetPassword(email: string) {
   const { error } = await withTimeout(
     getClient().auth.resetPasswordForEmail(email, {
-      redirectTo: 'iqra2://reset-password',
+      redirectTo: 'https://kaztekapp.github.io/iqra-legal/reset-password.html',
     }),
     AUTH_TIMEOUT,
   );
@@ -131,6 +133,13 @@ export async function updatePassword(newPassword: string) {
     AUTH_TIMEOUT,
   );
   if (error) throw error;
+}
+
+export async function deleteAccount() {
+  const client = getClient();
+  const { error } = await client.rpc('delete_own_account');
+  if (error) throw error;
+  useSettingsStore.getState().setSession(null);
 }
 
 export async function getSession() {

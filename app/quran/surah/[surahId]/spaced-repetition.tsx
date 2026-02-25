@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
@@ -45,6 +45,13 @@ export default function SpacedRepetitionScreen() {
   const [sessionRatings, setSessionRatings] = useState<number[]>([]);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const rateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (rateTimeoutRef.current) clearTimeout(rateTimeoutRef.current);
+    };
+  }, []);
 
   // Initialize session: find due reviews or auto-schedule learned ayahs
   useEffect(() => {
@@ -105,7 +112,8 @@ export default function SpacedRepetitionScreen() {
     setLastRatingInfo({ days });
 
     // Show interval briefly, then advance
-    setTimeout(() => {
+    if (rateTimeoutRef.current) clearTimeout(rateTimeoutRef.current);
+    rateTimeoutRef.current = setTimeout(() => {
       setLastRatingInfo(null);
       setIsRevealed(false);
 

@@ -20,12 +20,30 @@ const METHOD_COLOR = '#3b82f6';
 
 // ============ Anchor Word Chip ============
 
-function AnchorChip({ anchor, index }: { anchor: AnchorWord; index: number }) {
+function AnchorChip({ anchor, index, hidden, onReveal }: { anchor: AnchorWord; index: number; hidden?: boolean; onReveal?: () => void }) {
+  if (hidden) {
+    return (
+      <Pressable style={styles.hiddenAnchorChip} onPress={onReveal} accessibilityRole="button" accessibilityLabel={`Reveal word ${index}`}>
+        <Text style={styles.hiddenAnchorIndex}>{index}</Text>
+        <Ionicons name="eye-off-outline" size={22} color="#64748b" />
+        <Text style={styles.hiddenAnchorLabel}>Tap to reveal</Text>
+      </Pressable>
+    );
+  }
+  if (onReveal) {
+    return (
+      <Pressable style={styles.anchorChip} onPress={onReveal} accessibilityRole="button" accessibilityLabel={`Hide word ${index}`}>
+        <Text style={styles.anchorIndex}>{index}</Text>
+        <Text style={styles.anchorArabic}>{anchor.arabic}</Text>
+        <Text style={styles.anchorMeaning} numberOfLines={2}>{anchor.meaning}</Text>
+      </Pressable>
+    );
+  }
   return (
     <View style={styles.anchorChip}>
       <Text style={styles.anchorIndex}>{index}</Text>
       <Text style={styles.anchorArabic}>{anchor.arabic}</Text>
-      <Text style={styles.anchorMeaning}>{anchor.meaning}</Text>
+      <Text style={styles.anchorMeaning} numberOfLines={2}>{anchor.meaning}</Text>
     </View>
   );
 }
@@ -44,6 +62,7 @@ export default function VisualizationScreen() {
   const [vizMode, setVizMode] = useState<VisualizationMode>('study');
   const [isAyahRevealed, setIsAyahRevealed] = useState(false);
   const [sceneMemorized, setSceneMemorized] = useState(false);
+  const [revealedAnchors, setRevealedAnchors] = useState<Set<number>>(new Set());
 
   const currentAyah = ayahs[currentAyahIndex];
   const totalAyahs = ayahs.length;
@@ -58,7 +77,7 @@ export default function VisualizationScreen() {
   const scene = useMemo(() => {
     if (!currentAyah) return null;
     return buildAyahScene(currentAyah);
-  }, [currentAyah]);
+  }, [currentAyah?.id]);
 
   const dominantColor = scene?.dominantColor ?? '#a3a398';
 
@@ -118,6 +137,7 @@ export default function VisualizationScreen() {
     }
     setIsAyahRevealed(false);
     setSceneMemorized(false);
+    setRevealedAnchors(new Set());
   };
 
   const handlePrevAyah = () => {
@@ -125,6 +145,7 @@ export default function VisualizationScreen() {
       setCurrentAyahIndex((prev) => prev - 1);
       setIsAyahRevealed(false);
       setSceneMemorized(false);
+      setRevealedAnchors(new Set());
     }
   };
 
@@ -133,11 +154,24 @@ export default function VisualizationScreen() {
       setCurrentAyahIndex((prev) => prev + 1);
       setIsAyahRevealed(false);
       setSceneMemorized(false);
+      setRevealedAnchors(new Set());
     }
   };
 
+  const handleToggleAnchor = (index: number) => {
+    setRevealedAnchors((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
   // The dominant element — one icon per room
-  const mainElement = scene.elements[0];
+  const mainElement = scene?.elements?.[0];
 
   // ---- Render ----
 
@@ -173,6 +207,7 @@ export default function VisualizationScreen() {
               setVizMode('study');
               setIsAyahRevealed(false);
               setSceneMemorized(false);
+              setRevealedAnchors(new Set());
             }}
             accessibilityRole="button"
             accessibilityLabel={t('visualization.modeStudy')}
@@ -180,7 +215,7 @@ export default function VisualizationScreen() {
             <Ionicons
               name="book-outline"
               size={16}
-              color={vizMode === 'study' ? '#ffffff' : '#a3a398'}
+              color={vizMode === 'study' ? '#ffffff' : '#94a3b8'}
             />
             <Text style={[styles.modePillText, vizMode === 'study' && styles.modePillTextActive]}>
               {t('visualization.modeStudy')}
@@ -192,6 +227,7 @@ export default function VisualizationScreen() {
               setVizMode('review');
               setIsAyahRevealed(false);
               setSceneMemorized(false);
+              setRevealedAnchors(new Set());
             }}
             accessibilityRole="button"
             accessibilityLabel={t('visualization.modeReview')}
@@ -199,7 +235,7 @@ export default function VisualizationScreen() {
             <Ionicons
               name="refresh-outline"
               size={16}
-              color={vizMode === 'review' ? '#ffffff' : '#a3a398'}
+              color={vizMode === 'review' ? '#ffffff' : '#94a3b8'}
             />
             <Text style={[styles.modePillText, vizMode === 'review' && styles.modePillTextActive]}>
               {t('visualization.modeReview')}
@@ -227,16 +263,19 @@ export default function VisualizationScreen() {
           </View>
 
           {/* Single Room Icon */}
-          <View style={styles.roomIconArea}>
-            <View style={[styles.roomIconCircle, { backgroundColor: mainElement.color + '15', borderColor: mainElement.color + '25' }]}>
-              <Text style={styles.roomIconEmoji}>{mainElement.emoji}</Text>
-              <Ionicons name={mainElement.ionicon as any} size={22} color={mainElement.color} style={{ marginTop: 4 }} />
-              <Text style={[styles.roomIconLabel, { color: mainElement.color }]}>{mainElement.label}</Text>
+          {mainElement && (
+            <View style={styles.roomIconArea}>
+              <View style={[styles.roomIconCircle, { backgroundColor: mainElement.color + '15', borderColor: mainElement.color + '25' }]}>
+                <Text style={styles.roomIconEmoji}>{mainElement.emoji}</Text>
+                <Ionicons name={mainElement.ionicon as any} size={22} color={mainElement.color} style={{ marginTop: 4 }} />
+                <Text style={[styles.roomIconLabel, { color: mainElement.color }]}>{mainElement.label}</Text>
+              </View>
             </View>
-          </View>
+          )}
 
           {/* Memory Anchors */}
-          {scene.anchorWords.length > 0 && (
+          {/* Study mode: show anchors */}
+          {scene.anchorWords.length > 0 && vizMode === 'study' && (
             <View style={styles.anchorsSection}>
               <View style={[styles.anchorsDivider, { backgroundColor: dominantColor + '30' }]} />
               <Text style={styles.anchorsTitle}>{t('visualization.memoryAnchors')}</Text>
@@ -247,9 +286,33 @@ export default function VisualizationScreen() {
               </View>
             </View>
           )}
+
+          {/* Review mode: tap each chip to reveal */}
+          {scene.anchorWords.length > 0 && vizMode === 'review' && (
+            <View style={styles.anchorsSection}>
+              <View style={[styles.anchorsDivider, { backgroundColor: dominantColor + '30' }]} />
+              <Text style={styles.anchorsTitle}>{t('visualization.memoryAnchors')}</Text>
+              <View style={styles.anchorsRow}>
+                {scene.anchorWords.map((anchor, i) => (
+                  <AnchorChip
+                    key={`anchor-${i}`}
+                    anchor={anchor}
+                    index={i + 1}
+                    hidden={!revealedAnchors.has(i)}
+                    onReveal={() => handleToggleAnchor(i)}
+                  />
+                ))}
+              </View>
+              {revealedAnchors.size > 0 && revealedAnchors.size < scene.anchorWords.length && (
+                <Text style={styles.revealProgress}>
+                  {revealedAnchors.size}/{scene.anchorWords.length} revealed
+                </Text>
+              )}
+            </View>
+          )}
         </View>
 
-        {/* Ayah Text — Study mode shows it, Review mode hides until revealed */}
+        {/* Ayah Text — Study mode shows full, Review mode shows ayah to help recall anchors */}
         {vizMode === 'study' && (
           <View style={[styles.ayahTextContainer, { borderLeftColor: dominantColor }]}>
             <View style={styles.ayahTextContent}>
@@ -267,7 +330,7 @@ export default function VisualizationScreen() {
           </View>
         )}
 
-        {vizMode === 'review' && isAyahRevealed && (
+        {vizMode === 'review' && (
           <View style={[styles.ayahTextContainer, { borderLeftColor: dominantColor }]}>
             <View style={styles.ayahTextContent}>
               <TajweedText
@@ -300,24 +363,16 @@ export default function VisualizationScreen() {
           </Pressable>
         )}
 
-        {vizMode === 'review' && !isAyahRevealed && (
-          <>
-            <View style={styles.instructionCard}>
-              <Ionicons name="bulb-outline" size={20} color={METHOD_COLOR} />
-              <Text style={styles.instructionText}>
-                {t('visualization.reviewInstruction')}
-              </Text>
-            </View>
-            <Pressable style={styles.actionButton} onPress={handleReveal}>
-              <Ionicons name="eye-outline" size={20} color="#ffffff" />
-              <Text style={styles.actionButtonText}>
-                {t('visualization.showAyah')}
-              </Text>
-            </Pressable>
-          </>
+        {vizMode === 'review' && revealedAnchors.size < (scene?.anchorWords.length ?? 0) && (
+          <View style={styles.instructionCard}>
+            <Ionicons name="hand-left-outline" size={20} color={METHOD_COLOR} />
+            <Text style={styles.instructionText}>
+              {t('visualization.reviewInstruction', 'Tap each card to reveal the word. Try to recall before tapping!')}
+            </Text>
+          </View>
         )}
 
-        {vizMode === 'review' && isAyahRevealed && (
+        {vizMode === 'review' && revealedAnchors.size === (scene?.anchorWords.length ?? 0) && (scene?.anchorWords.length ?? 0) > 0 && (
           <View style={styles.ratingSection}>
             <Text style={styles.ratingTitle}>{t('visualization.rateRecall')}</Text>
             <View style={styles.ratingButtons}>
@@ -365,7 +420,7 @@ export default function VisualizationScreen() {
           <Ionicons
             name="chevron-back"
             size={20}
-            color={currentAyahIndex === 0 ? '#3a3a32' : '#f5f5f0'}
+            color={currentAyahIndex === 0 ? '#475569' : '#f5f5f0'}
           />
           <Text
             style={[styles.navButtonText, currentAyahIndex === 0 && styles.navButtonTextDisabled]}
@@ -395,7 +450,7 @@ export default function VisualizationScreen() {
           <Ionicons
             name="chevron-forward"
             size={20}
-            color={currentAyahIndex >= totalAyahs - 1 ? '#3a3a32' : '#f5f5f0'}
+            color={currentAyahIndex >= totalAyahs - 1 ? '#475569' : '#f5f5f0'}
           />
         </Pressable>
       </View>
@@ -408,10 +463,10 @@ export default function VisualizationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0d0d0a',
+    backgroundColor: '#0f172a',
   },
   errorText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 40,
@@ -422,7 +477,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loadingText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 16,
     marginTop: 16,
   },
@@ -438,7 +493,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -458,12 +513,12 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   ayahCounter: {
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#2a2a24',
+    borderColor: '#334155',
   },
   ayahCounterText: {
     color: '#f5f5f0',
@@ -478,11 +533,11 @@ const styles = StyleSheet.create({
   },
   modeToggle: {
     flexDirection: 'row',
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     borderRadius: 14,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#2a2a24',
+    borderColor: '#334155',
   },
   modePill: {
     flex: 1,
@@ -497,7 +552,7 @@ const styles = StyleSheet.create({
     backgroundColor: METHOD_COLOR,
   },
   modePillText: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 14,
     fontWeight: '600',
   },
@@ -517,10 +572,10 @@ const styles = StyleSheet.create({
 
   // Room Card — the spatial container
   roomCard: {
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#2a2a24',
+    borderColor: '#334155',
     borderTopWidth: 3,
     overflow: 'hidden',
   },
@@ -535,7 +590,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   roomLabel: {
-    color: '#6b6b60',
+    color: '#94a3b8',
     fontSize: 13,
     fontWeight: '500',
     marginTop: 2,
@@ -575,7 +630,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   anchorsTitle: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',
@@ -587,39 +642,75 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    rowGap: 6,
-    columnGap: 5,
+    rowGap: 10,
+    columnGap: 10,
   },
 
-  // Anchor Chip — compact word-by-word display
+  // Anchor Chip — clean word-by-word display
   anchorChip: {
-    backgroundColor: '#161613',
-    borderRadius: 10,
+    backgroundColor: '#0f172a',
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#2a2a24',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    borderColor: '#334155',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     alignItems: 'center',
-    minWidth: 52,
-    maxWidth: 90,
+    justifyContent: 'center',
+    flexBasis: '30%',
+    flexGrow: 1,
+    minHeight: 90,
   },
   anchorIndex: {
-    color: '#6b6b60',
-    fontSize: 8,
+    color: '#64748b',
+    fontSize: 9,
     fontWeight: '700',
-    marginBottom: 1,
+    marginBottom: 3,
   },
   anchorArabic: {
     color: '#D4AF37',
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: '700',
-    marginBottom: 1,
+    marginBottom: 4,
   },
   anchorMeaning: {
-    color: '#a3a398',
+    color: '#94a3b8',
+    fontSize: 11,
+    fontWeight: '500',
+    textAlign: 'center',
+    lineHeight: 15,
+  },
+  hiddenAnchorChip: {
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
+    borderStyle: 'dashed',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexBasis: '30%',
+    flexGrow: 1,
+    minHeight: 90,
+  },
+  hiddenAnchorIndex: {
+    color: '#64748b',
     fontSize: 9,
+    fontWeight: '700',
+    marginBottom: 3,
+  },
+  hiddenAnchorLabel: {
+    color: '#475569',
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+  revealProgress: {
+    color: '#94a3b8',
+    fontSize: 13,
     fontWeight: '600',
     textAlign: 'center',
+    marginTop: 8,
   },
 
   // Ayah Text
@@ -627,7 +718,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderLeftWidth: 4,
     borderRadius: 12,
-    backgroundColor: '#1e1e1a',
+    backgroundColor: '#1e293b',
     paddingLeft: 16,
     paddingRight: 16,
     paddingVertical: 16,
@@ -636,14 +727,14 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   transliteration: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 14,
     fontStyle: 'italic',
     textAlign: 'center',
     lineHeight: 22,
   },
   translation: {
-    color: '#a3a398',
+    color: '#cbd5e1',
     fontSize: 14,
     textAlign: 'center',
     lineHeight: 22,
@@ -732,8 +823,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 14,
     borderTopWidth: 1,
-    borderTopColor: '#2a2a24',
-    backgroundColor: '#0d0d0a',
+    borderTopColor: '#334155',
+    backgroundColor: '#0f172a',
   },
   navButton: {
     flexDirection: 'row',
@@ -751,6 +842,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   navButtonTextDisabled: {
-    color: '#3a3a32',
+    color: '#475569',
   },
 });

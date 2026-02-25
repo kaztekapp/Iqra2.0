@@ -1,6 +1,5 @@
 import "../global.css";
 import '../src/i18n';
-import * as Sentry from '@sentry/react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -19,22 +18,13 @@ import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supab
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 
-Sentry.init({
-  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-  enabled: !__DEV__,
-  tracesSampleRate: 0.2,
-  sendDefaultPii: false,
-});
-
 export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
-SplashScreen.preventAutoHideAsync().catch((e) => {
-  Sentry.captureException(e);
-});
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
   const { i18n } = useTranslation();
@@ -81,8 +71,8 @@ export default function RootLayout() {
             ]
           );
         }
-      } catch (e: any) {
-        Sentry.captureException(e);
+      } catch {
+        // OTA update check failed silently
       }
     })();
   }, []);
@@ -90,8 +80,8 @@ export default function RootLayout() {
   // Set Android navigation bar color to match tab bar
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#1e293b').catch((e) => Sentry.captureException(e));
-      NavigationBar.setButtonStyleAsync('light').catch((e) => Sentry.captureException(e));
+      NavigationBar.setBackgroundColorAsync('#1e293b').catch(() => {});
+      NavigationBar.setButtonStyleAsync('light').catch(() => {});
     }
   }, []);
 
@@ -120,8 +110,7 @@ export default function RootLayout() {
       if (session) {
         supabase!.auth.startAutoRefresh();
       }
-    }).catch((e) => {
-      Sentry.captureException(e);
+    }).catch(() => {
       clearTimeout(timeout);
       setAuthReady(true);
     });
@@ -220,7 +209,7 @@ export default function RootLayout() {
 
   const onLayoutRootView = useCallback(() => {
     if (appReady) {
-      SplashScreen.hideAsync().catch((e) => Sentry.captureException(e));
+      SplashScreen.hideAsync().catch(() => {});
       quranAudioService.warmUp();
       adService.initialize();
       iapService.initialize();

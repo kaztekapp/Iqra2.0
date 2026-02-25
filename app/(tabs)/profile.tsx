@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { ACHIEVEMENTS, Achievement } from '../../src/data/achievements';
 import { useSettingsStore } from '../../src/stores/settingsStore';
-import { signOut } from '../../src/services/authService';
+import { signOut, deleteAccount } from '../../src/services/authService';
 import { getProfile, upsertProfile } from '../../src/services/profileService';
 import { useRouter, Href } from 'expo-router';
 import { useAdStore } from '../../src/stores/adStore';
@@ -53,6 +53,50 @@ export default function ProfileScreen() {
     );
   };
 
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Profile',
+      'Are you sure you want to permanently delete your profile and all associated data? This action cannot be undone.',
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: 'Delete Profile',
+          style: 'destructive',
+          onPress: () => {
+            Alert.alert(
+              'Final Confirmation',
+              'This will permanently delete your profile, progress, and all data. Are you absolutely sure?',
+              [
+                { text: t('common.cancel'), style: 'cancel' },
+                {
+                  text: 'Delete Forever',
+                  style: 'destructive',
+                  onPress: async () => {
+                    setIsDeletingAccount(true);
+                    try {
+                      await deleteAccount();
+                    } catch (e: any) {
+                      Alert.alert(t('common.error') || 'Error', e.message || 'Could not delete account. Please try again.');
+                      setIsDeletingAccount(false);
+                      return;
+                    }
+                    try {
+                      resetProgress();
+                    } finally {
+                      setIsDeletingAccount(false);
+                    }
+                  },
+                },
+              ]
+            );
+          },
+        },
+      ]
+    );
+  };
+
   // Remove Ads / Premium
   const isPremium = useAdStore((s) => s.isPremium);
   const [isPurchasing, setIsPurchasing] = useState(false);
@@ -61,9 +105,11 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     if (ENABLE_ADS && !isPremium) {
+      let isMounted = true;
       iapService.getRemoveAdsProduct().then((product) => {
-        if (product) setRemoveAdsPrice(product.displayPrice);
-      });
+        if (isMounted && product) setRemoveAdsPrice(product.displayPrice);
+      }).catch(() => {});
+      return () => { isMounted = false; };
     }
   }, [isPremium]);
 
@@ -104,11 +150,13 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     if (user?.id) {
+      let isMounted = true;
       getProfile(user.id)
         .then((profile) => {
-          if (profile?.display_name) setDisplayName(profile.display_name);
+          if (isMounted && profile?.display_name) setDisplayName(profile.display_name);
         })
         .catch(() => {});
+      return () => { isMounted = false; };
     }
   }, [user?.id]);
 
@@ -548,6 +596,28 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
+        {/* Delete Profile */}
+        {isAuthenticated && (
+          <View style={styles.section}>
+            <Pressable
+              style={styles.deleteAccountButton}
+              onPress={handleDeleteAccount}
+              disabled={isDeletingAccount}
+              accessibilityRole="button"
+              accessibilityLabel="Delete Profile"
+            >
+              {isDeletingAccount ? (
+                <ActivityIndicator size="small" color="#ef4444" />
+              ) : (
+                <>
+                  <Ionicons name="trash-outline" size={20} color="#ef4444" />
+                  <Text style={styles.deleteAccountButtonText}>Delete Profile</Text>
+                </>
+              )}
+            </Pressable>
+          </View>
+        )}
+
         <View style={{ height: 100 }} />
       </ScrollView>
 
@@ -820,6 +890,22 @@ const styles = StyleSheet.create({
   },
   logOutButtonText: {
     color: '#f59e0b',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  deleteAccountButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#ef444440',
+    gap: 8,
+  },
+  deleteAccountButtonText: {
+    color: '#ef4444',
     fontSize: 15,
     fontWeight: '600',
   },

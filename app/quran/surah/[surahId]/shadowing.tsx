@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator } from
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
@@ -21,6 +21,8 @@ export default function ShadowingScreen() {
   const { ayahs, isLoading } = useQuranSurah(surahId);
   const { markAyahLearned, updateReviewItem, scheduleReview, isAyahLearned } = useQuranStore();
 
+  const isMountedRef = useRef(true);
+
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [phase, setPhase] = useState<ShadowPhase>('listen');
   const [audioState, setAudioState] = useState<AudioState>('idle');
@@ -29,15 +31,11 @@ export default function ShadowingScreen() {
   const currentAyah = ayahs[currentAyahIndex];
   const totalAyahs = ayahs.length;
 
-  // Auto-play audio when phase changes to listen or shadow
+  // Reset state when phase or ayah changes (no auto-play)
   useEffect(() => {
     if (!currentAyah || !surah) return;
-    if (phase === 'listen' || phase === 'shadow') {
-      setPhaseComplete(false);
-      playAudio();
-    }
+    setPhaseComplete(false);
     if (phase === 'solo') {
-      setPhaseComplete(false);
       quranAudioService.stop();
     }
   }, [phase, currentAyahIndex]);
@@ -45,6 +43,7 @@ export default function ShadowingScreen() {
   // Cleanup audio on unmount
   useEffect(() => {
     return () => {
+      isMountedRef.current = false;
       quranAudioService.stop();
     };
   }, []);
@@ -54,14 +53,16 @@ export default function ShadowingScreen() {
     quranAudioService.playAyah(surah.surahNumber, currentAyah.ayahNumber, {
       rate: 0.75,
       onStateChange: (state: AudioState) => {
-        setAudioState(state);
+        if (isMountedRef.current) setAudioState(state);
       },
       onComplete: () => {
-        setAudioState('idle');
-        setPhaseComplete(true);
+        if (isMountedRef.current) {
+          setAudioState('idle');
+          setPhaseComplete(true);
+        }
       },
       onError: () => {
-        setAudioState('idle');
+        if (isMountedRef.current) setAudioState('idle');
       },
     });
   };
@@ -188,7 +189,16 @@ export default function ShadowingScreen() {
           const isActive = index === currentPhaseIndex;
           const isCompleted = index < currentPhaseIndex;
           return (
-            <View key={p} style={styles.phaseStep}>
+            <Pressable
+              key={p}
+              style={styles.phaseStep}
+              onPress={() => {
+                quranAudioService.stop();
+                setPhase(p);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={p}
+            >
               <View
                 style={[
                   styles.phaseDot,
@@ -213,7 +223,7 @@ export default function ShadowingScreen() {
                   ? t('shadowing.phaseShadowTitle')
                   : t('shadowing.phaseSoloTitle')}
               </Text>
-            </View>
+            </Pressable>
           );
         })}
       </View>
@@ -255,29 +265,25 @@ export default function ShadowingScreen() {
           </View>
         )}
 
-        {/* Phase Instruction */}
-        <View style={styles.instructionCard}>
-          <Ionicons
-            name={
-              phase === 'listen'
-                ? audioState === 'playing'
-                  ? 'volume-high'
-                  : 'play-circle-outline'
-                : phase === 'shadow'
-                ? 'mic-outline'
-                : 'person-outline'
-            }
-            size={24}
-            color={METHOD_COLOR}
-          />
-          <Text style={styles.instructionText}>{getPhaseInstruction()}</Text>
-        </View>
-
-        {/* Audio play button for listen/shadow when idle */}
-        {(phase === 'listen' || phase === 'shadow') && audioState === 'idle' && !phaseComplete && (
-          <Pressable style={styles.playButton} onPress={playAudio}>
-            <Ionicons name="play" size={28} color="#fff" />
+        {/* Phase Instruction — tappable to play audio in listen/shadow */}
+        {(phase === 'listen' || phase === 'shadow') ? (
+          <Pressable
+            style={styles.instructionCard}
+            onPress={audioState === 'idle' ? playAudio : undefined}
+            disabled={audioState !== 'idle'}
+          >
+            <Ionicons
+              name={audioState === 'playing' ? 'volume-high' : 'play-circle-outline'}
+              size={24}
+              color={METHOD_COLOR}
+            />
+            <Text style={styles.instructionText}>{getPhaseInstruction()}</Text>
           </Pressable>
+        ) : (
+          <View style={styles.instructionCard}>
+            <Ionicons name="person-outline" size={24} color={METHOD_COLOR} />
+            <Text style={styles.instructionText}>{getPhaseInstruction()}</Text>
+          </View>
         )}
 
         {/* Loading indicator */}
