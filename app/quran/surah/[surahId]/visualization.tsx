@@ -10,6 +10,7 @@ import { useQuranStore } from '../../../../src/stores/quranStore';
 import { useAyahTranslations } from '../../../../src/hooks/useAyahTranslations';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { ReviewRating } from '../../../../src/types/quran';
+import { buildAyahScene, AnchorWord } from '../../../../src/utils/sceneBuilder';
 
 // ============ Types & Constants ============
 
@@ -17,40 +18,16 @@ type VisualizationMode = 'study' | 'review';
 
 const METHOD_COLOR = '#3b82f6';
 
-interface SceneTheme {
-  icon: string;
-  nameKey: string;
-  color: string;
-  rootPatterns: string[];
-}
+// ============ Anchor Word Chip ============
 
-const SCENE_THEMES: SceneTheme[] = [
-  { icon: '\u2728', nameKey: 'visualization.themeDivine', color: '#D4AF37', rootPatterns: ['\u0627\u0644\u0644\u0647', '\u0631\u0628', '\u0625\u0644\u0647'] },
-  { icon: '\uD83D\uDC9A', nameKey: 'visualization.themeMercy', color: '#10b981', rootPatterns: ['\u0631\u062D\u0645', '\u0631\u062D\u064A\u0645', '\u0631\u062D\u0645\u0646'] },
-  { icon: '\uD83C\uDF0C', nameKey: 'visualization.themeSky', color: '#3b82f6', rootPatterns: ['\u0633\u0645\u0627\u0621', '\u0633\u0645\u0627\u0648\u0627\u062A'] },
-  { icon: '\uD83D\uDCA7', nameKey: 'visualization.themeWater', color: '#06b6d4', rootPatterns: ['\u0645\u0627\u0621', '\u0628\u062D\u0631', '\u0646\u0647\u0631'] },
-  { icon: '\u2600\uFE0F', nameKey: 'visualization.themeLight', color: '#f59e0b', rootPatterns: ['\u0646\u0648\u0631', '\u0634\u0645\u0633', '\u0636\u0648\u0621'] },
-  { icon: '\uD83C\uDF0D', nameKey: 'visualization.themeEarth', color: '#84cc16', rootPatterns: ['\u0627\u0631\u0636', '\u0623\u0631\u0636'] },
-  { icon: '\uD83D\uDD25', nameKey: 'visualization.themeFire', color: '#ef4444', rootPatterns: ['\u0646\u0627\u0631', '\u062C\u0647\u0646\u0645'] },
-  { icon: '\uD83C\uDF33', nameKey: 'visualization.themeGarden', color: '#22c55e', rootPatterns: ['\u062C\u0646\u0629', '\u062C\u0646\u0627\u062A', '\u0634\u062C\u0631'] },
-  { icon: '\uD83D\uDCD6', nameKey: 'visualization.themeBook', color: '#a855f7', rootPatterns: ['\u0643\u062A\u0627\u0628', '\u0642\u0631\u0622\u0646', '\u0622\u064A\u0629'] },
-  { icon: '\uD83E\uDD32', nameKey: 'visualization.themePrayer', color: '#14b8a6', rootPatterns: ['\u0635\u0644\u0627\u0629', '\u0635\u0644\u0648', '\u0639\u0628\u062F'] },
-];
-
-const DEFAULT_THEME: SceneTheme = {
-  icon: '\uD83D\uDCDC',
-  nameKey: 'visualization.themeVerse',
-  color: '#64748b',
-  rootPatterns: [],
-};
-
-function getAyahTheme(ayahText: string): SceneTheme {
-  for (const theme of SCENE_THEMES) {
-    for (const pattern of theme.rootPatterns) {
-      if (ayahText.includes(pattern)) return theme;
-    }
-  }
-  return DEFAULT_THEME;
+function AnchorChip({ anchor, index }: { anchor: AnchorWord; index: number }) {
+  return (
+    <View style={styles.anchorChip}>
+      <Text style={styles.anchorIndex}>{index}</Text>
+      <Text style={styles.anchorArabic}>{anchor.arabic}</Text>
+      <Text style={styles.anchorMeaning}>{anchor.meaning}</Text>
+    </View>
+  );
 }
 
 // ============ Component ============
@@ -77,10 +54,13 @@ export default function VisualizationScreen() {
       || currentAyah.words.map(w => w.translation).join(' ')
     : '';
 
-  const currentTheme = useMemo(() => {
-    if (!currentAyah) return DEFAULT_THEME;
-    return getAyahTheme(currentAyah.textUthmani);
+  // Build the scene for the current ayah
+  const scene = useMemo(() => {
+    if (!currentAyah) return null;
+    return buildAyahScene(currentAyah);
   }, [currentAyah]);
+
+  const dominantColor = scene?.dominantColor ?? '#a3a398';
 
   // ---- Guards ----
 
@@ -103,7 +83,7 @@ export default function VisualizationScreen() {
     );
   }
 
-  if (!currentAyah) {
+  if (!currentAyah || !scene) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.errorText}>{t('common.notFound')}</Text>
@@ -155,6 +135,9 @@ export default function VisualizationScreen() {
       setSceneMemorized(false);
     }
   };
+
+  // The dominant element — one icon per room
+  const mainElement = scene.elements[0];
 
   // ---- Render ----
 
@@ -231,56 +214,79 @@ export default function VisualizationScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Scene Card */}
-        <View style={[styles.sceneCard, { borderTopColor: currentTheme.color }]}>
-          {/* Scene Icon */}
-          <Text style={styles.sceneIcon}>{currentTheme.icon}</Text>
-          <Text style={[styles.sceneThemeName, { color: currentTheme.color }]}>
-            {t(currentTheme.nameKey)}
-          </Text>
-          <Text style={styles.sceneRoomLabel}>
-            {t('visualization.room', { number: currentAyahIndex + 1 })}
-          </Text>
+        {/* Room Card — Spatial Loci */}
+        <View style={[styles.roomCard, { borderTopColor: dominantColor }]}>
+          {/* Room header */}
+          <View style={styles.roomHeader}>
+            <Text style={[styles.sceneSummary, { color: dominantColor }]}>
+              {scene.sceneSummary}
+            </Text>
+            <Text style={styles.roomLabel}>
+              {t('visualization.room', { number: currentAyahIndex + 1 })} — {t('activeRecall.ayahNumber', { number: currentAyah.ayahNumber })}
+            </Text>
+          </View>
 
-          {/* Ayah Text Area */}
-          {vizMode === 'study' && (
-            <View style={[styles.ayahTextContainer, { borderLeftColor: currentTheme.color }]}>
-              <View style={styles.ayahTextContent}>
-                <TajweedText
-                  text={currentAyah.textUthmani}
-                  tajweedRules={currentAyah.tajweedRules}
-                  showTajweed={progress.settings.showTajweedColors}
-                  fontSize={24}
-                />
-                {currentAyah.transliteration && (
-                  <Text style={styles.transliteration}>{currentAyah.transliteration}</Text>
-                )}
-                <Text style={styles.translation}>{ayahTranslation}</Text>
-              </View>
+          {/* Single Room Icon */}
+          <View style={styles.roomIconArea}>
+            <View style={[styles.roomIconCircle, { backgroundColor: mainElement.color + '15', borderColor: mainElement.color + '25' }]}>
+              <Text style={styles.roomIconEmoji}>{mainElement.emoji}</Text>
+              <Ionicons name={mainElement.ionicon as any} size={22} color={mainElement.color} style={{ marginTop: 4 }} />
+              <Text style={[styles.roomIconLabel, { color: mainElement.color }]}>{mainElement.label}</Text>
             </View>
-          )}
+          </View>
 
-          {vizMode === 'review' && isAyahRevealed && (
-            <View style={[styles.ayahTextContainer, { borderLeftColor: currentTheme.color }]}>
-              <View style={styles.ayahTextContent}>
-                <TajweedText
-                  text={currentAyah.textUthmani}
-                  tajweedRules={currentAyah.tajweedRules}
-                  showTajweed={progress.settings.showTajweedColors}
-                  fontSize={24}
-                />
-                <Text style={styles.translation}>{ayahTranslation}</Text>
+          {/* Memory Anchors */}
+          {scene.anchorWords.length > 0 && (
+            <View style={styles.anchorsSection}>
+              <View style={[styles.anchorsDivider, { backgroundColor: dominantColor + '30' }]} />
+              <Text style={styles.anchorsTitle}>{t('visualization.memoryAnchors')}</Text>
+              <View style={styles.anchorsRow}>
+                {scene.anchorWords.map((anchor, i) => (
+                  <AnchorChip key={`anchor-${i}`} anchor={anchor} index={i + 1} />
+                ))}
               </View>
             </View>
           )}
         </View>
 
-        {/* Instruction & Action */}
+        {/* Ayah Text — Study mode shows it, Review mode hides until revealed */}
+        {vizMode === 'study' && (
+          <View style={[styles.ayahTextContainer, { borderLeftColor: dominantColor }]}>
+            <View style={styles.ayahTextContent}>
+              <TajweedText
+                text={currentAyah.textUthmani}
+                tajweedRules={currentAyah.tajweedRules}
+                showTajweed={progress.settings.showTajweedColors}
+                fontSize={24}
+              />
+              {currentAyah.transliteration && (
+                <Text style={styles.transliteration}>{currentAyah.transliteration}</Text>
+              )}
+              <Text style={styles.translation}>{ayahTranslation}</Text>
+            </View>
+          </View>
+        )}
+
+        {vizMode === 'review' && isAyahRevealed && (
+          <View style={[styles.ayahTextContainer, { borderLeftColor: dominantColor }]}>
+            <View style={styles.ayahTextContent}>
+              <TajweedText
+                text={currentAyah.textUthmani}
+                tajweedRules={currentAyah.tajweedRules}
+                showTajweed={progress.settings.showTajweedColors}
+                fontSize={24}
+              />
+              <Text style={styles.translation}>{ayahTranslation}</Text>
+            </View>
+          </View>
+        )}
+
+        {/* Instruction & Actions */}
         {vizMode === 'study' && (
           <View style={styles.instructionCard}>
             <Ionicons name="eye-outline" size={20} color={METHOD_COLOR} />
             <Text style={styles.instructionText}>
-              {t('visualization.associateText')}
+              {t('visualization.studyInstruction')}
             </Text>
           </View>
         )}
@@ -299,7 +305,7 @@ export default function VisualizationScreen() {
             <View style={styles.instructionCard}>
               <Ionicons name="bulb-outline" size={20} color={METHOD_COLOR} />
               <Text style={styles.instructionText}>
-                {t('visualization.thinkOfScene')}
+                {t('visualization.reviewInstruction')}
               </Text>
             </View>
             <Pressable style={styles.actionButton} onPress={handleReveal}>
@@ -319,8 +325,8 @@ export default function VisualizationScreen() {
                 style={[styles.ratingButton, styles.ratingYes]}
                 onPress={() => handleRate(5)}
               >
-                <Ionicons name="checkmark-circle-outline" size={22} color="#22c55e" />
-                <Text style={[styles.ratingButtonText, { color: '#22c55e' }]}>
+                <Ionicons name="checkmark-circle-outline" size={22} color="#34d399" />
+                <Text style={[styles.ratingButtonText, { color: '#34d399' }]}>
                   {t('visualization.recallYes')}
                 </Text>
               </Pressable>
@@ -328,8 +334,8 @@ export default function VisualizationScreen() {
                 style={[styles.ratingButton, styles.ratingPartial]}
                 onPress={() => handleRate(3)}
               >
-                <Ionicons name="remove-circle-outline" size={22} color="#f59e0b" />
-                <Text style={[styles.ratingButtonText, { color: '#f59e0b' }]}>
+                <Ionicons name="remove-circle-outline" size={22} color="#fbbf24" />
+                <Text style={[styles.ratingButtonText, { color: '#fbbf24' }]}>
                   {t('visualization.recallPartial')}
                 </Text>
               </Pressable>
@@ -359,7 +365,7 @@ export default function VisualizationScreen() {
           <Ionicons
             name="chevron-back"
             size={20}
-            color={currentAyahIndex === 0 ? '#334155' : '#f5f5f0'}
+            color={currentAyahIndex === 0 ? '#3a3a32' : '#f5f5f0'}
           />
           <Text
             style={[styles.navButtonText, currentAyahIndex === 0 && styles.navButtonTextDisabled]}
@@ -389,7 +395,7 @@ export default function VisualizationScreen() {
           <Ionicons
             name="chevron-forward"
             size={20}
-            color={currentAyahIndex >= totalAyahs - 1 ? '#334155' : '#f5f5f0'}
+            color={currentAyahIndex >= totalAyahs - 1 ? '#3a3a32' : '#f5f5f0'}
           />
         </Pressable>
       </View>
@@ -402,7 +408,7 @@ export default function VisualizationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#0d0d0a',
   },
   errorText: {
     color: '#a3a398',
@@ -416,7 +422,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loadingText: {
-    color: '#94a3b8',
+    color: '#a3a398',
     fontSize: 16,
     marginTop: 16,
   },
@@ -432,7 +438,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#1e1e1a',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -452,12 +458,12 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   ayahCounter: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#1e1e1a',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#2a2a24',
   },
   ayahCounterText: {
     color: '#f5f5f0',
@@ -472,11 +478,11 @@ const styles = StyleSheet.create({
   },
   modeToggle: {
     flexDirection: 'row',
-    backgroundColor: '#1e293b',
+    backgroundColor: '#1e1e1a',
     borderRadius: 14,
     padding: 4,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#2a2a24',
   },
   modePill: {
     flex: 1,
@@ -509,55 +515,135 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 
-  // Scene Card
-  sceneCard: {
-    backgroundColor: '#1e293b',
+  // Room Card — the spatial container
+  roomCard: {
+    backgroundColor: '#1e1e1a',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#2a2a24',
     borderTopWidth: 3,
-    padding: 24,
+    overflow: 'hidden',
+  },
+  roomHeader: {
     alignItems: 'center',
+    paddingTop: 16,
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
-  sceneIcon: {
-    fontSize: 64,
-    marginBottom: 12,
-  },
-  sceneThemeName: {
+  sceneSummary: {
     fontSize: 18,
     fontWeight: '700',
-    marginBottom: 4,
   },
-  sceneRoomLabel: {
-    color: '#a3a398',
-    fontSize: 14,
+  roomLabel: {
+    color: '#6b6b60',
+    fontSize: 13,
     fontWeight: '500',
-    marginBottom: 20,
+    marginTop: 2,
   },
 
-  // Ayah Text within Scene Card
+  // Single Room Icon
+  roomIconArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  roomIconCircle: {
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  roomIconEmoji: {
+    fontSize: 56,
+    lineHeight: 62,
+  },
+  roomIconLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+
+  // Anchors Section
+  anchorsSection: {
+    paddingHorizontal: 12,
+    paddingBottom: 16,
+  },
+  anchorsDivider: {
+    height: 1,
+    marginBottom: 10,
+  },
+  anchorsTitle: {
+    color: '#a3a398',
+    fontSize: 11,
+    fontWeight: '600',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 8,
+  },
+  anchorsRow: {
+    flexDirection: 'row-reverse',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    rowGap: 6,
+    columnGap: 5,
+  },
+
+  // Anchor Chip — compact word-by-word display
+  anchorChip: {
+    backgroundColor: '#161613',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#2a2a24',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    alignItems: 'center',
+    minWidth: 52,
+    maxWidth: 90,
+  },
+  anchorIndex: {
+    color: '#6b6b60',
+    fontSize: 8,
+    fontWeight: '700',
+    marginBottom: 1,
+  },
+  anchorArabic: {
+    color: '#D4AF37',
+    fontSize: 15,
+    fontWeight: '700',
+    marginBottom: 1,
+  },
+  anchorMeaning: {
+    color: '#a3a398',
+    fontSize: 9,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+
+  // Ayah Text
   ayahTextContainer: {
     width: '100%',
     borderLeftWidth: 4,
     borderRadius: 12,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#1e1e1a',
     paddingLeft: 16,
     paddingRight: 16,
     paddingVertical: 16,
-    marginTop: 4,
   },
   ayahTextContent: {
     gap: 12,
   },
   transliteration: {
-    color: '#94a3b8',
+    color: '#a3a398',
     fontSize: 14,
     fontStyle: 'italic',
     textAlign: 'center',
     lineHeight: 22,
   },
   translation: {
-    color: '#cbd5e1',
+    color: '#a3a398',
     fontSize: 14,
     textAlign: 'center',
     lineHeight: 22,
@@ -622,12 +708,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   ratingYes: {
-    backgroundColor: '#22c55e15',
-    borderColor: '#22c55e30',
+    backgroundColor: '#34d39915',
+    borderColor: '#34d39930',
   },
   ratingPartial: {
-    backgroundColor: '#f59e0b15',
-    borderColor: '#f59e0b30',
+    backgroundColor: '#fbbf2415',
+    borderColor: '#fbbf2430',
   },
   ratingNo: {
     backgroundColor: '#fb718515',
@@ -646,8 +732,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 14,
     borderTopWidth: 1,
-    borderTopColor: '#334155',
-    backgroundColor: '#0f172a',
+    borderTopColor: '#2a2a24',
+    backgroundColor: '#0d0d0a',
   },
   navButton: {
     flexDirection: 'row',
@@ -665,6 +751,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   navButtonTextDisabled: {
-    color: '#334155',
+    color: '#3a3a32',
   },
 });
