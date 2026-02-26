@@ -101,9 +101,6 @@ function getSupabase(): SupabaseClient | null {
       },
     });
 
-    // Start auto-refresh immediately on creation
-    _supabase.auth.startAutoRefresh();
-
     // Pause/resume refresh based on app foreground state
     AppState.addEventListener('change', (state) => {
       if (state === 'active' && _supabase) {
