@@ -29,6 +29,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Publish update
-        run: eas update --branch production --message "${{ github.event.head_commit.message }}" --non-interactive
+        run: eas update --branch production --message "${MESSAGE:-Manual OTA update}" --non-interactive
         env:
           NODE_OPTIONS: --max-old-space-size=4096
+          MESSAGE: ${{ github.event.head_commit.message }}
