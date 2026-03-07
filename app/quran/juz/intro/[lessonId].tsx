@@ -15,8 +15,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_INTRO_LESSONS, JuzIntroLesson } from '../../../../src/data/arabic/quran/lessons/juzLessons';
 
 // Content Block Component
-function ContentBlock({ item }: { item: { type: string; text: string; icon?: string } }) {
+function ContentBlock({ item }: { item: { type: string; text: string; textFr?: string; icon?: string } }) {
   const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
   const getBlockStyle = () => {
     switch (item.type) {
       case 'fact':
@@ -51,7 +52,7 @@ function ContentBlock({ item }: { item: { type: string; text: string; icon?: str
     // Regular text block
     return (
       <View style={styles.textBlock}>
-        <Text style={styles.textContent}>{item.text}</Text>
+        <Text style={styles.textContent}>{lc(item.text, item.textFr)}</Text>
       </View>
     );
   }
@@ -75,7 +76,7 @@ function ContentBlock({ item }: { item: { type: string; text: string; icon?: str
         <Text style={styles.blockLabel}>
           {item.type === 'fact' ? t('juzFeature.didYouKnow') : item.type === 'tip' ? t('juzFeature.tip') : t('juzFeature.example')}
         </Text>
-        <Text style={styles.blockText}>{item.text}</Text>
+        <Text style={styles.blockText}>{lc(item.text, item.textFr)}</Text>
       </View>
     </View>
   );
@@ -142,10 +143,10 @@ export default function IntroLessonScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.titleGradient}
           >
-            <Text style={styles.lessonTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
+            <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
             <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
             <View style={styles.divider} />
-            <Text style={styles.lessonDescription}>{lc(lesson.description, (lesson as any).descriptionFr)}</Text>
+            <Text style={styles.lessonDescription}>{lc(lesson.description, lesson.descriptionFr)}</Text>
           </LinearGradient>
         </View>
 
@@ -164,7 +165,7 @@ export default function IntroLessonScreen() {
               <View style={styles.navButtonContent}>
                 <Text style={styles.navButtonLabel}>{t('common.previous')}</Text>
                 <Text style={styles.navButtonTitle} numberOfLines={1}>
-                  {prevLesson.title}
+                  {lc(prevLesson.title, prevLesson.titleFr)}
                 </Text>
               </View>
             </Pressable>
@@ -177,7 +178,7 @@ export default function IntroLessonScreen() {
               <View style={styles.navButtonContent}>
                 <Text style={[styles.navButtonLabel, { textAlign: 'right' }]}>{t('common.next')}</Text>
                 <Text style={[styles.navButtonTitle, { textAlign: 'right' }]} numberOfLines={1}>
-                  {nextLesson.title}
+                  {lc(nextLesson.title, nextLesson.titleFr)}
                 </Text>
               </View>
               <Ionicons name="arrow-forward" size={20} color="#ffffff" />

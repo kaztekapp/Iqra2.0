@@ -1,0 +1,190 @@
+import { fetch } from 'expo/fetch';
+import { useAIChatStore } from '../stores/aiChatStore';
+import { gatherAIContext } from './aiContextService';
+import { buildSystemPrompt } from '../data/ai/systemPrompts';
+import { ChatMessage, AIModelChoice, AI_MODEL_IDS } from '../types/aiChat';
+
+const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
+const MAX_HISTORY_MESSAGES = 10;
+
+interface SendMessageOptions {
+  userMessage: string;
+  model: AIModelChoice;
+  abortController?: AbortController;
+}
+
+/**
+ * Parse a single SSE line and extract the text delta if present.
+ * Anthropic SSE format: `data: {"type":"content_block_delta","delta":{"type":"text_delta","text":"..."}}`
+ */
+function extractTextDelta(line: string): string | null {
+  if (!line.startsWith('data: ')) return null;
+  const json = line.slice(6); // remove "data: "
+  if (json === '[DONE]') return null;
+
+  try {
+    const parsed = JSON.parse(json);
+    if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+      return parsed.delta.text;
+    }
+  } catch {
+    // Not valid JSON, skip
+  }
+  return null;
+}
+
+/**
+ * Sends a message to the Anthropic API with streaming enabled.
+ * Text chunks are pushed to the store incrementally so the UI
+ * renders them as they arrive.
+ */
+export async function sendAIChatMessage({
+  userMessage,
+  model,
+  abortController,
+}: SendMessageOptions): Promise<void> {
+  const store = useAIChatStore.getState();
+  const { activeModule, conversations } = store;
+
+  // Gather context
+  const context = gatherAIContext(activeModule);
+  const systemPrompt = buildSystemPrompt(context);
+
+  // Get conversation history (last N messages), filtering out error sentinels
+  const history = (conversations[activeModule] || [])
+    .filter((msg: ChatMessage) => !msg.content.startsWith('__error:'))
+    .slice(-MAX_HISTORY_MESSAGES)
+    .map((msg: ChatMessage) => ({
+      role: msg.role,
+      content: msg.content,
+    }));
+
+  // Add the new user message
+  store.addUserMessage(userMessage);
+  store.setStreaming(true);
+
+  try {
+    const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('no_api_key');
+    }
+
+    const modelId = AI_MODEL_IDS[model];
+
+    const response = await fetch(ANTHROPIC_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: modelId,
+        max_tokens: 768,
+        stream: true,
+        system: systemPrompt,
+        messages: [
+          ...history,
+          { role: 'user', content: userMessage },
+        ],
+      }),
+      signal: abortController?.signal,
+    });
+
+    if (response.status === 429) {
+      throw new Error('rate_limit');
+    }
+
+    if (!response.ok) {
+      const errorBody = await response.text().catch(() => '');
+      console.error('[AI Chat] API error:', response.status, errorBody);
+      throw new Error(`server_error_${response.status}`);
+    }
+
+    // Read the SSE stream
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error('no_stream');
+    }
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+
+      // Process complete lines from the buffer
+      const lines = buffer.split('\n');
+      // Keep the last (potentially incomplete) line in the buffer
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        const text = extractTextDelta(trimmed);
+        if (text) {
+          useAIChatStore.getState().appendStreamChunk(text);
+        }
+      }
+    }
+
+    // Process any remaining buffer
+    if (buffer.trim()) {
+      const text = extractTextDelta(buffer.trim());
+      if (text) {
+        useAIChatStore.getState().appendStreamChunk(text);
+      }
+    }
+
+    // Finalize the streamed message into a real conversation message
+    useAIChatStore.getState().finalizeStreamedMessage();
+
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      // User stopped — finalize whatever was streamed so far
+      const { streamingContent } = useAIChatStore.getState();
+      if (streamingContent) {
+        useAIChatStore.getState().finalizeStreamedMessage();
+      } else {
+        useAIChatStore.getState().setStreaming(false);
+      }
+      return;
+    }
+
+    console.error('[AI Chat] Error:', error.message);
+
+    // Create an error message for the user
+    let errorContent: string;
+    if (error.message === 'Network request failed' || error.message === 'no_stream') {
+      errorContent = '__error:offline__';
+    } else if (error.message === 'rate_limit') {
+      errorContent = '__error:rate_limit__';
+    } else if (error.message === 'no_api_key') {
+      errorContent = '__error:auth__';
+    } else {
+      errorContent = '__error:generic__';
+    }
+
+    // Add error as assistant message so user sees it
+    const currentState = useAIChatStore.getState();
+    const errorMsg: ChatMessage = {
+      id: `msg_${Date.now()}_err`,
+      role: 'assistant',
+      content: errorContent,
+      timestamp: Date.now(),
+    };
+    useAIChatStore.setState({
+      conversations: {
+        ...currentState.conversations,
+        [activeModule]: [...(currentState.conversations[activeModule] || []), errorMsg],
+      },
+      isStreaming: false,
+      streamingContent: '',
+    });
+  }
+}

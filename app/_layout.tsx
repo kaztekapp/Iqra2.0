@@ -16,6 +16,8 @@ import { iapService } from '../src/services/iapService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
+import { AIFloatingButton } from '../src/components/ai/AIFloatingButton';
+import { AIChatSheet } from '../src/components/ai/AIChatSheet';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 
 export { ErrorBoundary } from 'expo-router';
@@ -252,6 +254,8 @@ export default function RootLayout() {
           <Stack.Screen name="terms-of-service" />
         </Stack>
         <MiniAudioPlayer />
+        <AIFloatingButton />
+        <AIChatSheet />
       </GestureHandlerRootView>
     </AppErrorBoundary>
   );

@@ -1,0 +1,36 @@
+export type AIModuleContext =
+  | 'alphabet'
+  | 'vocabulary'
+  | 'grammar'
+  | 'verbs'
+  | 'reading'
+  | 'practice'
+  | 'general';
+
+export type AIModelChoice = 'haiku' | 'sonnet';
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
+}
+
+export interface AIContextPayload {
+  module: AIModuleContext;
+  lessonId?: string;
+  lessonTitle?: string;
+  userLevel: string;
+  lettersLearned: number;
+  wordsLearned: number;
+  lessonsCompleted: number;
+  accuracy: number;
+  currentStreak: number;
+  currentContent?: string;
+  language: 'en' | 'fr';
+}
+
+export const AI_MODEL_IDS: Record<AIModelChoice, string> = {
+  haiku: 'claude-haiku-4-5-20251001',
+  sonnet: 'claude-sonnet-4-5-20250929',
+};

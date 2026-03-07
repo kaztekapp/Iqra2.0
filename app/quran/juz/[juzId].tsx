@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_LESSONS, getJuzLesson } from '../../../src/data/arabic/quran/lessons/juzLessons';
 
@@ -80,12 +81,13 @@ function StaticSection({
 function VerseCard({
   verse,
 }: {
-  verse: { arabic: string; translation: string; reference: string };
+  verse: { arabic: string; translation: string; translationFr?: string; reference: string };
 }) {
+  const { lc } = useLocalizedContent();
   return (
     <View style={styles.verseCard}>
       <Text style={styles.verseArabic}>{verse.arabic}</Text>
-      <Text style={styles.verseTranslation}>"{verse.translation}"</Text>
+      <Text style={styles.verseTranslation}>"{lc(verse.translation, verse.translationFr)}"</Text>
       <View style={styles.verseReference}>
         <Ionicons name="bookmark" size={12} color="#3b82f6" />
         <Text style={styles.verseReferenceText}>{verse.reference}</Text>
@@ -96,6 +98,7 @@ function VerseCard({
 
 export default function JuzDetailScreen() {
   const { t } = useTranslation();
+  const { lc, lcArray } = useLocalizedContent();
   const { juzId } = useLocalSearchParams<{ juzId: string }>();
   const juzNumber = parseInt(juzId || '1', 10);
 
@@ -235,7 +238,7 @@ export default function JuzDetailScreen() {
             defaultExpanded={true}
           >
             <View style={styles.themesList}>
-              {juz.keyThemes.map((theme, index) => (
+              {lcArray(juz.keyThemes, juz.keyThemesFr).map((theme, index) => (
                 <View key={index} style={styles.themeItem}>
                   <View style={styles.themeBullet} />
                   <Text style={styles.themeText}>{theme}</Text>
@@ -252,7 +255,7 @@ export default function JuzDetailScreen() {
             defaultExpanded={true}
           >
             <View style={styles.highlightsList}>
-              {juz.highlights.map((highlight, index) => (
+              {lcArray(juz.highlights, juz.highlightsFr).map((highlight, index) => (
                 <View key={index} style={styles.highlightCard}>
                   <Ionicons name="checkmark-circle" size={18} color="#22c55e" />
                   <Text style={styles.highlightText}>{highlight}</Text>
@@ -283,7 +286,7 @@ export default function JuzDetailScreen() {
               iconColor="#8b5cf6"
             >
               <View style={styles.storiesList}>
-                {juz.stories.map((story, index) => (
+                {lcArray(juz.stories!, juz.storiesFr).map((story, index) => (
                   <View key={index} style={styles.storyItem}>
                     <View style={styles.storyIcon}>
                       <Ionicons name="chatbubbles" size={14} color="#8b5cf6" />
@@ -325,7 +328,7 @@ export default function JuzDetailScreen() {
               </View>
 
               <Text style={styles.tipsTitle}>{t('juzFeature.tipsForSuccess')}</Text>
-              {juz.memorization.tips.map((tip, index) => (
+              {lcArray(juz.memorization.tips, juz.memorization.tipsFr).map((tip, index) => (
                 <View key={index} style={styles.tipCard}>
                   <View style={styles.tipNumber}>
                     <Text style={styles.tipNumberText}>{index + 1}</Text>

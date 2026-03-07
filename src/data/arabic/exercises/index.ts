@@ -75,6 +75,22 @@ export const getExerciseCountByModule = (): Record<string, number> => {
 export const getExercisesForGrammarLesson = (lessonId: string): Exercise[] => {
   // Map lesson IDs to related exercises (including writing exercises)
   const lessonExerciseMap: Record<string, string[]> = {
+    'grammar-1': [
+      'ex-grammar-1-1', 'ex-grammar-1-2', 'ex-grammar-1-3', 'ex-grammar-1-4', 'ex-grammar-1-5',
+      'ex-grammar-1-6', 'ex-grammar-1-7', 'ex-grammar-1-8', 'ex-grammar-1-9', 'ex-grammar-1-10',
+      // Writing exercises (12)
+      'ex-grammar-1-11', 'ex-grammar-1-12', 'ex-grammar-1-13', 'ex-grammar-1-14', 'ex-grammar-1-15',
+      'ex-grammar-1-16', 'ex-grammar-1-17', 'ex-grammar-1-18', 'ex-grammar-1-19', 'ex-grammar-1-20',
+      'ex-grammar-1-21', 'ex-grammar-1-22'
+    ],
+    'grammar-2': [
+      'ex-grammar-2-1', 'ex-grammar-2-2', 'ex-grammar-2-3', 'ex-grammar-2-4', 'ex-grammar-2-5',
+      'ex-grammar-2-6', 'ex-grammar-2-7', 'ex-grammar-2-8', 'ex-grammar-2-9', 'ex-grammar-2-10',
+      // Writing exercises (12)
+      'ex-grammar-2-11', 'ex-grammar-2-12', 'ex-grammar-2-13', 'ex-grammar-2-14', 'ex-grammar-2-15',
+      'ex-grammar-2-16', 'ex-grammar-2-17', 'ex-grammar-2-18', 'ex-grammar-2-19', 'ex-grammar-2-20',
+      'ex-grammar-2-21', 'ex-grammar-2-22'
+    ],
     'grammar-3': [
       'ex-grammar-3-1', 'ex-grammar-3-2', 'ex-grammar-3-3', 'ex-grammar-3-4', 'ex-grammar-3-5',
       'ex-grammar-3-6', 'ex-grammar-3-7', 'ex-grammar-3-8', 'ex-grammar-3-9', 'ex-grammar-3-10',
@@ -249,6 +265,10 @@ export const getExercisesForVocabularyTheme = (themeId: string): Exercise[] => {
     'colors': 'ex-vocab-color',
     'food': 'ex-vocab-food',
     'body': 'ex-vocab-body',
+    'animals': 'ex-vocab-animal',
+    'time': 'ex-vocab-time',
+    'places': 'ex-vocab-place',
+    'objects': 'ex-vocab-obj',
   };
 
   const prefix = themePrefixMap[themeId];

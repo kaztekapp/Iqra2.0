@@ -53,10 +53,10 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
           <Ionicons name={iconMap[lesson.id] as any || 'book'} size={24} color="#ffffff" />
         </View>
         <View style={styles.introCardContent}>
-          <Text style={styles.introCardTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
+          <Text style={styles.introCardTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
           <Text style={styles.introCardTitleArabic}>{lesson.titleArabic}</Text>
           <Text style={styles.introCardDesc} numberOfLines={2}>
-            {lc(lesson.description, (lesson as any).descriptionFr)}
+            {lc(lesson.description, lesson.descriptionFr)}
           </Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color="#ffffff80" />
@@ -68,6 +68,7 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
 // Juz Card Component
 function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
   const { t } = useTranslation();
+  const { lcArray } = useLocalizedContent();
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'easy':
@@ -122,7 +123,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
       </View>
 
       <View style={styles.juzCardThemes}>
-        {juz.keyThemes.slice(0, 2).map((theme, index) => (
+        {lcArray(juz.keyThemes, juz.keyThemesFr).slice(0, 2).map((theme, index) => (
           <View key={index} style={styles.themeBadge}>
             <Text style={styles.themeText} numberOfLines={1}>
               {theme}
