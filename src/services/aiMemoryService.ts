@@ -45,6 +45,8 @@ export function analyzeConversation(
   const mistakes = new Set<string>(existingMemory?.mistakes || []);
   const strengths = new Set<string>(existingMemory?.strengths || []);
   const weakAreas = new Set<string>(existingMemory?.weakAreas || []);
+  const mistakeCounts: Record<string, number> = { ...(existingMemory?.mistakeCounts || {}) };
+  const mastered = new Set<string>(existingMemory?.mastered || []);
 
   for (let i = 0; i < messages.length; i++) {
     const msg = messages[i];
@@ -70,16 +72,12 @@ export function analyzeConversation(
       // Check for corrections (mistakes)
       for (const pattern of CORRECTION_PATTERNS) {
         if (pattern.test(content)) {
-          // Try to extract what the mistake was about from the surrounding context
           const prevUserMsg = findPreviousUserMessage(messages, i);
           if (prevUserMsg) {
-            const arabic = prevUserMsg.match(ARABIC_WORD_REGEX);
-            if (arabic) {
-              mistakes.add(arabic[0]);
-            } else {
-              // Use a short summary of the user's question
-              const summary = prevUserMsg.slice(0, 50).trim();
-              if (summary) mistakes.add(summary);
+            const mistakeKey = extractMistakeKey(prevUserMsg);
+            if (mistakeKey) {
+              mistakes.add(mistakeKey);
+              mistakeCounts[mistakeKey] = (mistakeCounts[mistakeKey] || 0) + 1;
             }
           }
           break;
@@ -91,12 +89,14 @@ export function analyzeConversation(
         if (pattern.test(content)) {
           const prevUserMsg = findPreviousUserMessage(messages, i);
           if (prevUserMsg) {
-            const arabic = prevUserMsg.match(ARABIC_WORD_REGEX);
-            if (arabic) {
-              strengths.add(arabic[0]);
-            } else {
-              const summary = prevUserMsg.slice(0, 50).trim();
-              if (summary) strengths.add(summary);
+            const strengthKey = extractMistakeKey(prevUserMsg);
+            if (strengthKey) {
+              strengths.add(strengthKey);
+              // If this was previously a mistake, it's now mastered
+              if (mistakes.has(strengthKey)) {
+                mastered.add(strengthKey);
+                weakAreas.delete(strengthKey);
+              }
             }
           }
           break;
@@ -105,9 +105,9 @@ export function analyzeConversation(
     }
   }
 
-  // Items that appear in mistakes but not strengths are weak areas
+  // Items that appear in mistakes but not mastered are weak areas
   mistakes.forEach(m => {
-    if (!strengths.has(m)) weakAreas.add(m);
+    if (!mastered.has(m)) weakAreas.add(m);
   });
 
   return {
@@ -116,10 +116,19 @@ export function analyzeConversation(
     mistakes: [...mistakes].slice(-MAX_MISTAKES),
     strengths: [...strengths].slice(-MAX_STRENGTHS),
     weakAreas: [...weakAreas].slice(-MAX_MISTAKES),
+    mistakeCounts,
+    mastered: [...mastered].slice(-MAX_STRENGTHS),
     conversationCount: (existingMemory?.conversationCount || 0) + 1,
     messageCount: (existingMemory?.messageCount || 0) + messages.length,
     lastUpdated: Date.now(),
   };
+}
+
+function extractMistakeKey(userMsg: string): string | null {
+  const arabic = userMsg.match(ARABIC_WORD_REGEX);
+  if (arabic) return arabic[0];
+  const summary = userMsg.slice(0, 50).trim();
+  return summary || null;
 }
 
 function findPreviousUserMessage(messages: ChatMessage[], currentIndex: number): string | null {
@@ -131,15 +140,14 @@ function findPreviousUserMessage(messages: ChatMessage[], currentIndex: number):
 
 /**
  * Format memory as concise text for injection into the system prompt.
- * Kept short (~100-200 tokens) to avoid inflating prompt size.
+ * Includes adaptive teaching directives based on weak areas and mastery.
  */
 export function formatMemoryForPrompt(memory: AIConversationMemory): string {
   const parts: string[] = [
-    `Student learning history (${memory.conversationCount} past conversations, ${memory.messageCount} messages):`,
+    `STUDENT LEARNING HISTORY (${memory.conversationCount} past conversations):`,
   ];
 
   if (memory.topicsCovered.length > 0) {
-    // Show last 10 topics to keep it concise
     const recent = memory.topicsCovered.slice(-10);
     parts.push(`Topics covered: ${recent.join(', ')}`);
   }
@@ -149,17 +157,48 @@ export function formatMemoryForPrompt(memory: AIConversationMemory): string {
     parts.push(`Strengths: ${recent.join(', ')}`);
   }
 
+  if (memory.mastered.length > 0) {
+    const recent = memory.mastered.slice(-5);
+    parts.push(`Previously struggled but now mastered: ${recent.join(', ')}`);
+  }
+
+  // Sort weak areas by mistake frequency — most struggled first
   if (memory.weakAreas.length > 0) {
-    const recent = memory.weakAreas.slice(-5);
-    parts.push(`Areas needing practice: ${recent.join(', ')}`);
+    const sorted = [...memory.weakAreas].sort(
+      (a, b) => (memory.mistakeCounts[b] || 1) - (memory.mistakeCounts[a] || 1)
+    );
+    const top = sorted.slice(0, 5);
+    const labeled = top.map(w => {
+      const count = memory.mistakeCounts[w] || 1;
+      return count > 1 ? `${w} (${count}x wrong)` : w;
+    });
+    parts.push(`Weak areas needing review: ${labeled.join(', ')}`);
   }
 
-  if (memory.mistakes.length > 0) {
-    const recent = memory.mistakes.slice(-5);
-    parts.push(`Recent mistakes: ${recent.join(', ')}`);
+  // Calculate days since last session
+  const daysSince = Math.floor((Date.now() - memory.lastUpdated) / (1000 * 60 * 60 * 24));
+
+  parts.push('');
+  parts.push('ADAPTIVE TEACHING RULES (follow these based on the history above):');
+
+  if (memory.weakAreas.length > 0) {
+    const topWeak = [...memory.weakAreas]
+      .sort((a, b) => (memory.mistakeCounts[b] || 1) - (memory.mistakeCounts[a] || 1))
+      .slice(0, 3);
+    parts.push(`- When the student asks a general question or says "teach me" / "what should I learn", PROACTIVELY revisit: ${topWeak.join(', ')}. Say something like "Last time you had trouble with X — let's practice that!"`);
+    parts.push('- Weave weak areas naturally into examples. If teaching a new concept, use weak-area words in your example sentences when possible.');
   }
 
-  parts.push('Use this history to personalize teaching — reference past topics, reinforce weak areas, and build on strengths.');
+  if (memory.mastered.length > 0) {
+    parts.push('- Reference mastered topics to build confidence: "You already know X well — this works the same way"');
+  }
+
+  if (daysSince >= 3) {
+    parts.push(`- The student hasn't practiced in ${daysSince} days. Welcome them back warmly and suggest a quick review of recent topics.`);
+  }
+
+  parts.push('- Gradually increase difficulty: if the student gets 2+ answers right in a row, offer a harder challenge.');
+  parts.push('- If the student repeats a mistake from their history, point it out gently: "This is something we\'ve seen before — let\'s break it down differently this time"');
 
   return parts.join('\n');
 }

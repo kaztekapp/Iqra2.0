@@ -46,6 +46,10 @@ export interface AIConversationMemory {
   mistakes: string[];
   strengths: string[];
   weakAreas: string[];
+  /** How many times each topic was gotten wrong — higher = weaker */
+  mistakeCounts: Record<string, number>;
+  /** Topics the student mastered (were in mistakes, then got right) */
+  mastered: string[];
   conversationCount: number;
   messageCount: number;
   lastUpdated: number;
