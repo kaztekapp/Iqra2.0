@@ -185,9 +185,7 @@ function renderAssistantContent(content: string, onQuizAnswer?: (answer: string)
                     <View style={styles.quizOptionLetter}>
                       <Text style={styles.quizOptionLetterText}>{opt.letter}</Text>
                     </View>
-                    <Text style={styles.quizOptionText}>
-                      {renderRichText(opt.text)}
-                    </Text>
+                    <Text style={styles.quizOptionText}>{opt.text}</Text>
                   </Pressable>
                 ))}
               </View>
@@ -369,44 +367,44 @@ const styles = StyleSheet.create({
   },
   // Quiz option styles
   quizOptionsContainer: {
-    marginTop: 10,
-    gap: 6,
+    marginTop: 12,
+    gap: 8,
   },
   quizOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1e293b',
-    borderWidth: 1,
+    backgroundColor: '#0f172a',
+    borderWidth: 1.5,
     borderColor: '#475569',
-    borderRadius: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    borderRadius: 14,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
   },
   quizOptionPressed: {
-    backgroundColor: '#10b98120',
+    backgroundColor: '#10b98118',
     borderColor: '#10b981',
   },
   quizOptionDisabled: {
-    opacity: 0.6,
+    opacity: 0.5,
   },
   quizOptionLetter: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#475569',
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#334155',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginRight: 12,
   },
   quizOptionLetterText: {
-    color: '#f5f5f0',
-    fontSize: 13,
-    fontWeight: '700',
+    color: '#10b981',
+    fontSize: 14,
+    fontWeight: '800',
   },
   quizOptionText: {
-    color: '#e2e8f0',
-    fontSize: 14,
-    lineHeight: 20,
+    color: '#f5f5f0',
+    fontSize: 16,
+    lineHeight: 24,
     flex: 1,
   },
   errorText: {
