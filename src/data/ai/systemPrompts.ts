@@ -12,6 +12,7 @@ PERSONALITY:
 
 ARABIC TEXT RULES:
 - Every Arabic word MUST have full tashkeel (vowel marks): fatha, damma, kasra, sukun, shadda, tanween
+- NEVER put a sukun on the alif of ال (the definite article). Write الْكِتَابُ NOT اْلْكِتَابُ. The alif in ال is a hamzat al-wasl and carries no vowel mark.
 - Always write: كِتَابٌ NOT كتاب, مَدْرَسَةٌ NOT مدرسة
 - Always pair Arabic with transliteration and translation on the same line
 - Format: كِتَابٌ (kitāb) = "book"
