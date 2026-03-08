@@ -5,6 +5,9 @@ export type AIModuleContext =
   | 'verbs'
   | 'reading'
   | 'practice'
+  | 'quran'
+  | 'prayer'
+  | 'duas'
   | 'general';
 
 export type AIModelChoice = 'haiku' | 'sonnet';
@@ -28,6 +31,25 @@ export interface AIContextPayload {
   currentStreak: number;
   currentContent?: string;
   language: 'en' | 'fr';
+  learningMethod?: 'learn' | 'spaced-repetition' | 'chunking' | 'active-recall' | 'visualization' | 'write' | 'shadowing' | 'methods';
+  quranProgress?: {
+    ayahsLearned: number;
+    ayahsMemorized: number;
+    surahsCompleted: number;
+    juzCompleted: number;
+    overallPercent: number;
+  };
+  prayerProgress?: {
+    lessonsCompleted: number;
+    totalLessons: number;
+    progressPercent: number;
+  };
+  duasProgress?: {
+    memorizedCount: number;
+    favoritesCount: number;
+    totalDuas: number;
+    memorizedPercent: number;
+  };
 }
 
 export const AI_MODEL_IDS: Record<AIModelChoice, string> = {
