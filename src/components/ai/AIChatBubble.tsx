@@ -318,12 +318,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    maxWidth: '92%',
+    flex: 1,
   },
   userContent: {
     backgroundColor: '#10b981',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 4,
+    flex: 0,
     maxWidth: '80%',
   },
   userText: {
