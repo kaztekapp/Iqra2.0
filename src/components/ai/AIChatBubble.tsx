@@ -8,11 +8,16 @@ interface Props {
   message: ChatMessage;
   speakingMessageId?: string | null;
   onSpeak?: (messageId: string, arabicText: string) => void;
+  onQuizAnswer?: (answer: string) => void;
   isStreamingMessage?: boolean;
+  isLatestAssistant?: boolean;
 }
 
 /** Detect Arabic characters to style them with gold color */
 const ARABIC_REGEX = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+(?:\s+[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+)*/g;
+
+/** Detect MCQ option lines: A) text, B) text, etc. */
+const MCQ_OPTION_REGEX = /^([A-D])\)\s+(.+)$/;
 
 /** Check if content is an error sentinel */
 function getErrorKey(content: string): string | null {
@@ -29,20 +34,55 @@ function extractArabicText(content: string): string {
 
 /**
  * Strip unsupported markdown syntax so it doesn't leak as raw text.
- * - [[text]] → text
- * - *text* (single italic) → text
- * - # headers → bold text
- * - --- horizontal rules → blank line
  */
 function cleanMarkdown(text: string): string {
   return text
-    .replace(/\[\[(.*?)\]\]/g, '$1')   // [[wiki-links]] → plain text
-    .replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '$1') // *italic* → plain
-    .replace(/^#{1,3}\s+(.+)$/gm, '**$1**') // # Header → **bold**
-    .replace(/^---+$/gm, '');            // --- → empty (spacing handled by paragraphs)
+    .replace(/\[\[(.*?)\]\]/g, '$1')
+    .replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '$1')
+    .replace(/^#{1,3}\s+(.+)$/gm, '**$1**')
+    .replace(/^---+$/gm, '');
 }
 
-export function AIChatBubble({ message, speakingMessageId, onSpeak, isStreamingMessage }: Props) {
+interface QuizOption {
+  letter: string;
+  text: string;
+}
+
+/**
+ * Extract MCQ options from a paragraph's lines.
+ * Returns null if the paragraph doesn't contain a valid MCQ block.
+ */
+function extractQuizOptions(lines: string[]): { questionLines: string[]; options: QuizOption[] } | null {
+  const options: QuizOption[] = [];
+  const questionLines: string[] = [];
+
+  for (const line of lines) {
+    const match = line.trim().match(MCQ_OPTION_REGEX);
+    if (match) {
+      options.push({ letter: match[1], text: match[2] });
+    } else {
+      // Only count as question line if we haven't started seeing options yet
+      if (options.length === 0) {
+        questionLines.push(line);
+      }
+    }
+  }
+
+  // Need at least 2 options to be a valid MCQ
+  if (options.length >= 2) {
+    return { questionLines, options };
+  }
+  return null;
+}
+
+export function AIChatBubble({
+  message,
+  speakingMessageId,
+  onSpeak,
+  onQuizAnswer,
+  isStreamingMessage,
+  isLatestAssistant,
+}: Props) {
   const { t } = useTranslation();
   const isUser = message.role === 'user';
 
@@ -77,7 +117,7 @@ export function AIChatBubble({ message, speakingMessageId, onSpeak, isStreamingM
       <View style={[styles.contentContainer, isUser && styles.userContent]}>
         {isUser
           ? <Text style={styles.userText}>{message.content}</Text>
-          : renderAssistantContent(message.content)
+          : renderAssistantContent(message.content, isLatestAssistant && !isStreamingMessage ? onQuizAnswer : undefined)
         }
         {arabicText.length > 0 && onSpeak && (
           <Pressable
@@ -99,13 +139,10 @@ export function AIChatBubble({ message, speakingMessageId, onSpeak, isStreamingM
 
 /**
  * Renders assistant content as structured blocks.
- * Splits on double newlines for paragraph spacing,
- * then handles bullets, Arabic text, and bold within each block.
+ * Detects MCQ options and renders them as interactive buttons.
  */
-function renderAssistantContent(content: string) {
+function renderAssistantContent(content: string, onQuizAnswer?: (answer: string) => void) {
   const cleaned = cleanMarkdown(content);
-
-  // Split into paragraphs (double newline or more)
   const paragraphs = cleaned.split(/\n{2,}/);
 
   return (
@@ -114,8 +151,51 @@ function renderAssistantContent(content: string) {
         const trimmed = para.trim();
         if (!trimmed) return null;
 
-        // Check if paragraph is a bullet list (lines starting with - or •)
         const lines = trimmed.split('\n');
+
+        // Check for MCQ options
+        const quiz = extractQuizOptions(lines);
+        if (quiz) {
+          return (
+            <View key={pIdx} style={pIdx > 0 ? styles.paragraphSpacing : undefined}>
+              {/* Render question text above options */}
+              {quiz.questionLines.length > 0 && (
+                <Text style={styles.assistantText}>
+                  {quiz.questionLines.map((line, lIdx) => (
+                    <React.Fragment key={lIdx}>
+                      {lIdx > 0 && '\n'}
+                      {renderRichText(line)}
+                    </React.Fragment>
+                  ))}
+                </Text>
+              )}
+              {/* Render interactive option buttons */}
+              <View style={styles.quizOptionsContainer}>
+                {quiz.options.map((opt) => (
+                  <Pressable
+                    key={opt.letter}
+                    style={({ pressed }) => [
+                      styles.quizOption,
+                      pressed && styles.quizOptionPressed,
+                      !onQuizAnswer && styles.quizOptionDisabled,
+                    ]}
+                    onPress={() => onQuizAnswer?.(`${opt.letter}) ${opt.text}`)}
+                    disabled={!onQuizAnswer}
+                  >
+                    <View style={styles.quizOptionLetter}>
+                      <Text style={styles.quizOptionLetterText}>{opt.letter}</Text>
+                    </View>
+                    <Text style={styles.quizOptionText}>
+                      {renderRichText(opt.text)}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          );
+        }
+
+        // Check if paragraph is a bullet list
         const isBulletList = lines.every(
           l => l.trim().startsWith('- ') || l.trim().startsWith('• ') || l.trim() === ''
         );
@@ -139,7 +219,7 @@ function renderAssistantContent(content: string) {
           );
         }
 
-        // Regular paragraph — handle inline newlines as line breaks
+        // Regular paragraph
         return (
           <Text
             key={pIdx}
@@ -162,7 +242,6 @@ function renderAssistantContent(content: string) {
  * Renders a single line of text with Arabic highlighting and bold support.
  */
 function renderRichText(text: string): React.ReactNode[] {
-  // First split by Arabic segments
   const segments: { text: string; isArabic: boolean }[] = [];
   let lastIndex = 0;
 
@@ -239,12 +318,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 4,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    maxWidth: '80%',
+    maxWidth: '92%',
   },
   userContent: {
     backgroundColor: '#10b981',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 4,
+    maxWidth: '80%',
   },
   userText: {
     color: '#fff',
@@ -285,6 +365,48 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 8,
     padding: 4,
+  },
+  // Quiz option styles
+  quizOptionsContainer: {
+    marginTop: 10,
+    gap: 6,
+  },
+  quizOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderWidth: 1,
+    borderColor: '#475569',
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  quizOptionPressed: {
+    backgroundColor: '#10b98120',
+    borderColor: '#10b981',
+  },
+  quizOptionDisabled: {
+    opacity: 0.6,
+  },
+  quizOptionLetter: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#475569',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  quizOptionLetterText: {
+    color: '#f5f5f0',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  quizOptionText: {
+    color: '#e2e8f0',
+    fontSize: 14,
+    lineHeight: 20,
+    flex: 1,
   },
   errorText: {
     color: '#f87171',

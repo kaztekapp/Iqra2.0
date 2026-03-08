@@ -40,14 +40,12 @@ export function AIChatMessageList({
   }, [messages.length, isStreaming, streamingContent]);
 
   const handleSpeak = useCallback((messageId: string, arabicText: string) => {
-    // If already speaking this message, stop
     if (speakingMessageId === messageId) {
       audioService.stop();
       setSpeakingMessageId(null);
       return;
     }
 
-    // Stop any current speech first
     if (speakingMessageId) {
       audioService.stop();
     }
@@ -58,6 +56,21 @@ export function AIChatMessageList({
       onDone: () => setSpeakingMessageId(null),
     });
   }, [speakingMessageId, setSpeakingMessageId]);
+
+  const handleQuizAnswer = useCallback((answer: string) => {
+    onSuggestionPress(answer);
+  }, [onSuggestionPress]);
+
+  // Find the last assistant message id to enable quiz buttons only on it
+  const lastAssistantId = (() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].role === 'assistant') return messages[i].id;
+    }
+    return null;
+  })();
+
+  // Quiz buttons are only active if the last message in the conversation is from the assistant
+  const quizActive = messages.length > 0 && messages[messages.length - 1].role === 'assistant';
 
   // Empty state
   if (messages.length === 0 && !isStreaming) {
@@ -128,11 +141,17 @@ export function AIChatMessageList({
             />
           );
         }
+
+        const msg = item as ChatMessage;
+        const isLastAssistant = msg.id === lastAssistantId;
+
         return (
           <AIChatBubble
-            message={item as ChatMessage}
+            message={msg}
             speakingMessageId={speakingMessageId}
             onSpeak={handleSpeak}
+            onQuizAnswer={quizActive && !isStreaming ? handleQuizAnswer : undefined}
+            isLatestAssistant={isLastAssistant}
           />
         );
       }}
