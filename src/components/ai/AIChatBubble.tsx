@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage } from '../../types/aiChat';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
   message: ChatMessage;
+  speakingMessageId?: string | null;
+  onSpeak?: (messageId: string, arabicText: string) => void;
+  isStreamingMessage?: boolean;
 }
 
 /** Detect Arabic characters to style them with gold color */
@@ -14,6 +18,13 @@ const ARABIC_REGEX = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+(?:
 function getErrorKey(content: string): string | null {
   const match = content.match(/^__error:(\w+)__$/);
   return match ? match[1] : null;
+}
+
+/** Extract all Arabic text segments from content */
+function extractArabicText(content: string): string {
+  const matches = content.match(ARABIC_REGEX);
+  if (!matches) return '';
+  return matches.join('\u060C '); // Arabic comma separator
 }
 
 /**
@@ -31,7 +42,7 @@ function cleanMarkdown(text: string): string {
     .replace(/^---+$/gm, '');            // --- → empty (spacing handled by paragraphs)
 }
 
-export function AIChatBubble({ message }: Props) {
+export function AIChatBubble({ message, speakingMessageId, onSpeak, isStreamingMessage }: Props) {
   const { t } = useTranslation();
   const isUser = message.role === 'user';
 
@@ -53,6 +64,9 @@ export function AIChatBubble({ message }: Props) {
     );
   }
 
+  const arabicText = !isUser && !isStreamingMessage ? extractArabicText(message.content) : '';
+  const isSpeaking = speakingMessageId === message.id;
+
   return (
     <View style={[styles.bubble, isUser ? styles.userBubble : styles.assistantBubble]}>
       {!isUser && (
@@ -65,6 +79,19 @@ export function AIChatBubble({ message }: Props) {
           ? <Text style={styles.userText}>{message.content}</Text>
           : renderAssistantContent(message.content)
         }
+        {arabicText.length > 0 && onSpeak && (
+          <Pressable
+            style={styles.speakButton}
+            onPress={() => onSpeak(message.id, arabicText)}
+            hitSlop={8}
+          >
+            <Ionicons
+              name={isSpeaking ? 'stop-circle-outline' : 'volume-high-outline'}
+              size={18}
+              color={isSpeaking ? '#f59e0b' : '#64748b'}
+            />
+          </Pressable>
+        )}
       </View>
     </View>
   );
@@ -253,6 +280,11 @@ const styles = StyleSheet.create({
   },
   bulletText: {
     flex: 1,
+  },
+  speakButton: {
+    alignSelf: 'flex-start',
+    marginTop: 8,
+    padding: 4,
   },
   errorText: {
     color: '#f87171',

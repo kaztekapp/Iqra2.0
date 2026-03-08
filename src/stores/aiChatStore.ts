@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AIModuleContext, AIModelChoice, ChatMessage } from '../types/aiChat';
+import { analyzeConversation } from '../services/aiMemoryService';
+import { useAIMemoryStore } from './aiMemoryStore';
 
 interface AIChatState {
   // Persisted
@@ -14,6 +16,7 @@ interface AIChatState {
   streamingContent: string;
   activeModule: AIModuleContext;
   activeSegments: string[];
+  speakingMessageId: string | null;
 
   // Actions
   openChat: (module?: AIModuleContext, segments?: string[]) => void;
@@ -25,6 +28,7 @@ interface AIChatState {
   setStreaming: (streaming: boolean) => void;
   clearConversation: (module?: AIModuleContext) => void;
   setPreferredModel: (model: AIModelChoice) => void;
+  setSpeakingMessageId: (id: string | null) => void;
 }
 
 const EMPTY_CONVERSATIONS: Record<AIModuleContext, ChatMessage[]> = {
@@ -50,6 +54,7 @@ export const useAIChatStore = create<AIChatState>()(
       streamingContent: '',
       activeModule: 'general',
       activeSegments: [],
+      speakingMessageId: null,
 
       openChat: (module, segments) => set({
         isOpen: true,
@@ -57,7 +62,18 @@ export const useAIChatStore = create<AIChatState>()(
         ...(segments ? { activeSegments: segments } : {}),
       }),
 
-      closeChat: () => set({ isOpen: false }),
+      closeChat: () => {
+        const { activeModule, conversations } = get();
+        const msgs = conversations[activeModule] || [];
+        // Analyze conversation for memory if it has enough messages
+        if (msgs.length >= 4) {
+          const memStore = useAIMemoryStore.getState();
+          const existing = memStore.getMemory(activeModule);
+          const memory = analyzeConversation(msgs, activeModule, existing);
+          memStore.updateMemory(activeModule, memory);
+        }
+        set({ isOpen: false });
+      },
 
       setActiveModule: (module) => set({ activeModule: module }),
 
@@ -111,6 +127,14 @@ export const useAIChatStore = create<AIChatState>()(
       clearConversation: (module) => {
         const { activeModule, conversations } = get();
         const target = module || activeModule;
+        const msgs = conversations[target] || [];
+        // Analyze conversation for memory before clearing
+        if (msgs.length >= 4) {
+          const memStore = useAIMemoryStore.getState();
+          const existing = memStore.getMemory(target);
+          const memory = analyzeConversation(msgs, target, existing);
+          memStore.updateMemory(target, memory);
+        }
         set({
           conversations: {
             ...conversations,
@@ -120,6 +144,8 @@ export const useAIChatStore = create<AIChatState>()(
       },
 
       setPreferredModel: (model) => set({ preferredModel: model }),
+
+      setSpeakingMessageId: (id) => set({ speakingMessageId: id }),
     }),
     {
       name: 'iqra-ai-chat',

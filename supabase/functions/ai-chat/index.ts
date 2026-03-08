@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
     }
 
     // 3. Parse request
-    const { messages, systemPrompt, model: modelKey } = await req.json();
+    const { messages, systemPrompt, model: modelKey, maxTokens } = await req.json();
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(JSON.stringify({ error: 'Messages required' }), {
@@ -74,6 +74,10 @@ Deno.serve(async (req) => {
     }
 
     const modelId = MODEL_MAP[modelKey] || MODEL_MAP.haiku;
+
+    // Resolve max tokens with server-side cap
+    const MAX_LIMITS: Record<string, number> = { haiku: 1024, sonnet: 1536 };
+    const resolvedMaxTokens = Math.min(maxTokens || 768, MAX_LIMITS[modelKey] || 1024);
 
     // 4. Call Anthropic API with streaming
     const anthropicResponse = await fetch(ANTHROPIC_API_URL, {
@@ -85,7 +89,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         model: modelId,
-        max_tokens: 512,
+        max_tokens: resolvedMaxTokens,
         system: systemPrompt,
         messages: messages.map((m: { role: string; content: string }) => ({
           role: m.role,

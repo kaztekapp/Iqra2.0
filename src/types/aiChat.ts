@@ -34,3 +34,19 @@ export const AI_MODEL_IDS: Record<AIModelChoice, string> = {
   haiku: 'claude-haiku-4-5-20251001',
   sonnet: 'claude-sonnet-4-5-20250929',
 };
+
+export const AI_MAX_TOKENS: Record<AIModelChoice, number> = {
+  haiku: 1024,
+  sonnet: 1536,
+};
+
+export interface AIConversationMemory {
+  module: AIModuleContext;
+  topicsCovered: string[];
+  mistakes: string[];
+  strengths: string[];
+  weakAreas: string[];
+  conversationCount: number;
+  messageCount: number;
+  lastUpdated: number;
+}

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { FlatList, View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage, AIModuleContext } from '../../types/aiChat';
@@ -6,7 +6,9 @@ import { AIChatBubble } from './AIChatBubble';
 import { AIChatTypingIndicator } from './AIChatTypingIndicator';
 import { getWelcomeMessage } from '../../data/ai/systemPrompts';
 import { useSettingsStore } from '../../stores/settingsStore';
+import { useAIChatStore } from '../../stores/aiChatStore';
 import { getContextualSuggestions } from '../../services/aiContextService';
+import audioService from '../../services/audioService';
 
 interface Props {
   messages: ChatMessage[];
@@ -27,6 +29,8 @@ export function AIChatMessageList({
 }: Props) {
   const flatListRef = useRef<FlatList>(null);
   const language = useSettingsStore((s) => s.language);
+  const speakingMessageId = useAIChatStore((s) => s.speakingMessageId);
+  const setSpeakingMessageId = useAIChatStore((s) => s.setSpeakingMessageId);
 
   // Auto-scroll to bottom on new messages or streaming
   useEffect(() => {
@@ -34,6 +38,26 @@ export function AIChatMessageList({
       setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
     }
   }, [messages.length, isStreaming, streamingContent]);
+
+  const handleSpeak = useCallback((messageId: string, arabicText: string) => {
+    // If already speaking this message, stop
+    if (speakingMessageId === messageId) {
+      audioService.stop();
+      setSpeakingMessageId(null);
+      return;
+    }
+
+    // Stop any current speech first
+    if (speakingMessageId) {
+      audioService.stop();
+    }
+
+    setSpeakingMessageId(messageId);
+    audioService.speakArabic({
+      text: arabicText,
+      onDone: () => setSpeakingMessageId(null),
+    });
+  }, [speakingMessageId, setSpeakingMessageId]);
 
   // Empty state
   if (messages.length === 0 && !isStreaming) {
@@ -100,10 +124,17 @@ export function AIChatMessageList({
                 content: item.content,
                 timestamp: Date.now(),
               }}
+              isStreamingMessage
             />
           );
         }
-        return <AIChatBubble message={item as ChatMessage} />;
+        return (
+          <AIChatBubble
+            message={item as ChatMessage}
+            speakingMessageId={speakingMessageId}
+            onSpeak={handleSpeak}
+          />
+        );
       }}
       contentContainerStyle={styles.listContent}
       showsVerticalScrollIndicator={false}

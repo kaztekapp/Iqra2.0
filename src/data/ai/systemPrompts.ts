@@ -1,4 +1,6 @@
 import { AIModuleContext, AIContextPayload } from '../../types/aiChat';
+import { useAIMemoryStore } from '../../stores/aiMemoryStore';
+import { formatMemoryForPrompt } from '../../services/aiMemoryService';
 
 const BASE_PROMPT = `You are Ustadh (أُسْتَاذ), an expert Arabic language teacher in the Iqra app.
 
@@ -199,6 +201,12 @@ export function buildSystemPrompt(context: AIContextPayload): string {
   }
 
   parts.push(progressLines.join('\n'));
+
+  // Inject conversation memory if available
+  const memory = useAIMemoryStore.getState().getMemory(context.module);
+  if (memory && memory.conversationCount > 0) {
+    parts.push(formatMemoryForPrompt(memory));
+  }
 
   // Current lesson content from local data files (truncated to fit token limits)
   if (context.lessonTitle) {

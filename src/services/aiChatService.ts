@@ -2,9 +2,10 @@ import { fetch } from 'expo/fetch';
 import { useAIChatStore } from '../stores/aiChatStore';
 import { gatherAIContext } from './aiContextService';
 import { buildSystemPrompt } from '../data/ai/systemPrompts';
-import { ChatMessage, AIModelChoice, AI_MODEL_IDS } from '../types/aiChat';
+import { ChatMessage, AIModelChoice, AI_MAX_TOKENS } from '../types/aiChat';
+import { supabase } from '../lib/supabase';
 
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
+const EDGE_FUNCTION_URL = `${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1/ai-chat`;
 const MAX_HISTORY_MESSAGES = 10;
 
 interface SendMessageOptions {
@@ -34,7 +35,7 @@ function extractTextDelta(line: string): string | null {
 }
 
 /**
- * Sends a message to the Anthropic API with streaming enabled.
+ * Sends a message to the AI chat Edge Function with streaming enabled.
  * Text chunks are pushed to the store incrementally so the UI
  * renders them as they arrive.
  */
@@ -64,33 +65,34 @@ export async function sendAIChatMessage({
   store.setStreaming(true);
 
   try {
-    const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      throw new Error('no_api_key');
+    // Get auth session for the Edge Function
+    const session = await supabase?.auth.getSession();
+    const accessToken = session?.data?.session?.access_token;
+    if (!accessToken) {
+      throw new Error('auth_required');
     }
 
-    const modelId = AI_MODEL_IDS[model];
-
-    const response = await fetch(ANTHROPIC_API_URL, {
+    const response = await fetch(EDGE_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
+        'Authorization': `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
-        model: modelId,
-        max_tokens: 768,
-        stream: true,
-        system: systemPrompt,
         messages: [
           ...history,
           { role: 'user', content: userMessage },
         ],
+        systemPrompt,
+        model,
+        maxTokens: AI_MAX_TOKENS[model],
       }),
       signal: abortController?.signal,
     });
+
+    if (response.status === 401) {
+      throw new Error('auth_required');
+    }
 
     if (response.status === 429) {
       throw new Error('rate_limit');
@@ -164,7 +166,7 @@ export async function sendAIChatMessage({
       errorContent = '__error:offline__';
     } else if (error.message === 'rate_limit') {
       errorContent = '__error:rate_limit__';
-    } else if (error.message === 'no_api_key') {
+    } else if (error.message === 'auth_required') {
       errorContent = '__error:auth__';
     } else {
       errorContent = '__error:generic__';
