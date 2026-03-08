@@ -109,11 +109,6 @@ export function AIChatBubble({
 
   return (
     <View style={[styles.bubble, isUser ? styles.userBubble : styles.assistantBubble]}>
-      {!isUser && (
-        <View style={styles.avatarContainer}>
-          <Text style={styles.avatar}>أ</Text>
-        </View>
-      )}
       <View style={[styles.contentContainer, isUser && styles.userContent]}>
         {isUser
           ? <Text style={styles.userText}>{message.content}</Text>
@@ -169,7 +164,10 @@ function renderAssistantContent(content: string, onQuizAnswer?: (answer: string)
                   ))}
                 </Text>
               )}
-              {/* Render interactive option buttons */}
+              {/* Render interactive option lines */}
+              {onQuizAnswer && (
+                <Text style={styles.tapHint}>Tap to select your answer</Text>
+              )}
               <View style={styles.quizOptionsContainer}>
                 {quiz.options.map((opt) => (
                   <Pressable
@@ -182,10 +180,10 @@ function renderAssistantContent(content: string, onQuizAnswer?: (answer: string)
                     onPress={() => onQuizAnswer?.(`${opt.letter}) ${opt.text}`)}
                     disabled={!onQuizAnswer}
                   >
-                    <View style={styles.quizOptionLetter}>
-                      <Text style={styles.quizOptionLetterText}>{opt.letter}</Text>
-                    </View>
-                    <Text style={styles.quizOptionText}>{opt.text}</Text>
+                    <Text style={styles.quizOptionText}>
+                      <Text style={styles.quizOptionLetter}>{opt.letter})</Text>
+                      {'  '}{opt.text}
+                    </Text>
                   </Pressable>
                 ))}
               </View>
@@ -295,21 +293,6 @@ const styles = StyleSheet.create({
   errorBubble: {
     justifyContent: 'center',
   },
-  avatarContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#10b981',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-    marginTop: 4,
-  },
-  avatar: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
-  },
   contentContainer: {
     backgroundColor: '#334155',
     borderRadius: 16,
@@ -365,47 +348,42 @@ const styles = StyleSheet.create({
     marginTop: 8,
     padding: 4,
   },
+  tapHint: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '500',
+    marginTop: 14,
+    marginBottom: 4,
+  },
   // Quiz option styles
   quizOptionsContainer: {
-    marginTop: 12,
-    gap: 8,
+    marginTop: 14,
+    gap: 6,
   },
   quizOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#0f172a',
-    borderWidth: 1.5,
-    borderColor: '#475569',
-    borderRadius: 14,
-    paddingVertical: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#475569',
+    borderRadius: 8,
+    paddingVertical: 11,
     paddingHorizontal: 14,
   },
   quizOptionPressed: {
-    backgroundColor: '#10b98118',
-    borderColor: '#10b981',
+    backgroundColor: '#10b98115',
+    borderLeftColor: '#10b981',
   },
   quizOptionDisabled: {
-    opacity: 0.5,
+    opacity: 0.45,
   },
   quizOptionLetter: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#334155',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  quizOptionLetterText: {
     color: '#10b981',
-    fontSize: 14,
     fontWeight: '800',
+    fontSize: 15,
   },
   quizOptionText: {
     color: '#f5f5f0',
-    fontSize: 16,
-    lineHeight: 24,
-    flex: 1,
+    fontSize: 18,
+    lineHeight: 28,
   },
   errorText: {
     color: '#f87171',
