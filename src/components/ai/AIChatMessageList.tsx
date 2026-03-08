@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 import { FlatList, View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage, AIModuleContext } from '../../types/aiChat';
-import { AIChatBubble } from './AIChatBubble';
+import { AIChatBubble, QuizOptionData } from './AIChatBubble';
 import { AIChatTypingIndicator } from './AIChatTypingIndicator';
 import { getWelcomeMessage } from '../../data/ai/systemPrompts';
 import { useSettingsStore } from '../../stores/settingsStore';
@@ -61,16 +61,44 @@ export function AIChatMessageList({
     onSuggestionPress(answer);
   }, [onSuggestionPress]);
 
-  // Find the last assistant message id to enable quiz buttons only on it
-  const lastAssistantId = (() => {
-    for (let i = messages.length - 1; i >= 0; i--) {
-      if (messages[i].role === 'assistant') return messages[i].id;
-    }
-    return null;
-  })();
+  // Determine which quiz message should have active buttons, and
+  // extract retry options for "try again" messages.
+  const MCQ_LINE_RE = /^([A-D])\)\s+(.+)$/gm;
+  const TRY_AGAIN_PATTERN = /not quite|try again|almost|hint:/i;
 
-  // Quiz buttons are only active if the last message in the conversation is from the assistant
-  const quizActive = messages.length > 0 && messages[messages.length - 1].role === 'assistant';
+  const { activeQuizMessageId, retryMessageId, retryOptions } = (() => {
+    if (messages.length === 0 || isStreaming) {
+      return { activeQuizMessageId: null, retryMessageId: null, retryOptions: [] as QuizOptionData[] };
+    }
+
+    const lastMsg = messages[messages.length - 1];
+
+    // If the last message is an assistant message with quiz options, it's the active quiz
+    if (lastMsg.role === 'assistant' && MCQ_LINE_RE.test(lastMsg.content)) {
+      MCQ_LINE_RE.lastIndex = 0; // reset regex
+      return { activeQuizMessageId: lastMsg.id, retryMessageId: null, retryOptions: [] as QuizOptionData[] };
+    }
+
+    // If the last assistant message is a "try again" hint, find previous quiz options
+    if (lastMsg.role === 'assistant' && TRY_AGAIN_PATTERN.test(lastMsg.content)) {
+      for (let i = messages.length - 2; i >= 0; i--) {
+        MCQ_LINE_RE.lastIndex = 0;
+        const content = messages[i].content;
+        if (messages[i].role === 'assistant' && MCQ_LINE_RE.test(content)) {
+          // Extract options from that quiz message
+          MCQ_LINE_RE.lastIndex = 0;
+          const opts: QuizOptionData[] = [];
+          let match;
+          while ((match = MCQ_LINE_RE.exec(content)) !== null) {
+            opts.push({ letter: match[1], text: match[2] });
+          }
+          return { activeQuizMessageId: null, retryMessageId: lastMsg.id, retryOptions: opts };
+        }
+      }
+    }
+
+    return { activeQuizMessageId: null, retryMessageId: null, retryOptions: [] as QuizOptionData[] };
+  })();
 
   // Empty state
   if (messages.length === 0 && !isStreaming) {
@@ -143,15 +171,17 @@ export function AIChatMessageList({
         }
 
         const msg = item as ChatMessage;
-        const isLastAssistant = msg.id === lastAssistantId;
+        const isActiveQuiz = msg.id === activeQuizMessageId;
+        const isRetryMessage = msg.id === retryMessageId;
 
         return (
           <AIChatBubble
             message={msg}
             speakingMessageId={speakingMessageId}
             onSpeak={handleSpeak}
-            onQuizAnswer={quizActive && !isStreaming ? handleQuizAnswer : undefined}
-            isLatestAssistant={isLastAssistant}
+            onQuizAnswer={(isActiveQuiz || isRetryMessage) ? handleQuizAnswer : undefined}
+            isLatestAssistant={isActiveQuiz}
+            retryOptions={isRetryMessage ? retryOptions : undefined}
           />
         );
       }}

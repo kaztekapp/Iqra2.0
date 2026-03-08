@@ -4,6 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage } from '../../types/aiChat';
 import { useTranslation } from 'react-i18next';
 
+export interface QuizOptionData {
+  letter: string;
+  text: string;
+}
+
 interface Props {
   message: ChatMessage;
   speakingMessageId?: string | null;
@@ -11,6 +16,8 @@ interface Props {
   onQuizAnswer?: (answer: string) => void;
   isStreamingMessage?: boolean;
   isLatestAssistant?: boolean;
+  /** Quiz options to re-attach on "try again" messages */
+  retryOptions?: QuizOptionData[];
 }
 
 /** Detect Arabic characters to style them with gold color */
@@ -82,6 +89,7 @@ export function AIChatBubble({
   onQuizAnswer,
   isStreamingMessage,
   isLatestAssistant,
+  retryOptions,
 }: Props) {
   const { t } = useTranslation();
   const isUser = message.role === 'user';
@@ -114,6 +122,28 @@ export function AIChatBubble({
           ? <Text style={styles.userText}>{message.content}</Text>
           : renderAssistantContent(message.content, isLatestAssistant && !isStreamingMessage ? onQuizAnswer : undefined)
         }
+        {retryOptions && retryOptions.length > 0 && onQuizAnswer && (
+          <>
+            <Text style={styles.tapHint}>Tap to try again</Text>
+            <View style={styles.quizOptionsContainer}>
+              {retryOptions.map((opt) => (
+                <Pressable
+                  key={opt.letter}
+                  style={({ pressed }) => [
+                    styles.quizOption,
+                    pressed && styles.quizOptionPressed,
+                  ]}
+                  onPress={() => onQuizAnswer(`${opt.letter}) ${opt.text}`)}
+                >
+                  <Text style={styles.quizOptionText}>
+                    <Text style={styles.quizOptionLetter}>{opt.letter})</Text>
+                    {'  '}{opt.text}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </>
+        )}
         {arabicText.length > 0 && onSpeak && (
           <Pressable
             style={styles.speakButton}
@@ -320,8 +350,9 @@ const styles = StyleSheet.create({
   },
   arabicText: {
     color: '#D4AF37',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 22,
+    lineHeight: 34,
+    fontWeight: '600',
   },
   boldText: {
     fontWeight: '700',
@@ -382,8 +413,9 @@ const styles = StyleSheet.create({
   },
   quizOptionText: {
     color: '#f5f5f0',
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 20,
+    lineHeight: 32,
+    fontWeight: '500',
   },
   errorText: {
     color: '#f87171',

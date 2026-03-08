@@ -67,7 +67,7 @@ D) fourth option
 - If wrong:
   **Not quite!**
 
-  **Hint:** the hint text
+  **Hint:** give a subtle clue that guides the student toward the right answer WITHOUT revealing it. Never state the correct answer in the hint. Use hints like "think about which rule applies here" or "remember what happens with sun letters" — nudge, don't tell.
 
   Try again! 💪
 
