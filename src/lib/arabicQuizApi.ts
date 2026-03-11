@@ -24,8 +24,11 @@ export interface DetailedExplanation {
   arabic: string;
   transliteration: string;
   english: string;
+  french: string;
   pronunciationTip?: string;
+  pronunciationTipFr?: string;
   memoryTip?: string;
+  memoryTipFr?: string;
 }
 
 export interface GenerateQuizResult {
@@ -38,8 +41,12 @@ function generateMultipleChoiceQuestion(
   word: ArabicVocabularyWord,
   allWords: ArabicVocabularyWord[],
   direction: QuizDirection,
-  index: number
+  index: number,
+  language: string = 'en'
 ): QuizQuestion {
+  const isFr = language === 'fr';
+  const localWord = isFr ? word.french : word.english;
+
   // Get 3 random wrong answers (distractors)
   const distractors = allWords
     .filter((w) => w.id !== word.id)
@@ -52,18 +59,22 @@ function generateMultipleChoiceQuestion(
   let correctIndex: number;
 
   if (direction === 'arabicToEnglish') {
-    // Show Arabic word, ask for English meaning
-    question = 'What does this Arabic word mean?';
+    // Show Arabic word, ask for meaning in user's language
+    question = isFr
+      ? 'Que signifie ce mot arabe ?'
+      : 'What does this Arabic word mean?';
     questionArabic = word.arabic;
 
-    // Options are English translations
-    const wrongOptions = distractors.map((w) => w.english);
+    // Options are translations in user's language
+    const wrongOptions = distractors.map((w) => isFr ? w.french : w.english);
     correctIndex = Math.floor(Math.random() * 4);
     options = [...wrongOptions];
-    options.splice(correctIndex, 0, word.english);
+    options.splice(correctIndex, 0, localWord);
   } else {
-    // Show English word, ask for Arabic translation
-    question = `How do you say "${word.english}" in Arabic?`;
+    // Show word in user's language, ask for Arabic translation
+    question = isFr
+      ? `Comment dit-on « ${localWord} » en arabe ?`
+      : `How do you say "${localWord}" in Arabic?`;
 
     // Options are Arabic words
     const wrongOptions = distractors.map((w) => w.arabic);
@@ -97,65 +108,91 @@ function createDetailedExplanation(
     arabic: word.arabic,
     transliteration: word.transliteration,
     english: word.english,
+    french: word.french,
   };
 
-  // Add pronunciation tip based on transliteration
-  explanation.pronunciationTip = generatePronunciationTip(word.transliteration, word.arabic);
+  // Add pronunciation tips (EN + FR)
+  explanation.pronunciationTip = generatePronunciationTip(word.transliteration, word.arabic, 'en');
+  explanation.pronunciationTipFr = generatePronunciationTip(word.transliteration, word.arabic, 'fr');
 
-  // Add memory tip to help remember the word
-  explanation.memoryTip = generateMemoryTip(word.english, word.transliteration);
+  // Add memory tips (EN + FR)
+  explanation.memoryTip = generateMemoryTip(word.english, word.transliteration, 'en');
+  explanation.memoryTipFr = generateMemoryTip(word.french, word.transliteration, 'fr');
 
   return explanation;
 }
 
 // Generate helpful pronunciation tips
-function generatePronunciationTip(transliteration: string, arabic: string): string {
+function generatePronunciationTip(transliteration: string, arabic: string, lang: string = 'en'): string {
+  const isFr = lang === 'fr';
   const tips: string[] = [];
 
-  // Check for common Arabic sounds that are difficult for English speakers
   if (transliteration.includes("'") || transliteration.includes('ع')) {
-    tips.push("The ' sound (ع) is a deep throat sound unique to Arabic");
+    tips.push(isFr
+      ? "Le son ' (ع) est un son guttural profond propre à l'arabe"
+      : "The ' sound (ع) is a deep throat sound unique to Arabic");
   }
   if (transliteration.includes('kh')) {
-    tips.push("'kh' is pronounced like the 'ch' in Scottish 'loch'");
+    tips.push(isFr
+      ? "'kh' se prononce comme la jota espagnole ou le 'ch' allemand"
+      : "'kh' is pronounced like the 'ch' in Scottish 'loch'");
   }
   if (transliteration.includes('gh')) {
-    tips.push("'gh' is a guttural sound, like gargling");
+    tips.push(isFr
+      ? "'gh' est un son guttural, comme un gargarisme"
+      : "'gh' is a guttural sound, like gargling");
   }
   if (transliteration.includes('q')) {
-    tips.push("'q' is pronounced deep in the throat, different from 'k'");
+    tips.push(isFr
+      ? "'q' se prononce au fond de la gorge, différent du 'k'"
+      : "'q' is pronounced deep in the throat, different from 'k'");
   }
   if (transliteration.includes('aa') || transliteration.includes('ee') || transliteration.includes('oo')) {
-    tips.push('Double vowels indicate a longer sound');
+    tips.push(isFr
+      ? 'Les voyelles doublées indiquent un son plus long'
+      : 'Double vowels indicate a longer sound');
   }
 
-  // Check for common Arabic letter patterns
   if (arabic.includes('ال')) {
-    tips.push("'ال' (al-) is the Arabic definite article, like 'the' in English");
+    tips.push(isFr
+      ? "'ال' (al-) est l'article défini arabe, comme « le/la » en français"
+      : "'ال' (al-) is the Arabic definite article, like 'the' in English");
   }
 
   if (tips.length === 0) {
-    return `Pronounce it as: "${transliteration}"`;
+    return isFr
+      ? `Prononcez : « ${transliteration} »`
+      : `Pronounce it as: "${transliteration}"`;
   }
 
-  return `Pronounce it as: "${transliteration}". ${tips[0]}`;
+  return isFr
+    ? `Prononcez : « ${transliteration} ». ${tips[0]}`
+    : `Pronounce it as: "${transliteration}". ${tips[0]}`;
 }
 
 // Generate memory tips to help remember words
-function generateMemoryTip(english: string, transliteration: string): string {
-  // Try to find sound similarities
-  const firstSyllable = transliteration.split(/[aeiou]/)[0];
+function generateMemoryTip(localWord: string, transliteration: string, lang: string = 'en'): string {
+  const isFr = lang === 'fr';
 
-  const memoryTips = [
-    `Try to associate "${transliteration}" with the meaning "${english}"`,
-    `Repeat "${transliteration}" three times while thinking of "${english}"`,
-    `Picture something related to "${english}" while saying "${transliteration}"`,
-    `The Arabic word sounds like "${transliteration}" - connect it to "${english}"`,
-  ];
+  const memoryTips = isFr
+    ? [
+        `Associez « ${transliteration} » au sens « ${localWord} »`,
+        `Répétez « ${transliteration} » trois fois en pensant à « ${localWord} »`,
+        `Imaginez quelque chose lié à « ${localWord} » en disant « ${transliteration} »`,
+        `Le mot arabe se prononce « ${transliteration} » — reliez-le à « ${localWord} »`,
+      ]
+    : [
+        `Try to associate "${transliteration}" with the meaning "${localWord}"`,
+        `Repeat "${transliteration}" three times while thinking of "${localWord}"`,
+        `Picture something related to "${localWord}" while saying "${transliteration}"`,
+        `The Arabic word sounds like "${transliteration}" - connect it to "${localWord}"`,
+      ];
 
-  // Check for sound similarities with English
-  if (transliteration.toLowerCase().includes(english.substring(0, 2).toLowerCase())) {
-    return `Notice how "${transliteration}" starts similarly to "${english}" - use this to remember!`;
+  // Check for sound similarities
+  if (transliteration.toLowerCase().includes(localWord.substring(0, 2).toLowerCase())) {
+    return isFr
+      ? `Remarquez que « ${transliteration} » commence comme « ${localWord} » — utilisez cela pour retenir !`
+      : `Notice how "${transliteration}" starts similarly to "${localWord}" - use this to remember!`;
   }
 
   return memoryTips[Math.floor(Math.random() * memoryTips.length)];
@@ -164,13 +201,18 @@ function generateMemoryTip(english: string, transliteration: string): string {
 // Generate a quiz with dynamically fetched vocabulary
 export async function generateArabicQuiz(
   questionCount: number = DEFAULT_QUIZ_CONFIG.questionCount,
-  mixDirections: boolean = true
+  mixDirections: boolean = true,
+  language: string = 'en'
 ): Promise<GenerateQuizResult> {
   // Fetch vocabulary from APIs (with caching)
   const vocabulary = await getVocabularyForQuiz(questionCount + 5);
 
   if (vocabulary.length < 4) {
-    throw new Error('Not enough vocabulary words available. Please try again.');
+    throw new Error(
+      language === 'fr'
+        ? 'Pas assez de mots disponibles. Veuillez réessayer.'
+        : 'Not enough vocabulary words available. Please try again.'
+    );
   }
 
   // Select words for the quiz
@@ -186,7 +228,7 @@ export async function generateArabicQuiz(
       direction = 'arabicToEnglish';
     }
 
-    return generateMultipleChoiceQuestion(word, vocabulary, direction, index);
+    return generateMultipleChoiceQuestion(word, vocabulary, direction, index, language);
   });
 
   return {

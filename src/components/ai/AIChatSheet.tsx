@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useMemo } from 'react';
 import {
   View,
   Modal,
@@ -13,11 +13,13 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSegments, useGlobalSearchParams } from 'expo-router';
 import { useAIChatStore } from '../../stores/aiChatStore';
+import { useCreditStore, getCreditDisplayInfo } from '../../stores/creditStore';
 import { sendAIChatMessage } from '../../services/aiChatService';
 import { AIChatHeader } from './AIChatHeader';
 import { AIChatMessageList } from './AIChatMessageList';
 import { AIChatInput } from './AIChatInput';
-import { useAIChatSpeechInput } from '../../hooks/useAIChatSpeechInput';
+import { AIQuickSuggestions } from './AIQuickSuggestions';
+import { CreditPurchaseSheet } from './CreditPurchaseSheet';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SHEET_HEIGHT_RATIO = 0.85;
@@ -50,11 +52,26 @@ export function AIChatSheet() {
     clearConversation,
   } = useAIChatStore();
 
-  const messages = conversations[activeModule] || [];
+  const creditBalance = useCreditStore((s) => s.creditBalance);
+  const subStatus = useCreditStore((s) => s.subscriptionStatus);
+  const subExpires = useCreditStore((s) => s.subscriptionExpiresAt);
+  const freeUsed = useCreditStore((s) => s.freeMessagesUsed);
+  const freeDate = useCreditStore((s) => s.freeMessagesDate);
 
-  // Voice input
-  const { isListening, startListening, stopListening, transcript } = useAIChatSpeechInput();
+  const creditInfo = useMemo(
+    () => getCreditDisplayInfo({
+      creditBalance, subscriptionStatus: subStatus,
+      subscriptionExpiresAt: subExpires, freeMessagesUsed: freeUsed,
+      freeMessagesDate: freeDate,
+    }),
+    [creditBalance, subStatus, subExpires, freeUsed, freeDate]
+  );
+
+  const messages = conversations[activeModule] || [];
+  const hasCredits = creditInfo.source !== 'empty';
+
   const [inputText, setInputText] = useState('');
+  const [purchaseSheetVisible, setPurchaseSheetVisible] = useState(false);
 
   // Slide animation
   const slideAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
@@ -104,11 +121,13 @@ export function AIChatSheet() {
   ).current;
 
   const handleClose = useCallback(() => {
+    setInputText('');
     animateOut(() => closeChat());
   }, []);
 
   const handleSend = useCallback(
     (text: string) => {
+      setInputText('');
       const controller = new AbortController();
       abortRef.current = controller;
       sendAIChatMessage({
@@ -124,23 +143,14 @@ export function AIChatSheet() {
     abortRef.current?.abort();
   }, []);
 
-  const handleModelSwitch = useCallback(() => {
-    setPreferredModel(preferredModel === 'haiku' ? 'sonnet' : 'haiku');
-  }, [preferredModel]);
-
   const handleClear = useCallback(() => {
     clearConversation();
   }, []);
 
-  const handleVoicePress = useCallback(() => {
-    if (isListening) {
-      stopListening();
-    } else {
-      startListening((text) => {
-        setInputText((prev) => (prev ? prev + ' ' + text : text));
-      });
-    }
-  }, [isListening]);
+  const handleModelSwitch = useCallback(() => {
+    const current = useAIChatStore.getState().preferredModel;
+    setPreferredModel(current === 'haiku' ? 'sonnet' : 'haiku');
+  }, []);
 
   const handleSuggestionPress = useCallback(
     (text: string) => {
@@ -182,9 +192,11 @@ export function AIChatSheet() {
               <AIChatHeader
                 module={activeModule}
                 model={preferredModel}
-                onModelSwitch={handleModelSwitch}
+                creditInfo={creditInfo}
                 onClear={handleClear}
                 onClose={handleClose}
+                onCreditPress={() => setPurchaseSheetVisible(true)}
+                onTeacherSwitch={handleModelSwitch}
               />
             </Animated.View>
 
@@ -194,21 +206,36 @@ export function AIChatSheet() {
                 isStreaming={isStreaming}
                 streamingContent={streamingContent}
                 module={activeModule}
+                model={preferredModel}
                 segments={segments}
                 onSuggestionPress={handleSuggestionPress}
               />
             </View>
 
+            <AIQuickSuggestions
+              messages={messages}
+              isStreaming={isStreaming}
+              activeModule={activeModule}
+              segments={segments}
+              onPress={handleSuggestionPress}
+            />
+
             <AIChatInput
+              value={inputText}
+              onChangeText={setInputText}
               onSend={handleSend}
-              onVoicePress={handleVoicePress}
               isStreaming={isStreaming}
               onStopStreaming={handleStopStreaming}
-              isListening={isListening}
+              hasCredits={hasCredits}
             />
           </Animated.View>
         </KeyboardAvoidingView>
       </View>
+
+      <CreditPurchaseSheet
+        visible={purchaseSheetVisible}
+        onClose={() => setPurchaseSheetVisible(false)}
+      />
     </Modal>
   );
 }

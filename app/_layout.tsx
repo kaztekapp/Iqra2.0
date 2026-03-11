@@ -13,7 +13,9 @@ import { useTranslation } from 'react-i18next';
 import { quranAudioService } from '../src/services/quranAudioService';
 import { adService } from '../src/services/adService';
 import { iapService } from '../src/services/iapService';
+import { revenueCatService } from '../src/services/revenueCatService';
 import { useSettingsStore } from '../src/stores/settingsStore';
+import { useCreditStore } from '../src/stores/creditStore';
 import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
 import { AIFloatingButton } from '../src/components/ai/AIFloatingButton';
@@ -111,6 +113,7 @@ export default function RootLayout() {
       // Start auto-refresh only after initial session is validated
       if (session) {
         supabase!.auth.startAutoRefresh();
+        useCreditStore.getState().syncCredits();
       }
     }).catch(() => {
       clearTimeout(timeout);
@@ -119,6 +122,13 @@ export default function RootLayout() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
+      if (session) {
+        useCreditStore.getState().syncCredits();
+        revenueCatService.identifyUser(session.user.id);
+      } else {
+        useCreditStore.getState().reset();
+        revenueCatService.logout();
+      }
       if (event === 'PASSWORD_RECOVERY') {
         router.replace('/reset-password');
       }
@@ -215,6 +225,7 @@ export default function RootLayout() {
       quranAudioService.warmUp();
       adService.initialize();
       iapService.initialize();
+      revenueCatService.initialize();
     }
   }, [appReady]);
 

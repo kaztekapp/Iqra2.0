@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "IQra2.0",
+    "name": "Iqra AI",
     "slug": "iqra2",
     "version": "1.0.0",
-    "description": "IQra2.0 — Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, study Quran with audio recitations, and practice prayer.",
+    "description": "Iqra AI — Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, study Quran with audio recitations, and practice prayer.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "iqra2",
@@ -22,8 +22,8 @@
         "UIBackgroundModes": [
           "audio"
         ],
-        "NSSpeechRecognitionUsageDescription": "IQra2.0 uses speech recognition to check your Arabic pronunciation during speaking practice.",
-        "NSMicrophoneUsageDescription": "IQra2.0 uses the microphone to record your voice during pronunciation practice.",
+        "NSSpeechRecognitionUsageDescription": "Iqra AI uses speech recognition to check your Arabic pronunciation during speaking practice.",
+        "NSMicrophoneUsageDescription": "Iqra AI uses the microphone to record your voice during pronunciation practice.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -62,7 +62,14 @@
       ],
       "expo-secure-store",
       "expo-apple-authentication",
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "ios": { "useFrameworks": "static" },
+          "android": { "minSdkVersion": 24 }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

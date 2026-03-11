@@ -22,6 +22,7 @@ interface AIChatState {
   openChat: (module?: AIModuleContext, segments?: string[]) => void;
   closeChat: () => void;
   setActiveModule: (module: AIModuleContext) => void;
+  setActiveSegments: (segments: string[]) => void;
   addUserMessage: (content: string) => string;
   appendStreamChunk: (chunk: string) => void;
   finalizeStreamedMessage: () => void;
@@ -38,6 +39,9 @@ const EMPTY_CONVERSATIONS: Record<AIModuleContext, ChatMessage[]> = {
   verbs: [],
   reading: [],
   practice: [],
+  quran: [],
+  prayer: [],
+  duas: [],
   general: [],
 };
 
@@ -76,6 +80,7 @@ export const useAIChatStore = create<AIChatState>()(
       },
 
       setActiveModule: (module) => set({ activeModule: module }),
+      setActiveSegments: (segments) => set({ activeSegments: segments }),
 
       addUserMessage: (content) => {
         const id = `msg_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;

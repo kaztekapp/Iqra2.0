@@ -1,16 +1,15 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { Alert } from 'react-native';
 import { useSettingsStore } from '../stores/settingsStore';
 
-// Try to import expo-speech-recognition (same guard as useSpeechRecognition)
+// Try to import expo-speech-recognition (requires dev build)
 let ExpoSpeechRecognitionModule: any = null;
-let useSpeechRecognitionEvent: any = null;
 
 try {
   const speechRecognition = require('expo-speech-recognition');
   ExpoSpeechRecognitionModule = speechRecognition.ExpoSpeechRecognitionModule;
-  useSpeechRecognitionEvent = speechRecognition.useSpeechRecognitionEvent;
 } catch {
-  // Module not available
+  // Module not available (Expo Go or missing native module)
 }
 
 /**
@@ -26,43 +25,56 @@ export function useAIChatSpeechInput() {
 
   const isSupported = !!ExpoSpeechRecognitionModule;
 
-  // Register event handlers (must be called unconditionally as per hooks rules)
-  useSpeechRecognitionEvent?.('result', (event: any) => {
-    const text = event.results[0]?.transcript || '';
-    setTranscript(text);
+  // Register native event listeners while listening
+  useEffect(() => {
+    if (!isListening || !ExpoSpeechRecognitionModule) return;
 
-    if (event.isFinal && text && onTranscriptRef.current) {
-      onTranscriptRef.current(text);
-    }
-  });
+    const resultSub = ExpoSpeechRecognitionModule.addListener('result', (event: any) => {
+      const text = event.results?.[0]?.transcript || '';
+      setTranscript(text);
 
-  useSpeechRecognitionEvent?.('error', (event: any) => {
-    setIsListening(false);
-    setError(event.error || 'Recognition failed');
-  });
+      if (event.isFinal && text && onTranscriptRef.current) {
+        onTranscriptRef.current(text);
+      }
+    });
 
-  useSpeechRecognitionEvent?.('end', () => {
-    setIsListening(false);
-  });
+    const errorSub = ExpoSpeechRecognitionModule.addListener('error', (event: any) => {
+      setIsListening(false);
+      setError(event.error || 'Recognition failed');
+    });
+
+    const endSub = ExpoSpeechRecognitionModule.addListener('end', () => {
+      setIsListening(false);
+    });
+
+    return () => {
+      resultSub.remove();
+      errorSub.remove();
+      endSub.remove();
+    };
+  }, [isListening]);
 
   const startListening = useCallback(
     async (onResult: (text: string) => void) => {
       if (!ExpoSpeechRecognitionModule) {
-        setError('Speech recognition requires a development build');
+        Alert.alert(
+          'Development Build Required',
+          'Voice input requires a development build. It is not available in Expo Go.',
+        );
         return;
       }
 
       try {
         const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
         if (!granted) {
-          setError('Microphone permission denied');
+          Alert.alert('Permission Denied', 'Microphone permission is required for voice input.');
           return;
         }
 
         onTranscriptRef.current = onResult;
-        setIsListening(true);
         setTranscript('');
         setError(null);
+        setIsListening(true);
 
         // Use the user's UI language for dictation
         const language = useSettingsStore.getState().language;

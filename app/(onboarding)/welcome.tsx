@@ -15,7 +15,7 @@ export default function WelcomeScreen() {
           style={styles.logoImage}
           resizeMode="contain"
         />
-        <Text style={styles.appName}>Iqra 2.0</Text>
+        <Text style={styles.appName}>Iqra AI</Text>
         <Text style={styles.tagline}>{t('onboarding.welcomeTagline')}</Text>
       </View>
 

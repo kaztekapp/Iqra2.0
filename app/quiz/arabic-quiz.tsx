@@ -17,11 +17,13 @@ import { useCommunityStore } from '../../src/stores/communityStore';
 import { generateArabicQuiz, DetailedExplanation } from '../../src/lib/arabicQuizApi';
 import { playArabicAudio } from '../../src/lib/arabicVocabularyApi';
 import { DEFAULT_QUIZ_CONFIG } from '../../src/types/arabicQuiz';
+import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
 export default function ArabicQuizScreen() {
   const { t } = useTranslation();
+  const { lc, language } = useLocalizedContent();
   const [screenState, setScreenState] = useState<ScreenState>('loading');
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -102,7 +104,7 @@ export default function ArabicQuizScreen() {
       setTimeout(() => setLoadingMessage(t('arabicQuiz.translatingWords')), 1500);
       setTimeout(() => setLoadingMessage(t('arabicQuiz.generatingQuestions')), 3000);
 
-      const { questions } = await generateArabicQuiz(10, true);
+      const { questions } = await generateArabicQuiz(10, true, language);
       setQuestions(questions);
       setScreenState('ready');
     } catch (err) {
@@ -345,7 +347,7 @@ export default function ArabicQuizScreen() {
             <Text style={styles.questionText}>
               {currentQuestion.direction === 'arabicToEnglish'
                 ? t('arabicQuiz.whatDoesThisMean')
-                : t('arabicQuiz.howDoYouSay', { word: currentQuestion.word.english })}
+                : t('arabicQuiz.howDoYouSay', { word: lc(currentQuestion.word.english, currentQuestion.word.french) })}
             </Text>
           </View>
 
@@ -369,7 +371,10 @@ export default function ArabicQuizScreen() {
               return (
                 <Pressable
                   key={index}
-                  style={optionStyle}
+                  style={({ pressed }) => [
+                    ...optionStyle,
+                    pressed && screenState === 'playing' && styles.optionPressed,
+                  ]}
                   onPress={() => handleSelectOption(index)}
                   disabled={screenState === 'feedback'}
                 >
@@ -406,7 +411,7 @@ export default function ArabicQuizScreen() {
                   </Pressable>
                   <Text style={styles.arabicLarge}>{currentQuestion.explanation.arabic}</Text>
                   <Text style={styles.transliteration}>{currentQuestion.explanation.transliteration}</Text>
-                  <Text style={styles.englishMeaning}>{currentQuestion.explanation.english}</Text>
+                  <Text style={styles.englishMeaning}>{lc(currentQuestion.explanation.english, currentQuestion.explanation.french)}</Text>
                 </View>
 
                 {currentQuestion.explanation.pronunciationTip && (
@@ -415,7 +420,7 @@ export default function ArabicQuizScreen() {
                       <Ionicons name="volume-high" size={16} color="#818cf8" />
                       <Text style={styles.tipLabel}>{t('arabicQuiz.pronunciation')}</Text>
                     </View>
-                    <Text style={styles.tipText}>{currentQuestion.explanation.pronunciationTip}</Text>
+                    <Text style={styles.tipText}>{lc(currentQuestion.explanation.pronunciationTip, currentQuestion.explanation.pronunciationTipFr)}</Text>
                   </View>
                 )}
 
@@ -425,7 +430,7 @@ export default function ArabicQuizScreen() {
                       <Ionicons name="bulb" size={16} color="#D4AF37" />
                       <Text style={styles.tipLabel}>{t('arabicQuiz.memoryTip')}</Text>
                     </View>
-                    <Text style={styles.tipText}>{currentQuestion.explanation.memoryTip}</Text>
+                    <Text style={styles.tipText}>{lc(currentQuestion.explanation.memoryTip, currentQuestion.explanation.memoryTipFr)}</Text>
                   </View>
                 )}
               </View>
@@ -505,7 +510,8 @@ export default function ArabicQuizScreen() {
             {currentQuestions.map((question, index) => {
               const answer = currentAnswers[index];
               const wasCorrect = answer?.isCorrect ?? false;
-              const userAnswer = answer?.selectedIndex >= 0 ? question.options[answer.selectedIndex] : t('arabicQuiz.noAnswer');
+              const rawUserAnswer = answer?.selectedIndex >= 0 ? question.options[answer.selectedIndex] : null;
+              const userAnswer = rawUserAnswer ?? t('arabicQuiz.noAnswer');
               const correctAnswer = question.options[question.correctIndex];
 
               return (
@@ -522,7 +528,7 @@ export default function ArabicQuizScreen() {
                   <Text style={styles.reviewQuestion}>
                     {question.direction === 'arabicToEnglish'
                       ? t('arabicQuiz.whatDoesThisMean')
-                      : t('arabicQuiz.howDoYouSay', { word: question.word.english })}
+                      : t('arabicQuiz.howDoYouSay', { word: lc(question.word.english, question.word.french) })}
                   </Text>
 
                   {question.questionArabic && (
@@ -561,11 +567,11 @@ export default function ArabicQuizScreen() {
                       </Pressable>
                       <Text style={styles.reviewArabic}>{question.explanation.arabic}</Text>
                       <Text style={styles.reviewTranslit}>({question.explanation.transliteration})</Text>
-                      <Text style={styles.reviewEnglish}>= {question.explanation.english}</Text>
+                      <Text style={styles.reviewEnglish}>= {lc(question.explanation.english, question.explanation.french)}</Text>
                     </View>
                     {question.explanation.pronunciationTip && (
                       <Text style={styles.reviewTip}>
-                        {question.explanation.pronunciationTip}
+                        {lc(question.explanation.pronunciationTip, question.explanation.pronunciationTipFr)}
                       </Text>
                     )}
                   </View>
@@ -859,6 +865,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 2,
     borderColor: '#334155',
+  },
+  optionPressed: {
+    borderColor: '#D4AF37',
+    backgroundColor: 'rgba(212, 175, 55, 0.06)',
   },
   optionCorrect: {
     backgroundColor: 'rgba(34, 197, 94, 0.1)',

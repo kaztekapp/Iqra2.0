@@ -1,12 +1,20 @@
 import { fetch } from 'expo/fetch';
 import { useAIChatStore } from '../stores/aiChatStore';
+import { useCreditStore } from '../stores/creditStore';
 import { gatherAIContext } from './aiContextService';
-import { buildSystemPrompt } from '../data/ai/systemPrompts';
+import { buildSystemPrompt, buildStudyPlanDirective } from '../data/ai/systemPrompts';
 import { ChatMessage, AIModelChoice, AI_MAX_TOKENS } from '../types/aiChat';
 import { supabase } from '../lib/supabase';
 
 const EDGE_FUNCTION_URL = `${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1/ai-chat`;
 const MAX_HISTORY_MESSAGES = 10;
+
+const STUDY_PLAN_PATTERNS = /\b(study\s*plan|learning\s*plan|revision\s*plan|weekly\s*plan|plan\s*d[''']?\s*[eé]tude|plan\s*d[''']?\s*apprentissage|plan\s*de\s*r[eé]vision|programme\s*d[''']?\s*[eé]tude)\b/i;
+
+/** Detect if the user message is requesting a study plan */
+function isStudyPlanRequest(message: string): boolean {
+  return STUDY_PLAN_PATTERNS.test(message);
+}
 
 interface SendMessageOptions {
   userMessage: string;
@@ -49,7 +57,12 @@ export async function sendAIChatMessage({
 
   // Gather context
   const context = gatherAIContext(activeModule);
-  const systemPrompt = buildSystemPrompt(context);
+  let systemPrompt = buildSystemPrompt(context, model);
+
+  // Append study plan directive if requested
+  if (isStudyPlanRequest(userMessage)) {
+    systemPrompt += '\n\n' + buildStudyPlanDirective(context);
+  }
 
   // Get conversation history (last N messages), filtering out error sentinels
   const history = (conversations[activeModule] || [])
@@ -92,6 +105,11 @@ export async function sendAIChatMessage({
 
     if (response.status === 401) {
       throw new Error('auth_required');
+    }
+
+    if (response.status === 402) {
+      useCreditStore.getState().updateFromHeaders(response.headers);
+      throw new Error('no_credits');
     }
 
     if (response.status === 429) {
@@ -146,8 +164,11 @@ export async function sendAIChatMessage({
     // Finalize the streamed message into a real conversation message
     useAIChatStore.getState().finalizeStreamedMessage();
 
+    // Sync credit state from response headers
+    useCreditStore.getState().updateFromHeaders(response.headers);
+
   } catch (error: any) {
-    if (error.name === 'AbortError') {
+    if (error.name === 'AbortError' || error.message?.toLowerCase().includes('cancel')) {
       // User stopped — finalize whatever was streamed so far
       const { streamingContent } = useAIChatStore.getState();
       if (streamingContent) {
@@ -164,6 +185,8 @@ export async function sendAIChatMessage({
     let errorContent: string;
     if (error.message === 'Network request failed' || error.message === 'no_stream') {
       errorContent = '__error:offline__';
+    } else if (error.message === 'no_credits') {
+      errorContent = '__error:no_credits__';
     } else if (error.message === 'rate_limit') {
       errorContent = '__error:rate_limit__';
     } else if (error.message === 'auth_required') {

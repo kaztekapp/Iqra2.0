@@ -293,8 +293,8 @@ function getSurahLengthTier(ayahCount: number): { tier: 'short' | 'medium' | 'lo
 
 const METHOD_DESCRIPTIONS: Record<LearningMethod, { en: string; fr: string }> = {
   learn: {
-    en: 'Surah Learning — the student is studying the surah in depth. They want tafsir (deep meaning), word-by-word understanding, and memorization guidance. Help them understand the meaning behind what they are memorizing.',
-    fr: 'Apprentissage de la Sourate — l\'étudiant étudie la sourate en profondeur. Il veut le tafsir (sens profond), la compréhension mot par mot, et des conseils de mémorisation.',
+    en: 'Surah Learning — the student is actively memorizing ayahs. Help them with memorization techniques: chunking, repetition patterns, meaning associations, and linking ayahs together.',
+    fr: 'Apprentissage de la Sourate — l\'étudiant mémorise activement les versets. Aide-le avec des techniques de mémorisation : découpage, schémas de répétition, associations de sens et enchaînement des versets.',
   },
   'spaced-repetition': {
     en: 'Spaced Repetition — the student reviews memorized ayahs at increasing intervals using the SM-2 algorithm. Focus on helping them recall and reinforce weak ayahs.',
@@ -740,36 +740,36 @@ export function getContextualSuggestions(
       if (method) {
         const methodSuggestions: Record<LearningMethod, { en: string[]; fr: string[] }> = {
           learn: {
-            en: ['Tafsir of these ayahs', 'Help me memorize this passage', 'Word-by-word meaning', 'Why was this revealed?'],
-            fr: ['Tafsir de ces versets', 'Aide-moi à mémoriser ce passage', 'Sens mot par mot', 'Pourquoi cela a été révélé ?'],
+            en: ['Help me memorize this ayah', 'Break it into chunks for me', 'What\'s a good repetition plan?', 'Link this ayah to the next one'],
+            fr: ['Aide-moi à mémoriser ce verset', 'Découpe-le en segments', 'Un bon plan de répétition ?', 'Relie ce verset au suivant'],
           },
           'spaced-repetition': {
-            en: ['Quiz me on my weak ayahs', 'Why do I keep forgetting this?', 'Tips to improve retention', 'Explain this ayah\'s meaning'],
-            fr: ['Teste-moi sur mes versets faibles', 'Pourquoi j\'oublie toujours ça ?', 'Astuces pour mieux retenir', 'Explique le sens de ce verset'],
+            en: ['Quiz me on due ayahs', 'Why do I keep forgetting this?', 'How to space my reviews better?', 'Break down this hard ayah'],
+            fr: ['Teste-moi sur les versets à réviser', 'Pourquoi j\'oublie toujours ça ?', 'Comment mieux espacer mes révisions ?', 'Décompose ce verset difficile'],
           },
           chunking: {
-            en: ['Explain this chunk\'s meaning', 'How do these chunks connect?', 'Help me link the phrases', 'Meaning of these words'],
-            fr: ['Explique le sens de ce segment', 'Comment ces segments se lient ?', 'Aide-moi à relier les phrases', 'Sens de ces mots'],
+            en: ['Break this ayah into chunks', 'How do these chunks connect?', 'Help me combine the chunks', 'What does this chunk mean?'],
+            fr: ['Découpe ce verset en segments', 'Comment ces segments se lient ?', 'Aide-moi à combiner les segments', 'Que veut dire ce segment ?'],
           },
           'active-recall': {
-            en: ['Give me a hint (no spoilers)', 'Why is this word correct?', 'What grammar rule here?', 'Tips for better recall'],
-            fr: ['Donne-moi un indice (pas de spoiler)', 'Pourquoi ce mot est correct ?', 'Quelle règle de grammaire ici ?', 'Astuces pour mieux se rappeler'],
+            en: ['Give me a hint (no spoilers)', 'Test me on the next ayah', 'I\'m stuck, guide me', 'Tips for better recall'],
+            fr: ['Donne-moi un indice (pas de spoiler)', 'Teste-moi sur le verset suivant', 'Je suis bloqué, guide-moi', 'Astuces pour mieux me rappeler'],
           },
           visualization: {
-            en: ['Help me picture this scene', 'Suggest a memory anchor', 'Create a personal connection', 'Explain the key words'],
-            fr: ['Aide-moi à imaginer cette scène', 'Suggère un ancrage mémoriel', 'Crée une connexion personnelle', 'Explique les mots clés'],
+            en: ['Help me picture this ayah', 'Suggest a memory anchor', 'Create a vivid scene for this', 'What image fits these words?'],
+            fr: ['Aide-moi à visualiser ce verset', 'Suggère un ancrage mémoriel', 'Crée une scène vivante pour ça', 'Quelle image pour ces mots ?'],
           },
           write: {
-            en: ['Why did I get this wrong?', 'Explain the letter forms', 'Help with diacritics', 'Common writing mistakes'],
-            fr: ['Pourquoi je me suis trompé ?', 'Explique les formes des lettres', 'Aide avec les diacritiques', 'Erreurs d\'écriture courantes'],
+            en: ['Check my writing mistakes', 'Tricky letters in this ayah', 'Help with the diacritics here', 'Which words are hardest to write?'],
+            fr: ['Vérifie mes erreurs d\'écriture', 'Lettres difficiles dans ce verset', 'Aide avec les diacritiques ici', 'Quels mots sont durs à écrire ?'],
           },
           shadowing: {
-            en: ['Pronunciation tips for this ayah', 'What sounds to focus on?', 'Common mistakes here', 'Explain the tajweed'],
-            fr: ['Conseils de prononciation pour ce verset', 'Quels sons cibler ?', 'Erreurs courantes ici', 'Explique le tajweed'],
+            en: ['Hard sounds in this ayah', 'Help me match the reciter', 'Tajweed rules to apply here', 'Slow it down for me'],
+            fr: ['Sons difficiles dans ce verset', 'Aide-moi à imiter le récitateur', 'Règles de tajweed à appliquer ici', 'Ralentis pour moi'],
           },
           methods: {
-            en: ['Which method is best for me?', 'How does chunking work?', 'Best method for long surahs?', 'Combine multiple methods?'],
-            fr: ['Quelle méthode me convient ?', 'Comment fonctionne le découpage ?', 'Meilleure méthode pour les longues sourates ?', 'Combiner plusieurs méthodes ?'],
+            en: ['Which method suits me best?', 'What is each method for?', 'Best method for long surahs?', 'Can I combine methods?'],
+            fr: ['Quelle méthode me convient ?', 'À quoi sert chaque méthode ?', 'Meilleure méthode pour les longues sourates ?', 'Puis-je combiner les méthodes ?'],
           },
         };
         return isFr ? methodSuggestions[method].fr : methodSuggestions[method].en;
@@ -849,16 +849,16 @@ export function getContextualSuggestions(
         : '';
       return isFr
         ? [
-            `Explique ${name || 'cette leçon'} en détail`,
-            'Comment bien prononcer ?',
-            'Obligatoire ou sunna ?',
-            'Teste-moi sur cette leçon',
+            `Explique ${name || 'cette leçon'} étape par étape`,
+            'Qu\'est-ce qui annule la prière ?',
+            'Erreurs courantes à éviter ?',
+            'Montre-moi les preuves (hadith)',
           ]
         : [
-            `Explain ${name || 'this lesson'} in detail`,
-            'Correct pronunciation?',
-            'Obligatory vs sunnah?',
-            'Quiz me on this lesson',
+            `Explain ${name || 'this lesson'} step by step`,
+            'What invalidates the prayer?',
+            'Common mistakes to avoid?',
+            'Show me the evidence (hadith)',
           ];
     }
 
@@ -866,15 +866,15 @@ export function getContextualSuggestions(
       return isFr
         ? [
             'Aide-moi à mémoriser ce dua',
-            'Quelle est l\'histoire derrière ce dua ?',
-            'Comment prononcer correctement ?',
-            'Quand réciter ce dua ?',
+            'Quelle est la source (hadith) ?',
+            'Y a-t-il d\'autres duas pour ça ?',
+            'Quand et comment le réciter ?',
           ]
         : [
             'Help me memorize this dua',
-            'What is the story behind this dua?',
-            'How to pronounce correctly?',
-            'When to recite this dua?',
+            'What is the source (hadith)?',
+            'Are there other duas for this?',
+            'When and how to recite it?',
           ];
     }
   }
@@ -964,32 +964,32 @@ export function getContextualSuggestions(
     if (module === 'prayer') {
       return isFr
         ? [
-            'Par quelle leçon commencer ?',
+            'Comment faire le wudu correctement ?',
             'Quels sont les piliers de la prière ?',
-            'Comment faire le wudu ?',
-            'Que faire si je me trompe ?',
+            'Que faire si je me trompe en priant ?',
+            'Comment prier quand je voyage ?',
           ]
         : [
-            'Which lesson should I start with?',
+            'How to do wudu correctly?',
             'What are the pillars of prayer?',
-            'How to do wudu?',
-            'What if I make a mistake?',
+            'What if I make a mistake in prayer?',
+            'How to pray when traveling?',
           ];
     }
 
     if (module === 'duas') {
       return isFr
         ? [
-            'Quels sont les duas les plus importants ?',
-            'Par quel dua commencer ?',
-            'Adhkar du matin',
-            'Dua pour les difficultés ?',
+            'Dua pour l\'anxiété ?',
+            'Adhkar du matin et du soir',
+            'Dua avant de dormir ?',
+            'Quels duas réciter après la prière ?',
           ]
         : [
-            'What are the most important duas?',
-            'Which dua should I start with?',
-            'Morning adhkar',
-            'Dua for difficulty?',
+            'Dua for anxiety?',
+            'Morning and evening adhkar',
+            'Dua before sleeping?',
+            'Which duas to recite after prayer?',
           ];
     }
   }

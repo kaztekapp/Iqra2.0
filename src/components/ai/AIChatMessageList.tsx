@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { FlatList, View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { ChatMessage, AIModuleContext } from '../../types/aiChat';
+import { ChatMessage, AIModuleContext, AIModelChoice } from '../../types/aiChat';
 import { AIChatBubble, QuizOptionData } from './AIChatBubble';
 import { AIChatTypingIndicator } from './AIChatTypingIndicator';
 import { getWelcomeMessage } from '../../data/ai/systemPrompts';
@@ -15,6 +15,7 @@ interface Props {
   isStreaming: boolean;
   streamingContent: string;
   module: AIModuleContext;
+  model: AIModelChoice;
   segments: string[];
   onSuggestionPress: (text: string) => void;
 }
@@ -24,6 +25,7 @@ export function AIChatMessageList({
   isStreaming,
   streamingContent,
   module,
+  model,
   segments,
   onSuggestionPress,
 }: Props) {
@@ -102,7 +104,7 @@ export function AIChatMessageList({
 
   // Empty state
   if (messages.length === 0 && !isStreaming) {
-    const welcome = getWelcomeMessage(module, language);
+    const welcome = getWelcomeMessage(module, language, model);
     const suggestions = getContextualSuggestions(segments, language as 'en' | 'fr');
 
     return (

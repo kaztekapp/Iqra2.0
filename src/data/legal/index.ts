@@ -1,5 +1,5 @@
 export const LEGAL_CONSTANTS = {
-  appName: 'IQra2.0',
+  appName: 'Iqra AI',
   company: 'KazTek LLC',
   email: 'support@mkaztek.com',
   jurisdiction: 'Indiana, United States',

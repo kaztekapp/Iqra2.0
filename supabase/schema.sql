@@ -451,6 +451,7 @@ BEGIN
   INSERT INTO public.user_stories_progress (user_id) VALUES (NEW.id);
   INSERT INTO public.user_quiz_stats (user_id) VALUES (NEW.id);
   INSERT INTO public.user_community_stats (user_id) VALUES (NEW.id);
+  INSERT INTO public.user_credits (user_id) VALUES (NEW.id);
 
   RETURN NEW;
 END;

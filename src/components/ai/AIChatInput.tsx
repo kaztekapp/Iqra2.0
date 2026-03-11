@@ -1,57 +1,45 @@
-import { useState, useRef } from 'react';
-import { View, TextInput, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
+import { useRef } from 'react';
+import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
+  value: string;
+  onChangeText: (text: string) => void;
   onSend: (message: string) => void;
-  onVoicePress: () => void;
   isStreaming: boolean;
   onStopStreaming: () => void;
-  isListening: boolean;
+  hasCredits?: boolean;
 }
 
-export function AIChatInput({ onSend, onVoicePress, isStreaming, onStopStreaming, isListening }: Props) {
+export function AIChatInput({ value, onChangeText, onSend, isStreaming, onStopStreaming, hasCredits = true }: Props) {
   const { t } = useTranslation();
-  const [text, setText] = useState('');
   const inputRef = useRef<TextInput>(null);
 
   const handleSend = () => {
-    const trimmed = text.trim();
-    if (!trimmed || isStreaming) return;
+    const trimmed = value.trim();
+    if (!trimmed || isStreaming || !hasCredits) return;
     onSend(trimmed);
-    setText('');
+    onChangeText('');
   };
 
-  const hasText = text.trim().length > 0;
+  const hasText = value.trim().length > 0;
+  const canSend = hasText && hasCredits;
 
   return (
     <View style={styles.container}>
       <View style={styles.inputRow}>
-        {/* Voice input button */}
-        <Pressable
-          onPress={isStreaming ? undefined : onVoicePress}
-          style={[styles.iconButton, isListening && styles.iconButtonActive]}
-          disabled={isStreaming}
-        >
-          <Ionicons
-            name={isListening ? 'radio' : 'mic-outline'}
-            size={22}
-            color={isListening ? '#10b981' : '#94a3b8'}
-          />
-        </Pressable>
-
         {/* Text input */}
         <TextInput
           ref={inputRef}
           style={styles.input}
-          value={text}
-          onChangeText={setText}
-          placeholder={t('ai.placeholder')}
-          placeholderTextColor="#64748b"
+          value={value}
+          onChangeText={onChangeText}
+          placeholder={!hasCredits ? t('ai.noCreditsPlaceholder') : t('ai.placeholder')}
+          placeholderTextColor={!hasCredits ? '#f8717180' : '#64748b'}
           multiline
           maxLength={500}
-          editable={!isStreaming}
+          editable={!isStreaming && hasCredits}
           returnKeyType="default"
         />
 
@@ -63,8 +51,8 @@ export function AIChatInput({ onSend, onVoicePress, isStreaming, onStopStreaming
         ) : (
           <Pressable
             onPress={handleSend}
-            style={[styles.sendButton, !hasText && styles.sendButtonDisabled]}
-            disabled={!hasText}
+            style={[styles.sendButton, !canSend && styles.sendButtonDisabled]}
+            disabled={!canSend}
           >
             <Ionicons name="arrow-up" size={20} color="#fff" />
           </Pressable>
@@ -72,14 +60,6 @@ export function AIChatInput({ onSend, onVoicePress, isStreaming, onStopStreaming
       </View>
     </View>
   );
-}
-
-// Allow parent to insert text (voice transcript)
-export function insertTextIntoInput(
-  setText: React.Dispatch<React.SetStateAction<string>>,
-  transcript: string
-) {
-  setText((prev) => (prev ? prev + ' ' + transcript : transcript));
 }
 
 const styles = StyleSheet.create({
@@ -94,17 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: 8,
-  },
-  iconButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#0f172a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconButtonActive: {
-    backgroundColor: '#10b98120',
   },
   input: {
     flex: 1,

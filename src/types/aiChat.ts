@@ -62,6 +62,11 @@ export const AI_MAX_TOKENS: Record<AIModelChoice, number> = {
   sonnet: 1536,
 };
 
+export const AI_CREDIT_COST: Record<AIModelChoice, number> = {
+  haiku: 1,
+  sonnet: 3,
+};
+
 export interface AIConversationMemory {
   module: AIModuleContext;
   topicsCovered: string[];

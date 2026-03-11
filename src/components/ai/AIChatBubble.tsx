@@ -1,8 +1,28 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Pressable, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ChatMessage } from '../../types/aiChat';
 import { useTranslation } from 'react-i18next';
+
+/** Blinking gold cursor shown at end of streaming text */
+function StreamingCursor() {
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, { toValue: 0, duration: 400, useNativeDriver: true }),
+        Animated.timing(opacity, { toValue: 1, duration: 400, useNativeDriver: true }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, []);
+
+  return (
+    <Animated.Text style={[styles.streamingCursor, { opacity }]}>|</Animated.Text>
+  );
+}
 
 export interface QuizOptionData {
   letter: string;
@@ -100,6 +120,7 @@ export function AIChatBubble({
     const errorMessages: Record<string, string> = {
       offline: t('ai.offline'),
       rate_limit: t('ai.rateLimit'),
+      no_credits: t('ai.noCredits'),
       auth: t('ai.errorAuth'),
       generic: t('ai.errorGeneric'),
     };
@@ -122,6 +143,7 @@ export function AIChatBubble({
           ? <Text style={styles.userText}>{message.content}</Text>
           : renderAssistantContent(message.content, isLatestAssistant && !isStreamingMessage ? onQuizAnswer : undefined)
         }
+        {isStreamingMessage && <StreamingCursor />}
         {retryOptions && retryOptions.length > 0 && onQuizAnswer && (
           <>
             <Text style={styles.tapHint}>Tap to try again</Text>
@@ -135,10 +157,12 @@ export function AIChatBubble({
                   ]}
                   onPress={() => onQuizAnswer(`${opt.letter}) ${opt.text}`)}
                 >
-                  <Text style={styles.quizOptionText}>
-                    <Text style={styles.quizOptionLetter}>{opt.letter})</Text>
-                    {'  '}{opt.text}
-                  </Text>
+                  <View style={styles.quizOptionRow}>
+                    <View style={styles.quizOptionLetterBadge}>
+                      <Text style={styles.quizOptionLetterText}>{opt.letter}</Text>
+                    </View>
+                    <Text style={styles.quizOptionText}>{opt.text}</Text>
+                  </View>
                 </Pressable>
               ))}
             </View>
@@ -210,10 +234,12 @@ function renderAssistantContent(content: string, onQuizAnswer?: (answer: string)
                     onPress={() => onQuizAnswer?.(`${opt.letter}) ${opt.text}`)}
                     disabled={!onQuizAnswer}
                   >
-                    <Text style={styles.quizOptionText}>
-                      <Text style={styles.quizOptionLetter}>{opt.letter})</Text>
-                      {'  '}{opt.text}
-                    </Text>
+                    <View style={styles.quizOptionRow}>
+                      <View style={styles.quizOptionLetterBadge}>
+                        <Text style={styles.quizOptionLetterText}>{opt.letter}</Text>
+                      </View>
+                      <Text style={styles.quizOptionText}>{opt.text}</Text>
+                    </View>
                   </Pressable>
                 ))}
               </View>
@@ -389,24 +415,37 @@ const styles = StyleSheet.create({
   // Quiz option styles
   quizOptionsContainer: {
     marginTop: 14,
-    gap: 6,
+    gap: 8,
   },
   quizOption: {
     backgroundColor: '#0f172a',
-    borderLeftWidth: 3,
-    borderLeftColor: '#475569',
-    borderRadius: 8,
-    paddingVertical: 11,
+    borderWidth: 1,
+    borderColor: '#475569',
+    borderRadius: 12,
+    paddingVertical: 12,
     paddingHorizontal: 14,
   },
   quizOptionPressed: {
     backgroundColor: '#10b98115',
-    borderLeftColor: '#10b981',
+    borderColor: '#10b981',
   },
   quizOptionDisabled: {
     opacity: 0.45,
   },
-  quizOptionLetter: {
+  quizOptionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  quizOptionLetterBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  quizOptionLetterText: {
     color: '#10b981',
     fontWeight: '800',
     fontSize: 15,
@@ -416,6 +455,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 32,
     fontWeight: '500',
+    flex: 1,
   },
   errorText: {
     color: '#f87171',
@@ -424,5 +464,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
+  },
+  streamingCursor: {
+    color: '#D4AF37',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 22,
   },
 });
