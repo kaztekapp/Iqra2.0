@@ -137,7 +137,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
 
   const waveformBars = [0.4, 0.7, 1, 0.6, 0.9, 0.5, 0.8, 0.3, 0.7, 0.5, 0.9, 0.6];
 
-  const bubbleContent = (
+  const voiceBubbleInner = (
     <Pressable
       style={isMe ? styles.voiceBubbleMe : styles.voiceBubbleOther}
       onLongPress={onLongPress}
@@ -166,10 +166,8 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
   if (isMe) {
     return (
       <View style={[styles.bubbleRowMe, !showAvatar && { marginTop: 2 }]}>
-        <View style={{ maxWidth: '100%' }}>
-          {bubbleContent}
-          <Text style={styles.bubbleMeTime}>{getTimeAgo(msg.createdAt)}</Text>
-        </View>
+        {voiceBubbleInner}
+        <Text style={styles.bubbleMeTime}>{getTimeAgo(msg.createdAt)}</Text>
         {reactionRow}
       </View>
     );
@@ -186,7 +184,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
       )}
       <View style={{ flex: 1 }}>
         {showAvatar && <Text style={[styles.bubbleOtherName, { color: groupColor, marginBottom: 4, marginLeft: 4 }]}>{msg.authorName}</Text>}
-        {bubbleContent}
+        {voiceBubbleInner}
         <Text style={styles.bubbleOtherTime}>{getTimeAgo(msg.createdAt)}</Text>
         {reactionRow}
       </View>
@@ -207,15 +205,15 @@ const styles = StyleSheet.create({
   msgAvatar: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   msgAvatarText: { fontSize: 13, fontWeight: '700' },
   avatarSpacer: { width: 32 },
-  bubbleOther: { backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10, maxWidth: '100%', borderWidth: 1, borderColor: '#334155' },
+  bubbleOther: { alignSelf: 'flex-start', backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10, maxWidth: '100%', borderWidth: 1, borderColor: '#334155' },
   bubbleOtherName: { fontSize: 12, fontWeight: '700', marginBottom: 3 },
   bubbleOtherBody: { fontSize: 15, color: '#e2e8f0', lineHeight: 21 },
   bubbleOtherTime: { fontSize: 11, color: '#64748b', marginTop: 4, alignSelf: 'flex-end' },
   pinnedIndicator: { position: 'absolute', top: 4, right: 6 },
   // Voice
-  voiceBubbleMe: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#818cf8', borderRadius: 18, borderBottomRightRadius: 4, paddingHorizontal: 14, paddingVertical: 10, maxWidth: '100%' },
-  voiceBubbleOther: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, borderColor: '#334155', maxWidth: '100%' },
-  playBtn: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  voiceBubbleMe: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#818cf8', borderRadius: 18, borderBottomRightRadius: 4, paddingHorizontal: 12, paddingVertical: 10, width: 200 },
+  voiceBubbleOther: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 12, paddingVertical: 10, borderWidth: 1, borderColor: '#334155', alignSelf: 'flex-start', width: 200 },
+  playBtn: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   waveformContainer: { flexDirection: 'row', alignItems: 'center', gap: 2, flex: 1 },
   waveformBar: { width: 3, borderRadius: 2 },
   voiceDurationMe: { fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: '600' },
