@@ -180,7 +180,10 @@ export default function GroupDetailScreen() {
       unsubscribe = subscribeToGroupMessages(id, (newRow) => {
         if (seenIds.current.has(newRow.id)) return;
         seenIds.current.add(newRow.id);
-        setMessages((prev) => [...prev, rowToMessage(newRow)]);
+        setMessages((prev) => {
+          if (prev.some((m) => m.id === newRow.id)) return prev;
+          return [...prev, rowToMessage(newRow)];
+        });
         setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
       });
 
@@ -672,8 +675,8 @@ export default function GroupDetailScreen() {
                 contentContainerStyle={styles.chatList}
                 showsVerticalScrollIndicator={false}
               >
-                {messages.map((msg, idx) => {
-                  const prevMsg = idx > 0 ? messages[idx - 1] : null;
+                {messages.filter((msg, idx, arr) => arr.findIndex((m) => m.id === msg.id) === idx).map((msg, idx, arr) => {
+                  const prevMsg = idx > 0 ? arr[idx - 1] : null;
                   const showAvatar = !prevMsg || prevMsg.authorName !== msg.authorName || (prevMsg.type !== 'chat' && prevMsg.type !== 'message');
                   const isMe = msg.authorName === (user?.user_metadata?.full_name || user?.email?.split('@')[0] || '');
                   const reactionGroups = getReactionGroups(msg.id);
