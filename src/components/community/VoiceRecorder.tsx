@@ -109,7 +109,7 @@ export function VoiceRecorder({ onSend, onCancel }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: '#0f172a', borderTopWidth: 1, borderTopColor: '#1e293b' },
+  container: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: '#1e293b', borderTopWidth: 1, borderTopColor: '#334155' },
   cancelBtn: { width: 42, height: 42, borderRadius: 21, backgroundColor: '#ef444420', alignItems: 'center', justifyContent: 'center' },
   pulseCircle: { width: 16, height: 16, borderRadius: 8, backgroundColor: '#ef444440', alignItems: 'center', justifyContent: 'center' },
   recordDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#ef4444' },

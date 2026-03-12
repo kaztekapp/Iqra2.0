@@ -166,7 +166,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
   if (isMe) {
     return (
       <View style={[styles.bubbleRowMe, !showAvatar && { marginTop: 2 }]}>
-        <View>
+        <View style={{ maxWidth: '100%' }}>
           {bubbleContent}
           <Text style={styles.bubbleMeTime}>{getTimeAgo(msg.createdAt)}</Text>
         </View>
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
   bubbleOtherTime: { fontSize: 11, color: '#64748b', marginTop: 4, alignSelf: 'flex-end' },
   pinnedIndicator: { position: 'absolute', top: 4, right: 6 },
   // Voice
-  voiceBubbleMe: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#818cf8', borderRadius: 18, borderBottomRightRadius: 4, paddingHorizontal: 14, paddingVertical: 10 },
-  voiceBubbleOther: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, borderColor: '#334155' },
+  voiceBubbleMe: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#818cf8', borderRadius: 18, borderBottomRightRadius: 4, paddingHorizontal: 14, paddingVertical: 10, maxWidth: '100%' },
+  voiceBubbleOther: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1e293b', borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, borderColor: '#334155', maxWidth: '100%' },
   playBtn: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   waveformContainer: { flexDirection: 'row', alignItems: 'center', gap: 2, flex: 1 },
   waveformBar: { width: 3, borderRadius: 2 },

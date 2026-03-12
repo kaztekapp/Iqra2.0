@@ -883,9 +883,9 @@ const styles = StyleSheet.create({
 
   // Tab bar
   tabBar: { flexDirection: 'row', paddingHorizontal: 16, gap: 4, marginBottom: 4 },
-  tab: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 10, borderRadius: 10, backgroundColor: '#1e293b' },
+  tab: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 3, paddingVertical: 8, paddingHorizontal: 4, borderRadius: 10, backgroundColor: '#1e293b' },
   tabActive: { backgroundColor: '#334155' },
-  tabText: { fontSize: 13, fontWeight: '600', color: '#64748b' },
+  tabText: { fontSize: 11, fontWeight: '600', color: '#64748b', textAlign: 'center' },
 
   // Chat
   chatList: { paddingHorizontal: 12, paddingVertical: 12, paddingBottom: 8 },
