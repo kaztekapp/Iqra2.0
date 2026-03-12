@@ -260,6 +260,9 @@ export default function RootLayout() {
           <Stack.Screen name="reading/[textId]" />
           <Stack.Screen name="exercise/[exerciseId]" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
           <Stack.Screen name="exercise/typing-practice" options={{ animation: 'slide_from_bottom', presentation: 'modal' }} />
+          <Stack.Screen name="community/thread/[id]" />
+          <Stack.Screen name="community/groups/[id]" />
+          <Stack.Screen name="community/groups/invite/[code]" />
           <Stack.Screen name="reset-password" />
           <Stack.Screen name="privacy-policy" />
           <Stack.Screen name="terms-of-service" />

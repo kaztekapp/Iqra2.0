@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Alert, ActivityIndicator, Image, TextInput, Linking, Platform } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Alert, ActivityIndicator, Image, TextInput, Linking, Platform, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { ACHIEVEMENTS, Achievement } from '../../src/data/achievements';
@@ -15,6 +15,11 @@ import { ENABLE_ADS } from '../../src/services/adService';
 import { useCreditStore, getCreditDisplayInfo } from '../../src/stores/creditStore';
 import { CreditPurchaseSheet } from '../../src/components/ai/CreditPurchaseSheet';
 import { revenueCatService } from '../../src/services/revenueCatService';
+import { useCommunityStore } from '../../src/stores/communityStore';
+import * as communityService from '../../src/services/communityService';
+import { LeaderboardType } from '../../src/types/community';
+import { CommunityStatsBar } from '../../src/components/community/CommunityStatsBar';
+import { LeaderboardPreview } from '../../src/components/community/LeaderboardPreview';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -33,6 +38,44 @@ export default function ProfileScreen() {
 
   const unlockedList = getUnlockedAchievements();
   const lockedList = ACHIEVEMENTS.filter((a) => !unlockedAchievements.includes(a.id));
+
+  // ── Community / Gamification data ──────────────────────────────
+  const [lbType, setLbType] = useState<LeaderboardType>('allTime');
+  const [refreshing, setRefreshing] = useState(false);
+  const userId = useSettingsStore((s) => s.user?.id);
+
+  const {
+    dailyChallenge,
+    initializeChallenges,
+    fetchCommunityStats,
+    communityStatsData,
+    isLoadingStats,
+    fetchLeaderboard,
+    leaderboardEntries,
+    isLoadingLeaderboard,
+  } = useCommunityStore();
+
+  useEffect(() => {
+    initializeChallenges();
+    if (userId && progress.totalXp > 0) {
+      communityService.syncProgress(userId, progress.totalXp, progress.currentStreak, progress.longestStreak);
+    }
+    fetchCommunityStats();
+  }, []);
+
+  useEffect(() => {
+    fetchLeaderboard(lbType, userId);
+  }, [lbType, userId]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    initializeChallenges();
+    await Promise.all([
+      fetchCommunityStats(true),
+      fetchLeaderboard(lbType, userId, true),
+    ]);
+    setRefreshing(false);
+  }, [initializeChallenges, fetchCommunityStats, fetchLeaderboard, lbType, userId]);
 
   const handleLanguageChange = (lang: 'en' | 'fr') => {
     setLanguage(lang);
@@ -284,7 +327,17 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#f97316"
+            colors={['#f97316']}
+          />
+        }
+      >
         {/* Header */}
         <View style={styles.header}>
           <View>
@@ -376,6 +429,52 @@ export default function ProfileScreen() {
             </View>
           </View>
         </View>
+
+        {/* Community Stats Bar */}
+        <View style={styles.communityStatsSection}>
+          <CommunityStatsBar stats={communityStatsData} isLoading={isLoadingStats} />
+        </View>
+
+        {/* Shortcut Cards — Leaderboard + Challenges */}
+        <View style={styles.shortcutCardsRow}>
+          <Pressable
+            style={styles.shortcutCard}
+            onPress={() => router.push('/community/leaderboard' as Href)}
+            accessibilityRole="button"
+            accessibilityLabel={t('community.leaderboard')}
+          >
+            <View style={[styles.shortcutIconContainer, { backgroundColor: 'rgba(212, 175, 55, 0.15)' }]}>
+              <Ionicons name="trophy" size={26} color="#D4AF37" />
+            </View>
+            <Text style={styles.shortcutTitle}>{t('community.leaderboard')}</Text>
+            <Text style={styles.shortcutTitleArabic}>الترتيب</Text>
+          </Pressable>
+          <Pressable
+            style={styles.shortcutCard}
+            onPress={() => router.push('/community/challenges' as Href)}
+            accessibilityRole="button"
+            accessibilityLabel={t('community.challenges')}
+          >
+            <View style={[styles.shortcutIconContainer, { backgroundColor: 'rgba(249, 115, 22, 0.15)' }]}>
+              <Ionicons name="flag" size={26} color="#f97316" />
+            </View>
+            <Text style={styles.shortcutTitle}>{t('community.challenges')}</Text>
+            <Text style={styles.shortcutTitleArabic}>التحديات</Text>
+            {dailyChallenge && (
+              <Text style={styles.shortcutSubtitle} numberOfLines={1}>
+                {dailyChallenge.currentValue}/{dailyChallenge.targetValue}
+              </Text>
+            )}
+          </Pressable>
+        </View>
+
+        {/* Embedded Leaderboard Preview */}
+        <LeaderboardPreview
+          entries={leaderboardEntries}
+          isLoading={isLoadingLeaderboard}
+          currentType={lbType}
+          onTypeChange={setLbType}
+        />
 
         {/* Subscription & Credits */}
         <View style={styles.section}>
@@ -1428,6 +1527,54 @@ const styles = StyleSheet.create({
     color: '#6b6b60',
     fontSize: 13,
     textDecorationLine: 'underline',
+  },
+
+  // ── Community gamification sections ──────────────────────────────
+  communityStatsSection: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  shortcutCardsRow: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    gap: 12,
+    marginBottom: 24,
+  },
+  shortcutCard: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  shortcutIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  shortcutTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#ffffff',
+    textAlign: 'center',
+  },
+  shortcutTitleArabic: {
+    fontSize: 12,
+    color: '#D4AF37',
+    marginTop: 2,
+    textAlign: 'center',
+  },
+  shortcutSubtitle: {
+    fontSize: 12,
+    color: '#94a3b8',
+    marginTop: 4,
+    textAlign: 'center',
   },
 
   // Storage styles

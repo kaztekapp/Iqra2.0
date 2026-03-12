@@ -1,0 +1,52 @@
+import React from 'react';
+import { View, Text, StyleSheet, Pressable, Animated } from 'react-native';
+
+const REACTIONS = ['❤️', '👍', '🤲', '🔥', 'ماشاءالله', 'بارك الله'];
+
+interface Props {
+  onSelect: (emoji: string) => void;
+  onClose: () => void;
+}
+
+export function ReactionPicker({ onSelect, onClose }: Props) {
+  return (
+    <Pressable style={styles.overlay} onPress={onClose}>
+      <View style={styles.container}>
+        {REACTIONS.map((emoji) => (
+          <ReactionButton key={emoji} emoji={emoji} onPress={() => { onSelect(emoji); onClose(); }} />
+        ))}
+      </View>
+    </Pressable>
+  );
+}
+
+function ReactionButton({ emoji, onPress }: { emoji: string; onPress: () => void }) {
+  const scale = React.useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scale, { toValue: 1.3, useNativeDriver: true, friction: 5 }).start();
+  };
+  const handlePressOut = () => {
+    Animated.spring(scale, { toValue: 1, useNativeDriver: true, friction: 5 }).start();
+  };
+
+  const isArabic = emoji.length > 2;
+
+  return (
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress}>
+      <Animated.View style={[styles.emojiBtn, { transform: [{ scale }] }]}>
+        <Text style={[styles.emoji, isArabic && styles.arabicEmoji]}>{emoji}</Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100 },
+  container: { flexDirection: 'row', backgroundColor: '#1e293b', borderRadius: 28, paddingHorizontal: 8, paddingVertical: 6, borderWidth: 1, borderColor: '#334155', shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 8, elevation: 8, position: 'absolute', top: '40%', alignSelf: 'center', gap: 4 },
+  emojiBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0f172a' },
+  emoji: { fontSize: 22 },
+  arabicEmoji: { fontSize: 11, fontWeight: '700', color: '#f59e0b' },
+});
+
+export { REACTIONS };

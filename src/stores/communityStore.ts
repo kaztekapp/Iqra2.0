@@ -7,6 +7,12 @@ import {
   Challenge,
   CommunityStats,
   CommunityAchievement,
+  DiscussionThread,
+  DiscussionCategory,
+  DiscussionReply,
+  StudyGroup,
+  StudyPartner,
+  ActivityFeedItem,
 } from '../types/community';
 import {
   getDailyChallengeForDate,
@@ -15,6 +21,7 @@ import {
   ChallengeTemplate,
 } from '../data/community/challenges';
 import * as communityService from '../services/communityService';
+import * as socialService from '../services/communitySocialService';
 import { useProgressStore } from './progressStore';
 import { useSettingsStore } from './settingsStore';
 import { supabase } from '../lib/supabase';
@@ -47,6 +54,24 @@ interface CommunityState {
   communityStatsData: CommunityStats;
   isLoadingStats: boolean;
 
+  // Social state
+  discussions: DiscussionThread[];
+  isLoadingDiscussions: boolean;
+  currentThread: DiscussionThread | null;
+  replies: DiscussionReply[];
+  isLoadingReplies: boolean;
+
+  groups: StudyGroup[];
+  isLoadingGroups: boolean;
+  userGroupIds: Set<string>;
+
+  partners: StudyPartner[];
+  isLoadingPartners: boolean;
+  connectedPartnerIds: Set<string>;
+
+  activityFeed: ActivityFeedItem[];
+  isLoadingActivity: boolean;
+
   // Actions
   initializeChallenges: () => void;
   contributeToChallenge: (type: 'words' | 'lessons' | 'xp' | 'exercises', amount: number) => void;
@@ -54,6 +79,26 @@ interface CommunityState {
   fetchCommunityStats: (forceRefresh?: boolean) => Promise<void>;
   addUserAchievement: (achievementTitle: string, achievementTitleArabic: string, icon: string) => void;
   getRecentAchievements: (userAchievements: { title: string; titleArabic: string; icon: string }[]) => CommunityAchievement[];
+
+  // Social actions
+  loadDiscussions: (category?: DiscussionCategory) => Promise<void>;
+  loadThread: (threadId: string) => Promise<void>;
+  loadReplies: (threadId: string) => Promise<void>;
+  postThread: (title: string, body: string, category: DiscussionCategory) => Promise<DiscussionThread | null>;
+  postReply: (threadId: string, body: string) => Promise<DiscussionReply | null>;
+  toggleLikeThread: (threadId: string) => Promise<void>;
+  toggleLikeReply: (replyId: string) => Promise<void>;
+
+  loadGroups: () => Promise<void>;
+  joinGroup: (groupId: string) => Promise<void>;
+  leaveGroup: (groupId: string) => Promise<void>;
+  createGroup: (name: string, description: string, topic: string, goal: string, icon?: string, color?: string) => Promise<StudyGroup | null>;
+
+  loadPartners: () => Promise<void>;
+  connectPartner: (targetId: string) => Promise<void>;
+  disconnectPartner: (targetId: string) => Promise<void>;
+
+  loadActivityFeed: () => Promise<void>;
 }
 
 // Helpers
@@ -117,6 +162,21 @@ export const useCommunityStore = create<CommunityState>()(
       isLoadingLeaderboard: false,
       communityStatsData: defaultStats,
       isLoadingStats: false,
+
+      // Social initial state
+      discussions: [],
+      isLoadingDiscussions: false,
+      currentThread: null,
+      replies: [],
+      isLoadingReplies: false,
+      groups: [],
+      isLoadingGroups: false,
+      userGroupIds: new Set<string>(),
+      partners: [],
+      isLoadingPartners: false,
+      connectedPartnerIds: new Set<string>(),
+      activityFeed: [],
+      isLoadingActivity: false,
 
       initializeChallenges: () => {
         const today = new Date();
@@ -373,6 +433,222 @@ export const useCommunityStore = create<CommunityState>()(
         return combined
           .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
           .slice(0, 5);
+      },
+
+      // ── Social Actions ──────────────────────────────────────────
+
+      loadDiscussions: async (category?) => {
+        set({ isLoadingDiscussions: true });
+        const discussions = await socialService.fetchThreads(category);
+        set({ discussions, isLoadingDiscussions: false });
+      },
+
+      loadThread: async (threadId) => {
+        const thread = await socialService.fetchThread(threadId);
+        set({ currentThread: thread });
+      },
+
+      loadReplies: async (threadId) => {
+        set({ isLoadingReplies: true });
+        const userId = useSettingsStore.getState().user?.id;
+        const replies = await socialService.fetchReplies(threadId, userId);
+        set({ replies, isLoadingReplies: false });
+      },
+
+      postThread: async (title, body, category) => {
+        const user = useSettingsStore.getState().user;
+        if (!user?.id) return null;
+        const authorName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+        const thread = await socialService.createThread(user.id, authorName, title, body, category);
+        if (thread) {
+          set((s) => ({ discussions: [thread, ...s.discussions] }));
+          // Post activity
+          await socialService.postActivity(user.id, authorName, 'discussion_post', title, 'chatbubble', '#14b8a6');
+        }
+        return thread;
+      },
+
+      postReply: async (threadId, body) => {
+        const user = useSettingsStore.getState().user;
+        if (!user?.id) return null;
+        const authorName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+        const reply = await socialService.createReply(threadId, user.id, authorName, body);
+        if (reply) {
+          set((s) => ({
+            replies: [...s.replies, reply],
+            currentThread: s.currentThread
+              ? { ...s.currentThread, replyCount: s.currentThread.replyCount + 1 }
+              : null,
+            discussions: s.discussions.map((d) =>
+              d.id === threadId ? { ...d, replyCount: d.replyCount + 1 } : d
+            ),
+          }));
+        }
+        return reply;
+      },
+
+      toggleLikeThread: async (threadId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        const liked = await socialService.toggleLikeThread(threadId, userId);
+        const delta = liked ? 1 : -1;
+        set((s) => ({
+          discussions: s.discussions.map((d) =>
+            d.id === threadId ? { ...d, likeCount: Math.max(0, d.likeCount + delta) } : d
+          ),
+          currentThread:
+            s.currentThread?.id === threadId
+              ? { ...s.currentThread, likeCount: Math.max(0, s.currentThread.likeCount + delta) }
+              : s.currentThread,
+        }));
+      },
+
+      toggleLikeReply: async (replyId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        const liked = await socialService.toggleLikeReply(replyId, userId);
+        const delta = liked ? 1 : -1;
+        set((s) => ({
+          replies: s.replies.map((r) =>
+            r.id === replyId
+              ? { ...r, likeCount: Math.max(0, r.likeCount + delta), isLiked: liked }
+              : r
+          ),
+        }));
+      },
+
+      loadGroups: async () => {
+        set({ isLoadingGroups: true });
+        const [groups, userGroupIds] = await Promise.all([
+          socialService.fetchGroups(),
+          (async () => {
+            const userId = useSettingsStore.getState().user?.id;
+            return userId ? socialService.fetchUserGroupIds(userId) : new Set<string>();
+          })(),
+        ]);
+        // Mark joined groups
+        const enrichedGroups = groups.map((g) => ({
+          ...g,
+          isJoined: userGroupIds.has(g.id),
+        }));
+        set({ groups: enrichedGroups, userGroupIds, isLoadingGroups: false });
+      },
+
+      joinGroup: async (groupId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        // Prevent joining twice
+        if (get().userGroupIds.has(groupId)) return;
+        const success = await socialService.joinGroup(groupId, userId);
+        if (success) {
+          set((s) => {
+            const newIds = new Set(s.userGroupIds);
+            newIds.add(groupId);
+            return {
+              userGroupIds: newIds,
+              groups: s.groups.map((g) =>
+                g.id === groupId ? { ...g, isJoined: true, memberCount: g.memberCount + 1 } : g
+              ),
+            };
+          });
+          // Post activity
+          const group = get().groups.find((g) => g.id === groupId);
+          if (group) {
+            const userName = useSettingsStore.getState().user?.user_metadata?.full_name || 'User';
+            await socialService.postActivity(userId, userName, 'joined_group', group.name, 'people', '#818cf8');
+          }
+        }
+      },
+
+      leaveGroup: async (groupId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        const success = await socialService.leaveGroup(groupId, userId);
+        if (success) {
+          set((s) => {
+            const newIds = new Set(s.userGroupIds);
+            newIds.delete(groupId);
+            return {
+              userGroupIds: newIds,
+              groups: s.groups.map((g) =>
+                g.id === groupId ? { ...g, isJoined: false, memberCount: Math.max(0, g.memberCount - 1) } : g
+              ),
+            };
+          });
+        }
+      },
+
+      createGroup: async (name, description, topic, goal, icon, color) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return null;
+        const group = await socialService.createGroup(userId, name, description, topic, goal, icon, color);
+        if (group) {
+          const joined = { ...group, isJoined: true };
+          set((s) => {
+            const newIds = new Set(s.userGroupIds);
+            newIds.add(group.id);
+            return { groups: [joined, ...s.groups], userGroupIds: newIds };
+          });
+          return joined;
+        }
+        return null;
+      },
+
+      loadPartners: async () => {
+        set({ isLoadingPartners: true });
+        const userId = useSettingsStore.getState().user?.id;
+        const [partners, connectedPartnerIds] = await Promise.all([
+          userId ? socialService.fetchPartnerSuggestions(userId) : Promise.resolve([]),
+          userId ? socialService.fetchConnectedPartnerIds(userId) : Promise.resolve(new Set<string>()),
+        ]);
+        // Mark connected partners
+        const enriched = partners.map((p) => ({
+          ...p,
+          isConnected: connectedPartnerIds.has(p.id),
+        }));
+        set({ partners: enriched, connectedPartnerIds, isLoadingPartners: false });
+      },
+
+      connectPartner: async (targetId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        const success = await socialService.sendConnection(userId, targetId);
+        if (success) {
+          set((s) => {
+            const newIds = new Set(s.connectedPartnerIds);
+            newIds.add(targetId);
+            return {
+              connectedPartnerIds: newIds,
+              partners: s.partners.map((p) =>
+                p.id === targetId ? { ...p, isConnected: true } : p
+              ),
+            };
+          });
+        }
+      },
+
+      disconnectPartner: async (targetId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return;
+        const success = await socialService.removeConnection(userId, targetId);
+        if (success) {
+          set((s) => {
+            const newIds = new Set(s.connectedPartnerIds);
+            newIds.delete(targetId);
+            return {
+              connectedPartnerIds: newIds,
+              partners: s.partners.map((p) =>
+                p.id === targetId ? { ...p, isConnected: false } : p
+              ),
+            };
+          });
+        }
+      },
+
+      loadActivityFeed: async () => {
+        set({ isLoadingActivity: true });
+        const feed = await socialService.fetchActivityFeed();
+        set({ activityFeed: feed, isLoadingActivity: false });
       },
     }),
     {
