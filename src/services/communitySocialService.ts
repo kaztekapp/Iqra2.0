@@ -854,12 +854,17 @@ export async function fetchReactions(messageIds: string[]): Promise<Record<strin
   }
 }
 
+// FIX #1: Scope reaction subscription to this group's messages only
 export function subscribeToReactions(
   groupId: string,
+  messageIds: string[],
   onReactionChange: (payload: any) => void
 ) {
   try {
     const client = getClient();
+    // Use a Set for fast lookups to filter events client-side
+    const msgIdSet = new Set(messageIds);
+
     const channel = client
       .channel(`group-reactions-${groupId}`)
       .on(
@@ -870,17 +875,22 @@ export function subscribeToReactions(
           table: 'message_reactions',
         },
         (payload) => {
-          onReactionChange(payload);
+          // Only process reactions belonging to messages in this group
+          const msgId = (payload.new as any)?.message_id || (payload.old as any)?.message_id;
+          if (msgId && msgIdSet.has(msgId)) {
+            onReactionChange(payload);
+          }
         }
       )
       .subscribe();
 
-    return () => {
-      client.removeChannel(channel);
-    };
+    // Allow adding new message IDs dynamically as new messages arrive
+    const addMessageId = (id: string) => msgIdSet.add(id);
+
+    return { unsubscribe: () => client.removeChannel(channel), addMessageId };
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] subscribeToReactions error:', e);
-    return () => {};
+    return { unsubscribe: () => {}, addMessageId: () => {} };
   }
 }
 

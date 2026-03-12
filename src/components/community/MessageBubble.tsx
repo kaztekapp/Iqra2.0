@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
@@ -26,7 +26,7 @@ interface Props {
   reactionRow?: React.ReactNode;
 }
 
-export function MessageBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, reactionRow }: Props) {
+export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, reactionRow }: Props) {
   if (msg.type === 'system') {
     return (
       <View style={styles.systemMsg}>
@@ -99,20 +99,32 @@ export function MessageBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, o
       </View>
     </View>
   );
-}
+});
 
+// FIX #2: Audio cleanup on unmount
 function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, reactionRow }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const soundRef = useRef<Audio.Sound | null>(null);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (soundRef.current) {
+        soundRef.current.stopAsync().catch(() => {});
+        soundRef.current.unloadAsync().catch(() => {});
+        soundRef.current = null;
+      }
+    };
+  }, []);
 
   const durationSec = Math.round((msg.durationMs || 0) / 1000);
   const durationStr = `${Math.floor(durationSec / 60)}:${(durationSec % 60).toString().padStart(2, '0')}`;
 
   const handlePlay = async () => {
-    if (isPlaying && sound) {
-      await sound.stopAsync();
-      await sound.unloadAsync();
-      setSound(null);
+    if (isPlaying && soundRef.current) {
+      await soundRef.current.stopAsync();
+      await soundRef.current.unloadAsync();
+      soundRef.current = null;
       setIsPlaying(false);
       return;
     }
@@ -120,14 +132,14 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
     try {
       await Audio.setAudioModeAsync({ allowsRecordingIOS: false, playsInSilentModeIOS: true });
       const { sound: newSound } = await Audio.Sound.createAsync({ uri: msg.audioUrl });
-      setSound(newSound);
+      soundRef.current = newSound;
       setIsPlaying(true);
       await newSound.playAsync();
       newSound.setOnPlaybackStatusUpdate((status: any) => {
         if (status.isLoaded && status.didJustFinish) {
           setIsPlaying(false);
           newSound.unloadAsync();
-          setSound(null);
+          soundRef.current = null;
         }
       });
     } catch {

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  FlatList,
   ScrollView,
   Pressable,
   TextInput,
@@ -18,17 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../../src/stores/communityStore';
 import { useSettingsStore } from '../../../src/stores/settingsStore';
 import { SIMULATED_GROUPS } from '../../../src/data/community/socialData';
-import {
-  SIMULATED_GROUP_MEMBERS,
-  SIMULATED_GROUP_MESSAGES,
-  SIMULATED_REACTIONS,
-  SIMULATED_SESSIONS,
-  SIMULATED_CHALLENGES,
-  SIMULATED_GROUP_LEADERBOARD,
-  GroupMember,
-  GroupMessage,
-  GroupLeaderboardEntry,
-} from '../../../src/data/community/socialData';
+import type { GroupMember, GroupMessage, GroupLeaderboardEntry } from '../../../src/data/community/socialData';
 import {
   fetchGroupMessages,
   sendGroupMessage,
@@ -65,12 +56,12 @@ import { PinnedBanner } from '../../../src/components/community/PinnedBanner';
 import { ChallengeBanner } from '../../../src/components/community/ChallengeBanner';
 import { GroupLeaderboard } from '../../../src/components/community/GroupLeaderboard';
 import { VoiceRecorder } from '../../../src/components/community/VoiceRecorder';
-import { CreateSessionModal } from '../../../src/components/community/CreateSessionModal';
-import { CreateChallengeModal } from '../../../src/components/community/CreateChallengeModal';
 
 type Tab = 'chat' | 'members' | 'info';
 
-function rowToMessage(row: GroupMessageRow): GroupMessage & { isPinned?: boolean; audioUrl?: string; durationMs?: number } {
+type MappedMessage = GroupMessage & { isPinned?: boolean; audioUrl?: string; durationMs?: number };
+
+function rowToMessage(row: GroupMessageRow): MappedMessage {
   return {
     id: row.id,
     userId: row.user_id,
@@ -88,22 +79,24 @@ function rowToMessage(row: GroupMessageRow): GroupMessage & { isPinned?: boolean
 export default function GroupDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
-  const scrollRef = useRef<ScrollView>(null);
+  const flatListRef = useRef<FlatList>(null);
 
   const user = useSettingsStore((s) => s.user);
   const { groups, joinGroup, leaveGroup } = useCommunityStore();
 
   const [activeTab, setActiveTab] = useState<Tab>('chat');
   const [messageText, setMessageText] = useState('');
-  const [messages, setMessages] = useState<(GroupMessage & { isPinned?: boolean; audioUrl?: string; durationMs?: number })[]>([]);
+  const [messages, setMessages] = useState<MappedMessage[]>([]);
   const [isLoadingMessages, setIsLoadingMessages] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const [members, setMembers] = useState<GroupMember[]>([]);
   const [isLoadingMembers, setIsLoadingMembers] = useState(true);
   const [memberSearch, setMemberSearch] = useState('');
+  // FIX #7: seenIds cleared on group change via useEffect cleanup
   const seenIds = useRef(new Set<string>());
+  const reactionSubRef = useRef<{ unsubscribe: () => void; addMessageId: (id: string) => void } | null>(null);
 
-  // New feature state
+  // Feature state
   const [pinnedMessages, setPinnedMessages] = useState<{ id: string; authorName: string; body: string }[]>([]);
   const [showPinned, setShowPinned] = useState(true);
   const [reactions, setReactions] = useState<Record<string, MessageReaction[]>>({});
@@ -125,70 +118,128 @@ export default function GroupDetailScreen() {
   const isAdmin = myRole === 'admin';
   const isModerator = myRole === 'moderator';
   const canManage = isAdmin || isModerator;
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'You';
 
-  // Load members
-  useEffect(() => {
-    if (!id) return;
-    (async () => {
-      setIsLoadingMembers(true);
-      const real = await fetchGroupMembers(id);
-      if (real.length > 0) {
-        setMembers(real);
-      } else {
-        setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
+  // FIX #4: Memoized deduplication
+  const dedupedMessages = useMemo(() => {
+    const seen = new Set<string>();
+    return messages.filter((m) => {
+      if (seen.has(m.id)) return false;
+      seen.add(m.id);
+      return true;
+    });
+  }, [messages]);
+
+  // FIX #8: Memoized reaction groups
+  const reactionGroupsMap = useMemo(() => {
+    const map: Record<string, { emoji: string; count: number; hasReacted: boolean }[]> = {};
+    for (const msgId of Object.keys(reactions)) {
+      const msgReactions = reactions[msgId];
+      const groups: Record<string, { emoji: string; count: number; hasReacted: boolean }> = {};
+      for (const r of msgReactions) {
+        if (!groups[r.emoji]) groups[r.emoji] = { emoji: r.emoji, count: 0, hasReacted: false };
+        groups[r.emoji].count++;
+        if (r.userId === user?.id) groups[r.emoji].hasReacted = true;
       }
-      setIsLoadingMembers(false);
-    })();
-  }, [id, isJoined]);
+      map[msgId] = Object.values(groups);
+    }
+    return map;
+  }, [reactions, user?.id]);
 
-  // Load messages + subscribe
+  // FIX #8: Memoized filtered members
+  const filteredMembers = useMemo(() => {
+    if (!memberSearch.trim()) return members;
+    const q = memberSearch.trim().toLowerCase();
+    return members.filter((m) => m.name.toLowerCase().includes(q));
+  }, [members, memberSearch]);
+
+  const activeChallenge = useMemo(() => challenges.find((c) => c.isActive), [challenges]);
+  const topContributorId = leaderboard.length > 0 ? leaderboard[0].userId : null;
+
+  // FIX #6: Single parallelized load for all data
   useEffect(() => {
     if (!id) return;
-    let unsubscribe: (() => void) | null = null;
-    let unsubReactions: (() => void) | null = null;
+    let unsubMessages: (() => void) | null = null;
+    // FIX #7: Clear seenIds on group change
+    seenIds.current.clear();
 
     (async () => {
       setIsLoadingMessages(true);
-      const rows = await fetchGroupMessages(id);
+      setIsLoadingMembers(true);
+
+      // Parallel fetch: messages, members, pinned, sessions, challenges, leaderboard
+      const [rows, membersData, pinned, sessData, challData, lbData] = await Promise.all([
+        fetchGroupMessages(id),
+        fetchGroupMembers(id),
+        fetchPinnedMessages(id),
+        fetchSessions(id),
+        fetchChallenges(id),
+        fetchGroupLeaderboard(id),
+      ]);
+
+      // Process messages
       const mapped = rows.map(rowToMessage);
       mapped.forEach((m) => seenIds.current.add(m.id));
 
       if (mapped.length > 0) {
         setMessages(mapped);
-        // Load reactions for these messages
+        // Fetch reactions in parallel (needs message IDs)
         const reactionData = await fetchReactions(mapped.map((m) => m.id));
-        if (Object.keys(reactionData).length > 0) {
-          setReactions(reactionData);
-        } else {
-          setReactions(SIMULATED_REACTIONS);
-        }
+        setReactions(Object.keys(reactionData).length > 0 ? reactionData : {});
       } else {
-        const simulated = SIMULATED_GROUP_MESSAGES[id] || [];
-        setMessages(simulated);
+        // FIX #9: Lazy-load simulated data only when needed
+        const { SIMULATED_GROUP_MESSAGES, SIMULATED_REACTIONS } = require('../../../src/data/community/socialData');
+        setMessages(SIMULATED_GROUP_MESSAGES[id] || []);
         setReactions(SIMULATED_REACTIONS);
       }
       setIsLoadingMessages(false);
-      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: false }), 150);
 
-      // Load pinned messages
-      const pinned = await fetchPinnedMessages(id);
+      // Process members
+      if (membersData.length > 0) {
+        setMembers(membersData);
+      } else {
+        const { SIMULATED_GROUP_MEMBERS } = require('../../../src/data/community/socialData');
+        setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
+      }
+      setIsLoadingMembers(false);
+
+      // Process pinned
       if (pinned.length > 0) {
         setPinnedMessages(pinned.map((p) => ({ id: p.id, authorName: p.author_name, body: p.body })));
       }
 
+      // Process sessions/challenges/leaderboard
+      if (sessData.length > 0) setSessions(sessData);
+      else {
+        const { SIMULATED_SESSIONS } = require('../../../src/data/community/socialData');
+        setSessions(SIMULATED_SESSIONS[id] || []);
+      }
+      if (challData.length > 0) setChallenges(challData);
+      else {
+        const { SIMULATED_CHALLENGES } = require('../../../src/data/community/socialData');
+        setChallenges(SIMULATED_CHALLENGES[id] || []);
+      }
+      if (lbData.length > 0) setLeaderboard(lbData);
+      else {
+        const { SIMULATED_GROUP_LEADERBOARD } = require('../../../src/data/community/socialData');
+        setLeaderboard(SIMULATED_GROUP_LEADERBOARD[id] || []);
+      }
+
       // Subscribe to new messages
-      unsubscribe = subscribeToGroupMessages(id, (newRow) => {
+      unsubMessages = subscribeToGroupMessages(id, (newRow) => {
         if (seenIds.current.has(newRow.id)) return;
         seenIds.current.add(newRow.id);
+        // Register new message ID with reaction subscription
+        reactionSubRef.current?.addMessageId(newRow.id);
         setMessages((prev) => {
           if (prev.some((m) => m.id === newRow.id)) return prev;
           return [...prev, rowToMessage(newRow)];
         });
-        setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
       });
 
-      // Subscribe to reactions in real-time
-      unsubReactions = subscribeToReactions(id, (payload) => {
+      // FIX #1: Subscribe to reactions scoped to this group's messages
+      const msgIds = mapped.map((m) => m.id);
+      const reactionSub = subscribeToReactions(id, msgIds, (payload) => {
         if (payload.eventType === 'INSERT' && payload.new) {
           const r = payload.new;
           setReactions((prev) => ({
@@ -209,32 +260,32 @@ export default function GroupDetailScreen() {
           }));
         }
       });
+      reactionSubRef.current = reactionSub;
     })();
 
     return () => {
-      if (unsubscribe) unsubscribe();
-      if (unsubReactions) unsubReactions();
+      if (unsubMessages) unsubMessages();
+      reactionSubRef.current?.unsubscribe();
+      reactionSubRef.current = null;
     };
   }, [id]);
 
-  // Load sessions, challenges, leaderboard
+  // Reload members when join state changes
   useEffect(() => {
-    if (!id) return;
+    if (!id || !isJoined) return;
     (async () => {
-      const [sessData, challData, lbData] = await Promise.all([
-        fetchSessions(id),
-        fetchChallenges(id),
-        fetchGroupLeaderboard(id),
-      ]);
-      setSessions(sessData.length > 0 ? sessData : SIMULATED_SESSIONS[id] || []);
-      setChallenges(challData.length > 0 ? challData : SIMULATED_CHALLENGES[id] || []);
-      setLeaderboard(lbData.length > 0 ? lbData : SIMULATED_GROUP_LEADERBOARD[id] || []);
+      const membersData = await fetchGroupMembers(id);
+      if (membersData.length > 0) setMembers(membersData);
     })();
-  }, [id]);
+  }, [isJoined]);
+
+  const scrollToEnd = useCallback(() => {
+    setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
+  }, []);
 
   useEffect(() => {
     if (activeTab === 'chat') {
-      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: false }), 100);
+      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: false }), 100);
     }
   }, [activeTab]);
 
@@ -244,11 +295,10 @@ export default function GroupDetailScreen() {
     setIsSending(true);
     setMessageText('');
 
-    const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'You';
     const sent = await sendGroupMessage(id, user.id, displayName, text);
 
     if (!sent) {
-      const fallbackMsg: GroupMessage = {
+      const fallbackMsg: MappedMessage = {
         id: `local-${Date.now()}`,
         userId: user.id,
         authorName: displayName,
@@ -260,10 +310,10 @@ export default function GroupDetailScreen() {
       setMessages((prev) => [...prev, fallbackMsg]);
     }
     setIsSending(false);
-    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
-  }, [messageText, isSending, id, user]);
+    scrollToEnd();
+  }, [messageText, isSending, id, user, displayName, scrollToEnd]);
 
-  const handleJoinLeave = () => {
+  const handleJoinLeave = useCallback(() => {
     if (!id) return;
     if (isJoined) {
       Alert.alert(
@@ -277,9 +327,9 @@ export default function GroupDetailScreen() {
     } else {
       joinGroup(id);
     }
-  };
+  }, [id, isJoined, t, leaveGroup, joinGroup]);
 
-  const handleMemberAction = (member: GroupMember) => {
+  const handleMemberAction = useCallback((member: GroupMember) => {
     if (!id || !canManage || member.userId === user?.id || member.id === user?.id) return;
     if (isModerator && member.role === 'admin') return;
 
@@ -310,18 +360,14 @@ export default function GroupDetailScreen() {
     }
     buttons.push({ text: t('common.cancel', { defaultValue: 'Cancel' }), style: 'cancel' });
     Alert.alert(member.name, `Role: ${member.role}`, buttons);
-  };
+  }, [id, canManage, isAdmin, isModerator, user?.id, t]);
 
-  // Pin/unpin message handler
-  const handleMessageLongPress = (msg: GroupMessage & { isPinned?: boolean }) => {
+  const handleMessageLongPress = useCallback((msg: MappedMessage) => {
     if (msg.type === 'system' || msg.type === 'milestone') return;
 
     const buttons: any[] = [];
-
-    // Reaction option
     buttons.push({ text: t('community.react', { defaultValue: 'React' }), onPress: () => setReactionPickerMsgId(msg.id) });
 
-    // Pin/unpin (admin/mod only)
     if (canManage) {
       if (msg.isPinned) {
         buttons.push({
@@ -349,10 +395,9 @@ export default function GroupDetailScreen() {
 
     buttons.push({ text: t('common.cancel', { defaultValue: 'Cancel' }), style: 'cancel' });
     Alert.alert(msg.authorName, msg.body.substring(0, 80), buttons);
-  };
+  }, [canManage, messages, t]);
 
-  // Reaction handlers
-  const handleReaction = async (emoji: string) => {
+  const handleReaction = useCallback(async (emoji: string) => {
     if (!reactionPickerMsgId || !user) return;
     const msgId = reactionPickerMsgId;
     const existing = (reactions[msgId] || []).find((r) => r.userId === user.id && r.emoji === emoji);
@@ -377,51 +422,37 @@ export default function GroupDetailScreen() {
         [msgId]: [...(prev[msgId] || []), newReaction],
       }));
     }
-  };
+  }, [reactionPickerMsgId, user, reactions]);
 
-  const handleToggleReaction = async (msgId: string, emoji: string) => {
+  // FIX #5: Stable callback for reaction toggling
+  const handleToggleReaction = useCallback(async (msgId: string, emoji: string) => {
     if (!user) return;
-    const existing = (reactions[msgId] || []).find((r) => r.userId === user.id && r.emoji === emoji);
-    if (existing) {
-      await removeReaction(msgId, user.id, emoji);
-      setReactions((prev) => ({
-        ...prev,
-        [msgId]: (prev[msgId] || []).filter((r) => !(r.userId === user.id && r.emoji === emoji)),
-      }));
-    } else {
-      await addReaction(msgId, user.id, emoji);
-      const newReaction: MessageReaction = {
-        id: `rx-${Date.now()}`,
-        messageId: msgId,
-        userId: user.id,
-        emoji,
-        createdAt: new Date().toISOString(),
-      };
-      setReactions((prev) => ({
-        ...prev,
-        [msgId]: [...(prev[msgId] || []), newReaction],
-      }));
-    }
-  };
+    setReactions((prev) => {
+      const existing = (prev[msgId] || []).find((r) => r.userId === user.id && r.emoji === emoji);
+      if (existing) {
+        removeReaction(msgId, user.id, emoji);
+        return { ...prev, [msgId]: (prev[msgId] || []).filter((r) => !(r.userId === user.id && r.emoji === emoji)) };
+      } else {
+        addReaction(msgId, user.id, emoji);
+        return { ...prev, [msgId]: [...(prev[msgId] || []), { id: `rx-${Date.now()}`, messageId: msgId, userId: user.id, emoji, createdAt: new Date().toISOString() }] };
+      }
+    });
+  }, [user]);
 
-  // Voice note handler
-  const handleVoiceSend = async (uri: string, durationMs: number) => {
+  const handleVoiceSend = useCallback(async (uri: string, durationMs: number) => {
     if (!id || !user) { setIsRecording(false); return; }
     setIsRecording(false);
-    const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'You';
 
-    // Upload and send
     const audioUrl = await uploadVoiceNote(id, user.id, uri);
     if (audioUrl) {
       const sent = await sendVoiceMessage(id, user.id, displayName, audioUrl, durationMs);
-      // Add optimistically so sender sees it immediately (seenIds prevents duplicate from realtime)
       if (sent) {
         seenIds.current.add(sent.id);
+        reactionSubRef.current?.addMessageId(sent.id);
         setMessages((prev) => [...prev, rowToMessage(sent)]);
       }
     } else {
-      // Fallback: show locally with local URI
-      const fallback: GroupMessage & { audioUrl?: string; durationMs?: number } = {
+      const fallback: MappedMessage = {
         id: `local-voice-${Date.now()}`,
         userId: user.id,
         authorName: displayName,
@@ -434,48 +465,39 @@ export default function GroupDetailScreen() {
       };
       setMessages((prev) => [...prev, fallback]);
     }
-    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
-  };
+    scrollToEnd();
+  }, [id, user, displayName, scrollToEnd]);
 
-  // Session/Challenge create handlers
-  const handleCreateSession = async (title: string, description: string, scheduledAt: string, durationMinutes: number) => {
+  const handleCreateSession = useCallback(async (title: string, description: string, scheduledAt: string, durationMinutes: number) => {
     if (!id || !user) return;
-    const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'You';
     const result = await createSession(id, user.id, displayName, title, description, scheduledAt, durationMinutes);
     if (result) {
       const newSession: StudySession = {
         id: result.id || `sess-${Date.now()}`,
-        groupId: id,
-        creatorId: user.id,
-        creatorName: displayName,
+        groupId: id, creatorId: user.id, creatorName: displayName,
         title, description, scheduledAt, durationMinutes,
-        attendeeCount: 0, userRsvp: null,
-        createdAt: new Date().toISOString(),
+        attendeeCount: 0, userRsvp: null, createdAt: new Date().toISOString(),
       };
       setSessions((prev) => [newSession, ...prev]);
     }
-  };
+  }, [id, user, displayName]);
 
-  const handleCreateChallenge = async (title: string, targetType: string, targetValue: number, startDate: string, endDate: string) => {
+  const handleCreateChallenge = useCallback(async (title: string, targetType: string, targetValue: number, startDate: string, endDate: string) => {
     if (!id || !user) return;
-    const displayName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'You';
     const result = await createChallenge(id, user.id, displayName, title, targetType, targetValue, startDate, endDate);
     if (result) {
       const newChallenge: GroupChallenge = {
         id: result.id || `ch-${Date.now()}`,
-        groupId: id,
-        creatorId: user.id,
-        creatorName: displayName,
+        groupId: id, creatorId: user.id, creatorName: displayName,
         title, targetType: targetType as any, targetValue,
         currentValue: 0, participantCount: 0,
-        startDate, endDate, isActive: true,
-        createdAt: new Date().toISOString(),
+        startDate, endDate, isActive: true, createdAt: new Date().toISOString(),
       };
       setChallenges((prev) => [newChallenge, ...prev]);
     }
-  };
+  }, [id, user, displayName]);
 
-  const handleRsvp = async (sessionId: string, status: 'going' | 'not_going') => {
+  const handleRsvp = useCallback(async (sessionId: string, status: 'going' | 'not_going') => {
     if (!user) return;
     await rsvpSession(sessionId, user.id, status);
     setSessions((prev) => prev.map((s) =>
@@ -483,48 +505,59 @@ export default function GroupDetailScreen() {
         ? { ...s, userRsvp: status, attendeeCount: status === 'going' ? s.attendeeCount + 1 : Math.max(0, s.attendeeCount - 1) }
         : s
     ));
-  };
+  }, [user]);
 
-  const handleGenerateInvite = async () => {
+  const handleGenerateInvite = useCallback(async () => {
     if (!id) return;
     const code = await generateInviteCode(id);
     if (code) setInviteCode(code);
-  };
+  }, [id]);
 
-  // Helper functions
-  const getTimeAgo = (dateStr: string) => {
+  const getTimeAgo = useCallback((dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 1) return t('community.justNow');
     if (mins < 60) return t('community.minutesAgo', { count: mins });
     const hours = Math.floor(mins / 60);
     if (hours < 24) return t('community.hoursAgo', { count: hours });
-    const days = Math.floor(hours / 24);
-    return `${days}d`;
-  };
+    return `${Math.floor(hours / 24)}d`;
+  }, [t]);
 
-  const getDaysAgo = (dateStr: string) => {
+  const getDaysAgo = useCallback((dateStr: string) => {
     const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / (24 * 3600000));
     if (days === 0) return 'today';
     if (days === 1) return '1 day ago';
     return `${days} days ago`;
-  };
+  }, []);
 
-  const getReactionGroups = (msgId: string) => {
-    const msgReactions = reactions[msgId] || [];
-    const groups: Record<string, { emoji: string; count: number; hasReacted: boolean }> = {};
-    msgReactions.forEach((r) => {
-      if (!groups[r.emoji]) groups[r.emoji] = { emoji: r.emoji, count: 0, hasReacted: false };
-      groups[r.emoji].count++;
-      if (r.userId === user?.id) groups[r.emoji].hasReacted = true;
-    });
-    return Object.values(groups);
-  };
+  // FIX #3: FlatList renderItem for chat messages
+  const renderMessage = useCallback(({ item: msg, index }: { item: MappedMessage; index: number }) => {
+    const prevMsg = index > 0 ? dedupedMessages[index - 1] : null;
+    const showAvatar = !prevMsg || prevMsg.authorName !== msg.authorName || (prevMsg.type !== 'chat' && prevMsg.type !== 'message');
+    const isMe = msg.userId === user?.id || msg.authorName === displayName;
+    const reactionGroups = reactionGroupsMap[msg.id] || [];
 
-  const activeChallenge = challenges.find((c) => c.isActive);
+    return (
+      <MessageBubble
+        msg={msg as MessageBubbleMessage}
+        getTimeAgo={getTimeAgo}
+        groupColor={group?.color || '#818cf8'}
+        isMe={isMe}
+        showAvatar={showAvatar}
+        onLongPress={() => handleMessageLongPress(msg)}
+        reactionRow={
+          reactionGroups.length > 0 ? (
+            <ReactionBadges
+              reactions={reactionGroups}
+              onToggle={(emoji) => handleToggleReaction(msg.id, emoji)}
+            />
+          ) : undefined
+        }
+      />
+    );
+  }, [dedupedMessages, user?.id, displayName, reactionGroupsMap, group?.color, getTimeAgo, handleMessageLongPress, handleToggleReaction]);
 
-  // Top contributor
-  const topContributorId = leaderboard.length > 0 ? leaderboard[0].userId : null;
+  const keyExtractor = useCallback((item: MappedMessage) => item.id, []);
 
   if (!group) {
     return (
@@ -655,12 +688,10 @@ export default function GroupDetailScreen() {
         {/* ── Chat tab ────────────────────────────────────── */}
         {activeTab === 'chat' && (
           <>
-            {/* Pinned banner */}
             {showPinned && pinnedMessages.length > 0 && (
               <PinnedBanner messages={pinnedMessages} onDismiss={() => setShowPinned(false)} />
             )}
 
-            {/* Challenge banner */}
             {activeChallenge && (
               <ChallengeBanner challenge={activeChallenge} groupColor={group.color} />
             )}
@@ -670,41 +701,21 @@ export default function GroupDetailScreen() {
                 <ActivityIndicator color={group.color} size="large" />
               </View>
             ) : (
-              <ScrollView
-                ref={scrollRef}
+              // FIX #3: FlatList with virtualization instead of ScrollView
+              <FlatList
+                ref={flatListRef}
+                data={dedupedMessages}
+                renderItem={renderMessage}
+                keyExtractor={keyExtractor}
                 contentContainerStyle={styles.chatList}
                 showsVerticalScrollIndicator={false}
-              >
-                {messages.filter((msg, idx, arr) => arr.findIndex((m) => m.id === msg.id) === idx).map((msg, idx, arr) => {
-                  const prevMsg = idx > 0 ? arr[idx - 1] : null;
-                  const showAvatar = !prevMsg || prevMsg.authorName !== msg.authorName || (prevMsg.type !== 'chat' && prevMsg.type !== 'message');
-                  const isMe = msg.authorName === (user?.user_metadata?.full_name || user?.email?.split('@')[0] || '');
-                  const reactionGroups = getReactionGroups(msg.id);
-
-                  return (
-                    <MessageBubble
-                      key={msg.id}
-                      msg={msg as MessageBubbleMessage}
-                      getTimeAgo={getTimeAgo}
-                      groupColor={group.color}
-                      isMe={isMe}
-                      showAvatar={showAvatar}
-                      onLongPress={() => handleMessageLongPress(msg)}
-                      reactionRow={
-                        reactionGroups.length > 0 ? (
-                          <ReactionBadges
-                            reactions={reactionGroups}
-                            onToggle={(emoji) => handleToggleReaction(msg.id, emoji)}
-                          />
-                        ) : undefined
-                      }
-                    />
-                  );
-                })}
-              </ScrollView>
+                onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: false })}
+                removeClippedSubviews={Platform.OS === 'android'}
+                maxToRenderPerBatch={15}
+                windowSize={11}
+              />
             )}
 
-            {/* Input bar / Voice recorder */}
             {isRecording ? (
               <VoiceRecorder
                 onSend={handleVoiceSend}
@@ -724,7 +735,6 @@ export default function GroupDetailScreen() {
               />
             )}
 
-            {/* Reaction picker overlay */}
             {reactionPickerMsgId && (
               <ReactionPicker
                 onSelect={handleReaction}
@@ -737,7 +747,6 @@ export default function GroupDetailScreen() {
         {/* ── Members tab ─────────────────────────────────── */}
         {activeTab === 'members' && (
           <>
-            {/* Segmented control */}
             <View style={styles.segmentedControl}>
               <Pressable
                 style={[styles.segment, memberTab === 'members' && { backgroundColor: `${group.color}25` }]}
@@ -782,26 +791,19 @@ export default function GroupDetailScreen() {
                     <View style={styles.centered}>
                       <ActivityIndicator color={group.color} size="large" />
                     </View>
+                  ) : filteredMembers.length === 0 ? (
+                    <Text style={styles.emptyMembersText}>No members found</Text>
                   ) : (
-                    (() => {
-                      const filtered = memberSearch.trim()
-                        ? members.filter((m) => m.name.toLowerCase().includes(memberSearch.trim().toLowerCase()))
-                        : members;
-                      return filtered.length === 0 ? (
-                        <Text style={styles.emptyMembersText}>No members found</Text>
-                      ) : (
-                        filtered.map((member) => (
-                          <MemberRow
-                            key={member.id}
-                            member={{ ...member, isTopContributor: member.userId === topContributorId || member.id === topContributorId } as MemberRowData}
-                            groupColor={group.color}
-                            getDaysAgo={getDaysAgo}
-                            canManage={canManage}
-                            onAction={() => handleMemberAction(member)}
-                          />
-                        ))
-                      );
-                    })()
+                    filteredMembers.map((member) => (
+                      <MemberRow
+                        key={member.id}
+                        member={{ ...member, isTopContributor: member.userId === topContributorId || member.id === topContributorId } as MemberRowData}
+                        groupColor={group.color}
+                        getDaysAgo={getDaysAgo}
+                        canManage={canManage}
+                        onAction={() => handleMemberAction(member)}
+                      />
+                    ))
                   )}
                 </ScrollView>
               </>
@@ -840,21 +842,36 @@ export default function GroupDetailScreen() {
       </>
       )}
 
-      {/* Modals */}
-      <CreateSessionModal
-        visible={showSessionModal}
-        onClose={() => setShowSessionModal(false)}
-        onCreate={handleCreateSession}
-        groupColor={group?.color || '#818cf8'}
-      />
-      <CreateChallengeModal
-        visible={showChallengeModal}
-        onClose={() => setShowChallengeModal(false)}
-        onCreate={handleCreateChallenge}
-        groupColor={group?.color || '#818cf8'}
-      />
+      {/* FIX #10: Only render modals when visible */}
+      {showSessionModal && (
+        <CreateSessionModalLazy
+          visible={showSessionModal}
+          onClose={() => setShowSessionModal(false)}
+          onCreate={handleCreateSession}
+          groupColor={group?.color || '#818cf8'}
+        />
+      )}
+      {showChallengeModal && (
+        <CreateChallengeModalLazy
+          visible={showChallengeModal}
+          onClose={() => setShowChallengeModal(false)}
+          onCreate={handleCreateChallenge}
+          groupColor={group?.color || '#818cf8'}
+        />
+      )}
     </SafeAreaView>
   );
+}
+
+// FIX #10: Lazy-loaded modal wrappers
+function CreateSessionModalLazy(props: any) {
+  const { CreateSessionModal } = require('../../../src/components/community/CreateSessionModal');
+  return <CreateSessionModal {...props} />;
+}
+
+function CreateChallengeModalLazy(props: any) {
+  const { CreateChallengeModal } = require('../../../src/components/community/CreateChallengeModal');
+  return <CreateChallengeModal {...props} />;
 }
 
 // ── Styles ────────────────────────────────────────────────────────
