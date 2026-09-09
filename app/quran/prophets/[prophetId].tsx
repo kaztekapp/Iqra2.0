@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent, InteractionManager } from 'react-native';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { View, Text, ScrollView, FlatList, Pressable, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -15,14 +15,20 @@ import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 
-/** How many blocks go up before the navigation animation finishes. */
-const FIRST_PAINT_BLOCKS = 12;
+/**
+ * Stable empty arrays. A fresh `[]` every render changes the identity of the
+ * block list, which rebuilds the narration queue and re-renders the story for
+ * nothing.
+ */
+const NO_SUBSTORIES: SubStory[] = [];
+const NO_BLOCKS: SubStory['content'] = [];
 
 export default function ProphetStoryScreen() {
   const { t } = useTranslation();
   const { lc, lcArray } = useLocalizedContent();
   const { prophetId } = useLocalSearchParams<{ prophetId: string }>();
   const scrollViewRef = useRef<ScrollView>(null);
+  const listRef = useRef<FlatList<SubStory['content'][number]>>(null);
 
   const [currentSubStoryId, setCurrentSubStoryId] = useState<string | null>(null);
   const [playingSourceId, setPlayingSourceId] = useState<string | null>(null);
@@ -37,10 +43,11 @@ export default function ProphetStoryScreen() {
   } = useProphetStoriesStore();
 
   // Get prophet story data
-  const storyData = prophetId ? getProphetStory(prophetId) : undefined;
+  // Memoized so the block list keeps one identity for the life of the screen.
+  const storyData = useMemo(() => (prophetId ? getProphetStory(prophetId) : undefined), [prophetId]);
   const hasFullStory = prophetId ? hasProphetStory(prophetId) : false;
   const prophet = storyData?.prophet;
-  const subStories = storyData?.subStories || [];
+  const subStories = storyData?.subStories ?? NO_SUBSTORIES;
 
   // Initialize first sub-story
   useEffect(() => {
@@ -52,8 +59,11 @@ export default function ProphetStoryScreen() {
   }, [prophetId, subStories, currentSubStoryId]);
 
   // Current sub-story content
-  const currentSubStory = subStories.find((s) => s.id === currentSubStoryId);
-  const currentContent = currentSubStory?.content || [];
+  const currentSubStory = useMemo(
+    () => subStories.find((s) => s.id === currentSubStoryId),
+    [subStories, currentSubStoryId]
+  );
+  const currentContent = currentSubStory?.content ?? NO_BLOCKS;
 
   // Get completed sub-stories
   const storyProgress = prophetId ? getStoryProgress(prophetId) : null;
@@ -66,50 +76,27 @@ export default function ProphetStoryScreen() {
   const narration = useStoryNarration(currentContent);
   const [playerOpen, setPlayerOpen] = useState(false);
 
-  /**
-   * Paint the top of the chapter first.
-   *
-   * A chapter runs to 128 blocks in Muhammad's story, and mounting all of
-   * them before the first frame is most of the wait between tapping a story
-   * card and seeing the story. Nobody reads block 60 in that moment. So a
-   * screenful goes up straight away and the rest follow once the navigation
-   * animation is done, which is the one time in the screen's life when the
-   * main thread has nothing better to do.
-   */
-  const [renderLimit, setRenderLimit] = useState(FIRST_PAINT_BLOCKS);
 
+  // Keep the sentence being read in sight. The list knows where its rows are,
+  // so this asks for a block by number instead of tracking pixel offsets.
   useEffect(() => {
-    if (currentContent.length <= FIRST_PAINT_BLOCKS) {
-      setRenderLimit(currentContent.length);
-      return;
-    }
-    setRenderLimit(FIRST_PAINT_BLOCKS);
-    const task = InteractionManager.runAfterInteractions(() =>
-      setRenderLimit(currentContent.length)
-    );
-    return () => task.cancel();
-  }, [currentSubStoryId, currentContent.length]);
+    if (!narration.isActive || !currentContent.length) return;
+    const index = Math.min(narration.currentBlockIndex, currentContent.length - 1);
+    if (index < 0) return;
+    listRef.current?.scrollToIndex({ index, viewPosition: 0.15, animated: true });
+  }, [narration.currentBlockIndex, narration.isActive, currentContent.length]);
 
-  const fullyRendered = renderLimit >= currentContent.length;
-
-  // Where each block sits in the scroll view, so the spoken one can be kept
-  // in sight without the reader chasing it.
-  const blockOffsets = useRef<Record<string, number>>({});
-  const blocksTop = useRef(0);
-
-  const onBlockLayout = useCallback(
-    (id: string) => (e: LayoutChangeEvent) => {
-      blockOffsets.current[id] = e.nativeEvent.layout.y;
+  // A row well off screen has not been measured yet. Fall back to the list's
+  // own running average rather than letting the scroll throw.
+  const onScrollToIndexFailed = useCallback(
+    (info: { index: number; averageItemLength: number }) => {
+      listRef.current?.scrollToOffset({
+        offset: info.averageItemLength * info.index,
+        animated: true,
+      });
     },
     []
   );
-
-  useEffect(() => {
-    if (!narration.isActive || !narration.currentBlockId) return;
-    const y = blockOffsets.current[narration.currentBlockId];
-    if (y == null) return;
-    scrollViewRef.current?.scrollTo({ y: Math.max(0, blocksTop.current + y - 140), animated: true });
-  }, [narration.currentBlockId, narration.isActive]);
 
   const cycleSpeed = useCallback(() => {
     const order: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
@@ -119,7 +106,7 @@ export default function ProphetStoryScreen() {
   // Handle sub-story selection
   const handleSubStorySelect = useCallback((subStoryId: string) => {
     setCurrentSubStoryId(subStoryId);
-    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, []);
 
   // Mark sub-story as completed when reaching the end
@@ -196,6 +183,85 @@ export default function ProphetStoryScreen() {
     ? isSubStoryCompleted(prophetId!, currentSubStoryId)
     : false;
 
+  const keyExtractor = useCallback((block: SubStory['content'][number]) => block.id, []);
+
+  /**
+   * What a row looks like depends only on the highlight and the verse player,
+   * so that is all the list watches. Handing it a fresh object each render
+   * would re-render every visible block on every tick of the narration.
+   */
+  const highlightedBlockId = narration.isActive ? narration.currentBlockId : null;
+  const listExtra = `${highlightedBlockId}|${playingSourceId}|${audioState}`;
+
+  const renderBlock = useCallback(
+    ({ item }: { item: SubStory['content'][number] }) => (
+      <View style={styles.blocksContainer}>
+        <StoryContentBlock
+          block={item}
+          isHighlighted={highlightedBlockId === item.id}
+          onPlayQuranAudio={
+            item.source?.type === 'quran'
+              ? () => handlePlayQuranAudio(item.source as QuranReference, item.id)
+              : undefined
+          }
+          isQuranPlaying={playingSourceId === item.id && audioState === 'playing'}
+          isQuranLoading={playingSourceId === item.id && audioState === 'loading'}
+        />
+      </View>
+    ),
+    [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio]
+  );
+
+  const storyHeader = currentSubStory ? (
+          <View style={styles.subStoryHeader}>
+            <Text style={styles.subStoryTitle}>{lc(currentSubStory.title, currentSubStory.titleFr)}</Text>
+            {currentSubStory.titleArabic && (
+              <Text style={styles.subStoryTitleArabic}>{currentSubStory.titleArabic}</Text>
+            )}
+            <View style={styles.subStoryMeta}>
+              <View style={styles.metaItem}>
+                <Ionicons name="book-outline" size={12} color={color.textFaint} />
+                <Text style={styles.metaText}>{sourceCount} {t('prophetsFeature.sources')}</Text>
+              </View>
+              <View style={styles.metaItem}>
+                <Ionicons name="time-outline" size={12} color={color.textFaint} />
+                <Text style={styles.metaText}>{currentSubStory.estimatedReadTime} {t('common.min')}</Text>
+              </View>
+            </View>
+
+            {hasFullStory && currentContent.length > 0 && (
+              <Pressable
+                style={styles.listenButton}
+                onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(0))}
+                accessibilityRole="button"
+              >
+                <Ionicons name="headset" size={18} color={color.textOnAccent} />
+                <Text style={styles.listenButtonText}>{t('listen.listen')}</Text>
+              </Pressable>
+            )}
+          </View>
+  ) : null;
+
+  const storyFooter = (
+    <View style={styles.blocksContainer}>
+      {/* Mark Complete Button */}
+      {currentContent.length > 0 && !isCurrentSubStoryCompleted && (
+        <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
+          <Ionicons name="checkmark-circle-outline" size={20} color={color.progress} />
+          <Text style={styles.completeButtonText}>{t('prophetsFeature.markComplete')}</Text>
+        </Pressable>
+      )}
+
+      {isCurrentSubStoryCompleted && (
+        <View style={styles.completedBadge}>
+          <Ionicons name="checkmark-circle" size={20} color={color.progress} />
+          <Text style={styles.completedText}>{t('prophetsFeature.sectionCompleted')}</Text>
+        </View>
+      )}
+      <View style={{ height: narration.isActive ? 104 : 40 }} />
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
@@ -229,44 +295,31 @@ export default function ProphetStoryScreen() {
       )}
 
       {/* Story Content */}
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Sub-story Title */}
-        {currentSubStory && (
-          <View style={styles.subStoryHeader}>
-            <Text style={styles.subStoryTitle}>{lc(currentSubStory.title, currentSubStory.titleFr)}</Text>
-            {currentSubStory.titleArabic && (
-              <Text style={styles.subStoryTitleArabic}>{currentSubStory.titleArabic}</Text>
-            )}
-            <View style={styles.subStoryMeta}>
-              <View style={styles.metaItem}>
-                <Ionicons name="book-outline" size={12} color={color.textFaint} />
-                <Text style={styles.metaText}>{sourceCount} {t('prophetsFeature.sources')}</Text>
-              </View>
-              <View style={styles.metaItem}>
-                <Ionicons name="time-outline" size={12} color={color.textFaint} />
-                <Text style={styles.metaText}>{currentSubStory.estimatedReadTime} {t('common.min')}</Text>
-              </View>
-            </View>
-
-            {hasFullStory && currentContent.length > 0 && (
-              <Pressable
-                style={styles.listenButton}
-                onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(0))}
-                accessibilityRole="button"
-              >
-                <Ionicons name="headset" size={18} color={color.textOnAccent} />
-                <Text style={styles.listenButtonText}>{t('listen.listen')}</Text>
-              </Pressable>
-            )}
-          </View>
-        )}
-
-        {/* Content Blocks */}
-        {!hasFullStory ? (
+      {hasFullStory ? (
+        <FlatList
+          ref={listRef}
+          style={styles.contentContainer}
+          data={currentContent}
+          keyExtractor={keyExtractor}
+          renderItem={renderBlock}
+          extraData={listExtra}
+          ListHeaderComponent={storyHeader}
+          ListFooterComponent={storyFooter}
+          onScrollToIndexFailed={onScrollToIndexFailed}
+          showsVerticalScrollIndicator={false}
+          initialNumToRender={8}
+          maxToRenderPerBatch={8}
+          updateCellsBatchingPeriod={50}
+          windowSize={9}
+          removeClippedSubviews={Platform.OS === 'android'}
+        />
+      ) : (
+        <ScrollView
+          ref={scrollViewRef}
+          style={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {storyHeader}
           <View style={styles.comingSoonContainer}>
             <Ionicons name="construct-outline" size={48} color={color.textFaint} />
             <Text style={styles.comingSoonTitle}>{t('prophetsFeature.comingSoon')}</Text>
@@ -289,48 +342,9 @@ export default function ProphetStoryScreen() {
               </View>
             )}
           </View>
-        ) : (
-          <View
-            style={styles.blocksContainer}
-            onLayout={(e) => {
-              blocksTop.current = e.nativeEvent.layout.y;
-            }}
-          >
-            {currentContent.slice(0, renderLimit).map((block) => (
-              <View key={block.id} onLayout={onBlockLayout(block.id)}>
-              <StoryContentBlock
-                block={block}
-                isHighlighted={narration.isActive && narration.currentBlockId === block.id}
-                onPlayQuranAudio={
-                  block.source?.type === 'quran'
-                    ? () => handlePlayQuranAudio(block.source as QuranReference, block.id)
-                    : undefined
-                }
-                isQuranPlaying={playingSourceId === block.id && audioState === 'playing'}
-                isQuranLoading={playingSourceId === block.id && audioState === 'loading'}
-              />
-              </View>
-            ))}
-
-            {/* Mark Complete Button */}
-            {fullyRendered && currentContent.length > 0 && !isCurrentSubStoryCompleted && (
-              <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
-                <Ionicons name="checkmark-circle-outline" size={20} color={color.progress} />
-                <Text style={styles.completeButtonText}>{t('prophetsFeature.markComplete')}</Text>
-              </Pressable>
-            )}
-
-            {fullyRendered && isCurrentSubStoryCompleted && (
-              <View style={styles.completedBadge}>
-                <Ionicons name="checkmark-circle" size={20} color={color.progress} />
-                <Text style={styles.completedText}>{t('prophetsFeature.sectionCompleted')}</Text>
-              </View>
-            )}
-          </View>
-        )}
-
-        <View style={{ height: narration.isActive ? 104 : 40 }} />
-      </ScrollView>
+          <View style={{ height: 40 }} />
+        </ScrollView>
+      )}
 
       {narration.isActive && (
         <SafeAreaView edges={['bottom']} style={styles.listenDock}>

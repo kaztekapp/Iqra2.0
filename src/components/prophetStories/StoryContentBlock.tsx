@@ -15,7 +15,12 @@ interface StoryContentBlockProps {
   isQuranLoading?: boolean;
 }
 
-export function StoryContentBlock({
+/**
+ * Memoized: a story is a long list of these, and narration changes the
+ * highlight on every sentence. Without this, one block lighting up re-renders
+ * every other block on screen.
+ */
+function StoryContentBlockBase({
   block,
   isHighlighted = false,
   onPlayQuranAudio,
@@ -78,5 +83,7 @@ const styles = StyleSheet.create({
     marginHorizontal: -8,
   },
 });
+
+export const StoryContentBlock = React.memo(StoryContentBlockBase);
 
 export default StoryContentBlock;
