@@ -4,7 +4,6 @@
 
 import { Ayah, Surah } from '../types/quran';
 import { SURAHS } from '../data/arabic/quran/surahs';
-import { QURAN_BY_JUZ } from '../data/arabic/quran/surahs/allSurahs';
 
 // Surah ID to number mapping (includes both metadata IDs and data file IDs)
 const SURAH_ID_TO_NUMBER: Record<string, number> = {
@@ -54,23 +53,47 @@ const SURAH_ID_TO_NUMBER: Record<string, number> = {
   'al-ma-un': 107,
 };
 
-// Pre-build the surah cache at module load time for instant lookups
-const SURAH_AYAHS_CACHE: Map<number, Ayah[]> = new Map();
+/**
+ * The bundled Quran text, indexed by surah — built on first use, never at
+ * import.
+ *
+ * This used to be a top-level import of every juz plus a loop over all
+ * thirty, running the moment anything touched this module. That is the whole
+ * Quran, 32 MB of object literals, and it was reached from the root layout:
+ * the mini player imports the quran data index, and that index re-exports
+ * this service. So every launch built the entire Quran before the first
+ * screen appeared, whether or not anyone opened a surah.
+ *
+ * The require() below is inside the function on purpose. Metro evaluates a
+ * module the first time it is actually required, so the text is built when a
+ * screen asks for a verse and not before. Do not lift it to the top of the
+ * file — that is exactly the change that made launching slow.
+ */
+let ayahsBySurah: Map<number, Ayah[]> | null = null;
 
-// Build cache immediately when module loads
-for (let juz = 1; juz <= 30; juz++) {
-  const juzData = QURAN_BY_JUZ[juz];
-  if (!juzData) continue;
+function surahAyahsCache(): Map<number, Ayah[]> {
+  if (ayahsBySurah) return ayahsBySurah;
 
-  for (const [, ayahs] of Object.entries(juzData)) {
-    if (ayahs.length > 0) {
-      const firstAyah = ayahs[0];
-      const surahNum = SURAH_ID_TO_NUMBER[firstAyah.surahId];
-      if (surahNum && !SURAH_AYAHS_CACHE.has(surahNum)) {
-        SURAH_AYAHS_CACHE.set(surahNum, ayahs);
+  const cache = new Map<number, Ayah[]>();
+  const { QURAN_BY_JUZ } = require('../data/arabic/quran/surahs/allSurahs');
+
+  for (let juz = 1; juz <= 30; juz++) {
+    const juzData = QURAN_BY_JUZ[juz];
+    if (!juzData) continue;
+
+    for (const [, ayahs] of Object.entries(juzData) as [string, Ayah[]][]) {
+      if (ayahs.length > 0) {
+        const firstAyah = ayahs[0];
+        const surahNum = SURAH_ID_TO_NUMBER[firstAyah.surahId];
+        if (surahNum && !cache.has(surahNum)) {
+          cache.set(surahNum, ayahs);
+        }
       }
     }
   }
+
+  ayahsBySurah = cache;
+  return cache;
 }
 
 /**
@@ -100,7 +123,7 @@ export function getSurahMetadataById(surahId: string): Surah | null {
  * Get ayahs for a surah - instant O(1) lookup from pre-built cache
  */
 export function getSurahAyahsSync(surahNumber: number): Ayah[] {
-  return SURAH_AYAHS_CACHE.get(surahNumber) || [];
+  return surahAyahsCache().get(surahNumber) || [];
 }
 
 /**
@@ -109,7 +132,7 @@ export function getSurahAyahsSync(surahNumber: number): Ayah[] {
 export function getSurahAyahsByIdSync(surahId: string): Ayah[] {
   const surahNumber = getSurahNumber(surahId);
   if (!surahNumber) return [];
-  return SURAH_AYAHS_CACHE.get(surahNumber) || [];
+  return surahAyahsCache().get(surahNumber) || [];
 }
 
 /**

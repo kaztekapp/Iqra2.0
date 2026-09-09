@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent, InteractionManager } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -14,6 +14,9 @@ import { useStoryNarration, NarrationSpeed } from '../../../src/hooks/useStoryNa
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+
+/** How many blocks go up before the navigation animation finishes. */
+const FIRST_PAINT_BLOCKS = 12;
 
 export default function ProphetStoryScreen() {
   const { t } = useTranslation();
@@ -62,6 +65,32 @@ export default function ProphetStoryScreen() {
   // Listening. The queue is rebuilt whenever the chapter changes.
   const narration = useStoryNarration(currentContent);
   const [playerOpen, setPlayerOpen] = useState(false);
+
+  /**
+   * Paint the top of the chapter first.
+   *
+   * A chapter runs to 128 blocks in Muhammad's story, and mounting all of
+   * them before the first frame is most of the wait between tapping a story
+   * card and seeing the story. Nobody reads block 60 in that moment. So a
+   * screenful goes up straight away and the rest follow once the navigation
+   * animation is done, which is the one time in the screen's life when the
+   * main thread has nothing better to do.
+   */
+  const [renderLimit, setRenderLimit] = useState(FIRST_PAINT_BLOCKS);
+
+  useEffect(() => {
+    if (currentContent.length <= FIRST_PAINT_BLOCKS) {
+      setRenderLimit(currentContent.length);
+      return;
+    }
+    setRenderLimit(FIRST_PAINT_BLOCKS);
+    const task = InteractionManager.runAfterInteractions(() =>
+      setRenderLimit(currentContent.length)
+    );
+    return () => task.cancel();
+  }, [currentSubStoryId, currentContent.length]);
+
+  const fullyRendered = renderLimit >= currentContent.length;
 
   // Where each block sits in the scroll view, so the spoken one can be kept
   // in sight without the reader chasing it.
@@ -267,7 +296,7 @@ export default function ProphetStoryScreen() {
               blocksTop.current = e.nativeEvent.layout.y;
             }}
           >
-            {currentContent.map((block) => (
+            {currentContent.slice(0, renderLimit).map((block) => (
               <View key={block.id} onLayout={onBlockLayout(block.id)}>
               <StoryContentBlock
                 block={block}
@@ -284,14 +313,14 @@ export default function ProphetStoryScreen() {
             ))}
 
             {/* Mark Complete Button */}
-            {currentContent.length > 0 && !isCurrentSubStoryCompleted && (
+            {fullyRendered && currentContent.length > 0 && !isCurrentSubStoryCompleted && (
               <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
                 <Ionicons name="checkmark-circle-outline" size={20} color={color.progress} />
                 <Text style={styles.completeButtonText}>{t('prophetsFeature.markComplete')}</Text>
               </Pressable>
             )}
 
-            {isCurrentSubStoryCompleted && (
+            {fullyRendered && isCurrentSubStoryCompleted && (
               <View style={styles.completedBadge}>
                 <Ionicons name="checkmark-circle" size={20} color={color.progress} />
                 <Text style={styles.completedText}>{t('prophetsFeature.sectionCompleted')}</Text>
