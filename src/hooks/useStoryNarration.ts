@@ -85,9 +85,21 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
   }, [voice]);
 
   /**
-   * Flatten the story. A source block reads its caption and then the
-   * translation; when the caption merely restates the line before it, it is
-   * dropped rather than said twice.
+   * Flatten the story.
+   *
+   * A Quran block is read by its caption alone. The caption is already the
+   * verse put into the story's own words — "Allah inspired Musa's mother
+   * with a plan to save her son" ahead of the verse that says exactly that —
+   * so reading the translation after it is the same thought twice, and the
+   * narrative block that follows usually makes it three times. The verse is
+   * still on screen to read; it is the listening that was repetitive.
+   *
+   * A hadith block keeps its translation, because there the caption only
+   * frames the report ("the Prophet spoke of Musa and the Angel of Death")
+   * and the report itself is what carries the story.
+   *
+   * A caption that merely restates the line before it is dropped rather than
+   * said twice.
    */
   const utterances = useMemo<Utterance[]>(() => {
     const out: Utterance[] = [];
@@ -110,8 +122,13 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
         return;
       }
       push(caption, block.id, blockIndex);
+
       const translation = block.source ? lc(block.source.translation, block.source.translationFr) : '';
-      if (translation) push(translation, block.id, blockIndex);
+      if (!translation) return;
+      // Read a verse only when there is no caption to carry the block, so
+      // that a block without one is never passed over in silence.
+      const readsTranslation = block.source?.type === 'hadith' || !caption.trim();
+      if (readsTranslation) push(translation, block.id, blockIndex);
     });
 
     return out;
