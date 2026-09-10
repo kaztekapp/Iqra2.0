@@ -1,0 +1,158 @@
+// Story of the People of the Sabbath (أصحاب السبت)
+// The town by the sea, the fish, and the trick that broke the law
+//
+// Verses are copied from the app's own Quran data, so the Arabic and both
+// translations are exactly what the surah screen shows. Prophets carry their
+// Islamic names throughout, including inside quoted translations.
+
+import { QuranStory, QuranReference, HadithReference } from '../../../../types/quranStories';
+
+export const sabtStory: QuranStory = {
+  id: "sabt",
+  titleEnglish: "The People of the Sabbath",
+  titleFrench: "Les Gens du Sabbat",
+  titleArabic: "أصحاب السبت",
+  order: 16,
+  category: "groups_nations",
+  description: "A town by the sea that found a clever way around Allah's prohibition, and paid for it",
+  descriptionFr: "Une cité au bord de la mer qui trouva un moyen habile de contourner l'interdit d'Allah, et le paya",
+  summary: "A town by the sea was tested through the Sabbath: on that day alone the fish came to them openly, and on that day alone they were forbidden to work. They transgressed. Some of the townspeople admonished them; others asked what the point was of warning a people Allah would destroy, and were answered: as an excuse before your Lord, and so that they might fear Him. Allah saved those who forbade the wrong and seized the wrongdoers, saying to the persistent: be apes, despised. The Quran made it a deterrent and a lesson for those who came after.",
+  summaryFr: "Une cité au bord de la mer fut éprouvée par le sabbat : ce jour-là seulement les poissons venaient à eux à découvert, et ce jour-là seulement il leur était interdit de travailler. Ils transgressèrent. Certains habitants les exhortèrent ; d'autres demandèrent à quoi bon avertir un peuple qu'Allah allait détruire, et on leur répondit : comme excuse devant votre Seigneur, et pour qu'ils Le craignent. Allah sauva ceux qui interdisaient le mal et saisit les injustes, disant aux obstinés : soyez des singes méprisés. Le Coran en fit un exemple dissuasif et une leçon pour ceux qui vinrent après.",
+  lessons: ["A prohibition evaded by trickery is still broken","Ease in sin is itself a test from Allah","Enjoin good even when you doubt it will be heard: it is your excuse before your Lord","The Quran names the saved: those who spoke against the wrong","Allah's punishment of a people becomes a lesson for those after them","Cleverness against the law of Allah ends in humiliation"],
+  lessonsFr: ["Une interdiction contournée par la ruse reste violée","La facilité dans le péché est elle-même une épreuve d'Allah","Ordonnez le bien même en doutant d'être entendu : c'est votre excuse devant votre Seigneur","Le Coran nomme les sauvés : ceux qui parlèrent contre le mal","Le châtiment d'un peuple par Allah devient une leçon pour ceux d'après","La ruse contre la loi d'Allah finit dans l'humiliation"],
+  estimatedReadTime: 10,
+  quranMentions: 3,
+  icon: "🐟",
+  mainSurah: {
+    number: 7,
+    name: "Al-A'raf",
+    nameArabic: "الأعراف",
+  },
+  content: [
+    {
+      id: "sabt-1",
+      type: 'narrative',
+      order: 1,
+      content: "The Quran returns more than once to a town by the sea whose people were tested through the Sabbath. Allah had forbidden them to work on that day, and on that day, and only that day, the fish came to them in plain view. The Quran does not name the town; the commentators most often say Aylah, on the coast of the Red Sea. It does say what the people did, and what became of them.",
+      contentFr: "Le Coran revient plus d'une fois sur une cité au bord de la mer dont les habitants furent éprouvés par le sabbat. Allah leur avait interdit de travailler ce jour-là, et ce jour-là, et seulement ce jour-là, les poissons venaient à eux à découvert. Le Coran ne nomme pas la cité ; les commentateurs disent le plus souvent Ayla, sur la côte de la mer Rouge. Il dit ce que les gens firent, et ce qu'il advint d'eux.",
+    },
+    {
+      id: "sabt-2",
+      type: 'quran_source',
+      order: 2,
+      content: "The town by the sea: the fish came openly on the Sabbath and not on other days. Thus Allah tried them for their disobedience.",
+      contentFr: "La cité au bord de la mer : les poissons venaient à découvert le jour du sabbat et non les autres jours. Ainsi Allah les éprouva pour leur désobéissance.",
+      source: {
+        type: 'quran',
+        surahNumber: 7,
+        surahNameEnglish: "Al-A'raf",
+        surahNameArabic: "الأعراف",
+        ayahStart: 163,
+        ayahEnd: 163,
+        arabicText: "وَسْـَٔلْهُمْ عَنِ ٱلْقَرْيَةِ ٱلَّتِى كَانَتْ حَاضِرَةَ ٱلْبَحْرِ إِذْ يَعْدُونَ فِى ٱلسَّبْتِ إِذْ تَأْتِيهِمْ حِيتَانُهُمْ يَوْمَ سَبْتِهِمْ شُرَّعًا وَيَوْمَ لَا يَسْبِتُونَ ۙ لَا تَأْتِيهِمْ ۚ كَذَٰلِكَ نَبْلُوهُم بِمَا كَانُوا۟ يَفْسُقُونَ",
+        translation: "And ask them about the town that was by the sea - when they transgressed in [the matter of] the sabbath - when their fish came to them openly on their sabbath day, and the day they had no sabbath they did not come to them. Thus did We give them trial because they were defiantly disobedient.",
+        translationFr: "Questionne-les donc sur la cité qui se trouvait en bord de mer et dont les habitants transgressaient le Sabbat. Les poissons venaient affleurer à la surface de l’eau quand c’était jour de Sabbat, et ne venaient point quand ce n’était pas jour de Sabbat. C’est ainsi que Nous les éprouvions pour leurs actes pervers.",
+      } as QuranReference,
+    },
+    {
+      id: "sabt-3",
+      type: 'narrative',
+      order: 3,
+      content: "The commentators relate how the transgression was done: not by open fishing, but by trickery, pens and channels dug so that fish entering on the Sabbath were trapped and gathered the next day. That detail is theirs; the Quran says only that they transgressed. The point the Quran makes needs no detail: a prohibition evaded by a device is a prohibition broken.",
+      contentFr: "Les commentateurs rapportent comment la transgression fut commise : non par une pêche ouverte, mais par la ruse, des enclos et des canaux creusés pour que les poissons entrés le jour du sabbat soient pris et ramassés le lendemain. Ce détail est le leur ; le Coran dit seulement qu'ils transgressèrent. Le point que fait le Coran n'a pas besoin de détail : une interdiction contournée par un stratagème est une interdiction violée.",
+    },
+    {
+      id: "sabt-4",
+      type: 'quran_source',
+      order: 4,
+      content: "A group asked: why admonish a people Allah will destroy? The admonishers answered: as an excuse before your Lord, and so that they might fear Him.",
+      contentFr: "Un groupe demanda : pourquoi exhorter un peuple qu'Allah va détruire ? Les exhortateurs répondirent : comme excuse devant votre Seigneur, et pour qu'ils Le craignent.",
+      source: {
+        type: 'quran',
+        surahNumber: 7,
+        surahNameEnglish: "Al-A'raf",
+        surahNameArabic: "الأعراف",
+        ayahStart: 164,
+        ayahEnd: 164,
+        arabicText: "وَإِذْ قَالَتْ أُمَّةٌ مِّنْهُمْ لِمَ تَعِظُونَ قَوْمًا ۙ ٱللَّهُ مُهْلِكُهُمْ أَوْ مُعَذِّبُهُمْ عَذَابًا شَدِيدًا ۖ قَالُوا۟ مَعْذِرَةً إِلَىٰ رَبِّكُمْ وَلَعَلَّهُمْ يَتَّقُونَ",
+        translation: "And when a community among them said, \"Why do you advise [or warn] a people whom Allāh is [about] to destroy or to punish with a severe punishment?\" they [the advisors] said, \"To be absolved before your Lord and perhaps they may fear Him.\"",
+        translationFr: "Et lorsqu’un groupe d’entre eux dit : « Qu’avez-vous à exhorter des gens qu’Allah va faire périr et qu’Il va soumettre à un terrible supplice ? » Ils dirent : « Pour n’en être point responsables devant notre Seigneur et dans l’espoir qu’ils deviendront pieux ! »",
+      } as QuranReference,
+    },
+    {
+      id: "sabt-5",
+      type: 'narrative',
+      order: 5,
+      content: "Three groups appear in the verse: those who transgressed, those who admonished them, and those who asked what the point of admonishing was. The admonishers gave the answer that defines the duty of enjoining good: we do it so that we have an excuse before our Lord, and because they might yet fear Him. The outcome is not ours; the duty is.",
+      contentFr: "Trois groupes apparaissent dans le verset : ceux qui transgressèrent, ceux qui les exhortèrent, et ceux qui demandèrent à quoi bon exhorter. Les exhortateurs donnèrent la réponse qui définit le devoir d'ordonner le bien : nous le faisons pour avoir une excuse devant notre Seigneur, et parce qu'ils pourraient encore Le craindre. L'issue ne nous appartient pas ; le devoir, si.",
+    },
+    {
+      id: "sabt-6",
+      type: 'quran_source',
+      order: 6,
+      content: "Allah saved those who forbade evil and seized the wrongdoers. To the persistent He said: be apes, despised.",
+      contentFr: "Allah sauva ceux qui interdisaient le mal et saisit les injustes. Aux obstinés Il dit : soyez des singes méprisés.",
+      source: {
+        type: 'quran',
+        surahNumber: 7,
+        surahNameEnglish: "Al-A'raf",
+        surahNameArabic: "الأعراف",
+        ayahStart: 165,
+        ayahEnd: 166,
+        arabicText: "فَلَمَّا نَسُوا۟ مَا ذُكِّرُوا۟ بِهِۦٓ أَنجَيْنَا ٱلَّذِينَ يَنْهَوْنَ عَنِ ٱلسُّوٓءِ وَأَخَذْنَا ٱلَّذِينَ ظَلَمُوا۟ بِعَذَابٍۭ بَـِٔيسٍۭ بِمَا كَانُوا۟ يَفْسُقُونَ فَلَمَّا عَتَوْا۟ عَن مَّا نُهُوا۟ عَنْهُ قُلْنَا لَهُمْ كُونُوا۟ قِرَدَةً خَـٰسِـِٔينَ",
+        translation: "And when they [i.e., those advised] forgot that by which they had been reminded, We saved those who had forbidden evil and seized those who wronged, with a wretched punishment, because they were defiantly disobeying. So when they were insolent about that which they had been forbidden, We said to them, \"Be apes, despised.\"",
+        translationFr: "Et quand ils eurent oublié ce qui leur avait été rappelé, Nous sauvâmes ceux qui proscrivaient le mal et Nous prîmes les injustes dans un supplice très dur pour prix de leurs actions perverses. Et comme ils tenaient, avec morgue, à ce qui leur avait été défendu, Nous leur dîmes : « Soyez des singes méprisables ! »",
+      } as QuranReference,
+    },
+    {
+      id: "sabt-7",
+      type: 'narrative',
+      order: 7,
+      content: "The Quran states that the admonishers were saved and the wrongdoers punished. Of the third group, who neither transgressed nor admonished, it says nothing, and the commentators differ about them. Ibn Kathir records both views. The silence itself is instructive: the ones the Quran names as saved are the ones who spoke.",
+      contentFr: "Le Coran affirme que les exhortateurs furent sauvés et les injustes châtiés. Du troisième groupe, qui ne transgressa ni n'exhorta, il ne dit rien, et les commentateurs divergent à leur sujet. Ibn Kathir rapporte les deux avis. Le silence lui-même est instructif : ceux que le Coran nomme comme sauvés sont ceux qui parlèrent.",
+    },
+    {
+      id: "sabt-8",
+      type: 'quran_source',
+      order: 8,
+      content: "Al-Baqarah recalls it to the Children of Israel: you know those who transgressed the Sabbath. It was made a deterrent and a lesson for the God-fearing.",
+      contentFr: "Al-Baqarah le rappelle aux Enfants d'Israël : vous connaissez ceux qui ont transgressé le sabbat. Il en fut fait un exemple dissuasif et une leçon pour les pieux.",
+      source: {
+        type: 'quran',
+        surahNumber: 2,
+        surahNameEnglish: "Al-Baqarah",
+        surahNameArabic: "البقرة",
+        ayahStart: 65,
+        ayahEnd: 66,
+        arabicText: "وَلَقَدْ عَلِمْتُمُ ٱلَّذِينَ ٱعْتَدَوْا۟ مِنكُمْ فِى ٱلسَّبْتِ فَقُلْنَا لَهُمْ كُونُوا۟ قِرَدَةً خَـٰسِـِٔينَ فَجَعَلْنَـٰهَا نَكَـٰلًا لِّمَا بَيْنَ يَدَيْهَا وَمَا خَلْفَهَا وَمَوْعِظَةً لِّلْمُتَّقِينَ",
+        translation: "And you had already known about those who transgressed among you concerning the sabbath, and We said to them, \"Be apes, despised.\" And We made it a deterrent punishment for those who were present and those who succeeded [them] and a lesson for those who fear Allāh.",
+        translationFr: "Vous saviez lesquels d’entre vous étaient ceux qui avaient transgressé le Sabbat (et ce que Nous en avons fait). À ceux-là Nous avons dit : « Soyez des singes méprisables ! » Nous en avons fait une (terrible) leçon pour les gens d’alors et pour les générations futures, et une (précieuse) exhortation pour les gens pieux.",
+      } as QuranReference,
+    },
+    {
+      id: "sabt-9",
+      type: 'hadith_source',
+      order: 9,
+      content: "The Prophet ﷺ on those who were transformed.",
+      contentFr: "Le Prophète ﷺ sur ceux qui furent transformés.",
+      source: {
+        type: 'hadith',
+        collection: "Sahih Muslim (2663)",
+        narrator: "Abdullah ibn Mas'ud",
+        arabicText: "إِنَّ اللَّهَ لَمْ يَجْعَلْ لِمَسْخٍ نَسْلًا وَلَا عَقِبًا، وَقَدْ كَانَتِ الْقِرَدَةُ وَالْخَنَازِيرُ قَبْلَ ذَلِكَ",
+        translation: "The Prophet ﷺ said: 'Allah did not give any transformed people offspring or descendants. Monkeys and pigs existed before that.'",
+        translationFr: "Le Prophète ﷺ dit : « Allah n'a donné à aucun peuple transformé de descendance ni de postérité. Les singes et les porcs existaient avant cela. »",
+        grade: "sahih",
+      } as HadithReference,
+    },
+    {
+      id: "sabt-10",
+      type: 'narrative',
+      order: 10,
+      content: "The transformation was real and the Quran states it twice; the hadith settles a question people ask, that the apes of today are not their descendants. Allah made the event 'a deterrent for those present and those who came after', that is, for us. The lesson is not about fish. It is about the mind that finds a clever way around what Allah forbade and calls it obedience.",
+      contentFr: "La transformation fut réelle et le Coran l'énonce deux fois ; le hadith tranche une question que les gens posent : les singes d'aujourd'hui ne sont pas leurs descendants. Allah fit de l'événement « un exemple dissuasif pour ceux qui étaient présents et ceux qui vinrent après », c'est-à-dire pour nous. La leçon ne concerne pas les poissons. Elle concerne l'esprit qui trouve un moyen habile de contourner ce qu'Allah a interdit et appelle cela obéissance.",
+    },
+  ],
+};
+
+export default sabtStory;

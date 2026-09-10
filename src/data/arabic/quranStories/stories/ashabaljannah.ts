@@ -1,0 +1,153 @@
+// Story of the Owners of the Garden (أصحاب الجنة)
+// The oath at dawn, and the garden that was gone by morning
+//
+// Verses are copied from the app's own Quran data, so the Arabic and both
+// translations are exactly what the surah screen shows. Prophets carry their
+// Islamic names throughout, including inside quoted translations.
+
+import { QuranStory, QuranReference, HadithReference } from '../../../../types/quranStories';
+
+export const ashabAlJannahStory: QuranStory = {
+  id: "ashabaljannah",
+  titleEnglish: "The Owners of the Garden",
+  titleFrench: "Les Propriétaires du Jardin",
+  titleArabic: "أصحاب الجنة",
+  order: 13,
+  category: "parables",
+  description: "They swore to harvest at dawn so the poor would get nothing, and woke to find the garden gone",
+  descriptionFr: "Ils jurèrent de récolter à l'aube pour que les pauvres n'aient rien, et trouvèrent le jardin disparu",
+  summary: "In Surah Al-Qalam, Allah tells the Quraysh that He is testing them as He tested the owners of a garden. They swore to pick its fruit at dawn, before any poor person could come, and did not say 'if Allah wills'. While they slept, a visitation from their Lord passed over it and left it like the black of night. They set out whispering, saw it, and thought at first they had lost their way. The most balanced of them reminded them that he had told them to glorify Allah. They confessed their wrong, blamed each other, and turned to their Lord in hope. 'Such is the punishment, and the punishment of the Hereafter is greater.'",
+  summaryFr: "Dans la sourate Al-Qalam, Allah dit aux Quraych qu'Il les éprouve comme Il éprouva les propriétaires d'un jardin. Ils jurèrent d'en cueillir les fruits à l'aube, avant qu'aucun pauvre ne vînt, et ne dirent pas « si Allah le veut ». Pendant leur sommeil, une calamité venue de leur Seigneur passa sur le jardin et le laissa comme la nuit noire. Ils partirent en chuchotant, le virent, et crurent d'abord s'être trompés de chemin. Le plus équilibré d'entre eux leur rappela qu'il leur avait dit de glorifier Allah. Ils reconnurent leur tort, se blâmèrent, et se tournèrent vers leur Seigneur avec espoir. « Tel est le châtiment, et le châtiment de l'au-delà est plus grand. »",
+  lessons: ["The poor have a right in wealth, and withholding it invites loss","Say 'if Allah wills' when you resolve on tomorrow","What is gathered in secret from the needy can vanish overnight","The most balanced voice in a group is often the one ignored until too late","Blame between partners in wrong changes nothing; turning to Allah does","Loss in this world is a warning; the loss of the Hereafter is greater"],
+  lessonsFr: ["Les pauvres ont un droit sur la richesse, et le leur retenir appelle la perte","Dites « si Allah le veut » quand vous décidez de demain","Ce qu'on soustrait en secret aux nécessiteux peut disparaître en une nuit","La voix la plus équilibrée d'un groupe est souvent celle qu'on ignore jusqu'à ce qu'il soit trop tard","Se blâmer entre complices ne change rien ; se tourner vers Allah, si","La perte en ce monde est un avertissement ; celle de l'au-delà est plus grande"],
+  estimatedReadTime: 9,
+  quranMentions: 1,
+  icon: "🌾",
+  mainSurah: {
+    number: 68,
+    name: "Al-Qalam",
+    nameArabic: "القلم",
+  },
+  content: [
+    {
+      id: "ashabaljannah-1",
+      type: 'narrative',
+      order: 1,
+      content: "Surah Al-Qalam turns from the Quraysh to a story that explains what was happening to them. 'We have tried them as We tried the owners of the garden.' Makkah's wealthy were being tested with their wealth, as those owners once were. The commentators, Ibn Kathir among them, relate that the garden had belonged to a righteous man who gave the poor their share at every harvest, and that his sons resolved otherwise. The Quran tells what they resolved and what came of it.",
+      contentFr: "La sourate Al-Qalam se détourne des Quraych vers une histoire qui explique ce qui leur arrivait. « Nous les avons éprouvés comme Nous avons éprouvé les propriétaires du jardin. » Les riches de La Mecque étaient éprouvés par leur richesse, comme ces propriétaires l'avaient été. Les commentateurs, dont Ibn Kathir, rapportent que le jardin avait appartenu à un homme pieux qui donnait aux pauvres leur part à chaque récolte, et que ses fils décidèrent autrement. Le Coran dit ce qu'ils décidèrent et ce qu'il en advint.",
+    },
+    {
+      id: "ashabaljannah-2",
+      type: 'quran_source',
+      order: 2,
+      content: "They swore to pick the harvest at dawn, and made no exception.",
+      contentFr: "Ils jurèrent de cueillir la récolte à l'aube, sans faire d'exception.",
+      source: {
+        type: 'quran',
+        surahNumber: 68,
+        surahNameEnglish: "Al-Qalam",
+        surahNameArabic: "القلم",
+        ayahStart: 17,
+        ayahEnd: 18,
+        arabicText: "إِنَّا بَلَوْنَـٰهُمْ كَمَا بَلَوْنَآ أَصْحَـٰبَ ٱلْجَنَّةِ إِذْ أَقْسَمُوا۟ لَيَصْرِمُنَّهَا مُصْبِحِينَ وَلَا يَسْتَثْنُونَ",
+        translation: "Indeed, We have tried them as We tried the companions of the garden, when they swore to cut its fruit in the [early] morning Without making exception.",
+        translationFr: "Nous les avons éprouvés comme Nous avions autrefois éprouvé les propriétaires du jardin et qui s’étaient juré de procéder à sa récolte au petit jour sans restreindre (leur serment)",
+      } as QuranReference,
+    },
+    {
+      id: "ashabaljannah-3",
+      type: 'narrative',
+      order: 3,
+      content: "'And made no exception' means they did not say 'if Allah wills'. The commentators read in this both a failure of humility and the plan itself: to gather everything before daylight, so that no poor person would be there to receive a share. The oath was firm; the intention behind it was to withhold.",
+      contentFr: "« Sans faire d'exception » signifie qu'ils ne dirent pas « si Allah le veut ». Les commentateurs y lisent à la fois un manque d'humilité et le plan lui-même : tout ramasser avant le jour, afin qu'aucun pauvre ne soit là pour recevoir une part. Le serment était ferme ; l'intention derrière était de retenir.",
+    },
+    {
+      id: "ashabaljannah-4",
+      type: 'quran_source',
+      order: 4,
+      content: "While they slept, a visitation from their Lord passed over the garden.",
+      contentFr: "Pendant qu'ils dormaient, une calamité venue de leur Seigneur passa sur le jardin.",
+      source: {
+        type: 'quran',
+        surahNumber: 68,
+        surahNameEnglish: "Al-Qalam",
+        surahNameArabic: "القلم",
+        ayahStart: 19,
+        ayahEnd: 20,
+        arabicText: "فَطَافَ عَلَيْهَا طَآئِفٌ مِّن رَّبِّكَ وَهُمْ نَآئِمُونَ فَأَصْبَحَتْ كَٱلصَّرِيمِ",
+        translation: "So there came upon it [i.e., the garden] an affliction from your Lord while they were asleep. And it became as though reaped.",
+        translationFr: "Un fléau venu de la part de ton Seigneur fondit sur le jardin pendant qu’ils dormaient. Au matin, (le jardin) était complètement ravagé.",
+      } as QuranReference,
+    },
+    {
+      id: "ashabaljannah-5",
+      type: 'quran_source',
+      order: 5,
+      content: "At dawn they set out, whispering, resolved that no poor man should enter.",
+      contentFr: "À l'aube ils se mirent en route, en chuchotant, résolus à ce qu'aucun pauvre n'entre.",
+      source: {
+        type: 'quran',
+        surahNumber: 68,
+        surahNameEnglish: "Al-Qalam",
+        surahNameArabic: "القلم",
+        ayahStart: 21,
+        ayahEnd: 25,
+        arabicText: "فَتَنَادَوْا۟ مُصْبِحِينَ أَنِ ٱغْدُوا۟ عَلَىٰ حَرْثِكُمْ إِن كُنتُمْ صَـٰرِمِينَ فَٱنطَلَقُوا۟ وَهُمْ يَتَخَـٰفَتُونَ أَن لَّا يَدْخُلَنَّهَا ٱلْيَوْمَ عَلَيْكُم مِّسْكِينٌ وَغَدَوْا۟ عَلَىٰ حَرْدٍ قَـٰدِرِينَ",
+        translation: "And they called one another at morning, [Saying], \"Go early to your crop if you would cut the fruit.\" So they set out, while lowering their voices, [Saying], \"There will surely not enter it today upon you [any] poor person.\" And they went early in determination, [assuming themselves] able.",
+        translationFr: "En se levant avec le jour, ils s’appelèrent les uns les autres : « Allez vite à votre champ si vous comptez (toujours) en achever la récolte. » Ils s’élancèrent aussitôt en se disant tout bas les uns aux autres : « Que nul pauvre n’y entre aujourd’hui ! » Ils s’en furent, au petit jour, fermement résolus à empêcher (les pauvres d’entrer dans leur jardin), et persuadés qu’ils en avaient le pouvoir.",
+      } as QuranReference,
+    },
+    {
+      id: "ashabaljannah-6",
+      type: 'quran_source',
+      order: 6,
+      content: "They saw it and thought they had lost their way. Then: we have been deprived. The best of them reminded them.",
+      contentFr: "Ils le virent et crurent s'être trompés de chemin. Puis : nous sommes dépouillés. Le meilleur d'entre eux le leur rappela.",
+      source: {
+        type: 'quran',
+        surahNumber: 68,
+        surahNameEnglish: "Al-Qalam",
+        surahNameArabic: "القلم",
+        ayahStart: 26,
+        ayahEnd: 29,
+        arabicText: "فَلَمَّا رَأَوْهَا قَالُوٓا۟ إِنَّا لَضَآلُّونَ بَلْ نَحْنُ مَحْرُومُونَ قَالَ أَوْسَطُهُمْ أَلَمْ أَقُل لَّكُمْ لَوْلَا تُسَبِّحُونَ قَالُوا۟ سُبْحَـٰنَ رَبِّنَآ إِنَّا كُنَّا ظَـٰلِمِينَ",
+        translation: "But when they saw it, they said, \"Indeed, we are lost; Rather, we have been deprived.\" The most moderate of them said, \"Did I not say to you, 'Why do you not exalt [Allāh]?'\" They said, \"Exalted is our Lord! Indeed, we were wrongdoers.\"",
+        translationFr: "Quand ils eurent vu (le jardin), ils dirent : « Nous nous sommes vraiment égarés ! Ou plutôt voilà que nous avons tout perdu ! » Le plus sage d’entre eux dit alors : «Ne vous avais-je pas dit de rendre gloire à Allah ? » « Gloire soit rendue à notre Seigneur, s’écrièrent-ils, nous étions vraiment injustes ! »",
+      } as QuranReference,
+    },
+    {
+      id: "ashabaljannah-7",
+      type: 'narrative',
+      order: 7,
+      content: "The Quran calls the one who spoke 'the most moderate of them', the most just and balanced. He had told them before to glorify Allah, and they had not listened. Now they did: 'Glory be to our Lord, we were indeed wrongdoers.' The recognition came after the loss, but it came.",
+      contentFr: "Le Coran appelle celui qui parla « le plus modéré d'entre eux », le plus juste et le plus équilibré. Il leur avait dit auparavant de glorifier Allah, et ils n'avaient pas écouté. Cette fois ils le firent : « Gloire à notre Seigneur, nous étions vraiment des injustes. » La reconnaissance vint après la perte, mais elle vint.",
+    },
+    {
+      id: "ashabaljannah-8",
+      type: 'quran_source',
+      order: 8,
+      content: "They blamed one another, then turned to their Lord in hope. Such is the punishment, and the punishment of the Hereafter is greater.",
+      contentFr: "Ils se blâmèrent les uns les autres, puis se tournèrent vers leur Seigneur avec espoir. Tel est le châtiment, et celui de l'au-delà est plus grand.",
+      source: {
+        type: 'quran',
+        surahNumber: 68,
+        surahNameEnglish: "Al-Qalam",
+        surahNameArabic: "القلم",
+        ayahStart: 30,
+        ayahEnd: 33,
+        arabicText: "فَأَقْبَلَ بَعْضُهُمْ عَلَىٰ بَعْضٍ يَتَلَـٰوَمُونَ قَالُوا۟ يَـٰوَيْلَنَآ إِنَّا كُنَّا طَـٰغِينَ عَسَىٰ رَبُّنَآ أَن يُبْدِلَنَا خَيْرًا مِّنْهَآ إِنَّآ إِلَىٰ رَبِّنَا رَٰغِبُونَ كَذَٰلِكَ ٱلْعَذَابُ ۖ وَلَعَذَابُ ٱلْـَٔاخِرَةِ أَكْبَرُ ۚ لَوْ كَانُوا۟ يَعْلَمُونَ",
+        translation: "Then they approached one another, blaming each other. They said, \"O woe to us; indeed we were transgressors. Perhaps our Lord will substitute for us [one] better than it. Indeed, we are toward our Lord desirous.\" Such is the punishment [of this world]. And the punishment of the Hereafter is greater, if they only knew.",
+        translationFr: "Puis ils se mirent à s’agonir de reproches mutuels. « Malheur à nous, dirent-ils, nous sommes allés à la démesure ! Que notre Seigneur nous accorde en échange mieux que (ce jardin) ! Car nous ne voulons plus rien désormais que l’agrément de notre Seigneur ! » C’est ainsi qu’est le supplice. Mais le supplice de l’autre monde est plus grand encore. Ah, si seulement ils pouvaient savoir !",
+      } as QuranReference,
+    },
+    {
+      id: "ashabaljannah-9",
+      type: 'narrative',
+      order: 9,
+      content: "The story ends on hope: 'Perhaps our Lord will give us in exchange a better one; to our Lord we turn.' Allah does not say whether He replaced their garden. He says what the story was for: 'Such is the punishment', in this world, for the Quraysh to consider, 'and the punishment of the Hereafter is greater, if only they knew.' Wealth is a trust, the poor have a right in it, and the one who tries to cheat that right at dawn may find the garden gone by morning.",
+      contentFr: "L'histoire se termine sur l'espoir : « Peut-être notre Seigneur nous donnera-t-il en échange un meilleur ; c'est vers notre Seigneur que nous nous tournons. » Allah ne dit pas s'Il remplaça leur jardin. Il dit à quoi servait l'histoire : « Tel est le châtiment », en ce monde, pour que les Quraych y réfléchissent, « et le châtiment de l'au-delà est plus grand, s'ils savaient ». La richesse est un dépôt, les pauvres y ont un droit, et celui qui tente de frauder ce droit à l'aube peut trouver le jardin disparu au matin.",
+    },
+  ],
+};
+
+export default ashabAlJannahStory;

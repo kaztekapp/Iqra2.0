@@ -27,6 +27,12 @@ export const QURAN_STORY_IDS = [
   'twogardens',
   'habilqabil',
   'uzayr',
+  'fil',
+  'qaryah',
+  'ashabaljannah',
+  'muminalfirawn',
+  'talut',
+  'sabt',
 ] as const;
 
 export const TOTAL_QURAN_STORIES = QURAN_STORY_IDS.length;
@@ -42,6 +48,12 @@ const STORY_LOADERS: Record<string, () => QuranStory> = {
   twogardens: () => require('./stories/twogardens').twoGardensStory,
   habilqabil: () => require('./stories/habilqabil').habilQabilStory,
   uzayr: () => require('./stories/uzayr').uzayrStory,
+  fil: () => require('./stories/fil').filStory,
+  qaryah: () => require('./stories/qaryah').qaryahStory,
+  ashabaljannah: () => require('./stories/ashabaljannah').ashabAlJannahStory,
+  muminalfirawn: () => require('./stories/muminalfirawn').muminAlFirawnStory,
+  talut: () => require('./stories/talut').talutStory,
+  sabt: () => require('./stories/sabt').sabtStory,
 };
 
 /** Built stories, so reopening one costs nothing. */
