@@ -144,7 +144,7 @@ export default function GroupDetailScreen() {
   const flatListRef = useRef<FlatList>(null);
 
   const user = useSettingsStore((s) => s.user);
-  const { groups, joinGroup, leaveGroup } = useCommunityStore();
+  const { groups, joinGroup, leaveGroup, deleteGroup } = useCommunityStore();
 
   const [activeTab, setActiveTab] = useState<Tab>('chat');
   const [messageText, setMessageText] = useState('');
@@ -198,6 +198,9 @@ export default function GroupDetailScreen() {
   const isJoined = group?.isJoined || false;
   const myMember = members.find((m) => m.userId === user?.id || m.id === user?.id);
   const myRole = myMember?.role || 'member';
+  // Only the person who made the group can delete it. The database enforces
+  // the same rule, so this only decides whether to offer the option.
+  const isCreator = !!user?.id && !!group?.creatorId && group.creatorId === user.id;
   const isAdmin = myRole === 'admin';
   const isModerator = myRole === 'moderator';
   const canManage = isAdmin || isModerator;
@@ -578,21 +581,48 @@ export default function GroupDetailScreen() {
     setMessageText((prev) => applyMention(prev, member.name));
   }, []);
 
+  // Deleting is irreversible and takes everyone's messages and boards with
+  // it, so it is confirmed on its own, after the choice to delete rather
+  // than leave has already been made.
+  const confirmDeleteGroup = useCallback(() => {
+    if (!id) return;
+    Alert.alert(
+      t('community.deleteGroup'),
+      t('community.deleteGroupConfirm'),
+      [
+        { text: t('common.cancel', { defaultValue: 'Cancel' }), style: 'cancel' },
+        {
+          text: t('community.deleteGroup'),
+          style: 'destructive',
+          onPress: async () => {
+            const ok = await deleteGroup(id);
+            if (ok) router.back();
+            else Alert.alert(t('community.deleteGroup'), t('community.deleteGroupFailed'));
+          },
+        },
+      ]
+    );
+  }, [id, t, deleteGroup]);
+
   const handleJoinLeave = useCallback(() => {
     if (!id) return;
-    if (isJoined) {
+    if (!isJoined) {
+      joinGroup(id);
+      return;
+    }
+    const cancel = { text: t('common.cancel', { defaultValue: 'Cancel' }), style: 'cancel' as const };
+    const leave = { text: t('community.leaveGroup'), style: 'destructive' as const, onPress: () => leaveGroup(id) };
+    if (isCreator) {
+      // The creator gets one more choice than everyone else.
       Alert.alert(
         t('community.leaveGroup'),
-        t('community.leaveGroupConfirm', { defaultValue: 'Are you sure you want to leave this group?' }),
-        [
-          { text: t('common.cancel', { defaultValue: 'Cancel' }), style: 'cancel' },
-          { text: t('community.leaveGroup'), style: 'destructive', onPress: () => leaveGroup(id) },
-        ]
+        t('community.leaveGroupConfirm'),
+        [cancel, leave, { text: t('community.deleteGroup'), style: 'destructive', onPress: confirmDeleteGroup }]
       );
-    } else {
-      joinGroup(id);
+      return;
     }
-  }, [id, isJoined, t, leaveGroup, joinGroup]);
+    Alert.alert(t('community.leaveGroup'), t('community.leaveGroupConfirm'), [cancel, leave]);
+  }, [id, isJoined, isCreator, t, leaveGroup, joinGroup, confirmDeleteGroup]);
 
   const handleMemberAction = useCallback((member: GroupMember) => {
     if (!id || !canManage || member.userId === user?.id || member.id === user?.id) return;

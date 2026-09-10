@@ -100,6 +100,8 @@ export interface StudyGroup {
   createdAt: string;
   inviteCode?: string;
   invitesEnabled?: boolean;
+  /** Who made the group. Only they can delete it; the database enforces the same rule. */
+  creatorId?: string;
 }
 
 // ── Group Social Upgrade Types ──────────────────────────────────

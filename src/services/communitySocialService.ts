@@ -288,6 +288,34 @@ export async function leaveGroup(groupId: string, userId: string): Promise<boole
   }
 }
 
+/**
+ * Delete a group and everything in it: members, messages, boards, sessions,
+ * challenges, reactions. Every child table cascades on the group row, so one
+ * delete is the whole clean-up.
+ *
+ * Only the creator may do this, and the database enforces it: the delete
+ * policy on study_groups matches creator_id to the caller. A caller who is
+ * not the creator gets no error, just no rows — which is why this selects
+ * the deleted id back and reports false on an empty result rather than
+ * trusting the absence of an error.
+ */
+export async function deleteGroup(groupId: string, userId: string): Promise<boolean> {
+  try {
+    const client = getClient();
+    const { data, error } = await client
+      .from('study_groups')
+      .delete()
+      .eq('id', groupId)
+      .eq('creator_id', userId)
+      .select('id');
+    if (error) throw error;
+    return Array.isArray(data) && data.length > 0;
+  } catch (e) {
+    if (__DEV__) console.warn('[communitySocial] deleteGroup error:', e);
+    return false;
+  }
+}
+
 export async function createGroup(
   creatorId: string,
   name: string,
@@ -1571,5 +1599,6 @@ function mapGroup(row: any): StudyGroup {
     createdAt: row.created_at,
     inviteCode: row.invite_code || undefined,
     invitesEnabled: row.invites_enabled ?? true,
+    creatorId: row.creator_id || undefined,
   };
 }

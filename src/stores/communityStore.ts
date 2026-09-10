@@ -22,6 +22,7 @@ import {
 } from '../data/community/challenges';
 import * as communityService from '../services/communityService';
 import * as socialService from '../services/communitySocialService';
+import { clearGroupSnapshot } from '../services/groupContentCache';
 import { useProgressStore } from './progressStore';
 import { useSettingsStore } from './settingsStore';
 import { supabase } from '../lib/supabase';
@@ -92,6 +93,8 @@ interface CommunityState {
   loadGroups: () => Promise<void>;
   joinGroup: (groupId: string) => Promise<void>;
   leaveGroup: (groupId: string) => Promise<void>;
+  /** Creator only. Resolves true when the group is gone. */
+  deleteGroup: (groupId: string) => Promise<boolean>;
   createGroup: (name: string, description: string, topic: string, goal: string, icon?: string, color?: string) => Promise<StudyGroup | null>;
 
   loadPartners: () => Promise<void>;
@@ -576,6 +579,21 @@ export const useCommunityStore = create<CommunityState>()(
             };
           });
         }
+      },
+
+      deleteGroup: async (groupId) => {
+        const userId = useSettingsStore.getState().user?.id;
+        if (!userId) return false;
+        const success = await socialService.deleteGroup(groupId, userId);
+        if (success) {
+          clearGroupSnapshot(groupId);
+          set((s) => {
+            const newIds = new Set(s.userGroupIds);
+            newIds.delete(groupId);
+            return { userGroupIds: newIds, groups: s.groups.filter((g) => g.id !== groupId) };
+          });
+        }
+        return success;
       },
 
       createGroup: async (name, description, topic, goal, icon, color) => {
