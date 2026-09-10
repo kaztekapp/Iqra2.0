@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { PROPHETS, TOTAL_PROPHETS } from '../../../src/data/arabic/prophets';
-import { QURAN_STORIES, TOTAL_QURAN_STORIES } from '../../../src/data/arabic/quranStories';
+import { getQuranStories, TOTAL_QURAN_STORIES } from '../../../src/data/arabic/quranStories';
 import { ProphetCard } from '../../../src/components/prophetStories';
 import { QuranStoryCard } from '../../../src/components/quranStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
@@ -46,10 +46,11 @@ export default function StoriesScreen() {
 
   // Filter other Quran stories based on search query
   const filteredQuranStories = useMemo(() => {
-    if (!searchQuery.trim()) return QURAN_STORIES;
+    const stories = getQuranStories();
+    if (!searchQuery.trim()) return stories;
 
     const query = searchQuery.toLowerCase();
-    return QURAN_STORIES.filter(
+    return stories.filter(
       (story) =>
         story.titleEnglish.toLowerCase().includes(query) ||
         story.titleArabic.includes(searchQuery) ||
