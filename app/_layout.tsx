@@ -196,7 +196,6 @@ export default function RootLayout() {
     const inLegal = seg === 'privacy-policy' || seg === 'terms-of-service';
     const inResetPassword = seg === 'reset-password';
 
-    if (true) { /* LOCAL AUDIT */ return; }
     if (!hasCompletedOnboarding && !inOnboarding) {
       router.replace('/(onboarding)/language');
     } else if (hasCompletedOnboarding && !isAuthenticated && !inAuth && !inLegal && !inResetPassword) {
