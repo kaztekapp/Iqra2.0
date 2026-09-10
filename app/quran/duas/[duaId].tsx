@@ -8,6 +8,8 @@ import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getDuaById, getAllDuas } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
+import { ArabicVoiceSheet } from '../../../src/components/duas/ArabicVoiceSheet';
+import type { ArabicDeviceVoice } from '../../../src/services/speech/arabicTTS';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import {
@@ -31,8 +33,9 @@ export default function DuaDetailScreen() {
   } = useDuasStore();
 
   // Audio/Speech functionality
-  const { speak, stop, isSpeaking, voiceGender, setVoiceGender, swapVoices, hasMultipleVoices } = useArabicSpeech();
-  const [showVoiceHelp, setShowVoiceHelp] = useState(false);
+  const { speak, stop, isSpeaking, voiceSource, deviceVoiceId, setArabicVoice, listDeviceVoices } = useArabicSpeech();
+  const [voiceSheetOpen, setVoiceSheetOpen] = useState(false);
+  const [deviceVoices, setDeviceVoices] = useState<ArabicDeviceVoice[] | null>(null);
   const [shareContent, setShareContent] = useState<SharedContent | null>(null);
 
   // Get dua data
@@ -72,38 +75,36 @@ export default function DuaDetailScreen() {
     }
   }, [dua, isSpeaking, speak, stop]);
 
-  // Toggle voice gender
-  const handleToggleVoice = useCallback(() => {
-    if (!hasMultipleVoices) {
-      // Only one voice available, show help
-      Alert.alert(
-        t('duasFeature.downloadMoreVoices'),
-        t('duasFeature.downloadVoicesInstructions'),
-        [{ text: t('duasFeature.ok') }]
-      );
-      return;
+  // The voice picker. The phone's voice list is asked for the first time the
+  // sheet opens, then kept: it does not change while the app is running.
+  const openVoiceSheet = useCallback(() => {
+    setVoiceSheetOpen(true);
+    if (deviceVoices === null) {
+      listDeviceVoices().then(setDeviceVoices).catch(() => setDeviceVoices([]));
     }
-    setVoiceGender(voiceGender === 'female' ? 'male' : 'female');
-  }, [voiceGender, setVoiceGender, hasMultipleVoices]);
+  }, [deviceVoices, listDeviceVoices]);
 
-  // Swap voices if detection was wrong (long-press)
-  const handleSwapVoices = useCallback(() => {
-    if (!hasMultipleVoices) {
-      // Only one voice available, show help
-      Alert.alert(
-        t('duasFeature.onlyOneVoice'),
-        t('duasFeature.onlyOneVoiceDesc'),
-        [{ text: t('duasFeature.ok') }]
-      );
-      return;
-    }
-    swapVoices();
+  const handlePickVoice = useCallback(
+    (source: 'online' | 'device', voiceId: string | null) => {
+      setArabicVoice(source, voiceId);
+      setVoiceSheetOpen(false);
+    },
+    [setArabicVoice]
+  );
+
+  const showDownloadHelp = useCallback(() => {
     Alert.alert(
-      t('duasFeature.voicesSwapped'),
-      t('duasFeature.voicesSwappedDesc'),
+      t('duasFeature.downloadMoreVoices'),
+      t('duasFeature.downloadVoicesInstructions'),
       [{ text: t('duasFeature.ok') }]
     );
-  }, [swapVoices, hasMultipleVoices]);
+  }, [t]);
+
+  // What the voice button says: the chosen device voice by name, or "Online".
+  const voiceLabel =
+    voiceSource === 'device'
+      ? deviceVoices?.find((v) => v.identifier === deviceVoiceId)?.name || t('duasFeature.arabicVoice')
+      : t('duasFeature.onlineVoice');
 
   // Stop speech when leaving screen
   useEffect(() => {
@@ -218,29 +219,10 @@ export default function DuaDetailScreen() {
 
           {/* Audio Controls */}
           <View style={styles.audioControls}>
-            <Pressable
-              style={[styles.voiceButton, !hasMultipleVoices && styles.voiceButtonDisabled]}
-              onPress={handleToggleVoice}
-              onLongPress={handleSwapVoices}
-              delayLongPress={500}
-            >
-              {!hasMultipleVoices ? (
-                <>
-                  <Ionicons name="alert-circle" size={18} color={color.warning} />
-                  <Text style={styles.voiceTextWarning}>{t('duasFeature.oneVoice')}</Text>
-                </>
-              ) : (
-                <>
-                  <Ionicons
-                    name={voiceGender === 'female' ? 'woman' : 'man'}
-                    size={18}
-                    color={voiceGender === 'female' ? color.accent : color.accent}
-                  />
-                  <Text style={[styles.voiceText, voiceGender === 'female' ? styles.voiceTextFemale : styles.voiceTextMale]}>
-                    {voiceGender === 'female' ? t('duasFeature.female') : t('duasFeature.male')}
-                  </Text>
-                </>
-              )}
+            <Pressable style={styles.voiceButton} onPress={openVoiceSheet} accessibilityRole="button" accessibilityLabel={t('duasFeature.chooseVoice')}>
+              <Ionicons name={voiceSource === 'device' ? 'phone-portrait-outline' : 'cloud-outline'} size={18} color={color.accent} />
+              <Text style={[styles.voiceText, styles.voiceTextFemale]} numberOfLines={1}>{voiceLabel}</Text>
+              <Ionicons name="chevron-down" size={14} color={color.textFaint} />
             </Pressable>
 
 
@@ -356,6 +338,17 @@ export default function DuaDetailScreen() {
         visible={!!shareContent}
         content={shareContent}
         onClose={() => setShareContent(null)}
+      />
+
+      <ArabicVoiceSheet
+        visible={voiceSheetOpen}
+        source={voiceSource}
+        deviceVoiceId={deviceVoiceId}
+        voices={deviceVoices || []}
+        loading={deviceVoices === null}
+        onPick={handlePickVoice}
+        onDownloadHelp={showDownloadHelp}
+        onClose={() => setVoiceSheetOpen(false)}
       />
     </SafeAreaView>
   );

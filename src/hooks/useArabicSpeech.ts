@@ -1,6 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
 import { audioService, VoiceGender } from '../services/audioService';
 import { useSettingsStore } from '../stores/settingsStore';
+import {
+  setArabicVoicePreference,
+  listArabicDeviceVoices,
+  type ArabicDeviceVoice,
+  type ArabicVoiceSource,
+} from '../services/speech/arabicTTS';
 
 // Speed options offered by the numbered speed control.
 export const ARABIC_SPEECH_SPEEDS = [0.75, 1.0, 1.25, 1.5] as const;
@@ -16,6 +22,11 @@ interface UseArabicSpeechReturn {
   setVoiceGender: (gender: VoiceGender) => void;
   swapVoices: () => void;
   hasMultipleVoices: boolean;
+  /** 'online' (fetched, device as fallback) or a voice installed on the phone. */
+  voiceSource: ArabicVoiceSource;
+  deviceVoiceId: string | null;
+  setArabicVoice: (source: ArabicVoiceSource, voiceId?: string | null) => void;
+  listDeviceVoices: () => Promise<ArabicDeviceVoice[]>;
 }
 
 export function useArabicSpeech(): UseArabicSpeechReturn {
@@ -26,6 +37,16 @@ export function useArabicSpeech(): UseArabicSpeechReturn {
   // Global, persisted playback speed (1.0 = natural).
   const speed = useSettingsStore((s) => s.arabicSpeechSpeed);
   const setSpeed = useSettingsStore((s) => s.setArabicSpeechSpeed);
+
+  // Persisted voice choice, handed to the speech service whenever it changes
+  // so the next utterance uses it. The service reads nothing from the store
+  // itself; this is the one place the two meet.
+  const voiceSource = useSettingsStore((s) => s.arabicVoiceSource);
+  const deviceVoiceId = useSettingsStore((s) => s.arabicDeviceVoiceId);
+  const setArabicVoice = useSettingsStore((s) => s.setArabicVoice);
+  useEffect(() => {
+    setArabicVoicePreference({ source: voiceSource, voiceId: deviceVoiceId });
+  }, [voiceSource, deviceVoiceId]);
 
   // Initialize and check voice availability
   useEffect(() => {
@@ -83,8 +104,12 @@ export function useArabicSpeech(): UseArabicSpeechReturn {
     setVoiceGender,
     swapVoices,
     hasMultipleVoices,
+    voiceSource,
+    deviceVoiceId,
+    setArabicVoice,
+    listDeviceVoices: listArabicDeviceVoices,
   };
 }
 
 export default useArabicSpeech;
-export type { VoiceGender };
+export type { VoiceGender, ArabicDeviceVoice, ArabicVoiceSource };

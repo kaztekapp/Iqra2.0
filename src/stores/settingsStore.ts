@@ -23,6 +23,15 @@ interface SettingsState {
   // Which voice reads the stories aloud. Persisted, so a listener who
   // settles on one never has to choose again.
   narrationVoice: 'female' | 'male';
+  /**
+   * Which Arabic voice reads duas, vocabulary and the rest of the Arabic
+   * speech. 'online' is the fetched voice with the device as a fallback;
+   * 'device' uses the phone's own Arabic voice, and `arabicDeviceVoiceId`
+   * says which one when the phone has several.
+   */
+  arabicVoiceSource: 'online' | 'device';
+  arabicDeviceVoiceId: string | null;
+  setArabicVoice: (source: 'online' | 'device', voiceId?: string | null) => void;
   setNarrationVoice: (voice: 'female' | 'male') => void;
 
   // Auth (NOT persisted - Supabase manages its own session)
@@ -54,6 +63,9 @@ export const useSettingsStore = create<SettingsState>()(
       // Story narration voice
       narrationVoice: 'female',
       setNarrationVoice: (voice) => set({ narrationVoice: voice }),
+      arabicVoiceSource: 'online',
+      arabicDeviceVoiceId: null,
+      setArabicVoice: (source, voiceId = null) => set({ arabicVoiceSource: source, arabicDeviceVoiceId: voiceId }),
 
       // Auth
       session: null,
@@ -75,6 +87,8 @@ export const useSettingsStore = create<SettingsState>()(
         learningGoals: state.learningGoals,
         arabicSpeechSpeed: state.arabicSpeechSpeed,
         narrationVoice: state.narrationVoice,
+        arabicVoiceSource: state.arabicVoiceSource,
+        arabicDeviceVoiceId: state.arabicDeviceVoiceId,
         // session, user, isAuthenticated are NOT persisted
       }),
     }

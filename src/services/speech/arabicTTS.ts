@@ -235,6 +235,13 @@ export async function playArabicLines(
 
       options.onLineStart?.(i);
 
+      // The learner asked for the phone's own voice: no fetch at all.
+      if (preference.source === 'device') {
+        await speakOnDevice(line, speed, myGen, () => generation);
+        if (myGen !== generation) return;
+        continue;
+      }
+
       const chunks = chunkLine(line);
       for (const chunk of chunks) {
         if (myGen !== generation) return;
@@ -242,8 +249,8 @@ export async function playArabicLines(
         try {
           uri = await fetchChunkToFile(chunk, speed);
         } catch {
-          // Google TTS is unreachable. Speak this line on device rather than
-          // failing the whole utterance into silence.
+          // The fetched voice is unreachable. Speak this line on device rather
+          // than failing the whole utterance into silence.
           await speakOnDevice(line, speed, myGen, () => generation);
           break;
         }
@@ -280,6 +287,38 @@ const MALE = ['maged', 'majed', 'tarik', 'omar', 'khaled', 'ahmed', 'hassan', 'm
 let voicePromise: Promise<string | undefined> | null = null;
 let preferredGender: 'female' | 'male' = 'female';
 
+export type ArabicVoiceSource = 'online' | 'device';
+
+export interface ArabicVoicePreference {
+  /** 'online' fetches the voice and falls back to the device; 'device' never fetches. */
+  source: ArabicVoiceSource;
+  /** A specific installed voice, or null for the best one the phone has. */
+  voiceId: string | null;
+}
+
+/** One of the phone's installed Arabic voices, as the picker shows it. */
+export interface ArabicDeviceVoice {
+  identifier: string;
+  name: string;
+  language: string;
+  quality: 'enhanced' | 'default' | 'compact';
+  gender?: 'female' | 'male';
+}
+
+let preference: ArabicVoicePreference = { source: 'online', voiceId: null };
+
+/** The learner's choice, persisted in settings and handed here by the hook. */
+export function setArabicVoicePreference(next: ArabicVoicePreference) {
+  if (next.source !== preference.source || next.voiceId !== preference.voiceId) {
+    preference = { ...next };
+    voicePromise = null; // re-resolve on next use
+  }
+}
+
+export function getArabicVoicePreference(): ArabicVoicePreference {
+  return preference;
+}
+
 export function setArabicVoiceGender(gender: 'female' | 'male') {
   if (gender !== preferredGender) {
     preferredGender = gender;
@@ -287,49 +326,112 @@ export function setArabicVoiceGender(gender: 'female' | 'male') {
   }
 }
 
+const named = (v: Speech.Voice) => `${v.identifier || ''} ${v.name || ''}`.toLowerCase();
+
+const qualityOf = (v: Speech.Voice): ArabicDeviceVoice['quality'] => {
+  const id = named(v);
+  if (String(v.quality || '').toLowerCase().includes('enhanced') || id.includes('premium') || id.includes('enhanced')) return 'enhanced';
+  if (id.includes('compact')) return 'compact';
+  return 'default';
+};
+
+const genderOf = (v: Speech.Voice): ArabicDeviceVoice['gender'] => {
+  const id = named(v);
+  if (FEMALE.some((w) => id.includes(w))) return 'female';
+  if (MALE.some((w) => id.includes(w))) return 'male';
+  return undefined;
+};
+
+/** Quality first, then the preferred gender; compact cuts last. */
+const score = (v: Speech.Voice) => {
+  const id = named(v);
+  let n = 0;
+  if (String(v.quality || '').toLowerCase().includes('enhanced')) n += 100;
+  if (id.includes('premium')) n += 60;
+  if (id.includes('enhanced')) n += 50;
+  if (id.includes('-network')) n += 45;
+  if (id.includes('super-compact')) n -= 80;
+  else if (id.includes('compact')) n -= 40;
+  const wanted = preferredGender === 'male' ? MALE : FEMALE;
+  if (wanted.some((w) => id.includes(w))) n += 25;
+  return n;
+};
+
+async function arabicVoices(): Promise<Speech.Voice[]> {
+  try {
+    const voices = await Speech.getAvailableVoicesAsync();
+    return voices
+      .filter((v) => (v.language || '').startsWith('ar') || (v.language || '').includes('Arab'))
+      .sort((a, b) => score(b) - score(a));
+  } catch {
+    return [];
+  }
+}
+
+/** Every Arabic voice installed on the phone, best first, for the picker. */
+export async function listArabicDeviceVoices(): Promise<ArabicDeviceVoice[]> {
+  return (await arabicVoices()).map((v) => ({
+    identifier: v.identifier,
+    name: v.name || v.identifier,
+    language: v.language || 'ar',
+    quality: qualityOf(v),
+    gender: genderOf(v),
+  }));
+}
+
 async function bestArabicVoice(): Promise<string | undefined> {
   if (voicePromise) return voicePromise;
   voicePromise = (async () => {
-    try {
-      const voices = await Speech.getAvailableVoicesAsync();
-      const arabic = voices.filter(
-        (v) => (v.language || '').startsWith('ar') || (v.language || '').includes('Arab')
-      );
-      if (arabic.length === 0) return undefined;
-      const named = (v: Speech.Voice) =>
-        `${v.identifier || ''} ${v.name || ''}`.toLowerCase();
-      const wanted = preferredGender === 'male' ? MALE : FEMALE;
-      const score = (v: Speech.Voice) => {
-        const id = named(v);
-        let n = 0;
-        if (String(v.quality || '').toLowerCase().includes('enhanced')) n += 100;
-        if (id.includes('premium')) n += 60;
-        if (id.includes('enhanced')) n += 50;
-        if (id.includes('-network')) n += 45;
-        if (id.includes('super-compact')) n -= 80;
-        else if (id.includes('compact')) n -= 40;
-        if (wanted.some((w) => id.includes(w))) n += 25;
-        return n;
-      };
-      return [...arabic].sort((a, b) => score(b) - score(a))[0]?.identifier;
-    } catch {
-      return undefined;
-    }
+    const voices = await arabicVoices();
+    if (voices.length === 0) return undefined;
+    // A voice the learner picked wins, as long as it is still installed.
+    if (preference.voiceId && voices.some((v) => v.identifier === preference.voiceId)) return preference.voiceId;
+    return voices[0]?.identifier;
   })();
   return voicePromise;
 }
 
-/** Speak on device. Used when Google TTS is unreachable. */
-async function speakOnDevice(text: string, speed: number, myGen: number, gen: () => number) {
-  const voice = await bestArabicVoice();
-  if (myGen !== gen()) return;
-  try { Speech.stop(); } catch {}
-  Speech.speak(text, {
-    language: 'ar',
-    voice,
-    // Slightly under normal: Arabic on-device voices run fast for a learner.
-    rate: Math.max(0.1, Math.min(1, speed * 0.9)),
-    pitch: 1.0,
+/**
+ * Speak one line on the device and resolve when it has finished.
+ *
+ * Used both when the learner has chosen the device voice and when the fetched
+ * voice cannot be reached. It has to be awaited: the old fallback returned as
+ * soon as speech started, so the loop moved to the next line and cut the
+ * previous one off after a word. A watchdog scaled to the text keeps a voice
+ * that never reports completion from hanging the utterance.
+ */
+function speakOnDevice(text: string, speed: number, myGen: number, gen: () => number): Promise<void> {
+  return new Promise<void>((resolve) => {
+    let settled = false;
+    let watchdog: ReturnType<typeof setTimeout> | null = null;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      if (watchdog) clearTimeout(watchdog);
+      resolve();
+    };
+    void (async () => {
+      const voice = await bestArabicVoice();
+      if (myGen !== gen()) return finish();
+      try { Speech.stop(); } catch {}
+      try {
+        Speech.speak(text, {
+          language: 'ar',
+          voice,
+          // Slightly under normal: Arabic on-device voices run fast for a learner.
+          rate: Math.max(0.1, Math.min(1, speed * 0.9)),
+          pitch: 1.0,
+          onDone: finish,
+          onStopped: finish,
+          onError: finish,
+        });
+      } catch {
+        return finish();
+      }
+      // Generous: about 8 characters a second at normal speed, plus slack.
+      const budget = (text.length / 8) * 1000 * (1 / Math.max(0.3, speed)) + 4000;
+      watchdog = setTimeout(finish, budget);
+    })();
   });
 }
 
