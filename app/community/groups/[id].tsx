@@ -33,7 +33,7 @@ import {
   addReaction,
   removeReaction,
   fetchReactions,
-  fetchGroupLeaderboard,
+  leaderboardFromMembers,
   fetchSessions,
   rsvpSession,
   createSession,
@@ -51,6 +51,7 @@ import {
   GroupMessageRow,
   PresenceUser,
 } from '../../../src/services/communitySocialService';
+import { getGroupSnapshot, setGroupSnapshot, type GroupSnapshot } from '../../../src/services/groupContentCache';
 import { StudySession, GroupChallenge, MessageReaction } from '../../../src/types/community';
 import { MessageBubble, MessageBubbleMessage } from '../../../src/components/community/MessageBubble';
 import { MemberRow, MemberRowData } from '../../../src/components/community/MemberRow';
@@ -274,69 +275,116 @@ export default function GroupDetailScreen() {
 
   const topContributorId = leaderboard.length > 0 ? leaderboard[0].userId : null;
 
-  // FIX #6: Single parallelized load for all data
+  // Load the group.
+  //
+  // Anything cached from earlier in the session paints at once and the
+  // network refreshes it behind. Messages set state the moment they arrive
+  // rather than waiting on members, sessions and challenges; the leaderboard
+  // is derived from the members list instead of fetched again with the same
+  // three queries; and the realtime subscriptions start as soon as the
+  // messages are in, not after everything else.
   useEffect(() => {
     if (!id) return;
     let unsubMessages: (() => void) | null = null;
+    let cancelled = false;
     // FIX #7: Clear seenIds on group change
     seenIds.current.clear();
 
+    const cached = getGroupSnapshot(id);
+    if (cached) {
+      cached.messages.forEach((m) => seenIds.current.add(m.id));
+      setMessages(cached.messages);
+      setReactions(cached.reactions);
+      setMembers(cached.members);
+      setSessions(cached.sessions);
+      setChallenges(cached.challenges);
+      setLeaderboard(cached.leaderboard);
+      setIsLoadingMessages(false);
+      setIsLoadingMembers(false);
+    } else {
+      setIsLoadingMessages(true);
+      setIsLoadingMembers(true);
+    }
+
+    const snapshot: GroupSnapshot = cached
+      ? { ...cached }
+      : { messages: [], reactions: {}, members: [], sessions: [], challenges: [], leaderboard: [] };
+    const remember = () => setGroupSnapshot(id, { ...snapshot });
+    const simulated = () => require('../../../src/data/community/socialData');
+
+    // Messages first: they are what the screen is for.
+    const loadMessages = (async () => {
+      const rows = await fetchGroupMessages(id);
+      if (cancelled) return [];
+      const mapped = (rows || []).map(rowToMessage);
+      mapped.forEach((m) => seenIds.current.add(m.id));
+
+      if (mapped.length > 0) {
+        setMessages(mapped);
+        snapshot.messages = mapped;
+        setIsLoadingMessages(false);
+        // Reactions need the message ids, so they follow; the list is already up.
+        const reactionData = await fetchReactions(mapped.map((m) => m.id));
+        if (cancelled) return mapped;
+        const rx = Object.keys(reactionData).length > 0 ? reactionData : {};
+        setReactions(rx);
+        snapshot.reactions = rx;
+      } else if (!cached) {
+        // FIX #9: Lazy-load simulated data only when needed
+        const { SIMULATED_GROUP_MESSAGES, SIMULATED_REACTIONS } = simulated();
+        setMessages(SIMULATED_GROUP_MESSAGES[id] || []);
+        setReactions(SIMULATED_REACTIONS);
+        setIsLoadingMessages(false);
+      } else {
+        setIsLoadingMessages(false);
+      }
+      remember();
+      return mapped;
+    })();
+
+    // Everything else, in parallel and independent of the messages.
+    const loadRest = (async () => {
+      const [membersData, sessData, challData] = await Promise.all([
+        fetchGroupMembers(id),
+        fetchSessions(id),
+        fetchChallenges(id),
+      ]);
+      if (cancelled) return;
+
+      if (Array.isArray(membersData) && membersData.length > 0) {
+        setMembers(membersData);
+        snapshot.members = membersData;
+        const lb = leaderboardFromMembers(membersData);
+        setLeaderboard(lb);
+        snapshot.leaderboard = lb;
+      } else if (!cached) {
+        const { SIMULATED_GROUP_MEMBERS, SIMULATED_GROUP_LEADERBOARD } = simulated();
+        setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
+        setLeaderboard(SIMULATED_GROUP_LEADERBOARD[id] || []);
+      }
+      setIsLoadingMembers(false);
+
+      if (Array.isArray(sessData) && sessData.length > 0) {
+        setSessions(sessData);
+        snapshot.sessions = sessData;
+      } else if (!cached) {
+        const { SIMULATED_SESSIONS } = simulated();
+        setSessions(SIMULATED_SESSIONS[id] || []);
+      }
+      if (Array.isArray(challData) && challData.length > 0) {
+        setChallenges(challData);
+        snapshot.challenges = challData;
+      } else if (!cached) {
+        const { SIMULATED_CHALLENGES } = simulated();
+        setChallenges(SIMULATED_CHALLENGES[id] || []);
+      }
+      remember();
+    })();
+
     (async () => {
       try {
-        setIsLoadingMessages(true);
-        setIsLoadingMembers(true);
-
-        // Parallel fetch: messages, members, sessions, challenges, leaderboard
-        const [rows, membersData, sessData, challData, lbData] = await Promise.all([
-          fetchGroupMessages(id),
-          fetchGroupMembers(id),
-          fetchSessions(id),
-          fetchChallenges(id),
-          fetchGroupLeaderboard(id),
-        ]);
-
-        // Process messages
-        const mapped = (rows || []).map(rowToMessage);
-        mapped.forEach((m) => seenIds.current.add(m.id));
-
-        if (mapped.length > 0) {
-          setMessages(mapped);
-          // Fetch reactions in parallel (needs message IDs)
-          const reactionData = await fetchReactions(mapped.map((m) => m.id));
-          setReactions(Object.keys(reactionData).length > 0 ? reactionData : {});
-        } else {
-          // FIX #9: Lazy-load simulated data only when needed
-          const { SIMULATED_GROUP_MESSAGES, SIMULATED_REACTIONS } = require('../../../src/data/community/socialData');
-          setMessages(SIMULATED_GROUP_MESSAGES[id] || []);
-          setReactions(SIMULATED_REACTIONS);
-        }
-        setIsLoadingMessages(false);
-
-        // Process members
-        if (Array.isArray(membersData) && membersData.length > 0) {
-          setMembers(membersData);
-        } else {
-          const { SIMULATED_GROUP_MEMBERS } = require('../../../src/data/community/socialData');
-          setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
-        }
-        setIsLoadingMembers(false);
-
-        // Process sessions/challenges/leaderboard
-        if (Array.isArray(sessData) && sessData.length > 0) setSessions(sessData);
-        else {
-          const { SIMULATED_SESSIONS } = require('../../../src/data/community/socialData');
-          setSessions(SIMULATED_SESSIONS[id] || []);
-        }
-        if (Array.isArray(challData) && challData.length > 0) setChallenges(challData);
-        else {
-          const { SIMULATED_CHALLENGES } = require('../../../src/data/community/socialData');
-          setChallenges(SIMULATED_CHALLENGES[id] || []);
-        }
-        if (Array.isArray(lbData) && lbData.length > 0) setLeaderboard(lbData);
-        else {
-          const { SIMULATED_GROUP_LEADERBOARD } = require('../../../src/data/community/socialData');
-          setLeaderboard(SIMULATED_GROUP_LEADERBOARD[id] || []);
-        }
+        const mapped = await loadMessages;
+        if (cancelled) return;
 
         // Subscribe to new + updated messages
         unsubMessages = subscribeToGroupMessages(
@@ -347,10 +395,13 @@ export default function GroupDetailScreen() {
             // Register new message ID with reaction subscription
             reactionSubRef.current?.addMessageId(newRow.id);
             const isMine = newRow.user_id === user?.id;
+            const incoming = rowToMessage(newRow);
             setMessages((prev) => {
               if (prev.some((m) => m.id === newRow.id)) return prev;
-              return [...prev, rowToMessage(newRow)];
+              return [...prev, incoming];
             });
+            snapshot.messages = [...snapshot.messages, incoming];
+            remember();
             // Track unread when not viewing the bottom of the chat.
             if (!isMine && !isAtBottomRef.current) setUnreadCount((c) => c + 1);
           },
@@ -386,20 +437,27 @@ export default function GroupDetailScreen() {
         reactionSubRef.current = reactionSub;
       } catch (e) {
         if (__DEV__) console.warn('[GroupDetail] Load error:', e);
-        // Fallback to simulated data on any error
-        const { SIMULATED_GROUP_MESSAGES, SIMULATED_REACTIONS, SIMULATED_GROUP_MEMBERS, SIMULATED_SESSIONS, SIMULATED_CHALLENGES, SIMULATED_GROUP_LEADERBOARD } = require('../../../src/data/community/socialData');
+        if (cancelled || cached) return;
+        const { SIMULATED_GROUP_MESSAGES, SIMULATED_REACTIONS } = simulated();
         setMessages(SIMULATED_GROUP_MESSAGES[id] || []);
         setReactions(SIMULATED_REACTIONS);
-        setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
-        setSessions(SIMULATED_SESSIONS[id] || []);
-        setChallenges(SIMULATED_CHALLENGES[id] || []);
-        setLeaderboard(SIMULATED_GROUP_LEADERBOARD[id] || []);
         setIsLoadingMessages(false);
-        setIsLoadingMembers(false);
       }
     })();
 
+    loadRest.catch((e) => {
+      if (__DEV__) console.warn('[GroupDetail] Load error:', e);
+      if (cancelled || cached) return;
+      const { SIMULATED_GROUP_MEMBERS, SIMULATED_SESSIONS, SIMULATED_CHALLENGES, SIMULATED_GROUP_LEADERBOARD } = simulated();
+      setMembers(SIMULATED_GROUP_MEMBERS[id] || []);
+      setSessions(SIMULATED_SESSIONS[id] || []);
+      setChallenges(SIMULATED_CHALLENGES[id] || []);
+      setLeaderboard(SIMULATED_GROUP_LEADERBOARD[id] || []);
+      setIsLoadingMembers(false);
+    });
+
     return () => {
+      cancelled = true;
       if (unsubMessages) unsubMessages();
       reactionSubRef.current?.unsubscribe();
       reactionSubRef.current = null;

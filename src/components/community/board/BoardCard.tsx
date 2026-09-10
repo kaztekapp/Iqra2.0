@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BoardCanvas, boardContentBounds } from './BoardCanvas';
 import { BoardViewer } from './BoardViewer';
-import type { BoardContent } from '../../../types/classContent';
+import type { BoardContent, BoardElement } from '../../../types/classContent';
 import { BOARD_BG } from '../../../types/classContent';
 import { color, radius } from '../../../theme/tokens';
 
@@ -28,7 +28,7 @@ export const BoardCard = React.memo(function BoardCard({ board, groupColor, auth
   const [w, setW] = useState(1);
 
   const bg = BOARD_BG[board.background];
-  const bounds = boardContentBounds(board.elements, board.width);
+  const bounds = useMemo(() => boardContentBounds(board.elements, board.width), [board]);
 
   // Scale the content so its width fills the card, then show only the top slice.
   const scale = bounds ? w / bounds.w : 1;
@@ -37,6 +37,25 @@ export const BoardCard = React.memo(function BoardCard({ board, groupColor, auth
   const cropped = fullH > PREVIEW_H + 8;
   const vbH = bounds ? previewH / scale : 0;
   const viewBox = bounds ? `${bounds.x} ${bounds.y} ${bounds.w} ${vbH}` : undefined;
+
+  /**
+   * Draw only what the teaser can show. The canvas renders every element it
+   * is given whatever the viewBox, so a board holding a whole lesson —
+   * hundreds of elements — was being built in full to show its top 200px,
+   * once per post in the chat. Anything that starts below the visible band
+   * cannot appear in it, so it is left out; the opened viewer still gets the
+   * full board.
+   */
+  const previewBoard = useMemo<BoardContent>(() => {
+    if (!bounds) return board;
+    const bottom = bounds.y + vbH;
+    const visible = (el: BoardElement): boolean => {
+      if (el.type === 'text') return el.y - el.size <= bottom;
+      if (el.type === 'stroke') return el.bbox[1] <= bottom;
+      return Math.min(el.y1, el.y2) <= bottom;
+    };
+    return { ...board, elements: board.elements.filter(visible) };
+  }, [board, bounds, vbH]);
 
   return (
     <>
@@ -53,7 +72,7 @@ export const BoardCard = React.memo(function BoardCard({ board, groupColor, auth
           style={[styles.preview, { height: previewH, backgroundColor: bg }]}
           onLayout={(e) => setW(Math.round(e.nativeEvent.layout.width))}
         >
-          <BoardCanvas content={board} width={w} height={previewH} viewBox={viewBox} />
+          <BoardCanvas content={previewBoard} width={w} height={previewH} viewBox={viewBox} />
           {cropped && (
             <LinearGradient
               colors={['transparent', bg]}

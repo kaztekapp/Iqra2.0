@@ -1271,52 +1271,31 @@ export function subscribeToReactions(
 
 // ── Group Leaderboard ───────────────────────────────────────────
 
+/**
+ * The leaderboard is the member list ranked by XP. It used to be fetched with
+ * the same three queries fetchGroupMembers had just run — members, profiles,
+ * progress — on every group open. Derive it from what is already loaded.
+ */
+export function leaderboardFromMembers(members: any[]): any[] {
+  return (members || [])
+    .map((m: any) => ({
+      userId: m.userId ?? m.user_id,
+      name: m.name || 'Member',
+      avatar: m.avatar || String(m.name || 'M').charAt(0).toUpperCase(),
+      xp: m.xp || 0,
+      streak: m.streak || 0,
+      messageCount: 0,
+    }))
+    .sort((a: any, b: any) => b.xp - a.xp);
+}
+
+/** Kept for callers that have no member list to hand; the group screen no longer uses it. */
 export async function fetchGroupLeaderboard(
   groupId: string,
   _metric: 'xp' | 'streak' | 'messages' = 'xp'
 ): Promise<any[]> {
-  try {
-    const client = getClient();
-    const { data: members, error } = await client
-      .from('study_group_members')
-      .select('user_id, role, joined_at')
-      .eq('group_id', groupId);
-
-    if (error) throw error;
-    if (!members || members.length === 0) return [];
-
-    const userIds = members.map((m: any) => m.user_id);
-
-    const [profilesRes, progressRes] = await Promise.all([
-      client.from('user_profiles').select('user_id, display_name').in('user_id', userIds),
-      client.from('user_arabic_progress').select('user_id, total_xp, current_streak').in('user_id', userIds),
-    ]);
-
-    const nameMap = new Map<string, string>();
-    (profilesRes.data || []).forEach((p: any) => nameMap.set(p.user_id, p.display_name));
-
-    const progressMap = new Map<string, any>();
-    (progressRes.data || []).forEach((p: any) => progressMap.set(p.user_id, p));
-
-    return members.map((m: any) => {
-      const prog = progressMap.get(m.user_id) || {};
-      const name = nameMap.get(m.user_id) || 'Member';
-      return {
-        userId: m.user_id,
-        name,
-        avatar: name.charAt(0).toUpperCase(),
-        xp: prog.total_xp || 0,
-        streak: prog.current_streak || 0,
-        messageCount: 0,
-      };
-    }).sort((a: any, b: any) => b.xp - a.xp);
-  } catch (e) {
-    if (__DEV__) console.warn('[communitySocial] fetchGroupLeaderboard fallback:', e);
-    return [];
-  }
+  return leaderboardFromMembers(await fetchGroupMembers(groupId));
 }
-
-// ── Study Sessions ──────────────────────────────────────────────
 
 export async function createSession(
   groupId: string,
