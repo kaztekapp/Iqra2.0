@@ -8,12 +8,12 @@ import * as Haptics from 'expo-haptics';
 import { BoardCanvas, renderBoardElement, boardContentHeight, wrapBoardText, elementOk } from './BoardCanvas';
 import type { BoardContent, BoardElement, BoardBackground, BoardGrid, BoardStroke, BoardShape } from '../../../types/classContent';
 import { BOARD_BG, BOARD_DEFAULT_INK } from '../../../types/classContent';
-import { AICoursePromptModal, CourseGenRequest } from './AICoursePromptModal';
+import { CoursePickerModal } from './CoursePickerModal';
 import { CourseBuilderModal } from './CourseBuilderModal';
-import { generateCourseSpec } from '../../../services/aiBoardService';
 import { buildBoardFromCourse } from './courseLayout';
 import type { CourseSpec } from '../../../types/aiBoard';
-import { listCurriculum, getCurriculumDigest } from '../../../data/arabic/curriculumSource';
+import { listCurriculum } from '../../../data/arabic/curriculumSource';
+import { courseSpecFromCurriculum } from '../../../data/arabic/courseFromCurriculum';
 import { useSettingsStore } from '../../../stores/settingsStore';
 import { color as tk, radius } from '../../../theme/tokens';
 
@@ -65,14 +65,13 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
   const [textValue, setTextValue] = useState('');
   const [textSize, setTextSize] = useState(28);
   const [textColor, setTextColor] = useState(BOARD_DEFAULT_INK[initial?.background || 'cream']);
-  // AI course drafting
-  const [aiModal, setAiModal] = useState<null | 'draft' | 'refine'>(null);
-  const [aiLoading, setAiLoading] = useState(false);
+  // Courses come from the app's own lessons; the picker chooses one.
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [builderOpen, setBuilderOpen] = useState(false);
   const language = useSettingsStore((s) => s.language);
   const curriculum = useMemo(() => listCurriculum(language), [language]);
   const lastSpecRef = useRef<CourseSpec | null>(null);
-  const aiCountRef = useRef(0); // number of leading AI-generated elements
+  const aiCountRef = useRef(0); // number of leading course-generated elements
 
   const redo = useRef<BoardElement[]>([]);
   const liveRef = useRef<BoardElement | null>(null);
@@ -387,7 +386,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
     setSelectedIndex(null);
   };
 
-  // Render a CourseSpec onto the board (shared by AI + manual builder), keeping
+  // Render a CourseSpec onto the board (shared by the picker + manual builder), keeping
   // freehand drawings added after the previous course.
   const renderCourse = (spec: CourseSpec, keepManual: boolean) => {
     const bg = background === 'white' || background === 'cream' ? background : 'dark';
@@ -405,30 +404,15 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
     setBuilderOpen(false);
   };
 
-  // ── AI course drafting / refining ──────────────────────────────
-  const handleAiSubmit = async (req: CourseGenRequest) => {
-    const refine = req.mode === 'refine';
-    setAiLoading(true);
-    try {
-      const args =
-        req.mode === 'refine'
-          ? { topic: lastSpecRef.current?.title || 'lesson', refineInstruction: req.instruction, priorSpec: lastSpecRef.current || undefined }
-          : req.source === 'lesson'
-            ? { topic: req.title, sourceMaterial: getCurriculumDigest(req.lessonId, language) }
-            : { topic: req.topic, level: req.level };
-      const spec = await generateCourseSpec({ ...args, language, model: 'sonnet' });
-      renderCourse(spec, refine); // draft: clean · refine: keep manual drawings
-      setAiModal(null);
-    } catch (e: any) {
-      const msg = e?.message === 'no_credits' ? 'You are out of AI credits.'
-        : e?.message === 'auth_required' ? 'Please sign in to use AI.'
-        : e?.message === 'rate_limit' ? 'Too many requests — try again shortly.'
-        : e?.message === 'bad_response' ? 'The AI response could not be read. Try again or rephrase.'
-        : 'Could not generate the course. Please try again.';
-      Alert.alert('AI course', msg);
-    } finally {
-      setAiLoading(false);
+  // ── A course from one of the app's lessons ─────────────────────
+  const handlePickCourse = (id: string) => {
+    const spec = courseSpecFromCurriculum(id, language);
+    setPickerOpen(false);
+    if (!spec) {
+      Alert.alert(t('community.fromAppLesson'), t('community.noLessonsMatch'));
+      return;
     }
+    renderCourse(spec, false); // a fresh course replaces the previous one
   };
 
   const handleSave = () => {
@@ -466,9 +450,9 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
           <Pressable onPress={() => setBuilderOpen(true)} style={styles.iconBtn} hitSlop={6}>
             <Ionicons name="list" size={20} color={tk.textMuted} />
           </Pressable>
-          <Pressable onPress={() => setAiModal(lastSpecRef.current ? 'refine' : 'draft')} style={styles.aiBtn} hitSlop={6}>
-            <Ionicons name="sparkles" size={18} color={groupColor} />
-            <Text style={[styles.aiBtnText, { color: groupColor }]}>{t('community.ai')}</Text>
+          <Pressable onPress={() => setPickerOpen(true)} style={styles.aiBtn} hitSlop={6} accessibilityRole="button">
+            <Ionicons name="library" size={18} color={groupColor} />
+            <Text style={[styles.aiBtnText, { color: groupColor }]}>{t('community.course')}</Text>
           </Pressable>
           <Pressable onPress={handleSave} style={[styles.postBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.postText}>{initial ? 'Update' : 'Post'}</Text>
@@ -541,12 +525,12 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
             </View>
           </ScrollView>
 
-          {/* Empty-state: draft with AI or build manually */}
+          {/* Empty-state: use an existing course or build one manually */}
           {elements.length === 0 && !live && !editing && (
             <View style={styles.emptyState} pointerEvents="box-none">
-              <Pressable style={[styles.draftBtn, { backgroundColor: groupColor }]} onPress={() => setAiModal('draft')}>
-                <Ionicons name="sparkles" size={18} color={tk.text} />
-                <Text style={styles.draftText}>{t('community.draftCourseAI')}</Text>
+              <Pressable style={[styles.draftBtn, { backgroundColor: groupColor }]} onPress={() => setPickerOpen(true)} accessibilityRole="button">
+                <Ionicons name="library" size={18} color={tk.text} />
+                <Text style={styles.draftText}>{t('community.pickCourse')}</Text>
               </Pressable>
               <Pressable style={styles.buildBtn} onPress={() => setBuilderOpen(true)}>
                 <Ionicons name="list" size={17} color={tk.textMuted} />
@@ -671,20 +655,18 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
           </KeyboardAvoidingView>
         )}
 
-        {/* AI course drafting / refining */}
-        {aiModal && (
-          <AICoursePromptModal
+        {/* A course from the app's own lessons */}
+        {pickerOpen && (
+          <CoursePickerModal
             visible
-            mode={aiModal}
             groupColor={groupColor}
-            loading={aiLoading}
             curriculum={curriculum}
-            onSubmit={handleAiSubmit}
-            onClose={() => { if (!aiLoading) setAiModal(null); }}
+            onPick={handlePickCourse}
+            onClose={() => setPickerOpen(false)}
           />
         )}
 
-        {/* Manual course builder (same layout engine as AI) */}
+        {/* Manual course builder (same layout engine as the picker) */}
         {builderOpen && (
           <CourseBuilderModal
             visible
