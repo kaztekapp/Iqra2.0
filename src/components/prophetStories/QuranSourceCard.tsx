@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { QuranReference } from '../../types/prophetStories';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
+import { TajweedText } from '../quran/TajweedText';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 
@@ -56,11 +57,13 @@ export function QuranSourceCard({
         )}
       </View>
 
-      {/* Arabic Text - render words separately to avoid RTL wrapping bug */}
+      {/* Arabic Text — the same rendering as the surah reading screen: the
+          AmiriQuran face at 32 on a 2.0 line height, one continuous run,
+          right-aligned. The words used to be split into separate Text nodes
+          in the system face, which broke the script's joins between words
+          and read nothing like the Quran screens. */}
       <View style={styles.arabicContainer}>
-        {source.arabicText.split(' ').map((word, index) => (
-          <Text key={index} style={styles.arabicWord}>{word}</Text>
-        ))}
+        <TajweedText text={source.arabicText} fontSize={32} />
       </View>
 
       {/* Translation */}
@@ -114,17 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: color.accent,
   },
   arabicContainer: {
-    flexDirection: 'row-reverse',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    marginBottom: 14,
-    gap: 8,
-  },
-  arabicWord: {
-    fontFamily: font.arabic,
-    color: color.text,
-    fontSize: 28,
-    lineHeight: 56,
+    marginBottom: 16,
+    width: '100%',
   },
   translation: {
     color: color.textMuted,
