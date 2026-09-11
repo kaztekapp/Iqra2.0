@@ -33,8 +33,8 @@ export const sabtStory: QuranStory = {
       id: "sabt-1",
       type: 'narrative',
       order: 1,
-      content: "The Quran returns more than once to a town by the sea whose people were tested through the Sabbath. Allah had forbidden them to work on that day, and on that day, and only that day, the fish came to them in plain view. The Quran does not name the town; the commentators most often say Aylah, on the coast of the Red Sea. It does say what the people did, and what became of them.",
-      contentFr: "Le Coran revient plus d'une fois sur une cité au bord de la mer dont les habitants furent éprouvés par le sabbat. Allah leur avait interdit de travailler ce jour-là, et ce jour-là, et seulement ce jour-là, les poissons venaient à eux à découvert. Le Coran ne nomme pas la cité ; les commentateurs disent le plus souvent Ayla, sur la côte de la mer Rouge. Il dit ce que les gens firent, et ce qu'il advint d'eux.",
+      content: "The Quran returns more than once to a town by the sea whose people were tested through the Sabbath. Allah had forbidden them to work on that day, and on that day, and only that day, the fish came to them in plain view. The Quran does not name the town. It does say what the people did, and what became of them.",
+      contentFr: "Le Coran revient plus d'une fois sur une cité au bord de la mer dont les habitants furent éprouvés par le sabbat. Allah leur avait interdit de travailler ce jour-là, et ce jour-là, et seulement ce jour-là, les poissons venaient à eux à découvert. Le Coran ne nomme pas la cité. Il dit ce que les gens firent, et ce qu'il advint d'eux.",
     },
     {
       id: "sabt-2",
@@ -58,8 +58,8 @@ export const sabtStory: QuranStory = {
       id: "sabt-3",
       type: 'narrative',
       order: 3,
-      content: "The commentators relate how the transgression was done: not by open fishing, but by trickery, pens and channels dug so that fish entering on the Sabbath were trapped and gathered the next day. That detail is theirs; the Quran says only that they transgressed. The point the Quran makes needs no detail: a prohibition evaded by a device is a prohibition broken.",
-      contentFr: "Les commentateurs rapportent comment la transgression fut commise : non par une pêche ouverte, mais par la ruse, des enclos et des canaux creusés pour que les poissons entrés le jour du sabbat soient pris et ramassés le lendemain. Ce détail est le leur ; le Coran dit seulement qu'ils transgressèrent. Le point que fait le Coran n'a pas besoin de détail : une interdiction contournée par un stratagème est une interdiction violée.",
+      content: "The Quran does not describe how the transgression was done. It says that they transgressed in the matter of the Sabbath, and that this was a trial: \"when their fish came to them openly on their Sabbath day, and the day they had no Sabbath they did not come to them. Thus did We give them trial because they were defiantly disobedient.\" (7:163)",
+      contentFr: "Le Coran ne décrit pas comment la transgression fut commise. Il dit qu'ils transgressèrent au sujet du sabbat, et que ce fut une épreuve : « leurs poissons venaient à eux à découvert le jour du sabbat, et ne venaient pas à eux le jour où ils n'observaient pas le sabbat. Ainsi les éprouvions-Nous pour leur perversité. » (7:163)",
     },
     {
       id: "sabt-4",
@@ -108,8 +108,8 @@ export const sabtStory: QuranStory = {
       id: "sabt-7",
       type: 'narrative',
       order: 7,
-      content: "The Quran states that the admonishers were saved and the wrongdoers punished. Of the third group, who neither transgressed nor admonished, it says nothing, and the commentators differ about them. Ibn Kathir records both views. The silence itself is instructive: the ones the Quran names as saved are the ones who spoke.",
-      contentFr: "Le Coran affirme que les exhortateurs furent sauvés et les injustes châtiés. Du troisième groupe, qui ne transgressa ni n'exhorta, il ne dit rien, et les commentateurs divergent à leur sujet. Ibn Kathir rapporte les deux avis. Le silence lui-même est instructif : ceux que le Coran nomme comme sauvés sont ceux qui parlèrent.",
+      content: "The Quran states that the admonishers were saved and the wrongdoers punished: \"And when they forgot that by which they had been reminded, We saved those who had forbidden evil and seized those who wronged, with a wretched punishment.\" (7:165) Of the third group, who neither transgressed nor admonished, it says nothing. The silence itself is instructive: the ones the Quran names as saved are the ones who spoke.",
+      contentFr: "Le Coran affirme que les exhortateurs furent sauvés et les injustes châtiés : « Puis, lorsqu'ils oublièrent ce qu'on leur avait rappelé, Nous sauvâmes ceux qui interdisaient le mal et saisîmes les injustes d'un châtiment misérable. » (7:165) Du troisième groupe, qui ne transgressa ni n'exhorta, il ne dit rien. Le silence lui-même est instructif : ceux que le Coran nomme comme sauvés sont ceux qui parlèrent.",
     },
     {
       id: "sabt-8",

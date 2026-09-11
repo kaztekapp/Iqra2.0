@@ -39,8 +39,8 @@ export const ibrahimStoryContent: StoryContentBlock[] = [
     id: 'ibrahim-1',
     type: 'narrative',
     order: 1,
-    content: "Ibrahim was born in a land of deep idol worship - the commentators place him in the region of Babylon in Iraq. His father Azar worshipped idols, and the commentators relate that he made and sold them. From a young age, Ibrahim's pure heart questioned the worship of these lifeless statues.",
-    contentFr: "Ibrahim naquit dans une terre d'idolâtrie profonde ; les commentateurs le situent dans la région de Babylone, en Irak. Son père Azar adorait les idoles, et les commentateurs rapportent qu'il les fabriquait et les vendait. Dès son jeune âge, le cœur pur d'Ibrahim remit en question l'adoration de ces statues sans vie.",
+    content: "Ibrahim was born among a people who worshipped idols; the Quran does not name the land. His father Azar worshipped them, and the Quran reports what Ibrahim said to him: \"Do you take idols as deities? Indeed, I see you and your people in manifest error.\" (6:74)",
+    contentFr: "Ibrahim naquit parmi un peuple qui adorait les idoles ; le Coran ne nomme pas le pays. Son père Azar les adorait, et le Coran rapporte ce qu'Ibrahim lui dit : « Prends-tu des idoles pour divinités ? Je te vois, toi et ton peuple, dans un égarement évident. » (6:74)",
   },
   {
     id: 'ibrahim-2',

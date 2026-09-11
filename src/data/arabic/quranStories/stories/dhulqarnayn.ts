@@ -118,8 +118,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-7',
       type: 'narrative',
       order: 7,
-      content: "His eastern journey brought him to a people who lived exposed to the sun, with no shelter from it - no buildings and, as some commentators say, no clothing to protect them. Despite their simple way of life, Dhul-Qarnayn dealt with them justly. Allah's knowledge encompassed all that Dhul-Qarnayn possessed and did, affirming that his actions were righteous.",
-      contentFr: "Son voyage vers l'est le mena chez un peuple qui vivait exposé au soleil, sans aucun abri contre lui : ni bâtiments ni, selon certains commentateurs, vêtements pour les protéger. Malgré leur mode de vie simple, Dhul-Qarnayn les traita avec justice. La connaissance d'Allah englobait tout ce que Dhul-Qarnayn possédait et faisait, confirmant que ses actions étaient droites.",
+      content: "His eastern journey brought him to a people over whom Allah had not made any shelter from the sun, as the Quran states it (18:90). Dhul-Qarnayn dealt with them as he had dealt with the others, and Allah says: \"Thus. And We had encompassed [all] that he had in knowledge.\" (18:91)",
+      contentFr: "Son voyage vers l'est le mena chez un peuple pour qui Allah n'avait pas établi d'abri contre le soleil, comme l'énonce le Coran (18:90). Dhul-Qarnayn les traita comme il avait traité les autres, et Allah dit : « Il en fut ainsi, et Nous embrassions de Notre science ce qu'il détenait. » (18:91)",
     },
     {
       id: 'dhulqarnayn-8',
@@ -241,8 +241,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-16',
       type: 'narrative',
       order: 17,
-      content: "Who was Dhul-Qarnayn? The Quran does not say, and no authentic hadith names him. Some later writers identified him with Alexander the Macedonian, but Ibn Kathir and others rejected this, since Alexander was a pagan while Dhul-Qarnayn was a believing and just king; others have suggested an ancient Persian or Arabian ruler. The Quran focuses instead on his qualities: justice, humility, gratitude to Allah, and service to the oppressed. These are the characteristics that matter.",
-      contentFr: "Qui était Dhul-Qarnayn ? Le Coran ne le dit pas, et aucun hadith authentique ne le nomme. Certains auteurs tardifs l'ont identifié à Alexandre le Macédonien, mais Ibn Kathir et d'autres ont rejeté cette identification, car Alexandre était païen alors que Dhul-Qarnayn était un roi croyant et juste ; d'autres ont proposé un ancien souverain perse ou arabe. Le Coran se concentre plutôt sur ses qualités : la justice, l'humilité, la gratitude envers Allah et le service des opprimés. Ce sont ces caractéristiques qui comptent.",
+      content: "Who was Dhul-Qarnayn? The Quran does not say, and no authentic hadith names him. What the Quran states of him is what it establishes: that Allah gave him power on earth and a way to everything (18:84), that he judged justly, and that he said of his barrier, \"This is a mercy from my Lord.\" (18:98)",
+      contentFr: "Qui était Dhul-Qarnayn ? Le Coran ne le dit pas, et aucun hadith authentique ne le nomme. Ce que le Coran énonce de lui est ce qu'il établit : qu'Allah lui donna la puissance sur terre et un moyen d'accès à toute chose (18:84), qu'il jugea avec justice, et qu'il dit de sa muraille : « C'est une miséricorde de mon Seigneur. » (18:98)",
     },
     {
       id: 'dhulqarnayn-17',

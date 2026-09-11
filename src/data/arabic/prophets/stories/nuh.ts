@@ -620,8 +620,8 @@ export const nuhStoryContent: StoryContentBlock[] = [
     id: 'nuh-42',
     type: 'narrative',
     order: 48,
-    content: "When Allah willed, the flood came to an end. The sky ceased its rain, and the earth absorbed its water. The ark came to rest upon al-Judi, a mountain which the commentators place in the region of the Jazirah, in the north of Iraq and the southeast of today's Turkey. A new chapter of human history was about to begin.",
-    contentFr: "Lorsqu'Allah le voulut, le déluge prit fin. Le ciel cessa sa pluie, et la terre absorba son eau. L'arche s'immobilisa sur al-Judi, une montagne que les commentateurs situent dans la région de la Jazira, au nord de l'Irak et au sud-est de la Turquie actuelle. Un nouveau chapitre de l'histoire humaine allait commencer.",
+    content: "When Allah willed, the flood came to an end. The Quran states it: \"And it was said, 'O earth, swallow your water, and O sky, withhold.' And the water subsided, and the matter was accomplished, and it came to rest on al-Judi.\" (11:44) It does not place the mountain.",
+    contentFr: "Lorsqu'Allah le voulut, le déluge prit fin. Le Coran l'énonce : « Et il fut dit : ô terre, absorbe ton eau ; et ô ciel, retiens. L'eau baissa, l'ordre fut accompli, et l'arche s'installa sur le Joudi. » (11:44) Il ne situe pas la montagne.",
   },
   {
     id: 'nuh-43',

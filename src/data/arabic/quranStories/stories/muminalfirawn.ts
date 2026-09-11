@@ -33,8 +33,8 @@ export const muminAlFirawnStory: QuranStory = {
       id: "muminalfirawn-1",
       type: 'narrative',
       order: 1,
-      content: "Surah Ghafir is also known as Surat al-Mu'min, the Believer, after one man. He was of Pharaoh's own household and he kept his faith hidden, until the day Pharaoh proposed to kill Musa. Then he spoke, and the Quran gives his speech at length, longer than it gives any other single believer who was not a prophet. He is never named. The commentators offer names; the Quran chose not to, and the speech is the point.",
-      contentFr: "La sourate Ghafir est aussi appelée Sourate Al-Mu'min, le Croyant, d'après un seul homme. Il était de la maison même de Pharaon et gardait sa foi cachée, jusqu'au jour où Pharaon proposa de tuer Moussa. Alors il parla, et le Coran rapporte longuement son discours, plus longuement que celui de tout autre croyant qui ne fût pas prophète. Il n'est jamais nommé. Les commentateurs proposent des noms ; le Coran a choisi de ne pas le faire, et le discours est l'essentiel.",
+      content: "Surah Ghafir is also known as Surat al-Mu'min, the Believer, after one man. He was of Pharaoh's own household and he kept his faith hidden, until the day Pharaoh proposed to kill Musa. Then he spoke, and the Quran gives his speech at length, longer than it gives any other single believer who was not a prophet. He is never named, and neither the Quran nor the authentic Sunnah names him. The speech is what is given.",
+      contentFr: "La sourate Ghafir est aussi appelée Sourate Al-Mu'min, le Croyant, d'après un seul homme. Il était de la maison même de Pharaon et gardait sa foi cachée, jusqu'au jour où Pharaon proposa de tuer Moussa. Alors il parla, et le Coran rapporte longuement son discours, plus longuement que celui de tout autre croyant qui ne fût pas prophète. Il n'est jamais nommé, et ni le Coran ni la Sunna authentique ne le nomment. Ce qui est donné, c'est le discours.",
     },
     {
       id: "muminalfirawn-2",

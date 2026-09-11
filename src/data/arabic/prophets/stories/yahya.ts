@@ -100,8 +100,8 @@ const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-6',
     type: 'narrative',
     order: 6,
-    content: "Being 'hasur' is explained by Ibn Kathir and others as one restrained from sins and from the desires that lead to them - not, as some claimed, one incapable of marriage. Yahya lived for the worship of Allah and for calling people to Him. The details of his daily life have not been narrated to us in the Quran or the authentic Sunnah.",
-    contentFr: "Être « hasur » est expliqué par Ibn Kathir et d'autres comme celui qui se retient des péchés et des désirs qui y mènent, et non, comme certains l'ont prétendu, celui qui est incapable de se marier. Yahya vécut pour l'adoration d'Allah et pour appeler les gens à Lui. Les détails de sa vie quotidienne ne nous ont pas été rapportés dans le Coran ni dans la Sunna authentique.",
+    content: "The Quran calls him \"hasur\" (3:39). Yahya lived for the worship of Allah and for calling people to Him. The details of his daily life have not been narrated to us in the Quran or the authentic Sunnah.",
+    contentFr: "Le Coran l'appelle « hasour » (3:39). Yahya vécut pour l'adoration d'Allah et pour appeler les gens à Lui. Les détails de sa vie quotidienne ne nous ont été rapportés ni dans le Coran ni dans la Sunna authentique.",
   },
   {
     id: 'yahya-7',
@@ -211,8 +211,8 @@ const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-15',
     type: 'narrative',
     order: 16,
-    content: "Yahya's uncompromising stance led to his martyrdom. The Quran and the authentic hadith do not narrate the details. Ibn Kathir and other historians relate that a king of his time wanted to marry a woman who was not lawful for him, that Yahya declared the marriage unlawful, and that he was killed as a result. These are historical reports, not revelation.",
-    contentFr: "La position intransigeante de Yahya conduisit à son martyre. Le Coran et les hadiths authentiques n'en racontent pas les détails. Ibn Kathir et d'autres historiens rapportent qu'un roi de son époque voulut épouser une femme qui ne lui était pas licite, que Yahya déclara ce mariage illicite, et qu'il fut tué pour cette raison. Ce sont des rapports historiques, non une révélation.",
+    content: "The Quran and the authentic hadith do not narrate how Yahya died. What the Quran states is the peace upon him: \"And peace be upon him the day he was born and the day he dies and the day he is raised alive.\" (19:15)",
+    contentFr: "Le Coran et le hadith authentique ne racontent pas comment Yahya mourut. Ce que le Coran énonce, c'est la paix sur lui : « Et paix sur lui le jour où il naquit, le jour où il mourra, et le jour où il sera ressuscité vivant. » (19:15)",
   },
   {
     id: 'yahya-16',

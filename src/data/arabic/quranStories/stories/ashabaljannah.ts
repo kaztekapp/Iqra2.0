@@ -33,8 +33,8 @@ export const ashabAlJannahStory: QuranStory = {
       id: "ashabaljannah-1",
       type: 'narrative',
       order: 1,
-      content: "Surah Al-Qalam turns from the Quraysh to a story that explains what was happening to them. 'We have tried them as We tried the owners of the garden.' Makkah's wealthy were being tested with their wealth, as those owners once were. The commentators, Ibn Kathir among them, relate that the garden had belonged to a righteous man who gave the poor their share at every harvest, and that his sons resolved otherwise. The Quran tells what they resolved and what came of it.",
-      contentFr: "La sourate Al-Qalam se détourne des Quraych vers une histoire qui explique ce qui leur arrivait. « Nous les avons éprouvés comme Nous avons éprouvé les propriétaires du jardin. » Les riches de La Mecque étaient éprouvés par leur richesse, comme ces propriétaires l'avaient été. Les commentateurs, dont Ibn Kathir, rapportent que le jardin avait appartenu à un homme pieux qui donnait aux pauvres leur part à chaque récolte, et que ses fils décidèrent autrement. Le Coran dit ce qu'ils décidèrent et ce qu'il en advint.",
+      content: "Surah Al-Qalam turns from the Quraysh to a story that explains what was happening to them. 'We have tried them as We tried the owners of the garden.' Makkah's wealthy were being tested with their wealth, as those owners once were. The Quran tells what the owners resolved and what came of it.",
+      contentFr: "La sourate Al-Qalam se détourne des Quraych vers une histoire qui explique ce qui leur arrivait. « Nous les avons éprouvés comme Nous avons éprouvé les propriétaires du jardin. » Les riches de La Mecque étaient éprouvés par leur richesse, comme ces propriétaires l'avaient été. Le Coran dit ce que les propriétaires décidèrent et ce qu'il en advint.",
     },
     {
       id: "ashabaljannah-2",
@@ -58,8 +58,8 @@ export const ashabAlJannahStory: QuranStory = {
       id: "ashabaljannah-3",
       type: 'narrative',
       order: 3,
-      content: "'And made no exception' means they did not say 'if Allah wills'. The commentators read in this both a failure of humility and the plan itself: to gather everything before daylight, so that no poor person would be there to receive a share. The oath was firm; the intention behind it was to withhold.",
-      contentFr: "« Sans faire d'exception » signifie qu'ils ne dirent pas « si Allah le veut ». Les commentateurs y lisent à la fois un manque d'humilité et le plan lui-même : tout ramasser avant le jour, afin qu'aucun pauvre ne soit là pour recevoir une part. Le serment était ferme ; l'intention derrière était de retenir.",
+      content: "'And made no exception' means they did not say 'if Allah wills'. The Quran states the oath and states the hour they chose: to cut the fruit in the morning, before anyone else was about. The oath was firm; what it was for, the Quran gives in their own words.",
+      contentFr: "« Sans faire d'exception » signifie qu'ils ne dirent pas « si Allah le veut ». Le Coran énonce le serment et énonce l'heure qu'ils choisirent : couper les fruits au matin, avant que quiconque ne soit levé. Le serment était ferme ; ce qu'il visait, le Coran le donne dans leurs propres mots.",
     },
     {
       id: "ashabaljannah-4",

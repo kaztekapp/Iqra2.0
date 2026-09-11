@@ -492,8 +492,8 @@ const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-32',
     type: 'narrative',
     order: 37,
-    content: "The queen's conversion was a triumph of Sulayman's da'wah. He did not use violence but a demonstration of power, wisdom, and truth. Her intelligence, which had made her a great queen, also allowed her to recognise the truth when she saw it. She became a believer. Some commentators say that Sulayman married her; the Quran does not say so, and nothing authentic establishes it.",
-    contentFr: "La conversion de la reine fut un triomphe de la da'wa de Soulayman. Il n'utilisa pas la violence mais une démonstration de puissance, de sagesse et de vérité. Son intelligence, qui avait fait d'elle une grande reine, lui permit aussi de reconnaître la vérité lorsqu'elle la vit. Elle devint croyante. Certains commentateurs disent que Soulayman l'épousa ; le Coran ne le dit pas, et rien d'authentique ne l'établit.",
+    content: "The Quran reports her own words: \"My Lord, indeed I have wronged myself, and I submit with Sulayman to Allah, Lord of the worlds.\" (27:44) It says nothing of her after that.",
+    contentFr: "Le Coran rapporte ses propres paroles : « Mon Seigneur, je me suis fait du tort à moi-même, et je me soumets avec Soulayman à Allah, Seigneur de l'Univers. » (27:44) Il ne dit rien d'elle par la suite.",
   },
   {
     id: 'sulayman-33',

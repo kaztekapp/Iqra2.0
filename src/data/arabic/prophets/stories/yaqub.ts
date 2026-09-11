@@ -50,8 +50,8 @@ const yaqubStoryContent: StoryContentBlock[] = [
     id: 'yaqub-2',
     type: 'narrative',
     order: 2,
-    content: "Allah chose Yaqub to continue the prophetic mission and gave him the name 'Israel', which the commentators explain as meaning 'servant of Allah'. Through him, Allah would establish a great nation - the Children of Israel - who would receive many prophets and divine scriptures in the generations to come.",
-    contentFr: "Allah choisit Yaqoub pour poursuivre la mission prophétique et lui donna le nom d'« Israël », que les commentateurs expliquent comme signifiant « serviteur d'Allah ». À travers lui, Allah établirait une grande nation, les Enfants d'Israël, qui recevrait de nombreux prophètes et écritures divines dans les générations à venir.",
+    content: "Allah chose Yaqub to continue the prophetic mission. The Quran calls his descendants the Children of Israel, and Israel is his own name (3:93). Through him, Allah established a people who would receive many prophets and scriptures in the generations to come.",
+    contentFr: "Allah choisit Yaqub pour poursuivre la mission prophétique. Le Coran appelle sa descendance les enfants d'Israël, et Israël est son propre nom (3:93). Par lui, Allah établit un peuple qui recevrait de nombreux prophètes et Écritures dans les générations à venir.",
   },
   {
     id: 'yaqub-3',
@@ -92,8 +92,8 @@ const yaqubStoryContent: StoryContentBlock[] = [
     id: 'yaqub-4',
     type: 'narrative',
     order: 5,
-    content: "Yaqub was blessed with twelve sons, who became the fathers of the tribes of the Children of Israel (al-Asbat). The Quran names only Yusuf among them; the commentators call Yusuf's full brother Binyamin. Yaqub had a special love for Yusuf and his younger brother, and the other brothers resented it.",
-    contentFr: "Yaqoub fut béni par douze fils, qui devinrent les pères des tribus des Enfants d'Israël (al-Asbat). Le Coran ne nomme que Yusuf parmi eux ; les commentateurs appellent Binyamin le frère germain de Yusuf. Yaqoub avait un amour particulier pour Yusuf et son jeune frère, et les autres frères en prirent ombrage.",
+    content: "Yaqub was blessed with twelve sons, who became the fathers of the tribes of the Children of Israel (al-Asbat). The Quran names only Yusuf among them. Yaqub had a special love for Yusuf and his younger brother, and the other brothers resented it - the Quran reports their words: \"Yusuf and his brother are more beloved to our father than we, while we are a clan.\" (12:8)",
+    contentFr: "Yaqub fut comblé de douze fils, qui devinrent les pères des tribus des enfants d'Israël (al-Asbat). Le Coran ne nomme que Youssouf parmi eux. Yaqub avait un amour particulier pour Youssouf et son jeune frère, et les autres frères en conçurent du ressentiment ; le Coran rapporte leurs paroles : « Youssouf et son frère sont plus aimés de notre père que nous, alors que nous sommes un groupe. » (12:8)",
   },
   {
     id: 'yaqub-5',

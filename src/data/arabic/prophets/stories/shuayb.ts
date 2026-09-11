@@ -13,8 +13,8 @@ export const shuaybStory: Prophet = {
   title: 'The Orator of the Prophets',
   titleFr: "L'Orateur des Prophètes",
   titleArabic: 'خطيب الأنبياء',
-  summary: "Prophet Shu'ayb was sent to the people of Madyan (Midian), a prosperous trading community near the Gulf of Aqaba. They were known for cheating in business, giving short measure, and highway robbery. Shu'ayb, known for his eloquent preaching, called them to worship Allah alone and to deal justly in commerce. Despite his powerful arguments, they rejected him and were destroyed by an earthquake and the punishment of the day of the shadow. Many commentators identify Shu'ayb with the righteous old man of Madyan who later sheltered Musa and gave him one of his daughters in marriage, though the Quran does not name him.",
-  summaryFr: "Le prophète Chou'ayb fut envoyé au peuple de Madyan (Madian), une communauté commerçante prospère près du golfe d'Aqaba. Ils étaient connus pour leur malhonnêteté dans le commerce, leurs mesures frauduleuses et le brigandage. Chou'ayb, réputé pour son éloquence dans la prédication, les appela à adorer Allah seul et à pratiquer l'équité dans le commerce. Malgré ses arguments puissants, ils le rejetèrent et furent détruits par un tremblement de terre et un jour brûlant. Chou'ayb accueillit plus tard Moussa lorsqu'il fuit l'Égypte, et Moussa épousa l'une de ses filles.",
+  summary: "Prophet Shu'ayb was sent to the people of Madyan. The Quran reports that they gave short measure and short weight, sat on every path threatening people, and worshipped others besides Allah. Shu'ayb called them to worship Allah alone and to give full measure. They rejected him, and the Quran states what befell them: the earthquake, the shriek, and the punishment of the day of the black cloud.",
+  summaryFr: "Le prophète Chouaïb fut envoyé au peuple de Madyan. Le Coran rapporte qu'ils diminuaient la mesure et le poids, s'asseyaient sur tous les chemins pour menacer les gens, et adoraient d'autres qu'Allah. Chouaïb les appela à adorer Allah seul et à donner la pleine mesure. Ils le rejetèrent, et le Coran énonce ce qui s'abattit sur eux : le tremblement de terre, le cri, et le châtiment du jour de l'Ombre.",
   hasSubStories: false,
   lessons: [
     'Honesty in trade and commerce is a religious obligation',
@@ -57,8 +57,8 @@ const shuaybStoryContent: StoryContentBlock[] = [
     id: 'shuayb-3',
     type: 'narrative',
     order: 3,
-    content: "To this corrupt community, Allah sent Shu'ayb. The commentators call him 'Khatib al-Anbiya' - the Orator of the Prophets - because of the eloquence and gentleness with which he addressed his people. His words were powerful, his arguments compelling, and his speech touched hearts.",
-    contentFr: "À cette communauté corrompue, Allah envoya Chouaïb. Les commentateurs l'appellent « Khatib al-Anbiya », l'Orateur des Prophètes, en raison de l'éloquence et de la douceur avec lesquelles il s'adressait à son peuple. Ses paroles étaient puissantes, ses arguments convaincants, et son discours touchait les cœurs.",
+    content: "To this community, Allah sent Shu'ayb. The Quran reports how he addressed them: \"O my people, worship Allah; you have no deity other than Him.\" (7:85)",
+    contentFr: "À cette communauté, Allah envoya Chouaïb. Le Coran rapporte comment il s'adressa à eux : « Ô mon peuple, adorez Allah ; vous n'avez pas d'autre divinité que Lui. » (7:85)",
   },
   {
     id: 'shuayb-4',
@@ -407,8 +407,8 @@ const shuaybStoryContent: StoryContentBlock[] = [
     id: 'shuayb-31',
     type: 'narrative',
     order: 31,
-    content: "The Quran calls it the punishment of the day of the black cloud. The commentators describe it this way: a scorching heat fell on them, then a cloud appeared and they hurried under it for shade, and from that cloud came fire, while the earth shook beneath them. The Quran itself states the cloud, the shriek, and the earthquake, and that by morning they lay dead in their homes.",
-    contentFr: "Le Coran l'appelle le supplice du jour du Nuage sombre. Les commentateurs le décrivent ainsi : une chaleur écrasante s'abattit sur eux, puis un nuage parut et ils coururent s'abriter sous son ombre, et de ce nuage vint le feu, tandis que la terre tremblait sous leurs pieds. Le Coran lui-même établit le nuage, le Cri et le tremblement de terre, et qu'au matin ils gisaient morts dans leurs maisons.",
+    content: "The Quran calls it the punishment of the day of the black cloud (26:189). It states the cloud, the shriek and the earthquake, and that by morning they lay dead in their homes (7:91, 11:94).",
+    contentFr: "Le Coran l'appelle le châtiment du jour de l'Ombre (26:189). Il énonce le nuage, le cri et le tremblement, et qu'au matin ils gisaient morts dans leurs demeures (7:91, 11:94).",
   },
   {
     id: 'shuayb-32',
@@ -482,8 +482,8 @@ const shuaybStoryContent: StoryContentBlock[] = [
     id: 'shuayb-37',
     type: 'narrative',
     order: 37,
-    content: "Long afterwards, the Quran tells of a young man who arrived in Madyan from Egypt - exhausted, alone, fleeing for his life. This was Musa, who had unintentionally killed an Egyptian and fled Pharaoh's wrath. The Quran does not name the old man of Madyan who sheltered him. Many commentators say he was Shu'ayb; others, including Ibn Kathir, considered this unlikely because of the long time between the destruction of Madyan and the era of Musa, and said he was a righteous man of Madyan. We narrate the story here because of that widely held identification, without asserting it.",
-    contentFr: "Bien plus tard, le Coran raconte qu'un jeune homme arriva à Madyan depuis l'Égypte, épuisé, seul, fuyant pour sa vie. C'était Moussa, qui avait tué involontairement un Égyptien et fuyait la colère de Pharaon. Le Coran ne nomme pas le vieil homme de Madyan qui l'accueillit. De nombreux commentateurs disent que c'était Chouaïb ; d'autres, dont Ibn Kathir, ont jugé cela peu probable en raison du long intervalle entre la destruction de Madyan et l'époque de Moussa, et ont dit qu'il s'agissait d'un homme pieux de Madyan. Nous racontons ici l'histoire en raison de cette identification largement répandue, sans l'affirmer.",
+    content: "Long afterwards, the Quran tells of a young man who arrived in Madyan from Egypt, exhausted and fleeing for his life. This was Musa. The Quran does not name the old man of Madyan who sheltered him, and neither does the authentic Sunnah.",
+    contentFr: "Bien plus tard, le Coran raconte l'arrivée à Madyan d'un jeune homme venu d'Égypte, épuisé et fuyant pour sa vie. C'était Moussa. Le Coran ne nomme pas le vieil homme de Madyan qui l'accueillit, et la Sunna authentique non plus.",
   },
   {
     id: 'shuayb-38',

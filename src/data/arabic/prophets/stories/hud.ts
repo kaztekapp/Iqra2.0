@@ -72,8 +72,8 @@ export const hudStoryContent: StoryContentBlock[] = [
     id: 'hud-4',
     type: 'narrative',
     order: 4,
-    content: "'Iram of the pillars' is understood by the commentators in different ways: some said Iram was the name of the tribe of 'Ad itself or of their forefather, and that 'pillars' referred to their tent-poles or their great strength; others said it was a city of towering columns. Either way, the people of 'Ad were proud of their achievements and their strength. They felt invincible, believing that no one could overpower them.",
-    contentFr: "« Iram aux piliers » est compris par les commentateurs de différentes manières : certains ont dit qu'Iram était le nom de la tribu de 'Ad elle-même ou de leur ancêtre, et que les « piliers » désignaient les mâts de leurs tentes ou leur grande force ; d'autres ont dit qu'il s'agissait d'une ville aux colonnes imposantes. Quoi qu'il en soit, le peuple de 'Ad était fier de ses réalisations et de sa force. Ils se croyaient invincibles, persuadés que personne ne pourrait les vaincre.",
+    content: "The Quran names them: \"Iram, who had lofty pillars, the like of whom had never been created in the land.\" (89:7-8) It does not explain the name beyond that. The people of 'Ad were proud of their strength, and the Quran reports their own words: \"Who is greater than us in strength?\" (41:15)",
+    contentFr: "Le Coran les nomme : « Iram, celle aux colonnes élevées, dont jamais pareille ne fut créée parmi les cités. » (89:7-8) Il n'explique pas ce nom au-delà de cela. Le peuple de 'Ad était fier de sa force, et le Coran rapporte leurs propres mots : « Qui est plus fort que nous ? » (41:15)",
   },
   {
     id: 'hud-5',
@@ -347,8 +347,8 @@ export const hudStoryContent: StoryContentBlock[] = [
     id: 'hud-20',
     type: 'narrative',
     order: 26,
-    content: "Years passed, and the people of 'Ad continued in their rejection. The commentators relate that a drought then befell the land: the skies withheld their rain and the earth became parched. Still, they did not turn back to Allah.",
-    contentFr: "Les années passèrent, et le peuple de 'Ad persista dans son rejet. Les commentateurs rapportent qu'une sécheresse s'abattit alors sur le pays : le ciel retint sa pluie et la terre se dessécha. Malgré cela, ils ne revinrent pas vers Allah.",
+    content: "Years passed, and the people of 'Ad continued in their rejection.",
+    contentFr: "Les années passèrent, et le peuple de 'Ad persista dans son rejet.",
   },
   {
     id: 'hud-21',

@@ -68,8 +68,8 @@ export const habilQabilStory: QuranStory = {
       id: 'habilqabil-3',
       type: 'narrative',
       order: 3,
-      content: "The Quran does not say what each brother offered. Early commentators relate that Habil, a shepherd, offered the best of his flock, while Qabil, a farmer, offered poor produce; these details are drawn from reports about earlier nations and are not established by the Quran or authentic hadith. What the Quran makes clear is that the difference lay in the heart behind the offering.",
-      contentFr: "Le Coran ne dit pas ce que chaque frère offrit. Les premiers commentateurs rapportent que Habil, berger, offrit le meilleur de son troupeau, tandis que Qabil, cultivateur, offrit une mauvaise récolte ; ces détails proviennent de récits sur les nations antérieures et ne sont établis ni par le Coran ni par un hadith authentique. Ce que le Coran rend clair, c'est que la différence résidait dans le cœur derrière l'offrande.",
+      content: "The Quran does not say what each brother offered. What it states is the outcome and the reason: \"And it was accepted from one of them but was not accepted from the other.\" Then the one from whom it was not accepted said, \"I will surely kill you,\" and the other answered, \"Allah only accepts from the righteous.\" (5:27)",
+      contentFr: "Le Coran ne dit pas ce que chaque frère offrit. Ce qu'il énonce, c'est le dénouement et la raison : « Cela fut accepté de l'un, mais ne le fut pas de l'autre. » Alors celui dont l'offrande ne fut pas acceptée dit : « Je te tuerai », et l'autre répondit : « Allah n'accepte que des pieux. » (5:27)",
     },
     {
       id: 'habilqabil-4',

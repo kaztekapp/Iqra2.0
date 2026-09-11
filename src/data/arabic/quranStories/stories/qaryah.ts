@@ -33,8 +33,8 @@ export const qaryahStory: QuranStory = {
       id: "qaryah-1",
       type: 'narrative',
       order: 1,
-      content: "In the middle of Surah Ya-Sin, Allah tells the Prophet ﷺ to set before his people a parable: the people of a town to whom messengers came. The Quran does not name the town or its people. Many commentators identify it as Antioch, and that is their view, not the text's. What the Quran gives is the shape of the story, and it is the shape that matters.",
-      contentFr: "Au milieu de la sourate Ya-Sin, Allah dit au Prophète ﷺ de proposer à son peuple une parabole : les gens d'une cité à qui vinrent des messagers. Le Coran ne nomme ni la cité ni ses habitants. Beaucoup de commentateurs y voient Antioche, mais c'est leur avis, non le texte. Ce que le Coran donne, c'est la forme de l'histoire, et c'est elle qui compte.",
+      content: "In the middle of Surah Ya-Sin, Allah tells the Prophet ﷺ to set before his people a parable: the people of a town to whom messengers came. The Quran does not name the town or its people, and neither does the authentic Sunnah. What the Quran gives is the shape of the story, and it is the shape that matters.",
+      contentFr: "Au milieu de la sourate Ya-Sin, Allah dit au Prophète ﷺ de proposer à son peuple une parabole : les gens d'une cité à qui vinrent des messagers. Le Coran ne nomme ni la cité ni ses habitants, et la Sunna authentique non plus. Ce que le Coran donne, c'est la forme de l'histoire, et c'est elle qui compte.",
     },
     {
       id: "qaryah-2",
@@ -101,8 +101,8 @@ export const qaryahStory: QuranStory = {
       id: "qaryah-5",
       type: 'narrative',
       order: 6,
-      content: "The messengers' answer to the threat is worth pausing on. Your omen is with yourselves, they said: the misfortune you fear comes from your own denial, not from those who warn you. Then, from the farthest part of the city, a man came running. The Quran does not give his name; some commentators call him Habib the carpenter, and again that is theirs. He came to plead for the messengers, not against them.",
-      contentFr: "La réponse des messagers à la menace mérite qu'on s'y arrête. Votre présage est en vous-mêmes, dirent-ils : le malheur que vous craignez vient de votre propre reniement, non de ceux qui vous avertissent. Puis, du bout de la cité, un homme accourut. Le Coran ne donne pas son nom ; certains commentateurs l'appellent Habib le charpentier, et là encore c'est leur avis. Il vint plaider pour les messagers, non contre eux.",
+      content: "The messengers' answer to the threat is worth pausing on. Your omen is with yourselves, they said: the misfortune you fear comes from your own denial, not from those who warn you. Then, from the farthest part of the city, a man came running. The Quran does not give his name. He came to plead for the messengers, not against them.",
+      contentFr: "La réponse des messagers à la menace mérite qu'on s'y arrête. Votre présage est en vous-mêmes, dirent-ils : le malheur que vous craignez vient de votre propre reniement, non de ceux qui vous avertissent. Puis, du bout de la cité, un homme accourut. Le Coran ne donne pas son nom. Il vint plaider pour les messagers, non contre eux.",
     },
     {
       id: "qaryah-6",

@@ -13,8 +13,8 @@ export const alyasaStory: Prophet = {
   title: 'The Successor',
   titleFr: 'Le Successeur',
   titleArabic: 'الخليفة',
-  summary: "Prophet Al-Yasa' is mentioned twice in the Quran, both times in the company of other great prophets, and is praised as being among the chosen and the excellent. The commentators mention that he was sent to the Children of Israel after Prophet Ilyas and continued his call to the worship of Allah alone. The Quran gives no further details of his story, and no authentic hadith describes it. What the Quran establishes is enough: he was one of Allah's messengers, preferred over the worlds and counted among the best.",
-  summaryFr: "Le Prophète Al-Yasa' est mentionné deux fois dans le Coran, les deux fois en compagnie d'autres grands prophètes, et il est loué comme faisant partie des élus et des meilleurs. Les commentateurs mentionnent qu'il fut envoyé aux Enfants d'Israël après le Prophète Ilyas et qu'il poursuivit son appel à l'adoration d'Allah seul. Le Coran ne donne pas d'autres détails sur son histoire, et aucun hadith authentique ne la décrit. Ce que le Coran établit suffit : il fut l'un des messagers d'Allah, préféré au-dessus des mondes et compté parmi les meilleurs.",
+  summary: "Prophet Al-Yasa' is mentioned twice in the Quran, both times in the company of other great prophets, and is praised as being among the chosen and the excellent. The Quran gives no further details of his story, and no authentic hadith describes it. What the Quran establishes is enough: he was one of Allah's messengers, preferred over the worlds and counted among the best.",
+  summaryFr: "Le Prophète Al-Yasa' est mentionné deux fois dans le Coran, les deux fois en compagnie d'autres grands prophètes, et il est loué comme faisant partie des élus et des meilleurs. Le Coran ne donne pas d'autres détails sur son histoire, et aucun hadith authentique ne la décrit. Ce que le Coran établit suffit : il fut l'un des messagers d'Allah, préféré au-dessus des mondes et compté parmi les meilleurs.",
   hasSubStories: false,
   lessons: [
     'Continuing the work of righteous predecessors is honorable',
@@ -43,8 +43,8 @@ const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-1',
     type: 'narrative',
     order: 1,
-    content: "Prophet Al-Yasa' was one of the messengers Allah sent to the Children of Israel. The commentators mention that he came after Prophet Ilyas and continued his call to the worship of Allah alone. Beyond this, the Quran and the authentic Sunnah give us no details of his life, and Muslim scholars have cautioned against filling that silence with stories taken from other scriptures.",
-    contentFr: "Le Prophète Al-Yasa' fut l'un des messagers qu'Allah envoya aux Enfants d'Israël. Les commentateurs mentionnent qu'il vint après le Prophète Ilyas et poursuivit son appel à l'adoration d'Allah seul. Au-delà de cela, le Coran et la Sunna authentique ne nous donnent aucun détail sur sa vie, et les savants musulmans ont mis en garde contre le fait de combler ce silence avec des récits tirés d'autres écritures.",
+    content: "Prophet Al-Yasa' was one of the messengers Allah sent. The Quran names him twice, both times in a list of those it honours: \"And Ismail and Al-Yasa' and Yunus and Lut - and all of them We preferred over the worlds.\" (6:86) Beyond this, the Quran and the authentic Sunnah give no details of his life.",
+    contentFr: "Le Prophète Al-Yasa' fut l'un des messagers qu'Allah envoya. Le Coran le nomme deux fois, chaque fois dans une liste de ceux qu'il honore : « Et Ismaïl, Al-Yasa', Younous et Lout : Nous les avons tous préférés aux mondes. » (6:86) Au-delà de cela, le Coran et la Sunna authentique ne donnent aucun détail sur sa vie.",
   },
   {
     id: 'alyasa-2',
@@ -128,8 +128,8 @@ const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-12',
     type: 'narrative',
     order: 10,
-    content: "The commentators' mention of Al-Yasa' following Ilyas illustrates an important principle: the prophetic mission continues from generation to generation. When one messenger passes, another rises to carry the message forward. The content of the message - worship Allah alone - remains unchanged, even as the messenger changes.",
-    contentFr: "La mention par les commentateurs d'Al-Yasa' succédant à Ilyas illustre un principe important : la mission prophétique se poursuit de génération en génération. Quand un messager s'en va, un autre se lève pour porter le message. Le contenu du message, adorer Allah seul, reste inchangé, même si le messager change.",
+    content: "The Quran names him again among those it calls the outstanding: \"And remember Ismail, Al-Yasa' and Dhul-Kifl, and all are among the outstanding.\" (38:48) It states his rank and says no more, and this story keeps to that.",
+    contentFr: "Le Coran le nomme de nouveau parmi ceux qu'il appelle les meilleurs : « Et rappelle-toi Ismaïl, Al-Yasa' et Dhoul-Kifl, tous étant du nombre des meilleurs. » (38:48) Il énonce son rang et n'en dit pas davantage, et ce récit s'en tient à cela.",
   },
   {
     id: 'alyasa-14',

@@ -43,8 +43,8 @@ const dawudStoryContent: StoryContentBlock[] = [
     id: 'dawud-1',
     type: 'narrative',
     order: 1,
-    content: "The story of Prophet Dawud takes place during a turbulent time for the Children of Israel, after Musa. They had strayed from pure worship, suffered at the hands of their enemies, and been driven from their homes. They came to a prophet of theirs - whom the Quran does not name, though the commentators call him Shamwil - asking for a king to lead them in battle.",
-    contentFr: "L'histoire du Prophète Dawoud se déroule à une époque troublée pour les Enfants d'Israël, après Moussa. Ils s'étaient éloignés de l'adoration pure, avaient souffert aux mains de leurs ennemis et avaient été chassés de leurs foyers. Ils vinrent trouver un de leurs prophètes, que le Coran ne nomme pas mais que les commentateurs appellent Shamwil, pour lui demander un roi qui les mènerait au combat.",
+    content: "The story of Prophet Dawud takes place after Musa, at a time when the Children of Israel had been driven from their homes and from their children. They came to a prophet of theirs - the Quran does not name him - asking for a king to lead them in battle.",
+    contentFr: "L'histoire du Prophète Dawoud se déroule après Moussa, à une époque où les enfants d'Israël avaient été chassés de leurs foyers et de leurs enfants. Ils vinrent trouver un de leurs prophètes, que le Coran ne nomme pas, pour lui demander un roi qui les mènerait au combat.",
   },
   {
     id: 'dawud-2',
@@ -175,8 +175,8 @@ const dawudStoryContent: StoryContentBlock[] = [
     id: 'dawud-12',
     type: 'narrative',
     order: 12,
-    content: "The Quran states the outcome plainly: 'Dawud killed Jalut.' The commentators relate that he was a young man of little standing in the army, and that his victory over the enemy's leader turned the battle. What matters is what the Quran emphasises: the victory came 'by permission of Allah', and a small, faithful company overcame a great one.",
-    contentFr: "Le Coran énonce le dénouement clairement : « Dawoud tua Jalout. » Les commentateurs rapportent qu'il était un jeune homme de peu de rang dans l'armée, et que sa victoire sur le chef ennemi renversa la bataille. Ce qui importe, c'est ce que le Coran souligne : la victoire vint « par la permission d'Allah », et une petite troupe de croyants l'emporta sur une grande.",
+    content: "The Quran states the outcome plainly: \"And Dawud killed Jalut.\" (2:251) And it states how: the victory came \"by permission of Allah\", and a small, faithful company overcame a great one (2:249).",
+    contentFr: "Le Coran énonce le dénouement clairement : « Et Dawoud tua Jalout. » (2:251) Et il énonce comment : la victoire vint « par la permission d'Allah », et une petite troupe de croyants l'emporta sur une grande (2:249).",
   },
   {
     id: 'dawud-13',

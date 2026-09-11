@@ -33,8 +33,8 @@ export const talutStory: QuranStory = {
       id: "talut-1",
       type: 'narrative',
       order: 1,
-      content: "After Musa, the Children of Israel lived for generations under prophets. Surah Al-Baqarah picks up the story at a moment when they had been driven from their homes and asked their prophet for a king to lead them in fighting. The Quran does not name this prophet; the commentators name him Shamwil, and that is their identification. What the Quran records is the request, the king Allah chose, the test at the river, and the young man who ended the battle.",
-      contentFr: "Après Moussa, les Enfants d'Israël vécurent des générations sous des prophètes. La sourate Al-Baqarah reprend l'histoire au moment où, chassés de leurs foyers, ils demandèrent à leur prophète un roi pour les mener au combat. Le Coran ne nomme pas ce prophète ; les commentateurs l'appellent Shamwil, et c'est leur identification. Ce que le Coran rapporte, c'est la demande, le roi qu'Allah choisit, l'épreuve à la rivière, et le jeune homme qui mit fin à la bataille.",
+      content: "After Musa, the Children of Israel lived for generations under prophets. Surah Al-Baqarah picks up the story at a moment when they had been driven from their homes and asked their prophet for a king to lead them in fighting. The Quran does not name this prophet. What the Quran records is the request, the king Allah chose, the test at the river, and the young man who ended the battle.",
+      contentFr: "Après Moussa, les enfants d'Israël vécurent des générations sous des prophètes. La sourate Al-Baqarah reprend l'histoire au moment où, chassés de leurs foyers, ils demandèrent à leur prophète un roi pour les mener au combat. Le Coran ne nomme pas ce prophète. Ce que le Coran rapporte, c'est la demande, le roi qu'Allah choisit, l'épreuve à la rivière, et le jeune homme qui mit fin à la bataille.",
     },
     {
       id: "talut-2",

@@ -67,8 +67,8 @@ export const maryamStory: QuranStory = {
       id: 'maryam-3',
       type: 'narrative',
       order: 3,
-      content: "Allah accepted Maryam with a beautiful acceptance and caused her to grow in goodness. When those who served in the sanctuary disputed over who would take charge of her, they cast lots, and the lot fell to Prophet Zakariya (3:44), who according to the commentators was married to her maternal aunt. He would visit her in her prayer chamber and witness miraculous provisions.",
-      contentFr: "Allah accepta Maryam d'une belle acceptation et la fit croître dans le bien. Lorsque ceux qui servaient dans le sanctuaire se disputèrent pour savoir qui la prendrait en charge, ils tirèrent au sort, et le sort tomba sur le Prophète Zakariya (3:44), qui, selon les commentateurs, était marié à sa tante maternelle. Il lui rendait visite dans sa chambre de prière et fut témoin de provisions miraculeuses.",
+      content: "Allah accepted Maryam with a beautiful acceptance and caused her to grow in goodness. When those who served in the sanctuary disputed over who would take charge of her, they cast lots, and Zakariya was put in charge of her (3:37, 3:44). He would find provision with her in her prayer chamber.",
+      contentFr: "Allah accepta Maryam d'une belle acceptation et la fit croître dans le bien. Lorsque ceux qui servaient dans le sanctuaire se disputèrent pour savoir qui la prendrait en charge, ils tirèrent au sort, et Zakariya en eut la charge (3:37, 3:44). Il trouvait auprès d'elle une subsistance dans sa chambre de prière.",
     },
     {
       id: 'maryam-4',

@@ -249,8 +249,8 @@ const zakariyaStoryContent: StoryContentBlock[] = [
     id: 'zakariya-17',
     type: 'narrative',
     order: 18,
-    content: "According to various accounts, Zakariya lived to see his son grow into a righteous prophet. Yahya would go on to call people to repentance, living an ascetic life of devotion. He was the one who would recognize and confirm Isa when he began his mission. Zakariya's prayer had been answered beyond his imaginings.",
-    contentFr: "Selon divers récits, Zakariya vécut assez longtemps pour voir son fils devenir un prophète vertueux. Yahya allait appeler les gens au repentir, menant une vie ascétique de dévotion. Il serait celui qui reconnaîtrait et confirmerait Issa quand celui-ci commencerait sa mission. La prière de Zakariya avait été exaucée au-delà de ses espérances.",
+    content: "What Allah states of the son is this: \"O Yahya, take the Scripture with determination. And We gave him judgement while yet a boy, and affection from Us and purity, and he was fearing of Allah, and dutiful to his parents, and he was not a disobedient tyrant.\" (19:12-14) Zakariya's prayer had been answered.",
+    contentFr: "Ce qu'Allah énonce au sujet du fils est ceci : « Ô Yahya, tiens fermement au Livre. Et Nous lui donnâmes la sagesse alors qu'il était enfant, ainsi que la tendresse de Notre part et la pureté. Il était pieux, et bon envers ses père et mère ; il n'était ni violent ni désobéissant. » (19:12-14) La prière de Zakariya avait été exaucée.",
   },
   {
     id: 'zakariya-18',

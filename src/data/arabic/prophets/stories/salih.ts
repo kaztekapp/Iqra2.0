@@ -161,8 +161,8 @@ export const salihStoryContent: StoryContentBlock[] = [
     id: 'salih-12',
     type: 'narrative',
     order: 12,
-    content: "She came with specific rules: she would drink from their water on one day, and they would have it to themselves on the next (54:28). The commentators add that she was of great size and that on her day the people would milk her abundantly.",
-    contentFr: "Elle vint avec des règles précises : elle boirait de leur eau un jour, et ils l'auraient pour eux seuls le jour suivant (54:28). Les commentateurs ajoutent qu'elle était de grande taille et que, le jour qui lui était réservé, les gens la trayaient abondamment.",
+    content: "She came with a rule: she would drink from their water on one day, and they would have it to themselves on the next (54:28, 26:155).",
+    contentFr: "Elle vint avec une règle : elle boirait de leur eau un jour, et l'eau serait à eux le lendemain (54:28, 26:155).",
   },
   {
     id: 'salih-13',

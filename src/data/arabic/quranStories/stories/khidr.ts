@@ -314,8 +314,8 @@ export const khidrStory: QuranStory = {
       id: 'khidr-24',
       type: 'narrative',
       order: 24,
-      content: "Who was al-Khidr? The Quran calls him 'a servant from among Our servants' whom Allah taught knowledge from Himself. The majority of scholars held that he was a prophet, since he acted by revelation - 'I did not do it of my own accord' - while others said he was a righteous servant. Claims that he is still alive and appears to people have no basis in the Quran or the authentic Sunnah, and scholars such as Ibn Taymiyyah and Ibn Kathir rejected them. What the texts establish is his lesson, not his legend.",
-      contentFr: "Qui était Al-Khidr ? Le Coran l'appelle « un serviteur parmi Nos serviteurs » à qui Allah a enseigné un savoir venant de Lui. La majorité des savants ont considéré qu'il était un prophète, puisqu'il agissait par révélation (« je ne l'ai pas fait de ma propre initiative ») ; d'autres ont dit qu'il était un serviteur pieux. Les affirmations selon lesquelles il serait toujours vivant et apparaîtrait aux gens n'ont aucun fondement dans le Coran ni dans la Sunna authentique, et des savants comme Ibn Taymiyya et Ibn Kathir les ont rejetées. Ce que les textes établissent, c'est sa leçon, non sa légende.",
+      content: "Who was al-Khidr? The Quran calls him \"a servant from among Our servants\" to whom Allah had given mercy from Himself and taught knowledge from Himself (18:65). It does not name him. He said of his own acts, \"And I did it not of my own accord\" (18:82). Claims that he is still alive and appears to people have no basis in the Quran or the authentic Sunnah.",
+      contentFr: "Qui était Al-Khidr ? Le Coran l'appelle « un serviteur parmi Nos serviteurs » à qui Allah avait accordé une miséricorde de Sa part et enseigné une science venant de Lui (18:65). Il ne le nomme pas. Il dit de ses propres actes : « Je ne l'ai pas fait de ma propre initiative. » (18:82) Les affirmations selon lesquelles il serait toujours vivant et apparaîtrait aux gens n'ont aucun fondement dans le Coran ni dans la Sunna authentique.",
     },
   ],
 };
