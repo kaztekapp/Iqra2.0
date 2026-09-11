@@ -48,6 +48,7 @@ import * as Speech from 'expo-speech';
 import { Platform } from 'react-native';
 import * as Network from 'expo-network';
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import type { AudioMetadata } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio } from './audioBus';
 import { File } from 'expo-file-system';
@@ -138,6 +139,10 @@ function deleteQuietly(uri: string) {
 class StoryAudioService {
   private generation = 0;
   private audioConfigured = false;
+  /** What the lock screen shows while a story is being read. */
+  private nowPlaying: AudioMetadata | null = null;
+  /** Told when the lock screen, a headset or another app works the transport. */
+  private onTransport: ((state: 'playing' | 'paused') => void) | null = null;
   private paused = false;
   private supportsDevicePause: boolean | null = null;
   private voiceCache = new Map<string, string | undefined>();
@@ -595,6 +600,9 @@ class StoryAudioService {
       }
 
       this.clipPlaying = true;
+      // The controls live on the player, and the player outlives the clip, so
+      // this only has to hold once per sentence to survive a `replace`.
+      this.applyLockScreen();
 
       /**
        * End this sentence. The player is deliberately NOT released — the next
@@ -674,7 +682,24 @@ class StoryAudioService {
           status.playing === false &&
           status.currentTime > 0 &&
           status.currentTime >= status.duration - 0.1;
-        if (status.didJustFinish || ranOut) settle(resolve);
+        if (status.didJustFinish || ranOut) {
+          settle(resolve);
+          return;
+        }
+
+        /**
+         * A clip that stops mid-sentence was stopped by someone: the lock
+         * screen, a headset button, a car. Treating it as a pause is what
+         * keeps the story where it was - `paused` also holds off the watchdog
+         * that would otherwise decide the sentence had wedged and skip it.
+         */
+        if (started && !this.paused && status.playing === false) {
+          this.paused = true;
+          this.onTransport?.('paused');
+        } else if (this.paused && status.playing === true) {
+          this.paused = false;
+          this.onTransport?.('playing');
+        }
       });
 
       player.play();
@@ -817,6 +842,50 @@ class StoryAudioService {
       await Speech.stop();
     } catch {
       /* already quiet */
+    }
+  }
+
+  /**
+   * What the lock screen and Now Playing show for this story.
+   *
+   * A story is read as a chain of one-sentence clips through a single
+   * reused player, so the controls are attached to that player once and the
+   * metadata stays put - the lock screen names the story, not the sentence
+   * being spoken, which would flicker on every line.
+   */
+  setNowPlaying(meta: AudioMetadata | null): void {
+    this.nowPlaying = meta;
+    if (meta) this.applyLockScreen();
+    else this.clearLockScreen();
+  }
+
+  /** Hear about a pause or play that came from outside the app. */
+  setTransportListener(fn: ((state: 'playing' | 'paused') => void) | null): void {
+    this.onTransport = fn;
+  }
+
+  private applyLockScreen(): void {
+    if (!this.player || !this.nowPlaying) return;
+    try {
+      this.player.setActiveForLockScreen(true, this.nowPlaying, {
+        // No seek buttons. A story is played as one-sentence clips, so the
+        // only thing they could scrub is the sentence being spoken - three
+        // seconds of it. Skipping by paragraph is in the player in the app,
+        // where it has the whole queue to move through.
+        showSeekForward: false,
+        showSeekBackward: false,
+      });
+    } catch {
+      // Not available on every platform or simulator; playback is unaffected.
+    }
+  }
+
+  private clearLockScreen(): void {
+    if (!this.player) return;
+    try {
+      this.player.clearLockScreenControls();
+    } catch {
+      /* already gone */
     }
   }
 

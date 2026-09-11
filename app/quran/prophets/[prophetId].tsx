@@ -73,7 +73,16 @@ export default function ProphetStoryScreen() {
   const sourceCount = currentContent.filter((block) => block.type !== 'narrative').length;
 
   // Listening. The queue is rebuilt whenever the chapter changes.
-  const narration = useStoryNarration(currentContent);
+  const narrationNowPlaying = useMemo(
+    () => ({
+      title:
+        lc(currentSubStory?.title ?? '', currentSubStory?.titleFr) ||
+        lc(prophet?.nameEnglish ?? '', prophet?.nameFrench),
+      artist: lc(prophet?.nameEnglish ?? '', prophet?.nameFrench),
+    }),
+    [currentSubStory, lc, prophet]
+  );
+  const narration = useStoryNarration(currentContent, narrationNowPlaying);
   const [playerOpen, setPlayerOpen] = useState(false);
 
 

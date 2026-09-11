@@ -11,6 +11,7 @@
 // verses/play are tapped rapidly.
 
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import type { AudioMetadata } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio } from '../audioBus';
 import type { AudioPlayer } from 'expo-audio';
@@ -155,6 +156,21 @@ const CLIP_START_BUDGET_MS = 8000;
 /** Slack on top of a clip's own length before it is treated as wedged. */
 const CLIP_END_SLACK_MS = 5000;
 
+/**
+ * What the lock screen should keep showing while Arabic lines are read.
+ *
+ * A quoted ayah is played through a player of its own, and only one player
+ * owns the lock screen at a time - so without re-claiming it here the
+ * controls would disappear every time the story reached a verse and come
+ * back when it returned to the narrator. The story sets this; the line
+ * borrows it.
+ */
+let lockScreen: AudioMetadata | null = null;
+
+export function setArabicNowPlaying(meta: AudioMetadata | null): void {
+  lockScreen = meta;
+}
+
 function playFile(uri: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     let player: AudioPlayer;
@@ -170,6 +186,18 @@ function playFile(uri: string): Promise<void> {
     // Deliberately no setPlaybackRate: the clip was already rendered at the
     // requested tempo. Resampling it here is what made the voice warble.
     currentPlayer = player;
+
+    if (lockScreen) {
+      try {
+        // Play/pause only, to match the story's own controls.
+        player.setActiveForLockScreen(true, lockScreen, {
+          showSeekForward: false,
+          showSeekBackward: false,
+        });
+      } catch {
+        // Not available everywhere; the line still plays.
+      }
+    }
 
     let settled = false;
     /**

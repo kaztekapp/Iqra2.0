@@ -25,7 +25,13 @@ import {
   VoiceGender,
 } from '../services/storyAudioService';
 import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns } from '../services/narrationText';
-import { speakArabic, stopArabic, prewarmArabicVoice, isArabicSpeaking } from '../services/speech/arabicTTS';
+import {
+  speakArabic,
+  stopArabic,
+  prewarmArabicVoice,
+  isArabicSpeaking,
+  setArabicNowPlaying,
+} from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
 export type NarrationSpeed = 0.75 | 1 | 1.25 | 1.5;
@@ -105,7 +111,13 @@ function quotedInProse(blocks: NarratableBlock[]): Set<string> {
   return keys;
 }
 
-export function useStoryNarration(blocks: NarratableBlock[]) {
+/** What the lock screen names while this story is being read. */
+export interface NarrationNowPlaying {
+  title: string;
+  artist?: string;
+}
+
+export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: NarrationNowPlaying) {
   // Narration follows the same language setting the text on screen does, so
   // the voice never reads English while the reader shows French.
   const { lc, language } = useLocalizedContent();
@@ -401,6 +413,32 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
     setSpeedState(next);
     speedRef.current = next;
   }, []);
+
+  /**
+   * Lock-screen controls, the same ones the Quran player puts up.
+   *
+   * The title is the story, not the sentence: a listener glancing at a locked
+   * phone wants to know what is being read, and a line of narration changing
+   * four times a minute is noise. The transport works the story rather than
+   * the clip - pausing from the lock screen pauses the reading, and playing
+   * resumes it - so the two never disagree about whether a story is running.
+   */
+  const title = nowPlaying?.title;
+  const artist = nowPlaying?.artist;
+  useEffect(() => {
+    if (!title) return;
+    const meta = { title, artist, albumTitle: artist };
+    storyAudioService.setNowPlaying(meta);
+    setArabicNowPlaying(meta);
+    storyAudioService.setTransportListener((next) => {
+      setStatus((current) => (current === 'idle' ? current : next));
+    });
+    return () => {
+      storyAudioService.setTransportListener(null);
+      storyAudioService.setNowPlaying(null);
+      setArabicNowPlaying(null);
+    };
+  }, [title, artist]);
 
   // Leaving the screen must not leave a voice talking, or the audio session
   // held open behind it.
