@@ -820,6 +820,29 @@ class StoryAudioService {
     }
   }
 
+  /**
+   * Hand the audio session back.
+   *
+   * `configureAudio` puts the session into `doNotMix` with background
+   * playback, so a story keeps reading with the screen off and gets
+   * lock-screen controls. It is a one-way latch, so without this the session
+   * stays that way for the rest of the app's life: iOS goes on keeping the
+   * app alive in the background around a session nothing is playing through,
+   * long after the listener has closed the story.
+   */
+  async releaseSession(): Promise<void> {
+    if (!this.audioConfigured) return;
+    this.audioConfigured = false;
+    try {
+      await setAudioModeAsync({
+        shouldPlayInBackground: false,
+        interruptionMode: 'mixWithOthers',
+      });
+    } catch (e) {
+      __DEV__ && console.log('[story audio] release session:', e);
+    }
+  }
+
   isPaused(): boolean {
     return this.paused;
   }

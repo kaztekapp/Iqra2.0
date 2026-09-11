@@ -150,6 +150,11 @@ async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
   return file.uri;
 }
 
+/** Nothing has started playing by now: the clip is not going to. */
+const CLIP_START_BUDGET_MS = 8000;
+/** Slack on top of a clip's own length before it is treated as wedged. */
+const CLIP_END_SLACK_MS = 5000;
+
 function playFile(uri: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     let player: AudioPlayer;
@@ -167,9 +172,25 @@ function playFile(uri: string): Promise<void> {
     currentPlayer = player;
 
     let settled = false;
+    /**
+     * Status updates are the only thing that ends a clip, and they stop
+     * arriving whenever the system takes the audio away - the app put in the
+     * background and suspended, a call, another app claiming the session.
+     * Without a backstop the promise never settles: this player, its
+     * listener and its file are never released, `currentPlayer` stays set so
+     * the engine reports itself as speaking for ever, and the story's queue
+     * waits on a line that will never finish. Only force-quitting clears it.
+     */
+    let watchdog: ReturnType<typeof setTimeout> | null = null;
+    const arm = (ms: number) => {
+      if (watchdog) clearTimeout(watchdog);
+      watchdog = setTimeout(finish, ms);
+    };
+
     const finish = () => {
       if (settled) return;
       settled = true;
+      if (watchdog) clearTimeout(watchdog);
       try {
         subscription.remove();
       } catch {}
@@ -187,8 +208,19 @@ function playFile(uri: string): Promise<void> {
 
     interruptCurrent = finish;
 
+    let started = false;
     const subscription = player.addListener('playbackStatusUpdate', (status) => {
       if (settled) return;
+      if (!started && (status.playing || status.currentTime > 0)) {
+        started = true;
+      }
+      // `duration` is 0 until the clip loads, so the end is only knowable
+      // once it is. Re-arming on each tick means a clip that keeps reporting
+      // is never cut short, and one that goes quiet is released.
+      if (started && typeof status.duration === 'number' && status.duration > 0) {
+        const left = Math.max(0, status.duration - status.currentTime) * 1000;
+        arm(left + CLIP_END_SLACK_MS);
+      }
       if (
         status.didJustFinish ||
         (status.playing === false &&
@@ -199,6 +231,8 @@ function playFile(uri: string): Promise<void> {
         finish();
       }
     });
+
+    arm(CLIP_START_BUDGET_MS);
 
     try {
       player.play();

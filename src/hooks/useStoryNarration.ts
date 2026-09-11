@@ -14,6 +14,7 @@
  * owns.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import { useLocalizedContent } from './useLocalizedContent';
 import { useSettingsStore } from '../stores/settingsStore';
 import {
@@ -24,7 +25,7 @@ import {
   VoiceGender,
 } from '../services/storyAudioService';
 import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns } from '../services/narrationText';
-import { speakArabic, stopArabic, prewarmArabicVoice } from '../services/speech/arabicTTS';
+import { speakArabic, stopArabic, prewarmArabicVoice, isArabicSpeaking } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
 export type NarrationSpeed = 0.75 | 1 | 1.25 | 1.5;
@@ -121,12 +122,16 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
 
   const runRef = useRef(0);
   const indexRef = useRef(0);
+  const statusRef = useRef<NarrationStatus>('idle');
   const speedRef = useRef<NarrationSpeed>(1);
   const pausedByStopRef = useRef(false);
 
   useEffect(() => {
     indexRef.current = index;
   }, [index]);
+  useEffect(() => {
+    statusRef.current = status;
+  }, [status]);
   useEffect(() => {
     speedRef.current = speed;
   }, [speed]);
@@ -397,13 +402,40 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
     speedRef.current = next;
   }, []);
 
-  // Leaving the screen must not leave a voice talking.
+  // Leaving the screen must not leave a voice talking, or the audio session
+  // held open behind it.
   useEffect(() => {
     return () => {
       runRef.current++;
       stopArabic();
-      void storyAudioService.stop();
+      void storyAudioService.stop().then(() => storyAudioService.releaseSession());
     };
+  }, []);
+
+  /**
+   * The app going to the background.
+   *
+   * Someone listening with the screen off is the point of background audio,
+   * so a story that is playing - or paused, waiting to be resumed - is left
+   * alone. An idle one has no business holding the session: the screen is
+   * simply the last one open, and iOS will keep the whole app alive around a
+   * silent session for as long as it is held, which is what left the app
+   * wedged on return. Coming back to the foreground, an utterance that lost
+   * its audio while the app was suspended is cleared rather than waited on.
+   */
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (next) => {
+      if (next === 'active') {
+        if (statusRef.current !== 'playing' && isArabicSpeaking()) stopArabic();
+        return;
+      }
+      if (next !== 'background') return;
+      if (statusRef.current !== 'idle') return;
+      runRef.current++;
+      stopArabic();
+      void storyAudioService.stop().then(() => storyAudioService.releaseSession());
+    });
+    return () => sub.remove();
   }, []);
 
   // Changing chapter replaces the queue; anything still speaking is stale.
