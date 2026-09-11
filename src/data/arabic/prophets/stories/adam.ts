@@ -78,8 +78,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-4',
     type: 'narrative',
     order: 4,
-    content: "The angels asked because they knew that beings with free will could cause corruption and shed blood - some commentators relate that they had seen this from the jinn who inhabited the earth before. But they did not object to Allah's wisdom; they simply wondered about His plan. And Allah, the All-Knowing, assured them that He knew what they did not know.",
-    contentFr: "Les anges posèrent la question parce qu'ils savaient que des êtres dotés de libre arbitre pouvaient semer la corruption et verser le sang ; certains commentateurs rapportent qu'ils l'avaient constaté chez les djinns qui habitaient la terre auparavant. Mais ils ne contestèrent pas la sagesse d'Allah ; ils s'interrogeaient simplement sur Son plan. Et Allah, l'Omniscient, les assura qu'Il savait ce qu'ils ne savaient pas.",
+    content: "﴿وَإِذْ قَالَ رَبُّكَ لِلْمَلَآئِكَةِ إِنِّى جَاعِلٌ فِى الْأَرْضِ خَلِيفَةً ۖ قَالُوٓا۟ أَتَجْعَلُ فِيهَا مَن يُفْسِدُ فِيهَا وَيَسْفِكُ الدِّمَآءَ وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ ۖ قَالَ إِنِّىٓ أَعْلَمُ مَا لَا تَعْلَمُونَ﴾ And [mention, O Muḥammad], when your Lord said to the angels, \"Indeed, I will make upon the earth a successive authority.\" They said, \"Will You place upon it one who causes corruption therein and sheds blood, while we exalt You with praise and declare Your perfection?\" He [Allah] said, \"Indeed, I know that which you do not know.\"",
+    contentFr: "﴿وَإِذْ قَالَ رَبُّكَ لِلْمَلَآئِكَةِ إِنِّى جَاعِلٌ فِى الْأَرْضِ خَلِيفَةً ۖ قَالُوٓا۟ أَتَجْعَلُ فِيهَا مَن يُفْسِدُ فِيهَا وَيَسْفِكُ الدِّمَآءَ وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ ۖ قَالَ إِنِّىٓ أَعْلَمُ مَا لَا تَعْلَمُونَ﴾ Lorsque ton Seigneur dit aux Anges : « Je vais installer sur terre une succession», ils dirent : « Y installeras-Tu qui y sèmera le désordre et y répandra le sang, alors que nous autres sommes là à Te rendre gloire et à Te sanctifier ? » Il dit : « Je sais ce que vous ne savez pas. »",
   },
 
   // ============ PART 2: THE CREATION OF ADAM ============
@@ -250,8 +250,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-18',
     type: 'narrative',
     order: 18,
-    content: 'All the angels obeyed immediately, falling into prostration before Adam. But there was one who refused - Iblis. Though he had been elevated to the rank of the angels through his worship, he was originally from the jinn, created from smokeless fire. And in his heart, he harbored arrogance.',
-    contentFr: 'Tous les anges obéirent immédiatement, se prosternant devant Adam. Mais il y en eut un qui refusa - Iblis. Bien qu\'il eût été élevé au rang des anges par son adoration, il était à l\'origine des djinns, créé de feu sans fumée. Et dans son cœur, il nourrissait l\'orgueil.',
+    content: "﴿وَلَقَدْ خَلَقْنَاكُمْ ثُمَّ صَوَّرْنَاكُمْ ثُمَّ قُلْنَا لِلْمَلَآئِكَةِ اسْجُدُوا۟ لِـَٔادَمَ فَسَجَدُوٓا۟ إِلَّآ إِبْلِيسَ لَمْ يَكُن مِّنَ السَّاجِدِينَ﴾ And We have certainly created you, [O mankind], and given you [human] form. Then We said to the angels, \"Prostrate to Adam\"; so they prostrated, except for Iblees. He was not of those who prostrated. ﴿قَالَ مَا مَنَعَكَ أَلَّا تَسْجُدَ إِذْ أَمَرْتُكَ ۖ قَالَ أَنَا۠ خَيْرٌ مِّنْهُ خَلَقْتَنِى مِن نَّارٍ وَخَلَقْتَهُۥ مِن طِينٍ﴾ [Allah] said, \"What prevented you from prostrating when I commanded you?\" [Satan] said, \"I am better than him. You created me from fire and created him from clay [i.e., earth].\" ﴿قَالَ يَآإِبْلِيسُ مَا مَنَعَكَ أَن تَسْجُدَ لِمَا خَلَقْتُ بِيَدَىَّ ۖ أَسْتَكْبَرْتَ أَمْ كُنتَ مِنَ الْعَالِينَ﴾ [Allah] said, \"O Iblees, what prevented you from prostrating to that which I created with My hands? Were you arrogant [then], or were you [already] among the haughty?\" ﴿قَالَ أَنَا۠ خَيْرٌ مِّنْهُ ۖ خَلَقْتَنِى مِن نَّارٍ وَخَلَقْتَهُۥ مِن طِينٍ﴾ He said, \"I am better than him. You created me from fire and created him from clay.\"",
+    contentFr: "﴿وَلَقَدْ خَلَقْنَاكُمْ ثُمَّ صَوَّرْنَاكُمْ ثُمَّ قُلْنَا لِلْمَلَآئِكَةِ اسْجُدُوا۟ لِـَٔادَمَ فَسَجَدُوٓا۟ إِلَّآ إِبْلِيسَ لَمْ يَكُن مِّنَ السَّاجِدِينَ﴾ Nous vous avons créés et vous avons donné forme. Puis Nous avons dit aux Anges : « Prosternez-vous devant Adam ! » Et ils se prosternèrent, hormis Iblîs qui n’était point de ceux qui se prosternèrent. ﴿قَالَ مَا مَنَعَكَ أَلَّا تَسْجُدَ إِذْ أَمَرْتُكَ ۖ قَالَ أَنَا۠ خَيْرٌ مِّنْهُ خَلَقْتَنِى مِن نَّارٍ وَخَلَقْتَهُۥ مِن طِينٍ﴾ Il (Allah) dit : « Qu’est-ce qui t’a empêché de te prosterner alors que Je te l’ai ordonné ? » Il répondit : « Je suis meilleur que lui. Tu m’as créé de feu et lui, Tu l’as créé d’argile ! » ﴿قَالَ يَآإِبْلِيسُ مَا مَنَعَكَ أَن تَسْجُدَ لِمَا خَلَقْتُ بِيَدَىَّ ۖ أَسْتَكْبَرْتَ أَمْ كُنتَ مِنَ الْعَالِينَ﴾ « Ô Iblîs ! (lui dit Allah) Qu’est-ce qui t’empêche de te prosterner devant ce que J’ai créé de Mes Mains ? Serais-tu à ce point orgueilleux, ou te croirais-tu supérieur ? » ﴿قَالَ أَنَا۠ خَيْرٌ مِّنْهُ ۖ خَلَقْتَنِى مِن نَّارٍ وَخَلَقْتَهُۥ مِن طِينٍ﴾ « Je suis bien meilleur que lui, répondit Iblîs ; Tu m’as créé de feu et Tu l’as créé d’argile. »",
   },
   {
     id: 'adam-19',
@@ -275,8 +275,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-20',
     type: 'narrative',
     order: 20,
-    content: 'This was the first sin of arrogance in creation. Iblis believed that his origin - fire - made him superior to Adam who was created from clay. He failed to understand that honor comes from obedience to Allah, not from one\'s material origin. Fire and clay are both creations of Allah - neither is superior.',
-    contentFr: 'Ce fut le premier péché d\'orgueil dans la création. Iblis croyait que son origine - le feu - le rendait supérieur à Adam qui était créé d\'argile. Il ne comprit pas que l\'honneur vient de l\'obéissance à Allah, non de son origine matérielle. Le feu et l\'argile sont tous deux des créations d\'Allah - aucun n\'est supérieur.',
+    content: "﴿قَالَ فَاهْبِطْ مِنْهَا فَمَا يَكُونُ لَكَ أَن تَتَكَبَّرَ فِيهَا فَاخْرُجْ إِنَّكَ مِنَ الصَّاغِرِينَ﴾ [Allah] said, \"Descend from it [i.e., Paradise], for it is not for you to be arrogant therein. So get out; indeed, you are of the debased.\"",
+    contentFr: "﴿قَالَ فَاهْبِطْ مِنْهَا فَمَا يَكُونُ لَكَ أَن تَتَكَبَّرَ فِيهَا فَاخْرُجْ إِنَّكَ مِنَ الصَّاغِرِينَ﴾ Il (Allah) dit alors : « Descends d’ici ! Tu n’as vraiment pas à te pavaner d’orgueil. Sors ! Tu es du nombre de ceux qui sont vils et bas ! »",
   },
   {
     id: 'adam-21',
@@ -327,8 +327,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-24',
     type: 'narrative',
     order: 24,
-    content: 'Notice how Iblis blamed Allah for his own misguidance, saying "Because You have put me in error." This is the way of the arrogant - never accepting responsibility, always blaming others. He then described his plan of attack: he would come at humans from every direction.',
-    contentFr: 'Remarquez comment Iblis blâma Allah pour son propre égarement, disant « Puisque Tu m\'as égaré ». C\'est la manière des orgueilleux - n\'acceptant jamais la responsabilité, blâmant toujours les autres. Il décrivit ensuite son plan d\'attaque : il viendrait aux humains de toutes les directions.',
+    content: "﴿قَالَ أَنظِرْنِىٓ إِلَىٰ يَوْمِ يُبْعَثُونَ﴾ [Satan] said, \"Reprieve me until the Day they are resurrected.\" ﴿قَالَ إِنَّكَ مِنَ الْمُنظَرِينَ﴾ [Allah] said, \"Indeed, you are of those reprieved.\" ﴿قَالَ فَبِمَآ أَغْوَيْتَنِى لَأَقْعُدَنَّ لَهُمْ صِرَٰطَكَ الْمُسْتَقِيمَ﴾ [Satan] said, \"Because You have put me in error, I will surely sit in wait for them [i.e., mankind] on Your straight path. ﴿ثُمَّ لَـَٔاتِيَنَّهُم مِّنۢ بَيْنِ أَيْدِيهِمْ وَمِنْ خَلْفِهِمْ وَعَنْ أَيْمَانِهِمْ وَعَن شَمَآئِلِهِمْ ۖ وَلَا تَجِدُ أَكْثَرَهُمْ شَاكِرِينَ﴾ Then I will come to them from before them and from behind them and on their right and on their left, and You will not find most of them grateful [to You].\" ﴿قَالَ فَبِعِزَّتِكَ لَأُغْوِيَنَّهُمْ أَجْمَعِينَ﴾ [Iblees] said, \"By Your might, I will surely mislead them all. ﴿إِلَّا عِبَادَكَ مِنْهُمُ الْمُخْلَصِينَ﴾ Except, among them, Your chosen servants.\"",
+    contentFr: "﴿قَالَ أَنظِرْنِىٓ إِلَىٰ يَوْمِ يُبْعَثُونَ﴾ Il dit : « Accorde-moi donc un délai jusqu’au jour où ils seront ressuscités. » ﴿قَالَ إِنَّكَ مِنَ الْمُنظَرِينَ﴾ « Tu es de ceux à qui délai est donné », dit (Allah). ﴿قَالَ فَبِمَآ أَغْوَيْتَنِى لَأَقْعُدَنَّ لَهُمْ صِرَٰطَكَ الْمُسْتَقِيمَ﴾ – « Comme Tu as décidé de me perdre, je resterai à les guetter, assis sur Ta voie droite. ﴿ثُمَّ لَـَٔاتِيَنَّهُم مِّنۢ بَيْنِ أَيْدِيهِمْ وَمِنْ خَلْفِهِمْ وَعَنْ أَيْمَانِهِمْ وَعَن شَمَآئِلِهِمْ ۖ وَلَا تَجِدُ أَكْثَرَهُمْ شَاكِرِينَ﴾ Puis je viendrai à eux par-devant et par-derrière, par leur droite et par leur gauche, et Tu n’en trouveras que peu qui Te seront reconnaissants. » ﴿قَالَ فَبِعِزَّتِكَ لَأُغْوِيَنَّهُمْ أَجْمَعِينَ﴾ « Par Ta Toute-Puissance, dit alors Iblîs, je les dévoierai tous, ﴿إِلَّا عِبَادَكَ مِنْهُمُ الْمُخْلَصِينَ﴾ excepté les élus parmi Tes serviteurs. »",
   },
   {
     id: 'adam-25',
@@ -397,8 +397,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-29',
     type: 'narrative',
     order: 29,
-    content: 'The angels, despite their constant worship and obedience, did not possess this knowledge. When Adam named everything before them, they understood the wisdom of Allah\'s choice. Humans were created with a unique capacity for learning, language, and creativity that qualified them for the responsibility of caring for the Earth.',
-    contentFr: 'Les anges, malgré leur adoration et leur obéissance constantes, ne possédaient pas ce savoir. Quand Adam nomma toute chose devant eux, ils comprirent la sagesse du choix d\'Allah. Les humains avaient été créés avec une capacité unique d\'apprentissage, de langage et de créativité qui les qualifiait pour la responsabilité de prendre soin de la Terre.',
+    content: "﴿وَعَلَّمَ ءَادَمَ الْأَسْمَآءَ كُلَّهَا ثُمَّ عَرَضَهُمْ عَلَى الْمَلَآئِكَةِ فَقَالَ أَنۢبِـُٔونِى بِأَسْمَآءِ هَآؤُلَآءِ إِن كُنتُمْ صَادِقِينَ﴾ And He taught Adam the names - all of them. Then He showed them to the angels and said, \"Inform Me of the names of these, if you are truthful.\" ﴿قَالُوا۟ سُبْحَانَكَ لَا عِلْمَ لَنَآ إِلَّا مَا عَلَّمْتَنَآ ۖ إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ﴾ They said, \"Exalted are You; we have no knowledge except what You have taught us. Indeed, it is You who is the Knowing, the Wise.\" ﴿قَالَ يَآـَٔادَمُ أَنۢبِئْهُم بِأَسْمَآئِهِمْ ۖ فَلَمَّآ أَنۢبَأَهُم بِأَسْمَآئِهِمْ قَالَ أَلَمْ أَقُل لَّكُمْ إِنِّىٓ أَعْلَمُ غَيْبَ السَّمَاوَٰتِ وَالْأَرْضِ وَأَعْلَمُ مَا تُبْدُونَ وَمَا كُنتُمْ تَكْتُمُونَ﴾ He said, \"O Adam, inform them of their names.\" And when he had informed them of their names, He said, \"Did I not tell you that I know the unseen [aspects] of the heavens and the earth? And I know what you reveal and what you have concealed.\"",
+    contentFr: "﴿وَعَلَّمَ ءَادَمَ الْأَسْمَآءَ كُلَّهَا ثُمَّ عَرَضَهُمْ عَلَى الْمَلَآئِكَةِ فَقَالَ أَنۢبِـُٔونِى بِأَسْمَآءِ هَآؤُلَآءِ إِن كُنتُمْ صَادِقِينَ﴾ Et il enseigna à Adam Tous les noms (Toutes choses nommées) puis les exposa aux Anges en disant : « Informez-Moi de leurs noms si vous dites vrai ! » ﴿قَالُوا۟ سُبْحَانَكَ لَا عِلْمَ لَنَآ إِلَّا مَا عَلَّمْتَنَآ ۖ إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ﴾ Ils dirent : « Gloire Te soit rendue ! Nous ne savons que ce que Tu nous as enseigné. C’est Toi l’Omniscient, le Sage. » ﴿قَالَ يَآـَٔادَمُ أَنۢبِئْهُم بِأَسْمَآئِهِمْ ۖ فَلَمَّآ أَنۢبَأَهُم بِأَسْمَآئِهِمْ قَالَ أَلَمْ أَقُل لَّكُمْ إِنِّىٓ أَعْلَمُ غَيْبَ السَّمَاوَٰتِ وَالْأَرْضِ وَأَعْلَمُ مَا تُبْدُونَ وَمَا كُنتُمْ تَكْتُمُونَ﴾ Il dit : « Ô Adam ! Informe-les de leurs noms. » Alors, une fois qu’il (Adam) les eut informés de leurs noms, Il (Allah) dit : « Ne vous ai-Je pas dit que Je Connais les mystères invisibles des cieux et de la terre et que Je Sais ce que vous révélez et ce que vous gardez secret ? »",
   },
 
   // ============ PART 6: THE COVENANT OF SOULS ============
@@ -431,8 +431,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-32',
     type: 'narrative',
     order: 32,
-    content: 'This primordial covenant means that every human soul has already testified to Allah\'s lordship before being born into this world. This is why belief in One God feels natural to the uncorrupted human soul - it is a return to what we already acknowledged.',
-    contentFr: 'Cet engagement primordial signifie que chaque âme humaine a déjà témoigné de la seigneurie d\'Allah avant de naître dans ce monde. C\'est pourquoi la croyance en un Dieu unique semble naturelle à l\'âme humaine non corrompue - c\'est un retour à ce que nous avons déjà reconnu.',
+    content: "﴿وَإِذْ أَخَذَ رَبُّكَ مِنۢ بَنِىٓ ءَادَمَ مِن ظُهُورِهِمْ ذُرِّيَّتَهُمْ وَأَشْهَدَهُمْ عَلَىٰٓ أَنفُسِهِمْ أَلَسْتُ بِرَبِّكُمْ ۖ قَالُوا۟ بَلَىٰ ۛ شَهِدْنَآ ۛ أَن تَقُولُوا۟ يَوْمَ الْقِيَامَةِ إِنَّا كُنَّا عَنْ هَاذَا غَافِلِينَ﴾ And [mention] when your Lord took from the children of Adam - from their loins - their descendants and made them testify of themselves, [saying to them], \"Am I not your Lord?\" They said, \"Yes, we have testified.\" [This] - lest you should say on the Day of Resurrection, \"Indeed, we were of this unaware.\"",
+    contentFr: "﴿وَإِذْ أَخَذَ رَبُّكَ مِنۢ بَنِىٓ ءَادَمَ مِن ظُهُورِهِمْ ذُرِّيَّتَهُمْ وَأَشْهَدَهُمْ عَلَىٰٓ أَنفُسِهِمْ أَلَسْتُ بِرَبِّكُمْ ۖ قَالُوا۟ بَلَىٰ ۛ شَهِدْنَآ ۛ أَن تَقُولُوا۟ يَوْمَ الْقِيَامَةِ إِنَّا كُنَّا عَنْ هَاذَا غَافِلِينَ﴾ Et quand ton Seigneur prit des reins des fils d’Adam les descendants de toute leur lignée et les fit témoigner contre eux-mêmes : « Ne suis-Je pas votre Seigneur ? » « Si, répondirent-ils, et nous en témoignons ! » Alors, au Jour de la Résurrection, vous ne direz plus : « Nous n’y avons pas été attentifs. »",
   },
   {
     id: 'adam-33',
@@ -523,8 +523,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-39',
     type: 'narrative',
     order: 39,
-    content: 'This single prohibition was a test. Among countless blessings, there was one thing forbidden. Would Adam and Hawwa remain obedient, grateful for everything they had? Or would they desire the one thing they could not have?',
-    contentFr: 'Cette unique interdiction était une épreuve. Parmi d\'innombrables bienfaits, il y avait une seule chose interdite. Adam et Hawwa resteraient-ils obéissants, reconnaissants pour tout ce qu\'ils avaient ? Ou désireraient-ils la seule chose qu\'ils ne pouvaient avoir ?',
+    content: "﴿وَقُلْنَا يَآـَٔادَمُ اسْكُنْ أَنتَ وَزَوْجُكَ الْجَنَّةَ وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَاذِهِ الشَّجَرَةَ فَتَكُونَا مِنَ الظَّالِمِينَ﴾ And We said, \"O Adam, dwell, you and your wife, in Paradise and eat therefrom in [ease and] abundance from wherever you will. But do not approach this tree, lest you be among the wrongdoers.\"",
+    contentFr: "﴿وَقُلْنَا يَآـَٔادَمُ اسْكُنْ أَنتَ وَزَوْجُكَ الْجَنَّةَ وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَاذِهِ الشَّجَرَةَ فَتَكُونَا مِنَ الظَّالِمِينَ﴾ Et Nous dîmes : « Ô Adam ! Demeurez au Paradis, toi et ton épouse, mangez de tout ce qui s’y trouve autant qu’il vous plaira et partout où vous voudrez, mais n’approchez point de cet arbre, ou alors vous seriez du nombre des injustes. »",
   },
   {
     id: 'adam-40',
@@ -548,8 +548,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-41',
     type: 'narrative',
     order: 41,
-    content: 'Despite this clear warning, Iblis began his campaign of deception. He approached Adam and Hawwa, not with open hostility, but with false concern and treacherous advice. He presented himself as a well-wisher.',
-    contentFr: 'Malgré cet avertissement clair, Iblis commença sa campagne de tromperie. Il approcha Adam et Hawwa, non pas avec une hostilité ouverte, mais avec une fausse sollicitude et des conseils perfides. Il se présenta comme un bien-veillant.',
+    content: "﴿فَقُلْنَا يَآـَٔادَمُ إِنَّ هَاذَا عَدُوٌّ لَّكَ وَلِزَوْجِكَ فَلَا يُخْرِجَنَّكُمَا مِنَ الْجَنَّةِ فَتَشْقَىٰٓ﴾ So We said, \"O Adam, indeed this is an enemy to you and to your wife. Then let him not remove you from Paradise so you would suffer. ﴿إِنَّ لَكَ أَلَّا تَجُوعَ فِيهَا وَلَا تَعْرَىٰ﴾ Indeed, it is [promised] for you not to be hungry therein or be unclothed. ﴿وَأَنَّكَ لَا تَظْمَؤُا۟ فِيهَا وَلَا تَضْحَىٰ﴾ And indeed, you will not be thirsty therein or be hot from the sun.\"",
+    contentFr: "﴿فَقُلْنَا يَآـَٔادَمُ إِنَّ هَاذَا عَدُوٌّ لَّكَ وَلِزَوْجِكَ فَلَا يُخْرِجَنَّكُمَا مِنَ الْجَنَّةِ فَتَشْقَىٰٓ﴾ Nous dîmes : « Ô Adam, celui-là est pour toi et ton épouse un ennemi. Gardez-vous de le laisser vous chasser du Paradis, ou alors tu auras à peiner. ﴿إِنَّ لَكَ أَلَّا تَجُوعَ فِيهَا وَلَا تَعْرَىٰ﴾ Ici tu ne connaîtras ni la faim ni la nudité ; ﴿وَأَنَّكَ لَا تَظْمَؤُا۟ فِيهَا وَلَا تَضْحَىٰ﴾ tu ne sentiras ni la soif ni la chaleur du soleil. »",
   },
   {
     id: 'adam-42',
@@ -573,8 +573,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-43',
     type: 'narrative',
     order: 43,
-    content: 'Iblis told them that the tree was forbidden only to prevent them from becoming angels or living forever. He swore by Allah that he was their sincere advisor. Adam and Hawwa, in their innocence, could not imagine that anyone would swear by Allah falsely.',
-    contentFr: 'Iblis leur dit que l\'arbre n\'était interdit que pour les empêcher de devenir des anges ou de vivre éternellement. Il jura par Allah qu\'il était leur conseiller sincère. Adam et Hawwa, dans leur innocence, ne pouvaient imaginer que quelqu\'un puisse jurer par Allah faussement.',
+    content: "﴿فَوَسْوَسَ لَهُمَا الشَّيْطَانُ لِيُبْدِىَ لَهُمَا مَا وُۥرِىَ عَنْهُمَا مِن سَوْءَٰتِهِمَا وَقَالَ مَا نَهَىٰكُمَا رَبُّكُمَا عَنْ هَاذِهِ الشَّجَرَةِ إِلَّآ أَن تَكُونَا مَلَكَيْنِ أَوْ تَكُونَا مِنَ الْخَالِدِينَ﴾ But Satan whispered to them to make apparent to them that which was concealed from them of their private parts. He said, \"Your Lord did not forbid you this tree except that you become angels or become of the immortal.\" ﴿وَقَاسَمَهُمَآ إِنِّى لَكُمَا لَمِنَ النَّاصِحِينَ﴾ And he swore [by Allah] to them, \"Indeed, I am to you from among the sincere advisors.\" ﴿فَوَسْوَسَ إِلَيْهِ الشَّيْطَانُ قَالَ يَآـَٔادَمُ هَلْ أَدُلُّكَ عَلَىٰ شَجَرَةِ الْخُلْدِ وَمُلْكٍ لَّا يَبْلَىٰ﴾ Then Satan whispered to him; he said, \"O Adam, shall I direct you to the tree of eternity and possession that will not deteriorate?\"",
+    contentFr: "﴿فَوَسْوَسَ لَهُمَا الشَّيْطَانُ لِيُبْدِىَ لَهُمَا مَا وُۥرِىَ عَنْهُمَا مِن سَوْءَٰتِهِمَا وَقَالَ مَا نَهَىٰكُمَا رَبُّكُمَا عَنْ هَاذِهِ الشَّجَرَةِ إِلَّآ أَن تَكُونَا مَلَكَيْنِ أَوْ تَكُونَا مِنَ الْخَالِدِينَ﴾ Alors, pour leur montrer leurs nudités qui leur étaient cachées, Satan leur susurra : « Votre Seigneur ne vous a défendu cet arbre que pour vous empêcher d’être deux Anges ou de devenir éternels ! » ﴿وَقَاسَمَهُمَآ إِنِّى لَكُمَا لَمِنَ النَّاصِحِينَ﴾ Et il leur jura : « Je suis pour vous, assurément, le meilleur des conseillers ! » ﴿فَوَسْوَسَ إِلَيْهِ الشَّيْطَانُ قَالَ يَآـَٔادَمُ هَلْ أَدُلُّكَ عَلَىٰ شَجَرَةِ الْخُلْدِ وَمُلْكٍ لَّا يَبْلَىٰ﴾ Mais Satan lui susurra : « Ô Adam ! Veux-tu que je te montre l’arbre de l’immortalité et un royaume qui jamais ne périra ? ».",
   },
   {
     id: 'adam-44',
@@ -625,8 +625,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-47',
     type: 'narrative',
     order: 47,
-    content: 'Here is where the story reveals its greatest lesson. When confronted with their sin, Adam and Hawwa did not make excuses. They did not blame each other. They did not blame Iblis. They took full responsibility for their own choice.',
-    contentFr: 'C\'est ici que l\'histoire révèle sa plus grande leçon. Lorsqu\'ils furent confrontés à leur péché, Adam et Hawwa ne cherchèrent pas d\'excuses. Ils ne se blâmèrent pas l\'un l\'autre. Ils ne blâmèrent pas Iblis. Ils prirent l\'entière responsabilité de leur propre choix.',
+    content: "﴿فَدَلَّىٰهُمَا بِغُرُورٍ ۚ فَلَمَّا ذَاقَا الشَّجَرَةَ بَدَتْ لَهُمَا سَوْءَٰتُهُمَا وَطَفِقَا يَخْصِفَانِ عَلَيْهِمَا مِن وَرَقِ الْجَنَّةِ ۖ وَنَادَىٰهُمَا رَبُّهُمَآ أَلَمْ أَنْهَكُمَا عَن تِلْكُمَا الشَّجَرَةِ وَأَقُل لَّكُمَآ إِنَّ الشَّيْطَانَ لَكُمَا عَدُوٌّ مُّبِينٌ﴾ So he made them fall, through deception. And when they tasted of the tree, their private parts became apparent to them, and they began to fasten together over themselves from the leaves of Paradise. And their Lord called to them, \"Did I not forbid you from that tree and tell you that Satan is to you a clear enemy?\"",
+    contentFr: "﴿فَدَلَّىٰهُمَا بِغُرُورٍ ۚ فَلَمَّا ذَاقَا الشَّجَرَةَ بَدَتْ لَهُمَا سَوْءَٰتُهُمَا وَطَفِقَا يَخْصِفَانِ عَلَيْهِمَا مِن وَرَقِ الْجَنَّةِ ۖ وَنَادَىٰهُمَا رَبُّهُمَآ أَلَمْ أَنْهَكُمَا عَن تِلْكُمَا الشَّجَرَةِ وَأَقُل لَّكُمَآ إِنَّ الشَّيْطَانَ لَكُمَا عَدُوٌّ مُّبِينٌ﴾ Il les fit choir par ruse. Et quand ils eurent goûté (aux fruits) de l’arbre, leur nudité à tous deux leur apparut. Ils se précipitèrent alors pour la couvrir en y attachant des feuilles du Paradis. Leur Seigneur les appela : « Ne vous ai-Je pas défendu à tous deux cet arbre ? Ne vous ai-Je point dit que Satan est pour vous un ennemi déclaré ? »",
   },
 
   // ============ PART 10: THE NOBLE REPENTANCE ============
@@ -652,8 +652,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-49',
     type: 'narrative',
     order: 49,
-    content: 'These words - "Our Lord, we have wronged ourselves" - became the model for repentance for all time. Compare this to Iblis, who said "Because You have put me in error." Adam acknowledged his fault; Iblis blamed Allah. This is the difference between a believer who sins and repents, and one who sins and persists in arrogance.',
-    contentFr: 'Ces paroles - « Ô notre Seigneur, nous nous sommes fait du tort à nous-mêmes » - devinrent le modèle du repentir pour tous les temps. Comparez cela à Iblis, qui dit « Puisque Tu m\'as égaré ». Adam reconnut sa faute ; Iblis blâma Allah. Telle est la différence entre un croyant qui pèche et se repent, et celui qui pèche et persiste dans l\'orgueil.',
+    content: "﴿قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾ They said, \"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\"",
+    contentFr: "﴿قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾ « Ô Seigneur ! répondirent-ils, nous nous sommes lésés nous-mêmes, et si Tu ne nous pardonnes pas et refuses de nous accorder Ta miséricorde, nous serons certainement du nombre des perdants. »",
   },
   {
     id: 'adam-50',
@@ -677,8 +677,8 @@ export const adamStoryContent: StoryContentBlock[] = [
     id: 'adam-51',
     type: 'narrative',
     order: 51,
-    content: 'Allah, in His infinite mercy, not only accepted their repentance but taught them the very words to use. He did not abandon them in their mistake. He guided them back to Him. This is a profound comfort for every believer who falls into sin - the door of repentance is always open.',
-    contentFr: 'Allah, dans Sa miséricorde infinie, non seulement accepta leur repentir mais leur enseigna les mots mêmes à utiliser. Il ne les abandonna pas dans leur erreur. Il les guida pour revenir vers Lui. C\'est un réconfort profond pour tout croyant qui tombe dans le péché - la porte du repentir est toujours ouverte.',
+    content: "﴿قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾ They said, \"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\"",
+    contentFr: "﴿قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾ « Ô Seigneur ! répondirent-ils, nous nous sommes lésés nous-mêmes, et si Tu ne nous pardonnes pas et refuses de nous accorder Ta miséricorde, nous serons certainement du nombre des perdants. »",
   },
   {
     id: 'adam-52',
@@ -698,19 +698,35 @@ export const adamStoryContent: StoryContentBlock[] = [
       translationFr: 'Puis son Seigneur l\'élut, agréa son repentir et le guida.',
     } as QuranReference,
   },
+  {
+    id: 'adam-52b',
+    type: 'hadith_source',
+    order: 53,
+    content: "The Prophet ﷺ narrated how Adam and Musa argued, and Adam won.",
+    contentFr: "Le Prophète ﷺ a raconté comment Adam et Moussa discutèrent, et comment Adam l'emporta.",
+    source: {
+      type: 'hadith',
+      collection: "bukhari",
+      hadithNumber: "6614",
+      narrator: "Abu Hurayrah",
+      translation: "Adam and Musa argued with each other. Musa said, \"O Adam, you are our father. You disappointed us and got us out of Paradise.\" Adam said to him, \"O Musa, Allah chose you with His speech and wrote for you with His own hand. Do you blame me for a matter which Allah had decreed for me forty years before He created me?\" So Adam confuted Musa, Adam confuted Musa.",
+      translationFr: "Adam et Moussa discutèrent. Moussa dit : « Ô Adam, tu es notre père. Tu nous as déçus et tu nous as fait sortir du Paradis. » Adam lui dit : « Ô Moussa, Allah t'a élu par Sa parole et a écrit pour toi de Sa propre main. Me reproches-tu une chose qu'Allah avait décrétée pour moi quarante ans avant de me créer ? » Ainsi Adam eut le dessus sur Moussa, Adam eut le dessus sur Moussa.",
+      grade: "sahih",
+    } as HadithReference,
+  },
 
   // ============ PART 11: THE DESCENT TO EARTH ============
   {
     id: 'adam-53',
     type: 'narrative',
-    order: 53,
+    order: 54,
     content: 'Though Adam was forgiven, the descent to Earth was still decreed. This was not a punishment for his sin - he had been forgiven. Rather, it was the fulfillment of Allah\'s original plan: Adam was created to be a khalifah on Earth, and now he would fulfill that role.',
     contentFr: 'Bien qu\'Adam fût pardonné, la descente sur Terre était toujours décrétée. Ce n\'était pas une punition pour son péché - il avait été pardonné. C\'était plutôt l\'accomplissement du plan originel d\'Allah : Adam avait été créé pour être un khalifah sur Terre, et maintenant il allait remplir ce rôle.',
   },
   {
     id: 'adam-54',
     type: 'quran_source',
-    order: 54,
+    order: 55,
     content: 'The command to descend to Earth.',
     contentFr: 'L\'ordre de descendre sur Terre.',
     source: {
@@ -728,14 +744,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-55',
     type: 'narrative',
-    order: 55,
-    content: 'Adam, Hawwa, and Iblis all descended to Earth - but with different destinies. Adam and his descendants were given the opportunity to return to Paradise through faith and good deeds. Iblis was cursed, destined for Hellfire, but given respite to test humanity.',
-    contentFr: 'Adam, Hawwa et Iblis descendirent tous sur Terre - mais avec des destinées différentes. Adam et ses descendants reçurent l\'opportunité de retourner au Paradis par la foi et les bonnes actions. Iblis fut maudit, destiné à l\'Enfer, mais bénéficiant d\'un répit pour éprouver l\'humanité.',
+    order: 56,
+    content: "﴿قَالَ اهْبِطُوا۟ بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ وَلَكُمْ فِى الْأَرْضِ مُسْتَقَرٌّ وَمَتَاعٌ إِلَىٰ حِينٍ﴾ [Allah] said, \"Descend, being to one another enemies. And for you on the earth is a place of settlement and enjoyment [i.e., provision] for a time.\" ﴿قَالَ فِيهَا تَحْيَوْنَ وَفِيهَا تَمُوتُونَ وَمِنْهَا تُخْرَجُونَ﴾ He said, \"Therein you will live, and therein you will die, and from it you will be brought forth.\" ﴿قَالَ اهْبِطَا مِنْهَا جَمِيعًۢا ۖ بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ فَإِمَّا يَأْتِيَنَّكُم مِّنِّى هُدًى فَمَنِ اتَّبَعَ هُدَاىَ فَلَا يَضِلُّ وَلَا يَشْقَىٰ﴾ [Allah] said, \"Descend from it [i.e., Paradise] - all, [your descendants] being enemies to one another. And if there should come to you guidance from Me - then whoever follows My guidance will neither go astray [in the world] nor suffer [in the Hereafter].",
+    contentFr: "﴿قَالَ اهْبِطُوا۟ بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ وَلَكُمْ فِى الْأَرْضِ مُسْتَقَرٌّ وَمَتَاعٌ إِلَىٰ حِينٍ﴾ « Descendez ! dit (Allah), vous serez ennemis les uns des autres ; et vous aurez sur terre séjour et jouissance, jusqu’à la fin d’une échéance. ﴿قَالَ فِيهَا تَحْيَوْنَ وَفِيهَا تَمُوتُونَ وَمِنْهَا تُخْرَجُونَ﴾ Vous y vivrez et vous y mourrez, et vous en serez sortis un Jour. » ﴿قَالَ اهْبِطَا مِنْهَا جَمِيعًۢا ۖ بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ فَإِمَّا يَأْتِيَنَّكُم مِّنِّى هُدًى فَمَنِ اتَّبَعَ هُدَاىَ فَلَا يَضِلُّ وَلَا يَشْقَىٰ﴾ « Descendez de là vous deux ! dit (Allah). Vous serez ennemis les uns des autres. Cependant, si jamais une bonne direction (hudâ) vous parvenait de Moi, celui qui la suivra ne serait ni égaré ni malheureux.",
   },
   {
     id: 'adam-56',
     type: 'quran_source',
-    order: 56,
+    order: 57,
     content: 'The promise of guidance for Adam\'s descendants.',
     contentFr: 'La promesse de guidance pour les descendants d\'Adam.',
     source: {
@@ -755,14 +771,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-57',
     type: 'narrative',
-    order: 57,
+    order: 58,
     content: "Adam and Hawwa began their life on Earth. The Quran does not narrate the details of their early life there. Some commentators relate that Hawwa bore children in pairs, a boy and a girl in each birth; this is not from the Quran or authentic hadith, and we mention it only as their report.",
     contentFr: "Adam et Hawwa commencèrent leur vie sur Terre. Le Coran ne raconte pas les détails de leurs débuts. Certains commentateurs rapportent que Hawwa enfanta par paires, un garçon et une fille à chaque naissance ; cela ne vient ni du Coran ni d'un hadith authentique, et nous ne le mentionnons qu'à titre de rapport.",
   },
   {
     id: 'adam-58',
     type: 'narrative',
-    order: 58,
+    order: 59,
     content: 'As the first prophet, Adam taught his children to worship Allah alone. He conveyed to them the lessons he had learned - about obedience, about the danger of Satan\'s whispers, about the importance of repentance. He was both father and teacher to humanity.',
     contentFr: 'En tant que premier prophète, Adam enseigna à ses enfants d\'adorer Allah seul. Il leur transmit les leçons qu\'il avait apprises - sur l\'obéissance, sur le danger des chuchotements de Satan, sur l\'importance du repentir. Il était à la fois père et enseignant de l\'humanité.',
   },
@@ -771,21 +787,21 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-59',
     type: 'narrative',
-    order: 59,
+    order: 60,
     content: "Among Adam's children were two sons whose story the Quran records - known in the commentaries as Qabil and Habil. The commentators relate that the dispute between them was over marriage, but the Quran does not state the cause; it begins the story with the sacrifice each of them offered.",
     contentFr: "Parmi les enfants d'Adam se trouvaient deux fils dont le Coran rapporte l'histoire, connus dans les commentaires sous les noms de Qabil et Habil. Les commentateurs rapportent que leur différend portait sur un mariage, mais le Coran n'en indique pas la cause ; il commence l'histoire par le sacrifice que chacun d'eux offrit.",
   },
   {
     id: 'adam-60',
     type: 'narrative',
-    order: 60,
+    order: 61,
     content: "Both sons offered a sacrifice to Allah. The Quran does not say what each offered; the commentators relate that Habil's was the best of his flock, given sincerely, while Qabil's was given grudgingly. What the Quran makes clear is why one was accepted: 'Allah only accepts from the righteous.'",
     contentFr: "Les deux fils offrirent un sacrifice à Allah. Le Coran ne dit pas ce que chacun offrit ; les commentateurs rapportent que celui de Habil était le meilleur de son troupeau, offert sincèrement, tandis que celui de Qabil fut offert à contrecœur. Ce que le Coran rend clair, c'est pourquoi l'un fut accepté : « Allah n'accepte que des pieux. »",
   },
   {
     id: 'adam-61',
     type: 'quran_source',
-    order: 61,
+    order: 62,
     content: 'The story of the two sons of Adam.',
     contentFr: 'L\'histoire des deux fils d\'Adam.',
     source: {
@@ -803,14 +819,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-62',
     type: 'narrative',
-    order: 62,
-    content: 'Habil\'s response showed his righteousness. Even when threatened with death, he refused to fight back, fearing Allah more than fearing his brother. But Qabil\'s heart was consumed by envy and anger.',
-    contentFr: 'La réponse de Habil montra sa droiture. Même menacé de mort, il refusa de riposter, craignant Allah plus que son frère. Mais le cœur de Qabil était consumé par l\'envie et la colère.',
+    order: 63,
+    content: "﴿وَاتْلُ عَلَيْهِمْ نَبَأَ ابْنَىْ ءَادَمَ بِالْحَقِّ إِذْ قَرَّبَا قُرْبَانًا فَتُقُبِّلَ مِنْ أَحَدِهِمَا وَلَمْ يُتَقَبَّلْ مِنَ الْـَٔاخَرِ قَالَ لَأَقْتُلَنَّكَ ۖ قَالَ إِنَّمَا يَتَقَبَّلُ اللَّهُ مِنَ الْمُتَّقِينَ﴾ And recite to them the story of Adam's two sons, in truth, when they both made an offering [to Allah], and it was accepted from one of them but was not accepted from the other. Said [the latter], \"I will surely kill you.\" Said [the former], \"Indeed, Allah only accepts from the righteous [who fear Him]. ﴿لَئِنۢ بَسَطتَ إِلَىَّ يَدَكَ لِتَقْتُلَنِى مَآ أَنَا۠ بِبَاسِطٍ يَدِىَ إِلَيْكَ لِأَقْتُلَكَ ۖ إِنِّىٓ أَخَافُ اللَّهَ رَبَّ الْعَالَمِينَ﴾ If you should raise your hand toward me to kill me - I shall not raise my hand toward you to kill you. Indeed, I fear Allah, Lord of the worlds. ﴿إِنِّىٓ أُرِيدُ أَن تَبُوٓأَ بِإِثْمِى وَإِثْمِكَ فَتَكُونَ مِنْ أَصْحَابِ النَّارِ ۚ وَذَٰلِكَ جَزَٰٓؤُا۟ الظَّالِمِينَ﴾ Indeed, I want you to obtain [thereby] my sin and your sin so you will be among the companions of the Fire. And that is the recompense of wrongdoers.\"",
+    contentFr: "﴿وَاتْلُ عَلَيْهِمْ نَبَأَ ابْنَىْ ءَادَمَ بِالْحَقِّ إِذْ قَرَّبَا قُرْبَانًا فَتُقُبِّلَ مِنْ أَحَدِهِمَا وَلَمْ يُتَقَبَّلْ مِنَ الْـَٔاخَرِ قَالَ لَأَقْتُلَنَّكَ ۖ قَالَ إِنَّمَا يَتَقَبَّلُ اللَّهُ مِنَ الْمُتَّقِينَ﴾ Raconte-leur, en toute vérité, l’histoire des deux fils d’Adam lorsqu’ils firent une offrande : elle fut acceptée de l’un, et ne le fut point de l’autre. Ce dernier dit alors : « Je te tuerai ! » Le premier répondit : « Allah n’accepte (les offrandes) que de la part des gens pieux ! » ﴿لَئِنۢ بَسَطتَ إِلَىَّ يَدَكَ لِتَقْتُلَنِى مَآ أَنَا۠ بِبَاسِطٍ يَدِىَ إِلَيْكَ لِأَقْتُلَكَ ۖ إِنِّىٓ أَخَافُ اللَّهَ رَبَّ الْعَالَمِينَ﴾ Si tu portes la main sur moi pour me tuer, je ne porterai pas la mienne sur toi pour te tuer. Car moi, je crains Allah, Seigneur de l’Univers. ﴿إِنِّىٓ أُرِيدُ أَن تَبُوٓأَ بِإِثْمِى وَإِثْمِكَ فَتَكُونَ مِنْ أَصْحَابِ النَّارِ ۚ وَذَٰلِكَ جَزَٰٓؤُا۟ الظَّالِمِينَ﴾ Je veux que tu endosses le péché de mon meurtre et ton propre péché (qui l’a précédé). Ainsi seras-tu parmi les hôtes du Feu, et c’est là la rétribution des injustes.",
   },
   {
     id: 'adam-63',
     type: 'quran_source',
-    order: 63,
+    order: 64,
     content: 'The first murder in human history.',
     contentFr: 'Le premier meurtre de l\'histoire humaine.',
     source: {
@@ -828,14 +844,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-64',
     type: 'narrative',
-    order: 64,
-    content: 'This was the first murder in human history - a crime born of envy and disobedience. Qabil did not know how to bury his brother until Allah sent a crow to show him. His remorse came too late, and he bore the burden of being the first to introduce murder to humanity.',
-    contentFr: 'Ce fut le premier meurtre de l\'histoire humaine - un crime né de l\'envie et de la désobéissance. Qabil ne savait pas comment enterrer son frère jusqu\'à ce qu\'Allah envoya un corbeau pour le lui montrer. Son remords vint trop tard, et il porta le fardeau d\'être le premier à avoir introduit le meurtre dans l\'humanité.',
+    order: 65,
+    content: "﴿فَبَعَثَ اللَّهُ غُرَابًا يَبْحَثُ فِى الْأَرْضِ لِيُرِيَهُۥ كَيْفَ يُوَٰرِى سَوْءَةَ أَخِيهِ ۚ قَالَ يَاوَيْلَتَىٰٓ أَعَجَزْتُ أَنْ أَكُونَ مِثْلَ هَاذَا الْغُرَابِ فَأُوَٰرِىَ سَوْءَةَ أَخِى ۖ فَأَصْبَحَ مِنَ النَّادِمِينَ﴾ Then Allah sent a crow searching [i.e., scratching] in the ground to show him how to hide the disgrace of his brother. He said, \"O woe to me! Have I failed to be like this crow and hide the disgrace [i.e., body] of my brother?\" And he became of the regretful.",
+    contentFr: "﴿فَبَعَثَ اللَّهُ غُرَابًا يَبْحَثُ فِى الْأَرْضِ لِيُرِيَهُۥ كَيْفَ يُوَٰرِى سَوْءَةَ أَخِيهِ ۚ قَالَ يَاوَيْلَتَىٰٓ أَعَجَزْتُ أَنْ أَكُونَ مِثْلَ هَاذَا الْغُرَابِ فَأُوَٰرِىَ سَوْءَةَ أَخِى ۖ فَأَصْبَحَ مِنَ النَّادِمِينَ﴾ Allah envoya un corbeau qui se mit à gratter la terre pour lui montrer comment enfouir la dépouille de son frère. Il dit : « Malheur à moi ! Suis-je donc incapable d’être comme ce corbeau et d’enfouir le cadavre de mon frère ? » Il se retrouva alors du nombre de ceux que ronge le remords.",
   },
   {
     id: 'adam-65',
     type: 'hadith_source',
-    order: 65,
+    order: 66,
     content: 'The Prophet Muhammad, peace be upon him, explained the gravity of this first murder.',
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, expliqua la gravité de ce premier meurtre.',
     source: {
@@ -853,14 +869,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-66',
     type: 'narrative',
-    order: 66,
+    order: 67,
     content: 'Adam lived for a very long time on Earth - according to narrations, about one thousand years. He saw his descendants multiply and spread across the Earth. He taught them, guided them, and established worship of Allah among them.',
     contentFr: 'Adam vécut très longtemps sur Terre - selon les narrations, environ mille ans. Il vit ses descendants se multiplier et se répandre sur la Terre. Il les enseigna, les guida et établit l\'adoration d\'Allah parmi eux.',
   },
   {
     id: 'adam-67',
     type: 'hadith_source',
-    order: 67,
+    order: 68,
     content: 'The Prophet Muhammad, peace be upon him, spoke about Adam\'s lifespan.',
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, parla de la durée de vie d\'Adam.',
     source: {
@@ -875,14 +891,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-68',
     type: 'narrative',
-    order: 68,
+    order: 69,
     content: 'When the time came for Adam to leave this world, the angels descended. They washed his body, shrouded him, prayed over him, and buried him. Then they said to his children: "This is your tradition for your dead."',
     contentFr: 'Quand le moment vint pour Adam de quitter ce monde, les anges descendirent. Ils lavèrent son corps, l\'enveloppèrent dans un linceul, prièrent sur lui et l\'enterrèrent. Puis ils dirent à ses enfants : « Voici votre tradition pour vos morts. »',
   },
   {
     id: 'adam-69',
     type: 'hadith_source',
-    order: 69,
+    order: 70,
     content: 'The angels\' funeral for Adam.',
     contentFr: 'Les funérailles d\'Adam par les anges.',
     source: {
@@ -899,14 +915,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-70',
     type: 'narrative',
-    order: 70,
+    order: 71,
     content: 'Adam\'s legacy is immense. He was the first human, the first prophet, the first to repent, and the father of all humanity. His story teaches us our origin - that we are not descended from animals but created with purpose and honor by Allah.',
     contentFr: 'L\'héritage d\'Adam est immense. Il fut le premier être humain, le premier prophète, le premier à se repentir et le père de toute l\'humanité. Son histoire nous enseigne notre origine - nous ne descendons pas des animaux mais avons été créés avec dessein et honneur par Allah.',
   },
   {
     id: 'adam-71',
     type: 'quran_source',
-    order: 71,
+    order: 72,
     content: 'Allah honored the children of Adam.',
     contentFr: 'Allah honora les enfants d\'Adam.',
     source: {
@@ -924,14 +940,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-72',
     type: 'narrative',
-    order: 72,
+    order: 73,
     content: 'The story of Adam also teaches us about our enemy. Iblis has been working against humanity since the beginning. His methods are deception, whispers, and false promises. But his power is limited - he can only invite to sin; he cannot force anyone.',
     contentFr: 'L\'histoire d\'Adam nous enseigne aussi qui est notre ennemi. Iblis travaille contre l\'humanité depuis le commencement. Ses méthodes sont la tromperie, les chuchotements et les fausses promesses. Mais son pouvoir est limité - il ne peut qu\'inviter au péché ; il ne peut forcer personne.',
   },
   {
     id: 'adam-73',
     type: 'quran_source',
-    order: 73,
+    order: 74,
     content: 'The reminder about our garments.',
     contentFr: 'Le rappel au sujet de nos vêtements.',
     source: {
@@ -949,14 +965,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-74',
     type: 'narrative',
-    order: 74,
+    order: 75,
     content: 'Most importantly, Adam\'s story teaches us about repentance. No matter how we fall, no matter what mistakes we make, the door of tawbah (repentance) is always open. Allah forgave Adam, and He will forgive us if we turn to Him sincerely, acknowledge our faults, and ask for His mercy.',
     contentFr: 'Plus important encore, l\'histoire d\'Adam nous enseigne le repentir. Quelle que soit notre chute, quelles que soient nos erreurs, la porte de la tawbah (repentir) est toujours ouverte. Allah pardonna à Adam, et Il nous pardonnera si nous nous tournons vers Lui sincèrement, reconnaissons nos fautes et demandons Sa miséricorde.',
   },
   {
     id: 'adam-75',
     type: 'hadith_source',
-    order: 75,
+    order: 76,
     content: 'The Prophet Muhammad, peace be upon him, gave us hope regarding repentance.',
     contentFr: 'Le Prophète Muhammad, paix et bénédictions sur lui, nous donna espoir concernant le repentir.',
     source: {
@@ -972,14 +988,14 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-76',
     type: 'narrative',
-    order: 76,
+    order: 77,
     content: 'Adam, peace be upon him, was the beginning of our story. From him came all of humanity - every prophet, every believer, every human being who has ever lived or will ever live. And though we are all descendants of Adam, we are not held accountable for his mistake. Each soul bears only its own burden.',
     contentFr: 'Adam, paix sur lui, fut le début de notre histoire. De lui vint toute l\'humanité - chaque prophète, chaque croyant, chaque être humain qui a vécu ou vivra jamais. Et bien que nous soyons tous des descendants d\'Adam, nous ne sommes pas tenus responsables de son erreur. Chaque âme ne porte que son propre fardeau.',
   },
   {
     id: 'adam-77',
     type: 'quran_source',
-    order: 77,
+    order: 78,
     content: 'Each soul bears only its own burden.',
     contentFr: 'Chaque âme ne porte que son propre fardeau.',
     source: {
@@ -997,21 +1013,21 @@ export const adamStoryContent: StoryContentBlock[] = [
   {
     id: 'adam-78',
     type: 'narrative',
-    order: 78,
+    order: 79,
     content: 'We are on the same journey that Adam began - a temporary life on Earth, tested by Iblis, given the choice between obedience and disobedience. And just as Allah promised Adam\'s descendants guidance, He has sent prophets and messengers throughout history, culminating in the final Prophet Muhammad, peace be upon him.',
     contentFr: 'Nous sommes sur le même voyage qu\'Adam a commencé - une vie temporaire sur Terre, éprouvés par Iblis, avec le choix entre l\'obéissance et la désobéissance. Et tout comme Allah promit aux descendants d\'Adam la guidance, Il a envoyé des prophètes et des messagers à travers l\'histoire, culminant avec le dernier Prophète Muhammad, paix et bénédictions sur lui.',
   },
   {
     id: 'adam-79',
     type: 'narrative',
-    order: 79,
+    order: 80,
     content: 'The destination of that journey is the same as Adam\'s starting point - Paradise. But unlike Adam, who had to leave Paradise, those who believe and do righteous deeds will enter it and never be expelled. May Allah make us among them.',
     contentFr: 'La destination de ce voyage est la même que le point de départ d\'Adam - le Paradis. Mais contrairement à Adam, qui dut quitter le Paradis, ceux qui croient et accomplissent de bonnes œuvres y entreront et n\'en seront jamais expulsés. Qu\'Allah nous compte parmi eux.',
   },
   {
     id: 'adam-80',
     type: 'quran_source',
-    order: 80,
+    order: 81,
     content: 'The promise to the righteous.',
     contentFr: 'La promesse aux vertueux.',
     source: {

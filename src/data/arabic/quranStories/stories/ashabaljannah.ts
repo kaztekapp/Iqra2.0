@@ -98,9 +98,16 @@ export const ashabAlJannahStory: QuranStory = {
       } as QuranReference,
     },
     {
+      id: 'ashabaljannah-5b',
+      type: 'narrative',
+      order: 6,
+      content: "﴿أَنِ اغْدُوا۟ عَلَىٰ حَرْثِكُمْ إِن كُنتُمْ صَارِمِينَ﴾ [Saying], \"Go early to your crop if you would cut the fruit.\" ﴿أَن لَّا يَدْخُلَنَّهَا الْيَوْمَ عَلَيْكُم مِّسْكِينٌ﴾ [Saying], \"There will surely not enter it today upon you [any] poor person.\"",
+      contentFr: "﴿أَنِ اغْدُوا۟ عَلَىٰ حَرْثِكُمْ إِن كُنتُمْ صَارِمِينَ﴾ « Allez vite à votre champ si vous comptez (toujours) en achever la récolte. » ﴿أَن لَّا يَدْخُلَنَّهَا الْيَوْمَ عَلَيْكُم مِّسْكِينٌ﴾ « Que nul pauvre n’y entre aujourd’hui ! »",
+    },
+    {
       id: "ashabaljannah-6",
       type: 'quran_source',
-      order: 6,
+      order: 7,
       content: "They saw it and thought they had lost their way. Then: we have been deprived. The best of them reminded them.",
       contentFr: "Ils le virent et crurent s'être trompés de chemin. Puis : nous sommes dépouillés. Le meilleur d'entre eux le leur rappela.",
       source: {
@@ -118,14 +125,14 @@ export const ashabAlJannahStory: QuranStory = {
     {
       id: "ashabaljannah-7",
       type: 'narrative',
-      order: 7,
-      content: "The Quran calls the one who spoke 'the most moderate of them', the most just and balanced. He had told them before to glorify Allah, and they had not listened. Now they did: 'Glory be to our Lord, we were indeed wrongdoers.' The recognition came after the loss, but it came.",
-      contentFr: "Le Coran appelle celui qui parla « le plus modéré d'entre eux », le plus juste et le plus équilibré. Il leur avait dit auparavant de glorifier Allah, et ils n'avaient pas écouté. Cette fois ils le firent : « Gloire à notre Seigneur, nous étions vraiment des injustes. » La reconnaissance vint après la perte, mais elle vint.",
+      order: 8,
+      content: "﴿فَلَمَّا رَأَوْهَا قَالُوٓا۟ إِنَّا لَضَآلُّونَ﴾ But when they saw it, they said, \"Indeed, we are lost; ﴿بَلْ نَحْنُ مَحْرُومُونَ﴾ Rather, we have been deprived.\" ﴿قَالَ أَوْسَطُهُمْ أَلَمْ أَقُل لَّكُمْ لَوْلَا تُسَبِّحُونَ﴾ The most moderate of them said, \"Did I not say to you, 'Why do you not exalt [Allah]?'\" ﴿قَالُوا۟ سُبْحَانَ رَبِّنَآ إِنَّا كُنَّا ظَالِمِينَ﴾ They said, \"Exalted is our Lord! Indeed, we were wrongdoers.\"",
+      contentFr: "﴿فَلَمَّا رَأَوْهَا قَالُوٓا۟ إِنَّا لَضَآلُّونَ﴾ Quand ils eurent vu (le jardin), ils dirent : « Nous nous sommes vraiment égarés ! ﴿بَلْ نَحْنُ مَحْرُومُونَ﴾ Ou plutôt voilà que nous avons tout perdu ! » ﴿قَالَ أَوْسَطُهُمْ أَلَمْ أَقُل لَّكُمْ لَوْلَا تُسَبِّحُونَ﴾ Le plus sage d’entre eux dit alors : «Ne vous avais-je pas dit de rendre gloire à Allah ? » ﴿قَالُوا۟ سُبْحَانَ رَبِّنَآ إِنَّا كُنَّا ظَالِمِينَ﴾ « Gloire soit rendue à notre Seigneur, s’écrièrent-ils, nous étions vraiment injustes ! »",
     },
     {
       id: "ashabaljannah-8",
       type: 'quran_source',
-      order: 8,
+      order: 9,
       content: "They blamed one another, then turned to their Lord in hope. Such is the punishment, and the punishment of the Hereafter is greater.",
       contentFr: "Ils se blâmèrent les uns les autres, puis se tournèrent vers leur Seigneur avec espoir. Tel est le châtiment, et celui de l'au-delà est plus grand.",
       source: {
@@ -143,9 +150,9 @@ export const ashabAlJannahStory: QuranStory = {
     {
       id: "ashabaljannah-9",
       type: 'narrative',
-      order: 9,
-      content: "The story ends on hope: 'Perhaps our Lord will give us in exchange a better one; to our Lord we turn.' Allah does not say whether He replaced their garden. He says what the story was for: 'Such is the punishment', in this world, for the Quraysh to consider, 'and the punishment of the Hereafter is greater, if only they knew.' Wealth is a trust, the poor have a right in it, and the one who tries to cheat that right at dawn may find the garden gone by morning.",
-      contentFr: "L'histoire se termine sur l'espoir : « Peut-être notre Seigneur nous donnera-t-il en échange un meilleur ; c'est vers notre Seigneur que nous nous tournons. » Allah ne dit pas s'Il remplaça leur jardin. Il dit à quoi servait l'histoire : « Tel est le châtiment », en ce monde, pour que les Quraych y réfléchissent, « et le châtiment de l'au-delà est plus grand, s'ils savaient ». La richesse est un dépôt, les pauvres y ont un droit, et celui qui tente de frauder ce droit à l'aube peut trouver le jardin disparu au matin.",
+      order: 10,
+      content: "﴿قَالُوا۟ يَاوَيْلَنَآ إِنَّا كُنَّا طَاغِينَ﴾ They said, \"O woe to us; indeed we were transgressors. ﴿عَسَىٰ رَبُّنَآ أَن يُبْدِلَنَا خَيْرًا مِّنْهَآ إِنَّآ إِلَىٰ رَبِّنَا رَٰغِبُونَ﴾ Perhaps our Lord will substitute for us [one] better than it. Indeed, we are toward our Lord desirous.\"",
+      contentFr: "﴿قَالُوا۟ يَاوَيْلَنَآ إِنَّا كُنَّا طَاغِينَ﴾ « Malheur à nous, dirent-ils, nous sommes allés à la démesure ! ﴿عَسَىٰ رَبُّنَآ أَن يُبْدِلَنَا خَيْرًا مِّنْهَآ إِنَّآ إِلَىٰ رَبِّنَا رَٰغِبُونَ﴾ Que notre Seigneur nous accorde en échange mieux que (ce jardin) ! Car nous ne voulons plus rien désormais que l’agrément de notre Seigneur ! »",
     },
   ],
 };

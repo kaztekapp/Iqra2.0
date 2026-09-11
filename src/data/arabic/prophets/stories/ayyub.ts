@@ -138,8 +138,8 @@ const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-10',
     type: 'narrative',
     order: 10,
-    content: "Notice the beauty of Ayyub's supplication. He did not complain or demand. He simply stated his condition - 'adversity has touched me' - and then affirmed Allah's attribute of mercy. This is the model of how a believer should pray during hardship: acknowledging the difficulty while maintaining trust in Allah's mercy and wisdom.",
-    contentFr: "Remarquez la beauté de la supplication d'Ayyoub. Il ne se plaignit pas et n'exigea rien. Il énonça simplement sa condition - 'le malheur m'a touché' - puis affirma l'attribut de miséricorde d'Allah. C'est le modèle de la façon dont un croyant devrait prier en période de difficulté : reconnaître l'épreuve tout en maintenant la confiance dans la miséricorde et la sagesse d'Allah.",
+    content: "﴿وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّٰحِمِينَ﴾ And [mention] Ayyub, when he called to his Lord, \"Indeed, adversity has touched me, and You are the most merciful of the merciful.\"",
+    contentFr: "﴿وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّٰحِمِينَ﴾ Puis (évoque) Ayyoub, qui supplia son Seigneur : « Le mal m’a atteint et Tu es le plus Miséricordieux des miséricordieux ! »",
   },
   {
     id: 'ayyub-11',
@@ -163,8 +163,8 @@ const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-12',
     type: 'narrative',
     order: 12,
-    content: "After years of patient endurance, Allah answered Ayyub's prayer. He commanded Ayyub to strike the ground with his foot. When he did, a spring of water gushed forth. Ayyub washed in it and drank from it, and his disease was completely healed. His body was restored to full health and strength.",
-    contentFr: "Après des années d'endurance patiente, Allah exauça la prière d'Ayyoub. Il ordonna à Ayyoub de frapper le sol de son pied. Lorsqu'il le fit, une source d'eau jaillit. Ayyoub s'y lava et en but, et sa maladie fut complètement guérie. Son corps retrouva toute sa santé et sa force.",
+    content: "﴿وَاذْكُرْ عَبْدَنَآ أَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ الشَّيْطَانُ بِنُصْبٍ وَعَذَابٍ﴾ And remember Our servant Ayyub, when he called to his Lord, \"Indeed, Satan has touched me with hardship and torment.\" ﴿ارْكُضْ بِرِجْلِكَ ۖ هَاذَا مُغْتَسَلٌۢ بَارِدٌ وَشَرَابٌ﴾ [So he was told], \"Strike [the ground] with your foot; this is a [spring for a] cool bath and drink.\"",
+    contentFr: "﴿وَاذْكُرْ عَبْدَنَآ أَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ الشَّيْطَانُ بِنُصْبٍ وَعَذَابٍ﴾ Évoque aussi Notre serviteur Ayyoub lorsqu’il invoqua (ainsi) son Seigneur : « Satan m’inflige peine et souffrance. » ﴿ارْكُضْ بِرِجْلِكَ ۖ هَاذَا مُغْتَسَلٌۢ بَارِدٌ وَشَرَابٌ﴾ « Frappe le sol de ton pied, (lui fut-il dit), voici une source d’eau fraîche où tu pourras te laver et boire ! »",
   },
   {
     id: 'ayyub-12b',
@@ -209,8 +209,8 @@ const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-16',
     type: 'narrative',
     order: 17,
-    content: "Allah, in His mercy, provided a way for Ayyub to fulfill his oath without harming his wife. He was told to take a bundle of grass and strike her lightly with it. This fulfilled the letter of his oath while showing mercy to his devoted companion. This is mentioned in Surah Sad, verse 44, showing Allah's consideration for both His servant's oath and his wife's faithful service.",
-    contentFr: "Allah, dans Sa miséricorde, fournit un moyen à Ayyoub d'accomplir son serment sans blesser son épouse. Il lui fut dit de prendre une poignée d'herbe et de la frapper légèrement avec. Cela accomplit la lettre de son serment tout en montrant de la miséricorde envers sa compagne dévouée. Cela est mentionné dans la sourate Sad, verset 44, montrant la considération d'Allah pour le serment de Son serviteur et le service fidèle de son épouse.",
+    content: "﴿وَخُذْ بِيَدِكَ ضِغْثًا فَاضْرِب بِّهِۦ وَلَا تَحْنَثْ ۗ إِنَّا وَجَدْنَاهُ صَابِرًا ۚ نِّعْمَ الْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ﴾ [We said], \"And take in your hand a bunch [of grass] and strike with it and do not break your oath.\" Indeed, We found him patient, an excellent servant. Indeed, he was one repeatedly turning back [to Allah].",
+    contentFr: "﴿وَخُذْ بِيَدِكَ ضِغْثًا فَاضْرِب بِّهِۦ وَلَا تَحْنَثْ ۗ إِنَّا وَجَدْنَاهُ صَابِرًا ۚ نِّعْمَ الْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ﴾ « Prends donc, (ô Ayyoub), un faisceau de brindilles, frappes-en (ta femme) et ne te parjure point ! » Nous l’avons trouvé patient à la peine. Et quel excellent serviteur ! Il aimait tant à se repentir.",
   },
   {
     id: 'ayyub-17',

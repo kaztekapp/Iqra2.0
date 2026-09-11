@@ -72,9 +72,34 @@ const isaStoryContent: StoryContentBlock[] = [
     contentFr: "Maryam fut choisie deux fois — d'abord pour sa pureté personnelle et sa dévotion, puis spécifiquement pour porter Issa. Elle fut élevée au-dessus de toutes les femmes des mondes, un honneur explicitement déclaré dans le Coran. Sa pureté, à la fois physique et spirituelle, fit d'elle le réceptacle de l'un des plus grands signes d'Allah.",
   },
   {
-    id: 'isa-4',
+    id: 'isa-3b',
     type: 'quran_source',
     order: 4,
+    content: "The angels gave Maryam the news of a son, and she asked how.",
+    contentFr: "Les anges annoncèrent à Maryam un fils, et elle demanda comment.",
+    source: {
+      type: 'quran',
+      surahNumber: 3,
+      surahNameEnglish: "Ali 'Imran",
+      surahNameArabic: "آل عمران",
+      ayahStart: 45,
+      ayahEnd: 47,
+      arabicText: "إِذْ قَالَتِ ٱلْمَلَـٰٓئِكَةُ يَـٰمَرْيَمُ إِنَّ ٱللَّهَ يُبَشِّرُكِ بِكَلِمَةٍ مِّنْهُ ٱسْمُهُ ٱلْمَسِيحُ عِيسَى ٱبْنُ مَرْيَمَ وَجِيهًا فِى ٱلدُّنْيَا وَٱلْـَٔاخِرَةِ وَمِنَ ٱلْمُقَرَّبِينَ ۝ وَيُكَلِّمُ ٱلنَّاسَ فِى ٱلْمَهْدِ وَكَهْلًا وَمِنَ ٱلصَّـٰلِحِينَ ۝ قَالَتْ رَبِّ أَنَّىٰ يَكُونُ لِى وَلَدٌ وَلَمْ يَمْسَسْنِى بَشَرٌ ۖ قَالَ كَذَٰلِكِ ٱللَّهُ يَخْلُقُ مَا يَشَآءُ ۚ إِذَا قَضَىٰٓ أَمْرًا فَإِنَّمَا يَقُولُ لَهُۥ كُن فَيَكُونُ",
+      translation: "[And mention] when the angels said, \"O Maryam, indeed Allah gives you good tidings of a word from Him, whose name will be the Messiah, Isa, the son of Maryam - distinguished in this world and the Hereafter and among those brought near [to Allah]. He will speak to the people in the cradle and in maturity and will be of the righteous.\" She said, \"My Lord, how will I have a child when no man has touched me?\" [The angel] said, \"Such is Allah; He creates what He wills. When He decrees a matter, He only says to it, 'Be,' and it is.",
+      translationFr: "Et quand les Anges dirent : « Ô Maryam ! Voici l’heureuse nouvelle qu’Allah t’annonce : la venue d’une Parole de Sa part dont le nom sera le Messie, Issa fils de Maryam, illustre ici-bas et dans l’au-delà, et il est du nombre des rapprochés (d’Allah). » Il parlera aux hommes depuis le berceau et à l’âge mûr ; et il sera du nombre des vertueux. Elle dit : « Seigneur ! Comment pourrais-je avoir un enfant alors qu’aucun homme ne m’a touchée ? » « Ainsi en sera-t-il, répondit-il, Allah crée ce qu’Il veut. Il Lui suffit, quand il décrète une chose, qu’Il lui dise : « Sois » et, aussitôt, elle est.",
+    } as QuranReference,
+  },
+  {
+    id: 'isa-3c',
+    type: 'narrative',
+    order: 5,
+    content: "﴿إِذْ قَالَتِ الْمَلَآئِكَةُ يَامَرْيَمُ إِنَّ اللَّهَ يُبَشِّرُكِ بِكَلِمَةٍ مِّنْهُ اسْمُهُ الْمَسِيحُ عِيسَى ابْنُ مَرْيَمَ وَجِيهًا فِى الدُّنْيَا وَالْـَٔاخِرَةِ وَمِنَ الْمُقَرَّبِينَ﴾ [And mention] when the angels said, \"O Maryam, indeed Allah gives you good tidings of a word from Him, whose name will be the Messiah, Isa, the son of Maryam - distinguished in this world and the Hereafter and among those brought near [to Allah]. ﴿وَيُكَلِّمُ النَّاسَ فِى الْمَهْدِ وَكَهْلًا وَمِنَ الصَّالِحِينَ﴾ He will speak to the people in the cradle and in maturity and will be of the righteous.\" ﴿قَالَتْ رَبِّ أَنَّىٰ يَكُونُ لِى وَلَدٌ وَلَمْ يَمْسَسْنِى بَشَرٌ ۖ قَالَ كَذَٰلِكِ اللَّهُ يَخْلُقُ مَا يَشَآءُ ۚ إِذَا قَضَىٰٓ أَمْرًا فَإِنَّمَا يَقُولُ لَهُۥ كُن فَيَكُونُ﴾ She said, \"My Lord, how will I have a child when no man has touched me?\" [The angel] said, \"Such is Allah; He creates what He wills. When He decrees a matter, He only says to it, 'Be,' and it is.",
+    contentFr: "﴿إِذْ قَالَتِ الْمَلَآئِكَةُ يَامَرْيَمُ إِنَّ اللَّهَ يُبَشِّرُكِ بِكَلِمَةٍ مِّنْهُ اسْمُهُ الْمَسِيحُ عِيسَى ابْنُ مَرْيَمَ وَجِيهًا فِى الدُّنْيَا وَالْـَٔاخِرَةِ وَمِنَ الْمُقَرَّبِينَ﴾ Et quand les Anges dirent : « Ô Maryam ! Voici l’heureuse nouvelle qu’Allah t’annonce : la venue d’une Parole de Sa part dont le nom sera le Messie, Issa fils de Maryam, illustre ici-bas et dans l’au-delà, et il est du nombre des rapprochés (d’Allah). » ﴿وَيُكَلِّمُ النَّاسَ فِى الْمَهْدِ وَكَهْلًا وَمِنَ الصَّالِحِينَ﴾ Il parlera aux hommes depuis le berceau et à l’âge mûr ; et il sera du nombre des vertueux. ﴿قَالَتْ رَبِّ أَنَّىٰ يَكُونُ لِى وَلَدٌ وَلَمْ يَمْسَسْنِى بَشَرٌ ۖ قَالَ كَذَٰلِكِ اللَّهُ يَخْلُقُ مَا يَشَآءُ ۚ إِذَا قَضَىٰٓ أَمْرًا فَإِنَّمَا يَقُولُ لَهُۥ كُن فَيَكُونُ﴾ Elle dit : « Seigneur ! Comment pourrais-je avoir un enfant alors qu’aucun homme ne m’a touchée ? » « Ainsi en sera-t-il, répondit-il, Allah crée ce qu’Il veut. Il Lui suffit, quand il décrète une chose, qu’Il lui dise : « Sois » et, aussitôt, elle est.",
+  },
+  {
+    id: 'isa-4',
+    type: 'quran_source',
+    order: 6,
     content: "The angel Jibril appeared to Maryam to announce the miraculous birth.",
     contentFr: "L'ange Jibril apparut à Maryam pour annoncer la naissance miraculeuse.",
     source: {
@@ -92,14 +117,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-5',
     type: 'narrative',
-    order: 5,
-    content: "When the angel Jibril appeared as a man, Maryam's first response was to seek refuge in Allah - showing her pure character. Jibril explained he was a messenger from Allah to announce a pure son. When Maryam asked how this was possible since no man had touched her, the answer was simple: 'It is easy for Allah.' The One who created Adam from dust, with no father or mother, could certainly create Isa with a mother alone.",
-    contentFr: "Quand l'ange Jibril apparut sous forme d'homme, la première réaction de Maryam fut de chercher refuge auprès d'Allah — montrant la pureté de son caractère. Jibril expliqua qu'il était un messager d'Allah pour annoncer un fils pur. Quand Maryam demanda comment cela était possible puisqu'aucun homme ne l'avait touchée, la réponse fut simple : « C'est facile pour Allah. » Celui qui créa Adam à partir de poussière, sans père ni mère, pouvait certainement créer Issa avec une mère seule.",
+    order: 7,
+    content: "﴿قَالَتْ إِنِّىٓ أَعُوذُ بِالرَّحْمَانِ مِنكَ إِن كُنتَ تَقِيًّا﴾ She said, \"Indeed, I seek refuge in the Most Merciful from you, [so leave me], if you should be fearing of Allah.\" ﴿قَالَ إِنَّمَآ أَنَا۠ رَسُولُ رَبِّكِ لِأَهَبَ لَكِ غُلَامًا زَكِيًّا﴾ He said, \"I am only the messenger of your Lord to give you [news of] a pure boy [i.e., son].\" ﴿قَالَتْ أَنَّىٰ يَكُونُ لِى غُلَامٌ وَلَمْ يَمْسَسْنِى بَشَرٌ وَلَمْ أَكُ بَغِيًّا﴾ She said, \"How can I have a boy while no man has touched me and I have not been unchaste?\" ﴿قَالَ كَذَٰلِكِ قَالَ رَبُّكِ هُوَ عَلَىَّ هَيِّنٌ ۖ وَلِنَجْعَلَهُۥٓ ءَايَةً لِّلنَّاسِ وَرَحْمَةً مِّنَّا ۚ وَكَانَ أَمْرًا مَّقْضِيًّا﴾ He said, \"Thus [it will be]; your Lord says, 'It is easy for Me, and We will make him a sign to the people and a mercy from Us. And it is a matter [already] decreed.'\"",
+    contentFr: "﴿قَالَتْ إِنِّىٓ أَعُوذُ بِالرَّحْمَانِ مِنكَ إِن كُنتَ تَقِيًّا﴾ Elle dit : « Je cherche refuge auprès du Tout Clément contre toi. Si seulement tu pouvais Le craindre ! » ﴿قَالَ إِنَّمَآ أَنَا۠ رَسُولُ رَبِّكِ لِأَهَبَ لَكِ غُلَامًا زَكِيًّا﴾ « Je ne suis qu’un émissaire de ton Seigneur, et je suis venu te faire don d’un garçon (très) pur », répondit-il. ﴿قَالَتْ أَنَّىٰ يَكُونُ لِى غُلَامٌ وَلَمْ يَمْسَسْنِى بَشَرٌ وَلَمْ أَكُ بَغِيًّا﴾ « Mais comment pourrais-je avoir un garçon quand personne ne m’a touchée ni ne suis une prostituée ? » dit-elle. ﴿قَالَ كَذَٰلِكِ قَالَ رَبُّكِ هُوَ عَلَىَّ هَيِّنٌ ۖ وَلِنَجْعَلَهُۥٓ ءَايَةً لِّلنَّاسِ وَرَحْمَةً مِّنَّا ۚ وَكَانَ أَمْرًا مَّقْضِيًّا﴾ Il dit : « Il en sera ainsi. Ton Seigneur a dit : “Cela M’est facile. Et Nous en ferons un Signe pour les hommes et un effet de Notre grâce. ” L’arrêt est déjà décrété. »",
   },
   {
     id: 'isa-6',
     type: 'quran_source',
-    order: 6,
+    order: 8,
     content: "The Quran explains that Isa's creation was like Adam's.",
     contentFr: "Le Coran explique que la création d'Issa fut semblable à celle d'Adam.",
     source: {
@@ -117,14 +142,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-7',
     type: 'narrative',
-    order: 7,
+    order: 9,
     content: "This verse provides the definitive Islamic understanding of Isa's birth. If Adam's creation without parents is accepted, then Isa's creation with only a mother should pose no difficulty. Both were created by Allah's command 'Be' (kun). The miraculous birth does not make Isa divine - it makes him a sign of Allah's unlimited power.",
     contentFr: "Ce verset fournit la compréhension islamique définitive de la naissance d'Issa. Si la création d'Adam sans parents est acceptée, alors la création d'Issa avec seulement une mère ne devrait poser aucune difficulté. Tous deux furent créés par le commandement d'Allah « Sois » (kun). La naissance miraculeuse ne fait pas d'Issa un être divin — elle fait de lui un signe de la puissance illimitée d'Allah.",
   },
   {
     id: 'isa-8',
     type: 'quran_source',
-    order: 8,
+    order: 10,
     content: "Maryam withdrew to give birth in solitude.",
     contentFr: "Maryam se retira pour donner naissance dans la solitude.",
     source: {
@@ -142,14 +167,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-9',
     type: 'narrative',
-    order: 9,
-    content: "Maryam's distress was natural - she was a virgin about to return to her people with a baby. How would she explain this? In her anguish, she wished she had died. But comfort came: a stream appeared beneath her, the palm tree provided fresh dates, and she was told to be content. Allah would take care of everything.",
-    contentFr: "La détresse de Maryam était naturelle — elle était une vierge sur le point de retourner vers son peuple avec un bébé. Comment allait-elle expliquer cela ? Dans son angoisse, elle souhaita être morte. Mais le réconfort vint : un ruisseau apparut sous elle, le palmier fournit des dattes fraîches, et on lui dit d'être contente. Allah prendrait soin de tout.",
+    order: 11,
+    content: "﴿فَأَجَآءَهَا الْمَخَاضُ إِلَىٰ جِذْعِ النَّخْلَةِ قَالَتْ يَالَيْتَنِى مِتُّ قَبْلَ هَاذَا وَكُنتُ نَسْيًا مَّنسِيًّا﴾ And the pains of childbirth drove her to the trunk of a palm tree. She said, \"Oh, I wish I had died before this and was in oblivion, forgotten.\" ﴿فَنَادَىٰهَا مِن تَحْتِهَآ أَلَّا تَحْزَنِى قَدْ جَعَلَ رَبُّكِ تَحْتَكِ سَرِيًّا﴾ But he called her from below her, \"Do not grieve; your Lord has provided beneath you a stream. ﴿وَهُزِّىٓ إِلَيْكِ بِجِذْعِ النَّخْلَةِ تُسَاقِطْ عَلَيْكِ رُطَبًا جَنِيًّا﴾ And shake toward you the trunk of the palm tree; it will drop upon you ripe, fresh dates. ﴿فَكُلِى وَاشْرَبِى وَقَرِّى عَيْنًا ۖ فَإِمَّا تَرَيِنَّ مِنَ الْبَشَرِ أَحَدًا فَقُولِىٓ إِنِّى نَذَرْتُ لِلرَّحْمَانِ صَوْمًا فَلَنْ أُكَلِّمَ الْيَوْمَ إِنسِيًّا﴾ So eat and drink and be contented. And if you see from among humanity anyone, say, 'Indeed, I have vowed to the Most Merciful abstention, so I will not speak today to [any] man.'\"",
+    contentFr: "﴿فَأَجَآءَهَا الْمَخَاضُ إِلَىٰ جِذْعِ النَّخْلَةِ قَالَتْ يَالَيْتَنِى مِتُّ قَبْلَ هَاذَا وَكُنتُ نَسْيًا مَّنسِيًّا﴾ Les douleurs de l’enfantement la poussèrent jusqu’au tronc du palmier. Elle dit : « Plût à (Allah) que je fusse morte avant cela, et que je fusse depuis longtemps oubliée ! » ﴿فَنَادَىٰهَا مِن تَحْتِهَآ أَلَّا تَحْزَنِى قَدْ جَعَلَ رَبُّكِ تَحْتَكِ سَرِيًّا﴾ (La voix de Issa) l’appela de dessous d’elle : « Ne t’afflige point. Ton Seigneur a mis une source à tes pieds. ﴿وَهُزِّىٓ إِلَيْكِ بِجِذْعِ النَّخْلَةِ تُسَاقِطْ عَلَيْكِ رُطَبًا جَنِيًّا﴾ Secoue le tronc du palmier: sur toi, il fera alors tomber des dattes fraîches et prêtes à être cueillies. ﴿فَكُلِى وَاشْرَبِى وَقَرِّى عَيْنًا ۖ فَإِمَّا تَرَيِنَّ مِنَ الْبَشَرِ أَحَدًا فَقُولِىٓ إِنِّى نَذَرْتُ لِلرَّحْمَانِ صَوْمًا فَلَنْ أُكَلِّمَ الْيَوْمَ إِنسِيًّا﴾ Mange donc, bois, et réjouis-toi ! Et si tu vois un humain, dis-lui : « J’ai fait vœu d’un jeûne au Tout Clément : je n’adresserai donc la parole à aucun être humain aujourd’hui. »",
   },
   {
     id: 'isa-10',
     type: 'quran_source',
-    order: 10,
+    order: 12,
     content: "When questioned, Maryam pointed to the baby, and Isa spoke from the cradle.",
     contentFr: "Quand on l'interrogea, Maryam pointa vers le bébé, et Issa parla depuis le berceau.",
     source: {
@@ -167,14 +192,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-11',
     type: 'narrative',
-    order: 11,
-    content: "This was Isa's first miracle: speaking from the cradle as a newborn. His first words were profound: 'I am the servant of Allah' (Inni Abdillah). Not the son of God, not divine - but a servant. He declared his prophethood, his duty to pray and give charity, his kindness to his mother, and his humility. Allah sent peace upon him at birth, and would at death and resurrection.",
-    contentFr: "Ce fut le premier miracle d'Issa : parler depuis le berceau en tant que nouveau-né. Ses premières paroles furent profondes : « Je suis le serviteur d'Allah » (Inni Abdillah). Pas le fils de Dieu, pas divin — mais un serviteur. Il déclara sa prophétie, son devoir de prier et de donner l'aumône, sa bonté envers sa mère et son humilité. Allah envoya la paix sur lui à sa naissance, et le ferait à sa mort et à sa résurrection.",
+    order: 13,
+    content: "﴿فَأَتَتْ بِهِۦ قَوْمَهَا تَحْمِلُهُۥ ۖ قَالُوا۟ يَامَرْيَمُ لَقَدْ جِئْتِ شَيْـًٔا فَرِيًّا﴾ Then she brought him to her people, carrying him. They said, \"O Maryam, you have certainly done a thing unprecedented. ﴿يَآأُخْتَ هَارُونَ مَا كَانَ أَبُوكِ امْرَأَ سَوْءٍ وَمَا كَانَتْ أُمُّكِ بَغِيًّا﴾ O sister [i.e., descendant] of Harun, your father was not a man of evil, nor was your mother unchaste.\" ﴿فَأَشَارَتْ إِلَيْهِ ۖ قَالُوا۟ كَيْفَ نُكَلِّمُ مَن كَانَ فِى الْمَهْدِ صَبِيًّا﴾ So she pointed to him. They said, \"How can we speak to one who is in the cradle a child?\" ﴿قَالَ إِنِّى عَبْدُ اللَّهِ ءَاتَىٰنِىَ الْكِتَابَ وَجَعَلَنِى نَبِيًّا﴾ [Isa] said, \"Indeed, I am the servant of Allah. He has given me the Scripture and made me a prophet. ﴿وَجَعَلَنِى مُبَارَكًا أَيْنَ مَا كُنتُ وَأَوْصَانِى بِالصَّلَوٰةِ وَالزَّكَوٰةِ مَا دُمْتُ حَيًّا﴾ And He has made me blessed wherever I am and has enjoined upon me prayer and zakāh as long as I remain alive ﴿وَبَرًّۢا بِوَٰلِدَتِى وَلَمْ يَجْعَلْنِى جَبَّارًا شَقِيًّا﴾ And [made me] dutiful to my mother, and He has not made me a wretched tyrant. ﴿وَالسَّلَامُ عَلَىَّ يَوْمَ وُلِدتُّ وَيَوْمَ أَمُوتُ وَيَوْمَ أُبْعَثُ حَيًّا﴾ And peace is on me the day I was born and the day I will die and the day I am raised alive.\"",
+    contentFr: "﴿فَأَتَتْ بِهِۦ قَوْمَهَا تَحْمِلُهُۥ ۖ قَالُوا۟ يَامَرْيَمُ لَقَدْ جِئْتِ شَيْـًٔا فَرِيًّا﴾ Elle s’en fut retrouver les siens en portant (son bébé). Alors, ils lui dirent : « Ô Maryam ! Ce que tu as fait est une chose affreuse ! ﴿يَآأُخْتَ هَارُونَ مَا كَانَ أَبُوكِ امْرَأَ سَوْءٍ وَمَا كَانَتْ أُمُّكِ بَغِيًّا﴾ Ô sœur d’Haroun, ton père n’était point quelqu’un de mauvais ni ta mère une femme de mauvaises mœurs. » ﴿فَأَشَارَتْ إِلَيْهِ ۖ قَالُوا۟ كَيْفَ نُكَلِّمُ مَن كَانَ فِى الْمَهْدِ صَبِيًّا﴾ Elle fit signe alors (en direction du bébé). Ils dirent : « Allons-nous parler à un bébé au berceau ? » ﴿قَالَ إِنِّى عَبْدُ اللَّهِ ءَاتَىٰنِىَ الْكِتَابَ وَجَعَلَنِى نَبِيًّا﴾ Et (le nouveau-né) dit : « Je suis le serviteur d’Allah. Il m’a donné le Livre et m’a fait Prophète. ﴿وَجَعَلَنِى مُبَارَكًا أَيْنَ مَا كُنتُ وَأَوْصَانِى بِالصَّلَوٰةِ وَالزَّكَوٰةِ مَا دُمْتُ حَيًّا﴾ Il a fait que je sois béni où que je me trouve, et m’a recommandé la Çalât et la Zakât aussi longtemps que je vivrai ; ﴿وَبَرًّۢا بِوَٰلِدَتِى وَلَمْ يَجْعَلْنِى جَبَّارًا شَقِيًّا﴾ (Il m’a recommandé aussi) la bonté envers ma mère, et Il n’a pas fait de moi un être arrogant et misérable. ﴿وَالسَّلَامُ عَلَىَّ يَوْمَ وُلِدتُّ وَيَوْمَ أَمُوتُ وَيَوْمَ أُبْعَثُ حَيًّا﴾ La paix soit sur moi le jour où je suis né, le jour où je serai mort et le jour où je serai ressuscité. »",
   },
   {
     id: 'isa-12',
     type: 'quran_source',
-    order: 12,
+    order: 14,
     content: "The Quran clarifies Isa's true nature.",
     contentFr: "Le Coran clarifie la vraie nature d'Issa.",
     source: {
@@ -192,14 +217,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-13',
     type: 'narrative',
-    order: 13,
+    order: 15,
     content: "The Quran addresses the theological disputes about Isa directly: he is the son of Maryam (not the son of God). Allah does not take children - He is far exalted above such need. When Allah wills something, He simply says 'Be,' and it exists. Isa was created by this command, not born of divine union.",
     contentFr: "Le Coran aborde directement les disputes théologiques concernant Issa : il est le fils de Maryam (pas le fils de Dieu). Allah ne prend pas d'enfants — Il est bien au-dessus d'un tel besoin. Quand Allah veut quelque chose, Il dit simplement « Sois » et cela existe. Issa fut créé par ce commandement, non pas né d'une union divine.",
   },
   {
     id: 'isa-14',
     type: 'quran_source',
-    order: 14,
+    order: 16,
     content: "Isa was given remarkable miracles as signs of his prophethood.",
     contentFr: "Issa reçut des miracles remarquables comme signes de sa prophétie.",
     source: {
@@ -217,14 +242,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-15',
     type: 'narrative',
-    order: 15,
+    order: 17,
     content: "Isa's miracles were extraordinary: creating birds from clay and bringing them to life, healing those born blind, curing lepers, raising the dead, and knowing hidden matters. But notice the repeated phrase: 'bi-idhnillah' - by Allah's permission. These were not Isa's own powers; they were signs from Allah working through His prophet.",
     contentFr: "Les miracles d'Issa étaient extraordinaires : créer des oiseaux en argile et leur donner vie, guérir les aveugles de naissance, soigner les lépreux, ressusciter les morts et connaître les choses cachées. Mais remarquez la phrase répétée : « bi-idhnillah » — par la permission d'Allah. Ce n'étaient pas les propres pouvoirs d'Issa ; c'étaient des signes d'Allah agissant à travers Son prophète.",
   },
   {
     id: 'isa-16',
     type: 'quran_source',
-    order: 16,
+    order: 18,
     content: "Isa confirmed the Torah and brought the Injil.",
     contentFr: "Issa confirma la Torah et apporta l'Injil.",
     source: {
@@ -242,14 +267,39 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-17',
     type: 'narrative',
-    order: 17,
+    order: 19,
     content: "Isa came to confirm the Torah, the previous revelation, while bringing some new rulings that made certain things lawful that had been forbidden as a test for earlier generations. His message was the same as all prophets: 'Allah is my Lord and your Lord, so worship Him.' This is 'as-sirat al-mustaqim' - the straight path that all prophets taught.",
     contentFr: "Issa vint confirmer la Torah, la révélation précédente, tout en apportant de nouvelles règles rendant licites certaines choses qui avaient été interdites comme épreuve pour les générations antérieures. Son message était le même que celui de tous les prophètes : « Allah est mon Seigneur et votre Seigneur, alors adorez-Le. » C'est « as-sirat al-mustaqim » — le droit chemin que tous les prophètes ont enseigné.",
   },
   {
+    id: 'isa-17b',
+    type: 'quran_source',
+    order: 20,
+    content: "Isa announced a messenger who would come after him, named Ahmad.",
+    contentFr: "Issa annonça un messager qui viendrait après lui, du nom d'Ahmad.",
+    source: {
+      type: 'quran',
+      surahNumber: 61,
+      surahNameEnglish: "As-Saf",
+      surahNameArabic: "الصف",
+      ayahStart: 6,
+      ayahEnd: 6,
+      arabicText: "وَإِذْ قَالَ عِيسَى ٱبْنُ مَرْيَمَ يَـٰبَنِىٓ إِسْرَٰٓءِيلَ إِنِّى رَسُولُ ٱللَّهِ إِلَيْكُم مُّصَدِّقًا لِّمَا بَيْنَ يَدَىَّ مِنَ ٱلتَّوْرَىٰةِ وَمُبَشِّرًۢا بِرَسُولٍ يَأْتِى مِنۢ بَعْدِى ٱسْمُهُۥٓ أَحْمَدُ ۖ فَلَمَّا جَآءَهُم بِٱلْبَيِّنَـٰتِ قَالُوا۟ هَـٰذَا سِحْرٌ مُّبِينٌ",
+      translation: "And [mention] when Isa, the son of Maryam, said, \"O Children of Israel, indeed I am the messenger of Allah to you confirming what came before me of the Torah and bringing good tidings of a messenger to come after me, whose name is Aḥmad.\" But when he came to them with clear evidences, they said, \"This is obvious magic.\"",
+      translationFr: "Et lorsque Issa, fils de Maryam, dit : « Ô Enfants d’Israël ! Je suis le Messager d’Allah (envoyé) vers vous, je suis venu confirmer ce qui m’a déjà précédé dans la Torah, et annoncer la venue d’un Messager qui me succèdera, du nom d’Ahmad. » Or, lorsqu’il leur eut apporté les preuves évidentes, ils dirent : « C’est manifestement de la magie ! »",
+    } as QuranReference,
+  },
+  {
+    id: 'isa-17c',
+    type: 'narrative',
+    order: 21,
+    content: "﴿وَإِذْ قَالَ عِيسَى ابْنُ مَرْيَمَ يَابَنِىٓ إِسْرَٰٓءِيلَ إِنِّى رَسُولُ اللَّهِ إِلَيْكُم مُّصَدِّقًا لِّمَا بَيْنَ يَدَىَّ مِنَ التَّوْرَىٰةِ وَمُبَشِّرًۢا بِرَسُولٍ يَأْتِى مِنۢ بَعْدِى اسْمُهُۥٓ أَحْمَدُ ۖ فَلَمَّا جَآءَهُم بِالْبَيِّنَاتِ قَالُوا۟ هَاذَا سِحْرٌ مُّبِينٌ﴾ And [mention] when Isa, the son of Maryam, said, \"O Children of Israel, indeed I am the messenger of Allah to you confirming what came before me of the Torah and bringing good tidings of a messenger to come after me, whose name is Aḥmad.\" But when he came to them with clear evidences, they said, \"This is obvious magic.\" ﴿لَقَدْ كَفَرَ الَّذِينَ قَالُوٓا۟ إِنَّ اللَّهَ هُوَ الْمَسِيحُ ابْنُ مَرْيَمَ ۖ وَقَالَ الْمَسِيحُ يَابَنِىٓ إِسْرَٰٓءِيلَ اعْبُدُوا۟ اللَّهَ رَبِّى وَرَبَّكُمْ ۖ إِنَّهُۥ مَن يُشْرِكْ بِاللَّهِ فَقَدْ حَرَّمَ اللَّهُ عَلَيْهِ الْجَنَّةَ وَمَأْوَىٰهُ النَّارُ ۖ وَمَا لِلظَّالِمِينَ مِنْ أَنصَارٍ﴾ They have certainly disbelieved who say, \"Allah is the Messiah, the son of Maryam\" while the Messiah has said, \"O Children of Israel, worship Allah, my Lord and your Lord.\" Indeed, he who associates others with Allah - Allah has forbidden him Paradise, and his refuge is the Fire. And there are not for the wrongdoers any helpers.",
+    contentFr: "﴿وَإِذْ قَالَ عِيسَى ابْنُ مَرْيَمَ يَابَنِىٓ إِسْرَٰٓءِيلَ إِنِّى رَسُولُ اللَّهِ إِلَيْكُم مُّصَدِّقًا لِّمَا بَيْنَ يَدَىَّ مِنَ التَّوْرَىٰةِ وَمُبَشِّرًۢا بِرَسُولٍ يَأْتِى مِنۢ بَعْدِى اسْمُهُۥٓ أَحْمَدُ ۖ فَلَمَّا جَآءَهُم بِالْبَيِّنَاتِ قَالُوا۟ هَاذَا سِحْرٌ مُّبِينٌ﴾ Et lorsque Issa, fils de Maryam, dit : « Ô Enfants d’Israël ! Je suis le Messager d’Allah (envoyé) vers vous, je suis venu confirmer ce qui m’a déjà précédé dans la Torah, et annoncer la venue d’un Messager qui me succèdera, du nom d’Ahmad. » Or, lorsqu’il leur eut apporté les preuves évidentes, ils dirent : « C’est manifestement de la magie ! » ﴿لَقَدْ كَفَرَ الَّذِينَ قَالُوٓا۟ إِنَّ اللَّهَ هُوَ الْمَسِيحُ ابْنُ مَرْيَمَ ۖ وَقَالَ الْمَسِيحُ يَابَنِىٓ إِسْرَٰٓءِيلَ اعْبُدُوا۟ اللَّهَ رَبِّى وَرَبَّكُمْ ۖ إِنَّهُۥ مَن يُشْرِكْ بِاللَّهِ فَقَدْ حَرَّمَ اللَّهُ عَلَيْهِ الْجَنَّةَ وَمَأْوَىٰهُ النَّارُ ۖ وَمَا لِلظَّالِمِينَ مِنْ أَنصَارٍ﴾ Ont certes mécru ceux qui ont dit : « Allah est le Messie, fils de Maryam », quand le Messie lui-même a dit : «Ô Enfants d’Israël ! Adorez Allah mon Seigneur et le vôtre ! » Quiconque associe à Allah (des émules), Allah lui interdira le Paradis. Et son refuge sera le Feu, car il n’y aura point de secours pour les injustes.",
+  },
+  {
     id: 'isa-18',
     type: 'quran_source',
-    order: 18,
+    order: 22,
     content: "When Isa sensed disbelief, he asked who would support Allah's cause.",
     contentFr: "Quand Issa sentit l'incrédulité, il demanda qui soutiendrait la cause d'Allah.",
     source: {
@@ -267,14 +317,39 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-19',
     type: 'narrative',
-    order: 19,
-    content: "The Hawariyyun (disciples) were Isa's faithful followers. When most people rejected the message, these few stood firm. They declared themselves 'Muslims' (those who submit to Allah) - because Islam is not just the name of Muhammad's community but the name of the eternal religion of submission to Allah taught by all prophets.",
-    contentFr: "Les Hawariyyoun (disciples) étaient les fidèles partisans d'Issa. Quand la plupart des gens rejetèrent le message, ces quelques-uns restèrent fermes. Ils se déclarèrent « musulmans » (ceux qui se soumettent à Allah) — car l'Islam n'est pas seulement le nom de la communauté de Muhammad mais le nom de la religion éternelle de soumission à Allah enseignée par tous les prophètes.",
+    order: 23,
+    content: "﴿فَلَمَّآ أَحَسَّ عِيسَىٰ مِنْهُمُ الْكُفْرَ قَالَ مَنْ أَنصَارِىٓ إِلَى اللَّهِ ۖ قَالَ الْحَوَارِيُّونَ نَحْنُ أَنصَارُ اللَّهِ ءَامَنَّا بِاللَّهِ وَاشْهَدْ بِأَنَّا مُسْلِمُونَ﴾ But when Isa felt [persistence in] disbelief from them, he said, \"Who are my supporters for [the cause of] Allah?\" The disciples said, \"We are supporters for Allah. We have believed in Allah and testify that we are Muslims [submitting to Him]. ﴿رَبَّنَآ ءَامَنَّا بِمَآ أَنزَلْتَ وَاتَّبَعْنَا الرَّسُولَ فَاكْتُبْنَا مَعَ الشَّاهِدِينَ﴾ Our Lord, we have believed in what You revealed and have followed the messenger [i.e., Isa], so register us among the witnesses [to truth].\"",
+    contentFr: "﴿فَلَمَّآ أَحَسَّ عِيسَىٰ مِنْهُمُ الْكُفْرَ قَالَ مَنْ أَنصَارِىٓ إِلَى اللَّهِ ۖ قَالَ الْحَوَارِيُّونَ نَحْنُ أَنصَارُ اللَّهِ ءَامَنَّا بِاللَّهِ وَاشْهَدْ بِأَنَّا مُسْلِمُونَ﴾ Mais, lorsque Issa sentit leur mauvaise foi, il dit : « Qui seront mes alliés (dans mon retour) vers Allah ? » Les apôtres répondirent : « Nous sommes les alliés d’Allah, nous croyons en Allah et sois témoin que nous sommes du nombre des Soumis. ﴿رَبَّنَآ ءَامَنَّا بِمَآ أَنزَلْتَ وَاتَّبَعْنَا الرَّسُولَ فَاكْتُبْنَا مَعَ الشَّاهِدِينَ﴾ Seigneur ! Nous avons cru à ce que Tu as fait descendre (en révélation) et nous avons suivi le Messager. Inscris-nous donc au nombre des témoins. »",
+  },
+  {
+    id: 'isa-19b',
+    type: 'quran_source',
+    order: 24,
+    content: "The disciples asked for a table from heaven, and Isa prayed for it.",
+    contentFr: "Les disciples demandèrent une table venue du ciel, et Issa pria pour l'obtenir.",
+    source: {
+      type: 'quran',
+      surahNumber: 5,
+      surahNameEnglish: "Al-Ma'idah",
+      surahNameArabic: "المائدة",
+      ayahStart: 112,
+      ayahEnd: 115,
+      arabicText: "إِذْ قَالَ ٱلْحَوَارِيُّونَ يَـٰعِيسَى ٱبْنَ مَرْيَمَ هَلْ يَسْتَطِيعُ رَبُّكَ أَن يُنَزِّلَ عَلَيْنَا مَآئِدَةً مِّنَ ٱلسَّمَآءِ ۖ قَالَ ٱتَّقُوا۟ ٱللَّهَ إِن كُنتُم مُّؤْمِنِينَ ۝ قَالُوا۟ نُرِيدُ أَن نَّأْكُلَ مِنْهَا وَتَطْمَئِنَّ قُلُوبُنَا وَنَعْلَمَ أَن قَدْ صَدَقْتَنَا وَنَكُونَ عَلَيْهَا مِنَ ٱلشَّـٰهِدِينَ ۝ قَالَ عِيسَى ٱبْنُ مَرْيَمَ ٱللَّهُمَّ رَبَّنَآ أَنزِلْ عَلَيْنَا مَآئِدَةً مِّنَ ٱلسَّمَآءِ تَكُونُ لَنَا عِيدًا لِّأَوَّلِنَا وَءَاخِرِنَا وَءَايَةً مِّنكَ ۖ وَٱرْزُقْنَا وَأَنتَ خَيْرُ ٱلرَّٰزِقِينَ ۝ قَالَ ٱللَّهُ إِنِّى مُنَزِّلُهَا عَلَيْكُمْ ۖ فَمَن يَكْفُرْ بَعْدُ مِنكُمْ فَإِنِّىٓ أُعَذِّبُهُۥ عَذَابًا لَّآ أُعَذِّبُهُۥٓ أَحَدًا مِّنَ ٱلْعَـٰلَمِينَ",
+      translation: "[And remember] when the disciples said, \"O Isa, Son of Maryam, can your Lord send down to us a table [spread with food] from the heaven?\" [Isa] said, \"Fear Allah, if you should be believers.\" They said, \"We wish to eat from it and let our hearts be reassured and know that you have been truthful to us and be among its witnesses.\" Said Isa, the son of Maryam, \"O Allah, our Lord, send down to us a table [spread with food] from the heaven to be for us a festival for the first of us and the last of us and a sign from You. And provide for us, and You are the best of providers.\" Allah said, \"Indeed, I will send it down to you, but whoever disbelieves afterwards from among you - then indeed will I punish him with a punishment by which I have not punished anyone among the worlds.\"",
+      translationFr: "(Un jour), les apôtres dirent : « Ô Issa, fils de Maryam, ton Seigneur peut-Il du ciel faire descendre sur nous une table servie ? » Il répondit : « Craignez donc Allah si vous êtes croyants ! » Ils dirent alors : « Nous voulons en manger afin que nos cœurs soient rassurés. Nous saurons ainsi que tu nous as dit la vérité et nous en serons parmi les témoins. » « Ô Allah, notre Seigneur, dit alors Issa, fils de Maryam, fais donc descendre du ciel sur nous une table qui soit un banquet pour nous, pour le premier et le dernier d’entre nous, (et) qui soit (également) un Signe de Ta part. Et dispense-nous Tes richesses car Tu es le Meilleur Dispensateur. » « Soit ! dit Allah, Je la ferai descendre sur vous. Mais celui qui d’entre vous mécroira encore, Je le soumettrai à un supplice auquel Je ne soumettrai personne aux mondes. »",
+    } as QuranReference,
+  },
+  {
+    id: 'isa-19c',
+    type: 'narrative',
+    order: 25,
+    content: "﴿إِذْ قَالَ الْحَوَارِيُّونَ يَاعِيسَى ابْنَ مَرْيَمَ هَلْ يَسْتَطِيعُ رَبُّكَ أَن يُنَزِّلَ عَلَيْنَا مَآئِدَةً مِّنَ السَّمَآءِ ۖ قَالَ اتَّقُوا۟ اللَّهَ إِن كُنتُم مُّؤْمِنِينَ﴾ [And remember] when the disciples said, \"O Isa, Son of Maryam, can your Lord send down to us a table [spread with food] from the heaven?\" [Isa] said, \"Fear Allah, if you should be believers.\" ﴿قَالُوا۟ نُرِيدُ أَن نَّأْكُلَ مِنْهَا وَتَطْمَئِنَّ قُلُوبُنَا وَنَعْلَمَ أَن قَدْ صَدَقْتَنَا وَنَكُونَ عَلَيْهَا مِنَ الشَّاهِدِينَ﴾ They said, \"We wish to eat from it and let our hearts be reassured and know that you have been truthful to us and be among its witnesses.\" ﴿قَالَ عِيسَى ابْنُ مَرْيَمَ اللَّهُمَّ رَبَّنَآ أَنزِلْ عَلَيْنَا مَآئِدَةً مِّنَ السَّمَآءِ تَكُونُ لَنَا عِيدًا لِّأَوَّلِنَا وَءَاخِرِنَا وَءَايَةً مِّنكَ ۖ وَارْزُقْنَا وَأَنتَ خَيْرُ الرَّٰزِقِينَ﴾ Said Isa, the son of Maryam, \"O Allah, our Lord, send down to us a table [spread with food] from the heaven to be for us a festival for the first of us and the last of us and a sign from You. And provide for us, and You are the best of providers.\" ﴿قَالَ اللَّهُ إِنِّى مُنَزِّلُهَا عَلَيْكُمْ ۖ فَمَن يَكْفُرْ بَعْدُ مِنكُمْ فَإِنِّىٓ أُعَذِّبُهُۥ عَذَابًا لَّآ أُعَذِّبُهُۥٓ أَحَدًا مِّنَ الْعَالَمِينَ﴾ Allah said, \"Indeed, I will send it down to you, but whoever disbelieves afterwards from among you - then indeed will I punish him with a punishment by which I have not punished anyone among the worlds.\"",
+    contentFr: "﴿إِذْ قَالَ الْحَوَارِيُّونَ يَاعِيسَى ابْنَ مَرْيَمَ هَلْ يَسْتَطِيعُ رَبُّكَ أَن يُنَزِّلَ عَلَيْنَا مَآئِدَةً مِّنَ السَّمَآءِ ۖ قَالَ اتَّقُوا۟ اللَّهَ إِن كُنتُم مُّؤْمِنِينَ﴾ (Un jour), les apôtres dirent : « Ô Issa, fils de Maryam, ton Seigneur peut-Il du ciel faire descendre sur nous une table servie ? » Il répondit : « Craignez donc Allah si vous êtes croyants ! » ﴿قَالُوا۟ نُرِيدُ أَن نَّأْكُلَ مِنْهَا وَتَطْمَئِنَّ قُلُوبُنَا وَنَعْلَمَ أَن قَدْ صَدَقْتَنَا وَنَكُونَ عَلَيْهَا مِنَ الشَّاهِدِينَ﴾ Ils dirent alors : « Nous voulons en manger afin que nos cœurs soient rassurés. Nous saurons ainsi que tu nous as dit la vérité et nous en serons parmi les témoins. » ﴿قَالَ عِيسَى ابْنُ مَرْيَمَ اللَّهُمَّ رَبَّنَآ أَنزِلْ عَلَيْنَا مَآئِدَةً مِّنَ السَّمَآءِ تَكُونُ لَنَا عِيدًا لِّأَوَّلِنَا وَءَاخِرِنَا وَءَايَةً مِّنكَ ۖ وَارْزُقْنَا وَأَنتَ خَيْرُ الرَّٰزِقِينَ﴾ « Ô Allah, notre Seigneur, dit alors Issa, fils de Maryam, fais donc descendre du ciel sur nous une table qui soit un banquet pour nous, pour le premier et le dernier d’entre nous, (et) qui soit (également) un Signe de Ta part. Et dispense-nous Tes richesses car Tu es le Meilleur Dispensateur. » ﴿قَالَ اللَّهُ إِنِّى مُنَزِّلُهَا عَلَيْكُمْ ۖ فَمَن يَكْفُرْ بَعْدُ مِنكُمْ فَإِنِّىٓ أُعَذِّبُهُۥ عَذَابًا لَّآ أُعَذِّبُهُۥٓ أَحَدًا مِّنَ الْعَالَمِينَ﴾ « Soit ! dit Allah, Je la ferai descendre sur vous. Mais celui qui d’entre vous mécroira encore, Je le soumettrai à un supplice auquel Je ne soumettrai personne aux mondes. »",
   },
   {
     id: 'isa-20',
     type: 'quran_source',
-    order: 20,
+    order: 26,
     content: "When enemies plotted against Isa, Allah had a different plan.",
     contentFr: "Quand les ennemis complotèrent contre Issa, Allah avait un plan différent.",
     source: {
@@ -292,14 +367,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-21',
     type: 'narrative',
-    order: 21,
+    order: 27,
     content: "The enemies of Isa plotted to kill him, but Allah's plan was greater. The phrase 'mutawaffika' is understood by most scholars as 'taking you' - not death, but raising him alive. Allah raised Isa to Himself, purifying him from the disbelievers. Those who truly follow Isa's teachings of monotheism would be superior to disbelievers until the Day of Judgment.",
     contentFr: "Les ennemis d'Issa complotèrent pour le tuer, mais le plan d'Allah fut plus grand. L'expression « mutawaffika » est comprise par la plupart des savants comme « te prendre » — non pas la mort, mais l'élévation vivant. Allah éleva Issa vers Lui, le purifiant des mécréants. Ceux qui suivent véritablement les enseignements d'Issa sur le monothéisme seraient supérieurs aux mécréants jusqu'au Jour du Jugement.",
   },
   {
     id: 'isa-22',
     type: 'quran_source',
-    order: 22,
+    order: 28,
     content: "The Quran explicitly denies that Isa was killed or crucified.",
     contentFr: "Le Coran nie explicitement qu'Issa ait été tué ou crucifié.",
     source: {
@@ -317,14 +392,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-23',
     type: 'narrative',
-    order: 23,
+    order: 29,
     content: "This is one of the clearest verses in the Quran: Isa was neither killed nor crucified. Someone else was made to appear like him to his enemies. Allah raised Isa to Himself - and he remains alive with Allah. This is a fundamental difference between Islamic and Christian beliefs about Isa's fate.",
     contentFr: "C'est l'un des versets les plus clairs du Coran : Issa n'a été ni tué ni crucifié. Quelqu'un d'autre fut rendu semblable à lui aux yeux de ses ennemis. Allah éleva Issa vers Lui — et il reste vivant auprès d'Allah. C'est une différence fondamentale entre les croyances islamiques et chrétiennes concernant le sort d'Issa.",
   },
   {
     id: 'isa-24',
     type: 'hadith_source',
-    order: 24,
+    order: 30,
     content: "The Prophet Muhammad described Isa's return.",
     contentFr: "Le Prophète Muhammad décrivit le retour d'Issa.",
     source: {
@@ -340,14 +415,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-25',
     type: 'narrative',
-    order: 25,
+    order: 31,
     content: "Muslims believe Isa will return before the Day of Judgment. He will descend as a just ruler, break the cross (symbolically rejecting claims of his crucifixion and divinity), kill the pig (ending its consumption), and abolish the jizyah (since all will become Muslim). He will defeat the Dajjal (Antichrist), establish justice, and eventually die a natural death.",
     contentFr: "Les musulmans croient qu'Issa reviendra avant le Jour du Jugement. Il descendra en tant que dirigeant juste, brisera la croix (rejetant symboliquement les affirmations de sa crucifixion et de sa divinité), tuera le porc (mettant fin à sa consommation), et abolira la jizyah (puisque tous deviendront musulmans). Il vaincra le Dajjal (l'Antéchrist), établira la justice et mourra finalement de mort naturelle.",
   },
   {
     id: 'isa-26',
     type: 'quran_source',
-    order: 26,
+    order: 32,
     content: "Isa will be a sign of the Hour.",
     contentFr: "Issa sera un signe de l'Heure.",
     source: {
@@ -365,14 +440,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-27',
     type: 'narrative',
-    order: 27,
+    order: 33,
     content: "Isa's return is described as 'knowledge of the Hour' - a sign that the Day of Judgment is near. His second coming is not to bring a new religion but to confirm the final message of Islam and to complete his own mission that was interrupted when he was raised to heaven.",
     contentFr: "Le retour d'Issa est décrit comme « connaissance de l'Heure » — un signe que le Jour du Jugement est proche. Sa seconde venue n'est pas pour apporter une nouvelle religion mais pour confirmer le message final de l'Islam et pour achever sa propre mission qui fut interrompue quand il fut élevé au ciel.",
   },
   {
     id: 'isa-28',
     type: 'quran_source',
-    order: 28,
+    order: 34,
     content: "On the Day of Judgment, Isa will deny ever claiming divinity.",
     contentFr: "Au Jour du Jugement, Issa niera avoir jamais revendiqué la divinité.",
     source: {
@@ -390,14 +465,14 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-29',
     type: 'narrative',
-    order: 29,
-    content: "This powerful scene shows Isa on the Day of Judgment denying that he ever claimed divinity for himself or his mother. He only taught what Allah commanded: to worship Allah, who is both his Lord and theirs. This is the consistent message of Isa throughout the Quran - he was a prophet, a servant of Allah, not divine.",
-    contentFr: "Cette scène puissante montre Issa au Jour du Jugement niant avoir jamais revendiqué la divinité pour lui-même ou sa mère. Il n'enseigna que ce qu'Allah avait commandé : adorer Allah, qui est à la fois son Seigneur et le leur. C'est le message constant d'Issa tout au long du Coran — il était un prophète, un serviteur d'Allah, non divin.",
+    order: 35,
+    content: "﴿وَإِذْ قَالَ اللَّهُ يَاعِيسَى ابْنَ مَرْيَمَ ءَأَنتَ قُلْتَ لِلنَّاسِ اتَّخِذُونِى وَأُمِّىَ إِلَاهَيْنِ مِن دُونِ اللَّهِ ۖ قَالَ سُبْحَانَكَ مَا يَكُونُ لِىٓ أَنْ أَقُولَ مَا لَيْسَ لِى بِحَقٍّ ۚ إِن كُنتُ قُلْتُهُۥ فَقَدْ عَلِمْتَهُۥ ۚ تَعْلَمُ مَا فِى نَفْسِى وَلَآ أَعْلَمُ مَا فِى نَفْسِكَ ۚ إِنَّكَ أَنتَ عَلَّامُ الْغُيُوبِ﴾ And [beware the Day] when Allah will say, \"O Isa, Son of Maryam, did you say to the people, 'Take me and my mother as deities besides Allah?'\" He will say, \"Exalted are You! It was not for me to say that to which I have no right. If I had said it, You would have known it. You know what is within myself, and I do not know what is within Yourself. Indeed, it is You who is Knower of the unseen. ﴿مَا قُلْتُ لَهُمْ إِلَّا مَآ أَمَرْتَنِى بِهِۦٓ أَنِ اعْبُدُوا۟ اللَّهَ رَبِّى وَرَبَّكُمْ ۚ وَكُنتُ عَلَيْهِمْ شَهِيدًا مَّا دُمْتُ فِيهِمْ ۖ فَلَمَّا تَوَفَّيْتَنِى كُنتَ أَنتَ الرَّقِيبَ عَلَيْهِمْ ۚ وَأَنتَ عَلَىٰ كُلِّ شَىْءٍ شَهِيدٌ﴾ I said not to them except what You commanded me - to worship Allah, my Lord and your Lord. And I was a witness over them as long as I was among them; but when You took me up, You were the Observer over them, and You are, over all things, Witness. ﴿إِن تُعَذِّبْهُمْ فَإِنَّهُمْ عِبَادُكَ ۖ وَإِن تَغْفِرْ لَهُمْ فَإِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ﴾ If You should punish them - indeed they are Your servants; but if You forgive them - indeed it is You who is the Exalted in Might, the Wise.\"",
+    contentFr: "﴿وَإِذْ قَالَ اللَّهُ يَاعِيسَى ابْنَ مَرْيَمَ ءَأَنتَ قُلْتَ لِلنَّاسِ اتَّخِذُونِى وَأُمِّىَ إِلَاهَيْنِ مِن دُونِ اللَّهِ ۖ قَالَ سُبْحَانَكَ مَا يَكُونُ لِىٓ أَنْ أَقُولَ مَا لَيْسَ لِى بِحَقٍّ ۚ إِن كُنتُ قُلْتُهُۥ فَقَدْ عَلِمْتَهُۥ ۚ تَعْلَمُ مَا فِى نَفْسِى وَلَآ أَعْلَمُ مَا فِى نَفْسِكَ ۚ إِنَّكَ أَنتَ عَلَّامُ الْغُيُوبِ﴾ Et (viendra le jour où) Allah dira : « Ô Issa, fils de Maryam, est-ce toi qui as dit aux hommes : “Prenez-moi, ainsi que ma mère, comme deux divinités autres qu’Allah ?”» « Gloire Te soit rendue ! répondra–t-il, ce n’est certes pas à moi de dire ce qui n’est pas de mon droit. Et d’ailleurs l’aurais-je dit que Tu l’aurais su (tout de même). Car Tu Sais ce qui est en mon être et je ne sais point ce qui est en Ton Être. C’est bien Toi le Suprême Connaisseur des secrets insondables. ﴿مَا قُلْتُ لَهُمْ إِلَّا مَآ أَمَرْتَنِى بِهِۦٓ أَنِ اعْبُدُوا۟ اللَّهَ رَبِّى وَرَبَّكُمْ ۚ وَكُنتُ عَلَيْهِمْ شَهِيدًا مَّا دُمْتُ فِيهِمْ ۖ فَلَمَّا تَوَفَّيْتَنِى كُنتَ أَنتَ الرَّقِيبَ عَلَيْهِمْ ۚ وَأَنتَ عَلَىٰ كُلِّ شَىْءٍ شَهِيدٌ﴾ Je ne leur ai rien dit d’autre que ce que Tu m’as ordonné de dire : \"Adorez Allah, mon Seigneur et le vôtre\" Tant que j’étais parmi eux, j’étais témoin contre eux ; puis quand Tu m’eus rappelé vers Toi, Tu étais Toi-même Celui Qui les observait attentivement. Car Tu es de Toute chose Témoin. ﴿إِن تُعَذِّبْهُمْ فَإِنَّهُمْ عِبَادُكَ ۖ وَإِن تَغْفِرْ لَهُمْ فَإِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ﴾ Si Tu les soumets au supplice, ce sont Tes serviteurs, et si Tu leur pardonnes, Tu es le Tout-Puissant, le Sage. »",
   },
   {
     id: 'isa-29b',
     type: 'hadith_source',
-    order: 30,
+    order: 36,
     content: "The Prophet ﷺ taught the correct belief about Isa and its reward.",
     contentFr: "Le Prophète ﷺ a enseigné la croyance correcte au sujet d'Issa et sa récompense.",
     source: {
@@ -414,7 +489,7 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-30',
     type: 'hadith_source',
-    order: 31,
+    order: 37,
     content: "The Prophet Muhammad mentioned meeting Isa during the Night Journey.",
     contentFr: "Le Prophète Muhammad mentionna sa rencontre avec Issa lors du Voyage Nocturne.",
     source: {
@@ -430,21 +505,21 @@ const isaStoryContent: StoryContentBlock[] = [
   {
     id: 'isa-31',
     type: 'narrative',
-    order: 32,
+    order: 38,
     content: "During the Night Journey, Muhammad ﷺ met Isa and Yahya together in the second heaven. The Prophet ﷺ called them 'the sons of two sisters' - their mothers were close relatives. They welcomed him as their brother in prophethood. The Prophet ﷺ described Isa as of medium height, with a reddish complexion and hair that looked as if it were dripping with water, as though he had just bathed (Sahih al-Bukhari).",
     contentFr: "Lors du Voyage nocturne, Muhammad ﷺ rencontra Issa et Yahya ensemble dans le deuxième ciel. Le Prophète ﷺ les appela « les fils de deux sœurs » : leurs mères étaient de proches parentes. Ils l'accueillirent comme leur frère dans la prophétie. Le Prophète ﷺ décrivit Issa comme étant de taille moyenne, au teint rougeâtre et aux cheveux qui semblaient dégoutter d'eau, comme s'il venait de se baigner (Sahih Al-Bukhari).",
   },
   {
     id: 'isa-32',
     type: 'narrative',
-    order: 33,
+    order: 39,
     content: "Prophet Isa, the Messiah, holds a unique place in Islam. Born miraculously, granted extraordinary powers, raised to heaven alive, and destined to return - his story spans from before his birth to beyond our time. Yet his message was always consistent: worship Allah alone, who is my Lord and your Lord.",
     contentFr: "Le Prophète Issa, le Messie, occupe une place unique en Islam. Né miraculeusement, doté de pouvoirs extraordinaires, élevé au ciel vivant et destiné à revenir — son histoire s'étend d'avant sa naissance au-delà de notre époque. Pourtant son message fut toujours constant : adorez Allah seul, qui est mon Seigneur et votre Seigneur.",
   },
   {
     id: 'isa-33',
     type: 'narrative',
-    order: 34,
+    order: 40,
     content: "Muslims love and honor Isa as one of the greatest prophets. They reject only the later claims of his divinity that he himself never made. When Muslims defend Isa's true nature as a servant and messenger of Allah, they are defending what Isa himself taught. His story reminds us that miracles, no matter how impressive, point not to the prophet but to the One who grants them.",
     contentFr: "Les musulmans aiment et honorent Issa comme l'un des plus grands prophètes. Ils rejettent seulement les affirmations ultérieures de sa divinité qu'il n'a lui-même jamais faites. Quand les musulmans défendent la vraie nature d'Issa en tant que serviteur et messager d'Allah, ils défendent ce qu'Issa lui-même a enseigné. Son histoire nous rappelle que les miracles, aussi impressionnants soient-ils, ne pointent pas vers le prophète mais vers Celui qui les accorde.",
   },

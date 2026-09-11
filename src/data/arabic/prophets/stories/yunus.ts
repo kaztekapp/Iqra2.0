@@ -146,8 +146,8 @@ const yunusStoryContent: StoryContentBlock[] = [
     id: 'yunus-11',
     type: 'narrative',
     order: 11,
-    content: "The supplication Yunus made from within the whale is one of the most powerful prayers in the Quran: 'La ilaha illa Anta, Subhanaka, inni kuntu min adh-dhalimin' (There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers). This prayer has three components: affirming Allah's oneness, glorifying His perfection, and acknowledging one's own wrongdoing.",
-    contentFr: "La supplication que Younous fit depuis l'intérieur de la baleine est l'une des prières les plus puissantes du Coran : 'La ilaha illa Anta, Subhanaka, inni kuntu min adh-dhalimin' (Il n'y a de divinité que Toi. Gloire à Toi ! En vérité, j'ai été parmi les injustes). Cette prière comporte trois composantes : l'affirmation de l'unicité d'Allah, la glorification de Sa perfection et la reconnaissance de ses propres méfaits.",
+    content: "﴿وَذَا النُّونِ إِذ ذَّهَبَ مُغَاضِبًا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِى الظُّلُمَاتِ أَن لَّآ إِلَاهَ إِلَّآ أَنتَ سُبْحَانَكَ إِنِّى كُنتُ مِنَ الظَّالِمِينَ﴾ And [mention] the man of the fish [i.e., Yunus], when he went off in anger and thought that We would not decree [anything] upon him. And he called out within the darknesses, \"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.\"",
+    contentFr: "﴿وَذَا النُّونِ إِذ ذَّهَبَ مُغَاضِبًا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِى الظُّلُمَاتِ أَن لَّآ إِلَاهَ إِلَّآ أَنتَ سُبْحَانَكَ إِنِّى كُنتُ مِنَ الظَّالِمِينَ﴾ Et Dhu-Nûn, qui s’en alla dépité croyant pouvoir échapper à Nos rigueurs. Puis il appela dans les ténèbres : « Il n’est point d’autre divinité que Toi, gloire Te soit rendue, j’étais certes du nombre des injustes ! »",
   },
   {
     id: 'yunus-12',
@@ -171,8 +171,8 @@ const yunusStoryContent: StoryContentBlock[] = [
     id: 'yunus-13',
     type: 'narrative',
     order: 13,
-    content: "Allah heard Yunus's prayer and responded. The whale was commanded to bring Yunus to shore and release him. But note the last phrase: 'And thus do We save the believers.' This is a promise for all time - anyone who turns to Allah with sincere repentance, acknowledging their wrongdoing, will be saved from their distress.",
-    contentFr: "Allah entendit la prière de Younous et y répondit. La baleine reçut l'ordre d'amener Younous au rivage et de le libérer. Mais notez la dernière phrase : 'C'est ainsi que Nous sauvons les croyants.' C'est une promesse pour tous les temps - quiconque se tourne vers Allah avec un repentir sincère, reconnaissant ses méfaits, sera sauvé de sa détresse.",
+    content: "﴿فَاسْتَجَبْنَا لَهُۥ وَنَجَّيْنَاهُ مِنَ الْغَمِّ ۚ وَكَذَٰلِكَ نُـۨجِى الْمُؤْمِنِينَ﴾ So We responded to him and saved him from the distress. And thus do We save the believers.",
+    contentFr: "﴿فَاسْتَجَبْنَا لَهُۥ وَنَجَّيْنَاهُ مِنَ الْغَمِّ ۚ وَكَذَٰلِكَ نُـۨجِى الْمُؤْمِنِينَ﴾ Nous l’exauçâmes et le délivrâmes de l’angoisse. Ainsi délivrons-Nous les croyants.",
   },
   {
     id: 'yunus-14',
@@ -345,8 +345,8 @@ const yunusStoryContent: StoryContentBlock[] = [
     id: 'yunus-29',
     type: 'narrative',
     order: 29,
-    content: "This verse, addressed to Prophet Muhammad ﷺ, uses Yunus as a lesson in patience. Wait for Allah's timing, it says. Don't leave your post out of frustration as Yunus did. Only Allah's favor saved Yunus from being cast out while still blamed. The lesson is clear: patience in the face of people's rejection is required.",
-    contentFr: "Ce verset, adressé au Prophète Muhammad ﷺ, utilise Younous comme leçon de patience. Attends le moment d'Allah, dit-il. Ne quitte pas ton poste par frustration comme Younous le fit. Seule la grâce d'Allah sauva Younous d'être rejeté tout en étant blâmé. La leçon est claire : la patience face au rejet des gens est requise.",
+    content: "﴿فَاجْتَبَاهُ رَبُّهُۥ فَجَعَلَهُۥ مِنَ الصَّالِحِينَ﴾ And his Lord chose him and made him of the righteous.",
+    contentFr: "﴿فَاجْتَبَاهُ رَبُّهُۥ فَجَعَلَهُۥ مِنَ الصَّالِحِينَ﴾ Son Seigneur l’élut et le fit du nombre des vertueux.",
   },
   {
     id: 'yunus-30',

@@ -91,16 +91,23 @@ export const qaryahStory: QuranStory = {
       } as QuranReference,
     },
     {
-      id: "qaryah-5",
+      id: 'qaryah-4b',
       type: 'narrative',
       order: 5,
+      content: "﴿إِذْ أَرْسَلْنَآ إِلَيْهِمُ اثْنَيْنِ فَكَذَّبُوهُمَا فَعَزَّزْنَا بِثَالِثٍ فَقَالُوٓا۟ إِنَّآ إِلَيْكُم مُّرْسَلُونَ﴾ When We sent to them two but they denied them, so We strengthened [them] with a third, and they said, \"Indeed, we are messengers to you.\" ﴿قَالُوا۟ مَآ أَنتُمْ إِلَّا بَشَرٌ مِّثْلُنَا وَمَآ أَنزَلَ الرَّحْمَانُ مِن شَىْءٍ إِنْ أَنتُمْ إِلَّا تَكْذِبُونَ﴾ They said, \"You are not but human beings like us, and the Most Merciful has not revealed a thing. You are only telling lies.\" ﴿قَالُوا۟ رَبُّنَا يَعْلَمُ إِنَّآ إِلَيْكُمْ لَمُرْسَلُونَ﴾ They said, \"Our Lord knows that we are messengers to you, ﴿وَمَا عَلَيْنَآ إِلَّا الْبَلَاغُ الْمُبِينُ﴾ And we are not responsible except for clear notification.\" ﴿قَالُوٓا۟ إِنَّا تَطَيَّرْنَا بِكُمْ ۖ لَئِن لَّمْ تَنتَهُوا۟ لَنَرْجُمَنَّكُمْ وَلَيَمَسَّنَّكُم مِّنَّا عَذَابٌ أَلِيمٌ﴾ They said, \"Indeed, we consider you a bad omen. If you do not desist, we will surely stone you, and there will surely touch you, from us, a painful punishment.\" ﴿قَالُوا۟ طَآئِرُكُم مَّعَكُمْ ۚ أَئِن ذُكِّرْتُم ۚ بَلْ أَنتُمْ قَوْمٌ مُّسْرِفُونَ﴾ They said, \"Your omen [i.e., fate] is with yourselves. Is it because you were reminded? Rather, you are a transgressing people.\"",
+      contentFr: "﴿إِذْ أَرْسَلْنَآ إِلَيْهِمُ اثْنَيْنِ فَكَذَّبُوهُمَا فَعَزَّزْنَا بِثَالِثٍ فَقَالُوٓا۟ إِنَّآ إِلَيْكُم مُّرْسَلُونَ﴾ Nous leur en avions envoyé deux qu’ils traitèrent de menteurs. Nous les appuyâmes alors par un troisième et ils dirent : « C’est vers vous que nous avons été envoyés. » ﴿قَالُوا۟ مَآ أَنتُمْ إِلَّا بَشَرٌ مِّثْلُنَا وَمَآ أَنزَلَ الرَّحْمَانُ مِن شَىْءٍ إِنْ أَنتُمْ إِلَّا تَكْذِبُونَ﴾ « Vous n’êtes que des humains comme nous, répondirent (les habitants de la cité), et le Tout Clément n’a rien fait descendre (en révélation) : vous n’êtes que des menteurs ! » ﴿قَالُوا۟ رَبُّنَا يَعْلَمُ إِنَّآ إِلَيْكُمْ لَمُرْسَلُونَ﴾ « Notre Seigneur Sait que c’est vers vous que nous sommes certes envoyés, (dirent les Messagers) ﴿وَمَا عَلَيْنَآ إِلَّا الْبَلَاغُ الْمُبِينُ﴾ et il ne nous appartient que de (vous) transmettre clairement ce message. » ﴿قَالُوٓا۟ إِنَّا تَطَيَّرْنَا بِكُمْ ۖ لَئِن لَّمْ تَنتَهُوا۟ لَنَرْجُمَنَّكُمْ وَلَيَمَسَّنَّكُم مِّنَّا عَذَابٌ أَلِيمٌ﴾ « Vous nous êtes des oiseaux de mauvais augure, reprirent (les mécréants). Ou vous arrêtez ou nous vous lapiderons, et vous atteindra, de notre part, un supplice très douloureux. » ﴿قَالُوا۟ طَآئِرُكُم مَّعَكُمْ ۚ أَئِن ذُكِّرْتُم ۚ بَلْ أَنتُمْ قَوْمٌ مُّسْرِفُونَ﴾ « Votre mauvais augure n’est dû qu’à vous-mêmes, dirent (les Messagers). (Réagissez-vous ainsi) parce que vous est rappelée (la vérité) ? Vous n’êtes en vérité que des gens portés aux excès ! »",
+    },
+    {
+      id: "qaryah-5",
+      type: 'narrative',
+      order: 6,
       content: "The messengers' answer to the threat is worth pausing on. Your omen is with yourselves, they said: the misfortune you fear comes from your own denial, not from those who warn you. Then, from the farthest part of the city, a man came running. The Quran does not give his name; some commentators call him Habib the carpenter, and again that is theirs. He came to plead for the messengers, not against them.",
       contentFr: "La réponse des messagers à la menace mérite qu'on s'y arrête. Votre présage est en vous-mêmes, dirent-ils : le malheur que vous craignez vient de votre propre reniement, non de ceux qui vous avertissent. Puis, du bout de la cité, un homme accourut. Le Coran ne donne pas son nom ; certains commentateurs l'appellent Habib le charpentier, et là encore c'est leur avis. Il vint plaider pour les messagers, non contre eux.",
     },
     {
       id: "qaryah-6",
       type: 'quran_source',
-      order: 6,
+      order: 7,
       content: "The man from the farthest part of the city: follow those who ask you no reward.",
       contentFr: "L'homme venu du bout de la cité : suivez ceux qui ne vous demandent aucun salaire.",
       source: {
@@ -116,9 +123,16 @@ export const qaryahStory: QuranStory = {
       } as QuranReference,
     },
     {
+      id: 'qaryah-6b',
+      type: 'narrative',
+      order: 8,
+      content: "﴿وَجَآءَ مِنْ أَقْصَا الْمَدِينَةِ رَجُلٌ يَسْعَىٰ قَالَ يَاقَوْمِ اتَّبِعُوا۟ الْمُرْسَلِينَ﴾ And there came from the farthest end of the city a man, running. He said, \"O my people, follow the messengers. ﴿اتَّبِعُوا۟ مَن لَّا يَسْـَٔلُكُمْ أَجْرًا وَهُم مُّهْتَدُونَ﴾ Follow those who do not ask of you [any] payment, and they are [rightly] guided. ﴿وَمَا لِىَ لَآ أَعْبُدُ الَّذِى فَطَرَنِى وَإِلَيْهِ تُرْجَعُونَ﴾ And why should I not worship He who created me and to whom you will be returned? ﴿إِنِّىٓ ءَامَنتُ بِرَبِّكُمْ فَاسْمَعُونِ﴾ Indeed, I have believed in your Lord, so listen to me.\"",
+      contentFr: "﴿وَجَآءَ مِنْ أَقْصَا الْمَدِينَةِ رَجُلٌ يَسْعَىٰ قَالَ يَاقَوْمِ اتَّبِعُوا۟ الْمُرْسَلِينَ﴾ Un homme, de l’autre bout de la ville, accourut en disant : « Ô peuple mien ! Suivez les Messagers ! ﴿اتَّبِعُوا۟ مَن لَّا يَسْـَٔلُكُمْ أَجْرًا وَهُم مُّهْتَدُونَ﴾ Suivez ceux qui ne vous réclament aucune récompense et qui sont bien guidés. ﴿وَمَا لِىَ لَآ أَعْبُدُ الَّذِى فَطَرَنِى وَإِلَيْهِ تُرْجَعُونَ﴾ Et pourquoi n’adorerais-je pas Celui Qui m’a créé (sans modèle préalable) et vers Qui vous devez retourner ? ﴿إِنِّىٓ ءَامَنتُ بِرَبِّكُمْ فَاسْمَعُونِ﴾ J’ai cru en votre Seigneur, (ô Messagers), écoutez-moi. »",
+    },
+    {
       id: "qaryah-7",
       type: 'quran_source',
-      order: 7,
+      order: 9,
       content: "He was told: enter Paradise. His only wish was that his people knew.",
       contentFr: "Il lui fut dit : entre au Paradis. Son seul souhait fut que son peuple sache.",
       source: {
@@ -136,14 +150,14 @@ export const qaryahStory: QuranStory = {
     {
       id: "qaryah-8",
       type: 'narrative',
-      order: 8,
-      content: "The Quran does not say in so many words that they killed him; it says 'Enter Paradise' and then gives his words from the other side. The commentators understand from this that his people killed him. What the text makes plain is that his first thought in Paradise was for the people who had rejected him: if only they knew what his Lord had forgiven him and how He had honoured him. That is the mark of the one who calls to Allah.",
-      contentFr: "Le Coran ne dit pas en toutes lettres qu'ils le tuèrent ; il dit « Entre au Paradis » puis rapporte ses paroles depuis l'autre côté. Les commentateurs en comprennent que son peuple le tua. Ce que le texte rend clair, c'est que sa première pensée au Paradis alla aux gens qui l'avaient rejeté : si seulement ils savaient ce que son Seigneur lui avait pardonné et comment Il l'avait honoré. C'est la marque de celui qui appelle à Allah.",
+      order: 10,
+      content: "﴿قِيلَ ادْخُلِ الْجَنَّةَ ۖ قَالَ يَالَيْتَ قَوْمِى يَعْلَمُونَ﴾ It was said, \"Enter Paradise.\" He said, \"I wish my people could know ﴿بِمَا غَفَرَ لِى رَبِّى وَجَعَلَنِى مِنَ الْمُكْرَمِينَ﴾ Of how my Lord has forgiven me and placed me among the honored.\"",
+      contentFr: "﴿قِيلَ ادْخُلِ الْجَنَّةَ ۖ قَالَ يَالَيْتَ قَوْمِى يَعْلَمُونَ﴾ (Mis à mort pour cet aveu), il s’entendit dire : « Entre au Paradis ! » « Si seulement mon peuple savait, s’exclama-t-il, ﴿بِمَا غَفَرَ لِى رَبِّى وَجَعَلَنِى مِنَ الْمُكْرَمِينَ﴾ que mon Seigneur m’a pardonné et m’a placé parmi ceux qui sont honorés ! »",
     },
     {
       id: "qaryah-9",
       type: 'quran_source',
-      order: 9,
+      order: 11,
       content: "No army was sent against the town. One shout, and they were extinguished.",
       contentFr: "Aucune armée ne fut envoyée contre la cité. Un seul cri, et ils furent éteints.",
       source: {
@@ -161,7 +175,7 @@ export const qaryahStory: QuranStory = {
     {
       id: "qaryah-10",
       type: 'narrative',
-      order: 10,
+      order: 12,
       content: "Allah did not send down an army from heaven against them; it was not needed. A single blast, and they were still. The verse that follows, 'Alas for the servants: no messenger came to them but they mocked him', turns the story into the lesson of the whole surah. The town is any town, and the man from its farthest part is anyone who runs to speak the truth.",
       contentFr: "Allah ne fit pas descendre d'armée du ciel contre eux ; ce n'était pas nécessaire. Un seul cri, et ils furent immobiles. Le verset suivant, « Quel regret pour les serviteurs : aucun messager ne leur vint sans qu'ils se moquassent de lui », fait de l'histoire la leçon de toute la sourate. La cité est n'importe quelle cité, et l'homme venu de son bout est quiconque accourt pour dire la vérité.",
     },

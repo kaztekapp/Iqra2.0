@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/quranStories';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
+import { StoryProse } from '../stories/StoryProse';
 import { useTranslation } from 'react-i18next';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
@@ -126,7 +127,7 @@ export function StoryContentBlock({
   if (block.type === 'narrative') {
     return (
       <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
-        <Text style={styles.narrativeText}>{lc(block.content, block.contentFr)}</Text>
+        <StoryProse style={styles.narrativeText} text={lc(block.content, block.contentFr)} />
       </View>
     );
   }

@@ -23,7 +23,8 @@ import {
   NarrationEngine,
   VoiceGender,
 } from '../services/storyAudioService';
-import { prepareForSpeech, splitSentences, speechKey } from '../services/narrationText';
+import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns } from '../services/narrationText';
+import { speakArabic, stopArabic, prewarmArabicVoice } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
 export type NarrationSpeed = 0.75 | 1 | 1.25 | 1.5;
@@ -43,8 +44,15 @@ export interface NarratableBlock {
   } | null;
 }
 
+/**
+ * A line of the Quran quoted inside the prose is its own utterance, spoken by
+ * the app's Arabic voice — the English and French voices cannot read it.
+ */
+type UtteranceLang = NarrationLang | 'ar';
+
 interface Utterance {
   text: string;
+  lang: UtteranceLang;
   blockId: string;
   blockIndex: number;
   seconds: number;
@@ -53,6 +61,26 @@ interface Utterance {
 /** Breath between sentences, and a longer settling pause between blocks. */
 const GAP_SENTENCE = 260;
 const GAP_BLOCK = 620;
+
+/**
+ * One quoted line of the Quran, through the Arabic voice the learner chose.
+ *
+ * `speakArabic` resolves whether the line finished or was cut off, so the
+ * finish is taken from its own callback: a line that was stopped — by a
+ * pause, a skip, or another producer claiming the audio — must not advance
+ * the queue, exactly as a stopped story sentence does not.
+ */
+async function speakQuranLine(text: string, speed: number): Promise<'done' | 'stopped'> {
+  let finished = false;
+  await speakArabic(text, {
+    speed,
+    onDone: () => { finished = true; },
+    // No Arabic voice at all, online or on the phone: the meaning that
+    // follows still gets read rather than the story falling silent here.
+    onError: () => { finished = true; },
+  });
+  return finished ? 'done' : 'stopped';
+}
 
 export function useStoryNarration(blocks: NarratableBlock[]) {
   // Narration follows the same language setting the text on screen does, so
@@ -106,12 +134,25 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
     let lastKey = '';
 
     const push = (raw: string, blockId: string, blockIndex: number) => {
-      const prepared = prepareForSpeech(raw, lang);
-      for (const sentence of splitSentences(prepared)) {
-        const key = speechKey(sentence);
-        if (!key || key === lastKey) continue;
-        lastKey = key;
-        out.push({ text: sentence, blockId, blockIndex, seconds: 0 });
+      // A conversation in the story quotes the Quran line by line: the
+      // Arabic first, then its meaning. "Musa said," is read by the story's
+      // voice, the Arabic by the Arabic voice, and the meaning by the story's
+      // voice again — the same cadence a teacher uses.
+      for (const segment of splitQuranRuns(raw)) {
+        if (segment.kind === 'quran') {
+          const key = speechKey(segment.text);
+          if (!key || key === lastKey) continue;
+          lastKey = key;
+          out.push({ text: segment.text, lang: 'ar', blockId, blockIndex, seconds: 0 });
+          continue;
+        }
+        const prepared = prepareForSpeech(segment.text, lang);
+        for (const sentence of splitSentences(prepared)) {
+          const key = speechKey(sentence);
+          if (!key || key === lastKey) continue;
+          lastKey = key;
+          out.push({ text: sentence, lang, blockId, blockIndex, seconds: 0 });
+        }
       }
     };
 
@@ -158,6 +199,7 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
       setStatus('loading');
       await storyAudioService.prime(lang);
       if (mine !== runRef.current) return;
+      if (utterances.some((u) => u.lang === 'ar')) prewarmArabicVoice();
       setStatus('playing');
 
       for (let i = from; i < utterances.length; i++) {
@@ -167,7 +209,10 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
         indexRef.current = i;
 
         const utterance = utterances[i];
-        const result = await storyAudioService.speak(utterance.text, speedRef.current, lang);
+        const result =
+          utterance.lang === 'ar'
+            ? await speakQuranLine(utterance.text, speedRef.current)
+            : await storyAudioService.speak(utterance.text, speedRef.current, lang);
         setEngine(storyAudioService.getEngine());
 
         if (mine !== runRef.current) return;
@@ -202,6 +247,7 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
     runRef.current++;
     pausedByStopRef.current = false;
     storyAudioService.resetSession();
+    stopArabic();
     await storyAudioService.stop();
     setStatus('idle');
     setIndex(0);
@@ -215,10 +261,17 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
    * restarts that one sentence.
    */
   const pause = useCallback(async () => {
+    // The Arabic voice has no pause; the line is cut and restarted on resume.
+    if (utterances[indexRef.current]?.lang === 'ar') {
+      stopArabic();
+      pausedByStopRef.current = true;
+      setStatus('paused');
+      return;
+    }
     const reallyPaused = await storyAudioService.pause();
     pausedByStopRef.current = !reallyPaused;
     setStatus('paused');
-  }, []);
+  }, [utterances]);
 
   // Sleep timer. It pauses rather than stops, so the story is exactly where
   // it was left when the listener comes back to it.
@@ -313,6 +366,7 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
   useEffect(() => {
     return () => {
       runRef.current++;
+      stopArabic();
       void storyAudioService.stop();
     };
   }, []);
@@ -321,6 +375,7 @@ export function useStoryNarration(blocks: NarratableBlock[]) {
   useEffect(() => {
     runRef.current++;
     storyAudioService.resetSession();
+    stopArabic();
     void storyAudioService.stop();
     setStatus('idle');
     setIndex(0);

@@ -73,8 +73,8 @@ const ishaqStoryContent: StoryContentBlock[] = [
     id: 'ishaq-4',
     type: 'narrative',
     order: 4,
-    content: "When the guests did not eat from the food Ibrahim had prepared, he became apprehensive. In that culture, refusing hospitality was unusual and could signal ill intentions. But the angels reassured him and revealed their true purpose.",
-    contentFr: "Lorsque les invités ne mangèrent pas de la nourriture qu'Ibrahim avait préparée, il devint inquiet. Dans cette culture, refuser l'hospitalité était inhabituel et pouvait signaler de mauvaises intentions. Mais les anges le rassurèrent et révélèrent leur véritable mission.",
+    content: "﴿هَلْ أَتَىٰكَ حَدِيثُ ضَيْفِ إِبْرَٰهِيمَ الْمُكْرَمِينَ﴾ Has there reached you the story of the honored guests of Ibrahim? - ﴿إِذْ دَخَلُوا۟ عَلَيْهِ فَقَالُوا۟ سَلَامًا ۖ قَالَ سَلَامٌ قَوْمٌ مُّنكَرُونَ﴾ When they entered upon him and said, \"[We greet you with] peace.\" He answered, \"[And upon you] peace; [you are] a people unknown.\" ﴿فَرَاغَ إِلَىٰٓ أَهْلِهِۦ فَجَآءَ بِعِجْلٍ سَمِينٍ﴾ Then he went to his family and came with a fat [roasted] calf. ﴿فَقَرَّبَهُۥٓ إِلَيْهِمْ قَالَ أَلَا تَأْكُلُونَ﴾ And placed it near them; he said, \"Will you not eat?\"",
+    contentFr: "﴿هَلْ أَتَىٰكَ حَدِيثُ ضَيْفِ إِبْرَٰهِيمَ الْمُكْرَمِينَ﴾ T’est-il donc parvenu le récit des hôtes honorés d’Ibrahim ? ﴿إِذْ دَخَلُوا۟ عَلَيْهِ فَقَالُوا۟ سَلَامًا ۖ قَالَ سَلَامٌ قَوْمٌ مُّنكَرُونَ﴾ Entrés chez lui, ils lui dirent : « Paix ! (Salâm) » « Paix à vous, étranges inconnus ! » leur répondit-il. ﴿فَرَاغَ إِلَىٰٓ أَهْلِهِۦ فَجَآءَ بِعِجْلٍ سَمِينٍ﴾ Il se retira rapidement et discrètement auprès de sa famille et revint avec un veau gras. ﴿فَقَرَّبَهُۥٓ إِلَيْهِمْ قَالَ أَلَا تَأْكُلُونَ﴾ En leur présentant le plat, (Ibrahim) dit : « Ne mangez-vous pas ? »",
   },
   {
     id: 'ishaq-5',
@@ -98,8 +98,8 @@ const ishaqStoryContent: StoryContentBlock[] = [
     id: 'ishaq-6',
     type: 'narrative',
     order: 6,
-    content: "Sarah was overwhelmed with disbelief at this news. She was very old, well past the age of bearing children, and had been barren her entire life. How could she possibly have a child now?",
-    contentFr: "Sarah fut submergée d'incrédulité à cette nouvelle. Elle était très âgée, bien au-delà de l'âge de procréer, et avait été stérile toute sa vie. Comment pourrait-elle avoir un enfant maintenant ?",
+    content: "﴿فَأَوْجَسَ مِنْهُمْ خِيفَةً ۖ قَالُوا۟ لَا تَخَفْ ۖ وَبَشَّرُوهُ بِغُلَامٍ عَلِيمٍ﴾ And he felt from them apprehension. They said, \"Fear not,\" and gave him good tidings of a learned boy. ﴿فَأَقْبَلَتِ امْرَأَتُهُۥ فِى صَرَّةٍ فَصَكَّتْ وَجْهَهَا وَقَالَتْ عَجُوزٌ عَقِيمٌ﴾ And his wife approached with a cry [of alarm] and struck her face and said, \"[I am] a barren old woman!\" ﴿قَالُوا۟ كَذَٰلِكِ قَالَ رَبُّكِ ۖ إِنَّهُۥ هُوَ الْحَكِيمُ الْعَلِيمُ﴾ They said, \"Thus has said your Lord; indeed, He is the Wise, the Knowing.\"",
+    contentFr: "﴿فَأَوْجَسَ مِنْهُمْ خِيفَةً ۖ قَالُوا۟ لَا تَخَفْ ۖ وَبَشَّرُوهُ بِغُلَامٍ عَلِيمٍ﴾ (Voyant qu’) il commençait à prendre peur devant eux, ils lui dirent : « N’aie aucune crainte ! » et ils lui annoncèrent l’heureuse (venue au monde) d’un fils (doté) d’un grand savoir. ﴿فَأَقْبَلَتِ امْرَأَتُهُۥ فِى صَرَّةٍ فَصَكَّتْ وَجْهَهَا وَقَالَتْ عَجُوزٌ عَقِيمٌ﴾ Sa femme fit irruption, criant et se frappant le visage : « (Avoir des enfants ?) Une vieille femme stérile (comme moi) ? » ﴿قَالُوا۟ كَذَٰلِكِ قَالَ رَبُّكِ ۖ إِنَّهُۥ هُوَ الْحَكِيمُ الْعَلِيمُ﴾ « C’est ce qu’a décrété ton Seigneur, répondirent-ils, c’est Lui le Sage et l’Omniscient. »",
   },
   {
     id: 'ishaq-7',
@@ -148,8 +148,8 @@ const ishaqStoryContent: StoryContentBlock[] = [
     id: 'ishaq-10',
     type: 'narrative',
     order: 10,
-    content: "The angels reminded Sarah that nothing is beyond Allah's power. The same Allah who created all of creation could certainly grant a child to an elderly couple. This was a mercy and blessing specifically for the household of Ibrahim.",
-    contentFr: "Les anges rappelèrent à Sarah que rien n'est au-delà du pouvoir d'Allah. Le même Allah qui a créé toute la création pouvait certainement accorder un enfant à un couple âgé. C'était une miséricorde et une bénédiction spécifiquement destinées à la famille d'Ibrahim.",
+    content: "﴿قَالَتْ يَاوَيْلَتَىٰٓ ءَأَلِدُ وَأَنَا۠ عَجُوزٌ وَهَاذَا بَعْلِى شَيْخًا ۖ إِنَّ هَاذَا لَشَىْءٌ عَجِيبٌ﴾ She said, \"Woe to me! Shall I give birth while I am an old woman and this, my husband, is an old man? Indeed, this is an amazing thing!\" ﴿قَالُوٓا۟ أَتَعْجَبِينَ مِنْ أَمْرِ اللَّهِ ۖ رَحْمَتُ اللَّهِ وَبَرَكَاتُهُۥ عَلَيْكُمْ أَهْلَ الْبَيْتِ ۚ إِنَّهُۥ حَمِيدٌ مَّجِيدٌ﴾ They said, \"Are you amazed at the decree of Allah? May the mercy of Allah and His blessings be upon you, people of the house. Indeed, He is Praiseworthy and Honorable.\"",
+    contentFr: "﴿قَالَتْ يَاوَيْلَتَىٰٓ ءَأَلِدُ وَأَنَا۠ عَجُوزٌ وَهَاذَا بَعْلِى شَيْخًا ۖ إِنَّ هَاذَا لَشَىْءٌ عَجِيبٌ﴾ Elle dit : « Malheur à moi ! Vais-je avoir des enfants, moi qui suis vieille et dont le mari que voici est un vieillard ? C’est vraiment là chose étrange ! » ﴿قَالُوٓا۟ أَتَعْجَبِينَ مِنْ أَمْرِ اللَّهِ ۖ رَحْمَتُ اللَّهِ وَبَرَكَاتُهُۥ عَلَيْكُمْ أَهْلَ الْبَيْتِ ۚ إِنَّهُۥ حَمِيدٌ مَّجِيدٌ﴾ Ils dirent : « Trouves-tu étrange l’ordre d’Allah ? Que la miséricorde d’Allah et Ses bénédictions soient sur vous, habitants de cette maison ! Il est Digne qu’on Le loue et qu’on Lui rende gloire ! »",
   },
   {
     id: 'ishaq-11',
@@ -173,8 +173,8 @@ const ishaqStoryContent: StoryContentBlock[] = [
     id: 'ishaq-12',
     type: 'narrative',
     order: 12,
-    content: "Ibrahim's response was beautiful - he acknowledged his initial surprise but immediately affirmed that only those who are misguided would despair of Allah's mercy. True believers know that Allah can do anything He wills.",
-    contentFr: "La réponse d'Ibrahim fut magnifique - il reconnut sa surprise initiale mais affirma immédiatement que seuls les égarés désespèrent de la miséricorde d'Allah. Les vrais croyants savent qu'Allah peut accomplir tout ce qu'Il veut.",
+    content: "﴿قَالُوا۟ لَا تَوْجَلْ إِنَّا نُبَشِّرُكَ بِغُلَامٍ عَلِيمٍ﴾ [The angels] said, \"Fear not. Indeed, we give you good tidings of a learned boy.\" ﴿قَالَ أَبَشَّرْتُمُونِى عَلَىٰٓ أَن مَّسَّنِىَ الْكِبَرُ فَبِمَ تُبَشِّرُونَ﴾ He said, \"Have you given me good tidings although old age has come upon me? Then of what [wonder] do you inform?\" ﴿قَالُوا۟ بَشَّرْنَاكَ بِالْحَقِّ فَلَا تَكُن مِّنَ الْقَانِطِينَ﴾ They said, \"We have given you good tidings in truth, so do not be of the despairing.\" ﴿قَالَ وَمَن يَقْنَطُ مِن رَّحْمَةِ رَبِّهِۦٓ إِلَّا الضَّآلُّونَ﴾ He said, \"And who despairs of the mercy of his Lord except for those astray?\"",
+    contentFr: "﴿قَالُوا۟ لَا تَوْجَلْ إِنَّا نُبَشِّرُكَ بِغُلَامٍ عَلِيمٍ﴾ « N’aie pas peur, dirent-ils, nous t’annonçons l’heureuse naissance d’un garçon doté d’un grand savoir. » ﴿قَالَ أَبَشَّرْتُمُونِى عَلَىٰٓ أَن مَّسَّنِىَ الْكِبَرُ فَبِمَ تُبَشِّرُونَ﴾ Il répondit : « M’annoncez-vous cette (heureuse nouvelle) quand m’a déjà atteint le grand âge? Quelle heureuse nouvelle m’annoncez-vous donc là ? » ﴿قَالُوا۟ بَشَّرْنَاكَ بِالْحَقِّ فَلَا تَكُن مِّنَ الْقَانِطِينَ﴾ « Nous t’avons annoncé la vérité. Ne sois donc pas si désespéré ! » ﴿قَالَ وَمَن يَقْنَطُ مِن رَّحْمَةِ رَبِّهِۦٓ إِلَّا الضَّآلُّونَ﴾ « Et qui pourrait désespérer de la miséricorde de son Seigneur, mis à part les égarés ? » dit-il.",
   },
   {
     id: 'ishaq-13',

@@ -93,8 +93,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-5',
       type: 'narrative',
       order: 5,
-      content: "Given absolute authority, Dhul-Qarnayn chose the path of justice. He would punish wrongdoers according to their crimes, knowing they would also face Allah's punishment in the Hereafter. But those who believed and did good would be rewarded and treated gently. His kingdom operated on divine principles, not arbitrary power.",
-      contentFr: "Dote d'une autorite absolue, Dhoul-Qarnayn choisit le chemin de la justice. Il punirait les malfaiteurs selon leurs crimes, sachant qu'ils feraient aussi face au chatiment d'Allah dans l'Au-dela. Mais ceux qui croyaient et faisaient le bien seraient recompenses et traites avec douceur. Son royaume fonctionnait selon des principes divins, et non un pouvoir arbitraire.",
+      content: "﴿حَتَّىٰٓ إِذَا بَلَغَ مَغْرِبَ الشَّمْسِ وَجَدَهَا تَغْرُبُ فِى عَيْنٍ حَمِئَةٍ وَوَجَدَ عِندَهَا قَوْمًا ۗ قُلْنَا يَاذَا الْقَرْنَيْنِ إِمَّآ أَن تُعَذِّبَ وَإِمَّآ أَن تَتَّخِذَ فِيهِمْ حُسْنًا﴾ Until, when he reached the setting of the sun [i.e., the west], he found it [as if] setting in a body of dark water, and he found near it a people. We [i.e., Allah] said, \"O Dhul-Qarnayn, either you punish [them] or else adopt among them [a way of] goodness.\" ﴿قَالَ أَمَّا مَن ظَلَمَ فَسَوْفَ نُعَذِّبُهُۥ ثُمَّ يُرَدُّ إِلَىٰ رَبِّهِۦ فَيُعَذِّبُهُۥ عَذَابًا نُّكْرًا﴾ He said, \"As for one who wrongs, we will punish him. Then he will be returned to his Lord, and He will punish him with a terrible punishment [i.e., Hellfire]. ﴿وَأَمَّا مَنْ ءَامَنَ وَعَمِلَ صَالِحًا فَلَهُۥ جَزَآءً الْحُسْنَىٰ ۖ وَسَنَقُولُ لَهُۥ مِنْ أَمْرِنَا يُسْرًا﴾ But as for one who believes and does righteousness, he will have a reward of the best [i.e., Paradise], and we [i.e., Dhul-Qarnayn] will speak to him from our command with ease.\"",
+      contentFr: "﴿حَتَّىٰٓ إِذَا بَلَغَ مَغْرِبَ الشَّمْسِ وَجَدَهَا تَغْرُبُ فِى عَيْنٍ حَمِئَةٍ وَوَجَدَ عِندَهَا قَوْمًا ۗ قُلْنَا يَاذَا الْقَرْنَيْنِ إِمَّآ أَن تُعَذِّبَ وَإِمَّآ أَن تَتَّخِذَ فِيهِمْ حُسْنًا﴾ jusqu’à ce qu’il ait atteint le couchant. Il vit alors que le soleil se couchait dans une source boueuse près de laquelle il trouva un peuple (qui vivait là). Nous dîmes : « Ô Dhul-Qarnayn, tu pourras ou sévir contre ces gens ou les traiter avec bonté. » ﴿قَالَ أَمَّا مَن ظَلَمَ فَسَوْفَ نُعَذِّبُهُۥ ثُمَّ يُرَدُّ إِلَىٰ رَبِّهِۦ فَيُعَذِّبُهُۥ عَذَابًا نُّكْرًا﴾ « Celui qui a commis des injustices, répondit-il, nous le châtierons, puis il sera ramené vers son Seigneur Qui le soumettra à un terrible supplice. ﴿وَأَمَّا مَنْ ءَامَنَ وَعَمِلَ صَالِحًا فَلَهُۥ جَزَآءً الْحُسْنَىٰ ۖ وَسَنَقُولُ لَهُۥ مِنْ أَمْرِنَا يُسْرًا﴾ Quant à celui qui a cru et a fait le bien, il aura la plus belle rétribution et nous lui adresserons des paroles bienveillantes. »",
     },
     {
       id: 'dhulqarnayn-6',
@@ -150,8 +150,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-10',
       type: 'narrative',
       order: 10,
-      content: "Gog and Magog were tribes of immense destructive power who spread corruption wherever they went. The vulnerable people offered to pay Dhul-Qarnayn tribute if he would build a barrier to protect them. His response showed his true character: he refused payment, saying that what Allah had given him was better than any tribute they could offer.",
-      contentFr: "Gog et Magog etaient des tribus d'une immense puissance destructrice qui repandaient la corruption partout ou elles allaient. Le peuple vulnerable offrit de payer un tribut a Dhoul-Qarnayn s'il construisait une barriere pour les proteger. Sa reponse revela son vrai caractere : il refusa le paiement, disant que ce qu'Allah lui avait donne etait meilleur que tout tribut qu'ils pourraient offrir.",
+      content: "﴿قَالُوا۟ يَاذَا الْقَرْنَيْنِ إِنَّ يَأْجُوجَ وَمَأْجُوجَ مُفْسِدُونَ فِى الْأَرْضِ فَهَلْ نَجْعَلُ لَكَ خَرْجًا عَلَىٰٓ أَن تَجْعَلَ بَيْنَنَا وَبَيْنَهُمْ سَدًّا﴾ They said, \"O Dhul-Qarnayn, indeed Gog and Magog are [great] corrupters in the land. So may we assign for you an expenditure that you might make between us and them a barrier?\" ﴿قَالَ مَا مَكَّنِّى فِيهِ رَبِّى خَيْرٌ فَأَعِينُونِى بِقُوَّةٍ أَجْعَلْ بَيْنَكُمْ وَبَيْنَهُمْ رَدْمًا﴾ He said, \"That in which my Lord has established me is better [than what you offer], but assist me with strength [i.e., manpower]; I will make between you and them a dam.",
+      contentFr: "﴿قَالُوا۟ يَاذَا الْقَرْنَيْنِ إِنَّ يَأْجُوجَ وَمَأْجُوجَ مُفْسِدُونَ فِى الْأَرْضِ فَهَلْ نَجْعَلُ لَكَ خَرْجًا عَلَىٰٓ أَن تَجْعَلَ بَيْنَنَا وَبَيْنَهُمْ سَدًّا﴾ Ils dirent : « Ô Dhul- Qarnayn, les Gog et les Magog sont des semeurs de désordre sur terre. Accepterais-tu de percevoir de nous un tribut contre lequel tu dresserais entre eux et nous un barrage ? » ﴿قَالَ مَا مَكَّنِّى فِيهِ رَبِّى خَيْرٌ فَأَعِينُونِى بِقُوَّةٍ أَجْعَلْ بَيْنَكُمْ وَبَيْنَهُمْ رَدْمًا﴾ « Nul (tribut) n’est meilleur pour moi que la puissance dont mon Seigneur m’a gratifié. Prêtez-moi main forte et je dresserai entre vous et eux une muraille.",
     },
     {
       id: 'dhulqarnayn-11',
@@ -175,8 +175,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-12',
       type: 'narrative',
       order: 12,
-      content: "With engineering genius provided by Allah, Dhul-Qarnayn directed the construction. They filled the gap between the mountains with blocks of iron, stacked to the height of the peaks. Then they heated the iron until it glowed like fire, and poured molten copper over it. The result was an impenetrable barrier - smooth and strong, impossible to climb or breach.",
-      contentFr: "Avec le genie d'ingenierie fourni par Allah, Dhoul-Qarnayn dirigea la construction. Ils remplirent le passage entre les montagnes avec des blocs de fer, empiles jusqu'a la hauteur des sommets. Puis ils chaufferent le fer jusqu'a ce qu'il rougeoie comme du feu, et verserent du cuivre fondu par-dessus. Le resultat fut une barriere impenetrable - lisse et solide, impossible a escalader ou a percer.",
+      content: "﴿ءَاتُونِى زُبَرَ الْحَدِيدِ ۖ حَتَّىٰٓ إِذَا سَاوَىٰ بَيْنَ الصَّدَفَيْنِ قَالَ انفُخُوا۟ ۖ حَتَّىٰٓ إِذَا جَعَلَهُۥ نَارًا قَالَ ءَاتُونِىٓ أُفْرِغْ عَلَيْهِ قِطْرًا﴾ Bring me bars of iron\" - until, when he had leveled [them] between the two mountain walls, he said, \"Blow [with bellows],\" until when he had made it [like] fire, he said, \"Bring me, that I may pour over it molten copper.\"",
+      contentFr: "﴿ءَاتُونِى زُبَرَ الْحَدِيدِ ۖ حَتَّىٰٓ إِذَا سَاوَىٰ بَيْنَ الصَّدَفَيْنِ قَالَ انفُخُوا۟ ۖ حَتَّىٰٓ إِذَا جَعَلَهُۥ نَارًا قَالَ ءَاتُونِىٓ أُفْرِغْ عَلَيْهِ قِطْرًا﴾ Apportez-moi des blocs de fer. » Lorsqu’il eut fermé l’espace entre les deux montagnes, il dit : « Soufflez (sur le feu) ! » Quand il eut rendu (le fer aussi rouge que) le feu, il reprit : « Apportez-moi de l’airain fondu afin que je puisse le verser dessus. »",
     },
     {
       id: 'dhulqarnayn-13',
@@ -200,8 +200,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-14',
       type: 'narrative',
       order: 14,
-      content: "Despite this incredible achievement, Dhul-Qarnayn did not boast or take credit. He attributed it to Allah's mercy, not his own power. And he looked beyond the present to the day Allah's promise would come: before the Hour, Allah will level this barrier and Gog and Magog will pour forth from every elevation, as the Quran describes elsewhere (21:96). Even his greatest accomplishment was temporary in the face of divine decree.",
-      contentFr: "Malgré cet exploit incroyable, Dhul-Qarnayn ne se vanta pas et ne s'en attribua pas le mérite. Il l'attribua à la miséricorde d'Allah, non à sa propre puissance. Et il regarda au-delà du présent, vers le jour où la promesse d'Allah viendrait : avant l'Heure, Allah nivellera cette barrière et Gog et Magog déferleront de toutes les hauteurs, comme le Coran le décrit ailleurs (21:96). Même sa plus grande réalisation était temporaire face au décret divin.",
+      content: "﴿قَالَ هَاذَا رَحْمَةٌ مِّن رَّبِّى ۖ فَإِذَا جَآءَ وَعْدُ رَبِّى جَعَلَهُۥ دَكَّآءَ ۖ وَكَانَ وَعْدُ رَبِّى حَقًّا﴾ [Dhul-Qarnayn] said, \"This is a mercy from my Lord; but when the promise of my Lord comes [i.e., approaches], He will make it level, and ever is the promise of my Lord true.\"",
+      contentFr: "﴿قَالَ هَاذَا رَحْمَةٌ مِّن رَّبِّى ۖ فَإِذَا جَآءَ وَعْدُ رَبِّى جَعَلَهُۥ دَكَّآءَ ۖ وَكَانَ وَعْدُ رَبِّى حَقًّا﴾ Il dit : « Ceci est un effet de la grâce de mon Seigneur. Mais le jour où arrivera la promesse de mon Seigneur, Il rasera cet ouvrage. Car la promesse de mon Seigneur est pure vérité.",
     },
     {
       id: 'dhulqarnayn-14b',

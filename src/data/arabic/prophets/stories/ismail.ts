@@ -176,8 +176,8 @@ const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-13',
     type: 'narrative',
     order: 13,
-    content: "What a remarkable response from a young boy! Ismail did not question, complain, or flee. Instead, he encouraged his father to fulfill Allah's command and promised to be patient. This response demonstrated the depth of faith that Ibrahim had instilled in his son and Ismail's own pure submission to Allah.",
-    contentFr: "Quelle réponse remarquable de la part d'un jeune garçon ! Ismail ne questionna pas, ne se plaignit pas et ne s'enfuit pas. Au contraire, il encouragea son père à accomplir l'ordre d'Allah et promit d'être patient. Cette réponse démontrait la profondeur de la foi qu'Ibrahim avait instillée en son fils et la pure soumission d'Ismail à Allah.",
+    content: "﴿فَلَمَّا بَلَغَ مَعَهُ السَّعْىَ قَالَ يَابُنَىَّ إِنِّىٓ أَرَىٰ فِى الْمَنَامِ أَنِّىٓ أَذْبَحُكَ فَانظُرْ مَاذَا تَرَىٰ ۚ قَالَ يَآأَبَتِ افْعَلْ مَا تُؤْمَرُ ۖ سَتَجِدُنِىٓ إِن شَآءَ اللَّهُ مِنَ الصَّابِرِينَ﴾ And when he reached with him [the age of] exertion, he said, \"O my son, indeed I have seen in a dream that I [must] sacrifice you, so see what you think.\" He said, \"O my father, do as you are commanded. You will find me, if Allah wills, of the steadfast.\"",
+    contentFr: "﴿فَلَمَّا بَلَغَ مَعَهُ السَّعْىَ قَالَ يَابُنَىَّ إِنِّىٓ أَرَىٰ فِى الْمَنَامِ أَنِّىٓ أَذْبَحُكَ فَانظُرْ مَاذَا تَرَىٰ ۚ قَالَ يَآأَبَتِ افْعَلْ مَا تُؤْمَرُ ۖ سَتَجِدُنِىٓ إِن شَآءَ اللَّهُ مِنَ الصَّابِرِينَ﴾ Lorsque celui-ci fut en âge de le suivre là où il allait, il lui dit : « Ô mon fils, je me suis vu en songe en train de t’égorger ! Réfléchis un peu et dis-moi ce que tu en penses. » Il répondit : « Père, fais ce qui t’est ordonné, et tu me trouveras, si Allah le veut, de ceux qui savent être patients (à la peine) ! »",
   },
   {
     id: 'ismail-14',
@@ -201,8 +201,8 @@ const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-15',
     type: 'narrative',
     order: 15,
-    content: "At the moment when Ibrahim laid his son down and was about to fulfill the sacrifice, Allah called out to him that he had passed the test. Their willingness to submit completely was what Allah sought - not the actual sacrifice. This was indeed the most clear and difficult test.",
-    contentFr: "Au moment où Ibrahim coucha son fils et s'apprêtait à accomplir le sacrifice, Allah l'appela pour lui dire qu'il avait réussi l'épreuve. Leur volonté de se soumettre complètement était ce qu'Allah recherchait - pas le sacrifice lui-même. C'était véritablement l'épreuve la plus claire et la plus difficile.",
+    content: "﴿فَلَمَّآ أَسْلَمَا وَتَلَّهُۥ لِلْجَبِينِ﴾ And when they had both submitted and he put him down upon his forehead, ﴿وَنَادَيْنَاهُ أَن يَآإِبْرَٰهِيمُ﴾ We called to him, \"O Ibrahim, ﴿قَدْ صَدَّقْتَ الرُّءْيَآ ۚ إِنَّا كَذَٰلِكَ نَجْزِى الْمُحْسِنِينَ﴾ You have fulfilled the vision.\" Indeed, We thus reward the doers of good. ﴿إِنَّ هَاذَا لَهُوَ الْبَلَآؤُا۟ الْمُبِينُ﴾ Indeed, this was the clear trial.",
+    contentFr: "﴿فَلَمَّآ أَسْلَمَا وَتَلَّهُۥ لِلْجَبِينِ﴾ Lorsque tous les deux se soumirent (à la volonté d’Allah), et (que le père) mit le front (de son fils) à même la terre, ﴿وَنَادَيْنَاهُ أَن يَآإِبْرَٰهِيمُ﴾ Nous l’appelâmes : « Ô Ibrahim ! ﴿قَدْ صَدَّقْتَ الرُّءْيَآ ۚ إِنَّا كَذَٰلِكَ نَجْزِى الْمُحْسِنِينَ﴾ Tu viens d’accomplir la vision. C’est ainsi que Nous récompensons les bienfaiteurs ! » ﴿إِنَّ هَاذَا لَهُوَ الْبَلَآؤُا۟ الْمُبِينُ﴾ Ce fut là l’épreuve manifeste.",
   },
   {
     id: 'ismail-16',
@@ -258,8 +258,8 @@ const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-20',
     type: 'narrative',
     order: 20,
-    content: "Father and son worked together in this blessed task, with Ibrahim standing on a stone (Maqam Ibrahim) to reach the higher portions while Ismail handed him the stones. As they built, they made beautiful supplications to Allah.",
-    contentFr: "Père et fils travaillèrent ensemble à cette tâche bénie, Ibrahim se tenant sur une pierre (Maqam Ibrahim) pour atteindre les parties les plus hautes tandis qu'Ismail lui passait les pierres. Pendant qu'ils construisaient, ils adressèrent de belles invocations à Allah.",
+    content: "﴿وَإِذْ يَرْفَعُ إِبْرَٰهِـۧمُ الْقَوَاعِدَ مِنَ الْبَيْتِ وَإِسْمَاعِيلُ رَبَّنَا تَقَبَّلْ مِنَّآ ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ﴾ And [mention] when Ibrahim was raising the foundations of the House and [with him] Ismail, [saying], \"Our Lord, accept [this] from us. Indeed, You are the Hearing, the Knowing. ﴿رَبَّنَا وَاجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِن ذُرِّيَّتِنَآ أُمَّةً مُّسْلِمَةً لَّكَ وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَآ ۖ إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ﴾ Our Lord, and make us Muslims [in submission] to You and from our descendants a Muslim nation [in submission] to You. And show us our rites [of worship] and accept our repentance. Indeed, You are the Accepting of Repentance, the Merciful. ﴿رَبَّنَا وَابْعَثْ فِيهِمْ رَسُولًا مِّنْهُمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَاتِكَ وَيُعَلِّمُهُمُ الْكِتَابَ وَالْحِكْمَةَ وَيُزَكِّيهِمْ ۚ إِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ﴾ Our Lord, and send among them a messenger from themselves who will recite to them Your verses and teach them the Book and wisdom and purify them. Indeed, You are the Exalted in Might, the Wise.\"",
+    contentFr: "﴿وَإِذْ يَرْفَعُ إِبْرَٰهِـۧمُ الْقَوَاعِدَ مِنَ الْبَيْتِ وَإِسْمَاعِيلُ رَبَّنَا تَقَبَّلْ مِنَّآ ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ﴾ Et quand Ibrahim et Ismaïl eurent élevé les fondations de la Maison (la Kaâba), ils dirent : « Ô Seigneur ! Veuille accepter de nous (ceci) car c’est Toi Qui Entends Tout et c’est Toi l’Omniscient. ﴿رَبَّنَا وَاجْعَلْنَا مُسْلِمَيْنِ لَكَ وَمِن ذُرِّيَّتِنَآ أُمَّةً مُّسْلِمَةً لَّكَ وَأَرِنَا مَنَاسِكَنَا وَتُبْ عَلَيْنَآ ۖ إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ﴾ Seigneur ! Fais que nous Te soyons Soumis et que notre descendance Te soit une nation soumise. Et montre-nous nos rites et veuille accepter de nous le repentir car c’est Toi le Tout Absoluteur, le Tout Miséricordieux ! ﴿رَبَّنَا وَابْعَثْ فِيهِمْ رَسُولًا مِّنْهُمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَاتِكَ وَيُعَلِّمُهُمُ الْكِتَابَ وَالْحِكْمَةَ وَيُزَكِّيهِمْ ۚ إِنَّكَ أَنتَ الْعَزِيزُ الْحَكِيمُ﴾ Seigneur ! Envoie parmi eux un messager qui soit des leurs, qui leur récitera Tes versets, leur enseignera le Livre et la sagesse et les purifiera, car c’est Toi le Tout -Puissant, le Sage.",
   },
   {
     id: 'ismail-21',
@@ -333,8 +333,8 @@ const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-26',
     type: 'narrative',
     order: 26,
-    content: "Being 'true to his promise' (صادق الوعد) was such a defining trait that it became synonymous with Ismail's name. He fulfilled every commitment he made, whether to Allah or to people. This trustworthiness is essential for anyone who carries the message of truth.",
-    contentFr: "Être « fidèle à sa promesse » (صادق الوعد) était un trait si caractéristique qu'il devint synonyme du nom d'Ismail. Il honorait chaque engagement pris, que ce soit envers Allah ou envers les gens. Cette fiabilité est essentielle pour quiconque porte le message de vérité.",
+    content: "﴿وَاذْكُرْ فِى الْكِتَابِ إِسْمَاعِيلَ ۚ إِنَّهُۥ كَانَ صَادِقَ الْوَعْدِ وَكَانَ رَسُولًا نَّبِيًّا﴾ And mention in the Book, Ismail. Indeed, he was true to his promise, and he was a messenger and a prophet. ﴿وَكَانَ يَأْمُرُ أَهْلَهُۥ بِالصَّلَوٰةِ وَالزَّكَوٰةِ وَكَانَ عِندَ رَبِّهِۦ مَرْضِيًّا﴾ And he used to enjoin on his people prayer and zakāh and was to his Lord pleasing [i.e., accepted by Him].",
+    contentFr: "﴿وَاذْكُرْ فِى الْكِتَابِ إِسْمَاعِيلَ ۚ إِنَّهُۥ كَانَ صَادِقَ الْوَعْدِ وَكَانَ رَسُولًا نَّبِيًّا﴾ Et évoque dans le Livre Ismaïl, car il honorait ses promesses et fut un Messager et un Prophète. ﴿وَكَانَ يَأْمُرُ أَهْلَهُۥ بِالصَّلَوٰةِ وَالزَّكَوٰةِ وَكَانَ عِندَ رَبِّهِۦ مَرْضِيًّا﴾ Il ordonnait à son peuple La Çalât et la Zakât, et il était agréé auprès de son Seigneur.",
   },
   {
     id: 'ismail-27',

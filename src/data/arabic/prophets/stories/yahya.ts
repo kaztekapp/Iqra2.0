@@ -125,8 +125,8 @@ const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-8',
     type: 'narrative',
     order: 8,
-    content: "The command 'Take the Scripture with strength' meant that Yahya was to approach the Torah and divine guidance with seriousness, determination, and action - not casually or half-heartedly. Even as a child, he was granted 'hukm' (wisdom/judgment), along with compassion from Allah and spiritual purity. He was 'taqi' - conscious of Allah, careful to avoid sin.",
-    contentFr: "Le commandement « Prends le Livre avec force » signifiait que Yahya devait aborder la Torah et la guidance divine avec sérieux, détermination et action — non pas de manière désinvolte ou tiède. Même enfant, il reçut le « hukm » (sagesse/jugement), accompagné de compassion de la part d'Allah et de pureté spirituelle. Il était « taqi » — conscient d'Allah, attentif à éviter le péché.",
+    content: "﴿يَايَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ ۖ وَءَاتَيْنَاهُ الْحُكْمَ صَبِيًّا﴾ [Allah said], \"O Yahya, take the Scripture [i.e., adhere to it] with determination.\" And We gave him judgement [while yet] a boy",
+    contentFr: "﴿يَايَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ ۖ وَءَاتَيْنَاهُ الْحُكْمَ صَبِيًّا﴾ « Ô Yahyâ ! Prends le Livre avec fermeté. » Et Nous lui avons donné le discernement depuis qu’il était enfant,",
   },
   {
     id: 'yahya-9',

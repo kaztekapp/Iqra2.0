@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/prophetStories';
 import { QuranSourceCard } from './QuranSourceCard';
 import { HadithSourceCard } from './HadithSourceCard';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
+import { StoryProse } from '../stories/StoryProse';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 
@@ -32,7 +33,7 @@ function StoryContentBlockBase({
   if (block.type === 'narrative') {
     return (
       <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
-        <Text style={styles.narrativeText}>{lc(block.content, block.contentFr)}</Text>
+        <StoryProse style={styles.narrativeText} text={lc(block.content, block.contentFr)} />
       </View>
     );
   }

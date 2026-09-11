@@ -83,8 +83,8 @@ export const sabtStory: QuranStory = {
       id: "sabt-5",
       type: 'narrative',
       order: 5,
-      content: "Three groups appear in the verse: those who transgressed, those who admonished them, and those who asked what the point of admonishing was. The admonishers gave the answer that defines the duty of enjoining good: we do it so that we have an excuse before our Lord, and because they might yet fear Him. The outcome is not ours; the duty is.",
-      contentFr: "Trois groupes apparaissent dans le verset : ceux qui transgressèrent, ceux qui les exhortèrent, et ceux qui demandèrent à quoi bon exhorter. Les exhortateurs donnèrent la réponse qui définit le devoir d'ordonner le bien : nous le faisons pour avoir une excuse devant notre Seigneur, et parce qu'ils pourraient encore Le craindre. L'issue ne nous appartient pas ; le devoir, si.",
+      content: "﴿وَإِذْ قَالَتْ أُمَّةٌ مِّنْهُمْ لِمَ تَعِظُونَ قَوْمًا ۙ اللَّهُ مُهْلِكُهُمْ أَوْ مُعَذِّبُهُمْ عَذَابًا شَدِيدًا ۖ قَالُوا۟ مَعْذِرَةً إِلَىٰ رَبِّكُمْ وَلَعَلَّهُمْ يَتَّقُونَ﴾ And when a community among them said, \"Why do you advise [or warn] a people whom Allah is [about] to destroy or to punish with a severe punishment?\" they [the advisors] said, \"To be absolved before your Lord and perhaps they may fear Him.\"",
+      contentFr: "﴿وَإِذْ قَالَتْ أُمَّةٌ مِّنْهُمْ لِمَ تَعِظُونَ قَوْمًا ۙ اللَّهُ مُهْلِكُهُمْ أَوْ مُعَذِّبُهُمْ عَذَابًا شَدِيدًا ۖ قَالُوا۟ مَعْذِرَةً إِلَىٰ رَبِّكُمْ وَلَعَلَّهُمْ يَتَّقُونَ﴾ Et lorsqu’un groupe d’entre eux dit : « Qu’avez-vous à exhorter des gens qu’Allah va faire périr et qu’Il va soumettre à un terrible supplice ? » Ils dirent : « Pour n’en être point responsables devant notre Seigneur et dans l’espoir qu’ils deviendront pieux ! »",
     },
     {
       id: "sabt-6",

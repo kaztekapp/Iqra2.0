@@ -75,8 +75,8 @@ const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-4',
     type: 'narrative',
     order: 4,
-    content: "Ilyas's message was clear and direct: How could they worship Ba'l and abandon Allah, the Best of Creators? He reminded them that Allah was not just some abstract deity but their Lord and the Lord of their ancestors. Their forefathers - the great prophets and righteous people of Israel - had all worshipped Allah alone. The people were betraying their own heritage.",
-    contentFr: "Le message d'Ilyas etait clair et direct : comment pouvaient-ils adorer Ba'l et abandonner Allah, le Meilleur des Createurs ? Il leur rappela qu'Allah n'etait pas une divinite abstraite mais leur Seigneur et le Seigneur de leurs ancetres. Leurs aieux - les grands prophetes et les justes d'Israel - avaient tous adore Allah seul. Le peuple trahissait son propre heritage.",
+    content: "﴿إِذْ قَالَ لِقَوْمِهِۦٓ أَلَا تَتَّقُونَ﴾ When he said to his people, \"Will you not fear Allah? ﴿أَتَدْعُونَ بَعْلًا وَتَذَرُونَ أَحْسَنَ الْخَالِقِينَ﴾ Do you call upon Baʿl and leave the best of creators - ﴿اللَّهَ رَبَّكُمْ وَرَبَّ ءَابَآئِكُمُ الْأَوَّلِينَ﴾ Allah, your Lord and the Lord of your first forefathers?\"",
+    contentFr: "﴿إِذْ قَالَ لِقَوْمِهِۦٓ أَلَا تَتَّقُونَ﴾ « Ne craignez-vous donc pas (Allah)? dit-il à son peuple. ﴿أَتَدْعُونَ بَعْلًا وَتَذَرُونَ أَحْسَنَ الْخَالِقِينَ﴾ Invoquerez-vous donc Baal en délaissant le Meilleur des créateurs, ﴿اللَّهَ رَبَّكُمْ وَرَبَّ ءَابَآئِكُمُ الْأَوَّلِينَ﴾ Allah, votre Seigneur et le Seigneur de vos tout premiers ancêtres? »",
   },
   {
     id: 'ilyas-5',

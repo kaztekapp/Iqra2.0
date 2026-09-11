@@ -29,6 +29,36 @@
  */
 export type NarrationLang = 'en' | 'fr';
 
+/**
+ * A spoken line of the Quran inside story prose, marked with the ornate
+ * Quranic brackets: `Musa said, ﴿رَبِّ أَرِنِي أَنظُرْ إِلَيْكَ﴾ "My Lord, show me..."`.
+ *
+ * The brackets are the convention for quoting the Quran in running text, and
+ * they let the reader and the narration find the Arabic without guessing at
+ * script ranges. The reader sets the run in the Quran face; the narration
+ * hands it to the Arabic voice and reads the words around it in the story's
+ * own language.
+ */
+export const QURAN_RUN = /﴿([^﴾]*)﴾/g;
+
+export type ProseSegment = { kind: 'prose'; text: string } | { kind: 'quran'; text: string };
+
+/** Cut prose into the story's own words and the Quranic lines quoted in it. */
+export function splitQuranRuns(text: string): ProseSegment[] {
+  const out: ProseSegment[] = [];
+  if (!text) return out;
+  let last = 0;
+  for (const m of text.matchAll(QURAN_RUN)) {
+    const at = m.index ?? 0;
+    if (at > last) out.push({ kind: 'prose', text: text.slice(last, at) });
+    const arabic = m[1].trim();
+    if (arabic) out.push({ kind: 'quran', text: arabic });
+    last = at + m[0].length;
+  }
+  if (last < text.length) out.push({ kind: 'prose', text: text.slice(last) });
+  return out;
+}
+
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
 
 const EN_EXPAND: Array<[RegExp, string]> = [
