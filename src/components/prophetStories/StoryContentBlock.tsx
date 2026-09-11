@@ -39,8 +39,10 @@ function StoryContentBlockBase({
   }
 
   if (block.type === 'quran_source' && block.source?.type === 'quran') {
+    const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+        {!!lead.trim() && <StoryProse style={styles.leadText} text={lead} />}
         <QuranSourceCard
           source={block.source as QuranReference}
           onPlayArabic={onPlayQuranAudio ? () => onPlayQuranAudio(block.source as QuranReference) : undefined}
@@ -52,8 +54,10 @@ function StoryContentBlockBase({
   }
 
   if (block.type === 'hadith_source' && block.source?.type === 'hadith') {
+    const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+        {!!lead.trim() && <StoryProse style={styles.leadText} text={lead} />}
         <HadithSourceCard source={block.source as HadithReference} />
       </View>
     );
@@ -76,6 +80,19 @@ const styles = StyleSheet.create({
   },
   sourceContainer: {
     borderRadius: radius.sm,
+  },
+  /**
+   * The sentence that hands the reader into the verse. It is the story's own
+   * voice, so it is set exactly like the story's prose - no label, no eyebrow,
+   * no smaller muted type - and it sits tight above the card it introduces.
+   * The card's own top margin is the only gap between them, which is what
+   * binds the two into one block on the page.
+   */
+  leadText: {
+    color: color.text,
+    fontSize: 16,
+    lineHeight: 26,
+    marginTop: 8,
   },
   highlighted: {
     backgroundColor: withAlpha(color.accent, 0.13),

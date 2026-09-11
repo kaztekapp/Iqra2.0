@@ -178,13 +178,29 @@ export function chunkForUrl(text: string, maxLen: number): string[] {
   return chunks.filter(Boolean);
 }
 
-/** Comparison key for "have we already said this?". */
+/**
+ * Comparison key for "have we already said this?".
+ *
+ * Arabic counts. The key used to keep only `[a-z0-9 ]`, so every ayah reduced
+ * to an empty string - and an empty key is treated as nothing to say, which
+ * silently dropped every quoted line of the Quran before the Arabic voice
+ * ever got it. Arabic letters are kept; the harakat, the dagger alef, the
+ * tatweel and the recitation marks are not. The letters that the two scripts
+ * spell differently - the alefs, alef maqsura, ta marbuta and the hamza seats
+ * - are folded together, so an ayah set in the Uthmani script keys the same as
+ * the same ayah set in the plain one.
+ */
 export function speechKey(text: string): string {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[\u0640\u064b-\u0652\u0670\u06d6-\u06ed]/g, '')
+    .replace(/[\u0622\u0623\u0625\u0671]/g, '\u0627')
+    .replace(/\u0649/g, '\u064a')
+    .replace(/\u0629/g, '\u0647')
+    .replace(/[\u0624\u0626]/g, '\u0621')
+    .replace(/[^a-z0-9\u0621-\u064a ]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
