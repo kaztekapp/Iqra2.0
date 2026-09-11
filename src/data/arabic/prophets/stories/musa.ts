@@ -41,20 +41,20 @@ export const musaStory: Prophet = {
   icon: '🔥',
 };
 
-// The account, in the order the Quran tells it
+// The story, in the order the Quran tells it
 const musaStoryContent: StoryContentBlock[] = [
   {
     id: 'musa-1',
     type: 'narrative',
     order: 1,
-    content: "Allah says that He recites this account in truth. Everything told here is what the Quran states and what the authentic Sunnah reports, and nothing else.",
+    content: "Allah says that He recites this story in truth. Everything told here is what the Quran states and what the authentic Sunnah reports, and nothing else.",
     contentFr: "Allah dit qu'Il récite ce récit en toute vérité. Tout ce qui est raconté ici est ce que le Coran énonce et ce que la Sunna authentique rapporte, et rien d'autre.",
   },
   {
     id: 'musa-2',
     type: 'quran_source',
     order: 2,
-    content: "Al-Qasas opens the account: Pharaoh exalted himself in the land, made its people into factions, and slaughtered the sons of the ones he oppressed. And Allah says what He wanted for them.",
+    content: "Al-Qasas opens the story: Pharaoh exalted himself in the land, made its people into factions, and slaughtered the sons of the ones he oppressed. And Allah says what He wanted for them.",
     contentFr: "Al-Qasas ouvre le récit : Pharaon s'enfla d'orgueil sur la terre, divisa ses habitants en clans, et fit égorger les fils de ceux qu'il opprimait. Et Allah dit ce qu'Il voulait pour eux.",
     source: {
       type: "quran",
@@ -2625,7 +2625,7 @@ const musaStoryContent: StoryContentBlock[] = [
     id: 'musa-146',
     type: 'quran_source',
     order: 146,
-    content: "The Quran closes the account by calling them to what was taken from them: remember My favour, and fulfil My covenant.",
+    content: "The Quran closes the story by calling them to what was taken from them: remember My favour, and fulfil My covenant.",
     contentFr: "Le Coran clôt le récit en les appelant à ce qui fut pris d'eux : rappelez-vous Ma faveur, et tenez Mon pacte.",
     source: {
       type: "quran",
