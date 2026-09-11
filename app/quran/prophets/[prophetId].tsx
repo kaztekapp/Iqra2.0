@@ -194,10 +194,11 @@ export default function ProphetStoryScreen() {
   const listExtra = `${highlightedBlockId}|${playingSourceId}|${audioState}`;
 
   const renderBlock = useCallback(
-    ({ item }: { item: SubStory['content'][number] }) => (
+    ({ item, index }: { item: SubStory['content'][number]; index: number }) => (
       <View style={styles.blocksContainer}>
         <StoryContentBlock
           block={item}
+          isOpening={index === 0 && item.type === 'narrative'}
           isHighlighted={highlightedBlockId === item.id}
           onPlayQuranAudio={
             item.source?.type === 'quran'

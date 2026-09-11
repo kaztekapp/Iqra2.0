@@ -45,8 +45,15 @@ export const musaStory: Prophet = {
 const musaStoryContent: StoryContentBlock[] = [
   {
     id: 'musa-1',
-    type: 'quran_source',
+    type: 'narrative',
     order: 1,
+    content: "This is the story of Prophet Musa, in the order the Quran tells it and in its own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nAnd it is not all of him. Much of his life was never told to us, and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Moussa, dans l'ordre où le Coran la raconte et dans ses propres mots. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nEt ce n'est pas tout de lui. Une grande part de sa vie ne nous a jamais été racontée, et ce qui ne l'a pas été, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+  },
+  {
+    id: 'musa-2',
+    type: 'quran_source',
+    order: 2,
     content: "Al-Qasas opens the story: Pharaoh exalted himself in the land, made its people into factions, and slaughtered the sons of the ones he oppressed. And Allah says what He wanted for them.",
     contentFr: "Al-Qasas ouvre le récit : Pharaon s'enfla d'orgueil sur la terre, divisa ses habitants en clans, et fit égorger les fils de ceux qu'il opprimait. Et Allah dit ce qu'Il voulait pour eux.",
     source: {
@@ -62,9 +69,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-2',
+    id: 'musa-3',
     type: 'quran_source',
-    order: 2,
+    order: 3,
     content: "Allah recalls that trial to the Children of Israel afterwards.",
     contentFr: "Allah rappelle ensuite cette épreuve aux enfants d'Israël.",
     source: {
@@ -80,9 +87,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-3',
+    id: 'musa-4',
     type: 'quran_source',
-    order: 3,
+    order: 4,
     content: "Al-A'raf recalls it in the same words.",
     contentFr: "Al-A'raf le rappelle dans les mêmes termes.",
     source: {
@@ -98,9 +105,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-4',
+    id: 'musa-5',
     type: 'quran_source',
-    order: 4,
+    order: 5,
     content: "And Musa recalls it to them himself, and tells them what their Lord proclaimed.",
     contentFr: "Et Moussa le leur rappelle lui-même, et leur dit ce que leur Seigneur proclama.",
     source: {
@@ -116,9 +123,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-5',
+    id: 'musa-6',
     type: 'quran_source',
-    order: 5,
+    order: 6,
     content: "Into that slaughter Musa was born. Allah inspired his mother to cast him into the river, the family of Pharaoh picked him up, his sister followed him at a distance, and he was returned to his mother.",
     contentFr: "C'est dans cet égorgement que Moussa naquit. Allah inspira à sa mère de le jeter dans le fleuve, la famille de Pharaon le recueillit, sa sœur le suivit de loin, et il fut rendu à sa mère.",
     source: {
@@ -134,9 +141,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-6',
+    id: 'musa-7',
     type: 'quran_source',
-    order: 6,
+    order: 7,
     content: "Allah recalled that same favour to Musa himself, on the day He spoke to him: the chest, the river, the sister, and the years in Madyan.",
     contentFr: "Allah rappela cette même faveur à Moussa lui-même, le jour où Il lui parla : le coffret, le fleuve, la sœur, et les années à Madyan.",
     source: {
@@ -152,9 +159,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-7',
+    id: 'musa-8',
     type: 'quran_source',
-    order: 7,
+    order: 8,
     content: "When he reached his full strength he entered the city unnoticed, found two men fighting, and struck the one from his enemy dead. He asked his Lord's forgiveness, and a man came running from the farthest end of the city to warn him.",
     contentFr: "Parvenu à sa pleine force, il entra dans la ville à l'insu de ses habitants, trouva deux hommes qui se battaient, et frappa à mort celui de ses ennemis. Il demanda pardon à son Seigneur, et un homme accourut du bout de la ville pour l'avertir.",
     source: {
@@ -170,9 +177,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-8',
+    id: 'musa-9',
     type: 'quran_source',
-    order: 8,
+    order: 9,
     content: "He turned toward Madyan. At its water he found two women holding back their flocks, watered for them, and asked his Lord for whatever good He would send down. Their father hired him, and set the term.",
     contentFr: "Il se dirigea vers Madyan. À son point d'eau il trouva deux femmes qui retenaient leurs bêtes, abreuva pour elles, et demanda à son Seigneur tout bien qu'Il ferait descendre sur lui. Leur père l'engagea, et fixa le terme.",
     source: {
@@ -188,9 +195,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-9',
+    id: 'musa-10',
     type: 'quran_source',
-    order: 9,
+    order: 10,
     content: "The term completed, he was travelling with his family when he saw a fire on the side of the mount. He came to it, and was called from the right bank of the valley, in the blessed spot, from the tree.",
     contentFr: "Le terme accompli, il voyageait avec sa famille lorsqu'il vit un feu du côté du Mont. Il y vint, et fut appelé depuis la rive droite de la vallée, à l'endroit béni, du fond de l'arbre.",
     source: {
@@ -206,9 +213,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-10',
+    id: 'musa-11',
     type: 'quran_source',
-    order: 10,
+    order: 11,
     content: "Ta-Ha tells the same night: the fire, the sandals, and the sacred valley of Tuwa.",
     contentFr: "Ta-Ha raconte la même nuit : le feu, les sandales, et la vallée sacrée de Tuwa.",
     source: {
@@ -224,9 +231,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-11',
+    id: 'musa-12',
     type: 'quran_source',
-    order: 11,
+    order: 12,
     content: "Then Allah asked him what was in his right hand, and the staff became a snake moving swiftly.",
     contentFr: "Puis Allah lui demanda ce qu'il avait dans sa main droite, et le bâton devint un serpent qui rampait.",
     source: {
@@ -242,9 +249,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-12',
+    id: 'musa-13',
     type: 'quran_source',
-    order: 12,
+    order: 13,
     content: "Musa asked for his breast to be expanded, his task eased, the knot untied from his tongue, and for his brother Harun. He was granted his request.",
     contentFr: "Moussa demanda que sa poitrine soit dilatée, sa tâche facilitée, le nœud dénoué de sa langue, et demanda son frère Haroun. Sa demande lui fut accordée.",
     source: {
@@ -260,9 +267,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-13',
+    id: 'musa-14',
     type: 'quran_source',
-    order: 13,
+    order: 14,
     content: "The two were sent together, and told to speak to Pharaoh with gentle speech. They said they feared him, and were answered.",
     contentFr: "Les deux furent envoyés ensemble, avec l'ordre de parler à Pharaon avec douceur. Ils dirent qu'ils le craignaient, et il leur fut répondu.",
     source: {
@@ -278,9 +285,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-14',
+    id: 'musa-15',
     type: 'quran_source',
-    order: 14,
+    order: 15,
     content: "An-Naml tells the same call, and names the hand and the staff among nine signs.",
     contentFr: "An-Naml raconte le même appel, et cite la main et le bâton parmi neuf signes.",
     source: {
@@ -296,9 +303,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-15',
+    id: 'musa-16',
     type: 'quran_source',
-    order: 15,
+    order: 16,
     content: "An-Nazi'at gives the words he was to put to Pharaoh.",
     contentFr: "An-Nazi'at donne les paroles qu'il devait adresser à Pharaon.",
     source: {
@@ -314,9 +321,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-16',
+    id: 'musa-17',
     type: 'quran_source',
-    order: 16,
+    order: 17,
     content: "Maryam states what Allah did for him there: He called him from the right side of the mount, drew him near, and gave him his brother.",
     contentFr: "Maryam énonce ce qu'Allah fit pour lui là : Il l'appela du côté droit du Mont, le fit approcher, et lui donna son frère.",
     source: {
@@ -332,9 +339,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-17',
+    id: 'musa-18',
     type: 'quran_source',
-    order: 17,
+    order: 18,
     content: "Ash-Shu'ara gives what he said when he was sent, and what he was answered.",
     contentFr: "Ash-Shu'ara donne ce qu'il dit lorsqu'il fut envoyé, et ce qui lui fut répondu.",
     source: {
@@ -350,9 +357,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-18',
+    id: 'musa-19',
     type: 'quran_source',
-    order: 18,
+    order: 19,
     content: "They came to Pharaoh. He reminded Musa that he had raised him as a child, asked what the Lord of the worlds is, called him mad, and threatened him with prison - and Musa threw down his staff.",
     contentFr: "Ils vinrent à Pharaon. Il rappela à Moussa qu'il l'avait élevé enfant, demanda ce qu'est le Seigneur de l'Univers, le traita de fou, et le menaça de prison ; alors Moussa jeta son bâton.",
     source: {
@@ -368,9 +375,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-19',
+    id: 'musa-20',
     type: 'quran_source',
-    order: 19,
+    order: 20,
     content: "Al-A'raf gives the same standing: Musa declares himself a messenger and asks for the Children of Israel.",
     contentFr: "Al-A'raf donne la même comparution : Moussa se déclare messager et réclame les enfants d'Israël.",
     source: {
@@ -386,9 +393,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-20',
+    id: 'musa-21',
     type: 'quran_source',
-    order: 20,
+    order: 21,
     content: "Ta-Ha gives what Pharaoh asked and what Musa answered - who their Lord is, and what became of the former generations.",
     contentFr: "Ta-Ha donne ce que Pharaon demanda et ce que Moussa répondit : qui est leur Seigneur, et ce qu'il advint des générations passées.",
     source: {
@@ -404,9 +411,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-21',
+    id: 'musa-22',
     type: 'quran_source',
-    order: 21,
+    order: 22,
     content: "Al-Isra gives the nine signs, Pharaoh calling him bewitched, and his answer.",
     contentFr: "Al-Isra donne les neuf signes, Pharaon le disant ensorcelé, et sa réponse.",
     source: {
@@ -422,9 +429,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-22',
+    id: 'musa-23',
     type: 'quran_source',
-    order: 22,
+    order: 23,
     content: "Ghafir gives the day Pharaoh said, 'Let me kill Musa' - and what Musa said then.",
     contentFr: "Ghafir donne le jour où Pharaon dit : « Laissez-moi tuer Moussa » ; et ce que Moussa dit alors.",
     source: {
@@ -440,9 +447,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-23',
+    id: 'musa-24',
     type: 'quran_source',
-    order: 23,
+    order: 24,
     content: "Ad-Dukhan gives his call to them to hand over the servants of Allah, and the prayer he made when they refused.",
     contentFr: "Ad-Dukhan donne son appel à leur livrer les serviteurs d'Allah, et l'invocation qu'il fit lorsqu'ils refusèrent.",
     source: {
@@ -458,9 +465,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-24',
+    id: 'musa-25',
     type: 'quran_source',
-    order: 24,
+    order: 25,
     content: "Al-Mu'minun gives their reason for refusing: they would not believe two men whose people served them.",
     contentFr: "Al-Mu'minun donne la raison de leur refus : ils ne croiraient pas deux hommes dont le peuple les servait.",
     source: {
@@ -476,9 +483,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-25',
+    id: 'musa-26',
     type: 'quran_source',
-    order: 25,
+    order: 26,
     content: "Yunus gives what they said when the truth came to them, and what Musa said back.",
     contentFr: "Younous donne ce qu'ils dirent quand la vérité leur parvint, et ce que Moussa leur répondit.",
     source: {
@@ -494,9 +501,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-26',
+    id: 'musa-27',
     type: 'quran_source',
-    order: 26,
+    order: 27,
     content: "Az-Zukhruf: he said he was the messenger of the Lord of the worlds, and they laughed at the signs.",
     contentFr: "Az-Zukhruf : il dit qu'il était le messager du Seigneur de l'Univers, et ils rirent des signes.",
     source: {
@@ -512,9 +519,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-27',
+    id: 'musa-28',
     type: 'quran_source',
-    order: 27,
+    order: 28,
     content: "Adh-Dhariyat: Pharaoh turned away with his supporters and said, 'A magician or a madman.'",
     contentFr: "Adh-Dhariyat : Pharaon se détourna avec ses partisans et dit : « Un magicien ou un fou. »",
     source: {
@@ -530,9 +537,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-28',
+    id: 'musa-29',
     type: 'quran_source',
-    order: 28,
+    order: 29,
     content: "Hud: he was sent with clear authority, and they followed Pharaoh's command.",
     contentFr: "Houd : il fut envoyé avec une autorité manifeste, et ils suivirent l'ordre de Pharaon.",
     source: {
@@ -548,9 +555,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-29',
+    id: 'musa-30',
     type: 'quran_source',
-    order: 29,
+    order: 30,
     content: "Ibrahim: he was sent to bring his people out of the darknesses into the light.",
     contentFr: "Ibrahim : il fut envoyé pour faire sortir son peuple des ténèbres vers la lumière.",
     source: {
@@ -566,9 +573,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-30',
+    id: 'musa-31',
     type: 'quran_source',
-    order: 30,
+    order: 31,
     content: "An-Nazi'at: he showed him the greatest sign, and Pharaoh gathered his people and called out what he called out.",
     contentFr: "An-Nazi'at : il lui montra le plus grand des signes, et Pharaon rassembla son peuple et proclama ce qu'il proclama.",
     source: {
@@ -584,9 +591,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-31',
+    id: 'musa-32',
     type: 'quran_source',
-    order: 31,
+    order: 32,
     content: "Pharaoh called him a learned magician and sent gatherers through the cities. The magicians came, asked their reward, threw by the might of Pharaoh - and Musa's staff devoured what they had falsified.",
     contentFr: "Pharaon le traita de magicien savant et envoya des rassembleurs dans les cités. Les magiciens vinrent, réclamèrent leur salaire, jetèrent par la puissance de Pharaon ; et le bâton de Moussa engloutit ce qu'ils avaient falsifié.",
     source: {
@@ -602,9 +609,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-32',
+    id: 'musa-33',
     type: 'quran_source',
-    order: 32,
+    order: 33,
     content: "Al-A'raf gives the same day, and what the magicians asked of their Lord once Pharaoh had threatened them.",
     contentFr: "Al-A'raf donne la même journée, et ce que les magiciens demandèrent à leur Seigneur une fois que Pharaon les eut menacés.",
     source: {
@@ -620,9 +627,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-33',
+    id: 'musa-34',
     type: 'quran_source',
-    order: 33,
+    order: 34,
     content: "Ta-Ha gives the appointment on the day of the festival, Musa's warning to them before they threw, and the fear he felt within himself.",
     contentFr: "Ta-Ha donne le rendez-vous au jour de la fête, l'avertissement de Moussa avant qu'ils ne jettent, et la crainte qu'il ressentit en lui-même.",
     source: {
@@ -638,9 +645,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-34',
+    id: 'musa-35',
     type: 'quran_source',
-    order: 34,
+    order: 35,
     content: "Yunus gives what Musa said when they had thrown.",
     contentFr: "Younous donne ce que Moussa dit lorsqu'ils eurent jeté.",
     source: {
@@ -656,9 +663,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-35',
+    id: 'musa-36',
     type: 'quran_source',
-    order: 35,
+    order: 36,
     content: "Pharaoh's chiefs pressed him, and he said he would kill their sons. Then came the years of famine, the flood, the locusts, the lice, the frogs and the blood - and each time the punishment was lifted, they broke their word.",
     contentFr: "Les notables de Pharaon le pressèrent, et il dit qu'il tuerait leurs fils. Vinrent alors les années de disette, le déluge, les sauterelles, les poux, les grenouilles et le sang ; et chaque fois que le châtiment était levé, ils manquaient à leur parole.",
     source: {
@@ -674,9 +681,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-36',
+    id: 'musa-37',
     type: 'quran_source',
-    order: 36,
+    order: 37,
     content: "Az-Zukhruf gives what they called Musa while the affliction was on them, and what Pharaoh called out to his people once it lifted.",
     contentFr: "Az-Zukhruf donne ce qu'ils appelèrent Moussa tant que l'affliction pesait sur eux, et ce que Pharaon proclama à son peuple une fois qu'elle fut levée.",
     source: {
@@ -692,9 +699,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-37',
+    id: 'musa-38',
     type: 'quran_source',
-    order: 37,
+    order: 38,
     content: "A man of Pharaoh's own household, who concealed his faith, spoke: do you kill a man for saying, 'My Lord is Allah'?",
     contentFr: "Un homme de la maison même de Pharaon, qui dissimulait sa foi, prit la parole : tuerez-vous un homme parce qu'il dit « mon Seigneur est Allah » ?",
     source: {
@@ -710,9 +717,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-38',
+    id: 'musa-39',
     type: 'quran_source',
-    order: 38,
+    order: 39,
     content: "Pharaoh answered by ordering Haman to build him a tower, that he might look at the God of Musa.",
     contentFr: "Pharaon répondit en ordonnant à Haman de lui bâtir une tour, pour qu'il regarde le Dieu de Moussa.",
     source: {
@@ -728,9 +735,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-39',
+    id: 'musa-40',
     type: 'quran_source',
-    order: 39,
+    order: 40,
     content: "Al-Qasas gives the same order, and what Pharaoh said to his chiefs before it.",
     contentFr: "Al-Qasas donne le même ordre, et ce que Pharaon dit à ses notables avant cela.",
     source: {
@@ -746,9 +753,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-40',
+    id: 'musa-41',
     type: 'quran_source',
-    order: 40,
+    order: 41,
     content: "The believing man spoke on: he called his people to the way of right conduct, and Allah protected him from what they plotted.",
     contentFr: "L'homme croyant poursuivit : il appela son peuple à la voie de la droiture, et Allah le protégea de ce qu'ils tramaient.",
     source: {
@@ -764,9 +771,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-41',
+    id: 'musa-42',
     type: 'quran_source',
-    order: 41,
+    order: 42,
     content: "And this is what they had said when he brought them the truth.",
     contentFr: "Et voici ce qu'ils avaient dit lorsqu'il leur apporta la vérité.",
     source: {
@@ -782,9 +789,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-42',
+    id: 'musa-43',
     type: 'quran_source',
-    order: 42,
+    order: 43,
     content: "Yunus gives who believed - only youths, for fear of Pharaoh - what Musa told them, and the supplication of his that was answered.",
     contentFr: "Younous donne qui crut : seulement des jeunes gens, par crainte de Pharaon ; ce que Moussa leur dit, et son invocation qui fut exaucée.",
     source: {
@@ -800,9 +807,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-43',
+    id: 'musa-44',
     type: 'quran_source',
-    order: 43,
+    order: 44,
     content: "And Allah sets the wife of Pharaoh as an example for those who believe, in the words of her own prayer.",
     contentFr: "Et Allah donne la femme de Pharaon en exemple à ceux qui croient, dans les mots de sa propre prière.",
     source: {
@@ -818,9 +825,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-44',
+    id: 'musa-45',
     type: 'quran_source',
-    order: 44,
+    order: 45,
     content: "Musa was commanded to travel by night with the servants of Allah. Pharaoh pursued them at sunrise, and when the two companies saw one another Musa said what he said - then he struck the sea, and it parted.",
     contentFr: "Il fut ordonné à Moussa de partir de nuit avec les serviteurs d'Allah. Pharaon les poursuivit au lever du soleil, et lorsque les deux troupes se virent, Moussa dit ce qu'il dit ; puis il frappa la mer, et elle se fendit.",
     source: {
@@ -836,9 +843,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-45',
+    id: 'musa-46',
     type: 'quran_source',
-    order: 45,
+    order: 46,
     content: "Ta-Ha gives the command: strike for them a dry path through the sea, fearing neither pursuit nor drowning.",
     contentFr: "Ta-Ha donne l'ordre : trace-leur un chemin sec à travers la mer, sans craindre d'être rejoint ni de te noyer.",
     source: {
@@ -854,9 +861,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-46',
+    id: 'musa-47',
     type: 'quran_source',
-    order: 46,
+    order: 47,
     content: "Ad-Dukhan gives the command to leave the sea in stillness, and what Pharaoh's people left behind them.",
     contentFr: "Ad-Dukhan donne l'ordre de laisser la mer calme, et ce que les gens de Pharaon laissèrent derrière eux.",
     source: {
@@ -872,9 +879,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-47',
+    id: 'musa-48',
     type: 'quran_source',
-    order: 47,
+    order: 48,
     content: "Yunus gives what Pharaoh said when the drowning overtook him, and what he was answered.",
     contentFr: "Younous donne ce que Pharaon dit lorsque la noyade le surprit, et ce qui lui fut répondu.",
     source: {
@@ -890,9 +897,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-48',
+    id: 'musa-49',
     type: 'quran_source',
-    order: 48,
+    order: 49,
     content: "They were drowned in the sea, and the people who had been oppressed inherited the land.",
     contentFr: "Ils furent noyés dans la mer, et le peuple qui avait été opprimé hérita de la terre.",
     source: {
@@ -908,9 +915,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-49',
+    id: 'musa-50',
     type: 'quran_source',
-    order: 49,
+    order: 50,
     content: "Al-Baqarah: the sea was parted for them while they looked on.",
     contentFr: "Al-Baqarah : la mer fut fendue pour eux tandis qu'ils regardaient.",
     source: {
@@ -926,9 +933,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-50',
+    id: 'musa-51',
     type: 'quran_source',
-    order: 50,
+    order: 51,
     content: "Al-Qasas: they were seized and cast into the sea, and made leaders inviting to the Fire.",
     contentFr: "Al-Qasas : ils furent saisis et jetés dans la mer, et faits chefs appelant au Feu.",
     source: {
@@ -944,9 +951,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-51',
+    id: 'musa-52',
     type: 'quran_source',
-    order: 51,
+    order: 52,
     content: "Az-Zukhruf: they were drowned all together, and made a precedent for the later peoples.",
     contentFr: "Az-Zukhruf : ils furent tous noyés, et faits précédent pour les peuples ultérieurs.",
     source: {
@@ -962,9 +969,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-52',
+    id: 'musa-53',
     type: 'quran_source',
-    order: 52,
+    order: 53,
     content: "Al-Isra: he meant to drive them from the land, and was drowned with all who were with him.",
     contentFr: "Al-Isra : il voulut les chasser du pays, et fut noyé avec tous ceux qui étaient avec lui.",
     source: {
@@ -980,9 +987,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-53',
+    id: 'musa-54',
     type: 'quran_source',
-    order: 53,
+    order: 54,
     content: "Adh-Dhariyat: he and his soldiers were cast into the sea, and he was blameworthy.",
     contentFr: "Adh-Dhariyat : lui et ses soldats furent jetés dans la mer, et il était blâmable.",
     source: {
@@ -998,9 +1005,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-54',
+    id: 'musa-55',
     type: 'quran_source',
-    order: 54,
+    order: 55,
     content: "Al-Ankabut: Qarun, Pharaoh and Haman - each was seized for his own sin.",
     contentFr: "Al-Ankabut : Qarun, Pharaon et Haman ; chacun fut saisi pour son propre péché.",
     source: {
@@ -1016,9 +1023,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-55',
+    id: 'musa-56',
     type: 'quran_source',
-    order: 55,
+    order: 56,
     content: "Al-Qamar: the warning came to the people of Pharaoh, and they denied every sign.",
     contentFr: "Al-Qamar : l'avertissement vint aux gens de Pharaon, et ils démentirent tous les signes.",
     source: {
@@ -1034,9 +1041,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-56',
+    id: 'musa-57',
     type: 'quran_source',
-    order: 56,
+    order: 57,
     content: "They crossed, and came upon a people devoted to idols of theirs. They asked Musa for a god like them, and he answered.",
     contentFr: "Ils traversèrent, et rencontrèrent un peuple voué à ses idoles. Ils demandèrent à Moussa un dieu comme les leurs, et il répondit.",
     source: {
@@ -1052,9 +1059,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-57',
+    id: 'musa-58',
     type: 'quran_source',
-    order: 57,
+    order: 58,
     content: "The clouds shaded them, the manna and the quails came down - and they asked to exchange it for herbs, cucumbers, garlic, lentils and onions.",
     contentFr: "Les nuages les ombragèrent, la manne et les cailles descendirent ; et ils demandèrent à échanger cela contre des herbes, des concombres, de l'ail, des lentilles et des oignons.",
     source: {
@@ -1070,9 +1077,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-58',
+    id: 'musa-59',
     type: 'quran_source',
-    order: 58,
+    order: 59,
     content: "Twelve springs gushed from the stone when he struck it, one for each tribe.",
     contentFr: "Douze sources jaillirent du rocher lorsqu'il le frappa, une pour chaque tribu.",
     source: {
@@ -1088,9 +1095,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-59',
+    id: 'musa-60',
     type: 'quran_source',
-    order: 59,
+    order: 60,
     content: "Ta-Ha gives the appointment at the right side of the mount, and the warning that came with the provision.",
     contentFr: "Ta-Ha donne le rendez-vous au côté droit du Mont, et l'avertissement joint à la subsistance.",
     source: {
@@ -1106,9 +1113,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-60',
+    id: 'musa-61',
     type: 'quran_source',
-    order: 60,
+    order: 61,
     content: "The term of his Lord was completed as forty nights. There Musa said, 'My Lord, show me, that I may look at You' - and the mountain was levelled.",
     contentFr: "Le terme fixé par son Seigneur s'accomplit en quarante nuits. Là, Moussa dit : « Mon Seigneur, montre-Toi à moi que je Te voie » ; et la montagne fut nivelée.",
     source: {
@@ -1124,9 +1131,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-61',
+    id: 'musa-62',
     type: 'quran_source',
-    order: 61,
+    order: 62,
     content: "And Allah spoke to Musa with direct speech.",
     contentFr: "Et Allah parla à Moussa de vive voix.",
     source: {
@@ -1142,9 +1149,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-62',
+    id: 'musa-63',
     type: 'quran_source',
-    order: 62,
+    order: 63,
     content: "Al-Baqarah: the forty nights, the calf taken in his absence, the pardon after it, and the Scripture and the criterion.",
     contentFr: "Al-Baqarah : les quarante nuits, le veau adopté en son absence, le pardon qui suivit, puis le Livre et le discernement.",
     source: {
@@ -1160,9 +1167,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-63',
+    id: 'musa-64',
     type: 'quran_source',
-    order: 63,
+    order: 64,
     content: "The mountain was raised above them as if it were a dark cloud, and they were certain it would fall upon them.",
     contentFr: "La montagne fut élevée au-dessus d'eux comme si elle était un nuage sombre, et ils furent certains qu'elle tomberait sur eux.",
     source: {
@@ -1178,9 +1185,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-64',
+    id: 'musa-65',
     type: 'quran_source',
-    order: 64,
+    order: 65,
     content: "Al-Baqarah gives the covenant taken under it.",
     contentFr: "Al-Baqarah donne le pacte qui fut pris sous elle.",
     source: {
@@ -1196,9 +1203,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-65',
+    id: 'musa-66',
     type: 'quran_source',
-    order: 65,
+    order: 66,
     content: "And what they answered when it was taken.",
     contentFr: "Et ce qu'ils répondirent lorsqu'il fut pris.",
     source: {
@@ -1214,9 +1221,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-66',
+    id: 'musa-67',
     type: 'quran_source',
-    order: 66,
+    order: 67,
     content: "An-Nisa: they had asked Musa for greater than a book from heaven - 'Show us Allah outright' - and the thunderbolt struck them.",
     contentFr: "An-Nisa : ils avaient demandé à Moussa plus grand qu'un livre venu du ciel : « Montre-nous Allah à découvert » ; et la foudre les frappa.",
     source: {
@@ -1232,9 +1239,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-67',
+    id: 'musa-68',
     type: 'quran_source',
-    order: 67,
+    order: 68,
     content: "The covenant taken from the Children of Israel, and what they did with it.",
     contentFr: "Le pacte pris des enfants d'Israël, et ce qu'ils en firent.",
     source: {
@@ -1250,9 +1257,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-68',
+    id: 'musa-69',
     type: 'quran_source',
-    order: 68,
+    order: 69,
     content: "Twelve leaders were delegated from among them, and Allah said what He would do if they kept it.",
     contentFr: "Douze chefs furent délégués parmi eux, et Allah dit ce qu'Il ferait s'ils le tenaient.",
     source: {
@@ -1268,9 +1275,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-69',
+    id: 'musa-70',
     type: 'quran_source',
-    order: 69,
+    order: 70,
     content: "And this was decreed upon them concerning a single soul.",
     contentFr: "Et ceci leur fut décrété au sujet d'une seule âme.",
     source: {
@@ -1286,9 +1293,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-70',
+    id: 'musa-71',
     type: 'quran_source',
-    order: 70,
+    order: 71,
     content: "Messengers were sent to them: some they denied, and some they killed.",
     contentFr: "Des messagers leur furent envoyés : ils en démentirent certains, et en tuèrent d'autres.",
     source: {
@@ -1304,9 +1311,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-71',
+    id: 'musa-72',
     type: 'quran_source',
-    order: 71,
+    order: 72,
     content: "The Scripture was given to Musa after the former generations had been destroyed - as enlightenment, guidance and mercy.",
     contentFr: "Le Livre fut donné à Moussa après la destruction des générations passées : clairvoyance, guidée et miséricorde.",
     source: {
@@ -1322,9 +1329,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-72',
+    id: 'musa-73',
     type: 'quran_source',
-    order: 72,
+    order: 73,
     content: "Al-An'am: a detailed explanation of all things.",
     contentFr: "Al-An'am : un exposé détaillé de toute chose.",
     source: {
@@ -1340,9 +1347,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-73',
+    id: 'musa-74',
     type: 'quran_source',
-    order: 73,
+    order: 74,
     content: "Say: who revealed the Scripture that Musa brought as light and guidance?",
     contentFr: "Dis : qui a fait descendre le Livre que Moussa apporta comme lumière et guide ?",
     source: {
@@ -1358,9 +1365,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-74',
+    id: 'musa-75',
     type: 'quran_source',
-    order: 74,
+    order: 75,
     content: "Al-Isra: it was made a guidance for the Children of Israel.",
     contentFr: "Al-Isra : il fut fait guide pour les enfants d'Israël.",
     source: {
@@ -1376,9 +1383,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-75',
+    id: 'musa-76',
     type: 'quran_source',
-    order: 75,
+    order: 76,
     content: "As-Sajdah: leaders were made from among them, guiding by Allah's command, when they were patient.",
     contentFr: "As-Sajdah : des chefs furent établis parmi eux, guidant selon l'ordre d'Allah, lorsqu'ils furent patients.",
     source: {
@@ -1394,9 +1401,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-76',
+    id: 'musa-77',
     type: 'quran_source',
-    order: 76,
+    order: 77,
     content: "Ghafir: Musa was given guidance, and they inherited the Scripture.",
     contentFr: "Ghafir : Moussa reçut la guidée, et ils héritèrent du Livre.",
     source: {
@@ -1412,9 +1419,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-77',
+    id: 'musa-78',
     type: 'quran_source',
-    order: 77,
+    order: 78,
     content: "Al-Jathiyah: they were given the Scripture, the judgement and the prophethood.",
     contentFr: "Al-Jathiyah : ils reçurent le Livre, le jugement et la prophétie.",
     source: {
@@ -1430,9 +1437,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-78',
+    id: 'musa-79',
     type: 'quran_source',
-    order: 78,
+    order: 79,
     content: "Al-Anbiya: Musa and Harun were given the criterion, a light and a reminder.",
     contentFr: "Al-Anbiya : Moussa et Haroun reçurent le discernement, une lumière et un rappel.",
     source: {
@@ -1448,9 +1455,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-79',
+    id: 'musa-80',
     type: 'quran_source',
-    order: 79,
+    order: 80,
     content: "Al-Furqan: Harun was appointed with him as an assistant, and both were sent.",
     contentFr: "Al-Furqan : Haroun fut établi avec lui comme assistant, et tous deux furent envoyés.",
     source: {
@@ -1466,9 +1473,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-80',
+    id: 'musa-81',
     type: 'quran_source',
-    order: 80,
+    order: 81,
     content: "Al-Mu'minun: the Scripture was given that they might be guided.",
     contentFr: "Al-Mu'minun : le Livre fut donné afin qu'ils soient guidés.",
     source: {
@@ -1484,9 +1491,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-81',
+    id: 'musa-82',
     type: 'quran_source',
-    order: 81,
+    order: 82,
     content: "Hud: it came under disagreement.",
     contentFr: "Houd : il fit l'objet de divergences.",
     source: {
@@ -1502,9 +1509,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-82',
+    id: 'musa-83',
     type: 'quran_source',
-    order: 82,
+    order: 83,
     content: "Fussilat says the same.",
     contentFr: "Fussilat dit la même chose.",
     source: {
@@ -1520,9 +1527,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-83',
+    id: 'musa-84',
     type: 'quran_source',
-    order: 83,
+    order: 84,
     content: "Ash-Shura: what was enjoined upon Musa was enjoined upon the prophets before and after him.",
     contentFr: "Ash-Shura : ce qui fut prescrit à Moussa fut prescrit aux prophètes avant et après lui.",
     source: {
@@ -1538,9 +1545,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-84',
+    id: 'musa-85',
     type: 'quran_source',
-    order: 84,
+    order: 85,
     content: "Al-Ahqaf: before the Quran was the scripture of Musa, a guide and a mercy.",
     contentFr: "Al-Ahqaf : avant le Coran il y eut le Livre de Moussa, guide et miséricorde.",
     source: {
@@ -1556,9 +1563,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-85',
+    id: 'musa-86',
     type: 'quran_source',
-    order: 85,
+    order: 86,
     content: "Hud says the same of it.",
     contentFr: "Houd en dit autant.",
     source: {
@@ -1574,9 +1581,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-86',
+    id: 'musa-87',
     type: 'quran_source',
-    order: 86,
+    order: 87,
     content: "And the jinn said they had heard a Book revealed after Musa.",
     contentFr: "Et les djinns dirent avoir entendu un Livre révélé après Moussa.",
     source: {
@@ -1592,9 +1599,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-87',
+    id: 'musa-88',
     type: 'quran_source',
-    order: 87,
+    order: 88,
     content: "They said: why was he not given the like of what was given to Musa?",
     contentFr: "Ils dirent : pourquoi n'a-t-il pas reçu le semblable de ce qui fut donné à Moussa ?",
     source: {
@@ -1610,9 +1617,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-88',
+    id: 'musa-89',
     type: 'quran_source',
-    order: 88,
+    order: 89,
     content: "And a witness from the Children of Israel testified.",
     contentFr: "Et un témoin d'entre les enfants d'Israël témoigna.",
     source: {
@@ -1628,9 +1635,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-89',
+    id: 'musa-90',
     type: 'quran_source',
-    order: 89,
+    order: 90,
     content: "An-Naml: this Quran relates to them most of what they disagree over.",
     contentFr: "An-Naml : ce Coran leur raconte la plupart de ce sur quoi ils divergent.",
     source: {
@@ -1646,9 +1653,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-90',
+    id: 'musa-91',
     type: 'quran_source',
-    order: 90,
+    order: 91,
     content: "Al-A'la: this is in the former scriptures, the scriptures of Ibrahim and Musa.",
     contentFr: "Al-A'la : cela est dans les Écritures anciennes, les Écritures d'Ibrahim et de Moussa.",
     source: {
@@ -1664,9 +1671,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-91',
+    id: 'musa-92',
     type: 'quran_source',
-    order: 91,
+    order: 92,
     content: "An-Najm asks whether he has been informed of what is in them.",
     contentFr: "An-Najm demande s'il a été informé de ce qui s'y trouve.",
     source: {
@@ -1682,9 +1689,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-92',
+    id: 'musa-93',
     type: 'quran_source',
-    order: 92,
+    order: 93,
     content: "Al-Jumu'ah gives the likeness of those entrusted with the Torah who did not take it on.",
     contentFr: "Al-Jumu'ah donne la ressemblance de ceux à qui la Torah fut confiée et qui ne s'en chargèrent pas.",
     source: {
@@ -1700,9 +1707,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-93',
+    id: 'musa-94',
     type: 'quran_source',
-    order: 93,
+    order: 94,
     content: "Al-Baqarah: the Scripture was given to Musa, and messengers followed after him.",
     contentFr: "Al-Baqarah : le Livre fut donné à Moussa, et des messagers vinrent à sa suite.",
     source: {
@@ -1718,9 +1725,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-94',
+    id: 'musa-95',
     type: 'quran_source',
-    order: 94,
+    order: 95,
     content: "Ali 'Imran: bring the Torah and recite it, if you are truthful.",
     contentFr: "Ali 'Imran : apportez la Torah et lisez-la, si vous êtes véridiques.",
     source: {
@@ -1736,9 +1743,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-95',
+    id: 'musa-96',
     type: 'quran_source',
-    order: 95,
+    order: 96,
     content: "And the scholars of the Children of Israel recognise it.",
     contentFr: "Et les savants des enfants d'Israël le reconnaissent.",
     source: {
@@ -1754,9 +1761,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-96',
+    id: 'musa-97',
     type: 'quran_source',
-    order: 96,
+    order: 97,
     content: "We believe in what was given to Musa, making no distinction between them.",
     contentFr: "Nous croyons en ce qui fut donné à Moussa, sans faire de distinction entre eux.",
     source: {
@@ -1772,9 +1779,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-97',
+    id: 'musa-98',
     type: 'quran_source',
-    order: 97,
+    order: 98,
     content: "Ali 'Imran says the same, and we are Muslims to Him.",
     contentFr: "Ali 'Imran dit la même chose, et nous Lui sommes soumis.",
     source: {
@@ -1790,9 +1797,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-98',
+    id: 'musa-99',
     type: 'quran_source',
-    order: 98,
+    order: 99,
     content: "An-Nisa: revelation was given to Musa as it was given to the prophets.",
     contentFr: "An-Nisa : la révélation fut donnée à Moussa comme elle fut donnée aux prophètes.",
     source: {
@@ -1808,9 +1815,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-99',
+    id: 'musa-100',
     type: 'quran_source',
-    order: 99,
+    order: 100,
     content: "Al-Ahzab: Allah took from the prophets their covenant, and from Musa among them.",
     contentFr: "Al-Ahzab : Allah prit des prophètes leur engagement, et de Moussa parmi eux.",
     source: {
@@ -1826,9 +1833,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-100',
+    id: 'musa-101',
     type: 'quran_source',
-    order: 100,
+    order: 101,
     content: "Al-An'am names him among those Allah guided.",
     contentFr: "Al-An'am le nomme parmi ceux qu'Allah a guidés.",
     source: {
@@ -1844,9 +1851,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-101',
+    id: 'musa-102',
     type: 'quran_source',
-    order: 101,
+    order: 102,
     content: "Maryam names him among those Allah favoured.",
     contentFr: "Maryam le nomme parmi ceux qu'Allah a comblés.",
     source: {
@@ -1862,9 +1869,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-102',
+    id: 'musa-103',
     type: 'quran_source',
-    order: 102,
+    order: 103,
     content: "And As-Saffat leaves this among the later generations: peace upon Musa and Harun.",
     contentFr: "Et As-Saffat laisse ceci parmi les générations ultérieures : paix sur Moussa et Haroun.",
     source: {
@@ -1880,9 +1887,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-103',
+    id: 'musa-104',
     type: 'quran_source',
-    order: 103,
+    order: 104,
     content: "While he was at the appointment his people were tried, and the Samiri led them astray. Musa returned angry and grieved, questioned Harun, then questioned the Samiri, and passed sentence on him.",
     contentFr: "Pendant qu'il était au rendez-vous, son peuple fut éprouvé, et le Samiri les égara. Moussa revint courroucé et affligé, interrogea Haroun, puis interrogea le Samiri, et prononça sa sentence.",
     source: {
@@ -1898,9 +1905,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-104',
+    id: 'musa-105',
     type: 'quran_source',
-    order: 104,
+    order: 105,
     content: "Al-A'raf gives the same return: he threw down the tablets and seized his brother's head, then prayed for the two of them, and afterwards chose seventy men for the appointment.",
     contentFr: "Al-A'raf donne le même retour : il jeta les tablettes et saisit la tête de son frère, puis pria pour eux deux, et choisit ensuite soixante-dix hommes pour le rendez-vous.",
     source: {
@@ -1916,9 +1923,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-105',
+    id: 'musa-106',
     type: 'quran_source',
-    order: 105,
+    order: 106,
     content: "Al-Baqarah gives what he commanded them after the calf, and what they said to him.",
     contentFr: "Al-Baqarah donne ce qu'il leur ordonna après le veau, et ce qu'ils lui dirent.",
     source: {
@@ -1934,9 +1941,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-106',
+    id: 'musa-107',
     type: 'quran_source',
-    order: 106,
+    order: 107,
     content: "He had brought them clear proofs, and still they took the calf.",
     contentFr: "Il leur avait apporté des preuves évidentes, et pourtant ils adoptèrent le veau.",
     source: {
@@ -1952,9 +1959,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-107',
+    id: 'musa-108',
     type: 'quran_source',
-    order: 107,
+    order: 108,
     content: "Then Allah commanded them, through Musa, to slaughter a cow - and they questioned him about it, question after question, until they could hardly do it.",
     contentFr: "Puis Allah leur ordonna, par Moussa, d'immoler une vache ; et ils l'interrogèrent à son sujet, question après question, jusqu'à ce qu'ils faillissent ne pas le faire.",
     source: {
@@ -1970,9 +1977,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-108',
+    id: 'musa-109',
     type: 'quran_source',
-    order: 108,
+    order: 109,
     content: "Musa called them to enter the blessed land assigned to them. They said, 'Go, you and your Lord, and fight' - and forty years were decreed upon them.",
     contentFr: "Moussa les appela à entrer dans la terre bénie qui leur était assignée. Ils dirent : « Va, toi et ton Seigneur, et combattez » ; et quarante ans leur furent décrétés.",
     source: {
@@ -1988,9 +1995,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-109',
+    id: 'musa-110',
     type: 'quran_source',
-    order: 109,
+    order: 110,
     content: "They were told to enter the gate bowing humbly, and those who wronged changed the word they had been given.",
     contentFr: "Il leur fut dit d'entrer par la porte en se prosternant, et ceux qui furent injustes changèrent la parole qui leur avait été donnée.",
     source: {
@@ -2006,9 +2013,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-110',
+    id: 'musa-111',
     type: 'quran_source',
-    order: 110,
+    order: 111,
     content: "Al-A'raf reports it the same way.",
     contentFr: "Al-A'raf le rapporte de la même manière.",
     source: {
@@ -2024,9 +2031,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-111',
+    id: 'musa-112',
     type: 'quran_source',
-    order: 111,
+    order: 112,
     content: "Al-A'raf gives the town by the sea and the sabbath, and what one community among them said to those who warned.",
     contentFr: "Al-A'raf donne la cité au bord de la mer et le sabbat, et ce qu'une communauté parmi eux dit à ceux qui avertissaient.",
     source: {
@@ -2042,9 +2049,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-112',
+    id: 'musa-113',
     type: 'quran_source',
-    order: 112,
+    order: 113,
     content: "Al-Baqarah: it was made a deterrent punishment, and a lesson.",
     contentFr: "Al-Baqarah : cela fut fait châtiment exemplaire, et leçon.",
     source: {
@@ -2060,9 +2067,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-113',
+    id: 'musa-114',
     type: 'quran_source',
-    order: 113,
+    order: 114,
     content: "And among the people of Musa is a community which guides by truth.",
     contentFr: "Et parmi le peuple de Moussa il est une communauté qui guide par la vérité.",
     source: {
@@ -2078,9 +2085,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-114',
+    id: 'musa-115',
     type: 'quran_source',
-    order: 114,
+    order: 115,
     content: "They were divided throughout the earth into nations, and tested with good times and bad.",
     contentFr: "Ils furent dispersés sur la terre en communautés, et éprouvés par le bonheur et le malheur.",
     source: {
@@ -2096,9 +2103,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-115',
+    id: 'musa-116',
     type: 'quran_source',
-    order: 115,
+    order: 116,
     content: "Qarun was of the people of Musa, and tyrannised them. His people counselled him, he answered that he was given his treasure for knowledge he had - and the earth swallowed him and his home.",
     contentFr: "Qarun était du peuple de Moussa, et les opprima. Son peuple le conseilla, il répondit qu'il tenait son trésor d'une science qu'il possédait ; et la terre l'engloutit avec sa demeure.",
     source: {
@@ -2114,9 +2121,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-116',
+    id: 'musa-117',
     type: 'quran_source',
-    order: 116,
+    order: 117,
     content: "Ghafir names him with Pharaoh and Haman among those Musa was sent to.",
     contentFr: "Ghafir le nomme avec Pharaon et Haman parmi ceux à qui Moussa fut envoyé.",
     source: {
@@ -2132,9 +2139,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-117',
+    id: 'musa-118',
     type: 'quran_source',
-    order: 117,
+    order: 118,
     content: "Musa said he would not cease travelling until he reached the junction of the two seas. There they found a servant of Allah's, and Musa asked to follow him.",
     contentFr: "Moussa dit qu'il n'aurait de cesse d'avancer avant d'atteindre la jonction des deux mers. Là ils trouvèrent un serviteur d'Allah, et Moussa demanda à le suivre.",
     source: {
@@ -2150,9 +2157,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-118',
+    id: 'musa-119',
     type: 'quran_source',
-    order: 118,
+    order: 119,
     content: "The ship, the boy and the wall - and at each one Musa spoke, until the parting came.",
     contentFr: "Le navire, le garçon et le mur ; et à chacun Moussa parla, jusqu'à ce que vînt la séparation.",
     source: {
@@ -2168,9 +2175,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-119',
+    id: 'musa-120',
     type: 'quran_source',
-    order: 119,
+    order: 120,
     content: "Then he told him the interpretation of what he could not bear patiently.",
     contentFr: "Puis il lui dit l'interprétation de ce qu'il n'avait pu endurer.",
     source: {
@@ -2186,9 +2193,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-120',
+    id: 'musa-121',
     type: 'hadith_source',
-    order: 120,
+    order: 121,
     content: "The Prophet صلى الله عليه وسلم told how that journey began, and why.",
     contentFr: "Le Prophète صلى الله عليه وسلم a raconté comment ce voyage commença, et pourquoi.",
     source: {
@@ -2201,9 +2208,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-121',
+    id: 'musa-122',
     type: 'quran_source',
-    order: 121,
+    order: 122,
     content: "As-Saff gives what he said to his people: why do you harm me, while you know that I am the messenger of Allah to you?",
     contentFr: "As-Saff donne ce qu'il dit à son peuple : pourquoi me blessez-vous, alors que vous savez que je suis le messager d'Allah vers vous ?",
     source: {
@@ -2219,9 +2226,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-122',
+    id: 'musa-123',
     type: 'quran_source',
-    order: 122,
+    order: 123,
     content: "Al-Ahzab: be not like those who abused Musa; then Allah cleared him of what they said.",
     contentFr: "Al-Ahzab : ne soyez pas comme ceux qui ont offensé Moussa ; Allah le disculpa de ce qu'ils disaient.",
     source: {
@@ -2237,9 +2244,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-123',
+    id: 'musa-124',
     type: 'hadith_source',
-    order: 123,
+    order: 124,
     content: "This is what they said of him, and how Allah cleared him of it.",
     contentFr: "Voici ce qu'ils disaient de lui, et comment Allah l'en disculpa.",
     source: {
@@ -2252,9 +2259,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-124',
+    id: 'musa-125',
     type: 'hadith_source',
-    order: 124,
+    order: 125,
     content: "The prayers this ummah prays five times a day were brought down to five at his word.",
     contentFr: "Les prières que cette communauté accomplit cinq fois par jour furent ramenées à cinq sur sa parole.",
     source: {
@@ -2267,9 +2274,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-125',
+    id: 'musa-126',
     type: 'hadith_source',
-    order: 125,
+    order: 126,
     content: "And the Prophet صلى الله عليه وسلم told of the day Adam and Musa argued.",
     contentFr: "Et le Prophète صلى الله عليه وسلم a raconté le jour où Adam et Moussa débattirent.",
     source: {
@@ -2282,9 +2289,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-126',
+    id: 'musa-127',
     type: 'hadith_source',
-    order: 126,
+    order: 127,
     content: "The day he was saved from the sea is fasted to this day.",
     contentFr: "Le jour où il fut sauvé de la mer est jeûné jusqu'à aujourd'hui.",
     source: {
@@ -2297,9 +2304,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-127',
+    id: 'musa-128',
     type: 'hadith_source',
-    order: 127,
+    order: 128,
     content: "And this is how his life ended.",
     contentFr: "Et voici comment sa vie prit fin.",
     source: {
@@ -2312,9 +2319,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-128',
+    id: 'musa-129',
     type: 'hadith_source',
-    order: 128,
+    order: 129,
     content: "The Prophet صلى الله عليه وسلم said, in the same report:",
     contentFr: "Le Prophète صلى الله عليه وسلم dit, dans le même rapport :",
     source: {
@@ -2327,9 +2334,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-129',
+    id: 'musa-130',
     type: 'quran_source',
-    order: 129,
+    order: 130,
     content: "An-Nazi'at: Allah seized him in exemplary punishment for the last and the first.",
     contentFr: "An-Nazi'at : Allah le saisit du châtiment exemplaire de l'au-delà et de celui d'ici-bas.",
     source: {
@@ -2345,9 +2352,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-130',
+    id: 'musa-131',
     type: 'quran_source',
-    order: 130,
+    order: 131,
     content: "Ghafir: the Fire, to which they are exposed morning and evening.",
     contentFr: "Ghafir : le Feu, auquel ils sont exposés matin et soir.",
     source: {
@@ -2363,9 +2370,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-131',
+    id: 'musa-132',
     type: 'quran_source',
-    order: 131,
+    order: 132,
     content: "Hud: he will precede his people on the Day of Resurrection and lead them into the Fire.",
     contentFr: "Houd : il précédera son peuple au Jour de la Résurrection et le mènera au Feu.",
     source: {
@@ -2381,9 +2388,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-132',
+    id: 'musa-133',
     type: 'quran_source',
-    order: 132,
+    order: 133,
     content: "Ali 'Imran: like the custom of the people of Pharaoh and those before them.",
     contentFr: "Ali 'Imran : telle la coutume des gens de Pharaon et de ceux d'avant eux.",
     source: {
@@ -2399,9 +2406,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-133',
+    id: 'musa-134',
     type: 'quran_source',
-    order: 133,
+    order: 134,
     content: "Al-Anfal: Allah seized them for their sins, and drowned the people of Pharaoh.",
     contentFr: "Al-Anfal : Allah les saisit pour leurs péchés, et noya les gens de Pharaon.",
     source: {
@@ -2417,9 +2424,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-134',
+    id: 'musa-135',
     type: 'quran_source',
-    order: 134,
+    order: 135,
     content: "Al-Haqqah: they disobeyed the messenger of their Lord, so He seized them.",
     contentFr: "Al-Haqqah : ils désobéirent au messager de leur Seigneur, et Il les saisit.",
     source: {
@@ -2435,9 +2442,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-135',
+    id: 'musa-136',
     type: 'quran_source',
-    order: 135,
+    order: 136,
     content: "Al-Muzzammil: a messenger was sent to Pharaoh as one has been sent to you.",
     contentFr: "Al-Muzzammil : un messager fut envoyé à Pharaon comme il vous en a été envoyé un.",
     source: {
@@ -2453,9 +2460,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-136',
+    id: 'musa-137',
     type: 'quran_source',
-    order: 136,
+    order: 137,
     content: "Al-Buruj asks whether the story of the soldiers has reached you.",
     contentFr: "Al-Buruj demande si le récit des armées t'est parvenu.",
     source: {
@@ -2471,9 +2478,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-137',
+    id: 'musa-138',
     type: 'quran_source',
-    order: 137,
+    order: 138,
     content: "Al-Fajr: Pharaoh, owner of the stakes.",
     contentFr: "Al-Fajr : Pharaon, celui aux pieux.",
     source: {
@@ -2489,9 +2496,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-138',
+    id: 'musa-139',
     type: 'quran_source',
-    order: 138,
+    order: 139,
     content: "Sad names him the same way.",
     contentFr: "Sad le nomme de la même manière.",
     source: {
@@ -2507,9 +2514,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-139',
+    id: 'musa-140',
     type: 'quran_source',
-    order: 139,
+    order: 140,
     content: "Qaf: all of them denied the messengers.",
     contentFr: "Qaf : tous démentirent les messagers.",
     source: {
@@ -2525,9 +2532,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-140',
+    id: 'musa-141',
     type: 'quran_source',
-    order: 140,
+    order: 141,
     content: "Al-Hajj: and Musa was denied, and the disbelievers were given respite before they were seized.",
     contentFr: "Al-Hajj : et Moussa fut démenti, et les mécréants eurent un répit avant d'être saisis.",
     source: {
@@ -2543,9 +2550,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-141',
+    id: 'musa-142',
     type: 'quran_source',
-    order: 141,
+    order: 142,
     content: "Ad-Dukhan: the Children of Israel were saved from the humiliating torment.",
     contentFr: "Ad-Dukhan : les enfants d'Israël furent sauvés du châtiment avilissant.",
     source: {
@@ -2561,9 +2568,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-142',
+    id: 'musa-143',
     type: 'quran_source',
-    order: 142,
+    order: 143,
     content: "Yunus: they were settled in an agreeable settlement, and differed only after knowledge came to them.",
     contentFr: "Younous : ils furent installés dans un lieu agréable, et ne divergèrent qu'après que la science leur fut venue.",
     source: {
@@ -2579,9 +2586,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-143',
+    id: 'musa-144',
     type: 'quran_source',
-    order: 143,
+    order: 144,
     content: "Al-Isra gives what was conveyed to them in the Scripture about what they would do on the earth.",
     contentFr: "Al-Isra donne ce qui leur fut annoncé dans le Livre au sujet de ce qu'ils feraient sur la terre.",
     source: {
@@ -2597,9 +2604,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-144',
+    id: 'musa-145',
     type: 'quran_source',
-    order: 144,
+    order: 145,
     content: "And after him, a sign of the kingship: a remnant of what the family of Musa and the family of Harun had left.",
     contentFr: "Et après lui, un signe de la royauté : une relique de ce qu'avaient laissé la famille de Moussa et la famille de Haroun.",
     source: {
@@ -2615,9 +2622,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-145',
+    id: 'musa-146',
     type: 'quran_source',
-    order: 145,
+    order: 146,
     content: "The Quran closes the story by calling them to what was taken from them: remember My favour, and fulfil My covenant.",
     contentFr: "Le Coran clôt le récit en les appelant à ce qui fut pris d'eux : rappelez-vous Ma faveur, et tenez Mon pacte.",
     source: {
@@ -2633,9 +2640,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-146',
+    id: 'musa-147',
     type: 'quran_source',
-    order: 146,
+    order: 147,
     content: "Remember My favour, and fear a Day when no soul will suffice for another.",
     contentFr: "Rappelez-vous Ma faveur, et craignez un Jour où nulle âme ne suffira pour une autre.",
     source: {
@@ -2651,9 +2658,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-147',
+    id: 'musa-148',
     type: 'quran_source',
-    order: 147,
+    order: 148,
     content: "Al-Baqarah repeats the call.",
     contentFr: "Al-Baqarah répète l'appel.",
     source: {
@@ -2669,9 +2676,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-148',
+    id: 'musa-149',
     type: 'quran_source',
-    order: 148,
+    order: 149,
     content: "Or do you intend to ask your Messenger as Musa was asked before?",
     contentFr: "Ou bien voulez-vous interroger votre Messager comme Moussa le fut auparavant ?",
     source: {
@@ -2687,9 +2694,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-149',
+    id: 'musa-150',
     type: 'quran_source',
-    order: 149,
+    order: 150,
     content: "Ask the Children of Israel how many a sign of evidence We gave them.",
     contentFr: "Demande aux enfants d'Israël combien de signes évidents Nous leur avons donnés.",
     source: {

@@ -10,6 +10,8 @@ import { withAlpha } from '../ui/Primitives';
 
 interface StoryContentBlockProps {
   block: ContentBlock;
+  /** The paragraph that opens a story, set apart from the telling itself. */
+  isOpening?: boolean;
   isHighlighted?: boolean;
   onPlayQuranAudio?: (source: QuranReference) => void;
   isQuranPlaying?: boolean;
@@ -23,6 +25,7 @@ interface StoryContentBlockProps {
  */
 function StoryContentBlockBase({
   block,
+  isOpening = false,
   isHighlighted = false,
   onPlayQuranAudio,
   isQuranPlaying = false,
@@ -33,7 +36,11 @@ function StoryContentBlockBase({
   if (block.type === 'narrative') {
     return (
       <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
-        <StoryProse style={styles.narrativeText} text={lc(block.content, block.contentFr)} />
+        <StoryProse
+          style={[styles.narrativeText, isOpening && styles.openingText]}
+          text={lc(block.content, block.contentFr)}
+        />
+        {isOpening && <View style={styles.openingRule} />}
       </View>
     );
   }
@@ -77,6 +84,26 @@ const styles = StyleSheet.create({
     color: color.text,
     fontSize: 16,
     lineHeight: 26,
+  },
+  /**
+   * The paragraph that stands before the story starts. It is the only place
+   * the app speaks in its own voice, so it is given the air to be read slowly
+   * - a larger measure, generous leading - and nothing else. No label above
+   * it, no italic, no tinted panel: the hairline under it is the whole device,
+   * and it is there to mark where the app stops speaking and the Quran begins.
+   */
+  openingText: {
+    fontSize: 17,
+    lineHeight: 30,
+    color: color.textMuted,
+    paddingTop: 4,
+  },
+  openingRule: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: withAlpha(color.progress, 0.35),
+    marginTop: 22,
+    marginBottom: 6,
+    width: 64,
   },
   sourceContainer: {
     borderRadius: radius.sm,
