@@ -1,10 +1,12 @@
 // Story of Prophet Dhul-Kifl (ذو الكفل) - The One of the Pledge
-// Single continuous narrative with Quran sources
+// Told from the Quran and the authentic Sunnah only.
+// Every Quranic passage about Dhul-Kifl is reported; conversations are given ayah by
+// ayah, verbatim, with no paraphrase around them.
 
-import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../../types/prophetStories';
+import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference } from '../../../../types/prophetStories';
 
 // Full prophet data with story details
-export const dhulKiflStory: Prophet = {
+export const dhulkiflStory: Prophet = {
   id: 'dhul-kifl',
   nameEnglish: 'Dhul-Kifl',
   nameFrench: 'Dhoul-Kifl',
@@ -13,199 +15,122 @@ export const dhulKiflStory: Prophet = {
   title: 'The One of the Pledge',
   titleFr: 'Celui du Pacte',
   titleArabic: 'ذو الكفل',
-  summary: "Prophet Dhul-Kifl is mentioned twice in the Quran among the righteous prophets. His name means 'The One of the Portion' or 'The One of the Pledge' - possibly referring to a pledge he made and fulfilled. While the Quran provides limited details about his specific story, it praises him as being among the patient and righteous, counted among the best of creation. Nothing in the Quran or authentic Sunnah identifies him with any figure from other scriptures. His inclusion among the prophets teaches us that faithfulness to one's commitments and patience in adversity are hallmarks of prophethood.",
-  summaryFr: "Le Prophète Dhul-Kifl est mentionné deux fois dans le Coran parmi les prophètes vertueux. Son nom signifie « Celui de la Part » ou « Celui de l'Engagement », faisant peut-être référence à un engagement qu'il prit et honora. Bien que le Coran donne peu de détails sur son histoire, il le loue comme étant parmi les patients et les vertueux, compté parmi les meilleurs de la création. Rien dans le Coran ni dans la Sunna authentique ne l'identifie à une figure d'autres écritures. Sa présence parmi les prophètes nous enseigne que la fidélité à ses engagements et la patience dans l'adversité sont des marques de la prophétie.",
+  summary: "Dhul-Kifl is named twice in the Quran, each time beside Ismail: one of the patient, admitted into Allah's mercy, one of the righteous (21:85-86), and among the outstanding (38:48). Nothing else is told of him, and no authentic hadith adds to it.",
+  summaryFr: "Dhoul-Kifl est nommé deux fois dans le Coran, chaque fois à côté d'Ismaïl : l'un des patients, reçu dans la miséricorde d'Allah, l'un des vertueux (21:85-86), et parmi les meilleurs (38:48). Rien d'autre n'est dit de lui, et aucun hadith authentique n'y ajoute.",
   hasSubStories: false,
   lessons: [
-    'Fulfilling pledges and promises is a prophetic quality',
-    'Patience in adversity leads to honor with Allah',
-    'Being righteous earns a place among the best of creation',
-    'Not all prophets are equally detailed in scripture, but all are honored',
-    'Steadfastness in faith is more important than fame',
-    'Every prophet, whether widely known or not, carries Allah\'s message',
+    "He is remembered for one quality, patience, and one reward, Allah's mercy. A whole life can be summed up truthfully in that (21:85-86).",
+    "The Quran does not say who he was, where he lived, or what he did - only that he was among the outstanding. What Allah chooses to record of a person is His to choose (38:48).",
+    "Two verses, and no story: and still his name is recited wherever the Quran is read. Being mentioned by Allah needs no story (21:85, 38:48).",
   ],
   lessonsFr: [
-    'Honorer ses engagements et ses promesses est une qualité prophétique',
-    'La patience dans l\'adversité mène à l\'honneur auprès d\'Allah',
-    'Être vertueux garantit une place parmi les meilleurs de la création',
-    'Tous les prophètes ne sont pas également détaillés dans les Écritures, mais tous sont honorés',
-    'La constance dans la foi est plus importante que la renommée',
-    'Chaque prophète, qu\'il soit largement connu ou non, porte le message d\'Allah',
+    "On se souvient de lui pour une qualité, la patience, et une récompense, la miséricorde d'Allah. Toute une vie peut se résumer véridiquement à cela (21:85-86).",
+    "Le Coran ne dit ni qui il était, ni où il vécut, ni ce qu'il fit - seulement qu'il était parmi les meilleurs. Ce qu'Allah choisit de consigner d'une personne, c'est à Lui de le choisir (38:48).",
+    "Deux versets, et pas d'histoire : et pourtant son nom est récité partout où le Coran est lu. Être mentionné par Allah n'a pas besoin d'histoire (21:85, 38:48).",
   ],
-  estimatedReadTime: 8,
+  estimatedReadTime: 5,
   quranMentions: 2,
   icon: '📜',
 };
 
-// Single continuous narrative
-const dhulKiflStoryContent: StoryContentBlock[] = [
+// Single continuous story (no sub-stories)
+export const dhulkiflStoryContent: StoryContentBlock[] = [
+
+  // ============ INTRODUCTION ============
   {
     id: 'dhulkifl-1',
     type: 'narrative',
     order: 1,
-    content: "Among the prophets mentioned in the Quran, Dhul-Kifl holds a unique place. Unlike prophets such as Musa or Ibrahim whose stories span many chapters, Dhul-Kifl is mentioned only twice, briefly but with great honor. His name itself is a title meaning 'The One of the Kifl' - where 'kifl' can mean a portion, share, or pledge.",
-    contentFr: "Parmi les prophètes mentionnés dans le Coran, Dhoul-Kifl occupe une place unique. Contrairement aux prophètes tels que Moussa ou Ibrahim dont les histoires s'étendent sur de nombreux chapitres, Dhoul-Kifl n'est mentionné que deux fois, brièvement mais avec un grand honneur. Son nom est lui-même un titre signifiant 'Celui du Kifl' - où 'kifl' peut signifier une part, un lot ou un engagement.",
+    content: "This is the story of Dhul-Kifl, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nIt is the shortest of these stories, because the Quran gives him two verses and no narrative, and no authentic hadith adds to them. Who he was and where he lived, we were not told - and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire de Dhoul-Kifl, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nC'est la plus courte de ces histoires, parce que le Coran lui donne deux versets et aucun récit, et qu'aucun hadith authentique n'y ajoute. Qui il était et où il vécut, cela ne nous a pas été dit - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
+
+  // ============ PART 1: ONE OF THE PATIENT ============
   {
     id: 'dhulkifl-2',
-    type: 'quran_source',
+    type: 'narrative',
     order: 2,
-    content: "Allah mentions Dhul-Kifl among the patient prophets.",
-    contentFr: "Allah mentionne Dhoul-Kifl parmi les prophètes patients.",
-    source: {
-      type: 'quran',
-      surahNumber: 21,
-      surahNameEnglish: 'Al-Anbiya',
-      surahNameArabic: 'الأنبياء',
-      ayahStart: 85,
-      ayahEnd: 86,
-      arabicText: 'وَإِسْمَاعِيلَ وَإِدْرِيسَ وَذَا الْكِفْلِ ۖ كُلٌّ مِّنَ الصَّابِرِينَ ۝ وَأَدْخَلْنَاهُمْ فِي رَحْمَتِنَا ۖ إِنَّهُم مِّنَ الصَّالِحِينَ',
-      translation: 'And [mention] Ismail and Idris and Dhul-Kifl; all were of the patient. And We admitted them into Our mercy. Indeed, they were of the righteous.',
-      translationFr: 'Et [mentionne] Ismaïl, Idris et Dhoul-Kifl ; tous étaient parmi les patients. Et Nous les fîmes entrer dans Notre miséricorde. En vérité, ils étaient parmi les vertueux.',
-    } as QuranReference,
+    content: "Al-Anbiya names him with Ismail and Idris, and gives the three of them one word - patient - and one reward.",
+    contentFr: "Al-Anbiya le nomme avec Ismaïl et Idris, et donne aux trois un seul mot - patients - et une seule récompense.",
   },
   {
     id: 'dhulkifl-3',
-    type: 'narrative',
+    type: 'quran_source',
     order: 3,
-    content: "In this beautiful passage, Allah groups Dhul-Kifl with Ismail and Idris - two great prophets known for their patience and righteousness. Three profound attributes are mentioned: they were patient (sabirin), they were admitted into Allah's mercy, and they were righteous (salihin). To be mentioned alongside such noble prophets is the highest honor.",
-    contentFr: "Dans ce beau passage, Allah regroupe Dhoul-Kifl avec Ismaïl et Idris - deux grands prophètes connus pour leur patience et leur droiture. Trois attributs profonds sont mentionnés : ils étaient patients (sabirin), ils furent admis dans la miséricorde d'Allah, et ils étaient vertueux (salihin). Être mentionné aux côtés de si nobles prophètes est le plus grand honneur.",
+    content: "Ismail, Idris and Dhul-Kifl: of the patient, admitted into Allah's mercy.",
+    contentFr: "Ismaïl, Idris et Dhoul-Kifl : des patients, reçus dans la miséricorde d'Allah.",
+    source: {
+      type: "quran",
+      surahNumber: 21,
+      surahNameEnglish: "Al-Anbiya",
+      surahNameArabic: "الأنبياء",
+      ayahStart: 85,
+      ayahEnd: 86,
+      arabicText: "وَإِسْمَـٰعِيلَ وَإِدْرِيسَ وَذَا ٱلْكِفْلِ ۖ كُلٌّ مِّنَ ٱلصَّـٰبِرِينَ ۝ وَأَدْخَلْنَـٰهُمْ فِى رَحْمَتِنَآ ۖ إِنَّهُم مِّنَ ٱلصَّـٰلِحِينَ",
+      translation: "And [mention] Ismail and Idris and Dhul-Kifl; all were of the patient. And We admitted them into Our mercy. Indeed, they were of the righteous.",
+      translationFr: "Et Ismaïl, et Idris, et Dhul-Kifl, tous étaient des (modèles) de patience. Nous les reçûmes dans Notre miséricorde, car ils étaient du nombre des vertueux.",
+    } as QuranReference,
   },
   {
     id: 'dhulkifl-4',
-    type: 'quran_source',
+    type: 'narrative',
     order: 4,
-    content: "Allah mentions Dhul-Kifl again among those who receive good remembrance.",
-    contentFr: "Allah mentionne Dhoul-Kifl à nouveau parmi ceux qui reçoivent une bonne mention.",
-    source: {
-      type: 'quran',
-      surahNumber: 38,
-      surahNameEnglish: 'Sad',
-      surahNameArabic: 'ص',
-      ayahStart: 48,
-      ayahEnd: 48,
-      arabicText: 'وَاذْكُرْ إِسْمَاعِيلَ وَالْيَسَعَ وَذَا الْكِفْلِ ۖ وَكُلٌّ مِّنَ الْأَخْيَارِ',
-      translation: 'And remember Ismail and Al-Yasa and Dhul-Kifl, and all are among the outstanding.',
-      translationFr: 'Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs.',
-    } as QuranReference,
+    content: "﴿وَإِسْمَـٰعِيلَ وَإِدْرِيسَ وَذَا ٱلْكِفْلِ ۖ كُلٌّ مِّنَ ٱلصَّـٰبِرِينَ﴾ And [mention] Ismail and Idris and Dhul-Kifl; all were of the patient. ﴿وَأَدْخَلْنَـٰهُمْ فِى رَحْمَتِنَآ ۖ إِنَّهُم مِّنَ ٱلصَّـٰلِحِينَ﴾ And We admitted them into Our mercy. Indeed, they were of the righteous.",
+    contentFr: "﴿وَإِسْمَـٰعِيلَ وَإِدْرِيسَ وَذَا ٱلْكِفْلِ ۖ كُلٌّ مِّنَ ٱلصَّـٰبِرِينَ﴾ Et Ismaïl, et Idris, et Dhul-Kifl, tous étaient des (modèles) de patience. ﴿وَأَدْخَلْنَـٰهُمْ فِى رَحْمَتِنَآ ۖ إِنَّهُم مِّنَ ٱلصَّـٰلِحِينَ﴾ Nous les reçûmes dans Notre miséricorde, car ils étaient du nombre des vertueux.",
   },
   {
     id: 'dhulkifl-5',
     type: 'narrative',
     order: 5,
-    content: "Here, Dhul-Kifl is listed with Ismail and Al-Yasa, and all three are described as 'min al-akhyar' - among the best, the outstanding, the excellent. The Quran commands us to remember these prophets, keeping their examples alive in our hearts and minds. Though their stories may be brief in scripture, their rank with Allah is immense.",
-    contentFr: "Ici, Dhoul-Kifl est cité avec Ismaïl et Al-Yasa, et tous trois sont décrits comme 'min al-akhyar' - parmi les meilleurs, les excellents, les éminents. Le Coran nous ordonne de nous souvenir de ces prophètes, gardant leurs exemples vivants dans nos coeurs et nos esprits. Bien que leurs histoires soient brèves dans les Écritures, leur rang auprès d'Allah est immense.",
+    content: "Sad names him again, with Ismail and Al-Yasa, among the outstanding.",
+    contentFr: "Sad le nomme à nouveau, avec Ismaïl et Al-Yasa, parmi les meilleurs.",
   },
   {
     id: 'dhulkifl-6',
-    type: 'narrative',
+    type: 'quran_source',
     order: 6,
-    content: "Who was Dhul-Kifl? The Quran gives only his title, and no authentic hadith names him or describes his life. Some later scholars suggested identifications with prophets known to the People of the Book, but nothing in the Quran or Sunnah confirms this, and it is safer to stop where the revelation stops.",
-    contentFr: "Qui était Dhul-Kifl ? Le Coran ne donne que son titre, et aucun hadith authentique ne le nomme ni ne décrit sa vie. Certains savants tardifs ont proposé des identifications avec des prophètes connus des Gens du Livre, mais rien dans le Coran ni dans la Sunna ne le confirme, et il est plus sûr de s'arrêter là où s'arrête la révélation.",
+    content: "\"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
+    contentFr: "« Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
+    source: {
+      type: "quran",
+      surahNumber: 38,
+      surahNameEnglish: "Sad",
+      surahNameArabic: "ص",
+      ayahStart: 48,
+      ayahEnd: 48,
+      arabicText: "وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ",
+      translation: "And remember Ismail, Al-Yasa and Dhul-Kifl, and all are among the outstanding.",
+      translationFr: "Évoque aussi Ismaïl, Al-Yasa et Dhul-Kifl. Tous étaient du nombre des meilleurs (de Nos serviteurs).",
+    } as QuranReference,
   },
   {
-    id: 'dhulkifl-10',
+    id: 'dhulkifl-7',
     type: 'narrative',
     order: 7,
-    content: "The Quran names Dhul-Kifl twice, both times among those it honours: \"And [mention] Ismail and Idris and Dhul-Kifl; all were of the patient.\" (21:85) \"And remember Ismail, Al-Yasa' and Dhul-Kifl, and all are among the outstanding.\" (38:48) It says nothing further of his life, and neither does the authentic Sunnah.",
-    contentFr: "Le Coran nomme Dhoul-Kifl deux fois, chaque fois parmi ceux qu'il honore : « Et Ismaïl, Idris et Dhoul-Kifl, tous étaient du nombre des endurants. » (21:85) « Et rappelle-toi Ismaïl, Al-Yasa' et Dhoul-Kifl, tous étant du nombre des meilleurs. » (38:48) Il ne dit rien de plus de sa vie, et la Sunna authentique non plus.",
+    content: "﴿وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ﴾ And remember Ismail, Al-Yasa and Dhul-Kifl, and all are among the outstanding.",
+    contentFr: "﴿وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ﴾ Évoque aussi Ismaïl, Al-Yasa et Dhul-Kifl. Tous étaient du nombre des meilleurs (de Nos serviteurs).",
   },
+
+  // ============ PART 2: WHAT WAS NOT TOLD ============
   {
-    id: 'dhulkifl-11',
+    id: 'dhulkifl-8',
     type: 'narrative',
     order: 8,
-    content: "Whether this specific narrative is historically accurate or not, it teaches valuable lessons consistent with what the Quran tells us about Dhul-Kifl. He was patient - extraordinarily patient. He made commitments and kept them. He was righteous in his actions. And these qualities earned him a place among Allah's chosen prophets.",
-    contentFr: "Que ce récit spécifique soit historiquement exact ou non, il enseigne des leçons précieuses en accord avec ce que le Coran nous dit sur Dhoul-Kifl. Il était patient - extraordinairement patient. Il prenait des engagements et les honorait. Il était droit dans ses actes. Et ces qualités lui valurent une place parmi les prophètes choisis par Allah.",
-  },
-  {
-    id: 'dhulkifl-12',
-    type: 'narrative',
-    order: 9,
-    content: "The Quran does not tell us where Dhul-Kifl lived. Various places have been claimed, but none is established. This uncertainty does not diminish his status - the Quran's testimony is sufficient confirmation.",
-    contentFr: "Le Coran ne nous dit pas où vécut Dhul-Kifl. Divers lieux ont été revendiqués, mais aucun n'est établi. Cette incertitude ne diminue pas son statut : le témoignage du Coran est une confirmation suffisante.",
-  },
-  {
-    id: 'dhulkifl-13',
-    type: 'narrative',
-    order: 10,
-    content: "What we know with certainty from the Quran is profound enough: Dhul-Kifl was patient, he was righteous, he was admitted into Allah's mercy, and he is among the best of creation. These four attributes describe the essence of a prophet's character and mission.",
-    contentFr: "Ce que nous savons avec certitude du Coran est suffisamment profond : Dhoul-Kifl était patient, il était vertueux, il fut admis dans la miséricorde d'Allah, et il est parmi les meilleurs de la création. Ces quatre attributs décrivent l'essence du caractère et de la mission d'un prophète.",
-  },
-  {
-    id: 'dhulkifl-14',
-    type: 'narrative',
-    order: 11,
-    content: "Patience (sabr) in Islam is not passive waiting but active endurance - persisting in obedience, resisting sin, and bearing hardship without complaint. Whatever trials Dhul-Kifl faced, he met them with this quality. His patience was not a single moment of fortitude but a lifelong characteristic.",
-    contentFr: "La patience (sabr) en Islam n'est pas une attente passive mais une endurance active - persister dans l'obéissance, résister au péché et supporter l'adversité sans se plaindre. Quelles que soient les épreuves auxquelles Dhoul-Kifl fit face, il les affronta avec cette qualité. Sa patience ne fut pas un seul moment de force mais une caractéristique qui dura toute sa vie.",
-  },
-  {
-    id: 'dhulkifl-15',
-    type: 'narrative',
-    order: 12,
-    content: "Righteousness (salah) encompasses doing good deeds, fulfilling obligations, and living in alignment with Allah's commands. Dhul-Kifl did not merely avoid sin; he actively pursued goodness. His righteousness earned him the description 'min as-salihin' - from among the righteous ones, a title shared by the greatest prophets.",
-    contentFr: "La droiture (salah) englobe l'accomplissement de bonnes actions, le respect des obligations et une vie conforme aux commandements d'Allah. Dhoul-Kifl ne se contenta pas d'éviter le péché ; il poursuivit activement le bien. Sa droiture lui valut la description 'min as-salihin' - parmi les vertueux, un titre partagé par les plus grands prophètes.",
-  },
-  {
-    id: 'dhulkifl-16',
-    type: 'narrative',
-    order: 13,
-    content: "Being admitted into Allah's mercy (rahma) is the ultimate success. No matter what worldly achievements one might have, nothing compares to being enveloped in the mercy of the Creator. Dhul-Kifl achieved this, and it is mentioned specifically to assure us that his patient, righteous life was rewarded.",
-    contentFr: "Être admis dans la miséricorde d'Allah (rahma) est le succès ultime. Quelles que soient les réalisations mondaines que l'on puisse avoir, rien ne se compare à être enveloppé dans la miséricorde du Créateur. Dhoul-Kifl y parvint, et cela est mentionné spécifiquement pour nous assurer que sa vie patiente et vertueuse fut récompensée.",
-  },
-  {
-    id: 'dhulkifl-17',
-    type: 'narrative',
-    order: 14,
-    content: "Being among the 'akhyar' (the best, the outstanding) places Dhul-Kifl in the most elite company - the prophets and messengers, the friends of Allah, the martyrs and the truthful. This is not a rank achieved through worldly status but through sincere devotion to Allah.",
-    contentFr: "Être parmi les 'akhyar' (les meilleurs, les éminents) place Dhoul-Kifl dans la compagnie la plus élite - les prophètes et messagers, les amis d'Allah, les martyrs et les véridiques. Ce n'est pas un rang atteint par le statut mondain mais par la dévotion sincère envers Allah.",
-  },
-  {
-    id: 'dhulkifl-18',
-    type: 'narrative',
-    order: 15,
-    content: "The story of Dhul-Kifl, though brief, carries important lessons for believers. First, one does not need to be famous to be honored by Allah. Dhul-Kifl is mentioned only twice in the Quran, yet he is counted among the greatest of creation. Allah sees what is hidden, and He honors sincere effort regardless of public recognition.",
-    contentFr: "L'histoire de Dhoul-Kifl, bien que brève, porte d'importantes leçons pour les croyants. Premièrement, on n'a pas besoin d'être célèbre pour être honoré par Allah. Dhoul-Kifl n'est mentionné que deux fois dans le Coran, pourtant il est compté parmi les meilleurs de la création. Allah voit ce qui est caché, et Il honore l'effort sincère indépendamment de la reconnaissance publique.",
-  },
-  {
-    id: 'dhulkifl-19',
-    type: 'narrative',
-    order: 16,
-    content: "Second, fulfilling one's commitments is a prophetic quality. If Dhul-Kifl earned his name from keeping a pledge, then his example teaches us the importance of honoring our promises. In a world where commitments are often broken, being someone who keeps their word is a noble distinction.",
-    contentFr: "Deuxièmement, honorer ses engagements est une qualité prophétique. Si Dhoul-Kifl gagna son nom en tenant un engagement, alors son exemple nous enseigne l'importance d'honorer nos promesses. Dans un monde où les engagements sont souvent rompus, être quelqu'un qui tient parole est une noble distinction.",
-  },
-  {
-    id: 'dhulkifl-20',
-    type: 'narrative',
-    order: 17,
-    content: "Third, patience under pressure is a path to honor. If the narration about Shaytan's attempts to anger him is authentic, Dhul-Kifl's victory came not through dramatic miracles but through daily, consistent self-control. Sometimes the greatest battles are fought within, and the greatest victories are invisible to others.",
-    contentFr: "Troisièmement, la patience sous la pression est un chemin vers l'honneur. Si la narration des tentatives de Shaytan pour le mettre en colère est authentique, la victoire de Dhoul-Kifl ne vint pas de miracles spectaculaires mais d'une maîtrise de soi quotidienne et constante. Parfois, les plus grandes batailles se mènent à l'intérieur de soi, et les plus grandes victoires sont invisibles aux autres.",
-  },
-  {
-    id: 'dhulkifl-21',
-    type: 'narrative',
-    order: 18,
-    content: "Finally, Dhul-Kifl reminds us that every prophet, known or unknown, famous or obscure, carries the same essential mission: calling people to worship Allah alone and to live righteously. The Quran mentions him to ensure we remember him, even if his story is not elaborated. In Allah's sight, he is among the best.",
-    contentFr: "Enfin, Dhoul-Kifl nous rappelle que chaque prophète, connu ou inconnu, célèbre ou obscur, porte la même mission essentielle : appeler les gens à adorer Allah seul et à vivre dans la droiture. Le Coran le mentionne pour que nous nous souvenions de lui, même si son histoire n'est pas développée. Aux yeux d'Allah, il est parmi les meilleurs.",
-  },
-  {
-    id: 'dhulkifl-22',
-    type: 'narrative',
-    order: 19,
-    content: "Prophet Dhul-Kifl, the One of the Pledge, stands as a reminder that faithfulness matters, that patience is power, and that righteousness earns eternal honor. When we read his name in the Quran, we send peace upon him as we do upon all the prophets, honoring his place in the blessed chain that connects Adam to Muhammad, peace be upon them all.",
-    contentFr: "Le prophète Dhoul-Kifl, Celui du Pacte, se dresse comme un rappel que la fidélité compte, que la patience est une force, et que la droiture confère un honneur éternel. Quand nous lisons son nom dans le Coran, nous envoyons la paix sur lui comme nous le faisons pour tous les prophètes, honorant sa place dans la chaîne bénie qui relie Adam à Muhammad, que la paix soit sur eux tous.",
+    content: "That is all the Quran says. It does not say whether Dhul-Kifl was a prophet or a righteous man, whom he was sent to if he was sent, or what the name he is called by refers to. What was not told, we leave untold. Allah knows best.",
+    contentFr: "C'est tout ce que dit le Coran. Il ne dit pas si Dhoul-Kifl était un prophète ou un homme vertueux, vers qui il fut envoyé s'il fut envoyé, ni à quoi renvoie le nom par lequel il est appelé. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
   },
 ];
 
 // Export as single continuous story
-export const dhulKiflSubStories: SubStory[] = [
+export const dhulkiflSubStories: SubStory[] = [
   {
     id: 'dhulkifl-complete',
     prophetId: 'dhul-kifl',
     title: 'The Story of Prophet Dhul-Kifl',
-    titleFr: 'L\'Histoire du Prophète Dhoul-Kifl',
-    titleArabic: 'قصة نبي الله ذي الكفل',
-    order: 23,
-    estimatedReadTime: 8,
-    content: dhulKiflStoryContent,
+    titleFr: "L'Histoire du Prophète Dhoul-Kifl",
+    titleArabic: "قصة نبي الله ذو الكفل",
+    order: 1,
+    estimatedReadTime: 5,
+    content: dhulkiflStoryContent,
   },
 ];

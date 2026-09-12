@@ -1,7 +1,9 @@
 // Story of Prophet Al-Yasa (اليسع) - The Successor
-// Single continuous narrative with Quran sources
+// Told from the Quran and the authentic Sunnah only.
+// Every Quranic passage about Al-Yasa is reported; conversations are given ayah by
+// ayah, verbatim, with no paraphrase around them.
 
-import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../../types/prophetStories';
+import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference } from '../../../../types/prophetStories';
 
 // Full prophet data with story details
 export const alyasaStory: Prophet = {
@@ -13,144 +15,109 @@ export const alyasaStory: Prophet = {
   title: 'The Successor',
   titleFr: 'Le Successeur',
   titleArabic: 'الخليفة',
-  summary: "Prophet Al-Yasa' is mentioned twice in the Quran, both times in the company of other great prophets, and is praised as being among the chosen and the excellent. The Quran gives no further details of his story, and no authentic hadith describes it. What the Quran establishes is enough: he was one of Allah's messengers, preferred over the worlds and counted among the best.",
-  summaryFr: "Le Prophète Al-Yasa' est mentionné deux fois dans le Coran, les deux fois en compagnie d'autres grands prophètes, et il est loué comme faisant partie des élus et des meilleurs. Le Coran ne donne pas d'autres détails sur son histoire, et aucun hadith authentique ne la décrit. Ce que le Coran établit suffit : il fut l'un des messagers d'Allah, préféré au-dessus des mondes et compté parmi les meilleurs.",
+  summary: "Al-Yasa is named twice in the Quran: with Ismail, Yunus and Lut as those Allah preferred over the worlds (6:86), and with Ismail and Dhul-Kifl among the outstanding (38:48). Nothing else is told of him, and no authentic hadith adds to it.",
+  summaryFr: "Al-Yasa est nommé deux fois dans le Coran : avec Ismaïl, Younous et Lout parmi ceux qu'Allah a préférés aux mondes (6:86), et avec Ismaïl et Dhoul-Kifl parmi les meilleurs (38:48). Rien d'autre n'est dit de lui, et aucun hadith authentique n'y ajoute.",
   hasSubStories: false,
   lessons: [
-    'Continuing the work of righteous predecessors is honorable',
-    'Every prophet, regardless of fame, carries immense responsibility',
-    'Persistence in guidance even when facing opposition',
-    'Being chosen by Allah is the highest honor',
-    'Faith must be passed from generation to generation',
-    'The prophetic mission is always the same: calling to Allah',
+    "He is named among those Allah \"preferred over the worlds\", and nothing else is said. Preference with Allah does not need a story to be real (6:86).",
+    "\"All are among the outstanding.\" His whole biography in the Quran is one word of praise, shared with two others (38:48).",
+    "Twenty-five prophets are named in the Quran, and some of them, like Al-Yasa, are only named. The Quran was not sent to tell every life; it was sent to guide ours (6:90).",
   ],
   lessonsFr: [
-    'Poursuivre l\'œuvre des prédécesseurs vertueux est honorable',
-    'Chaque prophète, quelle que soit sa renommée, porte une immense responsabilité',
-    'La persévérance dans la guidance même face à l\'opposition',
-    'Être choisi par Allah est le plus grand honneur',
-    'La foi doit être transmise de génération en génération',
-    'La mission prophétique est toujours la même : appeler à Allah',
+    "Il est nommé parmi ceux qu'Allah « a préférés aux mondes », et rien d'autre n'est dit. La préférence auprès d'Allah n'a pas besoin d'histoire pour être réelle (6:86).",
+    "« Tous sont parmi les meilleurs. » Toute sa biographie dans le Coran tient en un mot de louange, partagé avec deux autres (38:48).",
+    "Vingt-cinq prophètes sont nommés dans le Coran, et certains, comme Al-Yasa, ne sont que nommés. Le Coran n'a pas été envoyé pour raconter chaque vie ; il a été envoyé pour guider la nôtre (6:90).",
   ],
-  estimatedReadTime: 6,
+  estimatedReadTime: 4,
   quranMentions: 2,
   icon: '🌟',
 };
 
-// Single continuous narrative
-const alyasaStoryContent: StoryContentBlock[] = [
+// Single continuous story (no sub-stories)
+export const alyasaStoryContent: StoryContentBlock[] = [
+
+  // ============ INTRODUCTION ============
   {
     id: 'alyasa-1',
     type: 'narrative',
     order: 1,
-    content: "Prophet Al-Yasa' was one of the messengers Allah sent. The Quran names him twice, both times in a list of those it honours: \"And Ismail and Al-Yasa' and Yunus and Lut - and all of them We preferred over the worlds.\" (6:86) Beyond this, the Quran and the authentic Sunnah give no details of his life.",
-    contentFr: "Le Prophète Al-Yasa' fut l'un des messagers qu'Allah envoya. Le Coran le nomme deux fois, chaque fois dans une liste de ceux qu'il honore : « Et Ismaïl, Al-Yasa', Younous et Lout : Nous les avons tous préférés aux mondes. » (6:86) Au-delà de cela, le Coran et la Sunna authentique ne donnent aucun détail sur sa vie.",
+    content: "This is the story of Prophet Al-Yasa, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nIt is the shortest kind of story the Quran tells: a name, twice, in the company of other prophets. No authentic hadith adds to it. What was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Al-Yasa, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nC'est la plus courte sorte d'histoire que raconte le Coran : un nom, deux fois, en compagnie d'autres prophètes. Aucun hadith authentique n'y ajoute. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
+
+  // ============ PART 1: PREFERRED OVER THE WORLDS ============
   {
     id: 'alyasa-2',
     type: 'narrative',
     order: 2,
-    content: "The Quran mentions Al-Yasa' twice, both times in the company of other great prophets. While detailed stories about him are not narrated in the Quran, his inclusion among Allah's messengers confirms his status and importance. The very act of being named in the Quran is an eternal honor.",
-    contentFr: "Le Coran mentionne Al-Yasa' deux fois, les deux fois en compagnie d'autres grands prophètes. Bien que des récits détaillés à son sujet ne soient pas narrés dans le Coran, son inclusion parmi les messagers d'Allah confirme son statut et son importance. Le simple fait d'être nommé dans le Coran est un honneur éternel.",
+    content: "Al-An'am names him in a list of the prophets given to Ibrahim's line, and says what Allah did with all of them.",
+    contentFr: "Al-An'am le nomme dans une liste des prophètes donnés à la lignée d'Ibrahim, et dit ce qu'Allah fit d'eux tous.",
   },
   {
     id: 'alyasa-3',
     type: 'quran_source',
     order: 3,
-    content: "Allah mentions Al-Yasa' among the favored prophets.",
-    contentFr: "Allah mentionne Al-Yasa' parmi les prophètes favorisés.",
+    content: "Ismail, Al-Yasa, Yunus and Lut: preferred over the worlds.",
+    contentFr: "Ismaïl, Al-Yasa, Younous et Lout : préférés aux mondes.",
     source: {
-      type: 'quran',
+      type: "quran",
       surahNumber: 6,
       surahNameEnglish: "Al-An'am",
-      surahNameArabic: 'الأنعام',
+      surahNameArabic: "الأنعام",
       ayahStart: 86,
       ayahEnd: 86,
-      arabicText: 'وَإِسْمَاعِيلَ وَالْيَسَعَ وَيُونُسَ وَلُوطًا ۚ وَكُلًّا فَضَّلْنَا عَلَى الْعَالَمِينَ',
-      translation: 'And Ismail and Al-Yasa\' and Yunus and Lut - and all [of them] We preferred over the worlds.',
-      translationFr: 'Et Ismaïl, Al-Yasa\', Younous et Lout : à chacun Nous avons donné la préférence sur les mondes.',
+      arabicText: "وَإِسْمَـٰعِيلَ وَٱلْيَسَعَ وَيُونُسَ وَلُوطًا ۚ وَكُلًّا فَضَّلْنَا عَلَى ٱلْعَـٰلَمِينَ",
+      translation: "And Ismail and Al-Yasa and Yunus and Lut - and all [of them] We preferred over the worlds.",
+      translationFr: "Ainsi qu’Ismaïl, Al-Yasa, Younous et Lout, que Nous tînmes tous en plus haute estime que le reste du monde.",
     } as QuranReference,
   },
   {
     id: 'alyasa-4',
     type: 'narrative',
     order: 4,
-    content: "In this verse, Al-Yasa' is mentioned alongside Ismail, Yunus, and Lut - prophets whose stories are told in greater detail in the Quran. All of them, Allah declares, were 'preferred over the worlds' (faddalna 'ala al-'alamin). This phrase indicates their exalted status - each prophet was favored above all other people of their time and given a rank that ordinary humans could never attain.",
-    contentFr: "Dans ce verset, Al-Yasa' est mentionné aux côtés d'Ismaïl, Younous et Lout — des prophètes dont les histoires sont racontées plus en détail dans le Coran. Tous, déclare Allah, furent « préférés au-dessus des mondes » (faddalna 'ala al-'alamin). Cette expression indique leur statut exalté — chaque prophète fut favorisé au-dessus de tous les autres gens de son époque et reçut un rang que les humains ordinaires ne pourraient jamais atteindre.",
+    content: "﴿وَإِسْمَـٰعِيلَ وَٱلْيَسَعَ وَيُونُسَ وَلُوطًا ۚ وَكُلًّا فَضَّلْنَا عَلَى ٱلْعَـٰلَمِينَ﴾ And Ismail and Al-Yasa and Yunus and Lut - and all [of them] We preferred over the worlds.",
+    contentFr: "﴿وَإِسْمَـٰعِيلَ وَٱلْيَسَعَ وَيُونُسَ وَلُوطًا ۚ وَكُلًّا فَضَّلْنَا عَلَى ٱلْعَـٰلَمِينَ﴾ Ainsi qu’Ismaïl, Al-Yasa, Younous et Lout, que Nous tînmes tous en plus haute estime que le reste du monde.",
   },
   {
     id: 'alyasa-5',
-    type: 'quran_source',
+    type: 'narrative',
     order: 5,
-    content: "Allah mentions Al-Yasa' among the outstanding.",
-    contentFr: "Allah mentionne Al-Yasa' parmi les remarquables.",
-    source: {
-      type: 'quran',
-      surahNumber: 38,
-      surahNameEnglish: 'Sad',
-      surahNameArabic: 'ص',
-      ayahStart: 48,
-      ayahEnd: 48,
-      arabicText: 'وَاذْكُرْ إِسْمَاعِيلَ وَالْيَسَعَ وَذَا الْكِفْلِ ۖ وَكُلٌّ مِّنَ الْأَخْيَارِ',
-      translation: 'And remember Ismail and Al-Yasa\' and Dhul-Kifl, and all are among the outstanding.',
-      translationFr: 'Et rappelle-toi Ismaïl, Al-Yasa\' et Dhoul-Kifl : tous font partie des meilleurs.',
-    } as QuranReference,
+    content: "Sad names him again, and gives the three of them one word.",
+    contentFr: "Sad le nomme à nouveau, et donne aux trois un seul mot.",
   },
   {
     id: 'alyasa-6',
-    type: 'narrative',
+    type: 'quran_source',
     order: 6,
-    content: "Here, Al-Yasa' is listed with Ismail and Dhul-Kifl, and all three are described as 'min al-akhyar' - among the best, the outstanding, the excellent. The Quran commands us to remember these prophets, keeping their examples alive. Though their stories may be brief in the Quran, their rank with Allah is immense.",
-    contentFr: "Ici, Al-Yasa' est cité avec Ismaïl et Dhoul-Kifl, et tous trois sont décrits comme « min al-akhyar » — parmi les meilleurs, les remarquables, les excellents. Le Coran nous ordonne de nous souvenir de ces prophètes, gardant leurs exemples vivants. Bien que leurs histoires soient brèves dans le Coran, leur rang auprès d'Allah est immense.",
+    content: "\"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
+    contentFr: "« Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
+    source: {
+      type: "quran",
+      surahNumber: 38,
+      surahNameEnglish: "Sad",
+      surahNameArabic: "ص",
+      ayahStart: 48,
+      ayahEnd: 48,
+      arabicText: "وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ",
+      translation: "And remember Ismail, Al-Yasa and Dhul-Kifl, and all are among the outstanding.",
+      translationFr: "Évoque aussi Ismaïl, Al-Yasa et Dhul-Kifl. Tous étaient du nombre des meilleurs (de Nos serviteurs).",
+    } as QuranReference,
   },
   {
     id: 'alyasa-7',
     type: 'narrative',
     order: 7,
-    content: "We do not know the details of the opposition he faced or the signs he was given. What we know is the nature of his mission, for it was the mission of every messenger: to call people to worship Allah alone, to establish justice, and to warn of the Day of Judgement. Whatever trials he met, Allah tells us the outcome - he was among those Allah preferred over the worlds.",
-    contentFr: "Nous ne connaissons pas les détails de l'opposition qu'il rencontra ni des signes qui lui furent donnés. Ce que nous savons, c'est la nature de sa mission, car c'était la mission de tout messager : appeler les gens à adorer Allah seul, établir la justice et avertir du Jour du Jugement. Quelles que soient les épreuves qu'il rencontra, Allah nous en dit l'issue : il fut de ceux qu'Allah a préférés au-dessus des mondes.",
+    content: "﴿وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ﴾ And remember Ismail, Al-Yasa and Dhul-Kifl, and all are among the outstanding.",
+    contentFr: "﴿وَٱذْكُرْ إِسْمَـٰعِيلَ وَٱلْيَسَعَ وَذَا ٱلْكِفْلِ ۖ وَكُلٌّ مِّنَ ٱلْأَخْيَارِ﴾ Évoque aussi Ismaïl, Al-Yasa et Dhul-Kifl. Tous étaient du nombre des meilleurs (de Nos serviteurs).",
   },
+
+  // ============ PART 2: WHAT WAS NOT TOLD ============
   {
     id: 'alyasa-8',
     type: 'narrative',
     order: 8,
-    content: "Being 'preferred over the worlds' (6:86) is no small thing. It means that Allah chose him, purified him, and raised him above the people of his time. Prophets are not made by fame or by the number of stories told about them; they are made by Allah's choice.",
-    contentFr: "Être « préféré au-dessus des mondes » (6:86) n'est pas une petite chose. Cela signifie qu'Allah l'a choisi, l'a purifié et l'a élevé au-dessus des gens de son époque. Les prophètes ne sont pas faits par la renommée ni par le nombre d'histoires racontées à leur sujet ; ils sont faits par le choix d'Allah.",
-  },
-  {
-    id: 'alyasa-9',
-    type: 'narrative',
-    order: 9,
-    content: "Being 'among the excellent' (38:48) tells us about his character. The word akhyar describes those whose goodness is complete: sincere in worship, truthful in speech, and upright in dealings. Allah commands His Prophet ﷺ - and us - to remember him.",
-    contentFr: "Être « parmi les meilleurs » (38:48) nous renseigne sur son caractère. Le mot akhyar désigne ceux dont la bonté est complète : sincères dans l'adoration, véridiques dans la parole et droits dans les transactions. Allah ordonne à Son Prophète ﷺ, et à nous, de nous souvenir de lui.",
-  },
-  {
-    id: 'alyasa-12',
-    type: 'narrative',
-    order: 10,
-    content: "The Quran names him again among those it calls the outstanding: \"And remember Ismail, Al-Yasa' and Dhul-Kifl, and all are among the outstanding.\" (38:48) It states his rank and says no more, and this story keeps to that.",
-    contentFr: "Le Coran le nomme de nouveau parmi ceux qu'il appelle les meilleurs : « Et rappelle-toi Ismaïl, Al-Yasa' et Dhoul-Kifl, tous étant du nombre des meilleurs. » (38:48) Il énonce son rang et n'en dit pas davantage, et ce récit s'en tient à cela.",
-  },
-  {
-    id: 'alyasa-14',
-    type: 'narrative',
-    order: 11,
-    content: "The fact that Al-Yasa' is mentioned in the Quran, despite limited details about his story, teaches us something important: not all prophets are meant to be equally famous. Some are mentioned extensively, like Musa; others briefly, like Al-Yasa'. But all are honored by Allah. Fame in this world is not the measure of worth with the Creator.",
-    contentFr: "Le fait qu'Al-Yasa' soit mentionné dans le Coran, malgré les détails limités sur son histoire, nous enseigne quelque chose d'important : tous les prophètes ne sont pas destinés à être également célèbres. Certains sont mentionnés abondamment, comme Moussa ; d'autres brièvement, comme Al-Yasa'. Mais tous sont honorés par Allah. La renommée dans ce monde n'est pas la mesure de la valeur auprès du Créateur.",
-  },
-  {
-    id: 'alyasa-15',
-    type: 'narrative',
-    order: 12,
-    content: "For believers today, Al-Yasa's example teaches the importance of carrying on the work of those who came before us. Just as he continued Ilyas's mission, we are called to continue the work of the Prophet Muhammad ﷺ - calling people to Allah, establishing prayer, enjoining good, and forbidding evil. The specific person matters less than the continuity of the message.",
-    contentFr: "Pour les croyants d'aujourd'hui, l'exemple d'Al-Yasa' enseigne l'importance de poursuivre l'œuvre de ceux qui nous ont précédés. Tout comme il poursuivit la mission d'Ilyas, nous sommes appelés à continuer l'œuvre du Prophète Muhammad ﷺ — appeler les gens à Allah, établir la prière, ordonner le bien et interdire le mal. La personne spécifique compte moins que la continuité du message.",
-  },
-  {
-    id: 'alyasa-16',
-    type: 'narrative',
-    order: 13,
-    content: "Prophet Al-Yasa', who carried the call of Allah after Ilyas, stands as an example for all who inherit responsibility from those before them. When we read his name in the Quran, we send peace upon him and remember that he too was among Allah's chosen servants, preferred above the worlds, counted among the excellent. What greater honour could there be?",
-    contentFr: "Le Prophète Al-Yasa', qui porta l'appel d'Allah après Ilyas, est un exemple pour tous ceux qui héritent d'une responsabilité de ceux qui les ont précédés. Quand nous lisons son nom dans le Coran, nous lui envoyons la paix et nous rappelons qu'il faisait lui aussi partie des serviteurs élus d'Allah, préféré au-dessus des mondes, compté parmi les meilleurs. Quel plus grand honneur pourrait-il y avoir ?",
+    content: "That is all the Quran says. It does not say whom Al-Yasa was sent to, where, or when, and it tells nothing of his life. What was not told, we leave untold. Allah knows best.",
+    contentFr: "C'est tout ce que dit le Coran. Il ne dit ni vers qui Al-Yasa fut envoyé, ni où, ni quand, et il ne raconte rien de sa vie. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
   },
 ];
 
@@ -159,10 +126,11 @@ export const alyasaSubStories: SubStory[] = [
   {
     id: 'alyasa-complete',
     prophetId: 'al-yasa',
-    title: "The Story of Prophet Al-Yasa'",
-    titleArabic: 'قصة نبي الله اليسع',
-    order: 14,
-    estimatedReadTime: 6,
+    title: 'The Story of Prophet Al-Yasa',
+    titleFr: "L'Histoire du Prophète Al-Yasa",
+    titleArabic: "قصة نبي الله اليسع",
+    order: 1,
+    estimatedReadTime: 4,
     content: alyasaStoryContent,
   },
 ];
