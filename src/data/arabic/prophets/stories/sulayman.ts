@@ -59,8 +59,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-1',
     type: 'narrative',
     order: 1,
-    content: "This is the story of Prophet Sulayman, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells of him in Al-Anbiya, An-Naml, Saba and Sad, and each passage is given here whole. It does not name the queen of Saba, does not say what the body on his throne was, and tells his death only by the staff - and what was not told is not ours to imagine. Allah knows best.",
-    contentFr: "Voici l'histoire du prophète Soulayman, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran le raconte dans Al-Anbiya, An-Naml, Saba et Sad, et chaque passage est donné ici en entier. Il ne nomme pas la reine de Saba, ne dit pas ce qu'était le corps sur son trône, et ne raconte sa mort que par le bâton - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+    content: "This is the story of Prophet Sulayman, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells of him in Surah Al-Anbiya, An-Naml, Saba and Surah Sad, and each passage is given here whole. It does not name the queen of Saba, does not say what the body on his throne was, and tells his death only by the staff - and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Soulayman, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran le raconte dans la sourate Al-Anbiya, An-Naml, Saba et la sourate Sad, et chaque passage est donné ici en entier. Il ne nomme pas la reine de Saba, ne dit pas ce qu'était le corps sur son trône, et ne raconte sa mort que par le bâton - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
 
   // ============ PART 1: HE INHERITED DAWUD ============
@@ -68,8 +68,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-2',
     type: 'narrative',
     order: 2,
-    content: "An-Naml begins with what Dawud and Sulayman were given, and what they said for it - and then Sulayman's own words when he inherited his father.",
-    contentFr: "An-Naml commence par ce que Dawoud et Soulayman reçurent, et ce qu'ils dirent pour cela - puis les propres mots de Soulayman quand il hérita de son père.",
+    content: "Surah An-Naml begins with what Dawud and Sulayman were given, and what they said for it - and then Sulayman's own words when he inherited his father.",
+    contentFr: "La sourate An-Naml commence par ce que Dawoud et Soulayman reçurent, et ce qu'ils dirent pour cela - puis les propres mots de Soulayman quand il hérita de son père.",
   },
   {
     id: 'sulayman-3',
@@ -152,8 +152,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-9',
     type: 'narrative',
     order: 9,
-    content: "Al-Anbiya tells what was subjected to him: the wind, and the devils who dived.",
-    contentFr: "Al-Anbiya dit ce qui lui fut soumis : le vent, et les démons qui plongeaient.",
+    content: "Surah Al-Anbiya tells what was subjected to him: the wind, and the devils who dived.",
+    contentFr: "La sourate Al-Anbiya dit ce qui lui fut soumis : le vent, et les démons qui plongeaient.",
   },
   {
     id: 'sulayman-10',
@@ -184,8 +184,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-12',
     type: 'narrative',
     order: 12,
-    content: "Saba measures the wind - a month's journey in the morning, a month's in the afternoon - and tells of the spring of copper, the jinn who built, the family of Dawud told to work in gratitude, and the death that only the staff revealed.",
-    contentFr: "Saba mesure le vent - un mois de route le matin, un mois l'après-midi - et raconte la source de cuivre, les djinns qui bâtissaient, la famille de Dawoud invitée à œuvrer par gratitude, et la mort que seul le bâton révéla.",
+    content: "Surah Saba measures the wind - a month's journey in the morning, a month's in the afternoon - and tells of the spring of copper, the jinn who built, the family of Dawud told to work in gratitude, and the death that only the staff revealed.",
+    contentFr: "La sourate Saba mesure le vent - un mois de route le matin, un mois l'après-midi - et raconte la source de cuivre, les djinns qui bâtissaient, la famille de Dawoud invitée à œuvrer par gratitude, et la mort que seul le bâton révéla.",
   },
   {
     id: 'sulayman-13',
@@ -250,7 +250,7 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-18',
     type: 'narrative',
     order: 18,
-    content: "He took attendance of the birds and missed the hoopoe. The hoopoe came with news of Saba: a woman ruling them, a great throne, and a people prostrating to the sun. Sulayman's answer, and the letter.",
+    content: "He took attendance of the birds and missed the hoopoe. The hoopoe came with news of Surah Saba: a woman ruling them, a great throne, and a people prostrating to the sun. Sulayman's answer, and the letter.",
     contentFr: "Il fit l'appel des oiseaux et remarqua l'absence de la huppe. La huppe vint avec des nouvelles de Saba : une femme les gouvernant, un grand trône, et un peuple se prosternant devant le soleil. La réponse de Soulayman, et la lettre.",
   },
   {
@@ -348,8 +348,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-27',
     type: 'narrative',
     order: 27,
-    content: "Sad tells of the racehorses shown to him in the afternoon, what he said about them and did; then the trial and the body on his throne; then the prayer for a kingdom no one after him would have - and what was subjected to him for it.",
-    contentFr: "Sad raconte les chevaux de course qu'on lui présenta l'après-midi, ce qu'il en dit et fit ; puis l'épreuve et le corps sur son trône ; puis la prière pour un royaume que nul après lui n'aurait - et ce qui lui fut soumis pour cela.",
+    content: "Surah Sad tells of the racehorses shown to him in the afternoon, what he said about them and did; then the trial and the body on his throne; then the prayer for a kingdom no one after him would have - and what was subjected to him for it.",
+    contentFr: "La sourate Sad raconte les chevaux de course qu'on lui présenta l'après-midi, ce qu'il en dit et fit ; puis l'épreuve et le corps sur son trône ; puis la prière pour un royaume que nul après lui n'aurait - et ce qui lui fut soumis pour cela.",
   },
   {
     id: 'sulayman-28',
@@ -459,8 +459,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-36',
     type: 'narrative',
     order: 36,
-    content: "The Prophet ﷺ told of a night a jinn tried to cut off his prayer, and why he let him go.",
-    contentFr: "Le Prophète ﷺ raconta une nuit où un djinn tenta d'interrompre sa prière, et pourquoi il le relâcha.",
+    content: "The Prophet ﷺ told of a night a jinn tried to cut off his prayer, and why he let him go (Sahih al-Bukhari 461).",
+    contentFr: "Le Prophète ﷺ raconta une nuit où un djinn tenta d'interrompre sa prière, et pourquoi il le relâcha (Sahih al-Boukhari 461).",
   },
   {
     id: 'sulayman-37',
@@ -482,8 +482,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-38',
     type: 'narrative',
     order: 38,
-    content: "He ﷺ told of a judgement Sulayman gave as a young man, after his father had judged the same case.",
-    contentFr: "Il ﷺ raconta un jugement que Soulayman rendit jeune, après que son père eut jugé la même affaire.",
+    content: "He ﷺ told of a judgement Sulayman gave as a young man, after his father had judged the same case (Sahih al-Bukhari 3427).",
+    contentFr: "Il ﷺ raconta un jugement que Soulayman rendit jeune, après que son père eut jugé la même affaire (Sahih al-Boukhari 3427).",
   },
   {
     id: 'sulayman-39',
@@ -505,8 +505,8 @@ export const sulaymanStoryContent: StoryContentBlock[] = [
     id: 'sulayman-40',
     type: 'narrative',
     order: 40,
-    content: "And he ﷺ told of the night Sulayman did not say \"if Allah wills\".",
-    contentFr: "Et il ﷺ raconta la nuit où Soulayman ne dit pas « si Allah veut ».",
+    content: "And he ﷺ told of the night Sulayman did not say \"if Allah wills\" (Sahih al-Bukhari 5242).",
+    contentFr: "Et il ﷺ raconta la nuit où Soulayman ne dit pas « si Allah veut » (Sahih al-Boukhari 5242).",
   },
   {
     id: 'sulayman-41',
