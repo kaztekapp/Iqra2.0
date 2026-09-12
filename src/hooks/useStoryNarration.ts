@@ -46,7 +46,6 @@ export interface NarratableBlock {
   contentFr?: string;
   source?: {
     type: 'quran' | 'hadith';
-    arabicText?: string;
     translation: string;
     translationFr?: string;
   } | null;
@@ -96,27 +95,6 @@ export interface NarrationNowPlaying {
   artist?: string;
 }
 
-/** The ayah separator the story data uses inside a multi-ayah card. */
-const AYAH_MARK = /\s*۝\s*/;
-
-function splitAyahs(arabicText: string): string[] {
-  return arabicText.split(AYAH_MARK).map((a) => a.trim()).filter(Boolean);
-}
-
-/** Every ayah the story's own prose already quotes, keyed for comparison. */
-function quotedInProse(blocks: NarratableBlock[]): Set<string> {
-  const keys = new Set<string>();
-  for (const block of blocks) {
-    if (block.type !== 'narrative') continue;
-    for (const segment of splitQuranRuns(`${block.content} ${block.contentFr ?? ''}`)) {
-      if (segment.kind !== 'quran') continue;
-      const key = speechKey(segment.text);
-      if (key) keys.add(key);
-    }
-  }
-  return keys;
-}
-
 export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: NarrationNowPlaying) {
   // Narration follows the same language setting the text on screen does, so
   // the voice never reads English while the reader shows French.
@@ -154,21 +132,13 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   /**
    * Flatten the story.
    *
-   * A Quran block is narrated, then said. The caption is the story's own
-   * voice handing the listener into the passage — "then Allah asked him what
-   * was in his right hand" — and the passage itself follows in full, in the
-   * Quran's words: the question, the answer, the fear, the "do not fear", the
-   * whole of it as it moved. The caption is never left to stand in for the
-   * passage; a summary is exactly what the listener asked not to be given.
-   *
-   * It is read as one telling, in the story voice. Reading each ayah in
-   * Arabic and then its meaning turned the listening into a recitation drill
-   * — Arabic, translation, Arabic, translation — and lost the movement of the
-   * conversation. The Arabic is on screen to be read.
-   *
-   * Where a story sets its ayahs a second time as ﴿Arabic﴾ runs in its prose,
-   * that prose is what carries them, and the card reads its caption alone so
-   * nothing is heard twice.
+   * A Quran block is read by its caption alone. The caption is the verse put
+   * into the story's own words, and reading the ayah and then its meaning
+   * after it turns the listening into a recitation drill — lead, Arabic,
+   * translation, lead, Arabic, translation — which is not what a story
+   * sounds like. The verse is on screen to be read. Where a story sets its
+   * ayahs a second time as ﴿Arabic﴾ runs in its prose, that prose is what
+   * carries them to the ear, woven into the telling rather than announced.
    *
    * A hadith block keeps its translation, because there the caption only
    * frames the report ("the Prophet spoke of Musa and the Angel of Death")
@@ -179,7 +149,6 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
    */
   const utterances = useMemo<Utterance[]>(() => {
     const out: Utterance[] = [];
-    const proseKeys = quotedInProse(blocks);
     let lastKey = '';
 
     const push = (raw: string, blockId: string, blockIndex: number) => {
@@ -216,11 +185,10 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
       const translation = block.source ? lc(block.source.translation, block.source.translationFr) : '';
       if (!translation) return;
 
-      if (block.source?.type === 'quran') {
-        const ayahs = splitAyahs(block.source.arabicText ?? '');
-        if (ayahs.some((a) => proseKeys.has(speechKey(a)))) return;
-      }
-      push(translation, block.id, blockIndex);
+      // Read a verse only when there is no caption to carry the block, so
+      // that a block without one is never passed over in silence.
+      const readsTranslation = block.source?.type === 'hadith' || !caption.trim();
+      if (readsTranslation) push(translation, block.id, blockIndex);
     });
 
     return out;
