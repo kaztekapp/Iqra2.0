@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BoardCanvas, boardContentBounds } from './BoardCanvas';
@@ -25,7 +25,16 @@ const PREVIEW_H = 200;
 export const BoardCard = React.memo(function BoardCard({ board, groupColor, authorName, canEdit, onEdit, onLongPress }: Props) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [w, setW] = useState(1);
+  /**
+   * The card's width, known before layout. It used to start at 1 and wait
+   * for onLayout, so every board in a chat first drew as a 60px empty box
+   * and then grew to its real height a frame later - and each growth moved
+   * the list under the reader. The chat list insets are fixed (12 list
+   * padding, 2 row padding, 1 border, per side), so the width is computed
+   * up front; onLayout only corrects it if some other host differs.
+   */
+  const { width: windowW } = useWindowDimensions();
+  const [w, setW] = useState(() => Math.max(1, Math.round(windowW - 30)));
 
   const bg = BOARD_BG[board.background];
   const bounds = useMemo(() => boardContentBounds(board.elements, board.width), [board]);
@@ -70,7 +79,10 @@ export const BoardCard = React.memo(function BoardCard({ board, groupColor, auth
 
         <View
           style={[styles.preview, { height: previewH, backgroundColor: bg }]}
-          onLayout={(e) => setW(Math.round(e.nativeEvent.layout.width))}
+          onLayout={(e) => {
+            const measured = Math.round(e.nativeEvent.layout.width);
+            if (measured > 0 && measured !== w) setW(measured);
+          }}
         >
           <BoardCanvas content={previewBoard} width={w} height={previewH} viewBox={viewBox} />
           {cropped && (
