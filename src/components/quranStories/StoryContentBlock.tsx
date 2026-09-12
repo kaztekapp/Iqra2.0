@@ -84,7 +84,10 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
       <View style={hadithStyles.header}>
         <View style={hadithStyles.referenceContainer}>
           <Ionicons name="document-text" size={14} color={color.warning} />
-          <Text style={hadithStyles.referenceText}>{source.collection}</Text>
+          <Text style={hadithStyles.referenceText}>
+            {source.collection}
+            {source.hadithNumber ? ` #${source.hadithNumber}` : ''}
+          </Text>
         </View>
         {source.grade && (
           <View style={hadithStyles.gradeBadge}>

@@ -22,6 +22,7 @@ export interface QuranReference {
 export interface HadithReference {
   type: 'hadith';
   collection: string;
+  hadithNumber?: string;
   narrator: string;
   arabicText: string;
   translation: string;
