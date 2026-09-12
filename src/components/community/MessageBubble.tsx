@@ -11,6 +11,7 @@ import { QuizCard } from './class/QuizCard';
 import { PollCard } from './class/PollCard';
 import { BoardCard } from './board/BoardCard';
 import { renderMessageText, isPredominantlyArabic } from './chatText';
+import { ReactionBadges } from './ReactionBadges';
 import { font, color, radius } from '../../theme/tokens';
 
 export interface MessageBubbleMessage {
@@ -53,6 +54,15 @@ interface Props {
   currentUserName?: string;
   onEditClass?: (msg: MessageBubbleMessage) => void;
   reactionRow?: React.ReactNode;
+  /**
+   * Stable alternatives to `onLongPress` and `reactionRow`. A parent that
+   * passes an inline arrow and a freshly built element defeats React.memo
+   * on every row, every render; these take the message id instead, so a
+   * row only re-renders when its own message or reactions change.
+   */
+  onLongPressMessage?: (msg: MessageBubbleMessage) => void;
+  reactions?: { emoji: string; count: number; hasReacted: boolean }[];
+  onToggleReaction?: (messageId: string, emoji: string) => void;
 }
 
 function ReplyQuote({ preview, groupColor, isMe, onPress }: { preview: NonNullable<MessageBubbleMessage['replyPreview']>; groupColor: string; isMe: boolean; onPress?: () => void }) {
@@ -65,8 +75,14 @@ function ReplyQuote({ preview, groupColor, isMe, onPress }: { preview: NonNullab
   );
 }
 
-export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, onImagePress, onReplyPress, onPracticeShared, groupId, currentUserId, currentUserName, onEditClass, reactionRow }: Props) {
+export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress: onLongPressProp, onImagePress, onReplyPress, onPracticeShared, groupId, currentUserId, currentUserName, onEditClass, reactionRow: reactionRowProp, onLongPressMessage, reactions, onToggleReaction }: Props) {
   const { t } = useTranslation();
+  const onLongPress = onLongPressProp ?? (onLongPressMessage ? () => onLongPressMessage(msg) : undefined);
+  const reactionRow =
+    reactionRowProp ??
+    (reactions && reactions.length > 0 ? (
+      <ReactionBadges reactions={reactions} onToggle={(emoji) => onToggleReaction?.(msg.id, emoji)} />
+    ) : undefined);
   // Class content (lesson / quiz / poll / board) renders full-width, not as a chat bubble.
   if ((msg.type === 'lesson' || msg.type === 'quiz' || msg.type === 'poll' || msg.type === 'board') && msg.classContent && !msg.isDeleted) {
     return (

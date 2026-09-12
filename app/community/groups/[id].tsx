@@ -51,14 +51,13 @@ import {
   GroupMessageRow,
   PresenceUser,
 } from '../../../src/services/communitySocialService';
-import { getGroupSnapshot, setGroupSnapshot, type GroupSnapshot } from '../../../src/services/groupContentCache';
+import { getGroupSnapshot, setGroupSnapshot, persistGroupSnapshot, loadPersistedGroupSnapshot, type GroupSnapshot } from '../../../src/services/groupContentCache';
 import { StudySession, GroupChallenge, MessageReaction } from '../../../src/types/community';
 import { MessageBubble, MessageBubbleMessage } from '../../../src/components/community/MessageBubble';
 import { MemberRow, MemberRowData } from '../../../src/components/community/MemberRow';
 import { ChatInputBar } from '../../../src/components/community/ChatInputBar';
 import { GroupInfoTab } from '../../../src/components/community/GroupInfoTab';
 import { ReactionPicker } from '../../../src/components/community/ReactionPicker';
-import { ReactionBadges } from '../../../src/components/community/ReactionBadges';
 import { GroupLeaderboard } from '../../../src/components/community/GroupLeaderboard';
 import { VoiceRecorder } from '../../../src/components/community/VoiceRecorder';
 import { MessageActionSheet } from '../../../src/components/community/MessageActionSheet';
@@ -98,7 +97,7 @@ type MappedMessage = GroupMessage & {
 
 // A chat list row is either a message or an injected date separator.
 type ChatRow =
-  | { kind: 'msg'; msg: MappedMessage; showAvatar: boolean }
+  | { kind: 'msg'; msg: MessageBubbleMessage; showAvatar: boolean }
   | { kind: 'date'; id: string; label: string };
 
 function rowToMessage(row: GroupMessageRow): MappedMessage {
@@ -191,7 +190,9 @@ export default function GroupDetailScreen() {
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isTypingRef = useRef(false);
   const isAtBottomRef = useRef(true);
-  const pendingJumpRef = useRef(false); // keep chasing the bottom while a jump-to-latest is in flight
+  // Bubble objects are reused while their message and reply target are
+  // unchanged, so React.memo on a row holds across unrelated updates.
+  const bubbleCache = useRef(new Map<string, { src: MappedMessage; reply: MappedMessage | null | undefined; bubble: MessageBubbleMessage }>());
 
   // Find group
   const group = groups.find((g) => g.id === id) || SIMULATED_GROUPS.find((g) => g.id === id);
@@ -224,9 +225,17 @@ export default function GroupDetailScreen() {
   }, [dedupedMessages]);
 
   // Build the render list: messages + injected date separators + avatar grouping.
+  //
+  // The list is INVERTED (newest at index 0), the way every chat app draws
+  // its list: the bottom is the natural anchor, new messages never need a
+  // scroll-to-end, and older pages are appended at the far end without the
+  // viewport moving. Rows are built oldest-first, then reversed, so a date
+  // separator lands visually above its day.
   const chatRows = useMemo<ChatRow[]>(() => {
     const rows: ChatRow[] = [];
     let lastDay = '';
+    const cache = bubbleCache.current;
+    const live = new Set<string>();
     dedupedMessages.forEach((msg, i) => {
       const day = new Date(msg.createdAt).toDateString();
       if (day !== lastDay) {
@@ -237,10 +246,28 @@ export default function GroupDetailScreen() {
       const prevSameDay = prev && new Date(prev.createdAt).toDateString() === day;
       const isChatty = (tp: string) => tp === 'chat' || tp === 'message' || tp === 'voice' || tp === 'image' || tp === 'shared';
       const showAvatar = !prev || !prevSameDay || prev.authorName !== msg.authorName || !isChatty(prev.type);
-      rows.push({ kind: 'msg', msg, showAvatar });
+
+      const reply = msg.replyToId ? messagesById[msg.replyToId] ?? null : undefined;
+      let entry = cache.get(msg.id);
+      if (!entry || entry.src !== msg || entry.reply !== reply) {
+        const bubble: MessageBubbleMessage = {
+          ...(msg as MessageBubbleMessage),
+          replyPreview: reply
+            ? { authorName: reply.authorName, body: reply.body, type: reply.type }
+            : msg.replyToId
+              ? { authorName: '', body: 'Message', type: undefined }
+              : null,
+        };
+        entry = { src: msg, reply, bubble };
+        cache.set(msg.id, entry);
+      }
+      live.add(msg.id);
+      rows.push({ kind: 'msg', msg: entry.bubble, showAvatar });
     });
+    for (const key of cache.keys()) if (!live.has(key)) cache.delete(key);
+    rows.reverse();
     return rows;
-  }, [dedupedMessages]);
+  }, [dedupedMessages, messagesById]);
 
   // Recent text conversation, for AI "generate quiz from this chat".
   const chatContextText = useMemo(() => {
@@ -293,26 +320,39 @@ export default function GroupDetailScreen() {
     // FIX #7: Clear seenIds on group change
     seenIds.current.clear();
 
-    const cached = getGroupSnapshot(id);
-    if (cached) {
-      cached.messages.forEach((m) => seenIds.current.add(m.id));
-      setMessages(cached.messages);
-      setReactions(cached.reactions);
-      setMembers(cached.members);
-      setSessions(cached.sessions);
-      setChallenges(cached.challenges);
-      setLeaderboard(cached.leaderboard);
+    const paint = (snap: GroupSnapshot) => {
+      snap.messages.forEach((m) => seenIds.current.add(m.id));
+      setMessages(snap.messages);
+      setReactions(snap.reactions);
+      setMembers(snap.members);
+      setSessions(snap.sessions);
+      setChallenges(snap.challenges);
+      setLeaderboard(snap.leaderboard);
       setIsLoadingMessages(false);
       setIsLoadingMembers(false);
+    };
+
+    const cached = getGroupSnapshot(id);
+    if (cached) {
+      paint(cached);
     } else {
       setIsLoadingMessages(true);
       setIsLoadingMembers(true);
+      // A cold launch: the last visit, from disk, while the network answers.
+      loadPersistedGroupSnapshot(id).then((disk) => {
+        if (cancelled || !disk || seenIds.current.size > 0) return;
+        paint(disk);
+      });
     }
 
     const snapshot: GroupSnapshot = cached
       ? { ...cached }
       : { messages: [], reactions: {}, members: [], sessions: [], challenges: [], leaderboard: [] };
-    const remember = () => setGroupSnapshot(id, { ...snapshot });
+    const remember = () => {
+      const copy = { ...snapshot };
+      setGroupSnapshot(id, copy);
+      persistGroupSnapshot(id, copy);
+    };
     const simulated = () => require('../../../src/data/community/socialData');
 
     // Messages first: they are what the screen is for.
@@ -320,6 +360,8 @@ export default function GroupDetailScreen() {
       const rows = await fetchGroupMessages(id);
       if (cancelled) return [];
       const mapped = (rows || []).map(rowToMessage);
+      // The network is the truth: anything painted from disk is replaced.
+      seenIds.current.clear();
       mapped.forEach((m) => seenIds.current.add(m.id));
 
       if (mapped.length > 0) {
@@ -500,15 +542,10 @@ export default function GroupDetailScreen() {
     })();
   }, [isJoined]);
 
+  // The list is inverted, so the newest message is at offset 0.
   const scrollToEnd = useCallback(() => {
-    setTimeout(() => flatListRef.current?.scrollToEnd({ animated: true }), 100);
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, []);
-
-  useEffect(() => {
-    if (activeTab === 'chat') {
-      setTimeout(() => flatListRef.current?.scrollToEnd({ animated: false }), 100);
-    }
-  }, [activeTab]);
 
   // Resolve @mention tokens in the text to member user ids.
   const resolveMentions = useCallback((text: string): string[] => {
@@ -701,6 +738,11 @@ export default function GroupDetailScreen() {
     const idx = chatRows.findIndex((r) => r.kind === 'msg' && r.msg.id === targetId);
     if (idx >= 0) flatListRef.current?.scrollToIndex({ index: idx, animated: true, viewPosition: 0.5 });
   }, [chatRows]);
+
+  const handleLongPressBubble = useCallback((bubble: MessageBubbleMessage) => {
+    const original = messagesById[bubble.id];
+    if (original) handleMessageLongPress(original);
+  }, [messagesById, handleMessageLongPress]);
 
   const handleReaction = useCallback(async (emoji: string) => {
     if (!reactionPickerMsgId || !user) return;
@@ -926,31 +968,22 @@ export default function GroupDetailScreen() {
   }, []);
 
   // FIX #3: FlatList renderItem for chat rows (messages + date separators)
+  // Every prop here is either a primitive or a stable callback, and `msg` is
+  // reused from the row cache, so an unchanged row is skipped by React.memo.
   const renderMessage = useCallback(({ item }: { item: ChatRow }) => {
     if (item.kind === 'date') {
       return <DateSeparator label={item.label} />;
     }
     const msg = item.msg;
     const isMe = msg.userId === user?.id || msg.authorName === displayName;
-    const reactionGroups = reactionGroupsMap[msg.id] || [];
-    const replyTarget = msg.replyToId ? messagesById[msg.replyToId] : null;
-    const bubbleMsg: MessageBubbleMessage = {
-      ...(msg as MessageBubbleMessage),
-      replyPreview: replyTarget
-        ? { authorName: replyTarget.authorName, body: replyTarget.body, type: replyTarget.type }
-        : msg.replyToId
-          ? { authorName: '', body: 'Message', type: undefined }
-          : null,
-    };
-
     return (
       <MessageBubble
-        msg={bubbleMsg}
+        msg={msg}
         getTimeAgo={getTimeAgo}
         groupColor={group?.color || color.accent}
         isMe={isMe}
         showAvatar={item.showAvatar}
-        onLongPress={() => handleMessageLongPress(msg)}
+        onLongPressMessage={handleLongPressBubble}
         onImagePress={setLightboxUri}
         onReplyPress={handleReplyPress}
         onPracticeShared={isJoined ? handlePracticeShared : undefined}
@@ -958,28 +991,23 @@ export default function GroupDetailScreen() {
         currentUserId={user?.id}
         currentUserName={displayName}
         onEditClass={openEditClass}
-        reactionRow={
-          reactionGroups.length > 0 ? (
-            <ReactionBadges
-              reactions={reactionGroups}
-              onToggle={(emoji) => handleToggleReaction(msg.id, emoji)}
-            />
-          ) : undefined
-        }
+        reactions={reactionGroupsMap[msg.id]}
+        onToggleReaction={handleToggleReaction}
       />
     );
-  }, [user?.id, displayName, reactionGroupsMap, messagesById, group?.color, getTimeAgo, handleMessageLongPress, handleToggleReaction, handleReplyPress, handlePracticeShared, isJoined, id, openEditClass]);
+  }, [user?.id, displayName, reactionGroupsMap, group?.color, getTimeAgo, handleLongPressBubble, handleToggleReaction, handleReplyPress, handlePracticeShared, isJoined, id, openEditClass]);
 
   const keyExtractor = useCallback((item: ChatRow) => (item.kind === 'date' ? item.id : item.msg.id), []);
 
   // Track whether the user is near the bottom, to decide unread/pill behavior.
+  // In an inverted list the bottom is offset 0. State is only touched when
+  // the answer changes: setting it on every scroll frame re-rendered this
+  // whole screen sixty times a second while the thumb was moving.
   const handleScroll = useCallback((e: any) => {
-    const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
-    const distanceFromBottom = contentSize.height - (contentOffset.y + layoutMeasurement.height);
-    const atBottom = distanceFromBottom < 80;
+    const atBottom = e.nativeEvent.contentOffset.y < 80;
+    if (atBottom === isAtBottomRef.current) return;
     isAtBottomRef.current = atBottom;
     setIsAtBottom(atBottom);
-    if (atBottom) pendingJumpRef.current = false; // reached bottom — stop chasing
     if (atBottom && unreadCount > 0) {
       setUnreadCount(0);
       if (id && user) markGroupRead(id, user.id);
@@ -987,16 +1015,9 @@ export default function GroupDetailScreen() {
   }, [unreadCount, id, user]);
 
   const jumpToLatest = useCallback(() => {
-    const list = flatListRef.current;
-    if (!list) return;
-    // Tall quiz/board rows below the fold render/measure only as we approach them,
-    // so one scrollToEnd lands short. Set a "jump pending" flag: onContentSizeChange
-    // keeps re-scrolling to the growing bottom until handleScroll confirms we're there.
-    pendingJumpRef.current = true;
-    setIsAtBottom(true);
-    list.scrollToEnd({ animated: true });
-    // Safety net: stop chasing after a second even if we never register at-bottom.
-    setTimeout(() => { pendingJumpRef.current = false; }, 1200);
+    // Offset 0 is exact in an inverted list, however tall the rows below the
+    // fold are, so no chasing is needed.
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
     setUnreadCount(0);
     if (id && user) markGroupRead(id, user.id);
   }, [id, user]);
@@ -1174,23 +1195,29 @@ export default function GroupDetailScreen() {
                 <FlatList
                   ref={flatListRef}
                   data={chatRows}
+                  inverted
                   renderItem={renderMessage}
                   keyExtractor={keyExtractor}
                   contentContainerStyle={styles.chatList}
                   showsVerticalScrollIndicator={false}
                   onScroll={handleScroll}
-                  scrollEventThrottle={16}
-                  onContentSizeChange={() => { if (isAtBottomRef.current || pendingJumpRef.current) flatListRef.current?.scrollToEnd({ animated: false }); }}
+                  scrollEventThrottle={32}
                   onScrollToIndexFailed={() => {}}
-                  onStartReached={loadOlder}
-                  onStartReachedThreshold={0.2}
-                  ListHeaderComponent={isLoadingOlder ? <ActivityIndicator color={group.color} style={{ marginVertical: 12 }} /> : null}
-                  maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
+                  // Older pages load at the far end (visually the top) and
+                  // append there, so the viewport never moves.
+                  onEndReached={loadOlder}
+                  onEndReachedThreshold={0.4}
+                  ListFooterComponent={isLoadingOlder ? <ActivityIndicator color={group.color} style={{ marginVertical: 12 }} /> : null}
+                  // A new message at index 0 leaves the reader where they are
+                  // unless they are already within a screen's edge of the
+                  // bottom, in which case the list follows it - the same rule
+                  // every messaging app uses, done natively.
+                  maintainVisibleContentPosition={{ minIndexForVisible: 0, autoscrollToTopThreshold: 120 }}
                   removeClippedSubviews={false}
-                  initialNumToRender={12}
-                  maxToRenderPerBatch={10}
-                  updateCellsBatchingPeriod={50}
-                  windowSize={11}
+                  initialNumToRender={16}
+                  maxToRenderPerBatch={8}
+                  updateCellsBatchingPeriod={40}
+                  windowSize={9}
                 />
 
                 {typingUsers.length > 0 && (
