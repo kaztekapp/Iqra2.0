@@ -15,7 +15,7 @@ export const yaqubStory: Prophet = {
   title: 'Israel',
   titleFr: 'Israël',
   titleArabic: 'إسرائيل',
-  summary: "Yaqub, who is Israel, was announced to his grandmother before his father was born (11:71). The Quran tells him mostly through Yusuf: the dream he told him to keep from his brothers, the son he was afraid to send, the shirt with false blood and his answer - \"patience is most fitting\" - the second son he would not send without an oath by Allah, the eyes that went white from grief, his complaint to Allah alone, and the smell of Yusuf on the wind before the shirt was cast over his face. At his death he asked his sons what they would worship after him.",
+  summary: "Yaqub, who is Israel, was announced to his grandmother before his father was born (11:71). The Quran tells him mostly through Surah Yusuf: the dream he told him to keep from his brothers, the son he was afraid to send, the shirt with false blood and his answer - \"patience is most fitting\" - the second son he would not send without an oath by Allah, the eyes that went white from grief, his complaint to Allah alone, and the smell of Yusuf on the wind before the shirt was cast over his face. At his death he asked his sons what they would worship after him.",
   summaryFr: "Yaqub, qui est Israël, fut annoncé à sa grand-mère avant que son père ne naisse (11:71). Le Coran le raconte surtout à travers Youssouf : le rêve qu'il lui dit de cacher à ses frères, le fils qu'il craignait d'envoyer, la chemise au faux sang et sa réponse - « patience est plus belle » - le second fils qu'il n'envoya pas sans un serment par Allah, les yeux blanchis par le chagrin, sa plainte à Allah seul, et l'odeur de Youssouf dans le vent avant que la chemise ne soit jetée sur son visage. À sa mort, il demanda à ses fils ce qu'ils adoreraient après lui.",
   hasSubStories: false,
   lessons: [
@@ -410,8 +410,8 @@ export const yaqubStoryContent: StoryContentBlock[] = [
     id: 'yaqub-32',
     type: 'narrative',
     order: 32,
-    content: "Al-Baqarah tells what Ibrahim instructed his sons, and Yaqub too - and then the scene at Yaqub's death: his question, and his sons' answer.",
-    contentFr: "Al-Baqara raconte ce qu'Ibrahim recommanda à ses fils, et Yaqub aussi - puis la scène à la mort de Yaqub : sa question, et la réponse de ses fils.",
+    content: "Surah Al-Baqarah tells what Ibrahim instructed his sons, and Yaqub too - and then the scene at Yaqub's death: his question, and his sons' answer.",
+    contentFr: "La sourate Al-Baqara raconte ce qu'Ibrahim recommanda à ses fils, et Yaqub aussi - puis la scène à la mort de Yaqub : sa question, et la réponse de ses fils.",
   },
   {
     id: 'yaqub-33',
@@ -637,8 +637,8 @@ export const yaqubStoryContent: StoryContentBlock[] = [
     id: 'yaqub-51',
     type: 'narrative',
     order: 51,
-    content: "Asked who the most honourable of people was, the Prophet ﷺ answered with Yaqub's line.",
-    contentFr: "Interrogé sur le plus honorable des hommes, le Prophète ﷺ répondit par la lignée de Yaqub.",
+    content: "Asked who the most honourable of people was, the Prophet ﷺ answered with Yaqub's line (Sahih al-Bukhari 3353).",
+    contentFr: "Interrogé sur le plus honorable des hommes, le Prophète ﷺ répondit par la lignée de Yaqub (Sahih al-Boukhari 3353).",
   },
   {
     id: 'yaqub-52',
