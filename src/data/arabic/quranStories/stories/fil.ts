@@ -85,8 +85,8 @@ export const filStory: QuranStory = {
       id: 'fil-5',
       type: 'narrative',
       order: 5,
-      content: "On the road to Makkah in the year of Hudaybiyah, the Prophet's camel knelt and would not move, and he named the One who had held her.",
-      contentFr: "Sur la route de La Mecque l'année de Houdaybiya, la chamelle du Prophète s'agenouilla et refusa de bouger, et il nomma Celui qui la retenait.",
+      content: "On the road to Makkah in the year of Hudaybiyah, the Prophet's camel knelt and would not move, and he named the One who had held her (Sahih al-Bukhari 2731).",
+      contentFr: "Sur la route de La Mecque l'année de Houdaybiya, la chamelle du Prophète s'agenouilla et refusa de bouger, et il nomma Celui qui la retenait (Sahih al-Boukhari 2731).",
     },
     {
       id: 'fil-6',
