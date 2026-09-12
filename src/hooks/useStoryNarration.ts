@@ -33,6 +33,7 @@ import {
   isArabicSpeaking,
   setArabicNowPlaying,
   prepareArabic,
+  discardPreparedArabic,
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
@@ -276,6 +277,8 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     pausedByStopRef.current = false;
     storyAudioService.resetSession();
     stopArabic();
+    discardPreparedArabic();
+    storyAudioService.discardPrepared();
     await storyAudioService.stop();
     setStatus('idle');
     setIndex(0);
@@ -422,6 +425,8 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     return () => {
       runRef.current++;
       stopArabic();
+      discardPreparedArabic();
+      storyAudioService.discardPrepared();
       storyAudioService.setNarrating(false);
       void storyAudioService.stop().then(() => releaseAudioSessionIfIdle());
     };
@@ -452,6 +457,8 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     runRef.current++;
     storyAudioService.resetSession();
     stopArabic();
+    discardPreparedArabic();
+    storyAudioService.discardPrepared();
     void storyAudioService.stop();
     setStatus('idle');
     setIndex(0);

@@ -10,17 +10,16 @@
 // the generation to cancel whatever is running — preventing overlapping audio when
 // verses/play are tapped rapidly.
 
-import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import { createAudioPlayer } from 'expo-audio';
 import type { AudioMetadata } from 'expo-audio';
 import * as Speech from 'expo-speech';
-import { registerAudioProducer, claimAudio } from '../audioBus';
+import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
 let interruptCurrent: (() => void) | null = null;
-let audioInitialized = false;
 
 const MAX_CHUNK_LEN = 180;
 
@@ -37,11 +36,9 @@ export interface ArabicPlayOptions {
 }
 
 async function ensureAudioInit() {
-  if (audioInitialized) return;
-  audioInitialized = true;
-  try {
-    await setAudioModeAsync({ playsInSilentMode: true });
-  } catch {}
+  // Through the bus, so a story's background session is never downgraded by
+  // the line of Arabic read inside it.
+  await ensureAudioSession('speech');
 }
 
 function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
@@ -301,8 +298,14 @@ export function prepareArabic(text: string, speed = 1.0): void {
   }
 }
 
-/** Forget every line fetched ahead, deleting the files as they land. */
-function discardPrepared(): void {
+/**
+ * Forget every line fetched ahead, deleting the files as they land.
+ *
+ * Called by the story when the listener really stops - not from `stopArabic`,
+ * which also runs each time the story voice claims the audio for its next
+ * sentence, and would throw the prefetched Arabic line away every time.
+ */
+export function discardPreparedArabic(): void {
   for (const p of prepared.values()) p.then(deleteQuietly).catch(() => {});
   prepared.clear();
 }
@@ -549,7 +552,6 @@ export function stopArabic(): void {
   try { Speech.stop(); } catch {}
   generation++;
   teardownCurrent();
-  discardPrepared();
 }
 
 

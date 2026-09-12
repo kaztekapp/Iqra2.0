@@ -1,5 +1,5 @@
 import * as Speech from 'expo-speech';
-import { setAudioModeAsync } from 'expo-audio';
+import { ensureAudioSession } from './audioBus';
 import { speakArabic as speakArabicOnce, stopArabic, setArabicVoiceGender } from './speech/arabicTTS';
 
 export type VoiceGender = 'female' | 'male';
@@ -25,10 +25,9 @@ class AudioService {
     if (this.audioConfigured) return;
 
     try {
-      await setAudioModeAsync({
-        playsInSilentMode: true,
-        interruptionMode: 'duckOthers',
-      });
+      // Through the bus: a partial mode set here used to switch background
+      // playback off for whatever long-form audio was running.
+      await ensureAudioSession('speech');
       this.audioConfigured = true;
     } catch (error) {
       __DEV__ && console.log('Audio config error:', error);

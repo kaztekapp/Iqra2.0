@@ -1,4 +1,5 @@
 import { AppState } from 'react-native';
+import { setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
 
 /**
  * One place that knows what is making sound.
@@ -51,6 +52,67 @@ export function isAnyAudioBusy(): boolean {
 }
 
 /**
+ * The audio-session mode, owned here so no producer can take it away from
+ * another.
+ *
+ * expo-audio's `setAudioModeAsync` looks like it takes a partial mode, but the
+ * native record fills every field it is not given with the DEFAULT - and the
+ * defaults are `shouldPlayInBackground: false` and `mixWithOthers`. So the
+ * Arabic voice's innocent `{ playsInSilentMode: true }`, run once before its
+ * first line, silently switched background playback off for the whole app in
+ * the middle of a story: the next time the phone locked, expo-audio paused
+ * every player (that is what it does on entering the background with the flag
+ * off), and the now-mixable session lost its lock-screen controls. Every mode
+ * change now goes through here, in full, and never steps down while a
+ * long-form producer holds the session.
+ */
+type SessionLevel = 'off' | 'speech' | 'longform';
+
+const SESSION_MODES = {
+  // Recitation and stories: primary session, keeps playing with the screen off.
+  longform: { playsInSilentMode: true, shouldPlayInBackground: true, interruptionMode: 'doNotMix' as const },
+  // A tapped word: audible over the silent switch, mixes with whatever plays.
+  speech: { playsInSilentMode: true, shouldPlayInBackground: false, interruptionMode: 'mixWithOthers' as const },
+};
+
+let sessionLevel: SessionLevel = 'off';
+// Mode changes are serialised: two producers starting together must not race
+// the native session between two categories.
+let sessionWork: Promise<void> = Promise.resolve();
+
+function queueSessionWork(fn: () => Promise<void>): Promise<void> {
+  sessionWork = sessionWork.then(fn, fn).catch(() => {});
+  return sessionWork;
+}
+
+/**
+ * Bring the session up to at least `wanted`. Resolves once the mode is in
+ * place (plus the moment iOS needs before the first clip). A `speech` request
+ * while a `longform` session is held is a no-op: the word plays through the
+ * story's session rather than downgrading it.
+ */
+export function ensureAudioSession(wanted: 'speech' | 'longform'): Promise<void> {
+  if (sessionLevel === wanted || sessionLevel === 'longform') return sessionWork;
+  sessionLevel = wanted;
+  return queueSessionWork(async () => {
+    await setAudioModeAsync(SESSION_MODES[wanted]);
+    await new Promise((r) => setTimeout(r, 50));
+  });
+}
+
+/** Give the session back to iOS. Only `releaseAudioSessionIfIdle` calls this. */
+function resetAudioSession(): Promise<void> {
+  if (sessionLevel === 'off') return sessionWork;
+  sessionLevel = 'off';
+  return queueSessionWork(async () => {
+    await setAudioModeAsync(SESSION_MODES.speech);
+    // Our players keep the session alive on purpose, so the one moment
+    // nothing is playing anywhere is when it is turned off.
+    await setIsAudioActiveAsync(false);
+  });
+}
+
+/**
  * Hand the iOS audio session back - but only when no producer needs it.
  *
  * Both long-form players put the session into `doNotMix` with background
@@ -72,6 +134,7 @@ export function releaseAudioSessionIfIdle(): void {
       /* the next producer still gets to release */
     }
   }
+  void resetAudioSession();
 }
 
 AppState.addEventListener('change', (next) => {

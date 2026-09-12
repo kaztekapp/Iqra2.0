@@ -47,10 +47,10 @@
 import * as Speech from 'expo-speech';
 import { Platform } from 'react-native';
 import * as Network from 'expo-network';
-import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
+import { createAudioPlayer } from 'expo-audio';
 import type { AudioMetadata } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
-import { registerAudioProducer, claimAudio } from './audioBus';
+import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import { File, Paths } from 'expo-file-system';
 import { synthesizeToFile } from './edgeTts';
 import { chunkForUrl } from './narrationText';
@@ -138,7 +138,6 @@ function deleteQuietly(uri: string) {
 
 class StoryAudioService {
   private generation = 0;
-  private audioConfigured = false;
   /**
    * True for the whole of a listening session, including the silent gaps
    * between sentences and a pause. The clip flags below go quiet for a
@@ -221,19 +220,9 @@ class StoryAudioService {
    *   what someone pressing play on a story expects.
    */
   private async configureAudio(): Promise<void> {
-    if (this.audioConfigured) return;
-    this.audioConfigured = true;
-    try {
-      await setAudioModeAsync({
-        playsInSilentMode: true,
-        shouldPlayInBackground: true,
-        interruptionMode: 'doNotMix',
-      });
-      // iOS needs a moment to bring the session up before the first clip.
-      await new Promise((r) => setTimeout(r, 50));
-    } catch (e) {
-      __DEV__ && console.log('[story audio] audio mode:', e);
-    }
+    // The mode is owned by the audio bus, which never lets another producer
+    // take background playback away from a story that is being read.
+    await ensureAudioSession('longform');
   }
 
   // -- voice selection ----------------------------------------------------
@@ -482,7 +471,14 @@ class StoryAudioService {
     return `${lang}|${this.gender}|${body}`;
   }
 
-  private discardPrepared(): void {
+  /**
+   * Forget every sentence fetched ahead. The hook calls this when the
+   * listener really stops; it is deliberately NOT part of `stop()`, because
+   * `stop()` also runs every time the Arabic voice claims the audio for one
+   * line, and a story alternates voices on every sentence - discarding there
+   * threw away every prefetch the moment it was made.
+   */
+  discardPrepared(): void {
     for (const p of this.prepared.values()) p.then(deleteQuietly).catch(() => {});
     this.prepared.clear();
   }
@@ -900,7 +896,6 @@ class StoryAudioService {
     this.generation++;
     this.paused = false;
     this.deviceSpeaking = false;
-    this.discardPrepared();
     // A real stop is the one moment the player is handed back, well away
     // from any callback that might still be standing on it.
     this.releasePlayer();
@@ -1016,20 +1011,9 @@ class StoryAudioService {
    * long after the listener has closed the story.
    */
   async releaseSession(): Promise<void> {
+    // The session mode itself is reset by the audio bus once every producer
+    // has let go; this only drops what is ours.
     this.stopKeepAlive();
-    if (!this.audioConfigured) return;
-    this.audioConfigured = false;
-    try {
-      await setAudioModeAsync({
-        shouldPlayInBackground: false,
-        interruptionMode: 'mixWithOthers',
-      });
-      // Our players keep the session alive on purpose (see playClip), so the
-      // one moment nothing is playing anywhere is when we turn it off here.
-      await setIsAudioActiveAsync(false);
-    } catch (e) {
-      __DEV__ && console.log('[story audio] release session:', e);
-    }
   }
 
   isPaused(): boolean {

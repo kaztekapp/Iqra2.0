@@ -1,8 +1,8 @@
 // Quran Audio Service
 // Uses pre-recorded recitations from professional reciters for authentic Tajweed pronunciation
 
-import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
-import { registerAudioProducer, claimAudio } from './audioBus';
+import { createAudioPlayer } from 'expo-audio';
+import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
@@ -228,17 +228,11 @@ class QuranAudioService {
     this.configurationInProgress = true;
 
     try {
-      await setAudioModeAsync({
-        playsInSilentMode: true,
-        shouldPlayInBackground: true,
-        // `doNotMix` makes this the PRIMARY audio session (category .playback
-        // with no .mixWithOthers option). iOS only shows lock-screen / Now
-        // Playing controls for primary audio — a mixable session (the native
-        // default is `mixWithOthers`) gets no lock-screen controls at all.
-        interruptionMode: 'doNotMix',
-      });
-      // Small delay to let iOS audio session initialize
-      await new Promise(resolve => setTimeout(resolve, 50));
+      // `doNotMix` makes this the PRIMARY audio session (category .playback
+      // with no .mixWithOthers option). iOS only shows lock-screen / Now
+      // Playing controls for primary audio — a mixable session gets none.
+      // The mode is owned by the audio bus so no other producer can undo it.
+      await ensureAudioSession('longform');
       this.isAudioConfigured = true;
       this.configurationInProgress = false;
       return true;
@@ -616,17 +610,8 @@ class QuranAudioService {
 
   /** The session is re-configured on the next play, so dropping it is safe. */
   async releaseSession(): Promise<void> {
-    if (!this.isAudioConfigured) return;
+    // The audio bus resets the session mode once every producer has let go.
     this.isAudioConfigured = false;
-    try {
-      await setAudioModeAsync({
-        shouldPlayInBackground: false,
-        interruptionMode: 'mixWithOthers',
-      });
-      await setIsAudioActiveAsync(false);
-    } catch {
-      // Nothing to do: the next play configures the session again anyway.
-    }
   }
 
   /**
