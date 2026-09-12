@@ -789,8 +789,8 @@ export const yusufStoryContent: StoryContentBlock[] = [
     id: 'yusuf-67',
     type: 'narrative',
     order: 67,
-    content: "Asked who the most honourable of people was, the Prophet ﷺ answered with Yusuf's line.",
-    contentFr: "Interrogé sur le plus honorable des hommes, le Prophète ﷺ répondit par la lignée de Youssouf.",
+    content: "Asked who the most honourable of people was, the Prophet ﷺ answered with Yusuf's line (Sahih al-Bukhari 3353).",
+    contentFr: "Interrogé sur le plus honorable des hommes, le Prophète ﷺ répondit par la lignée de Youssouf (Sahih al-Boukhari 3353).",
   },
   {
     id: 'yusuf-68',
@@ -812,8 +812,8 @@ export const yusufStoryContent: StoryContentBlock[] = [
     id: 'yusuf-69',
     type: 'narrative',
     order: 69,
-    content: "He ﷺ spoke of Yusuf's years in prison, and of his own self beside them.",
-    contentFr: "Il ﷺ parla des années de prison de Youssouf, et de lui-même à côté d'elles.",
+    content: "He ﷺ spoke of Yusuf's years in prison, and of his own self beside them (Sahih al-Bukhari 3372).",
+    contentFr: "Il ﷺ parla des années de prison de Youssouf, et de lui-même à côté d'elles (Sahih al-Boukhari 3372).",
   },
   {
     id: 'yusuf-70',
@@ -835,8 +835,8 @@ export const yusufStoryContent: StoryContentBlock[] = [
     id: 'yusuf-71',
     type: 'narrative',
     order: 71,
-    content: "And on the night of the ascension he ﷺ met him in the third heaven, and said what Yusuf had been given.",
-    contentFr: "Et la nuit de l'ascension il ﷺ le rencontra au troisième ciel, et dit ce que Youssouf avait reçu.",
+    content: "And on the night of the ascension he ﷺ met him in the third heaven, and said what Yusuf had been given (Sahih Muslim 162).",
+    contentFr: "Et la nuit de l'ascension il ﷺ le rencontra au troisième ciel, et dit ce que Youssouf avait reçu (Sahih Mouslim 162).",
   },
   {
     id: 'yusuf-72',
