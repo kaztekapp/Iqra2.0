@@ -175,7 +175,9 @@ function playFile(uri: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     let player: AudioPlayer;
     try {
-      player = createAudioPlayer(uri);
+      // Keep the session alive across the line (expo-audio 57 would otherwise
+      // deactivate it when this clip ends, mid-story, with the screen locked).
+      player = createAudioPlayer(uri, { keepAudioSessionActive: true });
     } catch (e) {
       deleteQuietly(uri);
       reject(e);

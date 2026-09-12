@@ -47,7 +47,7 @@
 import * as Speech from 'expo-speech';
 import { Platform } from 'react-native';
 import * as Network from 'expo-network';
-import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
 import type { AudioMetadata } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio } from './audioBus';
@@ -591,7 +591,13 @@ class StoryAudioService {
         if (this.player) {
           this.player.replace({ uri });
         } else {
-          this.player = createAudioPlayer({ uri });
+          // expo-audio 57 turns the iOS audio session OFF on every pause and
+          // every playback completion unless the player is created with
+          // keepAudioSessionActive. A story is a chain of one-sentence clips
+          // with a pause between each; without this, the session went dark
+          // after the first sentence and, with the screen locked, iOS
+          // suspended the app before the next clip could load.
+          this.player = createAudioPlayer({ uri }, { keepAudioSessionActive: true });
         }
         player = this.player;
         player.shouldCorrectPitch = true;
@@ -923,6 +929,9 @@ class StoryAudioService {
         shouldPlayInBackground: false,
         interruptionMode: 'mixWithOthers',
       });
+      // Our players keep the session alive on purpose (see playClip), so the
+      // one moment nothing is playing anywhere is when we turn it off here.
+      await setIsAudioActiveAsync(false);
     } catch (e) {
       __DEV__ && console.log('[story audio] release session:', e);
     }

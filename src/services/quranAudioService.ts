@@ -1,7 +1,7 @@
 // Quran Audio Service
 // Uses pre-recorded recitations from professional reciters for authentic Tajweed pronunciation
 
-import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
 import { registerAudioProducer, claimAudio } from './audioBus';
 import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
@@ -363,7 +363,10 @@ class QuranAudioService {
       this.onStateChangeCallback = options?.onStateChange || null;
 
       // Create new audio player
-      const player = createAudioPlayer(url);
+      // Between two ayahs the outgoing player is paused; on expo-audio 57 that
+      // would deactivate the session and end background recitation after one
+      // ayah. keepAudioSessionActive holds it open for the whole surah.
+      const player = createAudioPlayer(url, { keepAudioSessionActive: true });
       this.player = player;
 
       // Set playback rate
@@ -620,6 +623,7 @@ class QuranAudioService {
         shouldPlayInBackground: false,
         interruptionMode: 'mixWithOthers',
       });
+      await setIsAudioActiveAsync(false);
     } catch {
       // Nothing to do: the next play configures the session again anyway.
     }
