@@ -147,7 +147,7 @@ export const bodyWords: VocabularyWord[] = [
     english: 'Finger',
     french: 'Doigt',
     partOfSpeech: 'noun',
-    gender: 'masculine',
+    gender: 'feminine',
     plural: 'أَصَابِعُ',
     level: 'beginner',
     order: 9,

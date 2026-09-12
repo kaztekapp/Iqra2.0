@@ -552,9 +552,9 @@ export const grammarExercises2: Exercise[] = [
     type: 'multiple_choice',
     moduleType: 'grammar',
     level: 'intermediate',
-    question: 'What is the feminine active participle of طَالَبَ (to demand)?',
-    questionFr: 'Quel est le participe actif féminin de طَالَبَ (demander) ?',
-    questionArabic: 'مَا اسْمُ الْفَاعِلِ الْمُؤَنَّث مِنْ طَالَبَ؟',
+    question: 'What is the feminine active participle of طَلَبَ (to demand)?',
+    questionFr: 'Quel est le participe actif féminin de طَلَبَ (demander) ?',
+    questionArabic: 'مَا اسْمُ الْفَاعِلِ الْمُؤَنَّث مِنْ طَلَبَ؟',
     options: [
       { id: 'a', text: 'طَالِب', textFr: 'طَالِب', isCorrect: false },
       { id: 'b', text: 'طَالِبَة', textFr: 'طَالِبَة', isCorrect: true },

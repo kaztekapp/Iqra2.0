@@ -872,7 +872,7 @@ export const verbLessons: GrammarLesson[] = [
         contentFr: "Ordres essentiels à connaître",
         examples: [
           { arabic: 'اُكْتُبْ / اُكْتُبِي / اُكْتُبُوا', english: 'Write! (m./f./pl.)', french: 'Écris / Écris / Écrivez !' },
-          { arabic: 'اِقْرَأْ / اِقْرَئِي / اِقْرَأُوا', english: 'Read! (m./f./pl.)', french: 'Lis / Lis / Lisez !' },
+          { arabic: 'اِقْرَأْ / اِقْرَئِي / اِقْرَؤُوا', english: 'Read! (m./f./pl.)', french: 'Lis / Lis / Lisez !' },
           { arabic: 'اِذْهَبْ / اِذْهَبِي / اِذْهَبُوا', english: 'Go! (m./f./pl.)', french: 'Va / Va / Allez !' },
           { arabic: 'اِجْلِسْ / اِجْلِسِي / اِجْلِسُوا', english: 'Sit! (m./f./pl.)', french: 'Assieds-toi / Assieds-toi / Asseyez-vous !' },
           { arabic: 'اِفْتَحْ / اِفْتَحِي / اِفْتَحُوا', english: 'Open! (m./f./pl.)', french: 'Ouvre / Ouvre / Ouvrez !' },

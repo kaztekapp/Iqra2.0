@@ -93,12 +93,12 @@ export const arabicVerbs: ArabicVerb[] = [
         thirdPersonMasculineSingular: 'قَرَأَ',
         thirdPersonFeminineSingular: 'قَرَأَتْ',
         secondPersonDual: 'قَرَأْتُمَا',
-        thirdPersonMasculineDual: 'قَرَأَا',
+        thirdPersonMasculineDual: 'قَرَآ',
         thirdPersonFeminineDual: 'قَرَأَتَا',
         firstPersonPlural: 'قَرَأْنَا',
         secondPersonMasculinePlural: 'قَرَأْتُمْ',
         secondPersonFemininePlural: 'قَرَأْتُنَّ',
-        thirdPersonMasculinePlural: 'قَرَأُوا',
+        thirdPersonMasculinePlural: 'قَرَؤُوا',
         thirdPersonFemininePlural: 'قَرَأْنَ',
       },
       present: {
@@ -134,7 +134,7 @@ export const arabicVerbs: ArabicVerb[] = [
       imperative: {
         secondPersonMasculineSingular: 'اِقْرَأْ',
         secondPersonFeminineSingular: 'اِقْرَئِي',
-        secondPersonDual: 'اِقْرَأَا',
+        secondPersonDual: 'اِقْرَآ',
         secondPersonMasculinePlural: 'اِقْرَؤُوا',
         secondPersonFemininePlural: 'اِقْرَأْنَ',
       },
@@ -872,7 +872,7 @@ export const arabicVerbs: ArabicVerb[] = [
     },
     examples: [
       { arabic: 'رَأَيْتُ صَدِيقِي', transliteration: 'raʾaytu ṣadīqī', english: 'I saw my friend', french: 'J\'ai vu mon ami', tense: 'past' },
-      { arabic: 'رَأَتْ الْفِيلْمَ', transliteration: 'raʾat al-fīlm', english: 'She saw the movie', french: 'Elle a vu le film', tense: 'past' },
+      { arabic: 'رَأَتِ الْفِيلْمَ', transliteration: 'raʾati l-fīlm', english: 'She saw the movie', french: 'Elle a vu le film', tense: 'past' },
       { arabic: 'أَرَى الْجَبَلَ', transliteration: 'arā al-jabal', english: 'I see the mountain', french: 'Je vois la montagne', tense: 'present' },
       { arabic: 'مَاذَا تَرَى؟', transliteration: 'mādhā tarā?', english: 'What do you see?', french: 'Que vois-tu ?', tense: 'present' },
       { arabic: 'سَأَرَاكَ غَدًا', transliteration: 'saʾarāka ghadan', english: 'I will see you tomorrow', french: 'Je te verrai demain', tense: 'future' },
@@ -1169,7 +1169,7 @@ export const arabicVerbs: ArabicVerb[] = [
     examples: [
       { arabic: 'نِمْتُ بَاكِرًا', transliteration: 'nimtu bākiran', english: 'I slept early', french: 'J\'ai dormi tôt', tense: 'past' },
       { arabic: 'نَامَ الطِّفْلُ', transliteration: 'nāma aṭ-ṭifl', english: 'The child slept', french: 'L\'enfant a dormi', tense: 'past' },
-      { arabic: 'أَنَامُ ثَمَانِ سَاعَاتٍ', transliteration: 'anāmu thamān sāʿāt', english: 'I sleep eight hours', french: 'Je dors huit heures', tense: 'present' },
+      { arabic: 'أَنَامُ ثَمَانِيَ سَاعَاتٍ', transliteration: 'anāmu thamān sāʿāt', english: 'I sleep eight hours', french: 'Je dors huit heures', tense: 'present' },
       { arabic: 'سَأَنَامُ الْآنَ', transliteration: 'saʾanāmu al-ān', english: 'I will sleep now', french: 'Je vais dormir maintenant', tense: 'future' },
       { arabic: 'نَمْ جَيِّدًا!', transliteration: 'nam jayyidan!', english: 'Sleep well!', french: 'Dors bien !', tense: 'imperative' },
     ],
