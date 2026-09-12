@@ -415,8 +415,8 @@ export const maryamStory: QuranStory = {
       id: 'maryam-32',
       type: 'narrative',
       order: 32,
-      content: "The Prophet ﷺ named her among the women who reached perfection, and called her the best of the women of her time.",
-      contentFr: "Le Prophète ﷺ la nomma parmi les femmes qui atteignirent la perfection, et l'appela la meilleure des femmes de son temps.",
+      content: "The Prophet ﷺ named her among the women who reached perfection, and called her the best of the women of her time (Sahih al-Bukhari 3411).",
+      contentFr: "Le Prophète ﷺ la nomma parmi les femmes qui atteignirent la perfection, et l'appela la meilleure des femmes de son temps (Sahih al-Boukhari 3411).",
     },
     {
       id: 'maryam-33',
