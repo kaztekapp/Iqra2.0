@@ -51,8 +51,8 @@ export const zakariyaStoryContent: StoryContentBlock[] = [
     id: 'zakariya-1',
     type: 'narrative',
     order: 1,
-    content: "This is the story of Prophet Zakariya, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells of him in Al Imran, Maryam and Al-Anbiya, and each passage is given here whole. It does not say how old he was, what became of him after Yahya, or how he died - and what was not told is not ours to imagine. Allah knows best.",
-    contentFr: "Voici l'histoire du prophète Zakariya, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran le raconte dans Al Imran, Maryam et Al-Anbiya, et chaque passage est donné ici en entier. Il ne dit ni quel âge il avait, ni ce qu'il advint de lui après Yahya, ni comment il mourut - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+    content: "This is the story of Prophet Zakariya, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells of him in Surah Al Imran, Surah Maryam and Surah Al-Anbiya, and each passage is given here whole. It does not say how old he was, what became of him after Yahya, or how he died - and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Zakariya, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran le raconte dans la sourate Al Imran, la sourate Maryam et la sourate Al-Anbiya, et chaque passage est donné ici en entier. Il ne dit ni quel âge il avait, ni ce qu'il advint de lui après Yahya, ni comment il mourut - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
 
   // ============ PART 1: THE CARE OF MARYAM ============
@@ -60,8 +60,8 @@ export const zakariyaStoryContent: StoryContentBlock[] = [
     id: 'zakariya-2',
     type: 'narrative',
     order: 2,
-    content: "Al Imran begins before him: the wife of Imran vowed what was in her womb to Allah, delivered a girl, named her Maryam, and sought refuge for her. Allah accepted her - and put her in the care of Zakariya. Then the provision he found with her, and their exchange.",
-    contentFr: "Al Imran commence avant lui : la femme d'Imran voua à Allah ce qui était dans son ventre, mit au monde une fille, la nomma Maryam, et chercha refuge pour elle. Allah l'accepta - et la plaça sous la garde de Zakariya. Puis la subsistance qu'il trouvait auprès d'elle, et leur échange.",
+    content: "Surah Al Imran begins before him: the wife of Imran vowed what was in her womb to Allah, delivered a girl, named her Maryam, and sought refuge for her. Allah accepted her - and put her in the care of Zakariya. Then the provision he found with her, and their exchange.",
+    contentFr: "La sourate Al Imran commence avant lui : la femme d'Imran voua à Allah ce qui était dans son ventre, mit au monde une fille, la nomma Maryam, et chercha refuge pour elle. Allah l'accepta - et la plaça sous la garde de Zakariya. Puis la subsistance qu'il trouvait auprès d'elle, et leur échange.",
   },
   {
     id: 'zakariya-3',
@@ -158,8 +158,8 @@ export const zakariyaStoryContent: StoryContentBlock[] = [
     id: 'zakariya-11',
     type: 'narrative',
     order: 11,
-    content: "Al-Anbiya gives the prayer in one line, and the answer - and says what his household was like.",
-    contentFr: "Al-Anbiya donne la prière en une ligne, et la réponse - et dit ce qu'était sa maison.",
+    content: "Surah Al-Anbiya gives the prayer in one line, and the answer - and says what his household was like.",
+    contentFr: "La sourate Al-Anbiya donne la prière en une ligne, et la réponse - et dit ce qu'était sa maison.",
   },
   {
     id: 'zakariya-12',
@@ -219,8 +219,8 @@ export const zakariyaStoryContent: StoryContentBlock[] = [
     id: 'zakariya-16',
     type: 'narrative',
     order: 16,
-    content: "The Prophet ﷺ told us his trade.",
-    contentFr: "Le Prophète ﷺ nous a dit son métier.",
+    content: "The Prophet ﷺ told us his trade (Sahih Muslim 2379).",
+    contentFr: "Le Prophète ﷺ nous a dit son métier (Sahih Mouslim 2379).",
   },
   {
     id: 'zakariya-17',
