@@ -89,8 +89,8 @@ export const uzayrStory: QuranStory = {
       id: 'uzayr-5',
       type: 'narrative',
       order: 5,
-      content: "The name Uzayr appears once in the Quran, in At-Tawbah, about what some said of him - not in the story above.",
-      contentFr: "Le nom Ouzayr apparaît une fois dans le Coran, dans At-Tawba, au sujet de ce que certains dirent de lui - non dans l'histoire ci-dessus.",
+      content: "The name Uzayr appears once in the Quran, in Surah At-Tawbah, about what some said of him - not in the story above.",
+      contentFr: "Le nom Ouzayr apparaît une fois dans le Coran, dans la sourate At-Tawba, au sujet de ce que certains dirent de lui - non dans l'histoire ci-dessus.",
     },
     {
       id: 'uzayr-6',
