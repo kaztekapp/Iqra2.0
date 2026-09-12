@@ -50,8 +50,8 @@ export const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-2',
     type: 'narrative',
     order: 2,
-    content: "Al-An'am names him in a list of the prophets given to Ibrahim's line, and says what Allah did with all of them.",
-    contentFr: "Al-An'am le nomme dans une liste des prophètes donnés à la lignée d'Ibrahim, et dit ce qu'Allah fit d'eux tous.",
+    content: "Surah Al-An'am names him in a list of the prophets given to Ibrahim's line, and says what Allah did with all of them.",
+    contentFr: "La sourate Al-An'am le nomme dans une liste des prophètes donnés à la lignée d'Ibrahim, et dit ce qu'Allah fit d'eux tous.",
   },
   {
     id: 'alyasa-3',
@@ -82,8 +82,8 @@ export const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-5',
     type: 'narrative',
     order: 5,
-    content: "Sad names him again, and gives the three of them one word.",
-    contentFr: "Sad le nomme à nouveau, et donne aux trois un seul mot.",
+    content: "Surah Sad names him again, and gives the three of them one word.",
+    contentFr: "La sourate Sad le nomme à nouveau, et donne aux trois un seul mot.",
   },
   {
     id: 'alyasa-6',
