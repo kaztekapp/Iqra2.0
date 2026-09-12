@@ -50,8 +50,8 @@ export const talutStory: QuranStory = {
       id: 'talut-1',
       type: 'narrative',
       order: 1,
-      content: "This is the story of Talut and Jalut, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells it in one passage of Al-Baqarah, and does not name the prophet who was asked for a king, the river, or the land. What was not told is not ours to imagine. Allah knows best.",
-      contentFr: "Voici l'histoire de Talout et Jalout, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage d'Al-Baqara, et ne nomme ni le prophète à qui un roi fut demandé, ni la rivière, ni le pays. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+      content: "This is the story of Talut and Jalut, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells it in one passage of Surah Al-Baqarah, and does not name the prophet who was asked for a king, the river, or the land. What was not told is not ours to imagine. Allah knows best.",
+      contentFr: "Voici l'histoire de Talout et Jalout, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage de la sourate Al-Baqara, et ne nomme ni le prophète à qui un roi fut demandé, ni la rivière, ni le pays. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
     },
 
     // ============ PART 1: A KING CHOSEN ============
@@ -127,8 +127,8 @@ export const talutStory: QuranStory = {
       id: 'talut-8',
       type: 'narrative',
       order: 8,
-      content: "Al-Bara told what the companions of the Prophet ﷺ used to say about their own number at Badr.",
-      contentFr: "Al-Bara raconta ce que les compagnons du Prophète ﷺ disaient de leur propre nombre à Badr.",
+      content: "Al-Bara told what the companions of the Prophet ﷺ used to say about their own number at Badr (Sahih al-Bukhari 3959).",
+      contentFr: "Al-Bara raconta ce que les compagnons du Prophète ﷺ disaient de leur propre nombre à Badr (Sahih al-Boukhari 3959).",
     },
     {
       id: 'talut-9',
