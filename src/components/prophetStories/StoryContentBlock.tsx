@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { StoryContentBlock as ContentBlock, QuranReference, HadithReference } from '../../types/prophetStories';
 import { QuranSourceCard } from './QuranSourceCard';
 import { HadithSourceCard } from './HadithSourceCard';
@@ -13,6 +13,12 @@ interface StoryContentBlockProps {
   /** The paragraph that opens a story, set apart from the telling itself. */
   isOpening?: boolean;
   isHighlighted?: boolean;
+  /**
+   * Listen from here. A story this long is not listened to from the top
+   * every time, so a paragraph - or the sentence that hands the reader into
+   * a verse - is a place to start, the way a chapter heading is.
+   */
+  onPress?: () => void;
   onPlayQuranAudio?: (source: QuranReference) => void;
   isQuranPlaying?: boolean;
   isQuranLoading?: boolean;
@@ -27,6 +33,7 @@ function StoryContentBlockBase({
   block,
   isOpening = false,
   isHighlighted = false,
+  onPress,
   onPlayQuranAudio,
   isQuranPlaying = false,
   isQuranLoading = false,
@@ -35,13 +42,21 @@ function StoryContentBlockBase({
 
   if (block.type === 'narrative') {
     return (
-      <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
+      <Pressable
+        onPress={onPress}
+        disabled={!onPress}
+        style={({ pressed }) => [
+          styles.narrativeContainer,
+          isHighlighted && styles.highlighted,
+          pressed && styles.pressed,
+        ]}
+      >
         <StoryProse
           style={[styles.narrativeText, isOpening && styles.openingText]}
           text={lc(block.content, block.contentFr)}
         />
         {isOpening && <View style={styles.openingRule} />}
-      </View>
+      </Pressable>
     );
   }
 
@@ -49,7 +64,11 @@ function StoryContentBlockBase({
     const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
-        {!!lead.trim() && <StoryProse style={styles.leadText} text={lead} />}
+        {!!lead.trim() && (
+          <Pressable onPress={onPress} disabled={!onPress} style={({ pressed }) => pressed && styles.pressed}>
+            <StoryProse style={styles.leadText} text={lead} />
+          </Pressable>
+        )}
         <QuranSourceCard
           source={block.source as QuranReference}
           onPlayArabic={onPlayQuranAudio ? () => onPlayQuranAudio(block.source as QuranReference) : undefined}
@@ -64,7 +83,11 @@ function StoryContentBlockBase({
     const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
-        {!!lead.trim() && <StoryProse style={styles.leadText} text={lead} />}
+        {!!lead.trim() && (
+          <Pressable onPress={onPress} disabled={!onPress} style={({ pressed }) => pressed && styles.pressed}>
+            <StoryProse style={styles.leadText} text={lead} />
+          </Pressable>
+        )}
         <HadithSourceCard source={block.source as HadithReference} />
       </View>
     );
@@ -120,6 +143,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
     marginTop: 8,
+  },
+  /**
+   * The touch, while it lasts: the same wash the reading highlight uses,
+   * fainter, so a finger on a paragraph reads as "this one" and nothing
+   * else changes until the voice arrives there.
+   */
+  pressed: {
+    backgroundColor: withAlpha(color.accent, 0.07),
+    borderRadius: radius.md,
   },
   highlighted: {
     backgroundColor: withAlpha(color.accent, 0.13),

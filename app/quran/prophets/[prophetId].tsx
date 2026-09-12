@@ -83,6 +83,7 @@ export default function ProphetStoryScreen() {
     [currentSubStory, lc, prophet]
   );
   const narration = useStoryNarration(currentContent, narrationNowPlaying);
+  const { seekToBlock } = narration;
   const [playerOpen, setPlayerOpen] = useState(false);
 
 
@@ -209,6 +210,7 @@ export default function ProphetStoryScreen() {
           block={item}
           isOpening={index === 0 && item.type === 'narrative'}
           isHighlighted={highlightedBlockId === item.id}
+          onPress={() => seekToBlock(index)}
           onPlayQuranAudio={
             item.source?.type === 'quran'
               ? () => handlePlayQuranAudio(item.source as QuranReference, item.id)
@@ -219,7 +221,7 @@ export default function ProphetStoryScreen() {
         />
       </View>
     ),
-    [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio]
+    [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio, seekToBlock]
   );
 
   const storyHeader = currentSubStory ? (
@@ -240,14 +242,17 @@ export default function ProphetStoryScreen() {
             </View>
 
             {hasFullStory && currentContent.length > 0 && (
-              <Pressable
-                style={styles.listenButton}
-                onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(0))}
-                accessibilityRole="button"
-              >
-                <Ionicons name="headset" size={18} color={color.textOnAccent} />
-                <Text style={styles.listenButtonText}>{t('listen.listen')}</Text>
-              </Pressable>
+              <>
+                <Pressable
+                  style={styles.listenButton}
+                  onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(0))}
+                  accessibilityRole="button"
+                >
+                  <Ionicons name="headset" size={18} color={color.textOnAccent} />
+                  <Text style={styles.listenButtonText}>{t('listen.listen')}</Text>
+                </Pressable>
+                <Text style={styles.listenHint}>{t('listen.tapToStart')}</Text>
+              </>
             )}
           </View>
   ) : null;
@@ -452,6 +457,13 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     backgroundColor: color.accentStrong,
     marginTop: 16,
+  },
+  listenHint: {
+    marginTop: 8,
+    fontSize: 13,
+    lineHeight: 18,
+    color: color.textFaint,
+    textAlign: 'center',
   },
   listenButtonText: {
     color: color.textOnAccent,

@@ -872,6 +872,7 @@ export default {
     sunnah: 'SUNNAH',
   },
   listen: {
+    tapToStart: 'Tap any paragraph to listen from there',
     listen: 'Listen',
     play: 'Play',
     pause: 'Pause',
