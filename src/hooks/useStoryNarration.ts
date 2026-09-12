@@ -46,7 +46,6 @@ export interface NarratableBlock {
   contentFr?: string;
   source?: {
     type: 'quran' | 'hadith';
-    arabicText?: string;
     translation: string;
     translationFr?: string;
   } | null;
@@ -88,27 +87,6 @@ async function speakQuranLine(text: string, speed: number): Promise<'done' | 'st
     onError: () => { finished = true; },
   });
   return finished ? 'done' : 'stopped';
-}
-
-/** The ayah separator the story data uses inside a multi-ayah card. */
-const AYAH_MARK = /\s*۝\s*/;
-
-function splitAyahs(arabicText: string): string[] {
-  return arabicText.split(AYAH_MARK).map((a) => a.trim()).filter(Boolean);
-}
-
-/** Every ayah the story's own prose already quotes, keyed for comparison. */
-function quotedInProse(blocks: NarratableBlock[]): Set<string> {
-  const keys = new Set<string>();
-  for (const block of blocks) {
-    if (block.type !== 'narrative') continue;
-    for (const segment of splitQuranRuns(`${block.content} ${block.contentFr ?? ''}`)) {
-      if (segment.kind !== 'quran') continue;
-      const key = speechKey(segment.text);
-      if (key) keys.add(key);
-    }
-  }
-  return keys;
 }
 
 /** What the lock screen names while this story is being read. */
@@ -154,16 +132,13 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   /**
    * Flatten the story.
    *
-   * A Quran block is read caption first, then the ayah in Arabic through the
-   * learner's Arabic voice, then its meaning — the cadence a teacher uses,
-   * and the same one a quoted conversation in the prose already follows.
-   *
-   * Unless the story's prose says it again. Some stories set the passage a
-   * second time as ﴿Arabic﴾ runs inside a narrative block; there the card goes
-   * quiet after its caption and lets the prose carry the ayah and its meaning,
-   * so no ayah is ever heard twice. One ayah in common hands the whole card
-   * over - a story that quotes only the spoken lines of a passage means the
-   * rest of it to be read on the page, not recited again a paragraph later.
+   * A Quran block is read by its caption alone. The caption is the verse put
+   * into the story's own words, and reading the ayah and then its meaning
+   * after it turns the listening into a recitation drill — lead, Arabic,
+   * translation, lead, Arabic, translation — which is not what a story
+   * sounds like. The verse is on screen to be read. Where a story sets its
+   * ayahs a second time as ﴿Arabic﴾ runs in its prose, that prose is what
+   * carries them to the ear, woven into the telling rather than announced.
    *
    * A hadith block keeps its translation, because there the caption only
    * frames the report ("the Prophet spoke of Musa and the Angel of Death")
@@ -174,7 +149,6 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
    */
   const utterances = useMemo<Utterance[]>(() => {
     const out: Utterance[] = [];
-    const proseKeys = quotedInProse(blocks);
     let lastKey = '';
 
     const push = (raw: string, blockId: string, blockIndex: number) => {
@@ -211,17 +185,10 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
       const translation = block.source ? lc(block.source.translation, block.source.translationFr) : '';
       if (!translation) return;
 
-      if (block.source?.type === 'hadith') {
-        push(translation, block.id, blockIndex);
-        return;
-      }
-
-      const ayahs = splitAyahs(block.source?.arabicText ?? '');
-      if (ayahs.some((a) => proseKeys.has(speechKey(a)))) return;
-
-      // One ayah at a time, so the Arabic voice is given a line and not a page.
-      for (const ayah of ayahs) push(`﴿${ayah}﴾`, block.id, blockIndex);
-      push(translation, block.id, blockIndex);
+      // Read a verse only when there is no caption to carry the block, so
+      // that a block without one is never passed over in silence.
+      const readsTranslation = block.source?.type === 'hadith' || !caption.trim();
+      if (readsTranslation) push(translation, block.id, blockIndex);
     });
 
     return out;
