@@ -50,8 +50,8 @@ export const dhulkiflStoryContent: StoryContentBlock[] = [
     id: 'dhulkifl-2',
     type: 'narrative',
     order: 2,
-    content: "Al-Anbiya names him with Ismail and Idris, and gives the three of them one word - patient - and one reward.",
-    contentFr: "Al-Anbiya le nomme avec Ismaïl et Idris, et donne aux trois un seul mot - patients - et une seule récompense.",
+    content: "Surah Al-Anbiya names him with Ismail and Idris, and gives the three of them one word - patient - and one reward.",
+    contentFr: "La sourate Al-Anbiya le nomme avec Ismaïl et Idris, et donne aux trois un seul mot - patients - et une seule récompense.",
   },
   {
     id: 'dhulkifl-3',
@@ -82,8 +82,8 @@ export const dhulkiflStoryContent: StoryContentBlock[] = [
     id: 'dhulkifl-5',
     type: 'narrative',
     order: 5,
-    content: "Sad names him again, with Ismail and Al-Yasa, among the outstanding.",
-    contentFr: "Sad le nomme à nouveau, avec Ismaïl et Al-Yasa, parmi les meilleurs.",
+    content: "Surah Sad names him again, with Ismail and Al-Yasa, among the outstanding.",
+    contentFr: "La sourate Sad le nomme à nouveau, avec Ismaïl et Al-Yasa, parmi les meilleurs.",
   },
   {
     id: 'dhulkifl-6',
