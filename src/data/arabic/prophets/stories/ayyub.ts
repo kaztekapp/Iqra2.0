@@ -58,8 +58,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-2',
     type: 'narrative',
     order: 2,
-    content: "Al-Anbiya gives his prayer in one line, and Allah's answer in the next.",
-    contentFr: "Al-Anbiya donne sa prière en une ligne, et la réponse d'Allah dans la suivante.",
+    content: "Surah Al-Anbiya gives his prayer in one line, and Allah's answer in the next.",
+    contentFr: "La sourate Al-Anbiya donne sa prière en une ligne, et la réponse d'Allah dans la suivante.",
   },
   {
     id: 'ayyub-3',
@@ -90,8 +90,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-5',
     type: 'narrative',
     order: 5,
-    content: "Sad tells it more fully: what he said Satan had done, the spring he was told to strike from the ground, the family given back with the like of them, the oath and the bunch of grass - and what Allah found him to be.",
-    contentFr: "Sad le raconte plus complètement : ce qu'il dit que Satan avait fait, la source qu'il lui fut dit de faire jaillir du sol, la famille rendue avec autant qu'elle, le serment et la poignée d'herbe - et ce qu'Allah trouva qu'il était.",
+    content: "Surah Sad tells it more fully: what he said Satan had done, the spring he was told to strike from the ground, the family given back with the like of them, the oath and the bunch of grass - and what Allah found him to be.",
+    contentFr: "La sourate Sad le raconte plus complètement : ce qu'il dit que Satan avait fait, la source qu'il lui fut dit de faire jaillir du sol, la famille rendue avec autant qu'elle, le serment et la poignée d'herbe - et ce qu'Allah trouva qu'il était.",
   },
   {
     id: 'ayyub-6',
@@ -176,8 +176,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-12',
     type: 'narrative',
     order: 12,
-    content: "The Prophet ﷺ told of a moment after Ayyub's healing, and of what he answered when his Lord asked him a question.",
-    contentFr: "Le Prophète ﷺ raconta un moment après la guérison d'Ayyoub, et ce qu'il répondit quand son Seigneur lui posa une question.",
+    content: "The Prophet ﷺ told of a moment after Ayyub's healing, and of what he answered when his Lord asked him a question (Sahih al-Bukhari 279).",
+    contentFr: "Le Prophète ﷺ raconta un moment après la guérison d'Ayyoub, et ce qu'il répondit quand son Seigneur lui posa une question (Sahih al-Boukhari 279).",
   },
   {
     id: 'ayyub-13',
