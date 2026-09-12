@@ -157,8 +157,8 @@ export const habilQabilStory: QuranStory = {
       id: 'habilqabil-11',
       type: 'narrative',
       order: 11,
-      content: "The Prophet ﷺ told what that first killing left on the one who did it.",
-      contentFr: "Le Prophète ﷺ dit ce que ce premier meurtre laissa sur celui qui le commit.",
+      content: "The Prophet ﷺ told what that first killing left on the one who did it (Sahih al-Bukhari 3335).",
+      contentFr: "Le Prophète ﷺ dit ce que ce premier meurtre laissa sur celui qui le commit (Sahih al-Boukhari 3335).",
     },
     {
       id: 'habilqabil-12',
