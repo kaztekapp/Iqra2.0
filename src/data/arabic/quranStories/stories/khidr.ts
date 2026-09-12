@@ -61,8 +61,8 @@ export const khidrStory: QuranStory = {
       id: 'khidr-2',
       type: 'narrative',
       order: 2,
-      content: "The Prophet ﷺ told how this journey began, and what happened on it, and named the servant. Ubayy ibn Ka'b narrated it from him.",
-      contentFr: "Le Prophète ﷺ raconta comment ce voyage commença, ce qui s'y passa, et nomma le serviteur. Oubayy ibn Ka'b le rapporta de lui.",
+      content: "The Prophet ﷺ told how this journey began, and what happened on it, and named the servant. Ubayy ibn Ka'b narrated it from him (Sahih al-Bukhari 4725).",
+      contentFr: "Le Prophète ﷺ raconta comment ce voyage commença, ce qui s'y passa, et nomma le serviteur. Oubayy ibn Ka'b le rapporta de lui (Sahih al-Boukhari 4725).",
     },
     {
       id: 'khidr-3',
