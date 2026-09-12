@@ -59,8 +59,8 @@ export const ukhdudStory: QuranStory = {
       id: 'ukhdud-2',
       type: 'narrative',
       order: 2,
-      content: "Al-Buruj opens with oaths, and then: destroyed were the companions of the ditch. They sat by the fire and watched. The believers had done nothing but believe. And the surah ends with both punishments and the great attainment.",
-      contentFr: "Al-Bourouj s'ouvre par des serments, puis : périssent les gens de la fosse. Ils étaient assis près du feu et regardaient. Les croyants n'avaient rien fait que croire. Et la sourate finit par les deux châtiments et le grand succès.",
+      content: "Surah Al-Buruj opens with oaths, and then: destroyed were the companions of the ditch. They sat by the fire and watched. The believers had done nothing but believe. And the surah ends with both punishments and the great attainment.",
+      contentFr: "La sourate Al-Bourouj s'ouvre par des serments, puis : périssent les gens de la fosse. Ils étaient assis près du feu et regardaient. Les croyants n'avaient rien fait que croire. Et la sourate finit par les deux châtiments et le grand succès.",
     },
     {
       id: 'ukhdud-3',
@@ -93,8 +93,8 @@ export const ukhdudStory: QuranStory = {
       id: 'ukhdud-5',
       type: 'narrative',
       order: 5,
-      content: "The Prophet ﷺ told the story of these people. Suhayb narrated it from him, and it is given whole.",
-      contentFr: "Le Prophète ﷺ raconta l'histoire de ces gens. Souhayb la rapporta de lui, et elle est donnée en entier.",
+      content: "The Prophet ﷺ told the story of these people. Suhayb narrated it from him, and it is given whole (Sahih Muslim 3005).",
+      contentFr: "Le Prophète ﷺ raconta l'histoire de ces gens. Souhayb la rapporta de lui, et elle est donnée en entier (Sahih Mouslim 3005).",
     },
     {
       id: 'ukhdud-6',
