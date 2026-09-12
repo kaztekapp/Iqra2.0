@@ -65,7 +65,14 @@
     "@types/react": "~19.2.4",
     "react-test-renderer": "19.1.0",
     "tailwindcss": "^3.4.17",
-    "typescript": "~6.0.3"
+    "typescript": "~5.9.3"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "install": {
+      "exclude": [
+        "typescript"
+      ]
+    }
+  }
 }
