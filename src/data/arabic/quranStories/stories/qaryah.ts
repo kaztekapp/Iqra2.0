@@ -50,8 +50,8 @@ export const qaryahStory: QuranStory = {
       id: 'qaryah-1',
       type: 'narrative',
       order: 1,
-      content: "This is the story of the people of the town, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran tells it in one passage of Ya-Sin and names neither the town, nor the messengers, nor the man who came running. No authentic hadith adds to it. What was not told is not ours to imagine. Allah knows best.",
-      contentFr: "Voici l'histoire des gens de la cité, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage de Ya-Sin et ne nomme ni la cité, ni les messagers, ni l'homme venu en courant. Aucun hadith authentique n'y ajoute. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+      content: "This is the story of the people of the town, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran tells it in one passage of Surah Ya-Sin and names neither the town, nor the messengers, nor the man who came running. No authentic hadith adds to it. What was not told is not ours to imagine. Allah knows best.",
+      contentFr: "Voici l'histoire des gens de la cité, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage de la sourate Ya-Sin et ne nomme ni la cité, ni les messagers, ni l'homme venu en courant. Aucun hadith authentique n'y ajoute. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
     },
 
     // ============ PART 1: THE MESSENGERS, AND THE TOWN ============
