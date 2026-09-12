@@ -74,12 +74,13 @@ export default function RootLayout() {
     setUpdateComplete(true);
   }, []);
 
-  // Android navigation bar: dark buttons on the light ground. Background color is no longer
-  // set — with edge-to-edge (SDK 54 default) the nav bar is transparent and
-  // setBackgroundColorAsync is unsupported (it only logs a warning).
+  // Android navigation bar: dark buttons on the light ground. Edge-to-edge is
+  // always on now, so the bar is transparent and only its content style is
+  // ours to set. Note the naming: 'light' is a LIGHT bar, i.e. dark buttons —
+  // the reverse of the old setButtonStyleAsync('dark') this replaces.
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setButtonStyleAsync('dark').catch(() => {});
+      NavigationBar.setStyle('light');
     }
   }, []);
 

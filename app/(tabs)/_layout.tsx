@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, ColorValue } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { color, type, weight } from '../../src/theme/tokens';
@@ -19,7 +19,7 @@ const ICONS: Record<string, { on: keyof typeof Ionicons.glyphMap; off: keyof typ
 };
 
 function tabIcon(name: keyof typeof ICONS) {
-  return ({ color: tint, focused }: { color: string; focused: boolean }) => (
+  return ({ color: tint, focused }: { color: ColorValue; focused: boolean }) => (
     <Ionicons name={focused ? ICONS[name].on : ICONS[name].off} size={23} color={tint} />
   );
 }

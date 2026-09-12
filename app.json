@@ -2,18 +2,12 @@
   "expo": {
     "name": "Iqra AI",
     "slug": "iqra2",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Iqra AI — Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, study Quran with audio recitations, and practice prayer.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "iqra2",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#F3F8F4"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.iqra2.app",
@@ -34,7 +28,6 @@
       },
       "package": "com.iqra2.app",
       "versionCode": 1,
-      "edgeToEdgeEnabled": true,
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
@@ -69,10 +62,16 @@
       [
         "expo-build-properties",
         {
-          "ios": { "useFrameworks": "static" },
-          "android": { "minSdkVersion": 24 }
+          "ios": {
+            "useFrameworks": "static"
+          },
+          "android": {
+            "minSdkVersion": 24
+          }
         }
-      ]
+      ],
+      "expo-status-bar",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
