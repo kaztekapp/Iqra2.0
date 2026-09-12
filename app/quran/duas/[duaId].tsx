@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useMemo, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { getDuaById, getAllDuas } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { ArabicVoiceSheet } from '../../../src/components/duas/ArabicVoiceSheet';
+import { useStoryNarration, type NarrationSpeed, type NarratableBlock } from '../../../src/hooks/useStoryNarration';
+import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import type { ArabicDeviceVoice } from '../../../src/services/speech/arabicTTS';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
 import type { SharedContent } from '../../../src/data/community/socialData';
@@ -33,7 +35,8 @@ export default function DuaDetailScreen() {
   } = useDuasStore();
 
   // Audio/Speech functionality
-  const { speak, stop, isSpeaking, voiceSource, deviceVoiceId, setArabicVoice, listDeviceVoices } = useArabicSpeech();
+  const { voiceSource, deviceVoiceId, setArabicVoice, listDeviceVoices } = useArabicSpeech();
+  const [playerOpen, setPlayerOpen] = useState(false);
   const [voiceSheetOpen, setVoiceSheetOpen] = useState(false);
   const [deviceVoices, setDeviceVoices] = useState<ArabicDeviceVoice[] | null>(null);
   const [shareContent, setShareContent] = useState<SharedContent | null>(null);
@@ -44,6 +47,69 @@ export default function DuaDetailScreen() {
   const currentIndex = dua ? allDuas.findIndex(d => d.id === dua.id) : -1;
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex < allDuas.length - 1;
+
+  /**
+   * The dua as a story reads itself: the Arabic first, by the Arabic voice,
+   * then its meaning by the narrator - the same cadence as the prophets'
+   * stories - and then, when the dua has them, when to say it, its virtues,
+   * and the story behind it. One block per section, so the section being
+   * read can be shown and tapped.
+   */
+  const categoryLabel = dua ? DUA_CATEGORY_LABELS[dua.category] : null;
+  const blocks = useMemo<NarratableBlock[]>(() => {
+    if (!dua) return [];
+    const out: NarratableBlock[] = [
+      {
+        id: `${dua.id}-dua`,
+        type: 'narrative',
+        content: `\ufd3f${dua.arabicText}\ufd3e ${dua.translation}`,
+        contentFr: `\ufd3f${dua.arabicText}\ufd3e ${dua.translationFr ?? dua.translation}`,
+      },
+    ];
+    if (dua.occasion) {
+      out.push({
+        id: `${dua.id}-occasion`,
+        type: 'narrative',
+        content: `${t('duasFeature.whenToRecite')}. ${dua.occasion}`,
+        contentFr: `${t('duasFeature.whenToRecite')}. ${dua.occasionFr ?? dua.occasion}`,
+      });
+    }
+    if (dua.virtues) {
+      out.push({
+        id: `${dua.id}-virtues`,
+        type: 'narrative',
+        content: `${t('duasFeature.virtuesRewards')}. ${dua.virtues}`,
+        contentFr: `${t('duasFeature.virtuesRewards')}. ${dua.virtuesFr ?? dua.virtues}`,
+      });
+    }
+    if (dua.story) {
+      out.push({
+        id: `${dua.id}-story`,
+        type: 'narrative',
+        content: `${t('duasFeature.backgroundStory')}. ${dua.story}`,
+        contentFr: `${t('duasFeature.backgroundStory')}. ${dua.storyFr ?? dua.story}`,
+      });
+    }
+    return out;
+  }, [dua, t]);
+
+  const nowPlaying = useMemo(
+    () =>
+      dua
+        ? {
+            title: lc(dua.titleEnglish, dua.titleFrench),
+            artist: categoryLabel ? lc(categoryLabel.english, categoryLabel.french) : undefined,
+          }
+        : undefined,
+    [dua, lc, categoryLabel]
+  );
+  const narration = useStoryNarration(blocks, nowPlaying);
+  const readingId = narration.isActive ? narration.currentBlockId : null;
+
+  const cycleSpeed = useCallback(() => {
+    const order: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
+    narration.setSpeed(order[(order.indexOf(narration.speed) + 1) % order.length]);
+  }, [narration]);
 
   // Track view
   useEffect(() => {
@@ -64,16 +130,12 @@ export default function DuaDetailScreen() {
     }
   }, [duaId, toggleMemorized]);
 
-  // Handle playing the Arabic text
-  const handlePlayDua = useCallback(async () => {
+  // Listen: start reading from the top, or open the player if already reading.
+  const handlePlayDua = useCallback(() => {
     if (!dua) return;
-
-    if (isSpeaking) {
-      await stop();
-    } else {
-      await speak(dua.arabicText);
-    }
-  }, [dua, isSpeaking, speak, stop]);
+    if (narration.isActive) setPlayerOpen(true);
+    else narration.start(0);
+  }, [dua, narration]);
 
   // The voice picker. The phone's voice list is asked for the first time the
   // sheet opens, then kept: it does not change while the app is running.
@@ -106,29 +168,22 @@ export default function DuaDetailScreen() {
       ? deviceVoices?.find((v) => v.identifier === deviceVoiceId)?.name || t('duasFeature.arabicVoice')
       : t('duasFeature.onlineVoice');
 
-  // Stop speech when leaving screen
-  useEffect(() => {
-    return () => {
-      stop();
-    };
-  }, [stop]);
-
   // Navigation handlers
   const handlePrevious = useCallback(async () => {
     if (hasPrevious) {
-      await stop();
+      await narration.stop();
       const prevDua = allDuas[currentIndex - 1];
       router.replace(`/quran/duas/${prevDua.id}` as any);
     }
-  }, [hasPrevious, currentIndex, allDuas, stop]);
+  }, [hasPrevious, currentIndex, allDuas, narration]);
 
   const handleNext = useCallback(async () => {
     if (hasNext) {
-      await stop();
+      await narration.stop();
       const nextDua = allDuas[currentIndex + 1];
       router.replace(`/quran/duas/${nextDua.id}` as any);
     }
-  }, [hasNext, currentIndex, allDuas, stop]);
+  }, [hasNext, currentIndex, allDuas, narration]);
 
   if (!dua) {
     return (
@@ -143,7 +198,6 @@ export default function DuaDetailScreen() {
 
   const favorite = duaId ? isFavorite(duaId) : false;
   const memorized = duaId ? isMemorized(duaId) : false;
-  const categoryLabel = DUA_CATEGORY_LABELS[dua.category];
   const collectionName = HADITH_COLLECTION_NAMES[dua.source.collection];
 
   return (
@@ -177,8 +231,8 @@ export default function DuaDetailScreen() {
       {/* Category Badge + Navigation */}
       <View style={styles.subHeader}>
         <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{lc(categoryLabel.english, categoryLabel.french)}</Text>
-          <Text style={styles.categoryTextArabic}>{categoryLabel.arabic}</Text>
+          <Text style={styles.categoryText}>{lc(categoryLabel!.english, categoryLabel!.french)}</Text>
+          <Text style={styles.categoryTextArabic}>{categoryLabel!.arabic}</Text>
         </View>
         <View style={{ flex: 1 }} />
         <View style={styles.headerNav}>
@@ -214,7 +268,7 @@ export default function DuaDetailScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Arabic Text */}
-        <View style={styles.arabicCard}>
+        <View style={[styles.arabicCard, readingId === `${dua.id}-dua` && styles.reading]}>
           <Text style={styles.arabicText}>{dua.arabicText}</Text>
 
           {/* Audio Controls */}
@@ -227,17 +281,12 @@ export default function DuaDetailScreen() {
 
 
             <Pressable
-              style={[styles.playButton, isSpeaking && styles.playButtonActive]}
+              style={[styles.playButton, narration.isActive && styles.playButtonActive]}
               onPress={handlePlayDua}
+              accessibilityRole="button"
             >
-              <Ionicons
-                name={isSpeaking ? 'stop' : 'play'}
-                size={24}
-                color={color.text}
-              />
-              <Text style={styles.playButtonText}>
-                {isSpeaking ? t('duasFeature.stop') : t('duasFeature.listen')}
-              </Text>
+              <Ionicons name="headset" size={22} color={color.textOnAccent} />
+              <Text style={styles.playButtonText}>{t('listen.listen')}</Text>
             </Pressable>
           </View>
         </View>
@@ -271,7 +320,7 @@ export default function DuaDetailScreen() {
 
         {/* Occasion */}
         {dua.occasion && (
-          <View style={styles.section}>
+          <View style={[styles.section, readingId === `${dua.id}-occasion` && styles.readingSection]}>
             <View style={styles.sectionHeader}>
               <Ionicons name="time" size={18} color={color.warning} />
               <Text style={[styles.sectionTitle, { marginLeft: 8, marginBottom: 0 }]}>
@@ -284,7 +333,7 @@ export default function DuaDetailScreen() {
 
         {/* Virtues */}
         {dua.virtues && (
-          <View style={styles.virtuesCard}>
+          <View style={[styles.virtuesCard, readingId === `${dua.id}-virtues` && styles.reading]}>
             <View style={styles.sectionHeader}>
               <Ionicons name="star" size={18} color={color.progress} />
               <Text style={[styles.sectionTitle, { color: color.progress, marginLeft: 8, marginBottom: 0 }]}>
@@ -297,7 +346,7 @@ export default function DuaDetailScreen() {
 
         {/* Story */}
         {dua.story && (
-          <View style={styles.storyCard}>
+          <View style={[styles.storyCard, readingId === `${dua.id}-story` && styles.reading]}>
             <View style={styles.sectionHeader}>
               <Ionicons name="book-outline" size={18} color={color.accent} />
               <Text style={[styles.sectionTitle, { color: color.accent, marginLeft: 8, marginBottom: 0 }]}>
@@ -331,8 +380,54 @@ export default function DuaDetailScreen() {
           </Text>
         </Pressable>
 
-        <View style={{ height: 40 }} />
+        <View style={{ height: narration.isActive ? 104 : 40 }} />
       </ScrollView>
+
+      {narration.isActive && (
+        <SafeAreaView edges={['bottom']} style={styles.listenDock}>
+          <ListenBar
+            title={lc(dua.titleEnglish, dua.titleFrench)}
+            status={narration.status}
+            progress={narration.progress}
+            blockIndex={narration.currentBlockIndex}
+            blockCount={narration.blockCount}
+            remainingSeconds={narration.remainingSeconds}
+            speed={narration.speed}
+            onToggle={narration.toggle}
+            onExpand={() => setPlayerOpen(true)}
+            onCycleSpeed={cycleSpeed}
+          />
+        </SafeAreaView>
+      )}
+
+      <ListenSheet
+        visible={playerOpen}
+        title={lc(dua.titleEnglish, dua.titleFrench)}
+        subtitle={lc(categoryLabel!.english, categoryLabel!.french)}
+        arabicTitle={dua.titleArabic}
+        status={narration.status}
+        progress={narration.progress}
+        elapsedSeconds={narration.elapsedSeconds}
+        remainingSeconds={narration.remainingSeconds}
+        blockIndex={narration.currentBlockIndex}
+        blockCount={narration.blockCount}
+        speed={narration.speed}
+        sleep={narration.sleep}
+        voice={narration.voice}
+        usingDeviceVoice={narration.usingDeviceVoice}
+        voiceApplies={narration.voiceApplies}
+        onClose={() => setPlayerOpen(false)}
+        onToggle={narration.toggle}
+        onSkip={narration.skipBlocks}
+        onSeek={narration.seekToFraction}
+        onSpeed={narration.setSpeed}
+        onSleep={narration.setSleep}
+        onVoice={narration.setVoice}
+        onStop={() => {
+          void narration.stop();
+          setPlayerOpen(false);
+        }}
+      />
 
       <ShareToGroupModal
         visible={!!shareContent}
@@ -526,19 +621,32 @@ const styles = StyleSheet.create({
   playButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: color.warning,
+    backgroundColor: color.accentStrong,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: radius.sm,
     gap: 8,
   },
   playButtonActive: {
-    backgroundColor: color.danger,
+    backgroundColor: color.accent,
   },
   playButtonText: {
-    color: color.text,
+    color: color.textOnAccent,
     fontSize: 15,
     fontWeight: '600',
+  },
+  // The section being read, in the same wash the story reader uses.
+  reading: {
+    backgroundColor: withAlpha(color.accent, 0.07),
+    borderColor: withAlpha(color.accent, 0.3),
+  },
+  readingSection: {
+    backgroundColor: withAlpha(color.accent, 0.07),
+    borderRadius: radius.md,
+    paddingVertical: 8,
+  },
+  listenDock: {
+    backgroundColor: color.surface,
   },
   section: {
     paddingHorizontal: 20,
