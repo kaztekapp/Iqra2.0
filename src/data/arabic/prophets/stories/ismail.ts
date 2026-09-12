@@ -130,8 +130,8 @@ export const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-8',
     type: 'narrative',
     order: 8,
-    content: "The Prophet ﷺ told the whole of it, and Ibn Abbas narrated it: the valley with no one in it, the water that ran out, his mother's seven runs between Safa and Marwa, the angel and Zamzam, the tribe that settled by the water, his marriage, the two visits of his father and the threshold, and the day the two of them raised the House.",
-    contentFr: "Le Prophète ﷺ raconta tout, et Ibn Abbas le rapporta : la vallée sans personne, l'eau qui s'épuisa, les sept courses de sa mère entre Safa et Marwa, l'ange et Zamzam, la tribu qui s'installa près de l'eau, son mariage, les deux visites de son père et le seuil, et le jour où tous deux élevèrent la Maison.",
+    content: "The Prophet ﷺ told the whole of it, and Ibn Abbas narrated it: the valley with no one in it, the water that ran out, his mother's seven runs between Safa and Marwa, the angel and Zamzam, the tribe that settled by the water, his marriage, the two visits of his father and the threshold, and the day the two of them raised the House (Sahih al-Bukhari 3364).",
+    contentFr: "Le Prophète ﷺ raconta tout, et Ibn Abbas le rapporta : la vallée sans personne, l'eau qui s'épuisa, les sept courses de sa mère entre Safa et Marwa, l'ange et Zamzam, la tribu qui s'installa près de l'eau, son mariage, les deux visites de son père et le seuil, et le jour où tous deux élevèrent la Maison (Sahih al-Boukhari 3364).",
   },
   {
     id: 'ismail-9',
@@ -153,8 +153,8 @@ export const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-10',
     type: 'narrative',
     order: 10,
-    content: "Al-Baqarah gives the charge to Ibrahim and Ismail to purify the House, and the prayer they made as they raised its foundations - for acceptance, for a Muslim nation from their descendants, and for a messenger from among them.",
-    contentFr: "Al-Baqara donne la charge faite à Ibrahim et Ismaïl de purifier la Maison, et la prière qu'ils firent en en élevant les fondations - pour l'acceptation, pour une communauté soumise issue de leur descendance, et pour un messager venu d'eux.",
+    content: "Surah Al-Baqarah gives the charge to Ibrahim and Ismail to purify the House, and the prayer they made as they raised its foundations - for acceptance, for a Muslim nation from their descendants, and for a messenger from among them.",
+    contentFr: "La sourate Al-Baqara donne la charge faite à Ibrahim et Ismaïl de purifier la Maison, et la prière qu'ils firent en en élevant les fondations - pour l'acceptation, pour une communauté soumise issue de leur descendance, et pour un messager venu d'eux.",
   },
   {
     id: 'ismail-11',
@@ -188,7 +188,7 @@ export const ismailStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 13,
     content: "Surah Maryam tells the Prophet ﷺ to mention Ismail in the Book, and says what he was.",
-    contentFr: "La sourate Maryam dit au Prophète ﷺ d'évoquer Ismaïl dans le Livre, et dit ce qu'il était.",
+    contentFr: "Maryam dit au Prophète ﷺ d'évoquer Ismaïl dans le Livre, et dit ce qu'il était.",
   },
   {
     id: 'ismail-14',
@@ -296,8 +296,8 @@ export const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-22',
     type: 'narrative',
     order: 22,
-    content: "As-Saffat tells of the son Ibrahim was told in a dream to sacrifice. The Quran does not name that son. The passage is given here whole, as the Quran gives it, and the name is left as the Quran leaves it.",
-    contentFr: "As-Saffat raconte le fils qu'Ibrahim vit en rêve devoir sacrifier. Le Coran ne nomme pas ce fils. Le passage est donné ici en entier, tel que le Coran le donne, et le nom est laissé comme le Coran le laisse.",
+    content: "Surah As-Saffat tells of the son Ibrahim was told in a dream to sacrifice. The Quran does not name that son. The passage is given here whole, as the Quran gives it, and the name is left as the Quran leaves it.",
+    contentFr: "La sourate As-Saffat raconte le fils qu'Ibrahim vit en rêve devoir sacrifier. Le Coran ne nomme pas ce fils. Le passage est donné ici en entier, tel que le Coran le donne, et le nom est laissé comme le Coran le laisse.",
   },
   {
     id: 'ismail-23',
@@ -464,8 +464,8 @@ export const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-36',
     type: 'narrative',
     order: 36,
-    content: "The Prophet ﷺ passed some men shooting arrows, and called them by their father's name.",
-    contentFr: "Le Prophète ﷺ passa près d'hommes qui tiraient à l'arc, et les appela du nom de leur père.",
+    content: "The Prophet ﷺ passed some men shooting arrows, and called them by their father's name (Sahih al-Bukhari 3373).",
+    contentFr: "Le Prophète ﷺ passa près d'hommes qui tiraient à l'arc, et les appela du nom de leur père (Sahih al-Boukhari 3373).",
   },
   {
     id: 'ismail-37',
@@ -487,8 +487,8 @@ export const ismailStoryContent: StoryContentBlock[] = [
     id: 'ismail-38',
     type: 'narrative',
     order: 38,
-    content: "And he ﷺ said what Ibrahim used to say over Ismail and Ishaq.",
-    contentFr: "Et il ﷺ dit ce qu'Ibrahim disait sur Ismaïl et Ishaq.",
+    content: "And he ﷺ said what Ibrahim used to say over Ismail and Ishaq (Sahih al-Bukhari 3371).",
+    contentFr: "Et il ﷺ dit ce qu'Ibrahim disait sur Ismaïl et Ishaq (Sahih al-Boukhari 3371).",
   },
   {
     id: 'ismail-39',
