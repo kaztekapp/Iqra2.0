@@ -26,7 +26,15 @@ import { File, Paths } from 'expo-file-system';
 const TRUSTED_CLIENT_TOKEN = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
 const GEC_VERSION = '1-143.0.3650.75';
 const WIN_EPOCH_SECONDS = 11644473600;
-const SYNTH_TIMEOUT_MS = 12000;
+/**
+ * Give up only when the socket has gone QUIET for this long. Audio streams
+ * back frame by frame from the first second, so a request that is still
+ * sending is still fine however long the paragraph; the old fixed 12-second
+ * budget failed every long hadith and got the neural voice retired.
+ */
+const SYNTH_IDLE_TIMEOUT_MS = 15000;
+/** And never wait longer than this in total, whatever arrives. */
+const SYNTH_MAX_MS = 120000;
 
 export type EdgeGender = 'female' | 'male';
 export type EdgeLang = 'en' | 'fr';
@@ -169,13 +177,19 @@ export function synthesize(text: string, voice: string, lang: EdgeLang, rate = '
       if (done) return;
       done = true;
       clearTimeout(timer);
+      clearTimeout(cap);
       try {
         socket.close();
       } catch {}
       fn();
     };
 
-    const timer = setTimeout(() => finish(() => reject(new Error('edge-tts-timeout'))), SYNTH_TIMEOUT_MS);
+    let timer = setTimeout(() => finish(() => reject(new Error('edge-tts-timeout'))), SYNTH_IDLE_TIMEOUT_MS);
+    const cap = setTimeout(() => finish(() => reject(new Error('edge-tts-timeout'))), SYNTH_MAX_MS);
+    const stillAlive = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => finish(() => reject(new Error('edge-tts-timeout'))), SYNTH_IDLE_TIMEOUT_MS);
+    };
 
     socket.onopen = () => {
       const stamp = new Date().toString();
@@ -195,6 +209,7 @@ export function synthesize(text: string, voice: string, lang: EdgeLang, rate = '
     };
 
     socket.onmessage = (event: any) => {
+      stillAlive();
       const data = event.data;
       if (typeof data === 'string') {
         if (data.includes('Path:turn.end')) {

@@ -119,8 +119,13 @@ const URL_CHUNK = 180;
 /** How long to stop fetching after a failure, so taps do not stall. */
 const NETWORK_BACKOFF_MS = 30_000;
 
-/** After it fails twice, stop asking for the rest of the session. */
-const SESSION_BACKOFF_MS = 24 * 60 * 60 * 1000;
+/**
+ * After it fails twice, leave it alone for a few minutes. This used to be a
+ * whole day, which meant two slow requests on a bad connection took the
+ * male voice away until the app was killed - and choosing "Male" afterwards
+ * did nothing, because the only engine that has one was still retired.
+ */
+const SESSION_BACKOFF_MS = 5 * 60 * 1000;
 
 export function estimateSeconds(text: string, speed: number): number {
   const words = text.trim().split(/\s+/).filter(Boolean).length;
@@ -314,6 +319,15 @@ class StoryAudioService {
     if (this.gender === gender) return;
     this.gender = gender;
     this.sessionEngine = null;
+    // A deliberate choice of voice is a request to try the neural engine
+    // again now, whatever it did earlier.
+    this.forgiveEngines();
+  }
+
+  /** Clear every back-off, so the next sentence starts at the top rung. */
+  private forgiveEngines(): void {
+    this.unavailableUntil = { edge: 0, google: 0 };
+    this.failures = { edge: 0, google: 0 };
   }
 
   /** Which engine this session settled on, once it has spoken. */
@@ -337,6 +351,7 @@ class StoryAudioService {
   /** Called when a story stops, so the next one re-chooses its engine. */
   resetSession(): void {
     this.sessionEngine = null;
+    this.forgiveEngines();
   }
 
   private localeFor(lang: NarrationLang): string {
