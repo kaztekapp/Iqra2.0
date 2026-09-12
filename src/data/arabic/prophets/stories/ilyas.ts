@@ -43,8 +43,8 @@ export const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-1',
     type: 'narrative',
     order: 1,
-    content: "This is the story of Prophet Ilyas, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nIt is a short story, because that is how the Quran tells it: one passage in As-Saffat, and his name once more among the righteous. No authentic hadith adds to it. Who his people were, where they lived, and what became of him - we were not told, and what was not told is not ours to imagine. Allah knows best.",
-    contentFr: "Voici l'histoire du prophète Ilyas, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nC'est une courte histoire, parce que c'est ainsi que le Coran la raconte : un passage dans As-Saffat, et son nom une fois encore parmi les vertueux. Aucun hadith authentique n'y ajoute. Qui était son peuple, où il vécut, et ce qu'il advint de lui - cela ne nous a pas été dit, et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+    content: "This is the story of Prophet Ilyas, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nIt is a short story, because that is how the Quran tells it: one passage in Surah As-Saffat, and his name once more among the righteous. No authentic hadith adds to it. Who his people were, where they lived, and what became of him - we were not told, and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Ilyas, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nC'est une courte histoire, parce que c'est ainsi que le Coran la raconte : un passage dans la sourate As-Saffat, et son nom une fois encore parmi les vertueux. Aucun hadith authentique n'y ajoute. Qui était son peuple, où il vécut, et ce qu'il advint de lui - cela ne nous a pas été dit, et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
 
   // ============ PART 1: DO YOU CALL UPON BAAL? ============
@@ -52,8 +52,8 @@ export const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-2',
     type: 'narrative',
     order: 2,
-    content: "As-Saffat counts him among the messengers, gives what he said to his people, and what they did - and the greeting Allah left for him.",
-    contentFr: "As-Saffat le compte parmi les messagers, donne ce qu'il dit à son peuple, et ce qu'ils firent - et la salutation qu'Allah laissa pour lui.",
+    content: "Surah As-Saffat counts him among the messengers, gives what he said to his people, and what they did - and the greeting Allah left for him.",
+    contentFr: "La sourate As-Saffat le compte parmi les messagers, donne ce qu'il dit à son peuple, et ce qu'ils firent - et la salutation qu'Allah laissa pour lui.",
   },
   {
     id: 'ilyas-3',
@@ -84,8 +84,8 @@ export const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-5',
     type: 'narrative',
     order: 5,
-    content: "Al-An'am names him with Zakariya, Yahya and Isa, among the righteous.",
-    contentFr: "Al-An'am le nomme avec Zakariya, Yahya et Issa, parmi les vertueux.",
+    content: "Surah Al-An'am names him with Zakariya, Yahya and Isa, among the righteous.",
+    contentFr: "La sourate Al-An'am le nomme avec Zakariya, Yahya et Issa, parmi les vertueux.",
   },
   {
     id: 'ilyas-6',
