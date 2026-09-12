@@ -50,8 +50,8 @@ export const twoGardensStory: QuranStory = {
       id: 'twogardens-1',
       type: 'narrative',
       order: 1,
-      content: "This is the parable of the owner of two gardens, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran presents it as an example of two men, in one passage of Al-Kahf, and names neither of them. No authentic hadith adds to it. What was not told is not ours to imagine. Allah knows best.",
-      contentFr: "Voici la parabole du propriétaire des deux jardins, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la présente comme l'exemple de deux hommes, en un seul passage d'Al-Kahf, et ne nomme aucun des deux. Aucun hadith authentique n'y ajoute. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+      content: "This is the parable of the owner of two gardens, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran presents it as an example of two men, in one passage of Surah Al-Kahf, and names neither of them. No authentic hadith adds to it. What was not told is not ours to imagine. Allah knows best.",
+      contentFr: "Voici la parabole du propriétaire des deux jardins, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la présente comme l'exemple de deux hommes, en un seul passage de la sourate Al-Kahf, et ne nomme aucun des deux. Aucun hadith authentique n'y ajoute. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
     },
 
     // ============ PART 1: TWO GARDENS, AND A RIVER ============
