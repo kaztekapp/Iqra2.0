@@ -12,7 +12,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useCreditStore, getCreditDisplayInfo } from '../../src/stores/creditStore';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { StudyPartner } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
@@ -26,8 +25,6 @@ const LEVEL_COLORS: Record<string, string> = {
 
 export default function StudyPartnersScreen() {
   const { t } = useTranslation();
-  const creditState = useCreditStore();
-  const isPremium = getCreditDisplayInfo(creditState).isPremium;
   const [refreshing, setRefreshing] = useState(false);
 
   const {
@@ -49,7 +46,6 @@ export default function StudyPartnersScreen() {
   }, [loadPartners]);
 
   const handleConnect = async (partnerId: string, isConnected: boolean) => {
-    if (!isPremium) return;
     if (isConnected) {
       await disconnectPartner(partnerId);
     } else {
@@ -113,7 +109,6 @@ export default function StudyPartnersScreen() {
                       key={partner.id}
                       partner={partner}
                       isConnected
-                      isPremium={isPremium}
                       onConnect={() => handleConnect(partner.id, true)}
                       getLastActive={getLastActive}
                       t={t}
@@ -129,7 +124,6 @@ export default function StudyPartnersScreen() {
                   key={partner.id}
                   partner={partner}
                   isConnected={false}
-                  isPremium={isPremium}
                   onConnect={() => handleConnect(partner.id, false)}
                   getLastActive={getLastActive}
                   t={t}
@@ -146,14 +140,12 @@ export default function StudyPartnersScreen() {
 function PartnerCard({
   partner,
   isConnected,
-  isPremium,
   onConnect,
   getLastActive,
   t,
 }: {
   partner: StudyPartner;
   isConnected: boolean;
-  isPremium: boolean;
   onConnect: () => void;
   getLastActive: (d: string) => string;
   t: any;
@@ -203,22 +195,16 @@ function PartnerCard({
         style={[
           styles.connectBtn,
           isConnected && styles.connectedBtn,
-          !isPremium && styles.lockedBtn,
         ]}
         onPress={onConnect}
-        disabled={!isPremium}
       >
         <Ionicons
-          name={isConnected ? 'checkmark-circle' : isPremium ? 'hand-left' : 'lock-closed'}
+          name={isConnected ? 'checkmark-circle' : 'hand-left'}
           size={16}
           color={isConnected ? color.progress : color.surface}
         />
         <Text style={[styles.connectText, isConnected && styles.connectedText]}>
-          {isConnected
-            ? t('community.connected')
-            : isPremium
-              ? t('community.connect')
-              : t('community.unlockToConnect')}
+          {isConnected ? t('community.connected') : t('community.connect')}
         </Text>
       </Pressable>
     </View>

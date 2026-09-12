@@ -16,7 +16,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useCreditStore, getCreditDisplayInfo } from '../../src/stores/creditStore';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import { GROUP_TEMPLATES } from '../../src/data/community/groupTemplates';
 import { GroupTemplate } from '../../src/types/community';
@@ -27,8 +26,6 @@ const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent
 
 export default function StudyGroupsScreen() {
   const { t } = useTranslation();
-  const creditState = useCreditStore();
-  const isPremium = getCreditDisplayInfo(creditState).isPremium;
 
   const [refreshing, setRefreshing] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);

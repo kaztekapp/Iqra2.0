@@ -1,20 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, TextInput, ScrollView, Modal, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { QuizContent, QuizQuestion } from '../../../types/classContent';
-import { AIQuizPromptModal, QuizGenRequest } from './AIQuizPromptModal';
-import { generateQuiz } from '../../../services/aiQuizService';
-import { listCurriculum, getCurriculumDigest } from '../../../data/arabic/curriculumSource';
-import { useSettingsStore } from '../../../stores/settingsStore';
 import { color, radius } from '../../../theme/tokens';
 
 interface Props {
   visible: boolean;
   groupColor: string;
   initial?: QuizContent | null;
-  chatContext?: string;   // recent chat text, enables "generate from chat"
   onSave: (content: QuizContent) => void;
   onClose: () => void;
 }
@@ -28,45 +23,10 @@ function blankQuestion(type: QuizQuestion['type']): QuizQuestion {
     : { id: newQid(), type, prompt: '', correctText: '', explanation: '' };
 }
 
-export function QuizEditor({ visible, groupColor, initial, chatContext, onSave, onClose }: Props) {
+export function QuizEditor({ visible, groupColor, initial, onSave, onClose }: Props) {
   const { t } = useTranslation();
   const [title, setTitle] = useState(initial?.title || '');
   const [questions, setQuestions] = useState<QuizQuestion[]>(initial?.questions?.length ? initial.questions : [blankQuestion('multiple_choice')]);
-  const [aiOpen, setAiOpen] = useState(false);
-  const [aiLoading, setAiLoading] = useState(false);
-  const language = useSettingsStore((s) => s.language);
-  const curriculum = useMemo(() => listCurriculum(language), [language]);
-  const isEmpty = questions.length === 1 && !questions[0].prompt.trim() && !title.trim();
-
-  const handleAiGenerate = async (req: QuizGenRequest) => {
-    setAiLoading(true);
-    try {
-      const quiz = await generateQuiz({
-        topic: req.source === 'lesson' ? req.title : req.topic,
-        chatContext: req.source === 'chat' ? chatContext : undefined,
-        sourceMaterial: req.source === 'lesson' && req.lessonId ? getCurriculumDigest(req.lessonId, language) : undefined,
-        count: req.count,
-        level: req.level,
-        language,
-        model: 'sonnet',
-      });
-      setTitle((t) => t || quiz.title);
-      setQuestions((prev) => {
-        const existing = prev.filter((q) => q.prompt.trim());
-        return [...existing, ...quiz.questions];
-      });
-      setAiOpen(false);
-    } catch (e: any) {
-      const msg = e?.message === 'no_credits' ? 'You are out of AI credits.'
-        : e?.message === 'auth_required' ? 'Please sign in to use AI.'
-        : e?.message === 'rate_limit' ? 'Too many requests — try again shortly.'
-        : e?.message === 'bad_response' ? 'The AI response could not be read. Try again or rephrase.'
-        : 'Could not generate the quiz. Please try again.';
-      Alert.alert('AI quiz', msg);
-    } finally {
-      setAiLoading(false);
-    }
-  };
 
   const patch = (i: number, p: Partial<QuizQuestion>) =>
     setQuestions((prev) => prev.map((q, idx) => (idx === i ? { ...q, ...p } : q)));
@@ -110,10 +70,6 @@ export function QuizEditor({ visible, groupColor, initial, chatContext, onSave, 
         <View style={styles.header}>
           <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
           <Text style={styles.headerTitle}>{initial ? 'Edit quiz' : 'New quiz'}</Text>
-          <Pressable onPress={() => setAiOpen(true)} style={styles.aiBtn} hitSlop={6}>
-            <Ionicons name="sparkles" size={18} color={groupColor} />
-            <Text style={[styles.aiBtnText, { color: groupColor }]}>{t('community.ai')}</Text>
-          </Pressable>
           <Pressable onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.saveText}>{initial ? 'Update' : 'Post'}</Text>
           </Pressable>
@@ -121,13 +77,6 @@ export function QuizEditor({ visible, groupColor, initial, chatContext, onSave, 
 
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.flex}>
           <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-            {isEmpty && (
-              <Pressable style={[styles.aiCta, { borderColor: `${groupColor}66` }]} onPress={() => setAiOpen(true)}>
-                <Ionicons name="sparkles" size={18} color={groupColor} />
-                <Text style={[styles.aiCtaText, { color: groupColor }]}>{t('community.generateQuizAI')}</Text>
-                <Text style={styles.aiCtaSub}>{t('community.fromChatOrTopic')}</Text>
-              </Pressable>
-            )}
             <TextInput style={styles.titleInput} placeholder={t('community.quizTitlePlaceholder')} placeholderTextColor={color.textFaint} value={title} onChangeText={setTitle} multiline />
 
             {questions.map((q, qi) => (
@@ -188,17 +137,6 @@ export function QuizEditor({ visible, groupColor, initial, chatContext, onSave, 
           </ScrollView>
         </KeyboardAvoidingView>
 
-        {aiOpen && (
-          <AIQuizPromptModal
-            visible
-            groupColor={groupColor}
-            hasChat={!!chatContext && chatContext.trim().length > 0}
-            curriculum={curriculum}
-            loading={aiLoading}
-            onSubmit={handleAiGenerate}
-            onClose={() => { if (!aiLoading) setAiOpen(false); }}
-          />
-        )}
       </SafeAreaView></SafeAreaProvider>
     </Modal>
   );
@@ -209,11 +147,6 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: color.borderSubtle },
   headerTitle: { flex: 1, fontSize: 17, fontWeight: '700', color: color.text },
-  aiBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 7, borderRadius: radius.md, backgroundColor: color.surface, borderWidth: 1, borderColor: color.border, marginRight: 8 },
-  aiBtnText: { fontWeight: '700', fontSize: 13 },
-  aiCta: { alignItems: 'center', gap: 3, paddingVertical: 16, borderRadius: radius.md, borderWidth: 1.5, borderStyle: 'dashed', marginBottom: 16, backgroundColor: color.surface },
-  aiCtaText: { fontSize: 15, fontWeight: '700' },
-  aiCtaSub: { fontSize: 12, color: color.textFaint },
   saveBtn: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: radius.md },
   saveText: { color: color.text, fontWeight: '700', fontSize: 14 },
   scroll: { padding: 16 },

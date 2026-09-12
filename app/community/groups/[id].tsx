@@ -269,15 +269,6 @@ export default function GroupDetailScreen() {
     return rows;
   }, [dedupedMessages, messagesById]);
 
-  // Recent text conversation, for AI "generate quiz from this chat".
-  const chatContextText = useMemo(() => {
-    const texts = dedupedMessages
-      .filter((m) => (m.type === 'chat' || m.type === 'message') && !m.isDeleted && m.body.trim())
-      .slice(-24)
-      .map((m) => `${m.authorName}: ${m.body.trim()}`);
-    return texts.join('\n').slice(-2400);
-  }, [dedupedMessages]);
-
   const mentionQuery = useMemo(() => activeMentionQuery(messageText), [messageText]);
 
   // FIX #8: Memoized reaction groups
@@ -1451,7 +1442,6 @@ export default function GroupDetailScreen() {
           visible
           groupColor={group?.color || color.accent}
           initial={editorInitial?.kind === 'quiz' ? editorInitial : null}
-          chatContext={chatContextText}
           onSave={handleSaveClass}
           onClose={closeEditor}
         />

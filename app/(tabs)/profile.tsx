@@ -14,9 +14,6 @@ import { iapService } from '../../src/services/iapService';
 import { ENABLE_ADS } from '../../src/services/adService';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import * as communityService from '../../src/services/communityService';
-import { useCreditStore, getCreditDisplayInfo } from '../../src/stores/creditStore';
-import { CreditPurchaseSheet } from '../../src/components/purchase/CreditPurchaseSheet';
-import { revenueCatService } from '../../src/services/revenueCatService';
 import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src/components/ui/Primitives';
 import { color, space, gutter, font, radius } from '../../src/theme/tokens';
 
@@ -219,51 +216,6 @@ export default function ProfileScreen() {
   };
 
 
-  // ── Subscription & Credits ──────────────────────────────────────
-  const creditBalance = useCreditStore((s) => s.creditBalance);
-  const subStatus = useCreditStore((s) => s.subscriptionStatus);
-  const subPlan = useCreditStore((s) => s.subscriptionPlan);
-  const subExpires = useCreditStore((s) => s.subscriptionExpiresAt);
-  const freeUsed = useCreditStore((s) => s.freeMessagesUsed);
-  const freeDate = useCreditStore((s) => s.freeMessagesDate);
-  const creditInfo = getCreditDisplayInfo({
-    creditBalance, subscriptionStatus: subStatus,
-    subscriptionExpiresAt: subExpires, freeMessagesUsed: freeUsed,
-    freeMessagesDate: freeDate,
-  });
-
-  const [showPurchaseSheet, setShowPurchaseSheet] = useState(false);
-  const [isRestoringPurchases, setIsRestoringPurchases] = useState(false);
-
-  const formatExpiryDate = (dateStr: string | null) => {
-    if (!dateStr) return '';
-    try {
-      return new Date(dateStr).toLocaleDateString(language === 'fr' ? 'fr-FR' : 'en-US', {
-        month: 'long', day: 'numeric', year: 'numeric',
-      });
-    } catch { return dateStr; }
-  };
-
-  const handleManageSubscription = () => {
-    if (Platform.OS === 'ios') {
-      Linking.openURL('https://apps.apple.com/account/subscriptions');
-    } else {
-      Linking.openURL('https://play.google.com/store/account/subscriptions');
-    }
-  };
-
-  const handleRestoreCreditPurchases = async () => {
-    setIsRestoringPurchases(true);
-    try {
-      await revenueCatService.restorePurchases();
-      Alert.alert(t('ads.restoreSuccess'), t('ads.restoreSuccessDesc'));
-    } catch {
-      Alert.alert(t('ads.restoreError'), t('ads.restoreErrorDesc'));
-    } finally {
-      setIsRestoringPurchases(false);
-    }
-  };
-
   const getAchievementProgress = (achievement: Achievement): number => {
     const { type, value } = achievement.condition;
     let current = 0;
@@ -442,111 +394,6 @@ export default function ProfileScreen() {
           <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
         </Pressable>
 
-
-        {/* Subscription & Credits */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('purchase.subscriptionAndCredits')}</Text>
-          <View style={styles.subCard}>
-            {/* ── Current Plan Row ──────────────────────────── */}
-            <View style={styles.subPlanRow}>
-              <View style={[
-                styles.subPlanIcon,
-                creditInfo.isPremium ? styles.subPlanIconPremium : styles.subPlanIconFree,
-              ]}>
-                <Ionicons
-                  name={creditInfo.isPremium ? 'diamond' : 'person-outline'}
-                  size={20}
-                  color={creditInfo.isPremium ? color.progress : color.textMuted}
-                />
-              </View>
-              <View style={styles.subPlanInfo}>
-                <Text style={styles.subPlanName}>
-                  {creditInfo.isPremium
-                    ? (subPlan === 'monthly' ? t('purchase.premiumMonthly') : t('purchase.premiumYearly'))
-                    : t('purchase.freePlan')}
-                </Text>
-                <Text style={styles.subPlanStatus}>
-                  {creditInfo.isPremium && subStatus === 'active' && subExpires
-                    ? t('purchase.renewsOn', { date: formatExpiryDate(subExpires) })
-                    : subStatus === 'cancelled' && subExpires
-                    ? t('purchase.cancelledExpires', { date: formatExpiryDate(subExpires) })
-                    : subStatus === 'expired' && subExpires
-                    ? t('purchase.expiredOn', { date: formatExpiryDate(subExpires) })
-                    : !creditInfo.isPremium
-                    ? t('purchase.freePlanDesc')
-                    : ''}
-                </Text>
-              </View>
-              {creditInfo.isPremium && (
-                <View style={styles.subActiveBadge}>
-                  <Text style={styles.subActiveBadgeText}>{t('purchase.premiumActive')}</Text>
-                </View>
-              )}
-            </View>
-
-            <View style={styles.subDivider} />
-
-            {/* ── Credit Balance Row ─────────────────────────── */}
-            <View style={styles.subCreditsRow}>
-              <View style={styles.subCreditsLeft}>
-                <View style={styles.subCreditsIcon}>
-                  <Ionicons name="wallet-outline" size={20} color={color.warning} />
-                </View>
-                <View>
-                  <Text style={styles.subCreditsLabel}>{t('purchase.creditBalance')}</Text>
-                  <Text style={styles.subCreditsValue}>
-                    {creditBalance > 0
-                      ? t('purchase.creditsRemaining', { count: creditBalance })
-                      : t('purchase.noCreditsYet')}
-                  </Text>
-                </View>
-              </View>
-              <Text style={styles.subCreditsNumber}>{creditBalance}</Text>
-            </View>
-
-            <View style={styles.subDivider} />
-
-            {/* ── Action Buttons ──────────────────────────────── */}
-            <View style={styles.subActions}>
-              {creditInfo.isPremium ? (
-                <Pressable style={styles.subManageBtn} onPress={handleManageSubscription}>
-                  <Ionicons name="settings-outline" size={16} color={color.text} />
-                  <Text style={styles.subManageBtnText}>{t('purchase.manageSub')}</Text>
-                  <Ionicons name="open-outline" size={14} color={color.textMuted} />
-                </Pressable>
-              ) : (
-                <Pressable
-                  style={styles.subUpgradeBtn}
-                  onPress={() => setShowPurchaseSheet(true)}
-                >
-                  <Ionicons name="diamond-outline" size={16} color={color.text} />
-                  <Text style={styles.subUpgradeBtnText}>{t('purchase.upgradeToPremium')}</Text>
-                </Pressable>
-              )}
-
-              <Pressable
-                style={styles.subGetCreditsBtn}
-                onPress={() => setShowPurchaseSheet(true)}
-              >
-                <Ionicons name="add-circle-outline" size={16} color={color.warning} />
-                <Text style={styles.subGetCreditsBtnText}>{t('purchase.getCredits')}</Text>
-              </Pressable>
-            </View>
-
-            {/* ── Restore Purchases ──────────────────────────── */}
-            <Pressable
-              style={styles.subRestoreBtn}
-              onPress={handleRestoreCreditPurchases}
-              disabled={isRestoringPurchases}
-            >
-              {isRestoringPurchases ? (
-                <ActivityIndicator size="small" color={color.textFaint} />
-              ) : (
-                <Text style={styles.subRestoreText}>{t('purchase.restorePurchases')}</Text>
-              )}
-            </Pressable>
-          </View>
-        </View>
 
         {/* Achievements */}
         <View style={styles.section}>
@@ -879,10 +726,7 @@ export default function ProfileScreen() {
           </View>
         </View>
       </Modal>
-      <CreditPurchaseSheet
-        visible={showPurchaseSheet}
-        onClose={() => setShowPurchaseSheet(false)}
-      />    </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
@@ -1399,155 +1243,6 @@ const styles = StyleSheet.create({
     color: color.text,
     fontSize: 16,
     fontWeight: '600',
-  },
-  // ── Subscription & Credits card ────────────────────────────────
-  subCard: {
-    backgroundColor: color.surface,
-    borderRadius: radius.lg,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: color.border,
-  },
-  subPlanRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  subPlanIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: radius.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  subPlanIconPremium: {
-    backgroundColor: withAlpha(color.progress, 0.09),
-  },
-  subPlanIconFree: {
-    backgroundColor: withAlpha(color.textMuted, 0.08),
-  },
-  subPlanInfo: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  subPlanName: {
-    color: color.text,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  subPlanStatus: {
-    color: color.textMuted,
-    fontSize: 12,
-    marginTop: 2,
-  },
-  subActiveBadge: {
-    backgroundColor: withAlpha(color.progress, 0.09),
-    borderRadius: radius.sm,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  subActiveBadgeText: {
-    color: color.progress,
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  subDivider: {
-    height: 1,
-    backgroundColor: color.border,
-    marginVertical: 14,
-  },
-  subCreditsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  subCreditsLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  subCreditsIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: radius.md,
-    backgroundColor: withAlpha(color.warning, 0.08),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  subCreditsLabel: {
-    color: color.text,
-    fontSize: 15,
-    fontWeight: '600',
-    marginLeft: 12,
-  },
-  subCreditsValue: {
-    color: color.textMuted,
-    fontSize: 12,
-    marginTop: 2,
-    marginLeft: 12,
-  },
-  subCreditsNumber: {
-    color: color.warning,
-    fontSize: 28,
-    fontWeight: '700',
-    fontVariant: ['tabular-nums'],
-  },
-  subActions: {
-    gap: 10,
-  },
-  subUpgradeBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.progress,
-    borderRadius: radius.md,
-    paddingVertical: 13,
-    gap: 8,
-  },
-  subUpgradeBtnText: {
-    color: color.text,
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  subManageBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.border,
-    borderRadius: radius.md,
-    paddingVertical: 13,
-    gap: 8,
-  },
-  subManageBtnText: {
-    color: color.text,
-    fontSize: 14,
-    fontWeight: '600',
-    flex: 1,
-    textAlign: 'center',
-  },
-  subGetCreditsBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: withAlpha(color.warning, 0.08),
-    borderRadius: radius.md,
-    paddingVertical: 13,
-    borderWidth: 1,
-    borderColor: withAlpha(color.warning, 0.19),
-    gap: 8,
-  },
-  subGetCreditsBtnText: {
-    color: color.warning,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  subRestoreBtn: {
-    alignItems: 'center',
-    paddingTop: 14,
-  },
-  subRestoreText: {
-    color: color.textFaint,
-    fontSize: 13,
-    textDecorationLine: 'underline',
   },
   // ── Community gamification sections ──────────────────────────────
   // Storage styles
