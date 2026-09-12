@@ -148,7 +148,7 @@ const musaStoryContent: StoryContentBlock[] = [
       ayahStart: 7,
       ayahEnd: 13,
       arabicText: "وَأَوْحَيْنَآ إِلَىٰٓ أُمِّ مُوسَىٰٓ أَنْ أَرْضِعِيهِ ۖ فَإِذَا خِفْتِ عَلَيْهِ فَأَلْقِيهِ فِى ٱلْيَمِّ وَلَا تَخَافِى وَلَا تَحْزَنِىٓ ۖ إِنَّا رَآدُّوهُ إِلَيْكِ وَجَاعِلُوهُ مِنَ ٱلْمُرْسَلِينَ ۝ فَٱلْتَقَطَهُۥٓ ءَالُ فِرْعَوْنَ لِيَكُونَ لَهُمْ عَدُوًّا وَحَزَنًا ۗ إِنَّ فِرْعَوْنَ وَهَـٰمَـٰنَ وَجُنُودَهُمَا كَانُوا۟ خَـٰطِـِٔينَ ۝ وَقَالَتِ ٱمْرَأَتُ فِرْعَوْنَ قُرَّتُ عَيْنٍ لِّى وَلَكَ ۖ لَا تَقْتُلُوهُ عَسَىٰٓ أَن يَنفَعَنَآ أَوْ نَتَّخِذَهُۥ وَلَدًا وَهُمْ لَا يَشْعُرُونَ ۝ وَأَصْبَحَ فُؤَادُ أُمِّ مُوسَىٰ فَـٰرِغًا ۖ إِن كَادَتْ لَتُبْدِى بِهِۦ لَوْلَآ أَن رَّبَطْنَا عَلَىٰ قَلْبِهَا لِتَكُونَ مِنَ ٱلْمُؤْمِنِينَ ۝ وَقَالَتْ لِأُخْتِهِۦ قُصِّيهِ ۖ فَبَصُرَتْ بِهِۦ عَن جُنُبٍ وَهُمْ لَا يَشْعُرُونَ ۝ وَحَرَّمْنَا عَلَيْهِ ٱلْمَرَاضِعَ مِن قَبْلُ فَقَالَتْ هَلْ أَدُلُّكُمْ عَلَىٰٓ أَهْلِ بَيْتٍ يَكْفُلُونَهُۥ لَكُمْ وَهُمْ لَهُۥ نَـٰصِحُونَ ۝ فَرَدَدْنَـٰهُ إِلَىٰٓ أُمِّهِۦ كَىْ تَقَرَّ عَيْنُهَا وَلَا تَحْزَنَ وَلِتَعْلَمَ أَنَّ وَعْدَ ٱللَّهِ حَقٌّ وَلَـٰكِنَّ أَكْثَرَهُمْ لَا يَعْلَمُونَ",
-      translation: "And We inspired to the mother of Musa, \"Suckle him; but when you fear for him, cast him into the river and do not fear and do not grieve. Indeed, We will return him to you and will make him [one] of the messengers.\" And the family of Pharaoh picked him up [out of the river] so that he would become to them an enemy and a [cause of] grief. Indeed, Pharaoh and Haman and their soldiers were deliberate sinners. And the wife of Pharaoh said, \"[He will be] a comfort of the eye [i.e., pleasure] for me and for you. Do not kill him; perhaps he may benefit us, or we may adopt him as a son.\" And they perceived not. And the heart of Musa's mother became empty [of all else]. She was about to disclose [the matter concerning] him had We not bound fast her heart that she would be of the believers. And she said to his sister, \"Follow him\"; so she watched him from a distance while they perceived not. And We had prevented from him [all] wet nurses before, so she said, \"Shall I direct you to a household that will be responsible for him for you while they are to him [for his upbringing] sincere?\" So We restored him to his mother that she might be content and not grieve and that she would know that the promise of Allah is true. But most of them [i.e., the people] do not know.",
+      translation: "And We inspired to the mother of Musa, \"Suckle him; but when you fear for him, cast him into the river and do not fear and do not grieve. Indeed, We will return him to you and will make him [one] of the messengers.\" And the family of Pharaoh picked him up [out of the river] so that he would become to them an enemy and a [cause of] grief. Indeed, Pharaoh and Haman and their soldiers were deliberate sinners. And the wife of Pharaoh said, \"[He will be] a comfort of the eye [i.e., pleasure] for me and for you. Do not kill him; perhaps he may benefit us, or we may adopt him as a son.\" And they perceived not. And the heart of Musa' mother became empty [of all else]. She was about to disclose [the matter concerning] him had We not bound fast her heart that she would be of the believers. And she said to his sister, \"Follow him\"; so she watched him from a distance while they perceived not. And We had prevented from him [all] wet nurses before, so she said, \"Shall I direct you to a household that will be responsible for him for you while they are to him [for his upbringing] sincere?\" So We restored him to his mother that she might be content and not grieve and that she would know that the promise of Allah is true. But most of them [i.e., the people] do not know.",
       translationFr: "Nous inspirâmes à la mère de Moussa : « Allaite-le. Et si tu crains pour lui, jette-le dans le fleuve. N’aie pas peur et ne sois pas triste, car Nous allons te le rendre. Et Nous ferons de lui un Messager. » La famille de Pharaon le recueillit alors, pour qu’il devienne pour eux un ennemi et une cause de malheur. Pharaon, Haman et leurs armées étaient dans l’erreur. La femme de Pharaon dit : « Ce sera la joie de mes yeux et des tiens. Ne le tuez pas. Il nous sera peut-être utile, ou alors nous le prendrons comme notre fils! » Et ils ne pouvaient (encore) rien sentir. Le cœur de la mère de Moussa fut envahi d’un grand vide et elle faillit tout révéler, mais Nous affermîmes son courage pour qu’elle fût du nombre des croyants. Elle dit à sa sœur : « Va à sa suite. » Elle l’apercevait alors de loin et sans qu’ils aient pu sentir (sa présence). Or, Nous avions déjà défendu qu’il fût allaité d’un autre sein (que celui de sa mère). (Sa sœur) dit : « Voulez-vous que je vous indique une famille qui le prendra en charge à votre place et qui saura bien le traiter ? » Nous le rendîmes alors à sa mère pour qu’elle retrouvât la joie, ne s’affligeât point et se rendît compte que la promesse d’Allah est vérité. La plupart d’entre eux, cependant, ne le savent pas.",
     } as QuranReference,
   },
@@ -156,6 +156,24 @@ const musaStoryContent: StoryContentBlock[] = [
     id: 'musa-7',
     type: 'quran_source',
     order: 7,
+    content: "Allah recalled that same favour to Musa himself, on the day He spoke to him: the chest, the river, the sister, and the years in Madyan.",
+    contentFr: "Allah rappela cette même faveur à Moussa lui-même, le jour où Il lui parla : le coffret, le fleuve, la sœur, et les années à Madyan.",
+    source: {
+      type: "quran",
+      surahNumber: 20,
+      surahNameEnglish: "Ta-Ha",
+      surahNameArabic: "طه",
+      ayahStart: 37,
+      ayahEnd: 41,
+      arabicText: "وَلَقَدْ مَنَنَّا عَلَيْكَ مَرَّةً أُخْرَىٰٓ ۝ إِذْ أَوْحَيْنَآ إِلَىٰٓ أُمِّكَ مَا يُوحَىٰٓ ۝ أَنِ ٱقْذِفِيهِ فِى ٱلتَّابُوتِ فَٱقْذِفِيهِ فِى ٱلْيَمِّ فَلْيُلْقِهِ ٱلْيَمُّ بِٱلسَّاحِلِ يَأْخُذْهُ عَدُوٌّ لِّى وَعَدُوٌّ لَّهُۥ ۚ وَأَلْقَيْتُ عَلَيْكَ مَحَبَّةً مِّنِّى وَلِتُصْنَعَ عَلَىٰ عَيْنِىٓ ۝ إِذْ تَمْشِىٓ أُخْتُكَ فَتَقُولُ هَلْ أَدُلُّكُمْ عَلَىٰ مَن يَكْفُلُهُۥ ۖ فَرَجَعْنَـٰكَ إِلَىٰٓ أُمِّكَ كَىْ تَقَرَّ عَيْنُهَا وَلَا تَحْزَنَ ۚ وَقَتَلْتَ نَفْسًا فَنَجَّيْنَـٰكَ مِنَ ٱلْغَمِّ وَفَتَنَّـٰكَ فُتُونًا ۚ فَلَبِثْتَ سِنِينَ فِىٓ أَهْلِ مَدْيَنَ ثُمَّ جِئْتَ عَلَىٰ قَدَرٍ يَـٰمُوسَىٰ ۝ وَٱصْطَنَعْتُكَ لِنَفْسِى",
+      translation: "And We had already conferred favor upon you another time, When We inspired to your mother what We inspired, [Saying], 'Cast him into the chest and cast it into the river, and the river will throw it onto the bank; there will take him an enemy to Me and an enemy to him.' And I bestowed upon you love from Me that you would be brought up under My eye [i.e., observation and care]. [And We favored you] when your sister went and said, 'Shall I direct you to someone who will be responsible for him?' So We restored you to your mother that she might be content and not grieve. And you killed someone, but We saved you from retaliation and tried you with a [severe] trial. And you remained [some] years among the people of Madyan. Then you came [here] at the decreed time, O Musa. And I produced you for Myself.",
+      translationFr: "Nous t’avons déjà favorisé une première fois, Quand, à ta mère, Nous avons inspiré ce qui s’inspire : \"Mets-le dans une caisse que tu jetteras dans les eaux du fleuve. Les flots l’entraîneront jusqu’à l’autre rive. Là le recueillera un ennemi à lui et à Moi.\" Et j’ai répandu sur toi, comme Signe de Ma grâce, l’amour (de tous), afin que tu sois élevé sous Mes yeux. Or ta sœur qui te suivait dit : \"Voulez-vous que je vous indique (une nourrice) pour le prendre en charge ?\" Alors, Nous t’avons rendu à ta mère pour qu’elle soit heureuse et pour qu’elle ne s’afflige point. Puis tu as tué un homme et Nous t’avons sauvé des tourments et t’avons mis plus d’une fois à l’épreuve. Pendant plusieurs années, ensuite, tu as vécu parmi le peuple de Madyan. Puis tu es venu, Moussa, d’après un terme décrété. Je t’ai élu pour Moi-même.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-8',
+    type: 'quran_source',
+    order: 8,
     content: "When he reached his full strength he entered the city unnoticed, found two men fighting, and struck the one from his enemy dead. He asked his Lord's forgiveness, and a man came running from the farthest end of the city to warn him.",
     contentFr: "Parvenu à sa pleine force, il entra dans la ville à l'insu de ses habitants, trouva deux hommes qui se battaient, et frappa à mort celui de ses ennemis. Il demanda pardon à son Seigneur, et un homme accourut du bout de la ville pour l'avertir.",
     source: {
@@ -171,9 +189,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-8',
+    id: 'musa-9',
     type: 'quran_source',
-    order: 8,
+    order: 9,
     content: "He turned toward Madyan. At its water he found two women holding back their flocks, watered for them, and asked his Lord for whatever good He would send down. Their father hired him, and set the term.",
     contentFr: "Il se dirigea vers Madyan. À son point d'eau il trouva deux femmes qui retenaient leurs bêtes, abreuva pour elles, et demanda à son Seigneur tout bien qu'Il ferait descendre sur lui. Leur père l'engagea, et fixa le terme.",
     source: {
@@ -189,9 +207,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-9',
+    id: 'musa-10',
     type: 'quran_source',
-    order: 9,
+    order: 10,
     content: "The term completed, he was travelling with his family when he saw a fire on the side of the mount. He came to it, and was called from the right bank of the valley, in the blessed spot, from the tree.",
     contentFr: "Le terme accompli, il voyageait avec sa famille lorsqu'il vit un feu du côté du Mont. Il y vint, et fut appelé depuis la rive droite de la vallée, à l'endroit béni, du fond de l'arbre.",
     source: {
@@ -207,9 +225,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-10',
+    id: 'musa-11',
     type: 'quran_source',
-    order: 10,
+    order: 11,
     content: "Ta-Ha tells the same night: the fire, the sandals, and the sacred valley of Tuwa.",
     contentFr: "Ta-Ha raconte la même nuit : le feu, les sandales, et la vallée sacrée de Tuwa.",
     source: {
@@ -225,9 +243,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-11',
+    id: 'musa-12',
     type: 'quran_source',
-    order: 11,
+    order: 12,
     content: "Then Allah asked him what was in his right hand, and the staff became a snake moving swiftly.",
     contentFr: "Puis Allah lui demanda ce qu'il avait dans sa main droite, et le bâton devint un serpent qui rampait.",
     source: {
@@ -243,9 +261,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-12',
+    id: 'musa-13',
     type: 'quran_source',
-    order: 12,
+    order: 13,
     content: "Musa asked for his breast to be expanded, his task eased, the knot untied from his tongue, and for his brother Harun. He was granted his request.",
     contentFr: "Moussa demanda que sa poitrine soit dilatée, sa tâche facilitée, le nœud dénoué de sa langue, et demanda son frère Haroun. Sa demande lui fut accordée.",
     source: {
@@ -258,24 +276,6 @@ const musaStoryContent: StoryContentBlock[] = [
       arabicText: "قَالَ رَبِّ ٱشْرَحْ لِى صَدْرِى ۝ وَيَسِّرْ لِىٓ أَمْرِى ۝ وَٱحْلُلْ عُقْدَةً مِّن لِّسَانِى ۝ يَفْقَهُوا۟ قَوْلِى ۝ وَٱجْعَل لِّى وَزِيرًا مِّنْ أَهْلِى ۝ هَـٰرُونَ أَخِى ۝ ٱشْدُدْ بِهِۦٓ أَزْرِى ۝ وَأَشْرِكْهُ فِىٓ أَمْرِى ۝ كَىْ نُسَبِّحَكَ كَثِيرًا ۝ وَنَذْكُرَكَ كَثِيرًا ۝ إِنَّكَ كُنتَ بِنَا بَصِيرًا ۝ قَالَ قَدْ أُوتِيتَ سُؤْلَكَ يَـٰمُوسَىٰ",
       translation: "[Musa] said, \"My Lord, expand [i.e., relax] for me my breast [with assurance] And ease for me my task And untie the knot from my tongue That they may understand my speech. And appoint for me a minister [i.e., assistant] from my family - Harun, my brother. Increase through him my strength And let him share my task That we may exalt You much And remember You much. Indeed, You are of us ever Seeing.\" [Allah] said, \"You have been granted your request, O Musa.",
       translationFr: "(Moussa) dit : « Seigneur ! Fais que ma poitrine s’ouvre (à Ta révélation) ! Rends ma mission facile. Défais le nœud (qui lie) ma langue, afin qu’ils comprennent ce que je (leur) dis. Donne-moi un assistant issu des miens : Haroun, mon frère ; fais qu’il me soit appui et renfort ; associe-le à ma mission, afin que nous Te rendions gloire abondamment, et que nous T’évoquions abondamment. Tu Vois parfaitement clair en nous. » (Allah) dit : « Accordée est ta demande, Moussa !",
-    } as QuranReference,
-  },
-  {
-    id: 'musa-13',
-    type: 'quran_source',
-    order: 13,
-    content: "And Allah reminded him of the favour before this one: the chest, the river, the sister who came to Pharaoh's house, the killing he was saved from, and the years in Madyan.",
-    contentFr: "Et Allah lui rappela la faveur d'avant celle-ci : le coffret, le fleuve, la sœur venue à la maison de Pharaon, le meurtre dont il fut sauvé, et les années à Madyan.",
-    source: {
-      type: "quran",
-      surahNumber: 20,
-      surahNameEnglish: "Ta-Ha",
-      surahNameArabic: "طه",
-      ayahStart: 37,
-      ayahEnd: 41,
-      arabicText: "وَلَقَدْ مَنَنَّا عَلَيْكَ مَرَّةً أُخْرَىٰٓ ۝ إِذْ أَوْحَيْنَآ إِلَىٰٓ أُمِّكَ مَا يُوحَىٰٓ ۝ أَنِ ٱقْذِفِيهِ فِى ٱلتَّابُوتِ فَٱقْذِفِيهِ فِى ٱلْيَمِّ فَلْيُلْقِهِ ٱلْيَمُّ بِٱلسَّاحِلِ يَأْخُذْهُ عَدُوٌّ لِّى وَعَدُوٌّ لَّهُۥ ۚ وَأَلْقَيْتُ عَلَيْكَ مَحَبَّةً مِّنِّى وَلِتُصْنَعَ عَلَىٰ عَيْنِىٓ ۝ إِذْ تَمْشِىٓ أُخْتُكَ فَتَقُولُ هَلْ أَدُلُّكُمْ عَلَىٰ مَن يَكْفُلُهُۥ ۖ فَرَجَعْنَـٰكَ إِلَىٰٓ أُمِّكَ كَىْ تَقَرَّ عَيْنُهَا وَلَا تَحْزَنَ ۚ وَقَتَلْتَ نَفْسًا فَنَجَّيْنَـٰكَ مِنَ ٱلْغَمِّ وَفَتَنَّـٰكَ فُتُونًا ۚ فَلَبِثْتَ سِنِينَ فِىٓ أَهْلِ مَدْيَنَ ثُمَّ جِئْتَ عَلَىٰ قَدَرٍ يَـٰمُوسَىٰ ۝ وَٱصْطَنَعْتُكَ لِنَفْسِى",
-      translation: "And We had already conferred favor upon you another time, When We inspired to your mother what We inspired, [Saying], 'Cast him into the chest and cast it into the river, and the river will throw it onto the bank; there will take him an enemy to Me and an enemy to him.' And I bestowed upon you love from Me that you would be brought up under My eye [i.e., observation and care]. [And We favored you] when your sister went and said, 'Shall I direct you to someone who will be responsible for him?' So We restored you to your mother that she might be content and not grieve. And you killed someone, but We saved you from retaliation and tried you with a [severe] trial. And you remained [some] years among the people of Madyan. Then you came [here] at the decreed time, O Musa. And I produced you for Myself.",
-      translationFr: "Nous t’avons déjà favorisé une première fois, Quand, à ta mère, Nous avons inspiré ce qui s’inspire : \"Mets-le dans une caisse que tu jetteras dans les eaux du fleuve. Les flots l’entraîneront jusqu’à l’autre rive. Là le recueillera un ennemi à lui et à Moi.\" Et j’ai répandu sur toi, comme Signe de Ma grâce, l’amour (de tous), afin que tu sois élevé sous Mes yeux. Or ta sœur qui te suivait dit : \"Voulez-vous que je vous indique (une nourrice) pour le prendre en charge ?\" Alors, Nous t’avons rendu à ta mère pour qu’elle soit heureuse et pour qu’elle ne s’afflige point. Puis tu as tué un homme et Nous t’avons sauvé des tourments et t’avons mis plus d’une fois à l’épreuve. Pendant plusieurs années, ensuite, tu as vécu parmi le peuple de Madyan. Puis tu es venu, Moussa, d’après un terme décrété. Je t’ai élu pour Moi-même.",
     } as QuranReference,
   },
   {
@@ -300,18 +300,18 @@ const musaStoryContent: StoryContentBlock[] = [
     id: 'musa-15',
     type: 'quran_source',
     order: 15,
-    content: "An-Naml tells the same call, names the hand and the staff among nine signs, and gives what they said when the signs came to them.",
-    contentFr: "An-Naml raconte le même appel, cite la main et le bâton parmi neuf signes, et donne ce qu'ils dirent lorsque les signes leur parvinrent.",
+    content: "An-Naml tells the same call, and names the hand and the staff among nine signs.",
+    contentFr: "An-Naml raconte le même appel, et cite la main et le bâton parmi neuf signes.",
     source: {
       type: "quran",
       surahNumber: 27,
       surahNameEnglish: "An-Naml",
       surahNameArabic: "النمل",
       ayahStart: 7,
-      ayahEnd: 14,
-      arabicText: "إِذْ قَالَ مُوسَىٰ لِأَهْلِهِۦٓ إِنِّىٓ ءَانَسْتُ نَارًا سَـَٔاتِيكُم مِّنْهَا بِخَبَرٍ أَوْ ءَاتِيكُم بِشِهَابٍ قَبَسٍ لَّعَلَّكُمْ تَصْطَلُونَ ۝ فَلَمَّا جَآءَهَا نُودِىَ أَنۢ بُورِكَ مَن فِى ٱلنَّارِ وَمَنْ حَوْلَهَا وَسُبْحَـٰنَ ٱللَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ يَـٰمُوسَىٰٓ إِنَّهُۥٓ أَنَا ٱللَّهُ ٱلْعَزِيزُ ٱلْحَكِيمُ ۝ وَأَلْقِ عَصَاكَ ۚ فَلَمَّا رَءَاهَا تَهْتَزُّ كَأَنَّهَا جَآنٌّ وَلَّىٰ مُدْبِرًا وَلَمْ يُعَقِّبْ ۚ يَـٰمُوسَىٰ لَا تَخَفْ إِنِّى لَا يَخَافُ لَدَىَّ ٱلْمُرْسَلُونَ ۝ إِلَّا مَن ظَلَمَ ثُمَّ بَدَّلَ حُسْنًۢا بَعْدَ سُوٓءٍ فَإِنِّى غَفُورٌ رَّحِيمٌ ۝ وَأَدْخِلْ يَدَكَ فِى جَيْبِكَ تَخْرُجْ بَيْضَآءَ مِنْ غَيْرِ سُوٓءٍ ۖ فِى تِسْعِ ءَايَـٰتٍ إِلَىٰ فِرْعَوْنَ وَقَوْمِهِۦٓ ۚ إِنَّهُمْ كَانُوا۟ قَوْمًا فَـٰسِقِينَ ۝ فَلَمَّا جَآءَتْهُمْ ءَايَـٰتُنَا مُبْصِرَةً قَالُوا۟ هَـٰذَا سِحْرٌ مُّبِينٌ ۝ وَجَحَدُوا۟ بِهَا وَٱسْتَيْقَنَتْهَآ أَنفُسُهُمْ ظُلْمًا وَعُلُوًّا ۚ فَٱنظُرْ كَيْفَ كَانَ عَـٰقِبَةُ ٱلْمُفْسِدِينَ",
-      translation: "[Mention] when Musa said to his family, \"Indeed, I have perceived a fire. I will bring you from there information or will bring you a burning torch that you may warm yourselves.\" But when he came to it, he was called, \"Blessed is whoever is at the fire and whoever is around it. And exalted is Allah, Lord of the worlds. O Musa, indeed it is I - Allah, the Exalted in Might, the Wise.\" And [he was told], \"Throw down your staff.\" But when he saw it writhing as if it were a snake, he turned in flight and did not return. [Allah said], \"O Musa, fear not. Indeed, in My presence the messengers do not fear. Otherwise, he who wrongs, then substitutes good after evil - indeed, I am Forgiving and Merciful. And put your hand into the opening of your garment [at the breast]; it will come out white without disease. [These are] among the nine signs [you will take] to Pharaoh and his people. Indeed, they have been a people defiantly disobedient.\" But when there came to them Our visible signs, they said, \"This is obvious magic.\" And they rejected them, while their [inner] selves were convinced thereof, out of injustice and haughtiness. So see how was the end of the corrupters.",
-      translationFr: "(Évoque) Moussa qui dit aux siens : «J’aperçois un feu. Je m’en vais vous apporter quelque information (pour retrouver notre chemin) ou un tison pour vous réchauffer. » Quand il y fut arrivé, il fut interpellé : « Béni soit Celui Qui (se trouve) dans le Feu et ceux qui (se trouvent) à l’entour ! Gloire soit rendue à Allah, Seigneur de l’Univers ! » « Ô Moussa, c’est Moi, Allah, le Tout-Puissant, le Sage. Jette ton bâton. » Mais, lorsqu’il le vit se remuer tel un serpent, il tourna les talons et s’enfuit sans se retourner. « Ô Moussa, (dit alors Allah), ne crains rien, car les Messagers ne craignent rien auprès de Moi. Quant à ceux qui ont commis une injustice puis ont substitué au mal le bien, (ceux-là doivent savoir que) Je suis Absoluteur et Tout Miséricordieux. Introduis ta main dans la fente de ta tunique, elle en ressortira blanche et saine de toute maladie. C’est là l’un des neuf Signes réservés à Pharaon et à son peuple, car il s’agit d’un peuple de pervers. » Mais lorsque Nos Signes leur furent parvenus, ils dirent : « C’est manifestement de la magie ! » Ils les nièrent, injustes et fiers, encore qu’en eux-mêmes ils en eussent la certitude. Vois donc quel fut le sort des semeurs de désordre.",
+      ayahEnd: 12,
+      arabicText: "إِذْ قَالَ مُوسَىٰ لِأَهْلِهِۦٓ إِنِّىٓ ءَانَسْتُ نَارًا سَـَٔاتِيكُم مِّنْهَا بِخَبَرٍ أَوْ ءَاتِيكُم بِشِهَابٍ قَبَسٍ لَّعَلَّكُمْ تَصْطَلُونَ ۝ فَلَمَّا جَآءَهَا نُودِىَ أَنۢ بُورِكَ مَن فِى ٱلنَّارِ وَمَنْ حَوْلَهَا وَسُبْحَـٰنَ ٱللَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ يَـٰمُوسَىٰٓ إِنَّهُۥٓ أَنَا ٱللَّهُ ٱلْعَزِيزُ ٱلْحَكِيمُ ۝ وَأَلْقِ عَصَاكَ ۚ فَلَمَّا رَءَاهَا تَهْتَزُّ كَأَنَّهَا جَآنٌّ وَلَّىٰ مُدْبِرًا وَلَمْ يُعَقِّبْ ۚ يَـٰمُوسَىٰ لَا تَخَفْ إِنِّى لَا يَخَافُ لَدَىَّ ٱلْمُرْسَلُونَ ۝ إِلَّا مَن ظَلَمَ ثُمَّ بَدَّلَ حُسْنًۢا بَعْدَ سُوٓءٍ فَإِنِّى غَفُورٌ رَّحِيمٌ ۝ وَأَدْخِلْ يَدَكَ فِى جَيْبِكَ تَخْرُجْ بَيْضَآءَ مِنْ غَيْرِ سُوٓءٍ ۖ فِى تِسْعِ ءَايَـٰتٍ إِلَىٰ فِرْعَوْنَ وَقَوْمِهِۦٓ ۚ إِنَّهُمْ كَانُوا۟ قَوْمًا فَـٰسِقِينَ",
+      translation: "[Mention] when Musa said to his family, \"Indeed, I have perceived a fire. I will bring you from there information or will bring you a burning torch that you may warm yourselves.\" But when he came to it, he was called, \"Blessed is whoever is at the fire and whoever is around it. And exalted is Allah, Lord of the worlds. O Musa, indeed it is I - Allah, the Exalted in Might, the Wise.\" And [he was told], \"Throw down your staff.\" But when he saw it writhing as if it were a snake, he turned in flight and did not return. [Allah said], \"O Musa, fear not. Indeed, in My presence the messengers do not fear. Otherwise, he who wrongs, then substitutes good after evil - indeed, I am Forgiving and Merciful. And put your hand into the opening of your garment [at the breast]; it will come out white without disease. [These are] among the nine signs [you will take] to Pharaoh and his people. Indeed, they have been a people defiantly disobedient.\"",
+      translationFr: "(Évoque) Moussa qui dit aux siens : «J’aperçois un feu. Je m’en vais vous apporter quelque information (pour retrouver notre chemin) ou un tison pour vous réchauffer. » Quand il y fut arrivé, il fut interpellé : « Béni soit Celui Qui (se trouve) dans le Feu et ceux qui (se trouvent) à l’entour ! Gloire soit rendue à Allah, Seigneur de l’Univers ! » « Ô Moussa, c’est Moi, Allah, le Tout-Puissant, le Sage. Jette ton bâton. » Mais, lorsqu’il le vit se remuer tel un serpent, il tourna les talons et s’enfuit sans se retourner. « Ô Moussa, (dit alors Allah), ne crains rien, car les Messagers ne craignent rien auprès de Moi. Quant à ceux qui ont commis une injustice puis ont substitué au mal le bien, (ceux-là doivent savoir que) Je suis Absoluteur et Tout Miséricordieux. Introduis ta main dans la fente de ta tunique, elle en ressortira blanche et saine de toute maladie. C’est là l’un des neuf Signes réservés à Pharaon et à son peuple, car il s’agit d’un peuple de pervers. »",
     } as QuranReference,
   },
   {
@@ -650,10 +650,10 @@ const musaStoryContent: StoryContentBlock[] = [
       surahNameEnglish: "Ta-Ha",
       surahNameArabic: "طه",
       ayahStart: 57,
-      ayahEnd: 76,
-      arabicText: "قَالَ أَجِئْتَنَا لِتُخْرِجَنَا مِنْ أَرْضِنَا بِسِحْرِكَ يَـٰمُوسَىٰ ۝ فَلَنَأْتِيَنَّكَ بِسِحْرٍ مِّثْلِهِۦ فَٱجْعَلْ بَيْنَنَا وَبَيْنَكَ مَوْعِدًا لَّا نُخْلِفُهُۥ نَحْنُ وَلَآ أَنتَ مَكَانًا سُوًى ۝ قَالَ مَوْعِدُكُمْ يَوْمُ ٱلزِّينَةِ وَأَن يُحْشَرَ ٱلنَّاسُ ضُحًى ۝ فَتَوَلَّىٰ فِرْعَوْنُ فَجَمَعَ كَيْدَهُۥ ثُمَّ أَتَىٰ ۝ قَالَ لَهُم مُّوسَىٰ وَيْلَكُمْ لَا تَفْتَرُوا۟ عَلَى ٱللَّهِ كَذِبًا فَيُسْحِتَكُم بِعَذَابٍ ۖ وَقَدْ خَابَ مَنِ ٱفْتَرَىٰ ۝ فَتَنَـٰزَعُوٓا۟ أَمْرَهُم بَيْنَهُمْ وَأَسَرُّوا۟ ٱلنَّجْوَىٰ ۝ قَالُوٓا۟ إِنْ هَـٰذَٰنِ لَسَـٰحِرَٰنِ يُرِيدَانِ أَن يُخْرِجَاكُم مِّنْ أَرْضِكُم بِسِحْرِهِمَا وَيَذْهَبَا بِطَرِيقَتِكُمُ ٱلْمُثْلَىٰ ۝ فَأَجْمِعُوا۟ كَيْدَكُمْ ثُمَّ ٱئْتُوا۟ صَفًّا ۚ وَقَدْ أَفْلَحَ ٱلْيَوْمَ مَنِ ٱسْتَعْلَىٰ ۝ قَالُوا۟ يَـٰمُوسَىٰٓ إِمَّآ أَن تُلْقِىَ وَإِمَّآ أَن نَّكُونَ أَوَّلَ مَنْ أَلْقَىٰ ۝ قَالَ بَلْ أَلْقُوا۟ ۖ فَإِذَا حِبَالُهُمْ وَعِصِيُّهُمْ يُخَيَّلُ إِلَيْهِ مِن سِحْرِهِمْ أَنَّهَا تَسْعَىٰ ۝ فَأَوْجَسَ فِى نَفْسِهِۦ خِيفَةً مُّوسَىٰ ۝ قُلْنَا لَا تَخَفْ إِنَّكَ أَنتَ ٱلْأَعْلَىٰ ۝ وَأَلْقِ مَا فِى يَمِينِكَ تَلْقَفْ مَا صَنَعُوٓا۟ ۖ إِنَّمَا صَنَعُوا۟ كَيْدُ سَـٰحِرٍ ۖ وَلَا يُفْلِحُ ٱلسَّاحِرُ حَيْثُ أَتَىٰ ۝ فَأُلْقِىَ ٱلسَّحَرَةُ سُجَّدًا قَالُوٓا۟ ءَامَنَّا بِرَبِّ هَـٰرُونَ وَمُوسَىٰ ۝ قَالَ ءَامَنتُمْ لَهُۥ قَبْلَ أَنْ ءَاذَنَ لَكُمْ ۖ إِنَّهُۥ لَكَبِيرُكُمُ ٱلَّذِى عَلَّمَكُمُ ٱلسِّحْرَ ۖ فَلَأُقَطِّعَنَّ أَيْدِيَكُمْ وَأَرْجُلَكُم مِّنْ خِلَـٰفٍ وَلَأُصَلِّبَنَّكُمْ فِى جُذُوعِ ٱلنَّخْلِ وَلَتَعْلَمُنَّ أَيُّنَآ أَشَدُّ عَذَابًا وَأَبْقَىٰ ۝ قَالُوا۟ لَن نُّؤْثِرَكَ عَلَىٰ مَا جَآءَنَا مِنَ ٱلْبَيِّنَـٰتِ وَٱلَّذِى فَطَرَنَا ۖ فَٱقْضِ مَآ أَنتَ قَاضٍ ۖ إِنَّمَا تَقْضِى هَـٰذِهِ ٱلْحَيَوٰةَ ٱلدُّنْيَآ ۝ إِنَّآ ءَامَنَّا بِرَبِّنَا لِيَغْفِرَ لَنَا خَطَـٰيَـٰنَا وَمَآ أَكْرَهْتَنَا عَلَيْهِ مِنَ ٱلسِّحْرِ ۗ وَٱللَّهُ خَيْرٌ وَأَبْقَىٰٓ ۝ إِنَّهُۥ مَن يَأْتِ رَبَّهُۥ مُجْرِمًا فَإِنَّ لَهُۥ جَهَنَّمَ لَا يَمُوتُ فِيهَا وَلَا يَحْيَىٰ ۝ وَمَن يَأْتِهِۦ مُؤْمِنًا قَدْ عَمِلَ ٱلصَّـٰلِحَـٰتِ فَأُو۟لَـٰٓئِكَ لَهُمُ ٱلدَّرَجَـٰتُ ٱلْعُلَىٰ ۝ جَنَّـٰتُ عَدْنٍ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَـٰرُ خَـٰلِدِينَ فِيهَا ۚ وَذَٰلِكَ جَزَآءُ مَن تَزَكَّىٰ",
-      translation: "He said, \"Have you come to us to drive us out of our land with your magic, O Musa? Then we will surely bring you magic like it, so make between us and you an appointment, which we will not fail to keep and neither will you, in a place assigned.\" [Musa] said, \"Your appointment is on the day of the festival when the people assemble at mid-morning.\" So Pharaoh went away, put together his plan, and then came [to Musa]. Musa said to them [i.e., the magicians summoned by Pharaoh], \"Woe to you! Do not invent a lie against Allah or He will exterminate you with a punishment; and he has failed who invents [such falsehood].\" So they disputed over their affair among themselves and concealed their private conversation. They said, \"Indeed, these are two magicians who want to drive you out of your land with their magic and do away with your most exemplary way [i.e., religion or tradition]. So resolve upon your plan and then come [forward] in line. And he has succeeded today who overcomes.\" They said, \"O Musa, either you throw or we will be the first to throw.\" He said, \"Rather, you throw.\" And suddenly their ropes and staffs seemed to him from their magic that they were moving [like snakes]. And he sensed within himself apprehension, did Musa. We [i.e., Allah] said, \"Fear not. Indeed, it is you who are superior. And throw what is in your right hand; it will swallow up what they have crafted. What they have crafted is but the trick of a magician, and the magician will not succeed wherever he is.\" So the magicians fell down in prostration. They said, \"We have believed in the Lord of Harun and Musa.\" [Pharaoh] said, \"You believed him [i.e., Musa] before I gave you permission. Indeed, he is your leader who has taught you magic. So I will surely cut off your hands and your feet on opposite sides, and I will crucify you on the trunks of palm trees, and you will surely know which of us is more severe in [giving] punishment and more enduring.\" They said, \"Never will we prefer you over what has come to us of clear proofs and [over] He who created us. So decree whatever you are to decree. You can only decree for this worldly life. Indeed, we have believed in our Lord that He may forgive us our sins and what you compelled us [to do] of magic. And Allah is better and more enduring.\" Indeed, whoever comes to his Lord as a criminal - indeed, for him is Hell; he will neither die therein nor live. But whoever comes to Him as a believer having done righteous deeds - for those will be the highest degrees [in position]: Gardens of perpetual residence beneath which rivers flow, wherein they abide eternally. And that is the reward of one who purifies himself.",
-      translationFr: "Il dit : « Es-tu venu vers nous, Moussa, pour nous chasser de notre terre avec ta magie ? Nous allons donc t’apporter une magie semblable. Fixe-nous un rendez-vous que nous ne manquerons pas, ni nous ni toi. Que ce soit dans un lieu qui nous convienne (à tous deux).» « Vous avez rendez-vous au jour des festivités et que les gens soient rassemblés dans la matinée. » Pharaon se retira, mobilisa tous ses stratagèmes et revint. Moussa leur dit : « Malheur à vous ! Ne débitez point de mensonges sur le compte d’Allah ou alors Il vous exterminera par un supplice. Car celui qui débite des mensonges échouera. » Ils discutèrent alors entre eux et tinrent secrètes leurs délibérations. Ils dirent : « Ces deux-là ne sont que des magiciens qui, par leurs sortilèges, veulent vous chasser de votre terre et se réserver votre tradition parfaite. Mobilisez donc tous vos stratagèmes, serrez les rangs, car aura certes réussi celui qui triomphera ! » « Ô Moussa, dirent-ils, jetteras-tu (ton bâton) ou veux-tu que nous jetions d’abord (ce que nous avons) ? » Il dit : « Jetez (ce que vous avez). » Aussitôt, leurs cordes et leurs bâtons lui semblèrent ramper par l’effet de leur sorcellerie. Il ressentit au fond de lui-même quelque peur, Moussa. Nous dîmes : « N’aie pas peur, c’est toi qui leur es supérieur! Jette ce que tu as dans ta main droite, et (tu le verras) happer tout ce qu’ils ont fait comme artifice. Ce qu’ils viennent de faire comme artifice n’est qu’illusions de magicien. Or le magicien, où qu’il aille, ne saurait prospérer. » Les magiciens se jetèrent (à terre) prosternés en s’écriant : « Nous croyons au Seigneur de Haroun et de Moussa ! » (Et Pharaon) leur dit : « Osez-vous croire en lui avant que je ne vous le permette ? Ce doit être votre chef et c’est lui qui a dû vous initier à la magie. Je vous ferai couper les mains et les pieds opposés puis vous ferai crucifier sur les troncs de palmiers. Vous saurez ainsi qui (du Seigneur de Moussa ou de moi) a le supplice le plus dur et le plus durable.» Ils dirent alors : « Nous ne te préfèrerons pas aux preuves évidentes qui nous sont parvenues, Pas plus que (nous ne te préfèrerons) à Celui Qui nous a créés (sans modèle préalable). Prononce donc le verdict que tu as à prononcer. Car tes sentences ne concernent que la vie en ce bas monde. Nous n’avons cru en notre Seigneur que pour qu’Il pardonne nos péchés et (nous pardonne) cette magie que tu nous as contraints (à pratiquer). Allah est Meilleur et (Sa rétribution) est plus durable. » Celui qui vient à son Seigneur en criminel aura (mérité) la Géhenne, où il ne mourra pas, ni ne vivra. Et ceux qui comparaîtront devant Lui en croyants, ayant accompli les bonnes œuvres, ceux-là auront (mérité) les plus hauts rangs. Des Jardins d’Éden sous lesquels coulent les rivières, où ils séjourneront pour l’éternité. Telle est la récompense de qui s’est purifié.",
+      ayahEnd: 73,
+      arabicText: "قَالَ أَجِئْتَنَا لِتُخْرِجَنَا مِنْ أَرْضِنَا بِسِحْرِكَ يَـٰمُوسَىٰ ۝ فَلَنَأْتِيَنَّكَ بِسِحْرٍ مِّثْلِهِۦ فَٱجْعَلْ بَيْنَنَا وَبَيْنَكَ مَوْعِدًا لَّا نُخْلِفُهُۥ نَحْنُ وَلَآ أَنتَ مَكَانًا سُوًى ۝ قَالَ مَوْعِدُكُمْ يَوْمُ ٱلزِّينَةِ وَأَن يُحْشَرَ ٱلنَّاسُ ضُحًى ۝ فَتَوَلَّىٰ فِرْعَوْنُ فَجَمَعَ كَيْدَهُۥ ثُمَّ أَتَىٰ ۝ قَالَ لَهُم مُّوسَىٰ وَيْلَكُمْ لَا تَفْتَرُوا۟ عَلَى ٱللَّهِ كَذِبًا فَيُسْحِتَكُم بِعَذَابٍ ۖ وَقَدْ خَابَ مَنِ ٱفْتَرَىٰ ۝ فَتَنَـٰزَعُوٓا۟ أَمْرَهُم بَيْنَهُمْ وَأَسَرُّوا۟ ٱلنَّجْوَىٰ ۝ قَالُوٓا۟ إِنْ هَـٰذَٰنِ لَسَـٰحِرَٰنِ يُرِيدَانِ أَن يُخْرِجَاكُم مِّنْ أَرْضِكُم بِسِحْرِهِمَا وَيَذْهَبَا بِطَرِيقَتِكُمُ ٱلْمُثْلَىٰ ۝ فَأَجْمِعُوا۟ كَيْدَكُمْ ثُمَّ ٱئْتُوا۟ صَفًّا ۚ وَقَدْ أَفْلَحَ ٱلْيَوْمَ مَنِ ٱسْتَعْلَىٰ ۝ قَالُوا۟ يَـٰمُوسَىٰٓ إِمَّآ أَن تُلْقِىَ وَإِمَّآ أَن نَّكُونَ أَوَّلَ مَنْ أَلْقَىٰ ۝ قَالَ بَلْ أَلْقُوا۟ ۖ فَإِذَا حِبَالُهُمْ وَعِصِيُّهُمْ يُخَيَّلُ إِلَيْهِ مِن سِحْرِهِمْ أَنَّهَا تَسْعَىٰ ۝ فَأَوْجَسَ فِى نَفْسِهِۦ خِيفَةً مُّوسَىٰ ۝ قُلْنَا لَا تَخَفْ إِنَّكَ أَنتَ ٱلْأَعْلَىٰ ۝ وَأَلْقِ مَا فِى يَمِينِكَ تَلْقَفْ مَا صَنَعُوٓا۟ ۖ إِنَّمَا صَنَعُوا۟ كَيْدُ سَـٰحِرٍ ۖ وَلَا يُفْلِحُ ٱلسَّاحِرُ حَيْثُ أَتَىٰ ۝ فَأُلْقِىَ ٱلسَّحَرَةُ سُجَّدًا قَالُوٓا۟ ءَامَنَّا بِرَبِّ هَـٰرُونَ وَمُوسَىٰ ۝ قَالَ ءَامَنتُمْ لَهُۥ قَبْلَ أَنْ ءَاذَنَ لَكُمْ ۖ إِنَّهُۥ لَكَبِيرُكُمُ ٱلَّذِى عَلَّمَكُمُ ٱلسِّحْرَ ۖ فَلَأُقَطِّعَنَّ أَيْدِيَكُمْ وَأَرْجُلَكُم مِّنْ خِلَـٰفٍ وَلَأُصَلِّبَنَّكُمْ فِى جُذُوعِ ٱلنَّخْلِ وَلَتَعْلَمُنَّ أَيُّنَآ أَشَدُّ عَذَابًا وَأَبْقَىٰ ۝ قَالُوا۟ لَن نُّؤْثِرَكَ عَلَىٰ مَا جَآءَنَا مِنَ ٱلْبَيِّنَـٰتِ وَٱلَّذِى فَطَرَنَا ۖ فَٱقْضِ مَآ أَنتَ قَاضٍ ۖ إِنَّمَا تَقْضِى هَـٰذِهِ ٱلْحَيَوٰةَ ٱلدُّنْيَآ ۝ إِنَّآ ءَامَنَّا بِرَبِّنَا لِيَغْفِرَ لَنَا خَطَـٰيَـٰنَا وَمَآ أَكْرَهْتَنَا عَلَيْهِ مِنَ ٱلسِّحْرِ ۗ وَٱللَّهُ خَيْرٌ وَأَبْقَىٰٓ",
+      translation: "He said, \"Have you come to us to drive us out of our land with your magic, O Musa? Then we will surely bring you magic like it, so make between us and you an appointment, which we will not fail to keep and neither will you, in a place assigned.\" [Musa] said, \"Your appointment is on the day of the festival when the people assemble at mid-morning.\" So Pharaoh went away, put together his plan, and then came [to Musa]. Musa said to them [i.e., the magicians summoned by Pharaoh], \"Woe to you! Do not invent a lie against Allah or He will exterminate you with a punishment; and he has failed who invents [such falsehood].\" So they disputed over their affair among themselves and concealed their private conversation. They said, \"Indeed, these are two magicians who want to drive you out of your land with their magic and do away with your most exemplary way [i.e., religion or tradition]. So resolve upon your plan and then come [forward] in line. And he has succeeded today who overcomes.\" They said, \"O Musa, either you throw or we will be the first to throw.\" He said, \"Rather, you throw.\" And suddenly their ropes and staffs seemed to him from their magic that they were moving [like snakes]. And he sensed within himself apprehension, did Musa. We [i.e., Allah] said, \"Fear not. Indeed, it is you who are superior. And throw what is in your right hand; it will swallow up what they have crafted. What they have crafted is but the trick of a magician, and the magician will not succeed wherever he is.\" So the magicians fell down in prostration. They said, \"We have believed in the Lord of Harun and Musa.\" [Pharaoh] said, \"You believed him [i.e., Musa] before I gave you permission. Indeed, he is your leader who has taught you magic. So I will surely cut off your hands and your feet on opposite sides, and I will crucify you on the trunks of palm trees, and you will surely know which of us is more severe in [giving] punishment and more enduring.\" They said, \"Never will we prefer you over what has come to us of clear proofs and [over] He who created us. So decree whatever you are to decree. You can only decree for this worldly life. Indeed, we have believed in our Lord that He may forgive us our sins and what you compelled us [to do] of magic. And Allah is better and more enduring.\"",
+      translationFr: "Il dit : « Es-tu venu vers nous, Moussa, pour nous chasser de notre terre avec ta magie ? Nous allons donc t’apporter une magie semblable. Fixe-nous un rendez-vous que nous ne manquerons pas, ni nous ni toi. Que ce soit dans un lieu qui nous convienne (à tous deux).» « Vous avez rendez-vous au jour des festivités et que les gens soient rassemblés dans la matinée. » Pharaon se retira, mobilisa tous ses stratagèmes et revint. Moussa leur dit : « Malheur à vous ! Ne débitez point de mensonges sur le compte d’Allah ou alors Il vous exterminera par un supplice. Car celui qui débite des mensonges échouera. » Ils discutèrent alors entre eux et tinrent secrètes leurs délibérations. Ils dirent : « Ces deux-là ne sont que des magiciens qui, par leurs sortilèges, veulent vous chasser de votre terre et se réserver votre tradition parfaite. Mobilisez donc tous vos stratagèmes, serrez les rangs, car aura certes réussi celui qui triomphera ! » « Ô Moussa, dirent-ils, jetteras-tu (ton bâton) ou veux-tu que nous jetions d’abord (ce que nous avons) ? » Il dit : « Jetez (ce que vous avez). » Aussitôt, leurs cordes et leurs bâtons lui semblèrent ramper par l’effet de leur sorcellerie. Il ressentit au fond de lui-même quelque peur, Moussa. Nous dîmes : « N’aie pas peur, c’est toi qui leur es supérieur! Jette ce que tu as dans ta main droite, et (tu le verras) happer tout ce qu’ils ont fait comme artifice. Ce qu’ils viennent de faire comme artifice n’est qu’illusions de magicien. Or le magicien, où qu’il aille, ne saurait prospérer. » Les magiciens se jetèrent (à terre) prosternés en s’écriant : « Nous croyons au Seigneur de Haroun et de Moussa ! » (Et Pharaon) leur dit : « Osez-vous croire en lui avant que je ne vous le permette ? Ce doit être votre chef et c’est lui qui a dû vous initier à la magie. Je vous ferai couper les mains et les pieds opposés puis vous ferai crucifier sur les troncs de palmiers. Vous saurez ainsi qui (du Seigneur de Moussa ou de moi) a le supplice le plus dur et le plus durable.» Ils dirent alors : « Nous ne te préfèrerons pas aux preuves évidentes qui nous sont parvenues, Pas plus que (nous ne te préfèrerons) à Celui Qui nous a créés (sans modèle préalable). Prononce donc le verdict que tu as à prononcer. Car tes sentences ne concernent que la vie en ce bas monde. Nous n’avons cru en notre Seigneur que pour qu’Il pardonne nos péchés et (nous pardonne) cette magie que tu nous as contraints (à pratiquer). Allah est Meilleur et (Sa rétribution) est plus durable. »",
     } as QuranReference,
   },
   {
@@ -686,10 +686,10 @@ const musaStoryContent: StoryContentBlock[] = [
       surahNameEnglish: "Al-A'raf",
       surahNameArabic: "الأعراف",
       ayahStart: 127,
-      ayahEnd: 135,
-      arabicText: "وَقَالَ ٱلْمَلَأُ مِن قَوْمِ فِرْعَوْنَ أَتَذَرُ مُوسَىٰ وَقَوْمَهُۥ لِيُفْسِدُوا۟ فِى ٱلْأَرْضِ وَيَذَرَكَ وَءَالِهَتَكَ ۚ قَالَ سَنُقَتِّلُ أَبْنَآءَهُمْ وَنَسْتَحْىِۦ نِسَآءَهُمْ وَإِنَّا فَوْقَهُمْ قَـٰهِرُونَ ۝ قَالَ مُوسَىٰ لِقَوْمِهِ ٱسْتَعِينُوا۟ بِٱللَّهِ وَٱصْبِرُوٓا۟ ۖ إِنَّ ٱلْأَرْضَ لِلَّهِ يُورِثُهَا مَن يَشَآءُ مِنْ عِبَادِهِۦ ۖ وَٱلْعَـٰقِبَةُ لِلْمُتَّقِينَ ۝ قَالُوٓا۟ أُوذِينَا مِن قَبْلِ أَن تَأْتِيَنَا وَمِنۢ بَعْدِ مَا جِئْتَنَا ۚ قَالَ عَسَىٰ رَبُّكُمْ أَن يُهْلِكَ عَدُوَّكُمْ وَيَسْتَخْلِفَكُمْ فِى ٱلْأَرْضِ فَيَنظُرَ كَيْفَ تَعْمَلُونَ ۝ وَلَقَدْ أَخَذْنَآ ءَالَ فِرْعَوْنَ بِٱلسِّنِينَ وَنَقْصٍ مِّنَ ٱلثَّمَرَٰتِ لَعَلَّهُمْ يَذَّكَّرُونَ ۝ فَإِذَا جَآءَتْهُمُ ٱلْحَسَنَةُ قَالُوا۟ لَنَا هَـٰذِهِۦ ۖ وَإِن تُصِبْهُمْ سَيِّئَةٌ يَطَّيَّرُوا۟ بِمُوسَىٰ وَمَن مَّعَهُۥٓ ۗ أَلَآ إِنَّمَا طَـٰٓئِرُهُمْ عِندَ ٱللَّهِ وَلَـٰكِنَّ أَكْثَرَهُمْ لَا يَعْلَمُونَ ۝ وَقَالُوا۟ مَهْمَا تَأْتِنَا بِهِۦ مِنْ ءَايَةٍ لِّتَسْحَرَنَا بِهَا فَمَا نَحْنُ لَكَ بِمُؤْمِنِينَ ۝ فَأَرْسَلْنَا عَلَيْهِمُ ٱلطُّوفَانَ وَٱلْجَرَادَ وَٱلْقُمَّلَ وَٱلضَّفَادِعَ وَٱلدَّمَ ءَايَـٰتٍ مُّفَصَّلَـٰتٍ فَٱسْتَكْبَرُوا۟ وَكَانُوا۟ قَوْمًا مُّجْرِمِينَ ۝ وَلَمَّا وَقَعَ عَلَيْهِمُ ٱلرِّجْزُ قَالُوا۟ يَـٰمُوسَى ٱدْعُ لَنَا رَبَّكَ بِمَا عَهِدَ عِندَكَ ۖ لَئِن كَشَفْتَ عَنَّا ٱلرِّجْزَ لَنُؤْمِنَنَّ لَكَ وَلَنُرْسِلَنَّ مَعَكَ بَنِىٓ إِسْرَٰٓءِيلَ ۝ فَلَمَّا كَشَفْنَا عَنْهُمُ ٱلرِّجْزَ إِلَىٰٓ أَجَلٍ هُم بَـٰلِغُوهُ إِذَا هُمْ يَنكُثُونَ",
-      translation: "And the eminent among the people of Pharaoh said, \"Will you leave Musa and his people to cause corruption in the land and abandon you and your gods?\" [Pharaoh] said, \"We will kill their sons and keep their women alive; and indeed, we are subjugators over them.\" Said Musa to his people, \"Seek help through Allah and be patient. Indeed, the earth belongs to Allah. He causes to inherit it whom He wills of His servants. And the [best] outcome is for the righteous.\" They said, \"We have been harmed before you came to us and after you have come to us.\" He said, \"Perhaps your Lord will destroy your enemy and grant you succession in the land and see how you will do.\" And We certainly seized the people of Pharaoh with years of famine and a deficiency in fruits that perhaps they would be reminded. But when good [i.e., provision] came to them, they said, \"This is ours [by right].\" And if a bad [condition] struck them, they saw an evil omen in Musa and those with him. Unquestionably, their fortune is with Allah, but most of them do not know. And they said, \"No matter what sign you bring us with which to bewitch us, we will not be believers in you.\" So We sent upon them the flood and locusts and lice and frogs and blood as distinct signs, but they were arrogant and were a criminal people. And when the punishment descended upon them, they said, \"O Musa, invoke for us your Lord by what He has promised you. If you [can] remove the punishment from us, we will surely believe you, and we will send with you the Children of Israel.\" But when We removed the punishment from them until a term which they were to reach, then at once they broke their word.",
-      translationFr: "L’assemblée des notables du peuple de Pharaon dirent : « Vas-tu laisser Moussa et son peuple semer le désordre sur terre alors que lui t’a abandonné, toi et tes divinités ? » Il dit : « Nous exterminerons leurs hommes et épargnerons leurs femmes ; nous prendrons le dessus sur eux et serons dominateurs. » Moussa dit à son peuple : « Demandez l’assistance d’Allah et prenez patience, car la terre appartient à Allah. Il en fait hériter qui Il veut de Ses serviteurs. Ce qui est à venir reviendra à ceux qui sont pieux. » Ils dirent : « Nous avons été opprimés aussi bien avant qu’après ton arrivée. » Et Moussa dit : « Peut-être que votre Seigneur fera périr votre ennemi et vous donnera la terre en héritage, pour voir plus tard comment vous agirez. » Nous éprouvâmes le peuple de Pharaon par une succession d’années maigres et une pénurie de fruits afin qu’ils se rappellent. Quand les périodes fastes venaient, ils disaient : « Cela est dû à nous. » Et quand les surprenait un événement néfaste, ils en attribuaient la cause, par superstition, à Moussa et ceux qui étaient avec lui. Leur sort, en vérité, ne relève que d’Allah, mais la plupart d’entre eux ne savent pas. Et ils dirent : « Quelque miracle que tu produises pour nous charmer nous ne croirons pas en toi. » Nous leur envoyâmes les inondations, les sauterelles, les poux, les grenouilles et le sang en Signes distincts. Mais ils réagirent avec orgueil et se comportèrent en criminels. Puis lorsque se fut abattu sur eux le châtiment, ils dirent : « Ô Moussa ! Invoque pour nous ton Seigneur de par l’engagement qu’Il t’a donné. Si tu nous évites le châtiment, nous croirons en toi et enverrons avec toi les Enfants d’Israël. » Mais lorsque Nous eûmes éloigné d’eux le châtiment pour un délai fixé, ils revinrent sur leur engagement.",
+      ayahEnd: 136,
+      arabicText: "وَقَالَ ٱلْمَلَأُ مِن قَوْمِ فِرْعَوْنَ أَتَذَرُ مُوسَىٰ وَقَوْمَهُۥ لِيُفْسِدُوا۟ فِى ٱلْأَرْضِ وَيَذَرَكَ وَءَالِهَتَكَ ۚ قَالَ سَنُقَتِّلُ أَبْنَآءَهُمْ وَنَسْتَحْىِۦ نِسَآءَهُمْ وَإِنَّا فَوْقَهُمْ قَـٰهِرُونَ ۝ قَالَ مُوسَىٰ لِقَوْمِهِ ٱسْتَعِينُوا۟ بِٱللَّهِ وَٱصْبِرُوٓا۟ ۖ إِنَّ ٱلْأَرْضَ لِلَّهِ يُورِثُهَا مَن يَشَآءُ مِنْ عِبَادِهِۦ ۖ وَٱلْعَـٰقِبَةُ لِلْمُتَّقِينَ ۝ قَالُوٓا۟ أُوذِينَا مِن قَبْلِ أَن تَأْتِيَنَا وَمِنۢ بَعْدِ مَا جِئْتَنَا ۚ قَالَ عَسَىٰ رَبُّكُمْ أَن يُهْلِكَ عَدُوَّكُمْ وَيَسْتَخْلِفَكُمْ فِى ٱلْأَرْضِ فَيَنظُرَ كَيْفَ تَعْمَلُونَ ۝ وَلَقَدْ أَخَذْنَآ ءَالَ فِرْعَوْنَ بِٱلسِّنِينَ وَنَقْصٍ مِّنَ ٱلثَّمَرَٰتِ لَعَلَّهُمْ يَذَّكَّرُونَ ۝ فَإِذَا جَآءَتْهُمُ ٱلْحَسَنَةُ قَالُوا۟ لَنَا هَـٰذِهِۦ ۖ وَإِن تُصِبْهُمْ سَيِّئَةٌ يَطَّيَّرُوا۟ بِمُوسَىٰ وَمَن مَّعَهُۥٓ ۗ أَلَآ إِنَّمَا طَـٰٓئِرُهُمْ عِندَ ٱللَّهِ وَلَـٰكِنَّ أَكْثَرَهُمْ لَا يَعْلَمُونَ ۝ وَقَالُوا۟ مَهْمَا تَأْتِنَا بِهِۦ مِنْ ءَايَةٍ لِّتَسْحَرَنَا بِهَا فَمَا نَحْنُ لَكَ بِمُؤْمِنِينَ ۝ فَأَرْسَلْنَا عَلَيْهِمُ ٱلطُّوفَانَ وَٱلْجَرَادَ وَٱلْقُمَّلَ وَٱلضَّفَادِعَ وَٱلدَّمَ ءَايَـٰتٍ مُّفَصَّلَـٰتٍ فَٱسْتَكْبَرُوا۟ وَكَانُوا۟ قَوْمًا مُّجْرِمِينَ ۝ وَلَمَّا وَقَعَ عَلَيْهِمُ ٱلرِّجْزُ قَالُوا۟ يَـٰمُوسَى ٱدْعُ لَنَا رَبَّكَ بِمَا عَهِدَ عِندَكَ ۖ لَئِن كَشَفْتَ عَنَّا ٱلرِّجْزَ لَنُؤْمِنَنَّ لَكَ وَلَنُرْسِلَنَّ مَعَكَ بَنِىٓ إِسْرَٰٓءِيلَ ۝ فَلَمَّا كَشَفْنَا عَنْهُمُ ٱلرِّجْزَ إِلَىٰٓ أَجَلٍ هُم بَـٰلِغُوهُ إِذَا هُمْ يَنكُثُونَ ۝ فَٱنتَقَمْنَا مِنْهُمْ فَأَغْرَقْنَـٰهُمْ فِى ٱلْيَمِّ بِأَنَّهُمْ كَذَّبُوا۟ بِـَٔايَـٰتِنَا وَكَانُوا۟ عَنْهَا غَـٰفِلِينَ",
+      translation: "And the eminent among the people of Pharaoh said, \"Will you leave Musa and his people to cause corruption in the land and abandon you and your gods?\" [Pharaoh] said, \"We will kill their sons and keep their women alive; and indeed, we are subjugators over them.\" Said Musa to his people, \"Seek help through Allah and be patient. Indeed, the earth belongs to Allah. He causes to inherit it whom He wills of His servants. And the [best] outcome is for the righteous.\" They said, \"We have been harmed before you came to us and after you have come to us.\" He said, \"Perhaps your Lord will destroy your enemy and grant you succession in the land and see how you will do.\" And We certainly seized the people of Pharaoh with years of famine and a deficiency in fruits that perhaps they would be reminded. But when good [i.e., provision] came to them, they said, \"This is ours [by right].\" And if a bad [condition] struck them, they saw an evil omen in Musa and those with him. Unquestionably, their fortune is with Allah, but most of them do not know. And they said, \"No matter what sign you bring us with which to bewitch us, we will not be believers in you.\" So We sent upon them the flood and locusts and lice and frogs and blood as distinct signs, but they were arrogant and were a criminal people. And when the punishment descended upon them, they said, \"O Musa, invoke for us your Lord by what He has promised you. If you [can] remove the punishment from us, we will surely believe you, and we will send with you the Children of Israel.\" But when We removed the punishment from them until a term which they were to reach, then at once they broke their word. So We took retribution from them, and We drowned them in the sea because they denied Our signs and were heedless of them.",
+      translationFr: "L’assemblée des notables du peuple de Pharaon dirent : « Vas-tu laisser Moussa et son peuple semer le désordre sur terre alors que lui t’a abandonné, toi et tes divinités ? » Il dit : « Nous exterminerons leurs hommes et épargnerons leurs femmes ; nous prendrons le dessus sur eux et serons dominateurs. » Moussa dit à son peuple : « Demandez l’assistance d’Allah et prenez patience, car la terre appartient à Allah. Il en fait hériter qui Il veut de Ses serviteurs. Ce qui est à venir reviendra à ceux qui sont pieux. » Ils dirent : « Nous avons été opprimés aussi bien avant qu’après ton arrivée. » Et Moussa dit : « Peut-être que votre Seigneur fera périr votre ennemi et vous donnera la terre en héritage, pour voir plus tard comment vous agirez. » Nous éprouvâmes le peuple de Pharaon par une succession d’années maigres et une pénurie de fruits afin qu’ils se rappellent. Quand les périodes fastes venaient, ils disaient : « Cela est dû à nous. » Et quand les surprenait un événement néfaste, ils en attribuaient la cause, par superstition, à Moussa et ceux qui étaient avec lui. Leur sort, en vérité, ne relève que d’Allah, mais la plupart d’entre eux ne savent pas. Et ils dirent : « Quelque miracle que tu produises pour nous charmer nous ne croirons pas en toi. » Nous leur envoyâmes les inondations, les sauterelles, les poux, les grenouilles et le sang en Signes distincts. Mais ils réagirent avec orgueil et se comportèrent en criminels. Puis lorsque se fut abattu sur eux le châtiment, ils dirent : « Ô Moussa ! Invoque pour nous ton Seigneur de par l’engagement qu’Il t’a donné. Si tu nous évites le châtiment, nous croirons en toi et enverrons avec toi les Enfants d’Israël. » Mais lorsque Nous eûmes éloigné d’eux le châtiment pour un délai fixé, ils revinrent sur leur engagement. Alors, Nous Nous vengeâmes d’eux et les noyâmes dans les flots, parce qu’ils avaient renié Nos Signes et y étaient complètement indifférents.",
     } as QuranReference,
   },
   {
@@ -786,6 +786,24 @@ const musaStoryContent: StoryContentBlock[] = [
     id: 'musa-42',
     type: 'quran_source',
     order: 42,
+    content: "And this is what they had said when he brought them the truth.",
+    contentFr: "Et voici ce qu'ils avaient dit lorsqu'il leur apporta la vérité.",
+    source: {
+      type: "quran",
+      surahNumber: 40,
+      surahNameEnglish: "Ghafir",
+      surahNameArabic: "غافر",
+      ayahStart: 25,
+      ayahEnd: 25,
+      arabicText: "فَلَمَّا جَآءَهُم بِٱلْحَقِّ مِنْ عِندِنَا قَالُوا۟ ٱقْتُلُوٓا۟ أَبْنَآءَ ٱلَّذِينَ ءَامَنُوا۟ مَعَهُۥ وَٱسْتَحْيُوا۟ نِسَآءَهُمْ ۚ وَمَا كَيْدُ ٱلْكَـٰفِرِينَ إِلَّا فِى ضَلَـٰلٍ",
+      translation: "And when he brought them the truth from Us, they said, \"Kill the sons of those who have believed with him and keep their women alive.\" But the plan of the disbelievers is not except in error.",
+      translationFr: "Puis, quand il leur eut apporté la vérité de Notre part, ils dirent : « Mettez à mort les fils de ceux qui ont cru avec lui, et laissez en vie leurs femmes ! » Mais les intrigues des mécréants ne peuvent être que vaines.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-43',
+    type: 'quran_source',
+    order: 43,
     content: "Yunus gives who believed - only youths, for fear of Pharaoh - what Musa told them, and the supplication of his that was answered.",
     contentFr: "Younous donne qui crut : seulement des jeunes gens, par crainte de Pharaon ; ce que Moussa leur dit, et son invocation qui fut exaucée.",
     source: {
@@ -801,9 +819,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-43',
+    id: 'musa-44',
     type: 'quran_source',
-    order: 43,
+    order: 44,
     content: "And Allah sets the wife of Pharaoh as an example for those who believe, in the words of her own prayer.",
     contentFr: "Et Allah donne la femme de Pharaon en exemple à ceux qui croient, dans les mots de sa propre prière.",
     source: {
@@ -819,9 +837,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-44',
+    id: 'musa-45',
     type: 'quran_source',
-    order: 44,
+    order: 45,
     content: "Musa was commanded to travel by night with the servants of Allah. Pharaoh pursued them at sunrise, and when the two companies saw one another Musa said what he said - then he struck the sea, and it parted.",
     contentFr: "Il fut ordonné à Moussa de partir de nuit avec les serviteurs d'Allah. Pharaon les poursuivit au lever du soleil, et lorsque les deux troupes se virent, Moussa dit ce qu'il dit ; puis il frappa la mer, et elle se fendit.",
     source: {
@@ -837,9 +855,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-45',
+    id: 'musa-46',
     type: 'quran_source',
-    order: 45,
+    order: 46,
     content: "Ta-Ha gives the command: strike for them a dry path through the sea, fearing neither pursuit nor drowning.",
     contentFr: "Ta-Ha donne l'ordre : trace-leur un chemin sec à travers la mer, sans craindre d'être rejoint ni de te noyer.",
     source: {
@@ -855,9 +873,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-46',
+    id: 'musa-47',
     type: 'quran_source',
-    order: 46,
+    order: 47,
     content: "Ad-Dukhan gives the command to leave the sea in stillness, and what Pharaoh's people left behind them.",
     contentFr: "Ad-Dukhan donne l'ordre de laisser la mer calme, et ce que les gens de Pharaon laissèrent derrière eux.",
     source: {
@@ -873,9 +891,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-47',
+    id: 'musa-48',
     type: 'quran_source',
-    order: 47,
+    order: 48,
     content: "Yunus gives what Pharaoh said when the drowning overtook him, and what he was answered.",
     contentFr: "Younous donne ce que Pharaon dit lorsque la noyade le surprit, et ce qui lui fut répondu.",
     source: {
@@ -891,9 +909,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-48',
+    id: 'musa-49',
     type: 'quran_source',
-    order: 48,
+    order: 49,
     content: "They were drowned in the sea, and the people who had been oppressed inherited the land.",
     contentFr: "Ils furent noyés dans la mer, et le peuple qui avait été opprimé hérita de la terre.",
     source: {
@@ -909,9 +927,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-49',
+    id: 'musa-50',
     type: 'quran_source',
-    order: 49,
+    order: 50,
     content: "Al-Baqarah: the sea was parted for them while they looked on.",
     contentFr: "Al-Baqarah : la mer fut fendue pour eux tandis qu'ils regardaient.",
     source: {
@@ -927,9 +945,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-50',
+    id: 'musa-51',
     type: 'quran_source',
-    order: 50,
+    order: 51,
     content: "Al-Qasas: they were seized and cast into the sea, and made leaders inviting to the Fire.",
     contentFr: "Al-Qasas : ils furent saisis et jetés dans la mer, et faits chefs appelant au Feu.",
     source: {
@@ -945,9 +963,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-51',
+    id: 'musa-52',
     type: 'quran_source',
-    order: 51,
+    order: 52,
     content: "Az-Zukhruf: they were drowned all together, and made a precedent for the later peoples.",
     contentFr: "Az-Zukhruf : ils furent tous noyés, et faits précédent pour les peuples ultérieurs.",
     source: {
@@ -963,9 +981,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-52',
+    id: 'musa-53',
     type: 'quran_source',
-    order: 52,
+    order: 53,
     content: "Al-Isra: he meant to drive them from the land, and was drowned with all who were with him.",
     contentFr: "Al-Isra : il voulut les chasser du pays, et fut noyé avec tous ceux qui étaient avec lui.",
     source: {
@@ -981,9 +999,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-53',
+    id: 'musa-54',
     type: 'quran_source',
-    order: 53,
+    order: 54,
     content: "Adh-Dhariyat: he and his soldiers were cast into the sea, and he was blameworthy.",
     contentFr: "Adh-Dhariyat : lui et ses soldats furent jetés dans la mer, et il était blâmable.",
     source: {
@@ -999,9 +1017,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-54',
+    id: 'musa-55',
     type: 'quran_source',
-    order: 54,
+    order: 55,
     content: "Al-Ankabut: Qarun, Pharaoh and Haman - each was seized for his own sin.",
     contentFr: "Al-Ankabut : Qarun, Pharaon et Haman ; chacun fut saisi pour son propre péché.",
     source: {
@@ -1017,9 +1035,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-55',
+    id: 'musa-56',
     type: 'quran_source',
-    order: 55,
+    order: 56,
     content: "Al-Qamar: the warning came to the people of Pharaoh, and they denied every sign.",
     contentFr: "Al-Qamar : l'avertissement vint aux gens de Pharaon, et ils démentirent tous les signes.",
     source: {
@@ -1035,9 +1053,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-56',
+    id: 'musa-57',
     type: 'quran_source',
-    order: 56,
+    order: 57,
     content: "They crossed, and came upon a people devoted to idols of theirs. They asked Musa for a god like them, and he answered.",
     contentFr: "Ils traversèrent, et rencontrèrent un peuple voué à ses idoles. Ils demandèrent à Moussa un dieu comme les leurs, et il répondit.",
     source: {
@@ -1046,16 +1064,16 @@ const musaStoryContent: StoryContentBlock[] = [
       surahNameEnglish: "Al-A'raf",
       surahNameArabic: "الأعراف",
       ayahStart: 138,
-      ayahEnd: 140,
-      arabicText: "وَجَـٰوَزْنَا بِبَنِىٓ إِسْرَٰٓءِيلَ ٱلْبَحْرَ فَأَتَوْا۟ عَلَىٰ قَوْمٍ يَعْكُفُونَ عَلَىٰٓ أَصْنَامٍ لَّهُمْ ۚ قَالُوا۟ يَـٰمُوسَى ٱجْعَل لَّنَآ إِلَـٰهًا كَمَا لَهُمْ ءَالِهَةٌ ۚ قَالَ إِنَّكُمْ قَوْمٌ تَجْهَلُونَ ۝ إِنَّ هَـٰٓؤُلَآءِ مُتَبَّرٌ مَّا هُمْ فِيهِ وَبَـٰطِلٌ مَّا كَانُوا۟ يَعْمَلُونَ ۝ قَالَ أَغَيْرَ ٱللَّهِ أَبْغِيكُمْ إِلَـٰهًا وَهُوَ فَضَّلَكُمْ عَلَى ٱلْعَـٰلَمِينَ",
-      translation: "And We took the Children of Israel across the sea; then they came upon a people intent in devotion to [some] idols of theirs. They [the Children of Israel] said, \"O Musa, make for us a god just as they have gods.\" He said, \"Indeed, you are a people behaving ignorantly. Indeed, those [worshippers] - destroyed is that in which they are [engaged], and worthless is whatever they were doing.\" He said, \"Is it other than Allah I should desire for you as a god while He has preferred you over the worlds?\"",
-      translationFr: "Et Nous fîmes traverser la mer aux Enfants d’Israël. Passant devant un peuple qui adorait des idoles avec ferveur, ils dirent : «Ô Moussa ! Donne-nous une divinité comme les leurs. » Il répondit : « Vous êtes manifestement des gens ignorants ! Ceux-là rendent un culte voué à la destruction ; nul est ce qu’ils font, et sans valeur aucune. » Et il dit encore : « Voudrais-je pour vous une divinité autre qu’Allah, quand Lui vous a favorisés par rapport à tous les peuples (de votre temps) ? »",
+      ayahEnd: 141,
+      arabicText: "وَجَـٰوَزْنَا بِبَنِىٓ إِسْرَٰٓءِيلَ ٱلْبَحْرَ فَأَتَوْا۟ عَلَىٰ قَوْمٍ يَعْكُفُونَ عَلَىٰٓ أَصْنَامٍ لَّهُمْ ۚ قَالُوا۟ يَـٰمُوسَى ٱجْعَل لَّنَآ إِلَـٰهًا كَمَا لَهُمْ ءَالِهَةٌ ۚ قَالَ إِنَّكُمْ قَوْمٌ تَجْهَلُونَ ۝ إِنَّ هَـٰٓؤُلَآءِ مُتَبَّرٌ مَّا هُمْ فِيهِ وَبَـٰطِلٌ مَّا كَانُوا۟ يَعْمَلُونَ ۝ قَالَ أَغَيْرَ ٱللَّهِ أَبْغِيكُمْ إِلَـٰهًا وَهُوَ فَضَّلَكُمْ عَلَى ٱلْعَـٰلَمِينَ ۝ وَإِذْ أَنجَيْنَـٰكُم مِّنْ ءَالِ فِرْعَوْنَ يَسُومُونَكُمْ سُوٓءَ ٱلْعَذَابِ ۖ يُقَتِّلُونَ أَبْنَآءَكُمْ وَيَسْتَحْيُونَ نِسَآءَكُمْ ۚ وَفِى ذَٰلِكُم بَلَآءٌ مِّن رَّبِّكُمْ عَظِيمٌ",
+      translation: "And We took the Children of Israel across the sea; then they came upon a people intent in devotion to [some] idols of theirs. They [the Children of Israel] said, \"O Musa, make for us a god just as they have gods.\" He said, \"Indeed, you are a people behaving ignorantly. Indeed, those [worshippers] - destroyed is that in which they are [engaged], and worthless is whatever they were doing.\" He said, \"Is it other than Allah I should desire for you as a god while He has preferred you over the worlds?\" And [recall, O Children of Israel], when We saved you from the people of Pharaoh, [who were] afflicting you with the worst torment - killing your sons and keeping your women alive. And in that was a great trial from your Lord.",
+      translationFr: "Et Nous fîmes traverser la mer aux Enfants d’Israël. Passant devant un peuple qui adorait des idoles avec ferveur, ils dirent : «Ô Moussa ! Donne-nous une divinité comme les leurs. » Il répondit : « Vous êtes manifestement des gens ignorants ! Ceux-là rendent un culte voué à la destruction ; nul est ce qu’ils font, et sans valeur aucune. » Et il dit encore : « Voudrais-je pour vous une divinité autre qu’Allah, quand Lui vous a favorisés par rapport à tous les peuples (de votre temps) ? » (Souvenez-vous) quand Nous vous sauvâmes des gens de Pharaon, alors qu’ils vous faisaient subir les pires supplices. Ils massacraient vos fils et épargnaient vos filles, et c’était là, de la part de votre Seigneur, une épreuve des plus terribles.",
     } as QuranReference,
   },
   {
-    id: 'musa-57',
+    id: 'musa-58',
     type: 'quran_source',
-    order: 57,
+    order: 58,
     content: "The clouds shaded them, the manna and the quails came down - and they asked to exchange it for herbs, cucumbers, garlic, lentils and onions.",
     contentFr: "Les nuages les ombragèrent, la manne et les cailles descendirent ; et ils demandèrent à échanger cela contre des herbes, des concombres, de l'ail, des lentilles et des oignons.",
     source: {
@@ -1071,9 +1089,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-58',
+    id: 'musa-59',
     type: 'quran_source',
-    order: 58,
+    order: 59,
     content: "Twelve springs gushed from the stone when he struck it, one for each tribe.",
     contentFr: "Douze sources jaillirent du rocher lorsqu'il le frappa, une pour chaque tribu.",
     source: {
@@ -1089,9 +1107,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-59',
+    id: 'musa-60',
     type: 'quran_source',
-    order: 59,
+    order: 60,
     content: "Ta-Ha gives the appointment at the right side of the mount, and the warning that came with the provision.",
     contentFr: "Ta-Ha donne le rendez-vous au côté droit du Mont, et l'avertissement joint à la subsistance.",
     source: {
@@ -1107,9 +1125,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-60',
+    id: 'musa-61',
     type: 'quran_source',
-    order: 60,
+    order: 61,
     content: "The term of his Lord was completed as forty nights. There Musa said, 'My Lord, show me, that I may look at You' - and the mountain was levelled.",
     contentFr: "Le terme fixé par son Seigneur s'accomplit en quarante nuits. Là, Moussa dit : « Mon Seigneur, montre-Toi à moi que je Te voie » ; et la montagne fut nivelée.",
     source: {
@@ -1125,9 +1143,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-61',
+    id: 'musa-62',
     type: 'quran_source',
-    order: 61,
+    order: 62,
     content: "And Allah spoke to Musa with direct speech.",
     contentFr: "Et Allah parla à Moussa de vive voix.",
     source: {
@@ -1143,9 +1161,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-62',
+    id: 'musa-63',
     type: 'quran_source',
-    order: 62,
+    order: 63,
     content: "Al-Baqarah: the forty nights, the calf taken in his absence, the pardon after it, and the Scripture and the criterion.",
     contentFr: "Al-Baqarah : les quarante nuits, le veau adopté en son absence, le pardon qui suivit, puis le Livre et le discernement.",
     source: {
@@ -1161,9 +1179,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-63',
+    id: 'musa-64',
     type: 'quran_source',
-    order: 63,
+    order: 64,
     content: "The mountain was raised above them as if it were a dark cloud, and they were certain it would fall upon them.",
     contentFr: "La montagne fut élevée au-dessus d'eux comme si elle était un nuage sombre, et ils furent certains qu'elle tomberait sur eux.",
     source: {
@@ -1179,9 +1197,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-64',
+    id: 'musa-65',
     type: 'quran_source',
-    order: 64,
+    order: 65,
     content: "Al-Baqarah gives the covenant taken under it.",
     contentFr: "Al-Baqarah donne le pacte qui fut pris sous elle.",
     source: {
@@ -1197,9 +1215,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-65',
+    id: 'musa-66',
     type: 'quran_source',
-    order: 65,
+    order: 66,
     content: "And what they answered when it was taken.",
     contentFr: "Et ce qu'ils répondirent lorsqu'il fut pris.",
     source: {
@@ -1215,9 +1233,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-66',
+    id: 'musa-67',
     type: 'quran_source',
-    order: 66,
+    order: 67,
     content: "An-Nisa: they had asked Musa for greater than a book from heaven - 'Show us Allah outright' - and the thunderbolt struck them.",
     contentFr: "An-Nisa : ils avaient demandé à Moussa plus grand qu'un livre venu du ciel : « Montre-nous Allah à découvert » ; et la foudre les frappa.",
     source: {
@@ -1233,9 +1251,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-67',
+    id: 'musa-68',
     type: 'quran_source',
-    order: 67,
+    order: 68,
     content: "The covenant taken from the Children of Israel, and what they did with it.",
     contentFr: "Le pacte pris des enfants d'Israël, et ce qu'ils en firent.",
     source: {
@@ -1251,9 +1269,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-68',
+    id: 'musa-69',
     type: 'quran_source',
-    order: 68,
+    order: 69,
     content: "Twelve leaders were delegated from among them, and Allah said what He would do if they kept it.",
     contentFr: "Douze chefs furent délégués parmi eux, et Allah dit ce qu'Il ferait s'ils le tenaient.",
     source: {
@@ -1269,9 +1287,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-69',
+    id: 'musa-70',
     type: 'quran_source',
-    order: 69,
+    order: 70,
     content: "And this was decreed upon them concerning a single soul.",
     contentFr: "Et ceci leur fut décrété au sujet d'une seule âme.",
     source: {
@@ -1287,9 +1305,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-70',
+    id: 'musa-71',
     type: 'quran_source',
-    order: 70,
+    order: 71,
     content: "Messengers were sent to them: some they denied, and some they killed.",
     contentFr: "Des messagers leur furent envoyés : ils en démentirent certains, et en tuèrent d'autres.",
     source: {
@@ -1305,9 +1323,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-71',
+    id: 'musa-72',
     type: 'quran_source',
-    order: 71,
+    order: 72,
     content: "The Scripture was given to Musa after the former generations had been destroyed - as enlightenment, guidance and mercy.",
     contentFr: "Le Livre fut donné à Moussa après la destruction des générations passées : clairvoyance, guidée et miséricorde.",
     source: {
@@ -1323,9 +1341,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-72',
+    id: 'musa-73',
     type: 'quran_source',
-    order: 72,
+    order: 73,
     content: "Al-An'am: a detailed explanation of all things.",
     contentFr: "Al-An'am : un exposé détaillé de toute chose.",
     source: {
@@ -1341,9 +1359,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-73',
+    id: 'musa-74',
     type: 'quran_source',
-    order: 73,
+    order: 74,
     content: "Say: who revealed the Scripture that Musa brought as light and guidance?",
     contentFr: "Dis : qui a fait descendre le Livre que Moussa apporta comme lumière et guide ?",
     source: {
@@ -1359,9 +1377,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-74',
+    id: 'musa-75',
     type: 'quran_source',
-    order: 74,
+    order: 75,
     content: "Al-Isra: it was made a guidance for the Children of Israel.",
     contentFr: "Al-Isra : il fut fait guide pour les enfants d'Israël.",
     source: {
@@ -1377,9 +1395,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-75',
+    id: 'musa-76',
     type: 'quran_source',
-    order: 75,
+    order: 76,
     content: "As-Sajdah: leaders were made from among them, guiding by Allah's command, when they were patient.",
     contentFr: "As-Sajdah : des chefs furent établis parmi eux, guidant selon l'ordre d'Allah, lorsqu'ils furent patients.",
     source: {
@@ -1395,9 +1413,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-76',
+    id: 'musa-77',
     type: 'quran_source',
-    order: 76,
+    order: 77,
     content: "Ghafir: Musa was given guidance, and they inherited the Scripture.",
     contentFr: "Ghafir : Moussa reçut la guidée, et ils héritèrent du Livre.",
     source: {
@@ -1413,9 +1431,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-77',
+    id: 'musa-78',
     type: 'quran_source',
-    order: 77,
+    order: 78,
     content: "Al-Jathiyah: they were given the Scripture, the judgement and the prophethood.",
     contentFr: "Al-Jathiyah : ils reçurent le Livre, le jugement et la prophétie.",
     source: {
@@ -1431,9 +1449,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-78',
+    id: 'musa-79',
     type: 'quran_source',
-    order: 78,
+    order: 79,
     content: "Al-Anbiya: Musa and Harun were given the criterion, a light and a reminder.",
     contentFr: "Al-Anbiya : Moussa et Haroun reçurent le discernement, une lumière et un rappel.",
     source: {
@@ -1449,9 +1467,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-79',
+    id: 'musa-80',
     type: 'quran_source',
-    order: 79,
+    order: 80,
     content: "Al-Furqan: Harun was appointed with him as an assistant, and both were sent.",
     contentFr: "Al-Furqan : Haroun fut établi avec lui comme assistant, et tous deux furent envoyés.",
     source: {
@@ -1467,9 +1485,27 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-80',
+    id: 'musa-81',
     type: 'quran_source',
-    order: 80,
+    order: 81,
+    content: "Al-Mu'minun: the Scripture was given that they might be guided.",
+    contentFr: "Al-Mu'minun : le Livre fut donné afin qu'ils soient guidés.",
+    source: {
+      type: "quran",
+      surahNumber: 23,
+      surahNameEnglish: "Al-Mu'minun",
+      surahNameArabic: "المؤمنون",
+      ayahStart: 49,
+      ayahEnd: 49,
+      arabicText: "وَلَقَدْ ءَاتَيْنَا مُوسَى ٱلْكِتَـٰبَ لَعَلَّهُمْ يَهْتَدُونَ",
+      translation: "And We certainly gave Musa the Scripture that perhaps they would be guided.",
+      translationFr: "Nous avons donné le Livre à Moussa afin que (les siens) fussent guidés.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-82',
+    type: 'quran_source',
+    order: 82,
     content: "Hud: it came under disagreement.",
     contentFr: "Houd : il fit l'objet de divergences.",
     source: {
@@ -1485,9 +1521,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-81',
+    id: 'musa-83',
     type: 'quran_source',
-    order: 81,
+    order: 83,
     content: "Fussilat says the same.",
     contentFr: "Fussilat dit la même chose.",
     source: {
@@ -1503,9 +1539,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-82',
+    id: 'musa-84',
     type: 'quran_source',
-    order: 82,
+    order: 84,
     content: "Ash-Shura: what was enjoined upon Musa was enjoined upon the prophets before and after him.",
     contentFr: "Ash-Shura : ce qui fut prescrit à Moussa fut prescrit aux prophètes avant et après lui.",
     source: {
@@ -1521,9 +1557,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-83',
+    id: 'musa-85',
     type: 'quran_source',
-    order: 83,
+    order: 85,
     content: "Al-Ahqaf: before the Quran was the scripture of Musa, a guide and a mercy.",
     contentFr: "Al-Ahqaf : avant le Coran il y eut le Livre de Moussa, guide et miséricorde.",
     source: {
@@ -1539,9 +1575,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-84',
+    id: 'musa-86',
     type: 'quran_source',
-    order: 84,
+    order: 86,
     content: "Hud says the same of it.",
     contentFr: "Houd en dit autant.",
     source: {
@@ -1557,9 +1593,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-85',
+    id: 'musa-87',
     type: 'quran_source',
-    order: 85,
+    order: 87,
     content: "And the jinn said they had heard a Book revealed after Musa.",
     contentFr: "Et les djinns dirent avoir entendu un Livre révélé après Moussa.",
     source: {
@@ -1575,9 +1611,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-86',
+    id: 'musa-88',
     type: 'quran_source',
-    order: 86,
+    order: 88,
     content: "They said: why was he not given the like of what was given to Musa?",
     contentFr: "Ils dirent : pourquoi n'a-t-il pas reçu le semblable de ce qui fut donné à Moussa ?",
     source: {
@@ -1593,9 +1629,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-87',
+    id: 'musa-89',
     type: 'quran_source',
-    order: 87,
+    order: 89,
     content: "And a witness from the Children of Israel testified.",
     contentFr: "Et un témoin d'entre les enfants d'Israël témoigna.",
     source: {
@@ -1611,9 +1647,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-88',
+    id: 'musa-90',
     type: 'quran_source',
-    order: 88,
+    order: 90,
     content: "An-Naml: this Quran relates to them most of what they disagree over.",
     contentFr: "An-Naml : ce Coran leur raconte la plupart de ce sur quoi ils divergent.",
     source: {
@@ -1629,9 +1665,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-89',
+    id: 'musa-91',
     type: 'quran_source',
-    order: 89,
+    order: 91,
     content: "Al-A'la: this is in the former scriptures, the scriptures of Ibrahim and Musa.",
     contentFr: "Al-A'la : cela est dans les Écritures anciennes, les Écritures d'Ibrahim et de Moussa.",
     source: {
@@ -1647,9 +1683,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-90',
+    id: 'musa-92',
     type: 'quran_source',
-    order: 90,
+    order: 92,
     content: "An-Najm asks whether he has been informed of what is in them.",
     contentFr: "An-Najm demande s'il a été informé de ce qui s'y trouve.",
     source: {
@@ -1665,9 +1701,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-91',
+    id: 'musa-93',
     type: 'quran_source',
-    order: 91,
+    order: 93,
     content: "Al-Jumu'ah gives the likeness of those entrusted with the Torah who did not take it on.",
     contentFr: "Al-Jumu'ah donne la ressemblance de ceux à qui la Torah fut confiée et qui ne s'en chargèrent pas.",
     source: {
@@ -1683,9 +1719,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-92',
+    id: 'musa-94',
     type: 'quran_source',
-    order: 92,
+    order: 94,
     content: "Al-Baqarah: the Scripture was given to Musa, and messengers followed after him.",
     contentFr: "Al-Baqarah : le Livre fut donné à Moussa, et des messagers vinrent à sa suite.",
     source: {
@@ -1701,9 +1737,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-93',
+    id: 'musa-95',
     type: 'quran_source',
-    order: 93,
+    order: 95,
     content: "Ali 'Imran: bring the Torah and recite it, if you are truthful.",
     contentFr: "Ali 'Imran : apportez la Torah et lisez-la, si vous êtes véridiques.",
     source: {
@@ -1719,9 +1755,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-94',
+    id: 'musa-96',
     type: 'quran_source',
-    order: 94,
+    order: 96,
     content: "And the scholars of the Children of Israel recognise it.",
     contentFr: "Et les savants des enfants d'Israël le reconnaissent.",
     source: {
@@ -1737,9 +1773,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-95',
+    id: 'musa-97',
     type: 'quran_source',
-    order: 95,
+    order: 97,
     content: "We believe in what was given to Musa, making no distinction between them.",
     contentFr: "Nous croyons en ce qui fut donné à Moussa, sans faire de distinction entre eux.",
     source: {
@@ -1755,9 +1791,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-96',
+    id: 'musa-98',
     type: 'quran_source',
-    order: 96,
+    order: 98,
     content: "Ali 'Imran says the same, and we are Muslims to Him.",
     contentFr: "Ali 'Imran dit la même chose, et nous Lui sommes soumis.",
     source: {
@@ -1773,9 +1809,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-97',
+    id: 'musa-99',
     type: 'quran_source',
-    order: 97,
+    order: 99,
     content: "An-Nisa: revelation was given to Musa as it was given to the prophets.",
     contentFr: "An-Nisa : la révélation fut donnée à Moussa comme elle fut donnée aux prophètes.",
     source: {
@@ -1791,9 +1827,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-98',
+    id: 'musa-100',
     type: 'quran_source',
-    order: 98,
+    order: 100,
     content: "Al-Ahzab: Allah took from the prophets their covenant, and from Musa among them.",
     contentFr: "Al-Ahzab : Allah prit des prophètes leur engagement, et de Moussa parmi eux.",
     source: {
@@ -1809,9 +1845,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-99',
+    id: 'musa-101',
     type: 'quran_source',
-    order: 99,
+    order: 101,
     content: "Al-An'am names him among those Allah guided.",
     contentFr: "Al-An'am le nomme parmi ceux qu'Allah a guidés.",
     source: {
@@ -1827,9 +1863,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-100',
+    id: 'musa-102',
     type: 'quran_source',
-    order: 100,
+    order: 102,
     content: "Maryam names him among those Allah favoured.",
     contentFr: "Maryam le nomme parmi ceux qu'Allah a comblés.",
     source: {
@@ -1845,9 +1881,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-101',
+    id: 'musa-103',
     type: 'quran_source',
-    order: 101,
+    order: 103,
     content: "And As-Saffat leaves this among the later generations: peace upon Musa and Harun.",
     contentFr: "Et As-Saffat laisse ceci parmi les générations ultérieures : paix sur Moussa et Haroun.",
     source: {
@@ -1863,9 +1899,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-102',
+    id: 'musa-104',
     type: 'quran_source',
-    order: 102,
+    order: 104,
     content: "While he was at the appointment his people were tried, and the Samiri led them astray. Musa returned angry and grieved, questioned Harun, then questioned the Samiri, and passed sentence on him.",
     contentFr: "Pendant qu'il était au rendez-vous, son peuple fut éprouvé, et le Samiri les égara. Moussa revint courroucé et affligé, interrogea Haroun, puis interrogea le Samiri, et prononça sa sentence.",
     source: {
@@ -1881,9 +1917,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-103',
+    id: 'musa-105',
     type: 'quran_source',
-    order: 103,
+    order: 105,
     content: "Al-A'raf gives the same return: he threw down the tablets and seized his brother's head, then prayed for the two of them, and afterwards chose seventy men for the appointment.",
     contentFr: "Al-A'raf donne le même retour : il jeta les tablettes et saisit la tête de son frère, puis pria pour eux deux, et choisit ensuite soixante-dix hommes pour le rendez-vous.",
     source: {
@@ -1899,9 +1935,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-104',
+    id: 'musa-106',
     type: 'quran_source',
-    order: 104,
+    order: 106,
     content: "Al-Baqarah gives what he commanded them after the calf, and what they said to him.",
     contentFr: "Al-Baqarah donne ce qu'il leur ordonna après le veau, et ce qu'ils lui dirent.",
     source: {
@@ -1917,9 +1953,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-105',
+    id: 'musa-107',
     type: 'quran_source',
-    order: 105,
+    order: 107,
     content: "He had brought them clear proofs, and still they took the calf.",
     contentFr: "Il leur avait apporté des preuves évidentes, et pourtant ils adoptèrent le veau.",
     source: {
@@ -1935,27 +1971,27 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-106',
+    id: 'musa-108',
     type: 'quran_source',
-    order: 106,
-    content: "Then Allah commanded them, through Musa, to slaughter a cow - and they questioned him about it, question after question, until they could hardly do it. And after that, their hearts hardened.",
-    contentFr: "Puis Allah leur ordonna, par Moussa, d'immoler une vache ; et ils l'interrogèrent à son sujet, question après question, jusqu'à ce qu'ils faillissent ne pas le faire. Et après cela, leurs cœurs s'endurcirent.",
+    order: 108,
+    content: "Then Allah commanded them, through Musa, to slaughter a cow - and they questioned him about it, question after question, until they could hardly do it.",
+    contentFr: "Puis Allah leur ordonna, par Moussa, d'immoler une vache ; et ils l'interrogèrent à son sujet, question après question, jusqu'à ce qu'ils faillissent ne pas le faire.",
     source: {
       type: "quran",
       surahNumber: 2,
       surahNameEnglish: "Al-Baqarah",
       surahNameArabic: "البقرة",
       ayahStart: 67,
-      ayahEnd: 74,
-      arabicText: "وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِۦٓ إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تَذْبَحُوا۟ بَقَرَةً ۖ قَالُوٓا۟ أَتَتَّخِذُنَا هُزُوًا ۖ قَالَ أَعُوذُ بِٱللَّهِ أَنْ أَكُونَ مِنَ ٱلْجَـٰهِلِينَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِىَ ۚ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا فَارِضٌ وَلَا بِكْرٌ عَوَانٌۢ بَيْنَ ذَٰلِكَ ۖ فَٱفْعَلُوا۟ مَا تُؤْمَرُونَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا لَوْنُهَا ۚ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ صَفْرَآءُ فَاقِعٌ لَّوْنُهَا تَسُرُّ ٱلنَّـٰظِرِينَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِىَ إِنَّ ٱلْبَقَرَ تَشَـٰبَهَ عَلَيْنَا وَإِنَّآ إِن شَآءَ ٱللَّهُ لَمُهْتَدُونَ ۝ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا ذَلُولٌ تُثِيرُ ٱلْأَرْضَ وَلَا تَسْقِى ٱلْحَرْثَ مُسَلَّمَةٌ لَّا شِيَةَ فِيهَا ۚ قَالُوا۟ ٱلْـَٔـٰنَ جِئْتَ بِٱلْحَقِّ ۚ فَذَبَحُوهَا وَمَا كَادُوا۟ يَفْعَلُونَ ۝ وَإِذْ قَتَلْتُمْ نَفْسًا فَٱدَّٰرَْٰٔتُمْ فِيهَا ۖ وَٱللَّهُ مُخْرِجٌ مَّا كُنتُمْ تَكْتُمُونَ ۝ فَقُلْنَا ٱضْرِبُوهُ بِبَعْضِهَا ۚ كَذَٰلِكَ يُحْىِ ٱللَّهُ ٱلْمَوْتَىٰ وَيُرِيكُمْ ءَايَـٰتِهِۦ لَعَلَّكُمْ تَعْقِلُونَ ۝ ثُمَّ قَسَتْ قُلُوبُكُم مِّنۢ بَعْدِ ذَٰلِكَ فَهِىَ كَٱلْحِجَارَةِ أَوْ أَشَدُّ قَسْوَةً ۚ وَإِنَّ مِنَ ٱلْحِجَارَةِ لَمَا يَتَفَجَّرُ مِنْهُ ٱلْأَنْهَـٰرُ ۚ وَإِنَّ مِنْهَا لَمَا يَشَّقَّقُ فَيَخْرُجُ مِنْهُ ٱلْمَآءُ ۚ وَإِنَّ مِنْهَا لَمَا يَهْبِطُ مِنْ خَشْيَةِ ٱللَّهِ ۗ وَمَا ٱللَّهُ بِغَـٰفِلٍ عَمَّا تَعْمَلُونَ",
-      translation: "And [recall] when Musa said to his people, \"Indeed, Allah commands you to slaughter a cow.\" They said, \"Do you take us in ridicule?\" He said, \"I seek refuge in Allah from being among the ignorant.\" They said, \"Call upon your Lord to make clear to us what it is.\" [Musa] said, \"[Allah] says, 'It is a cow which is neither old nor virgin, but median between that,' so do what you are commanded.\" They said, \"Call upon your Lord to show us what is her color.\" He said, \"He says, 'It is a yellow cow, bright in color - pleasing to the observers.'\" They said, \"Call upon your Lord to make clear to us what it is. Indeed, [all] cows look alike to us. And indeed we, if Allah wills, will be guided.\" He said, \"He says, 'It is a cow neither trained to plow the earth nor to irrigate the field, one free from fault with no spot upon her.'\" They said, \"Now you have come with the truth.\" So they slaughtered her, but they could hardly do it. And [recall] when you slew a man and disputed over it, but Allah was to bring out that which you were concealing. So We said, \"Strike him [i.e., the slain man] with part of it.\" Thus does Allah bring the dead to life, and He shows you His signs that you might reason. Then your hearts became hardened after that, being like stones or even harder. For indeed, there are stones from which rivers burst forth, and there are some of them that split open and water comes out, and there are some of them that fall down for fear of Allah. And Allah is not unaware of what you do.",
-      translationFr: "Et (souvenez-vous) lorsque Moussa eut dit à son peuple : « Allah vous ordonne d’égorger une vache. » Ils répondirent : « Nous tournerais-tu en dérision ? » - « Allah, répondit-il, me préserve d’être du nombre des ignorants ! » Ils dirent : « Demande à ton Seigneur de nous préciser comment elle est. » Il répondit : « (Allah) dit que ce n’est Ni une vache vieillie ni une vierge génisse, elle est d’un âge intermédiaire. Faites donc ce qui vous est ordonné. » Ils dirent : « Demande à ton Seigneur de nous préciser sa couleur. » À quoi il répondit : « (Allah vous) dit que c’est une vache (dont la robe est) jaune vif, qui ravit ceux qui la regardent. » Ils dirent (encore) : « Demande à ton Seigneur de nous dire clairement comment elle est car les vaches, à nos yeux, se ressemblent à s’y méprendre. Alors, si Allah veut, nous serons bien guidés. » Il répondit : « (Allah vous) dit que c’est une vache non soumise aux travaux de la terre ni à l’arrosage des champs labourés. Elle est exempte de toute tare et de toute tache. » Ils dirent : « Maintenant tu es venu nous apporter la vérité. » Alors ils l’égorgèrent, mais ils faillirent ne pas le faire. Et lorsque vous avez tué un homme puis vous vous êtes disputés à son sujet en vous accusant les uns les autres…Allah dévoile ce que vous dissimuliez. Alors Nous dîmes : « Frappez-le (le cadavre) avec l’un de ses morceaux (ceux de la vache égorgée). » C’est ainsi qu’Allah fait revivre les morts et vous montre Ses Signes, peut-être entendrez-vous raison. Après cela, pourtant, vos cœurs s’endurcirent, tels les rocs ou plus durs encore, car des rocs il peut jaillir des rivières ; certains se fendent pour laisser sourdre l’eau ; certains encore s’effondrent par crainte d’Allah. Et Allah n’est point distrait de ce que vous faites.",
+      ayahEnd: 73,
+      arabicText: "وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِۦٓ إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تَذْبَحُوا۟ بَقَرَةً ۖ قَالُوٓا۟ أَتَتَّخِذُنَا هُزُوًا ۖ قَالَ أَعُوذُ بِٱللَّهِ أَنْ أَكُونَ مِنَ ٱلْجَـٰهِلِينَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِىَ ۚ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا فَارِضٌ وَلَا بِكْرٌ عَوَانٌۢ بَيْنَ ذَٰلِكَ ۖ فَٱفْعَلُوا۟ مَا تُؤْمَرُونَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا لَوْنُهَا ۚ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ صَفْرَآءُ فَاقِعٌ لَّوْنُهَا تَسُرُّ ٱلنَّـٰظِرِينَ ۝ قَالُوا۟ ٱدْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِىَ إِنَّ ٱلْبَقَرَ تَشَـٰبَهَ عَلَيْنَا وَإِنَّآ إِن شَآءَ ٱللَّهُ لَمُهْتَدُونَ ۝ قَالَ إِنَّهُۥ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا ذَلُولٌ تُثِيرُ ٱلْأَرْضَ وَلَا تَسْقِى ٱلْحَرْثَ مُسَلَّمَةٌ لَّا شِيَةَ فِيهَا ۚ قَالُوا۟ ٱلْـَٔـٰنَ جِئْتَ بِٱلْحَقِّ ۚ فَذَبَحُوهَا وَمَا كَادُوا۟ يَفْعَلُونَ ۝ وَإِذْ قَتَلْتُمْ نَفْسًا فَٱدَّٰرَْٰٔتُمْ فِيهَا ۖ وَٱللَّهُ مُخْرِجٌ مَّا كُنتُمْ تَكْتُمُونَ ۝ فَقُلْنَا ٱضْرِبُوهُ بِبَعْضِهَا ۚ كَذَٰلِكَ يُحْىِ ٱللَّهُ ٱلْمَوْتَىٰ وَيُرِيكُمْ ءَايَـٰتِهِۦ لَعَلَّكُمْ تَعْقِلُونَ",
+      translation: "And [recall] when Musa said to his people, \"Indeed, Allah commands you to slaughter a cow.\" They said, \"Do you take us in ridicule?\" He said, \"I seek refuge in Allah from being among the ignorant.\" They said, \"Call upon your Lord to make clear to us what it is.\" [Musa] said, \"[Allah] says, 'It is a cow which is neither old nor virgin, but median between that,' so do what you are commanded.\" They said, \"Call upon your Lord to show us what is her color.\" He said, \"He says, 'It is a yellow cow, bright in color - pleasing to the observers.'\" They said, \"Call upon your Lord to make clear to us what it is. Indeed, [all] cows look alike to us. And indeed we, if Allah wills, will be guided.\" He said, \"He says, 'It is a cow neither trained to plow the earth nor to irrigate the field, one free from fault with no spot upon her.'\" They said, \"Now you have come with the truth.\" So they slaughtered her, but they could hardly do it. And [recall] when you slew a man and disputed over it, but Allah was to bring out that which you were concealing. So We said, \"Strike him [i.e., the slain man] with part of it.\" Thus does Allah bring the dead to life, and He shows you His signs that you might reason.",
+      translationFr: "Et (souvenez-vous) lorsque Moussa eut dit à son peuple : « Allah vous ordonne d’égorger une vache. » Ils répondirent : « Nous tournerais-tu en dérision ? » - « Allah, répondit-il, me préserve d’être du nombre des ignorants ! » Ils dirent : « Demande à ton Seigneur de nous préciser comment elle est. » Il répondit : « (Allah) dit que ce n’est Ni une vache vieillie ni une vierge génisse, elle est d’un âge intermédiaire. Faites donc ce qui vous est ordonné. » Ils dirent : « Demande à ton Seigneur de nous préciser sa couleur. » À quoi il répondit : « (Allah vous) dit que c’est une vache (dont la robe est) jaune vif, qui ravit ceux qui la regardent. » Ils dirent (encore) : « Demande à ton Seigneur de nous dire clairement comment elle est car les vaches, à nos yeux, se ressemblent à s’y méprendre. Alors, si Allah veut, nous serons bien guidés. » Il répondit : « (Allah vous) dit que c’est une vache non soumise aux travaux de la terre ni à l’arrosage des champs labourés. Elle est exempte de toute tare et de toute tache. » Ils dirent : « Maintenant tu es venu nous apporter la vérité. » Alors ils l’égorgèrent, mais ils faillirent ne pas le faire. Et lorsque vous avez tué un homme puis vous vous êtes disputés à son sujet en vous accusant les uns les autres…Allah dévoile ce que vous dissimuliez. Alors Nous dîmes : « Frappez-le (le cadavre) avec l’un de ses morceaux (ceux de la vache égorgée). » C’est ainsi qu’Allah fait revivre les morts et vous montre Ses Signes, peut-être entendrez-vous raison.",
     } as QuranReference,
   },
   {
-    id: 'musa-107',
+    id: 'musa-109',
     type: 'quran_source',
-    order: 107,
+    order: 109,
     content: "Musa called them to enter the blessed land assigned to them. They said, 'Go, you and your Lord, and fight' - and forty years were decreed upon them.",
     contentFr: "Moussa les appela à entrer dans la terre bénie qui leur était assignée. Ils dirent : « Va, toi et ton Seigneur, et combattez » ; et quarante ans leur furent décrétés.",
     source: {
@@ -1971,11 +2007,29 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-108',
+    id: 'musa-110',
     type: 'quran_source',
-    order: 108,
-    content: "They were told to enter the city and its gate bowing humbly, and those who wronged changed the word they had been given - Al-Baqarah told it above, among the manna and the springs, and Al-A'raf tells it here.",
-    contentFr: "Il leur fut dit d'entrer dans la cité et par sa porte en se prosternant, et ceux qui furent injustes changèrent la parole qui leur avait été donnée ; Al-Baqarah l'a raconté plus haut, entre la manne et les sources, et Al-A'raf le raconte ici.",
+    order: 110,
+    content: "They were told to enter the gate bowing humbly, and those who wronged changed the word they had been given.",
+    contentFr: "Il leur fut dit d'entrer par la porte en se prosternant, et ceux qui furent injustes changèrent la parole qui leur avait été donnée.",
+    source: {
+      type: "quran",
+      surahNumber: 2,
+      surahNameEnglish: "Al-Baqarah",
+      surahNameArabic: "البقرة",
+      ayahStart: 58,
+      ayahEnd: 59,
+      arabicText: "وَإِذْ قُلْنَا ٱدْخُلُوا۟ هَـٰذِهِ ٱلْقَرْيَةَ فَكُلُوا۟ مِنْهَا حَيْثُ شِئْتُمْ رَغَدًا وَٱدْخُلُوا۟ ٱلْبَابَ سُجَّدًا وَقُولُوا۟ حِطَّةٌ نَّغْفِرْ لَكُمْ خَطَـٰيَـٰكُمْ ۚ وَسَنَزِيدُ ٱلْمُحْسِنِينَ ۝ فَبَدَّلَ ٱلَّذِينَ ظَلَمُوا۟ قَوْلًا غَيْرَ ٱلَّذِى قِيلَ لَهُمْ فَأَنزَلْنَا عَلَى ٱلَّذِينَ ظَلَمُوا۟ رِجْزًا مِّنَ ٱلسَّمَآءِ بِمَا كَانُوا۟ يَفْسُقُونَ",
+      translation: "And [recall] when We said, \"Enter this city [i.e., Jerusalem] and eat from it wherever you will in [ease and] abundance, and enter the gate bowing humbly and say, 'Relieve us of our burdens [i.e., sins].' We will [then] forgive your sins for you, and We will increase the doers of good [in goodness and reward].\" But those who wronged changed [those words] to a statement other than that which had been said to them, so We sent down upon those who wronged a punishment [i.e., plague] from the sky because they were defiantly disobeying.",
+      translationFr: "Et lorsque Nous dîmes : « Entrez dans cette cité et mangez-y où vous voudrez et autant qu’il vous plaira ; entrez-y par la porte prosternés et demandez : « Rémission pour (nos péchés) ! » Nous vous pardonnerons alors vos fautes et Nous donnerons plus encore aux bienfaiteurs. » Ceux qui ont été injustes ont alors substitué d’autres paroles à celles qui leur ont été dites et, sur eux, Nous avons fait descendre du ciel un châtiment humiliant pour les punir d’avoir été impies.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-111',
+    type: 'quran_source',
+    order: 111,
+    content: "Al-A'raf reports it the same way.",
+    contentFr: "Al-A'raf le rapporte de la même manière.",
     source: {
       type: "quran",
       surahNumber: 7,
@@ -1989,9 +2043,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-109',
+    id: 'musa-112',
     type: 'quran_source',
-    order: 109,
+    order: 112,
     content: "Al-A'raf gives the town by the sea and the sabbath, and what one community among them said to those who warned.",
     contentFr: "Al-A'raf donne la cité au bord de la mer et le sabbat, et ce qu'une communauté parmi eux dit à ceux qui avertissaient.",
     source: {
@@ -2007,9 +2061,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-110',
+    id: 'musa-113',
     type: 'quran_source',
-    order: 110,
+    order: 113,
     content: "Al-Baqarah: it was made a deterrent punishment, and a lesson.",
     contentFr: "Al-Baqarah : cela fut fait châtiment exemplaire, et leçon.",
     source: {
@@ -2025,9 +2079,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-111',
+    id: 'musa-114',
     type: 'quran_source',
-    order: 111,
+    order: 114,
     content: "And among the people of Musa is a community which guides by truth.",
     contentFr: "Et parmi le peuple de Moussa il est une communauté qui guide par la vérité.",
     source: {
@@ -2043,9 +2097,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-112',
+    id: 'musa-115',
     type: 'quran_source',
-    order: 112,
+    order: 115,
     content: "They were divided throughout the earth into nations, and tested with good times and bad.",
     contentFr: "Ils furent dispersés sur la terre en communautés, et éprouvés par le bonheur et le malheur.",
     source: {
@@ -2061,9 +2115,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-113',
+    id: 'musa-116',
     type: 'quran_source',
-    order: 113,
+    order: 116,
     content: "Qarun was of the people of Musa, and tyrannised them. His people counselled him, he answered that he was given his treasure for knowledge he had - and the earth swallowed him and his home.",
     contentFr: "Qarun était du peuple de Moussa, et les opprima. Son peuple le conseilla, il répondit qu'il tenait son trésor d'une science qu'il possédait ; et la terre l'engloutit avec sa demeure.",
     source: {
@@ -2079,9 +2133,27 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-114',
+    id: 'musa-117',
     type: 'quran_source',
-    order: 114,
+    order: 117,
+    content: "Ghafir names him with Pharaoh and Haman among those Musa was sent to.",
+    contentFr: "Ghafir le nomme avec Pharaon et Haman parmi ceux à qui Moussa fut envoyé.",
+    source: {
+      type: "quran",
+      surahNumber: 40,
+      surahNameEnglish: "Ghafir",
+      surahNameArabic: "غافر",
+      ayahStart: 24,
+      ayahEnd: 24,
+      arabicText: "إِلَىٰ فِرْعَوْنَ وَهَـٰمَـٰنَ وَقَـٰرُونَ فَقَالُوا۟ سَـٰحِرٌ كَذَّابٌ",
+      translation: "To Pharaoh, Haman and Qarun, but they said, \"[He is] a magician and a liar.\"",
+      translationFr: "vers Pharaon, Haman et Qarun (Coré) qui dirent : « C’est un magicien, un menteur ! »",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-118',
+    type: 'quran_source',
+    order: 118,
     content: "Musa said he would not cease travelling until he reached the junction of the two seas. There they found a servant of Allah's, and Musa asked to follow him.",
     contentFr: "Moussa dit qu'il n'aurait de cesse d'avancer avant d'atteindre la jonction des deux mers. Là ils trouvèrent un serviteur d'Allah, et Moussa demanda à le suivre.",
     source: {
@@ -2097,9 +2169,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-115',
+    id: 'musa-119',
     type: 'quran_source',
-    order: 115,
+    order: 119,
     content: "The ship, the boy and the wall - and at each one Musa spoke, until the parting came.",
     contentFr: "Le navire, le garçon et le mur ; et à chacun Moussa parla, jusqu'à ce que vînt la séparation.",
     source: {
@@ -2115,9 +2187,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-116',
+    id: 'musa-120',
     type: 'quran_source',
-    order: 116,
+    order: 120,
     content: "Then he told him the interpretation of what he could not bear patiently.",
     contentFr: "Puis il lui dit l'interprétation de ce qu'il n'avait pu endurer.",
     source: {
@@ -2133,9 +2205,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-117',
+    id: 'musa-121',
     type: 'hadith_source',
-    order: 117,
+    order: 121,
     content: "The Prophet صلى الله عليه وسلم told how that journey began, and why.",
     contentFr: "Le Prophète صلى الله عليه وسلم a raconté comment ce voyage commença, et pourquoi.",
     source: {
@@ -2148,9 +2220,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-118',
+    id: 'musa-122',
     type: 'quran_source',
-    order: 118,
+    order: 122,
     content: "As-Saff gives what he said to his people: why do you harm me, while you know that I am the messenger of Allah to you?",
     contentFr: "As-Saff donne ce qu'il dit à son peuple : pourquoi me blessez-vous, alors que vous savez que je suis le messager d'Allah vers vous ?",
     source: {
@@ -2166,9 +2238,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-119',
+    id: 'musa-123',
     type: 'quran_source',
-    order: 119,
+    order: 123,
     content: "Al-Ahzab: be not like those who abused Musa; then Allah cleared him of what they said.",
     contentFr: "Al-Ahzab : ne soyez pas comme ceux qui ont offensé Moussa ; Allah le disculpa de ce qu'ils disaient.",
     source: {
@@ -2184,9 +2256,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-120',
+    id: 'musa-124',
     type: 'hadith_source',
-    order: 120,
+    order: 124,
     content: "This is what they said of him, and how Allah cleared him of it.",
     contentFr: "Voici ce qu'ils disaient de lui, et comment Allah l'en disculpa.",
     source: {
@@ -2199,9 +2271,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-121',
+    id: 'musa-125',
     type: 'hadith_source',
-    order: 121,
+    order: 125,
     content: "The prayers this ummah prays five times a day were brought down to five at his word.",
     contentFr: "Les prières que cette communauté accomplit cinq fois par jour furent ramenées à cinq sur sa parole.",
     source: {
@@ -2214,9 +2286,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-122',
+    id: 'musa-126',
     type: 'hadith_source',
-    order: 122,
+    order: 126,
     content: "And the Prophet صلى الله عليه وسلم told of the day Adam and Musa argued.",
     contentFr: "Et le Prophète صلى الله عليه وسلم a raconté le jour où Adam et Moussa débattirent.",
     source: {
@@ -2229,9 +2301,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-123',
+    id: 'musa-127',
     type: 'hadith_source',
-    order: 123,
+    order: 127,
     content: "The day he was saved from the sea is fasted to this day.",
     contentFr: "Le jour où il fut sauvé de la mer est jeûné jusqu'à aujourd'hui.",
     source: {
@@ -2244,9 +2316,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-124',
+    id: 'musa-128',
     type: 'hadith_source',
-    order: 124,
+    order: 128,
     content: "And this is how his life ended.",
     contentFr: "Et voici comment sa vie prit fin.",
     source: {
@@ -2259,9 +2331,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-125',
+    id: 'musa-129',
     type: 'hadith_source',
-    order: 125,
+    order: 129,
     content: "The Prophet صلى الله عليه وسلم said, in the same report:",
     contentFr: "Le Prophète صلى الله عليه وسلم dit, dans le même rapport :",
     source: {
@@ -2274,9 +2346,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'musa-126',
+    id: 'musa-130',
     type: 'quran_source',
-    order: 126,
+    order: 130,
     content: "An-Nazi'at: Allah seized him in exemplary punishment for the last and the first.",
     contentFr: "An-Nazi'at : Allah le saisit du châtiment exemplaire de l'au-delà et de celui d'ici-bas.",
     source: {
@@ -2292,27 +2364,27 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-127',
+    id: 'musa-131',
     type: 'quran_source',
-    order: 127,
-    content: "Ghafir goes on to what they will say to one another inside the Fire, and to its keepers.",
-    contentFr: "Ghafir poursuit avec ce qu'ils se diront les uns aux autres dans le Feu, et à ses gardiens.",
+    order: 131,
+    content: "Ghafir: the Fire, to which they are exposed morning and evening.",
+    contentFr: "Ghafir : le Feu, auquel ils sont exposés matin et soir.",
     source: {
       type: "quran",
       surahNumber: 40,
       surahNameEnglish: "Ghafir",
       surahNameArabic: "غافر",
-      ayahStart: 47,
-      ayahEnd: 50,
-      arabicText: "وَإِذْ يَتَحَآجُّونَ فِى ٱلنَّارِ فَيَقُولُ ٱلضُّعَفَـٰٓؤُا۟ لِلَّذِينَ ٱسْتَكْبَرُوٓا۟ إِنَّا كُنَّا لَكُمْ تَبَعًا فَهَلْ أَنتُم مُّغْنُونَ عَنَّا نَصِيبًا مِّنَ ٱلنَّارِ ۝ قَالَ ٱلَّذِينَ ٱسْتَكْبَرُوٓا۟ إِنَّا كُلٌّ فِيهَآ إِنَّ ٱللَّهَ قَدْ حَكَمَ بَيْنَ ٱلْعِبَادِ ۝ وَقَالَ ٱلَّذِينَ فِى ٱلنَّارِ لِخَزَنَةِ جَهَنَّمَ ٱدْعُوا۟ رَبَّكُمْ يُخَفِّفْ عَنَّا يَوْمًا مِّنَ ٱلْعَذَابِ ۝ قَالُوٓا۟ أَوَلَمْ تَكُ تَأْتِيكُمْ رُسُلُكُم بِٱلْبَيِّنَـٰتِ ۖ قَالُوا۟ بَلَىٰ ۚ قَالُوا۟ فَٱدْعُوا۟ ۗ وَمَا دُعَـٰٓؤُا۟ ٱلْكَـٰفِرِينَ إِلَّا فِى ضَلَـٰلٍ",
-      translation: "And [mention] when they will argue within the Fire, and the weak will say to those who had been arrogant, \"Indeed, we were [only] your followers, so will you relieve us of a share of the Fire?\" Those who had been arrogant will say, \"Indeed, all [of us] are in it. Indeed, Allah has judged between the servants.\" And those in the Fire will say to the keepers of Hell, \"Supplicate your Lord to lighten for us a day from the punishment.\" They will say, \"Did there not come to you your messengers with clear proofs?\" They will say, \"Yes.\" They will reply, \"Then supplicate [yourselves], but the supplication of the disbelievers is not except in error [i.e., futility].\"",
-      translationFr: "Lorsqu’ils se disputeront au sein même du Feu, les plus faibles diront à ceux qui étaient arrogants : « Nous vous suivions pourtant ! Ne pourriez-vous nous épargner une part de cet Enfer ? » Ceux qui étaient arrogants leur diront alors : « Et voilà que nous y sommes tous. Allah a déjà jugé entre Ses serviteurs. » Aux gardiens de la Géhenne, les hôtes du Feu demanderont : « Priez votre Seigneur pour qu’Il allège pour nous, ne serait-ce que d’un jour, (le terrible) supplice (qui est le nôtre) ! » (Les gardiens) demanderont : « Vos Messagers ne venaient-ils pas vous apporter les preuves évidentes ? » « Si, répondront-ils. » « Priez donc, reprendront (les gardiens). » Mais les prières des mécréants ne vont qu’en pure perte.",
+      ayahStart: 45,
+      ayahEnd: 46,
+      arabicText: "فَوَقَىٰهُ ٱللَّهُ سَيِّـَٔاتِ مَا مَكَرُوا۟ ۖ وَحَاقَ بِـَٔالِ فِرْعَوْنَ سُوٓءُ ٱلْعَذَابِ ۝ ٱلنَّارُ يُعْرَضُونَ عَلَيْهَا غُدُوًّا وَعَشِيًّا ۖ وَيَوْمَ تَقُومُ ٱلسَّاعَةُ أَدْخِلُوٓا۟ ءَالَ فِرْعَوْنَ أَشَدَّ ٱلْعَذَابِ",
+      translation: "So Allah protected him from the evils they plotted, and the people of Pharaoh were enveloped by the worst of punishment - The Fire; they are exposed to it morning and evening. And the Day the Hour appears [it will be said], \"Make the people of Pharaoh enter the severest punishment.\"",
+      translationFr: "Allah le protégea donc du mal de leurs intrigues, et le plus dur des supplices cerna de toutes parts le peuple de Pharaon. (C’est) au Feu qu’ils seront exposés, matin et soir, et le Jour où viendra l’Heure, (il sera dit) : « Conduisez Pharaon et sa suite vers le pire des supplices. »",
     } as QuranReference,
   },
   {
-    id: 'musa-128',
+    id: 'musa-132',
     type: 'quran_source',
-    order: 128,
+    order: 132,
     content: "Hud: he will precede his people on the Day of Resurrection and lead them into the Fire.",
     contentFr: "Houd : il précédera son peuple au Jour de la Résurrection et le mènera au Feu.",
     source: {
@@ -2328,9 +2400,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-129',
+    id: 'musa-133',
     type: 'quran_source',
-    order: 129,
+    order: 133,
     content: "Ali 'Imran: like the custom of the people of Pharaoh and those before them.",
     contentFr: "Ali 'Imran : telle la coutume des gens de Pharaon et de ceux d'avant eux.",
     source: {
@@ -2346,9 +2418,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-130',
+    id: 'musa-134',
     type: 'quran_source',
-    order: 130,
+    order: 134,
     content: "Al-Anfal: Allah seized them for their sins, and drowned the people of Pharaoh.",
     contentFr: "Al-Anfal : Allah les saisit pour leurs péchés, et noya les gens de Pharaon.",
     source: {
@@ -2364,9 +2436,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-131',
+    id: 'musa-135',
     type: 'quran_source',
-    order: 131,
+    order: 135,
     content: "Al-Haqqah: they disobeyed the messenger of their Lord, so He seized them.",
     contentFr: "Al-Haqqah : ils désobéirent au messager de leur Seigneur, et Il les saisit.",
     source: {
@@ -2382,9 +2454,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-132',
+    id: 'musa-136',
     type: 'quran_source',
-    order: 132,
+    order: 136,
     content: "Al-Muzzammil: a messenger was sent to Pharaoh as one has been sent to you.",
     contentFr: "Al-Muzzammil : un messager fut envoyé à Pharaon comme il vous en a été envoyé un.",
     source: {
@@ -2400,9 +2472,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-133',
+    id: 'musa-137',
     type: 'quran_source',
-    order: 133,
+    order: 137,
     content: "Al-Buruj asks whether the story of the soldiers has reached you.",
     contentFr: "Al-Buruj demande si le récit des armées t'est parvenu.",
     source: {
@@ -2418,9 +2490,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-134',
+    id: 'musa-138',
     type: 'quran_source',
-    order: 134,
+    order: 138,
     content: "Al-Fajr: Pharaoh, owner of the stakes.",
     contentFr: "Al-Fajr : Pharaon, celui aux pieux.",
     source: {
@@ -2436,9 +2508,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-135',
+    id: 'musa-139',
     type: 'quran_source',
-    order: 135,
+    order: 139,
     content: "Sad names him the same way.",
     contentFr: "Sad le nomme de la même manière.",
     source: {
@@ -2454,9 +2526,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-136',
+    id: 'musa-140',
     type: 'quran_source',
-    order: 136,
+    order: 140,
     content: "Qaf: all of them denied the messengers.",
     contentFr: "Qaf : tous démentirent les messagers.",
     source: {
@@ -2472,9 +2544,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-137',
+    id: 'musa-141',
     type: 'quran_source',
-    order: 137,
+    order: 141,
     content: "Al-Hajj: and Musa was denied, and the disbelievers were given respite before they were seized.",
     contentFr: "Al-Hajj : et Moussa fut démenti, et les mécréants eurent un répit avant d'être saisis.",
     source: {
@@ -2490,9 +2562,45 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-138',
+    id: 'musa-142',
     type: 'quran_source',
-    order: 138,
+    order: 142,
+    content: "Ad-Dukhan: the Children of Israel were saved from the humiliating torment.",
+    contentFr: "Ad-Dukhan : les enfants d'Israël furent sauvés du châtiment avilissant.",
+    source: {
+      type: "quran",
+      surahNumber: 44,
+      surahNameEnglish: "Ad-Dukhan",
+      surahNameArabic: "الدخان",
+      ayahStart: 30,
+      ayahEnd: 33,
+      arabicText: "وَلَقَدْ نَجَّيْنَا بَنِىٓ إِسْرَٰٓءِيلَ مِنَ ٱلْعَذَابِ ٱلْمُهِينِ ۝ مِن فِرْعَوْنَ ۚ إِنَّهُۥ كَانَ عَالِيًا مِّنَ ٱلْمُسْرِفِينَ ۝ وَلَقَدِ ٱخْتَرْنَـٰهُمْ عَلَىٰ عِلْمٍ عَلَى ٱلْعَـٰلَمِينَ ۝ وَءَاتَيْنَـٰهُم مِّنَ ٱلْـَٔايَـٰتِ مَا فِيهِ بَلَـٰٓؤٌا۟ مُّبِينٌ",
+      translation: "And We certainly saved the Children of Israel from the humiliating torment - From Pharaoh. Indeed, he was a haughty one among the transgressors. And We certainly chose them by knowledge over [all] the worlds. And We gave them of signs that in which there was a clear trial.",
+      translationFr: "Nous avons certes sauvé les Enfants d’Israël du supplice humiliant, de Pharaon qui était arrogant et enclin aux outrances. De tous les peuples de l’Univers, Nous les avons choisis en toute connaissance parmi les autres peuples (de leur temps). Nous avons produit devant eux des prodiges qui devaient leur être des épreuves manifestes.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-143',
+    type: 'quran_source',
+    order: 143,
+    content: "Yunus: they were settled in an agreeable settlement, and differed only after knowledge came to them.",
+    contentFr: "Younous : ils furent installés dans un lieu agréable, et ne divergèrent qu'après que la science leur fut venue.",
+    source: {
+      type: "quran",
+      surahNumber: 10,
+      surahNameEnglish: "Yunus",
+      surahNameArabic: "يونس",
+      ayahStart: 93,
+      ayahEnd: 93,
+      arabicText: "وَلَقَدْ بَوَّأْنَا بَنِىٓ إِسْرَٰٓءِيلَ مُبَوَّأَ صِدْقٍ وَرَزَقْنَـٰهُم مِّنَ ٱلطَّيِّبَـٰتِ فَمَا ٱخْتَلَفُوا۟ حَتَّىٰ جَآءَهُمُ ٱلْعِلْمُ ۚ إِنَّ رَبَّكَ يَقْضِى بَيْنَهُمْ يَوْمَ ٱلْقِيَـٰمَةِ فِيمَا كَانُوا۟ فِيهِ يَخْتَلِفُونَ",
+      translation: "And We had certainly settled the Children of Israel in an agreeable settlement and provided them with good things. And they did not differ until [after] knowledge had come to them. Indeed, your Lord will judge between them on the Day of Resurrection concerning that over which they used to differ.",
+      translationFr: "Nous installâmes les Enfants d’Israël en un lieu béni, et leur dispensâmes des nourritures les plus pures. Ils ne divergèrent ensuite que lorsque leur fut venue la science (la vérité). Ton Seigneur les départagera, au Jour de la Résurrection, sur ce qui les opposait.",
+    } as QuranReference,
+  },
+  {
+    id: 'musa-144',
+    type: 'quran_source',
+    order: 144,
     content: "Al-Isra gives what was conveyed to them in the Scripture about what they would do on the earth.",
     contentFr: "Al-Isra donne ce qui leur fut annoncé dans le Livre au sujet de ce qu'ils feraient sur la terre.",
     source: {
@@ -2508,9 +2616,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-139',
+    id: 'musa-145',
     type: 'quran_source',
-    order: 139,
+    order: 145,
     content: "And after him, a sign of the kingship: a remnant of what the family of Musa and the family of Harun had left.",
     contentFr: "Et après lui, un signe de la royauté : une relique de ce qu'avaient laissé la famille de Moussa et la famille de Haroun.",
     source: {
@@ -2526,9 +2634,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-140',
+    id: 'musa-146',
     type: 'quran_source',
-    order: 140,
+    order: 146,
     content: "The Quran closes the story by calling them to what was taken from them: remember My favour, and fulfil My covenant.",
     contentFr: "Le Coran clôt le récit en les appelant à ce qui fut pris d'eux : rappelez-vous Ma faveur, et tenez Mon pacte.",
     source: {
@@ -2544,9 +2652,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-141',
+    id: 'musa-147',
     type: 'quran_source',
-    order: 141,
+    order: 147,
     content: "Remember My favour, and fear a Day when no soul will suffice for another.",
     contentFr: "Rappelez-vous Ma faveur, et craignez un Jour où nulle âme ne suffira pour une autre.",
     source: {
@@ -2562,9 +2670,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-142',
+    id: 'musa-148',
     type: 'quran_source',
-    order: 142,
+    order: 148,
     content: "Al-Baqarah repeats the call.",
     contentFr: "Al-Baqarah répète l'appel.",
     source: {
@@ -2580,9 +2688,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-143',
+    id: 'musa-149',
     type: 'quran_source',
-    order: 143,
+    order: 149,
     content: "Or do you intend to ask your Messenger as Musa was asked before?",
     contentFr: "Ou bien voulez-vous interroger votre Messager comme Moussa le fut auparavant ?",
     source: {
@@ -2598,9 +2706,9 @@ const musaStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'musa-144',
+    id: 'musa-150',
     type: 'quran_source',
-    order: 144,
+    order: 150,
     content: "Ask the Children of Israel how many a sign of evidence We gave them.",
     contentFr: "Demande aux enfants d'Israël combien de signes évidents Nous leur avons donnés.",
     source: {
