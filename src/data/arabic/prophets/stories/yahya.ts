@@ -49,8 +49,8 @@ export const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-1',
     type: 'narrative',
     order: 1,
-    content: "This is the story of Prophet Yahya, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran gives his birth in Al Imran and Maryam, and his description in four verses. It does not tell his life or his death - and what was not told is not ours to imagine. Allah knows best.",
-    contentFr: "Voici l'histoire du prophète Yahya, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran donne sa naissance dans Al Imran et Maryam, et sa description en quatre versets. Il ne raconte ni sa vie ni sa mort - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+    content: "This is the story of Prophet Yahya, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran gives his birth in Surah Al Imran and Maryam, and his description in four verses. It does not tell his life or his death - and what was not told is not ours to imagine. Allah knows best.",
+    contentFr: "Voici l'histoire du prophète Yahya, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran donne sa naissance dans la sourate Al Imran et Maryam, et sa description en quatre versets. Il ne raconte ni sa vie ni sa mort - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
   },
 
   // ============ PART 1: A NAME GIVEN TO NO ONE BEFORE ============
@@ -122,8 +122,8 @@ export const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-8',
     type: 'narrative',
     order: 8,
-    content: "Al-Anbiya says he was given as an answer, and his mother made able - and says what his house was like.",
-    contentFr: "Al-Anbiya dit qu'il fut donné en réponse, et sa mère rendue capable - et dit ce qu'était sa maison.",
+    content: "Surah Al-Anbiya says he was given as an answer, and his mother made able - and says what his house was like.",
+    contentFr: "La sourate Al-Anbiya dit qu'il fut donné en réponse, et sa mère rendue capable - et dit ce qu'était sa maison.",
   },
   {
     id: 'yahya-9',
@@ -217,8 +217,8 @@ export const yahyaStoryContent: StoryContentBlock[] = [
     id: 'yahya-16',
     type: 'narrative',
     order: 16,
-    content: "On the night of the ascension, the Prophet ﷺ met Yahya and Isa together in the second heaven.",
-    contentFr: "La nuit de l'ascension, le Prophète ﷺ rencontra Yahya et Issa ensemble au deuxième ciel.",
+    content: "On the night of the ascension, the Prophet ﷺ met Yahya and Isa together in the second heaven (Sahih al-Bukhari 3887).",
+    contentFr: "La nuit de l'ascension, le Prophète ﷺ rencontra Yahya et Issa ensemble au deuxième ciel (Sahih al-Boukhari 3887).",
   },
   {
     id: 'yahya-17',
