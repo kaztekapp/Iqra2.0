@@ -48,8 +48,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-1',
       type: 'narrative',
       order: 1,
-      content: "This is the story of Dhul-Qarnayn, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells it in one passage of Al-Kahf, as an answer to those who asked. It does not say who he was, when he lived, or where the two mountains stand - and what was not told is not ours to imagine. Allah knows best.",
-      contentFr: "Voici l'histoire de Dhul-Qarnayn, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage d'Al-Kahf, en réponse à ceux qui posaient la question. Il ne dit ni qui il était, ni quand il vécut, ni où se dressent les deux montagnes - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+      content: "This is the story of Dhul-Qarnayn, in the Quran's own words. Every line of it is from the Quran or from an authentic hadith; nothing has been added.\n\nThe Quran tells it in one passage of Surah Al-Kahf, as an answer to those who asked. It does not say who he was, when he lived, or where the two mountains stand - and what was not told is not ours to imagine. Allah knows best.",
+      contentFr: "Voici l'histoire de Dhul-Qarnayn, dans les propres mots du Coran. Chaque ligne vient du Coran ou d'un hadith authentique ; rien n'y a été ajouté.\n\nLe Coran la raconte en un seul passage de la sourate Al-Kahf, en réponse à ceux qui posaient la question. Il ne dit ni qui il était, ni quand il vécut, ni où se dressent les deux montagnes - et ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
     },
 
     // ============ PART 1: THE SETTING AND THE RISING OF THE SUN ============
@@ -189,8 +189,8 @@ export const dhulQarnaynStory: QuranStory = {
       id: 'dhulqarnayn-14',
       type: 'narrative',
       order: 14,
-      content: "The Prophet ﷺ spoke of the barrier, and of a gap opened in it.",
-      contentFr: "Le Prophète ﷺ parla de la barrière, et d'une brèche ouverte en elle.",
+      content: "The Prophet ﷺ spoke of the barrier, and of a gap opened in it (Sahih al-Bukhari 3346).",
+      contentFr: "Le Prophète ﷺ parla de la barrière, et d'une brèche ouverte en elle (Sahih al-Boukhari 3346).",
     },
     {
       id: 'dhulqarnayn-15',
