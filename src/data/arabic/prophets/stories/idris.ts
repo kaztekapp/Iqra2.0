@@ -152,8 +152,8 @@ export const idrisStoryContent: StoryContentBlock[] = [
     id: 'idris-11',
     type: 'narrative',
     order: 11,
-    content: "On the night he was taken up through the heavens, the Prophet ﷺ met Idris. He told us in which heaven, and what Idris said to him.",
-    contentFr: "La nuit où il fut élevé à travers les cieux, le Prophète ﷺ rencontra Idris. Il nous a dit dans quel ciel, et ce qu'Idris lui dit.",
+    content: "On the night he was taken up through the heavens, the Prophet ﷺ met Idris. He told us in which heaven, and what Idris said to him (Sahih al-Bukhari 3887).",
+    contentFr: "La nuit où il fut élevé à travers les cieux, le Prophète ﷺ rencontra Idris. Il nous a dit dans quel ciel, et ce qu'Idris lui dit (Sahih al-Boukhari 3887).",
   },
   {
     id: 'idris-12',
