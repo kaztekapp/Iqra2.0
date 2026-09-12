@@ -6,17 +6,28 @@ import * as Updates from 'expo-updates';
 import { color, radius } from '../theme/tokens';
 
 /**
- * Self-contained EAS Update (OTA) prompt. On launch and each time the app is
- * foregrounded it checks for a new update; when one is found it downloads it
- * quietly, then asks the user to restart to apply. Driven by the reactive
- * `Updates.useUpdates()` state (not a one-shot check) so the prompt reliably
- * appears the moment a downloaded update is pending. No-op in Expo Go / dev
- * builds where `Updates.isEnabled` is false.
+ * Self-contained EAS Update (OTA) prompt. On launch, each time the app is
+ * foregrounded, and every few minutes while it stays open, it checks for a
+ * new update; when one is found it downloads it quietly, then asks the user
+ * to restart to apply. Driven by the reactive `Updates.useUpdates()` state
+ * (not a one-shot check) so the prompt reliably appears the moment a
+ * downloaded update is pending. No-op in Expo Go / dev builds where
+ * `Updates.isEnabled` is false.
+ *
+ * The periodic check exists because an app that is simply left open never
+ * changes AppState, so before it the prompt could only appear after the app
+ * was backgrounded or relaunched. And the prompt follows the update's id,
+ * not the "available" flag: once one update had been found the flag stayed
+ * true, so a second update published later was neither fetched nor shown
+ * until the next launch.
  */
+const CHECK_EVERY_MS = 5 * 60 * 1000;
 export function UpdateModal() {
   const { t } = useTranslation();
-  const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
-  const [dismissed, setDismissed] = useState(false);
+  const { availableUpdate, isUpdatePending } = Updates.useUpdates();
+  const availableId = availableUpdate?.updateId ?? null;
+  // The id of the update the user last dismissed; a newer one is shown again.
+  const [dismissedId, setDismissedId] = useState<string | null>(null);
   const [reloading, setReloading] = useState(false);
 
   const scale = useRef(new Animated.Value(0.96)).current;
@@ -27,24 +38,32 @@ export function UpdateModal() {
     Updates.checkForUpdateAsync().catch(() => {});
   }, []);
 
-  // Check on mount and whenever the app returns to the foreground.
+  // Check on mount, whenever the app returns to the foreground, and on a
+  // timer while it stays in the foreground.
   useEffect(() => {
     check();
+    let timer: ReturnType<typeof setInterval> | null = AppState.currentState === 'active' ? setInterval(check, CHECK_EVERY_MS) : null;
     const sub = AppState.addEventListener('change', (s) => {
-      if (s === 'active') check();
+      if (s === 'active') {
+        check();
+        if (!timer) timer = setInterval(check, CHECK_EVERY_MS);
+      } else if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
     });
-    return () => sub.remove();
+    return () => {
+      sub.remove();
+      if (timer) clearInterval(timer);
+    };
   }, [check]);
 
-  // Download in the background as soon as an update is found.
+  // Download in the background as soon as an update is found - each one.
   useEffect(() => {
-    if (isUpdateAvailable) {
-      setDismissed(false);
-      Updates.fetchUpdateAsync().catch(() => {});
-    }
-  }, [isUpdateAvailable]);
+    if (availableId) Updates.fetchUpdateAsync().catch(() => {});
+  }, [availableId]);
 
-  const visible = isUpdatePending && !dismissed;
+  const visible = isUpdatePending && dismissedId !== availableId;
 
   useEffect(() => {
     if (visible) {
@@ -75,7 +94,7 @@ export function UpdateModal() {
   if (!visible) return null;
 
   return (
-    <Modal visible transparent animationType="fade" onRequestClose={() => setDismissed(true)}>
+    <Modal visible transparent animationType="fade" onRequestClose={() => setDismissedId(availableId)}>
       <View style={styles.overlay}>
         <Animated.View style={[styles.card, { opacity, transform: [{ scale }] }]}>
           <View style={styles.iconWrap}>
@@ -88,7 +107,7 @@ export function UpdateModal() {
           <View style={styles.actions}>
             <Pressable
               style={styles.secondaryButton}
-              onPress={() => setDismissed(true)}
+              onPress={() => setDismissedId(availableId)}
               disabled={reloading}
               accessibilityRole="button"
               accessibilityLabel={t('profile.later')}
