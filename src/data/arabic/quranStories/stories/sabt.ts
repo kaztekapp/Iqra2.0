@@ -20,7 +20,7 @@ export const sabtStory: QuranStory = {
     "\"Thus did We give them trial because they were defiantly disobedient.\" The test came after the disobedience, not before it (7:163).",
     "Some asked: why warn a people Allah is going to destroy? The answer is the reason for every warning ever given: to be absolved before your Lord, and perhaps they may fear Him (7:164).",
     "\"We saved those who had forbidden evil and seized those who wronged.\" The Quran names two groups saved and punished; about the third, the ones who asked why bother, it says only that they had forgotten (7:165).",
-    "\"Be apes, despised.\" Al-Baqarah says it was made a deterrent for those present and those after them, and a lesson for those who fear Allah (7:166, 2:65-66).",
+    "\"Be apes, despised.\" Surah Al-Baqarah says it was made a deterrent for those present and those after them, and a lesson for those who fear Allah (7:166, 2:65-66).",
     "\"Do not transgress on the Sabbath\" was part of a solemn covenant. The town by the sea broke a promise, not just a rule (4:154).",
     "\"The Sabbath was only appointed for those who differed over it.\" The day itself was a consequence of dispute (16:124).",
   ],
@@ -29,7 +29,7 @@ export const sabtStory: QuranStory = {
     "« Ainsi les éprouvions-Nous parce qu'ils étaient pervers. » L'épreuve vint après la désobéissance, non avant (7:163).",
     "Certains demandèrent : pourquoi avertir un peuple qu'Allah va détruire ? La réponse est la raison de tout avertissement jamais donné : pour être excusés devant votre Seigneur, et peut-être Le craindront-ils (7:164).",
     "« Nous sauvâmes ceux qui interdisaient le mal et saisîmes ceux qui faisaient le tort. » Le Coran nomme deux groupes, sauvés et châtiés ; du troisième, ceux qui demandaient pourquoi se donner la peine, il dit seulement qu'ils avaient oublié (7:165).",
-    "« Soyez des singes, méprisés. » Al-Baqara dit que ce fut fait un exemple dissuasif pour les présents et ceux d'après, et un rappel pour ceux qui craignent Allah (7:166, 2:65-66).",
+    "« Soyez des singes, méprisés. » la sourate Al-Baqara dit que ce fut fait un exemple dissuasif pour les présents et ceux d'après, et un rappel pour ceux qui craignent Allah (7:166, 2:65-66).",
     "« Ne transgressez pas le Sabbat » faisait partie d'un engagement solennel. La cité au bord de la mer rompit une promesse, non seulement une règle (4:154).",
     "« Le Sabbat n'a été imposé qu'à ceux qui divergeaient à son sujet. » Le jour lui-même fut une conséquence d'un différend (16:124).",
   ],
@@ -48,8 +48,8 @@ export const sabtStory: QuranStory = {
       id: 'sabt-1',
       type: 'narrative',
       order: 1,
-      content: "This is the story of the people of the Sabbath, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran tells it in Al-A'raf and refers to it in Al-Baqarah and An-Nisa. It does not name the town, and no authentic hadith adds to what it says. What was not told is not ours to imagine. Allah knows best.",
-      contentFr: "Voici l'histoire des gens du Sabbat, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la raconte dans Al-A'raf et y renvoie dans Al-Baqara et An-Nisa. Il ne nomme pas la cité, et aucun hadith authentique n'ajoute à ce qu'il dit. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
+      content: "This is the story of the people of the Sabbath, in the Quran's own words. Every line of it is from the Quran; nothing has been added.\n\nThe Quran tells it in Surah Al-A'raf and refers to it in Surah Al-Baqarah and An-Nisa. It does not name the town, and no authentic hadith adds to what it says. What was not told is not ours to imagine. Allah knows best.",
+      contentFr: "Voici l'histoire des gens du Sabbat, dans les propres mots du Coran. Chaque ligne vient du Coran ; rien n'y a été ajouté.\n\nLe Coran la raconte dans la sourate Al-A'raf et y renvoie dans la sourate Al-Baqara et An-Nisa. Il ne nomme pas la cité, et aucun hadith authentique n'ajoute à ce qu'il dit. Ce qui ne fut pas raconté, il ne nous appartient pas de l'imaginer. Allah est le plus savant.",
     },
 
     // ============ PART 1: THE TOWN BY THE SEA ============
