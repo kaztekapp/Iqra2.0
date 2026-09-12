@@ -903,6 +903,8 @@ export default {
     beingPrepared: 'is being prepared. Check back soon!',
     summary: 'Summary',
     keyLessons: 'Key Lessons',
+    lessonsHeading: 'What we can learn from this',
+    lessonsNote: "The story above is told in the Quran's own words. What follows is what we can take from it.",
     markComplete: 'Mark as Complete',
     sectionCompleted: 'Section Completed',
   },

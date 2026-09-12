@@ -903,6 +903,8 @@ export default {
     beingPrepared: 'est en cours de préparation. Revenez bientôt !',
     summary: 'Résumé',
     keyLessons: 'Leçons Clés',
+    lessonsHeading: 'Ce que nous pouvons en apprendre',
+    lessonsNote: "Le récit ci-dessus est raconté dans les mots mêmes du Coran. Ce qui suit est ce que nous pouvons en retenir.",
     markComplete: 'Marquer comme Terminé',
     sectionCompleted: 'Section Terminée',
   },

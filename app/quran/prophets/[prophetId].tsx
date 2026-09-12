@@ -254,6 +254,26 @@ export default function ProphetStoryScreen() {
 
   const storyFooter = (
     <View style={styles.blocksContainer}>
+      {/*
+        The story ends on the Quran's own closing words, so the lessons open
+        with the same hairline the story opened with: the mark of the app
+        speaking rather than the revelation. No numbers and no bullets - these
+        are separate thoughts, not steps, and a numbered list would promise an
+        order the story does not have.
+      */}
+      {prophet.lessons.length > 0 && (
+        <View style={styles.lessonsSection}>
+          <View style={styles.lessonsRule} />
+          <Text style={styles.lessonsHeading}>{t('prophetsFeature.lessonsHeading')}</Text>
+          <Text style={styles.lessonsNote}>{t('prophetsFeature.lessonsNote')}</Text>
+          {lcArray(prophet.lessons, prophet.lessonsFr).map((lesson, index) => (
+            <Text key={index} style={styles.lessonLine}>
+              {lesson}
+            </Text>
+          ))}
+        </View>
+      )}
+
       {/* Mark Complete Button */}
       {currentContent.length > 0 && !isCurrentSubStoryCompleted && (
         <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
@@ -549,6 +569,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: color.text,
     lineHeight: 22,
+  },
+  /**
+   * The closing reflection. Set like the story's opening paragraph, for the
+   * same reason: it is the app's voice, and a reader should never have to
+   * wonder which voice they are reading. Quieter than the telling, with the
+   * air to be read slowly, and no tinted panel competing with the verse
+   * cards above it.
+   */
+  lessonsSection: {
+    marginTop: 12,
+    marginBottom: 24,
+  },
+  lessonsRule: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: withAlpha(color.progress, 0.35),
+    width: 64,
+    marginBottom: 22,
+  },
+  lessonsHeading: {
+    fontSize: 19,
+    lineHeight: 28,
+    color: color.text,
+    marginBottom: 8,
+  },
+  lessonsNote: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: color.textFaint,
+    marginBottom: 20,
+  },
+  lessonLine: {
+    fontSize: 16,
+    lineHeight: 28,
+    color: color.textMuted,
+    marginBottom: 18,
   },
   lessonsCard: {
     backgroundColor: color.surface,
