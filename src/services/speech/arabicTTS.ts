@@ -273,6 +273,41 @@ function playFile(uri: string): Promise<void> {
 }
 
 /**
+ * Lines fetched ahead of their turn, keyed by speed and text.
+ *
+ * A story hands the next line here while the current one is still playing,
+ * so the gap between two lines is a file swap rather than a network round
+ * trip. That gap is silence, and silence with the screen locked is what iOS
+ * suspends an app for.
+ */
+const prepared = new Map<string, Promise<string>>();
+const PREPARED_LIMIT = 6;
+const preparedKey = (chunk: string, speed: number) => `${speed}|${chunk}`;
+
+export function prepareArabic(text: string, speed = 1.0): void {
+  if (preference.source === 'device') return;
+  const line = text.trim();
+  if (!line) return;
+  for (const chunk of chunkLine(line)) {
+    const key = preparedKey(chunk, speed);
+    if (prepared.has(key) || prepared.size >= PREPARED_LIMIT) continue;
+    prepared.set(
+      key,
+      fetchChunkToFile(chunk, speed).catch((e) => {
+        prepared.delete(key);
+        throw e;
+      })
+    );
+  }
+}
+
+/** Forget every line fetched ahead, deleting the files as they land. */
+function discardPrepared(): void {
+  for (const p of prepared.values()) p.then(deleteQuietly).catch(() => {});
+  prepared.clear();
+}
+
+/**
  * Speak an array of lines in order. Empty lines (stanza breaks) are skipped but
  * their index is preserved, so `onLineStart` indices map 1:1 onto `lines`.
  */
@@ -311,7 +346,10 @@ export async function playArabicLines(
         if (myGen !== generation) return;
         let uri: string;
         try {
-          uri = await fetchChunkToFile(chunk, speed);
+          const key = preparedKey(chunk, speed);
+          const ahead = prepared.get(key);
+          prepared.delete(key);
+          uri = ahead ? await ahead : await fetchChunkToFile(chunk, speed);
         } catch {
           // The fetched voice is unreachable. Speak this line on device rather
           // than failing the whole utterance into silence.
@@ -511,6 +549,7 @@ export function stopArabic(): void {
   try { Speech.stop(); } catch {}
   generation++;
   teardownCurrent();
+  discardPrepared();
 }
 
 

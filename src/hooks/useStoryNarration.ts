@@ -32,6 +32,7 @@ import {
   prewarmArabicVoice,
   isArabicSpeaking,
   setArabicNowPlaying,
+  prepareArabic,
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
@@ -229,6 +230,13 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
         indexRef.current = i;
 
         const utterance = utterances[i];
+        // Fetch the next line while this one plays, so the gap between them
+        // is a file swap and not a network round trip.
+        const upcoming = utterances[i + 1];
+        if (upcoming) {
+          if (upcoming.lang === 'ar') prepareArabic(upcoming.text, speedRef.current);
+          else storyAudioService.prepare(upcoming.text, lang);
+        }
         const result =
           utterance.lang === 'ar'
             ? await speakQuranLine(utterance.text, speedRef.current)

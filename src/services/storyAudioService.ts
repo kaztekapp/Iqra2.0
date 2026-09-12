@@ -51,7 +51,7 @@ import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from 'exp
 import type { AudioMetadata } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio } from './audioBus';
-import { File } from 'expo-file-system';
+import { File, Paths } from 'expo-file-system';
 import { synthesizeToFile } from './edgeTts';
 import { chunkForUrl } from './narrationText';
 
@@ -146,6 +146,18 @@ class StoryAudioService {
    * most likely to be asked whether it is busy.
    */
   private narrating = false;
+  /**
+   * A looping second of silence, played at zero volume for the whole of a
+   * listening session. iOS keeps a backgrounded app running only while it
+   * is actually rendering audio, and a story is one-sentence clips with a
+   * network fetch in the gap between each. One slow fetch with the screen
+   * locked and the app was suspended mid-story. While this plays, the app is
+   * always rendering, whatever the network is doing.
+   */
+  private keepAlive: AudioPlayer | null = null;
+  /** Sentences synthesized ahead of their turn (Edge only; the others stream). */
+  private prepared = new Map<string, Promise<string>>();
+  private silentUri: string | null = null;
   /** What the lock screen shows while a story is being read. */
   private nowPlaying: AudioMetadata | null = null;
   /** Told when the lock screen, a headset or another app works the transport. */
@@ -442,6 +454,39 @@ class StoryAudioService {
     return this.speakWith(this.sessionEngine, body, speed, lang, generation);
   }
 
+  /**
+   * Synthesize a sentence before it is needed.
+   *
+   * The story calls this for the next sentence while the current one plays.
+   * It only applies to the Edge voice: the Google rung streams from a URL and
+   * the device voice fetches nothing. A sentence that fails to synthesize is
+   * simply forgotten, and the normal path will try again when its turn comes.
+   */
+  prepare(text: string, lang: NarrationLang): void {
+    const body = text?.trim();
+    if (!body) return;
+    const engine = this.sessionEngine ?? this.nextFetchedEngine(null);
+    if (engine !== 'edge') return;
+    const key = this.preparedKey(body, lang);
+    if (this.prepared.has(key) || this.prepared.size >= 3) return;
+    this.prepared.set(
+      key,
+      synthesizeToFile(body, lang, this.gender).catch((e) => {
+        this.prepared.delete(key);
+        throw e;
+      })
+    );
+  }
+
+  private preparedKey(body: string, lang: NarrationLang): string {
+    return `${lang}|${this.gender}|${body}`;
+  }
+
+  private discardPrepared(): void {
+    for (const p of this.prepared.values()) p.then(deleteQuietly).catch(() => {});
+    this.prepared.clear();
+  }
+
   /** Send a sentence to one rung of the ladder. */
   private speakWith(
     engine: NarrationEngine,
@@ -514,7 +559,10 @@ class StoryAudioService {
     generation: number
   ): Promise<SpeakResult> {
     try {
-      const uri = await synthesizeToFile(body, lang, this.gender);
+      const key = this.preparedKey(body, lang);
+      const ahead = this.prepared.get(key);
+      this.prepared.delete(key);
+      const uri = ahead ? await ahead : await synthesizeToFile(body, lang, this.gender);
       if (generation !== this.generation) {
         deleteQuietly(uri);
         return 'stopped';
@@ -706,7 +754,11 @@ class StoryAudioService {
          * keeps the story where it was - `paused` also holds off the watchdog
          * that would otherwise decide the sentence had wedged and skip it.
          */
-        if (started && !this.paused && status.playing === false) {
+        // Only a stop well before the end counts. AVPlayer drops its rate a
+        // tick or two before it reports the finish, and reading that as a
+        // pause flipped the story to "paused" at the end of every sentence.
+        const nearEnd = durationKnown && status.currentTime >= status.duration - 0.5;
+        if (started && !this.paused && status.playing === false && durationKnown && !nearEnd) {
           this.paused = true;
           this.onTransport?.('paused');
         } else if (this.paused && status.playing === true) {
@@ -848,6 +900,7 @@ class StoryAudioService {
     this.generation++;
     this.paused = false;
     this.deviceSpeaking = false;
+    this.discardPrepared();
     // A real stop is the one moment the player is handed back, well away
     // from any callback that might still be standing on it.
     this.releasePlayer();
@@ -875,6 +928,47 @@ class StoryAudioService {
   /** The hook says when a listening session begins and ends. */
   setNarrating(active: boolean): void {
     this.narrating = active;
+    if (active) this.startKeepAlive();
+    else this.stopKeepAlive();
+  }
+
+  /** A 1-second, 8 kHz, 16-bit mono WAV of zeros, written once to the cache. */
+  private silentTrack(): string {
+    if (this.silentUri) return this.silentUri;
+    const sampleRate = 8000;
+    const dataBytes = sampleRate * 2; // one second of 16-bit mono
+    const buf = new Uint8Array(44 + dataBytes);
+    const ascii = (at: number, text: string) => { for (let i = 0; i < text.length; i++) buf[at + i] = text.charCodeAt(i); };
+    const u32 = (at: number, v: number) => { buf[at] = v & 255; buf[at + 1] = (v >> 8) & 255; buf[at + 2] = (v >> 16) & 255; buf[at + 3] = (v >>> 24) & 255; };
+    const u16 = (at: number, v: number) => { buf[at] = v & 255; buf[at + 1] = (v >> 8) & 255; };
+    ascii(0, 'RIFF'); u32(4, 36 + dataBytes); ascii(8, 'WAVE');
+    ascii(12, 'fmt '); u32(16, 16); u16(20, 1); u16(22, 1); u32(24, sampleRate); u32(28, sampleRate * 2); u16(32, 2); u16(34, 16);
+    ascii(36, 'data'); u32(40, dataBytes);
+    const file = new File(Paths.cache, 'iqra-silence.wav');
+    file.write(buf);
+    this.silentUri = file.uri;
+    return this.silentUri;
+  }
+
+  private startKeepAlive(): void {
+    if (this.keepAlive) return;
+    try {
+      const player = createAudioPlayer({ uri: this.silentTrack() }, { keepAudioSessionActive: true });
+      player.loop = true;
+      player.volume = 0;
+      player.play();
+      this.keepAlive = player;
+    } catch (e) {
+      __DEV__ && console.log('[story audio] keep-alive:', e);
+    }
+  }
+
+  private stopKeepAlive(): void {
+    const player = this.keepAlive;
+    this.keepAlive = null;
+    if (!player) return;
+    try { player.pause(); } catch {}
+    try { player.remove(); } catch {}
   }
 
   isBusy(): boolean {
@@ -922,6 +1016,7 @@ class StoryAudioService {
    * long after the listener has closed the story.
    */
   async releaseSession(): Promise<void> {
+    this.stopKeepAlive();
     if (!this.audioConfigured) return;
     this.audioConfigured = false;
     try {
