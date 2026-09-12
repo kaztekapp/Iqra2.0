@@ -1,7 +1,6 @@
 // Quran Audio Service
 // Uses pre-recorded recitations from professional reciters for authentic Tajweed pronunciation
 
-import { AppState } from 'react-native';
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
 import { registerAudioProducer, claimAudio } from './audioBus';
 import type { AudioPlayer } from 'expo-audio';
@@ -809,27 +808,15 @@ export interface PlaybackStatus {
 // Export singleton instance
 export const quranAudioService = new QuranAudioService();
 
-/**
- * Hand the audio session back once nothing is playing and the app has gone
- * away.
- *
- * `configureAudio` latches the session into `doNotMix` with background
- * playback and never unlatches it, so one tapped ayah leaves iOS keeping the
- * app alive around a silent session for the rest of its life. Recitation that
- * is actually playing is left alone - listening with the screen off is the
- * whole point of the background mode.
- */
-AppState.addEventListener('change', (next) => {
-  if (next !== 'background') return;
-  // Only a session with nothing behind it at all. Paused recitation is
-  // waiting to be resumed, and resuming does not re-configure the session.
-  if (quranAudioService.getAudioState() !== 'idle') return;
-  void quranAudioService.releaseSession();
-});
 
 // Recitation is long-form: it survives navigation, but starting it silences any
 // tapped-word speech, and any new speech silences it.
-registerAudioProducer('quran', 'longform', () => quranAudioService.stop());
+registerAudioProducer('quran', 'longform', () => quranAudioService.stop(), {
+  // Paused recitation is waiting to be resumed, and resuming does not
+  // re-configure the session, so it counts as busy.
+  isBusy: () => quranAudioService.getAudioState() !== 'idle',
+  release: () => quranAudioService.releaseSession(),
+});
 
 // Export class for testing
 export { QuranAudioService };

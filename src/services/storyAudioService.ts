@@ -139,6 +139,13 @@ function deleteQuietly(uri: string) {
 class StoryAudioService {
   private generation = 0;
   private audioConfigured = false;
+  /**
+   * True for the whole of a listening session, including the silent gaps
+   * between sentences and a pause. The clip flags below go quiet for a
+   * quarter-second between every sentence, which is exactly when the app is
+   * most likely to be asked whether it is busy.
+   */
+  private narrating = false;
   /** What the lock screen shows while a story is being read. */
   private nowPlaying: AudioMetadata | null = null;
   /** Told when the lock screen, a headset or another app works the transport. */
@@ -859,6 +866,15 @@ class StoryAudioService {
     else this.clearLockScreen();
   }
 
+  /** The hook says when a listening session begins and ends. */
+  setNarrating(active: boolean): void {
+    this.narrating = active;
+  }
+
+  isBusy(): boolean {
+    return this.narrating || this.clipPlaying || this.deviceSpeaking || this.paused;
+  }
+
   /** Hear about a pause or play that came from outside the app. */
   setTransportListener(fn: ((state: 'playing' | 'paused') => void) | null): void {
     this.onTransport = fn;
@@ -919,6 +935,9 @@ class StoryAudioService {
 
 export const storyAudioService = new StoryAudioService();
 
-registerAudioProducer('story', 'longform', () => storyAudioService.stop());
+registerAudioProducer('story', 'longform', () => storyAudioService.stop(), {
+  isBusy: () => storyAudioService.isBusy(),
+  release: () => storyAudioService.releaseSession(),
+});
 
 export default storyAudioService;

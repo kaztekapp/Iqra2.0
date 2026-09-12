@@ -1,3 +1,5 @@
+import { AppState } from 'react-native';
+
 /**
  * One place that knows what is making sound.
  *
@@ -23,11 +25,58 @@
 type Stopper = () => void | Promise<void>;
 type Channel = 'speech' | 'longform';
 
-const producers = new Map<string, { channel: Channel; stop: Stopper }>();
-
-export function registerAudioProducer(id: string, channel: Channel, stop: Stopper) {
-  producers.set(id, { channel, stop });
+interface ProducerExtras {
+  /** True while this producer is playing, or paused and waiting to resume. */
+  isBusy?: () => boolean;
+  /** Hand back whatever iOS audio session this producer configured. */
+  release?: () => void | Promise<void>;
 }
+
+const producers = new Map<string, { channel: Channel; stop: Stopper } & ProducerExtras>();
+
+export function registerAudioProducer(id: string, channel: Channel, stop: Stopper, extras: ProducerExtras = {}) {
+  producers.set(id, { channel, stop, ...extras });
+}
+
+/** Is anything at all making sound, or paused mid-sound? */
+export function isAnyAudioBusy(): boolean {
+  for (const entry of producers.values()) {
+    try {
+      if (entry.isBusy?.()) return true;
+    } catch {
+      /* a producer that cannot answer is treated as quiet */
+    }
+  }
+  return false;
+}
+
+/**
+ * Hand the iOS audio session back - but only when no producer needs it.
+ *
+ * Both long-form players put the session into `doNotMix` with background
+ * playback and, until this existed, each released it on its own when IT was
+ * idle. That is how a story died the moment the phone locked: the Quran
+ * player, idle, saw the app go to the background and released the session
+ * out from under the narration that was playing through the other service.
+ * One decision, made here, with every producer consulted.
+ */
+export function releaseAudioSessionIfIdle(): void {
+  if (isAnyAudioBusy()) return;
+  for (const entry of producers.values()) {
+    try {
+      const result = entry.release?.();
+      if (result && typeof (result as Promise<void>).catch === 'function') {
+        (result as Promise<void>).catch(() => {});
+      }
+    } catch {
+      /* the next producer still gets to release */
+    }
+  }
+}
+
+AppState.addEventListener('change', (next) => {
+  if (next === 'background') releaseAudioSessionIfIdle();
+});
 
 function runStop(id: string, entry: { stop: Stopper }) {
   try {

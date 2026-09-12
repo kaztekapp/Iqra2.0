@@ -25,6 +25,7 @@ import {
   VoiceGender,
 } from '../services/storyAudioService';
 import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns } from '../services/narrationText';
+import { releaseAudioSessionIfIdle } from '../services/audioBus';
 import {
   speakArabic,
   stopArabic,
@@ -413,35 +414,30 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     return () => {
       runRef.current++;
       stopArabic();
-      void storyAudioService.stop().then(() => storyAudioService.releaseSession());
+      storyAudioService.setNarrating(false);
+      void storyAudioService.stop().then(() => releaseAudioSessionIfIdle());
     };
   }, []);
 
   /**
-   * The app going to the background.
-   *
-   * Someone listening with the screen off is the point of background audio,
-   * so a story that is playing - or paused, waiting to be resumed - is left
-   * alone. An idle one has no business holding the session: the screen is
-   * simply the last one open, and iOS will keep the whole app alive around a
-   * silent session for as long as it is held, which is what left the app
-   * wedged on return. Coming back to the foreground, an utterance that lost
-   * its audio while the app was suspended is cleared rather than waited on.
+   * Coming back to the foreground, an utterance that lost its audio while the
+   * app was suspended is cleared rather than waited on.
    */
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
-      if (next === 'active') {
-        if (statusRef.current !== 'playing' && isArabicSpeaking()) stopArabic();
-        return;
-      }
-      if (next !== 'background') return;
-      if (statusRef.current !== 'idle') return;
-      runRef.current++;
-      stopArabic();
-      void storyAudioService.stop().then(() => storyAudioService.releaseSession());
+      if (next !== 'active') return;
+      if (statusRef.current !== 'playing' && isArabicSpeaking()) stopArabic();
     });
     return () => sub.remove();
   }, []);
+
+  // The service is asked "are you busy?" when the app goes to the background,
+  // and a story that is playing or paused must answer yes even in the silent
+  // quarter-second between two sentences. Releasing the session is decided on
+  // the audio bus, with every producer consulted - not here.
+  useEffect(() => {
+    storyAudioService.setNarrating(status !== 'idle');
+  }, [status]);
 
   // Changing chapter replaces the queue; anything still speaking is stale.
   useEffect(() => {
