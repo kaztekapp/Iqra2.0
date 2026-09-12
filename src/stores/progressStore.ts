@@ -43,7 +43,7 @@ AppState.addEventListener('change', (state: AppStateStatus) => {
   }
 });
 
-export type ModuleType = 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading' | 'practice' | 'numbers' | 'writing';
+export type ModuleType = 'alphabet' | 'vocabulary' | 'grammar' | 'verbs' | 'reading' | 'practice' | 'numbers' | 'writing' | 'calendar';
 
 export interface LastAccessedInfo {
   module: ModuleType;

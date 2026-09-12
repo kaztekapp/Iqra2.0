@@ -34,6 +34,7 @@ const MODULES: Record<ModuleType, {
   alphabet: { titleKey: 'home.alphabet', titleArabic: 'الْحُرُوف', icon: 'text', color: color.accent, route: '/alphabet', arabicChar: 'أ' },
   vocabulary: { titleKey: 'home.vocabulary', titleArabic: 'الْمُفْرَدَات', icon: 'library', color: color.accent, route: '/vocabulary', arabicChar: 'ك' },
   numbers: { titleKey: 'learn.numbers', titleArabic: 'الْأَرْقَام', icon: 'keypad', color: color.accent, route: '/numbers', arabicChar: '٥' },
+  calendar: { titleKey: 'learn.calendar', titleArabic: 'التَّقْوِيمُ الْهِجْرِيّ', icon: 'moon', color: color.accent, route: '/calendar', arabicChar: 'هـ' },
   grammar: { titleKey: 'learn.grammar', titleArabic: 'الْقَوَاعِد', icon: 'git-branch', color: color.accent, route: '/grammar', arabicChar: 'ق' },
   verbs: { titleKey: 'learn.verbConjugations', titleArabic: 'تَصْرِيفُ الْأَفْعَال', icon: 'swap-horizontal', color: color.accent, route: '/verbs', arabicChar: 'ف' },
   reading: { titleKey: 'learn.reading', titleArabic: 'الْقِرَاءَة', icon: 'document-text', color: color.accent, route: '/reading', arabicChar: 'ر' },

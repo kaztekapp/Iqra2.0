@@ -168,6 +168,15 @@ export default function LearnScreen() {
       route: '/numbers',
     },
     {
+      id: 'calendar',
+      title: t('learn.calendar'),
+      titleArabic: 'التَّقْوِيمُ الْهِجْرِيّ',
+      description: t('learn.calendarDesc'),
+      icon: 'moon' as const,
+      progress: null,
+      route: '/calendar',
+    },
+    {
       id: 'practice',
       title: t('learn.practice'),
       titleArabic: 'التَّدْرِيب',
