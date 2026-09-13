@@ -77,6 +77,15 @@ export function splitQuranRuns(text: string): ProseSegment[] {
 export function normalizeArabicForSpeech(input: string): string {
   if (!input) return '';
   return input
+    // A tatweel carrying a hamza is a SEAT, not decoration. The mushaf writes
+    // anbi'uni as ب + kasra + tatweel + damma + hamza: the hamza rides on a
+    // dummy stroke. Stripping the tatweel further down used to leave the beh
+    // holding a kasra, a damma AND a hamza at once — a cluster no engine can
+    // parse, so it spelled the word out. That is the letter-by-letter reading
+    // that survived every other rule here. Rebuild it as a real ya-seat hamza
+    // and keep whatever haraka rode on the stroke. Must run before the tatweel
+    // is removed.
+    .replace(/\u0640([\u064B-\u0652]*)\u0654/g, '\u0626$1')
     // alef wasla and dagger alef → plain alef (a real long-vowel the voice knows)
     .replace(/\u0671/g, '\u0627')
     .replace(/\u0670/g, '\u0627')
@@ -91,7 +100,12 @@ export function normalizeArabicForSpeech(input: string): string {
     .replace(/\u0640/g, '')
     .replace(/[\u200B-\u200F\u2060]/g, '')
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim()
+    // Compose what is left. The mushaf writes alef+maddah, waw+hamza and
+    // ya+hamza as a letter plus a combining mark; ordinary Arabic — and the
+    // voices — expect the single characters آ ؤ ئ أ إ. NFC turns one into the
+    // other, and leaves everything already composed alone.
+    .normalize('NFC');
 }
 
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
