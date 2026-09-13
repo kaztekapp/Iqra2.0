@@ -16,6 +16,7 @@ import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
+import { normalizeArabicForSpeech } from '../narrationText';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
@@ -120,9 +121,11 @@ function googleTtsSpeed(speed: number): number {
  */
 async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
   const ttsSpeed = googleTtsSpeed(speed);
+  // The mushaf marks make some voices spell the word out; send plain Arabic.
+  const spoken = normalizeArabicForSpeech(text);
   const url =
     `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&ttsspeed=${ttsSpeed}&q=` +
-    encodeURIComponent(text);
+    encodeURIComponent(spoken);
 
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`tts_http_${resp.status}`);
@@ -354,10 +357,17 @@ export async function playArabicLines(
           prepared.delete(key);
           uri = ahead ? await ahead : await fetchChunkToFile(chunk, speed);
         } catch {
-          // The fetched voice is unreachable. Speak this line on device rather
-          // than failing the whole utterance into silence.
-          await speakOnDevice(line, speed, myGen, () => generation);
-          break;
+          // A prefetch race or a transient rate-limit should not send the line
+          // to the device voice, which spells the mushaf; wait a moment and
+          // fetch once more before giving up on the network voice.
+          try {
+            await new Promise((r) => setTimeout(r, 400));
+            if (myGen !== generation) return;
+            uri = await fetchChunkToFile(chunk, speed);
+          } catch {
+            await speakOnDevice(line, speed, myGen, () => generation);
+            break;
+          }
         }
         if (myGen !== generation) {
           deleteQuietly(uri);
@@ -518,9 +528,12 @@ function speakOnDevice(text: string, speed: number, myGen: number, gen: () => nu
     void (async () => {
       const voice = await bestArabicVoice();
       if (myGen !== gen()) return finish();
+      // The device voice is the one that spells the mushaf out; give it the
+      // same plain Arabic the network voice gets.
+      const spoken = normalizeArabicForSpeech(text) || text;
       try { Speech.stop(); } catch {}
       try {
-        Speech.speak(text, {
+        Speech.speak(spoken, {
           language: 'ar',
           voice,
           // Slightly under normal: Arabic on-device voices run fast for a learner.
@@ -534,7 +547,7 @@ function speakOnDevice(text: string, speed: number, myGen: number, gen: () => nu
         return finish();
       }
       // Generous: about 8 characters a second at normal speed, plus slack.
-      const budget = (text.length / 8) * 1000 * (1 / Math.max(0.3, speed)) + 4000;
+      const budget = (spoken.length / 8) * 1000 * (1 / Math.max(0.3, speed)) + 4000;
       watchdog = setTimeout(finish, budget);
     })();
   });

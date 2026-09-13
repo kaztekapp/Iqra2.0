@@ -59,6 +59,41 @@ export function splitQuranRuns(text: string): ProseSegment[] {
   return out;
 }
 
+/**
+ * Normalise a line of Quranic (Uthmani) Arabic so a text-to-speech voice reads
+ * the WORDS, not the letters.
+ *
+ * The mushaf text carries marks that standard Arabic writing does not: the
+ * alef wasla (ٱ), the dagger/superscript alef (ـٰ), the little waqf signs above
+ * the line (ۖ ۗ ۚ …), small superscript letters, and tatweel. A neural voice
+ * trained on ordinary Arabic meets these and, unable to place them in a word,
+ * spells the word out one letter at a time — which is exactly the "reading the
+ * letters" a listener hears on the device voice, and on any engine handed a
+ * fragment it cannot parse. Converting the two alefs to a plain alef and
+ * dropping the annotation marks leaves fully-vowelled, ordinary Arabic that
+ * every engine reads as speech. The harakat that matter for pronunciation —
+ * fatha, damma, kasra, the tanwin, shadda, sukun, maddah, hamza — are kept.
+ */
+export function normalizeArabicForSpeech(input: string): string {
+  if (!input) return '';
+  return input
+    // alef wasla and dagger alef → plain alef (a real long-vowel the voice knows)
+    .replace(/\u0671/g, '\u0627')
+    .replace(/\u0670/g, '\u0627')
+    // small high honorific marks (U+0610–U+061A)
+    .replace(/[\u0610-\u061A]/g, '')
+    // extended combining marks that are not the standard harakat (U+0656–U+065F)
+    .replace(/[\u0656-\u065F]/g, '')
+    // Quranic annotation & waqf signs (U+06D6–U+06ED) and small super letters
+    .replace(/[\u06D6-\u06ED]/g, '')
+    .replace(/[\u06E5\u06E6]/g, '')
+    // tatweel (kashida) and zero-width joiners
+    .replace(/\u0640/g, '')
+    .replace(/[\u200B-\u200F\u2060]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
 
 const EN_EXPAND: Array<[RegExp, string]> = [
