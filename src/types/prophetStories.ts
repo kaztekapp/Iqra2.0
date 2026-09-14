@@ -85,6 +85,7 @@ export type HadithCollection =
   | 'ahmad'
   | 'malik'
   | 'darimi'
+  | 'ibn_hibban'
   | 'other';
 
 export type HadithGrade = 'sahih' | 'hasan' | 'daif' | 'mutawatir';

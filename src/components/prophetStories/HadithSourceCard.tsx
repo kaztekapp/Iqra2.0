@@ -21,6 +21,7 @@ const COLLECTION_NAMES: Record<HadithCollection, string> = {
   ahmad: 'Musnad Ahmad',
   malik: 'Muwatta Malik',
   darimi: 'Sunan ad-Darimi',
+  ibn_hibban: 'Sahih Ibn Hibban',
   other: 'Other Collection',
 };
 
