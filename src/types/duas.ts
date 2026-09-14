@@ -12,7 +12,8 @@ export type DuaCategory =
   | 'guidance'
   | 'distress'
   | 'peace'
-  | 'journey';
+  | 'journey'
+  | 'prophets';
 
 export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; french: string; arabic: string }> = {
   protection: { english: 'Protection', french: 'Protection', arabic: 'الحماية' },
@@ -24,6 +25,7 @@ export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; french:
   distress: { english: 'Distress & Relief', french: 'Détresse & Soulagement', arabic: 'الكرب والفرج' },
   peace: { english: 'Peace & Tranquillity', french: 'Paix & Sérénité', arabic: 'السكينة والطمأنينة' },
   journey: { english: 'Journey', french: 'Voyage', arabic: 'السفر' },
+  prophets: { english: 'Duas of the Prophets', french: 'Invocations des Prophètes', arabic: 'أدعية الأنبياء' },
 };
 
 // ============ Hadith Source Types ============
