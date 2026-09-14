@@ -10,7 +10,8 @@ export type DuaCategory =
   | 'morning_evening'
   | 'health'
   | 'guidance'
-  | 'distress';
+  | 'distress'
+  | 'peace';
 
 export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; french: string; arabic: string }> = {
   protection: { english: 'Protection', french: 'Protection', arabic: 'الحماية' },
@@ -20,6 +21,7 @@ export const DUA_CATEGORY_LABELS: Record<DuaCategory, { english: string; french:
   health: { english: 'Health', french: 'Santé', arabic: 'الصحة' },
   guidance: { english: 'Guidance', french: 'Guidée', arabic: 'الهداية' },
   distress: { english: 'Distress & Relief', french: 'Détresse & Soulagement', arabic: 'الكرب والفرج' },
+  peace: { english: 'Peace & Tranquillity', french: 'Paix & Sérénité', arabic: 'السكينة والطمأنينة' },
 };
 
 // ============ Hadith Source Types ============
