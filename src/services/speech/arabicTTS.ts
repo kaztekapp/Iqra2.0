@@ -136,17 +136,25 @@ function edgeRate(speed: number): string {
  * dead socket does not add its timeout to every chunk of a long dua; Google
  * carries the line meanwhile. A voice change forgives it early.
  */
-const EDGE_BACKOFF_MS = 3 * 60 * 1000;
+const EDGE_BACKOFF_MS = 60 * 1000;
 let edgeUnavailableUntil = 0;
 
 /**
  * How long one Arabic line may wait on the neural voice before Google takes
- * it. The socket has its own 15s idle timeout, which is right for a whole
- * paragraph of prose but far too long here: an ayah is a few seconds of
- * audio, and a story holds a dozen of them, so a slow socket turned every
- * verse into a silence. Past this budget the line is Google's.
+ * it. Long enough for a phone on a slow connection to finish a handshake and
+ * a short clip - the first try at six seconds was losing Hamed to Google on
+ * every verse - and still short of the socket's own 15s idle timeout, which
+ * would leave a hole in the story.
  */
-const EDGE_BUDGET_MS = 6000;
+const EDGE_BUDGET_MS = 12000;
+
+/**
+ * One miss is a slow moment, not an outage. Only a second failure in a row
+ * rests the neural voice, and only briefly, because resting it is what makes
+ * the reading change voice mid-story.
+ */
+const EDGE_STRIKES_BEFORE_REST = 2;
+let edgeStrikes = 0;
 
 /**
  * One Arabic synthesis at a time.
@@ -175,6 +183,7 @@ function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
 
 export function forgiveArabicEdge(): void {
   edgeUnavailableUntil = 0;
+  edgeStrikes = 0;
 }
 
 function writeChunk(bytes: Uint8Array): string {
@@ -197,13 +206,20 @@ function writeChunk(bytes: Uint8Array): string {
  */
 const ARABIC_VOICE = 'ar-SA-HamedNeural';
 
-async function fetchChunkFromEdge(spoken: string, speed: number): Promise<string> {
-  const queued = edgeChain
-    .catch(() => {})
-    .then(() => withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)), EDGE_BUDGET_MS));
+async function fetchChunkFromEdge(
+  spoken: string,
+  speed: number,
+  now: boolean
+): Promise<string> {
+  const attempt = () =>
+    withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)), EDGE_BUDGET_MS);
+  // The line being read goes first. Queueing it behind the prefetch of the
+  // NEXT line - which is started before it - meant every verse waited for a
+  // verse nobody was listening to yet, and then ran out of budget.
+  const work = now ? attempt() : edgeChain.catch(() => {}).then(attempt);
   // The chain waits for this attempt to settle, not to succeed.
-  edgeChain = queued.catch(() => {});
-  const bytes = await queued;
+  edgeChain = work.catch(() => {});
+  const bytes = await work;
   if (!bytes.length) throw new Error('tts_empty');
   return writeChunk(bytes);
 }
@@ -240,14 +256,20 @@ async function fetchChunkFromGoogle(spoken: string, speed: number): Promise<stri
  * at the requested tempo with the articulation a learner needs; time-stretching
  * the finished mp3 afterwards smears it and is why slow Arabic sounded bad.
  */
-async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
+async function fetchChunkToFile(text: string, speed = 1, now = true): Promise<string> {
   // The mushaf marks make some voices spell the word out; send plain Arabic.
   const spoken = normalizeArabicForSpeech(text);
   if (Date.now() >= edgeUnavailableUntil) {
     try {
-      return await fetchChunkFromEdge(spoken, speed);
+      const uri = await fetchChunkFromEdge(spoken, speed, now);
+      edgeStrikes = 0;
+      return uri;
     } catch {
-      edgeUnavailableUntil = Date.now() + EDGE_BACKOFF_MS;
+      edgeStrikes += 1;
+      if (edgeStrikes >= EDGE_STRIKES_BEFORE_REST) {
+        edgeUnavailableUntil = Date.now() + EDGE_BACKOFF_MS;
+        edgeStrikes = 0;
+      }
     }
   }
   return fetchChunkFromGoogle(spoken, speed);
@@ -395,7 +417,7 @@ export function prepareArabic(text: string, speed = 1.0): void {
     if (prepared.has(key) || prepared.size >= PREPARED_LIMIT) continue;
     prepared.set(
       key,
-      fetchChunkToFile(chunk, speed).catch((e) => {
+      fetchChunkToFile(chunk, speed, false).catch((e) => {
         prepared.delete(key);
         throw e;
       })
