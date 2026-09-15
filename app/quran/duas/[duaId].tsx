@@ -9,7 +9,7 @@ import { getDuaById, getAllDuas } from '../../../src/data/arabic/duas';
 import { useDuasStore } from '../../../src/stores/duasStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { ArabicVoiceSheet } from '../../../src/components/duas/ArabicVoiceSheet';
-import { useStoryNarration, type NarrationSpeed, type NarratableBlock } from '../../../src/hooks/useStoryNarration';
+import { useStoryNarration, type NarratableBlock } from '../../../src/hooks/useStoryNarration';
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import type { ArabicDeviceVoice } from '../../../src/services/speech/arabicTTS';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
@@ -106,10 +106,6 @@ export default function DuaDetailScreen() {
   const narration = useStoryNarration(blocks, nowPlaying);
   const readingId = narration.isActive ? narration.currentBlockId : null;
 
-  const cycleSpeed = useCallback(() => {
-    const order: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
-    narration.setSpeed(order[(order.indexOf(narration.speed) + 1) % order.length]);
-  }, [narration]);
 
   // Track view
   useEffect(() => {
@@ -392,10 +388,10 @@ export default function DuaDetailScreen() {
             blockIndex={narration.currentBlockIndex}
             blockCount={narration.blockCount}
             remainingSeconds={narration.remainingSeconds}
-            speed={narration.speed}
+            pace={narration.pace}
             onToggle={narration.toggle}
             onExpand={() => setPlayerOpen(true)}
-            onCycleSpeed={cycleSpeed}
+            onTogglePace={narration.togglePace}
           />
         </SafeAreaView>
       )}
@@ -411,7 +407,7 @@ export default function DuaDetailScreen() {
         remainingSeconds={narration.remainingSeconds}
         blockIndex={narration.currentBlockIndex}
         blockCount={narration.blockCount}
-        speed={narration.speed}
+        pace={narration.pace}
         sleep={narration.sleep}
         voice={narration.voice}
         usingDeviceVoice={narration.usingDeviceVoice}
@@ -420,7 +416,7 @@ export default function DuaDetailScreen() {
         onToggle={narration.toggle}
         onSkip={narration.skipBlocks}
         onSeek={narration.seekToFraction}
-        onSpeed={narration.setSpeed}
+        onPace={narration.setPace}
         onSleep={narration.setSleep}
         onVoice={narration.setVoice}
         onStop={() => {

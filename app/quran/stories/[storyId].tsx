@@ -10,7 +10,7 @@ import { StoryContentBlock } from '../../../src/components/quranStories';
 import { useQuranStoriesStore } from '../../../src/stores/quranStoriesStore';
 import { QuranReference, STORY_CATEGORY_LABELS } from '../../../src/types/quranStories';
 import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
-import { useStoryNarration, NarrationSpeed } from '../../../src/hooks/useStoryNarration';
+import { useStoryNarration } from '../../../src/hooks/useStoryNarration';
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
@@ -66,10 +66,6 @@ export default function QuranStoryDetailScreen() {
     scrollViewRef.current?.scrollTo({ y: Math.max(0, blocksTop.current + y - 140), animated: true });
   }, [narration.currentBlockId, narration.isActive]);
 
-  const cycleSpeed = useCallback(() => {
-    const order: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
-    narration.setSpeed(order[(order.indexOf(narration.speed) + 1) % order.length]);
-  }, [narration]);
 
   // Handle mark complete
   const handleMarkComplete = useCallback(() => {
@@ -278,10 +274,10 @@ export default function QuranStoryDetailScreen() {
             blockIndex={narration.currentBlockIndex}
             blockCount={narration.blockCount}
             remainingSeconds={narration.remainingSeconds}
-            speed={narration.speed}
+            pace={narration.pace}
             onToggle={narration.toggle}
             onExpand={() => setPlayerOpen(true)}
-            onCycleSpeed={cycleSpeed}
+            onTogglePace={narration.togglePace}
           />
         </SafeAreaView>
       )}
@@ -297,7 +293,7 @@ export default function QuranStoryDetailScreen() {
         remainingSeconds={narration.remainingSeconds}
         blockIndex={narration.currentBlockIndex}
         blockCount={narration.blockCount}
-        speed={narration.speed}
+        pace={narration.pace}
         sleep={narration.sleep}
         voice={narration.voice}
         usingDeviceVoice={narration.usingDeviceVoice}
@@ -306,7 +302,7 @@ export default function QuranStoryDetailScreen() {
         onToggle={narration.toggle}
         onSkip={narration.skipBlocks}
         onSeek={narration.seekToFraction}
-        onSpeed={narration.setSpeed}
+        onPace={narration.setPace}
         onSleep={narration.setSleep}
         onVoice={narration.setVoice}
         onStop={() => {

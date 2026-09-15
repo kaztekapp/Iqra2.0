@@ -10,7 +10,7 @@ import { SubStoryNav, StoryContentBlock } from '../../../src/components/prophetS
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
 import { SubStory, QuranReference } from '../../../src/types/prophetStories';
 import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
-import { useStoryNarration, NarrationSpeed } from '../../../src/hooks/useStoryNarration';
+import { useStoryNarration } from '../../../src/hooks/useStoryNarration';
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
@@ -108,10 +108,6 @@ export default function ProphetStoryScreen() {
     []
   );
 
-  const cycleSpeed = useCallback(() => {
-    const order: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
-    narration.setSpeed(order[(order.indexOf(narration.speed) + 1) % order.length]);
-  }, [narration]);
 
   // Handle sub-story selection
   const handleSubStorySelect = useCallback((subStoryId: string) => {
@@ -390,10 +386,10 @@ export default function ProphetStoryScreen() {
             blockIndex={narration.currentBlockIndex}
             blockCount={narration.blockCount}
             remainingSeconds={narration.remainingSeconds}
-            speed={narration.speed}
+            pace={narration.pace}
             onToggle={narration.toggle}
             onExpand={() => setPlayerOpen(true)}
-            onCycleSpeed={cycleSpeed}
+            onTogglePace={narration.togglePace}
           />
         </SafeAreaView>
       )}
@@ -409,7 +405,7 @@ export default function ProphetStoryScreen() {
         remainingSeconds={narration.remainingSeconds}
         blockIndex={narration.currentBlockIndex}
         blockCount={narration.blockCount}
-        speed={narration.speed}
+        pace={narration.pace}
         sleep={narration.sleep}
         voice={narration.voice}
         usingDeviceVoice={narration.usingDeviceVoice}
@@ -418,7 +414,7 @@ export default function ProphetStoryScreen() {
         onToggle={narration.toggle}
         onSkip={narration.skipBlocks}
         onSeek={narration.seekToFraction}
-        onSpeed={narration.setSpeed}
+        onPace={narration.setPace}
         onSleep={narration.setSleep}
         onVoice={narration.setVoice}
         onStop={() => {

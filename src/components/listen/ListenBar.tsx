@@ -9,7 +9,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { color, radius, type, weight, space, gutter } from '../../theme/tokens';
-import { NarrationSpeed, NarrationStatus } from '../../hooks/useStoryNarration';
+import { NarrationPace, NarrationStatus } from '../../hooks/useStoryNarration';
 import { formatMinutesLeft } from './format';
 
 interface Props {
@@ -19,10 +19,10 @@ interface Props {
   blockIndex: number;
   blockCount: number;
   remainingSeconds: number;
-  speed: NarrationSpeed;
+  pace: NarrationPace;
   onToggle: () => void;
   onExpand: () => void;
-  onCycleSpeed: () => void;
+  onTogglePace: () => void;
 }
 
 export function ListenBar({
@@ -32,10 +32,10 @@ export function ListenBar({
   blockIndex,
   blockCount,
   remainingSeconds,
-  speed,
+  pace,
   onToggle,
   onExpand,
-  onCycleSpeed,
+  onTogglePace,
 }: Props) {
   const { t } = useTranslation();
   const playing = status === 'playing';
@@ -74,8 +74,14 @@ export function ListenBar({
         </Pressable>
 
         <View style={styles.right}>
-          <Pressable onPress={onCycleSpeed} hitSlop={6} style={styles.speed} accessibilityRole="button">
-            <Text style={styles.speedText}>{speed}×</Text>
+          <Pressable
+            onPress={onTogglePace}
+            hitSlop={6}
+            style={styles.pace}
+            accessibilityRole="button"
+            accessibilityLabel={t('listen.arabicPace')}
+          >
+            <Text style={styles.paceText}>{t(`listen.pace_${pace}`)}</Text>
           </Pressable>
           <Pressable onPress={onExpand} hitSlop={8} style={styles.chevron} accessibilityRole="button">
             <Ionicons name="chevron-up" size={20} color={color.textMuted} />
@@ -137,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.xs,
   },
-  speed: {
+  pace: {
     height: 30,
     minWidth: 44,
     paddingHorizontal: 10,
@@ -146,7 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  speedText: {
+  paceText: {
     ...type.caption,
     fontWeight: weight.semibold,
     color: color.accentStrong,

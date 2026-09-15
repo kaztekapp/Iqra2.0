@@ -11,11 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { color, radius, type, weight, space, gutter, font, arabicType } from '../../theme/tokens';
-import { NarrationSpeed, NarrationStatus, SleepOption } from '../../hooks/useStoryNarration';
+import { NarrationPace, NarrationStatus, SleepOption } from '../../hooks/useStoryNarration';
 import type { VoiceGender } from '../../services/storyAudioService';
 import { formatClock } from './format';
 
-const SPEEDS: NarrationSpeed[] = [0.75, 1, 1.25, 1.5];
+const PACES: NarrationPace[] = ['normal', 'slow'];
 const SLEEP_OPTIONS: SleepOption[] = ['off', 5, 15, 30, 45];
 const VOICES: VoiceGender[] = ['female', 'male'];
 
@@ -30,7 +30,7 @@ interface Props {
   remainingSeconds: number;
   blockIndex: number;
   blockCount: number;
-  speed: NarrationSpeed;
+  pace: NarrationPace;
   sleep: SleepOption;
   voice: VoiceGender;
   usingDeviceVoice: boolean;
@@ -44,7 +44,7 @@ interface Props {
   onToggle: () => void;
   onSkip: (delta: number) => void;
   onSeek: (fraction: number) => void;
-  onSpeed: (speed: NarrationSpeed) => void;
+  onPace: (pace: NarrationPace) => void;
   onSleep: (option: SleepOption) => void;
   onVoice: (voice: VoiceGender) => void;
   onStop: () => void;
@@ -61,7 +61,7 @@ export function ListenSheet({
   remainingSeconds,
   blockIndex,
   blockCount,
-  speed,
+  pace,
   sleep,
   voice,
   usingDeviceVoice,
@@ -70,7 +70,7 @@ export function ListenSheet({
   onToggle,
   onSkip,
   onSeek,
-  onSpeed,
+  onPace,
   onSleep,
   onVoice,
   onStop,
@@ -164,22 +164,29 @@ export function ListenSheet({
                 {t('listen.paragraphOf', { current: blockIndex + 1, total: blockCount })}
               </Text>
 
+              <View style={styles.settingHeader}>
+                <Ionicons name="book-outline" size={20} color={color.textMuted} />
+                <Text style={styles.settingLabel}>{t('listen.arabicPace')}</Text>
+              </View>
               <View style={styles.segment}>
-                {SPEEDS.map((option) => {
-                  const active = option === speed;
+                {PACES.map((option) => {
+                  const active = option === pace;
                   return (
                     <Pressable
                       key={option}
-                      onPress={() => onSpeed?.(option)}
+                      onPress={() => onPace?.(option)}
                       style={[styles.segmentItem, active && styles.segmentItemActive]}
                       accessibilityRole="button"
                       accessibilityState={{ selected: active }}
                     >
-                      <Text style={[styles.segmentText, active && styles.segmentTextActive]}>{option}×</Text>
+                      <Text style={[styles.segmentText, active && styles.segmentTextActive]}>
+                        {t(`listen.pace_${option}`)}
+                      </Text>
                     </Pressable>
                   );
                 })}
               </View>
+              <Text style={styles.settingNote}>{t('listen.arabicPaceNote')}</Text>
 
               <View style={styles.settingHeader}>
                 <Ionicons name="person-circle-outline" size={20} color={color.textMuted} />

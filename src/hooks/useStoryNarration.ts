@@ -38,7 +38,23 @@ import {
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
-export type NarrationSpeed = 0.75 | 1 | 1.25 | 1.5;
+/**
+ * How fast the reading goes.
+ *
+ * There used to be four multipliers. A multiplier is a setting for a podcast;
+ * this is a story with the Quran in it, and nobody wants an ayah at 1.5. Two
+ * paces: the one the story is written for, and one for following along.
+ */
+export type NarrationPace = 'normal' | 'slow';
+
+/**
+ * The pace applies to the ARABIC voice only - a quoted ayah, a dua, the words
+ * of a hadith. The story around it is prose in a language the reader speaks,
+ * and slowing that down helps nobody; the Arabic is the part someone wants to
+ * follow word by word, or recite along with. The number is a prosody rate for
+ * the Arabic engine (see edgeRate in arabicTTS), not a stretched clip.
+ */
+const ARABIC_PACE_RATE: Record<NarrationPace, number> = { normal: 1, slow: 0.6 };
 /** Minutes, or off. Listening at night is the reason this exists. */
 export type SleepOption = 'off' | 5 | 15 | 30 | 45;
 
@@ -110,14 +126,14 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
 
   const [status, setStatus] = useState<NarrationStatus>('idle');
   const [index, setIndex] = useState(0);
-  const [speed, setSpeedState] = useState<NarrationSpeed>(1);
+  const [pace, setPaceState] = useState<NarrationPace>('normal');
   const [sleep, setSleep] = useState<SleepOption>('off');
   const [engine, setEngine] = useState<NarrationEngine | null>(null);
 
   const runRef = useRef(0);
   const indexRef = useRef(0);
   const statusRef = useRef<NarrationStatus>('idle');
-  const speedRef = useRef<NarrationSpeed>(1);
+  const paceRef = useRef<NarrationPace>('normal');
   const pausedByStopRef = useRef(false);
 
   useEffect(() => {
@@ -127,8 +143,8 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     statusRef.current = status;
   }, [status]);
   useEffect(() => {
-    speedRef.current = speed;
-  }, [speed]);
+    paceRef.current = pace;
+  }, [pace]);
   useEffect(() => {
     storyAudioService.setGender(voice);
     setArabicVoiceGender(voice);
@@ -200,15 +216,22 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   }, [blocks, lang, lc]);
 
   const totalSeconds = useMemo(
-    () => utterances.reduce((sum, u) => sum + estimateSeconds(u.text, speed), 0),
-    [utterances, speed]
+    () =>
+      utterances.reduce(
+        (sum, u) => sum + estimateSeconds(u.text, u.lang === 'ar' ? ARABIC_PACE_RATE[pace] : 1),
+        0
+      ),
+    [utterances, pace]
   );
 
   const remainingSeconds = useMemo(() => {
     let sum = 0;
-    for (let i = index; i < utterances.length; i++) sum += estimateSeconds(utterances[i].text, speed);
+    for (let i = index; i < utterances.length; i++) {
+      const u = utterances[i];
+      sum += estimateSeconds(u.text, u.lang === 'ar' ? ARABIC_PACE_RATE[pace] : 1);
+    }
     return sum;
-  }, [utterances, index, speed]);
+  }, [utterances, index, pace]);
 
   const current = utterances[index];
   const currentBlockId = current?.blockId ?? null;
@@ -237,13 +260,13 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
         // is a file swap and not a network round trip.
         const upcoming = utterances[i + 1];
         if (upcoming) {
-          if (upcoming.lang === 'ar') prepareArabic(upcoming.text, speedRef.current);
+          if (upcoming.lang === 'ar') prepareArabic(upcoming.text, ARABIC_PACE_RATE[paceRef.current]);
           else storyAudioService.prepare(upcoming.text, lang);
         }
         const result =
           utterance.lang === 'ar'
-            ? await speakQuranLine(utterance.text, speedRef.current)
-            : await storyAudioService.speak(utterance.text, speedRef.current, lang);
+            ? await speakQuranLine(utterance.text, ARABIC_PACE_RATE[paceRef.current])
+            : await storyAudioService.speak(utterance.text, 1, lang);
         setEngine(storyAudioService.getEngine());
 
         if (mine !== runRef.current) return;
@@ -388,13 +411,17 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     [voice, storeVoice, status, run]
   );
 
-  const setSpeed = useCallback((next: NarrationSpeed) => {
+  const setPace = useCallback((next: NarrationPace) => {
     // The engine fixes rate when an utterance starts, so this lands on the
     // next sentence. Restarting the current one to apply it sooner would mean
     // saying it twice, which is never worth it.
-    setSpeedState(next);
-    speedRef.current = next;
+    setPaceState(next);
+    paceRef.current = next;
   }, []);
+
+  const togglePace = useCallback(() => {
+    setPace(paceRef.current === 'normal' ? 'slow' : 'normal');
+  }, [setPace]);
 
   /**
    * Lock-screen controls, the same ones the Quran player puts up.
@@ -472,7 +499,7 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     status,
     isActive: status !== 'idle',
     isPlaying: status === 'playing',
-    speed,
+    pace,
     index,
     total: utterances.length,
     currentBlockId,
@@ -500,7 +527,8 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     skipBlocks,
     seekToBlock,
     seekToFraction,
-    setSpeed,
+    setPace,
+    togglePace,
   };
 }
 
