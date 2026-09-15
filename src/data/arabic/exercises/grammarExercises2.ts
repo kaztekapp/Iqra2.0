@@ -127,7 +127,7 @@ export const grammarExercises2: Exercise[] = [
     level: 'intermediate',
     question: 'Which is the correct command for "Read!" (to a male)?',
     questionFr: 'Quel est l\'impératif correct pour "Lis !" (à un homme) ?',
-    questionArabic: 'مَا الْأَمْرُ الصَّحِيحُ لـ "Read!" لِلْمُذَكَّر؟',
+    questionArabic: 'مَا الْأَمْرُ الصَّحِيحُ لـ "Read!" لِلْمُذَكَّرِ؟',
     options: [
       { id: 'a', text: 'اِقْرَأْ', textFr: 'اِقْرَأْ', isCorrect: true },
       { id: 'b', text: 'قَرَأَ', textFr: 'قَرَأَ', isCorrect: false },
@@ -146,7 +146,7 @@ export const grammarExercises2: Exercise[] = [
     level: 'intermediate',
     question: 'How do you say "Sit down!" (to a female) in Arabic?',
     questionFr: 'Comment dit-on "Assieds-toi !" (à une femme) en arabe ?',
-    questionArabic: 'كَيْفَ تَقُولُ "Sit down!" لِلْمُؤَنَّث؟',
+    questionArabic: 'كَيْفَ تَقُولُ "Sit down!" لِلْمُؤَنَّثِ؟',
     options: [
       { id: 'a', text: 'اِجْلِسْ', textFr: 'اِجْلِسْ', isCorrect: false },
       { id: 'b', text: 'اِجْلِسِي', textFr: 'اِجْلِسِي', isCorrect: true },
@@ -1598,7 +1598,7 @@ export const grammarExercises2: Exercise[] = [
     level: 'advanced',
     question: 'What are the two main types of adverbs (ظُرُوف) in Arabic?',
     questionFr: 'Quels sont les deux principaux types d\'adverbes (ظُرُوف) en arabe ?',
-    questionArabic: 'مَا نَوْعَا الظُّرُوفِ فِي الْعَرَبِيَّة؟',
+    questionArabic: 'مَا نَوْعَا الظُّرُوفِ فِي الْعَرَبِيَّةِ؟',
     options: [
       { id: 'a', text: 'Adverbs of time (ظَرْف زَمَان) and place (ظَرْف مَكَان)', textFr: 'Adverbes de temps (ظَرْف زَمَان) et de lieu (ظَرْف مَكَان)', isCorrect: true },
       { id: 'b', text: 'Adverbs of quality and quantity', textFr: 'Adverbes de qualité et de quantité', isCorrect: false },
