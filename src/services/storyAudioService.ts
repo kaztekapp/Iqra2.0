@@ -66,7 +66,13 @@ export type VoiceGender = 'female' | 'male';
  */
 export type FetchedEngine = 'edge' | 'google';
 export type NarrationEngine = FetchedEngine | 'device';
-const FETCH_ORDER: FetchedEngine[] = ['edge', 'google'];
+/**
+ * The neural voice, then the phone's own. Google's voice used to sit between
+ * them; it reads in a flat monotone that the owner of this app did not want
+ * the Quran, a dua or a lesson read in, so a line the neural voice cannot
+ * take now goes straight to the voice the reader installed themselves.
+ */
+const FETCH_ORDER: FetchedEngine[] = ['edge'];
 
 /**
  * Voices carry no gender field, so it has to be read off the identifier.

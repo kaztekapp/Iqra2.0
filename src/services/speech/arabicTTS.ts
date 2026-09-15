@@ -97,21 +97,6 @@ function teardownCurrent() {
   }
 }
 
-/**
- * Map a requested speed onto what Google actually supports.
- *
- * The endpoint does not take a continuous rate: measured against
- * translate_tts with a fixed Arabic phrase, every value from 0.5 to 1 returns
- * byte-identical audio, 0.2-0.3 returns a distinct clip ~19% longer, and 0.1
- * and below ~36% longer. So there are three tempos, not a dial. Passing 0.7
- * through unchanged would silently produce normal-speed audio while the UI
- * claimed it was slow.
- */
-function googleTtsSpeed(speed: number): number {
-  if (speed >= 0.9) return 1;      // normal
-  if (speed >= 0.45) return 0.24;  // slow
-  return 0.1;                      // slowest, for picking a word apart
-}
 
 /**
  * Map a requested speed onto an Edge prosody rate.
@@ -224,29 +209,6 @@ async function fetchChunkFromEdge(
   return writeChunk(bytes);
 }
 
-async function fetchChunkFromGoogle(spoken: string, speed: number): Promise<string> {
-  const ttsSpeed = googleTtsSpeed(speed);
-  const url =
-    `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&ttsspeed=${ttsSpeed}&q=` +
-    encodeURIComponent(spoken);
-
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`tts_http_${resp.status}`);
-
-  const blob = await resp.blob();
-  const base64: string = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve((reader.result as string).split(',')[1] || '');
-    reader.onerror = () => reject(new Error('tts_read_failed'));
-    reader.readAsDataURL(blob);
-  });
-  if (!base64) throw new Error('tts_empty');
-
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  return writeChunk(bytes);
-}
 
 /**
  * Fetch one chunk as an mp3: the Edge neural voice first, Google if Edge is
@@ -256,23 +218,30 @@ async function fetchChunkFromGoogle(spoken: string, speed: number): Promise<stri
  * at the requested tempo with the articulation a learner needs; time-stretching
  * the finished mp3 afterwards smears it and is why slow Arabic sounded bad.
  */
+/**
+ * Fetch one chunk as an mp3, in Hamed's voice.
+ *
+ * There is no second network voice any more. Google's Arabic reads in a flat
+ * monotone and swallows the vowel endings, and a dua should not be read that
+ * way: if Hamed cannot be reached the line goes to the voice on the phone,
+ * which the reader chose and can hear offline.
+ */
 async function fetchChunkToFile(text: string, speed = 1, now = true): Promise<string> {
   // The mushaf marks make some voices spell the word out; send plain Arabic.
   const spoken = normalizeArabicForSpeech(text);
-  if (Date.now() >= edgeUnavailableUntil) {
-    try {
-      const uri = await fetchChunkFromEdge(spoken, speed, now);
+  if (Date.now() < edgeUnavailableUntil) throw new Error('tts_resting');
+  try {
+    const uri = await fetchChunkFromEdge(spoken, speed, now);
+    edgeStrikes = 0;
+    return uri;
+  } catch (e) {
+    edgeStrikes += 1;
+    if (edgeStrikes >= EDGE_STRIKES_BEFORE_REST) {
+      edgeUnavailableUntil = Date.now() + EDGE_BACKOFF_MS;
       edgeStrikes = 0;
-      return uri;
-    } catch {
-      edgeStrikes += 1;
-      if (edgeStrikes >= EDGE_STRIKES_BEFORE_REST) {
-        edgeUnavailableUntil = Date.now() + EDGE_BACKOFF_MS;
-        edgeStrikes = 0;
-      }
     }
+    throw e;
   }
-  return fetchChunkFromGoogle(spoken, speed);
 }
 
 /** Nothing has started playing by now: the clip is not going to. */
