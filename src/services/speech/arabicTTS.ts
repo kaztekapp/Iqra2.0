@@ -118,11 +118,17 @@ function googleTtsSpeed(speed: number): number {
  *
  * Edge takes a real percentage, so the learner's three tempos map to three
  * distinct rates instead of Google's byte-identical clips above 0.5.
+ *
+ * Arabic is set slower than the prose at every step. The narrator is telling
+ * a story and can move; a quoted ayah, a dua or the words of a hadith are
+ * being recited, and at the narrator's pace the vowel endings run together.
+ * -25% is the unhurried reading pace; the two below it are for a learner
+ * taking a line apart.
  */
 function edgeRate(speed: number): string {
-  if (speed >= 0.9) return '-4%';   // normal, same as the story narrator
-  if (speed >= 0.45) return '-30%'; // slow
-  return '-50%';                    // slowest, for picking a word apart
+  if (speed >= 0.9) return '-25%';  // normal: recited, not narrated
+  if (speed >= 0.45) return '-40%'; // slow
+  return '-55%';                    // slowest, for picking a word apart
 }
 
 /**
