@@ -86,9 +86,32 @@ export function normalizeArabicForSpeech(input: string): string {
     // and keep whatever haraka rode on the stroke. Must run before the tatweel
     // is removed.
     .replace(/\u0640([\u064B-\u0652]*)\u0654/g, '\u0626$1')
-    // alef wasla and dagger alef → plain alef (a real long-vowel the voice knows)
+    // A dagger alef on an alef maqsura is not a second letter: ʿalā, ilā,
+    // Mūsā, ʿĪsā are written ى + the mark, and turning the mark into a full
+    // alef spelled them ʿalayā, ilayā - a non-word, and the single commonest
+    // fault in the reading (2,170 places in the stories). Drop the mark and
+    // leave the maqsura, which is how the word is spelled everywhere else.
+    .replace(/\u0649\u0670/g, '\u0649')
+    // A dagger alef after a waw marks a SILENT waw: ṣalāh, zakāh, ḥayāh and
+    // najāh are written صلوٰة زكوٰة حيوٰة نجوٰة. Keeping both letters produced
+    // ṣalawāh. The waw goes and the mark becomes the alef it stands for.
+    .replace(/\u0648\u0670/g, '\u0627')
+    // The vocative is two words. The mushaf joins them - yā-qawmi, yā-Mūsā,
+    // yā-ayyuhā, yā-Ibrāhīm are all written as one word - and the voice then
+    // hunts for a word it does not know. Put the space back: a yā carrying a
+    // dagger alef AT THE START of a word is the calling particle (220 places
+    // in the stories). Mid-word the same pair is an ordinary long ā - āyāt,
+    // al-qiyāmah - and must be left alone, so the word boundary is the whole
+    // rule. Runs after the tatweel that the mushaf puts under the mark.
+    .replace(/(^|\s)((?:[\u0648\u0641]\u064E)?)\u064A\u064E?\u0640?\u0670\u0653?/g, '$1$2\u064A\u064E\u0627 ')
+    // alef wasla and any remaining dagger alef → plain alef (a real long
+    // vowel the voice knows: hādhā, dhālika, ibrāhīm, samāwāt)
     .replace(/\u0671/g, '\u0627')
     .replace(/\u0670/g, '\u0627')
+    // A madd sign sits on an alef to make آ, which the voices need. Anywhere
+    // else - innī, qālū, ʿalā, banī - it is a reciter's elongation mark, not
+    // a letter, and it belongs with the other Quranic marks stripped below.
+    .replace(/([^\u0627\u0623\u0625\u0622])\u0653/g, '$1')
     // small high honorific marks (U+0610–U+061A)
     .replace(/[\u0610-\u061A]/g, '')
     // extended combining marks that are not the standard harakat (U+0656–U+065F)
