@@ -17,7 +17,7 @@ import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioB
 import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import { normalizeArabicForSpeech } from '../narrationText';
-import { synthesize as edgeSynthesize, voiceFor as edgeVoiceFor } from '../edgeTts';
+import { synthesize as edgeSynthesize } from '../edgeTts';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
@@ -146,9 +146,19 @@ function writeChunk(bytes: Uint8Array): string {
   return file.uri;
 }
 
-/** The same neural voice the English and French narrators use, in Arabic. */
+/**
+ * The Arabic voice, chosen by ear: ar-SA-HamedNeural.
+ *
+ * It does not follow the story narrator's gender the way the prose does. The
+ * reader picks the voice that tells the story; the Arabic - a quoted ayah, a
+ * dua, the words of a hadith - is always read by the one voice that carries
+ * full tashkeel best, so the same words never sound different from one screen
+ * to the next.
+ */
+const ARABIC_VOICE = 'ar-SA-HamedNeural';
+
 async function fetchChunkFromEdge(spoken: string, speed: number): Promise<string> {
-  const voice = edgeVoiceFor('ar', preferredGender);
+  const voice = ARABIC_VOICE;
   const bytes = await edgeSynthesize(spoken, voice, 'ar', edgeRate(speed));
   if (!bytes.length) throw new Error('tts_empty');
   return writeChunk(bytes);
