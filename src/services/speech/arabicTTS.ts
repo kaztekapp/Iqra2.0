@@ -139,6 +139,40 @@ function edgeRate(speed: number): string {
 const EDGE_BACKOFF_MS = 3 * 60 * 1000;
 let edgeUnavailableUntil = 0;
 
+/**
+ * How long one Arabic line may wait on the neural voice before Google takes
+ * it. The socket has its own 15s idle timeout, which is right for a whole
+ * paragraph of prose but far too long here: an ayah is a few seconds of
+ * audio, and a story holds a dozen of them, so a slow socket turned every
+ * verse into a silence. Past this budget the line is Google's.
+ */
+const EDGE_BUDGET_MS = 6000;
+
+/**
+ * One Arabic synthesis at a time.
+ *
+ * The line being read and the line being prefetched used to open sockets at
+ * once, and the story engine may hold a third for the prose. Edge answers a
+ * burst like that slowly or not at all, which read as the player freezing.
+ */
+let edgeChain: Promise<unknown> = Promise.resolve();
+
+function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('edge_budget')), ms);
+    work.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (error) => {
+        clearTimeout(timer);
+        reject(error);
+      }
+    );
+  });
+}
+
 export function forgiveArabicEdge(): void {
   edgeUnavailableUntil = 0;
 }
@@ -164,8 +198,12 @@ function writeChunk(bytes: Uint8Array): string {
 const ARABIC_VOICE = 'ar-SA-HamedNeural';
 
 async function fetchChunkFromEdge(spoken: string, speed: number): Promise<string> {
-  const voice = ARABIC_VOICE;
-  const bytes = await edgeSynthesize(spoken, voice, 'ar', edgeRate(speed));
+  const queued = edgeChain
+    .catch(() => {})
+    .then(() => withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)), EDGE_BUDGET_MS));
+  // The chain waits for this attempt to settle, not to succeed.
+  edgeChain = queued.catch(() => {});
+  const bytes = await queued;
   if (!bytes.length) throw new Error('tts_empty');
   return writeChunk(bytes);
 }
