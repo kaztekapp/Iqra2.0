@@ -23,7 +23,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'definite-article': {
     title: 'The Definite Article',
     titleFr: 'L\'article defini',
-    titleArabic: 'أَلْ التَّعْرِيف',
+    titleArabic: 'أَلْ التَّعْرِيفُ',
     sections: [
       {
         title: 'What is the Definite Article?',
@@ -78,7 +78,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'gender': {
     title: 'Gender in Arabic',
     titleFr: 'Le genre en arabe',
-    titleArabic: 'الْمُذَكَّرُ وَالْمُؤَنَّث',
+    titleArabic: 'الْمُذَكَّرُ وَالْمُؤَنَّثُ',
     sections: [
       {
         title: 'Two Genders',
@@ -133,7 +133,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'personal-pronouns': {
     title: 'Personal Pronouns',
     titleFr: 'Les pronoms personnels',
-    titleArabic: 'الضَّمَائِر الشَّخْصِيَّة',
+    titleArabic: 'الضَّمَائِر الشَّخْصِيَّةُ',
     sections: [
       {
         title: 'Subject Pronouns (Singular)',
@@ -182,7 +182,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'possessive': {
     title: 'Possessive Pronouns',
     titleFr: 'Les pronoms possessifs',
-    titleArabic: 'ضَمَائِر الْمِلْكِيَّة',
+    titleArabic: 'ضَمَائِر الْمِلْكِيَّةُ',
     sections: [
       {
         title: 'How Possession Works in Arabic',
@@ -237,7 +237,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'adjectives': {
     title: 'Adjectives',
     titleFr: 'Les adjectifs',
-    titleArabic: 'الصِّفَات',
+    titleArabic: 'الصِّفَاتُ',
     sections: [
       {
         title: 'Introduction to Arabic Adjectives',
@@ -328,7 +328,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'nominal-sentence': {
     title: 'Nominal Sentences',
     titleFr: 'Les phrases nominales',
-    titleArabic: 'الْجُمْلَة الاِسْمِيَّة',
+    titleArabic: 'الْجُمْلَة الاِسْمِيَّةُ',
     sections: [
       {
         title: 'What is a Nominal Sentence?',
@@ -367,7 +367,7 @@ export const lessonContent: Record<string, LegacyLesson> = {
   'numbers': {
     title: 'Numbers & Counting',
     titleFr: 'Les nombres et le comptage',
-    titleArabic: 'الأَعْدَاد',
+    titleArabic: 'الأَعْدَادُ',
     sections: [
       {
         title: 'Numbers 1-10',

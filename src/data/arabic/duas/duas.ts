@@ -793,7 +793,7 @@ export const DUAS: Dua[] = [
   {
     id: 'dua-for-host',
     titleEnglish: 'Dua for the Host After Eating',
-    titleArabic: 'دعاء للمُضيف بعد الطعام',
+    titleArabic: 'دُعَاءٌ لِلْمُضِيفِ بَعْدَ الطَّعَامِ',
     category: 'rizq',
     arabicText: 'اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُمْ، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ',
     transliteration: 'Allahumma barik lahum fima razaqtahum, waghfir lahum warhamhum',

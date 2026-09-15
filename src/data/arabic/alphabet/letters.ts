@@ -19,8 +19,8 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 1,
     examples: [
-      { word: 'أَب', transliteration: 'ab', meaning: 'father', meaningFr: 'père', position: 'initial' },
-      { word: 'بَاب', transliteration: 'bāb', meaning: 'door', meaningFr: 'porte', position: 'medial' },
+      { word: 'أَبٌ', transliteration: 'ab', meaning: 'father', meaningFr: 'père', position: 'initial' },
+      { word: 'بَابٌ', transliteration: 'bāb', meaning: 'door', meaningFr: 'porte', position: 'medial' },
       { word: 'هُنَا', transliteration: 'hunā', meaning: 'here', meaningFr: 'ici', position: 'final' },
     ],
   },
@@ -42,9 +42,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 2,
     examples: [
-      { word: 'بَيْت', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'initial' },
-      { word: 'كِتَاب', transliteration: 'kitāb', meaning: 'book', meaningFr: 'livre', position: 'final' },
-      { word: 'حَبِيب', transliteration: 'ḥabīb', meaning: 'beloved', meaningFr: 'bien-aimé', position: 'medial' },
+      { word: 'بَيْتٌ', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'initial' },
+      { word: 'كِتَابٌ', transliteration: 'kitāb', meaning: 'book', meaningFr: 'livre', position: 'final' },
+      { word: 'حَبِيبٌ', transliteration: 'ḥabīb', meaning: 'beloved', meaningFr: 'bien-aimé', position: 'medial' },
     ],
   },
   {
@@ -65,9 +65,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 3,
     examples: [
-      { word: 'تُفَّاح', transliteration: 'tuffāḥ', meaning: 'apple', meaningFr: 'pomme', position: 'initial' },
-      { word: 'بَيْت', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'final' },
-      { word: 'كُتُب', transliteration: 'kutub', meaning: 'books', meaningFr: 'livres', position: 'medial' },
+      { word: 'تُفَّاحٌ', transliteration: 'tuffāḥ', meaning: 'apple', meaningFr: 'pomme', position: 'initial' },
+      { word: 'بَيْتٌ', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'final' },
+      { word: 'كُتُبٌ', transliteration: 'kutub', meaning: 'books', meaningFr: 'livres', position: 'medial' },
     ],
   },
   {
@@ -88,9 +88,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 4,
     examples: [
-      { word: 'ثَلَاثَة', transliteration: 'thalātha', meaning: 'three', meaningFr: 'trois', position: 'initial' },
-      { word: 'مِثْل', transliteration: 'mithl', meaning: 'like/similar', meaningFr: 'comme/similaire', position: 'medial' },
-      { word: 'ثُلُث', transliteration: 'thuluth', meaning: 'one-third', meaningFr: 'un tiers', position: 'final' },
+      { word: 'ثَلَاثَةٌ', transliteration: 'thalātha', meaning: 'three', meaningFr: 'trois', position: 'initial' },
+      { word: 'مِثْلٌ', transliteration: 'mithl', meaning: 'like/similar', meaningFr: 'comme/similaire', position: 'medial' },
+      { word: 'ثُلُثٌ', transliteration: 'thuluth', meaning: 'one-third', meaningFr: 'un tiers', position: 'final' },
     ],
   },
   {
@@ -111,9 +111,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 5,
     examples: [
-      { word: 'جَمِيل', transliteration: 'jamīl', meaning: 'beautiful', meaningFr: 'beau', position: 'initial' },
-      { word: 'رَجُل', transliteration: 'rajul', meaning: 'man', meaningFr: 'homme', position: 'medial' },
-      { word: 'ثَلْج', transliteration: 'thalj', meaning: 'snow', meaningFr: 'neige', position: 'final' },
+      { word: 'جَمِيلٌ', transliteration: 'jamīl', meaning: 'beautiful', meaningFr: 'beau', position: 'initial' },
+      { word: 'رَجُلٌ', transliteration: 'rajul', meaning: 'man', meaningFr: 'homme', position: 'medial' },
+      { word: 'ثَلْجٌ', transliteration: 'thalj', meaning: 'snow', meaningFr: 'neige', position: 'final' },
     ],
   },
   {
@@ -134,9 +134,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 6,
     examples: [
-      { word: 'حُبّ', transliteration: 'ḥubb', meaning: 'love', meaningFr: 'amour', position: 'initial' },
-      { word: 'بَحْر', transliteration: 'baḥr', meaning: 'sea', meaningFr: 'mer', position: 'medial' },
-      { word: 'صَبَاح', transliteration: 'ṣabāḥ', meaning: 'morning', meaningFr: 'matin', position: 'final' },
+      { word: 'حُبٌّ', transliteration: 'ḥubb', meaning: 'love', meaningFr: 'amour', position: 'initial' },
+      { word: 'بَحْرٌ', transliteration: 'baḥr', meaning: 'sea', meaningFr: 'mer', position: 'medial' },
+      { word: 'صَبَاحٌ', transliteration: 'ṣabāḥ', meaning: 'morning', meaningFr: 'matin', position: 'final' },
     ],
   },
   {
@@ -157,9 +157,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 7,
     examples: [
-      { word: 'خُبْز', transliteration: 'khubz', meaning: 'bread', meaningFr: 'pain', position: 'initial' },
-      { word: 'أَخ', transliteration: 'akh', meaning: 'brother', meaningFr: 'frère', position: 'final' },
-      { word: 'مَخْبَز', transliteration: 'makhbaz', meaning: 'bakery', meaningFr: 'boulangerie', position: 'medial' },
+      { word: 'خُبْزٌ', transliteration: 'khubz', meaning: 'bread', meaningFr: 'pain', position: 'initial' },
+      { word: 'أَخٌ', transliteration: 'akh', meaning: 'brother', meaningFr: 'frère', position: 'final' },
+      { word: 'مَخْبَزٌ', transliteration: 'makhbaz', meaning: 'bakery', meaningFr: 'boulangerie', position: 'medial' },
     ],
   },
   {
@@ -180,9 +180,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 8,
     examples: [
-      { word: 'دَار', transliteration: 'dār', meaning: 'home', meaningFr: 'maison', position: 'initial' },
-      { word: 'بِلَاد', transliteration: 'bilād', meaning: 'countries', meaningFr: 'pays', position: 'final' },
-      { word: 'مَدْرَسَة', transliteration: 'madrasa', meaning: 'school', meaningFr: 'école', position: 'medial' },
+      { word: 'دَارٌ', transliteration: 'dār', meaning: 'home', meaningFr: 'maison', position: 'initial' },
+      { word: 'بِلَادٌ', transliteration: 'bilād', meaning: 'countries', meaningFr: 'pays', position: 'final' },
+      { word: 'مَدْرَسَةٌ', transliteration: 'madrasa', meaning: 'school', meaningFr: 'école', position: 'medial' },
     ],
   },
   {
@@ -203,9 +203,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 9,
     examples: [
-      { word: 'ذَهَب', transliteration: 'dhahab', meaning: 'gold', meaningFr: 'or', position: 'initial' },
+      { word: 'ذَهَبٌ', transliteration: 'dhahab', meaning: 'gold', meaningFr: 'or', position: 'initial' },
       { word: 'هَذَا', transliteration: 'hādhā', meaning: 'this', meaningFr: 'ceci', position: 'medial' },
-      { word: 'أُسْتَاذ', transliteration: 'ustādh', meaning: 'teacher', meaningFr: 'professeur', position: 'final' },
+      { word: 'أُسْتَاذٌ', transliteration: 'ustādh', meaning: 'teacher', meaningFr: 'professeur', position: 'final' },
     ],
   },
   {
@@ -226,9 +226,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 10,
     examples: [
-      { word: 'رَجُل', transliteration: 'rajul', meaning: 'man', meaningFr: 'homme', position: 'initial' },
-      { word: 'كَبِير', transliteration: 'kabīr', meaning: 'big', meaningFr: 'grand', position: 'final' },
-      { word: 'مَرْحَبَا', transliteration: 'marḥabā', meaning: 'hello', meaningFr: 'bonjour', position: 'medial' },
+      { word: 'رَجُلٌ', transliteration: 'rajul', meaning: 'man', meaningFr: 'homme', position: 'initial' },
+      { word: 'كَبِيرٌ', transliteration: 'kabīr', meaning: 'big', meaningFr: 'grand', position: 'final' },
+      { word: 'مَرْحَبًا', transliteration: 'marḥabā', meaning: 'hello', meaningFr: 'bonjour', position: 'medial' },
     ],
   },
   {
@@ -249,9 +249,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 11,
     examples: [
-      { word: 'زَهْرَة', transliteration: 'zahra', meaning: 'flower', meaningFr: 'fleur', position: 'initial' },
-      { word: 'خُبْز', transliteration: 'khubz', meaning: 'bread', meaningFr: 'pain', position: 'final' },
-      { word: 'مَزْرَعَة', transliteration: 'mazraʿa', meaning: 'farm', meaningFr: 'ferme', position: 'medial' },
+      { word: 'زَهْرَةٌ', transliteration: 'zahra', meaning: 'flower', meaningFr: 'fleur', position: 'initial' },
+      { word: 'خُبْزٌ', transliteration: 'khubz', meaning: 'bread', meaningFr: 'pain', position: 'final' },
+      { word: 'مَزْرَعَةٌ', transliteration: 'mazraʿa', meaning: 'farm', meaningFr: 'ferme', position: 'medial' },
     ],
   },
   {
@@ -272,9 +272,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 12,
     examples: [
-      { word: 'سَمَاء', transliteration: 'samāʾ', meaning: 'sky', meaningFr: 'ciel', position: 'initial' },
-      { word: 'شَمْس', transliteration: 'shams', meaning: 'sun', meaningFr: 'soleil', position: 'final' },
-      { word: 'مَسْجِد', transliteration: 'masjid', meaning: 'mosque', meaningFr: 'mosquée', position: 'medial' },
+      { word: 'سَمَاءٌ', transliteration: 'samāʾ', meaning: 'sky', meaningFr: 'ciel', position: 'initial' },
+      { word: 'شَمْسٌ', transliteration: 'shams', meaning: 'sun', meaningFr: 'soleil', position: 'final' },
+      { word: 'مَسْجِدٌ', transliteration: 'masjid', meaning: 'mosque', meaningFr: 'mosquée', position: 'medial' },
     ],
   },
   {
@@ -295,9 +295,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 13,
     examples: [
-      { word: 'شَمْس', transliteration: 'shams', meaning: 'sun', meaningFr: 'soleil', position: 'initial' },
-      { word: 'مَشْرُوب', transliteration: 'mashrūb', meaning: 'drink', meaningFr: 'boisson', position: 'medial' },
-      { word: 'عَيْش', transliteration: 'ʿaysh', meaning: 'life/bread', meaningFr: 'vie / pain', position: 'final' },
+      { word: 'شَمْسٌ', transliteration: 'shams', meaning: 'sun', meaningFr: 'soleil', position: 'initial' },
+      { word: 'مَشْرُوبٌ', transliteration: 'mashrūb', meaning: 'drink', meaningFr: 'boisson', position: 'medial' },
+      { word: 'عَيْشٌ', transliteration: 'ʿaysh', meaning: 'life/bread', meaningFr: 'vie / pain', position: 'final' },
     ],
   },
   {
@@ -318,9 +318,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 14,
     examples: [
-      { word: 'صَبَاح', transliteration: 'ṣabāḥ', meaning: 'morning', meaningFr: 'matin', position: 'initial' },
-      { word: 'قِصَّة', transliteration: 'qiṣṣa', meaning: 'story', meaningFr: 'histoire', position: 'medial' },
-      { word: 'شَخْص', transliteration: 'shakhṣ', meaning: 'person', meaningFr: 'personne', position: 'final' },
+      { word: 'صَبَاحٌ', transliteration: 'ṣabāḥ', meaning: 'morning', meaningFr: 'matin', position: 'initial' },
+      { word: 'قِصَّةٌ', transliteration: 'qiṣṣa', meaning: 'story', meaningFr: 'histoire', position: 'medial' },
+      { word: 'شَخْصٌ', transliteration: 'shakhṣ', meaning: 'person', meaningFr: 'personne', position: 'final' },
     ],
   },
   {
@@ -341,9 +341,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 15,
     examples: [
-      { word: 'ضَوْء', transliteration: 'ḍawʾ', meaning: 'light', meaningFr: 'lumière', position: 'initial' },
-      { word: 'حَاضِر', transliteration: 'ḥāḍir', meaning: 'present', meaningFr: 'présent', position: 'medial' },
-      { word: 'أَبْيَض', transliteration: 'abyaḍ', meaning: 'white', meaningFr: 'blanc', position: 'final' },
+      { word: 'ضَوْءٌ', transliteration: 'ḍawʾ', meaning: 'light', meaningFr: 'lumière', position: 'initial' },
+      { word: 'حَاضِرٌ', transliteration: 'ḥāḍir', meaning: 'present', meaningFr: 'présent', position: 'medial' },
+      { word: 'أَبْيَضُ', transliteration: 'abyaḍ', meaning: 'white', meaningFr: 'blanc', position: 'final' },
     ],
   },
   {
@@ -364,9 +364,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 16,
     examples: [
-      { word: 'طَعَام', transliteration: 'ṭaʿām', meaning: 'food', meaningFr: 'nourriture', position: 'initial' },
-      { word: 'مَطَر', transliteration: 'maṭar', meaning: 'rain', meaningFr: 'pluie', position: 'medial' },
-      { word: 'خَطّ', transliteration: 'khaṭṭ', meaning: 'line', meaningFr: 'ligne', position: 'final' },
+      { word: 'طَعَامٌ', transliteration: 'ṭaʿām', meaning: 'food', meaningFr: 'nourriture', position: 'initial' },
+      { word: 'مَطَرٌ', transliteration: 'maṭar', meaning: 'rain', meaningFr: 'pluie', position: 'medial' },
+      { word: 'خَطٌّ', transliteration: 'khaṭṭ', meaning: 'line', meaningFr: 'ligne', position: 'final' },
     ],
   },
   {
@@ -387,9 +387,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 17,
     examples: [
-      { word: 'ظُهْر', transliteration: 'ẓuhr', meaning: 'noon', meaningFr: 'midi', position: 'initial' },
-      { word: 'نَظَر', transliteration: 'naẓar', meaning: 'sight/look', meaningFr: 'regard', position: 'medial' },
-      { word: 'حَفِيظ', transliteration: 'ḥafīẓ', meaning: 'guardian', meaningFr: 'gardien', position: 'final' },
+      { word: 'ظُهْرٌ', transliteration: 'ẓuhr', meaning: 'noon', meaningFr: 'midi', position: 'initial' },
+      { word: 'نَظَرٌ', transliteration: 'naẓar', meaning: 'sight/look', meaningFr: 'regard', position: 'medial' },
+      { word: 'حَفِيظٌ', transliteration: 'ḥafīẓ', meaning: 'guardian', meaningFr: 'gardien', position: 'final' },
     ],
   },
   {
@@ -410,9 +410,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 18,
     examples: [
-      { word: 'عَيْن', transliteration: 'ʿayn', meaning: 'eye', meaningFr: 'œil', position: 'initial' },
-      { word: 'سَاعَة', transliteration: 'sāʿa', meaning: 'hour/clock', meaningFr: 'heure / montre', position: 'medial' },
-      { word: 'رُبْع', transliteration: 'rubʿ', meaning: 'quarter', meaningFr: 'quart', position: 'final' },
+      { word: 'عَيْنٌ', transliteration: 'ʿayn', meaning: 'eye', meaningFr: 'œil', position: 'initial' },
+      { word: 'سَاعَةٌ', transliteration: 'sāʿa', meaning: 'hour/clock', meaningFr: 'heure / montre', position: 'medial' },
+      { word: 'رُبْعٌ', transliteration: 'rubʿ', meaning: 'quarter', meaningFr: 'quart', position: 'final' },
     ],
   },
   {
@@ -433,9 +433,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 19,
     examples: [
-      { word: 'غُرْفَة', transliteration: 'ghurfa', meaning: 'room', meaningFr: 'chambre', position: 'initial' },
-      { word: 'صَغِير', transliteration: 'ṣaghīr', meaning: 'small', meaningFr: 'petit', position: 'medial' },
-      { word: 'فَرَاغ', transliteration: 'farāgh', meaning: 'emptiness', meaningFr: 'vide', position: 'final' },
+      { word: 'غُرْفَةٌ', transliteration: 'ghurfa', meaning: 'room', meaningFr: 'chambre', position: 'initial' },
+      { word: 'صَغِيرٌ', transliteration: 'ṣaghīr', meaning: 'small', meaningFr: 'petit', position: 'medial' },
+      { word: 'فَرَاغٌ', transliteration: 'farāgh', meaning: 'emptiness', meaningFr: 'vide', position: 'final' },
     ],
   },
   {
@@ -456,9 +456,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 20,
     examples: [
-      { word: 'فَم', transliteration: 'fam', meaning: 'mouth', meaningFr: 'bouche', position: 'initial' },
-      { word: 'سَفَر', transliteration: 'safar', meaning: 'travel', meaningFr: 'voyage', position: 'medial' },
-      { word: 'صَيْف', transliteration: 'ṣayf', meaning: 'summer', meaningFr: 'été', position: 'final' },
+      { word: 'فَمٌ', transliteration: 'fam', meaning: 'mouth', meaningFr: 'bouche', position: 'initial' },
+      { word: 'سَفَرٌ', transliteration: 'safar', meaning: 'travel', meaningFr: 'voyage', position: 'medial' },
+      { word: 'صَيْفٌ', transliteration: 'ṣayf', meaning: 'summer', meaningFr: 'été', position: 'final' },
     ],
   },
   {
@@ -479,9 +479,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 21,
     examples: [
-      { word: 'قَلْب', transliteration: 'qalb', meaning: 'heart', meaningFr: 'cœur', position: 'initial' },
-      { word: 'صَدِيق', transliteration: 'ṣadīq', meaning: 'friend', meaningFr: 'ami', position: 'final' },
-      { word: 'مَقْعَد', transliteration: 'maqʿad', meaning: 'seat', meaningFr: 'siège', position: 'medial' },
+      { word: 'قَلْبٌ', transliteration: 'qalb', meaning: 'heart', meaningFr: 'cœur', position: 'initial' },
+      { word: 'صَدِيقٌ', transliteration: 'ṣadīq', meaning: 'friend', meaningFr: 'ami', position: 'final' },
+      { word: 'مَقْعَدٌ', transliteration: 'maqʿad', meaning: 'seat', meaningFr: 'siège', position: 'medial' },
     ],
   },
   {
@@ -502,9 +502,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 22,
     examples: [
-      { word: 'كِتَاب', transliteration: 'kitāb', meaning: 'book', meaningFr: 'livre', position: 'initial' },
-      { word: 'شُكْر', transliteration: 'shukr', meaning: 'thanks', meaningFr: 'remerciement', position: 'medial' },
-      { word: 'مَلِك', transliteration: 'malik', meaning: 'king', meaningFr: 'roi', position: 'final' },
+      { word: 'كِتَابٌ', transliteration: 'kitāb', meaning: 'book', meaningFr: 'livre', position: 'initial' },
+      { word: 'شُكْرٌ', transliteration: 'shukr', meaning: 'thanks', meaningFr: 'remerciement', position: 'medial' },
+      { word: 'مَلِكٌ', transliteration: 'malik', meaning: 'king', meaningFr: 'roi', position: 'final' },
     ],
   },
   {
@@ -525,9 +525,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 23,
     examples: [
-      { word: 'لَيْل', transliteration: 'layl', meaning: 'night', meaningFr: 'nuit', position: 'initial' },
-      { word: 'قَلْب', transliteration: 'qalb', meaning: 'heart', meaningFr: 'cœur', position: 'medial' },
-      { word: 'جَمِيل', transliteration: 'jamīl', meaning: 'beautiful', meaningFr: 'beau', position: 'final' },
+      { word: 'لَيْلٌ', transliteration: 'layl', meaning: 'night', meaningFr: 'nuit', position: 'initial' },
+      { word: 'قَلْبٌ', transliteration: 'qalb', meaning: 'heart', meaningFr: 'cœur', position: 'medial' },
+      { word: 'جَمِيلٌ', transliteration: 'jamīl', meaning: 'beautiful', meaningFr: 'beau', position: 'final' },
     ],
   },
   {
@@ -548,9 +548,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 24,
     examples: [
-      { word: 'مَاء', transliteration: 'māʾ', meaning: 'water', meaningFr: 'eau', position: 'initial' },
-      { word: 'سَمَاء', transliteration: 'samāʾ', meaning: 'sky', meaningFr: 'ciel', position: 'medial' },
-      { word: 'قَلَم', transliteration: 'qalam', meaning: 'pen', meaningFr: 'stylo', position: 'final' },
+      { word: 'مَاءٌ', transliteration: 'māʾ', meaning: 'water', meaningFr: 'eau', position: 'initial' },
+      { word: 'سَمَاءٌ', transliteration: 'samāʾ', meaning: 'sky', meaningFr: 'ciel', position: 'medial' },
+      { word: 'قَلَمٌ', transliteration: 'qalam', meaning: 'pen', meaningFr: 'stylo', position: 'final' },
     ],
   },
   {
@@ -571,9 +571,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 25,
     examples: [
-      { word: 'نَار', transliteration: 'nār', meaning: 'fire', meaningFr: 'feu', position: 'initial' },
+      { word: 'نَارٌ', transliteration: 'nār', meaning: 'fire', meaningFr: 'feu', position: 'initial' },
       { word: 'مِنْ', transliteration: 'min', meaning: 'from', meaningFr: 'de', position: 'final' },
-      { word: 'جَنَّة', transliteration: 'janna', meaning: 'paradise', meaningFr: 'paradis', position: 'medial' },
+      { word: 'جَنَّةٌ', transliteration: 'janna', meaning: 'paradise', meaningFr: 'paradis', position: 'medial' },
     ],
   },
   {
@@ -595,8 +595,8 @@ export const arabicLetters: ArabicLetter[] = [
     order: 26,
     examples: [
       { word: 'هُوَ', transliteration: 'huwa', meaning: 'he', meaningFr: 'il', position: 'initial' },
-      { word: 'نَهْر', transliteration: 'nahr', meaning: 'river', meaningFr: 'fleuve', position: 'medial' },
-      { word: 'وَجْه', transliteration: 'wajh', meaning: 'face', meaningFr: 'visage', position: 'final' },
+      { word: 'نَهْرٌ', transliteration: 'nahr', meaning: 'river', meaningFr: 'fleuve', position: 'medial' },
+      { word: 'وَجْهٌ', transliteration: 'wajh', meaning: 'face', meaningFr: 'visage', position: 'final' },
     ],
   },
   {
@@ -617,8 +617,8 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: false,
     order: 27,
     examples: [
-      { word: 'وَرْد', transliteration: 'ward', meaning: 'rose', meaningFr: 'rose', position: 'initial' },
-      { word: 'نُور', transliteration: 'nūr', meaning: 'light', meaningFr: 'lumière', position: 'medial' },
+      { word: 'وَرْدٌ', transliteration: 'ward', meaning: 'rose', meaningFr: 'rose', position: 'initial' },
+      { word: 'نُورٌ', transliteration: 'nūr', meaning: 'light', meaningFr: 'lumière', position: 'medial' },
       { word: 'هُوَ', transliteration: 'huwa', meaning: 'he', meaningFr: 'il', position: 'final' },
     ],
   },
@@ -640,9 +640,9 @@ export const arabicLetters: ArabicLetter[] = [
     connectable: true,
     order: 28,
     examples: [
-      { word: 'يَد', transliteration: 'yad', meaning: 'hand', meaningFr: 'main', position: 'initial' },
-      { word: 'بَيْت', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'medial' },
-      { word: 'عَرَبِي', transliteration: 'ʿarabī', meaning: 'Arabic', meaningFr: 'arabe', position: 'final' },
+      { word: 'يَدٌ', transliteration: 'yad', meaning: 'hand', meaningFr: 'main', position: 'initial' },
+      { word: 'بَيْتٌ', transliteration: 'bayt', meaning: 'house', meaningFr: 'maison', position: 'medial' },
+      { word: 'عَرَبِيٌ', transliteration: 'ʿarabī', meaning: 'Arabic', meaningFr: 'arabe', position: 'final' },
     ],
   },
 ];
