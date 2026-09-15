@@ -12,9 +12,9 @@ import { color, type, weight } from '../../src/theme/tokens';
  */
 const ICONS: Record<string, { on: keyof typeof Ionicons.glyphMap; off: keyof typeof Ionicons.glyphMap }> = {
   index: { on: 'home', off: 'home-outline' },
-  learn: { on: 'book', off: 'book-outline' },
+  learn: { on: 'school', off: 'school-outline' },
   community: { on: 'people', off: 'people-outline' },
-  quran: { on: 'bookmark', off: 'bookmark-outline' },
+  quran: { on: 'book', off: 'book-outline' },
   profile: { on: 'person', off: 'person-outline' },
 };
 
