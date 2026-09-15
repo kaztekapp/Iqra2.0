@@ -8,7 +8,7 @@ export const salah4Content: PrayerContent[] = [
     type: 'description',
     title: 'How to Pray',
     titleFr: 'Comment prier',
-    titleArabic: 'كيفية الصلاة',
+    titleArabic: 'كَيْفِيَّةُ الصَّلَاةِ',
     content: 'This lesson covers the complete steps of performing a two-rak\'ah (unit) prayer. All prayers follow this pattern, with variations in the number of units.',
     contentFr: 'Cette leçon couvre les etapes completes de l\'accomplissement d\'une priere de deux rak\'ah (unites). Toutes les prieres suivent ce modele, avec des variations dans le nombre d\'unites.',
   },

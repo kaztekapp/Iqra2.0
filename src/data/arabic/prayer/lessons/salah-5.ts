@@ -8,7 +8,7 @@ export const salah5Content: PrayerContent[] = [
     type: 'description',
     title: 'Detailed Guide to Each Prayer',
     titleFr: 'Guide detaille de chaque priere',
-    titleArabic: 'تفصيل كل صلاة',
+    titleArabic: 'تَفْصِيلُ كُلِّ صَلَاةٍ',
     content: 'Each of the five daily prayers has specific characteristics including the number of rak\'ahs (units), whether recitation is aloud or silent, and recommended Sunnah prayers before or after.',
     contentFr: 'Chacune des cinq prieres quotidiennes a des caracteristiques specifiques, notamment le nombre de rak\'ahs (unites), si la recitation est a voix haute ou silencieuse, et les prieres Sunnah recommandees avant ou apres.',
   },
@@ -16,7 +16,7 @@ export const salah5Content: PrayerContent[] = [
     type: 'prayer_times_table',
     title: 'Summary of the Five Prayers',
     titleFr: 'Resume des cinq prieres',
-    titleArabic: 'ملخص الصلوات الخمس',
+    titleArabic: 'مُلَخَّصُ الصَّلَوَاتِ الْخَمْسِ',
     rows: [
       {
         name: 'Fajr',
@@ -119,7 +119,7 @@ export const salah5Content: PrayerContent[] = [
     type: 'table',
     title: 'Confirmed Sunnah Prayers (Rawatib)',
     titleFr: 'Prieres Sunnah confirmees (Rawatib)',
-    titleArabic: 'السنن الرواتب',
+    titleArabic: 'السُّنَنُ الرَّوَاتِبُ',
     headers: ['Prayer', 'Before', 'After', 'Total Sunnah'],
     headersFr: ['Priere', 'Avant', 'Apres', 'Total Sunnah'],
     rows: [
@@ -150,7 +150,7 @@ export const salah5Content: PrayerContent[] = [
     type: 'description',
     title: 'Witr Prayer',
     titleFr: 'Priere du Witr',
-    titleArabic: 'صلاة الوتر',
+    titleArabic: 'صَلَاةُ الْوِتْرِ',
     content: 'Witr is a highly recommended prayer performed after Isha. It can be 1, 3, 5, 7, 9, or 11 rak\'ahs. The minimum is one rak\'ah. In the last rak\'ah of Witr, it is Sunnah to recite Qunut (a special supplication) after rising from Ruku.',
     contentFr: 'Le Witr est une priere fortement recommandee accomplie apres l\'Isha. Il peut etre de 1, 3, 5, 7, 9 ou 11 rak\'ahs. Le minimum est une rak\'ah. Dans la derniere rak\'ah du Witr, il est Sunnah de reciter le Qunut (une invocation speciale) apres s\'etre releve du Ruku.',
     arabic: 'اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ',
@@ -159,7 +159,7 @@ export const salah5Content: PrayerContent[] = [
     type: 'examples_grid',
     title: 'Short Surahs for Prayer',
     titleFr: 'Sourates courtes pour la priere',
-    titleArabic: 'سور قصيرة للصلاة',
+    titleArabic: 'سُوَرٌ قَصِيرَةٌ لِلصَّلَاةِ',
     examples: [
       {
         arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ',

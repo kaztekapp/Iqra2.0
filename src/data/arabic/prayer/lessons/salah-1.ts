@@ -8,7 +8,7 @@ export const salah1Content: PrayerContent[] = [
     type: 'description',
     title: 'The Pillar of Islam',
     titleFr: 'Le Pilier de l\'Islam',
-    titleArabic: 'عمود الإسلام',
+    titleArabic: 'عَمُودُ الْإِسْلَامِ',
     content: 'Salah (prayer) is the second pillar of Islam and the most important act of worship after the declaration of faith (Shahada). It is the direct connection between the servant and Allah.',
     contentFr: 'La Salah (priere) est le deuxieme pilier de l\'Islam et l\'acte d\'adoration le plus important apres la declaration de foi (Shahada). C\'est le lien direct entre le serviteur et Allah.',
     arabic: 'الصَّلَاةُ عِمَادُ الدِّينِ',
@@ -25,7 +25,7 @@ export const salah1Content: PrayerContent[] = [
     type: 'examples_grid',
     title: 'Quranic Verses on Salah',
     titleFr: 'Versets coraniques sur la Salah',
-    titleArabic: 'آيات قرآنية عن الصلاة',
+    titleArabic: 'آيَاتٌ قُرْآنِيَّةٌ عَنِ الصَّلَاةِ',
     examples: [
       {
         arabic: 'وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ',
@@ -57,7 +57,7 @@ export const salah1Content: PrayerContent[] = [
     type: 'prayer_times_table',
     title: 'The Five Daily Prayers',
     titleFr: 'Les cinq prieres quotidiennes',
-    titleArabic: 'الصلوات الخمس',
+    titleArabic: 'الصَّلَوَاتُ الْخَمْسُ',
     rows: [
       {
         name: 'Fajr',
@@ -134,7 +134,7 @@ export const salah1Content: PrayerContent[] = [
     type: 'description',
     title: 'The Prophet\'s Advice',
     titleFr: 'Le conseil du Prophete',
-    titleArabic: 'وصية النبي ﷺ',
+    titleArabic: 'وَصِيَّةُ النَّبِيِّ ﷺ',
     content: 'The last words of the Prophet Muhammad (peace be upon him) before his passing included: "The prayer, the prayer! And fear Allah regarding those whom your right hands possess."',
     contentFr: 'Les derniers mots du Prophete Muhammad (paix et salut sur lui) avant sa mort comprenaient : "La priere, la priere ! Et craignez Allah concernant ceux que vos mains droites possedent."',
     arabic: 'الصَّلَاةَ الصَّلَاةَ وَمَا مَلَكَتْ أَيْمَانُكُمْ',
