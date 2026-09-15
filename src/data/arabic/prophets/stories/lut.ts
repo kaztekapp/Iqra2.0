@@ -831,6 +831,7 @@ export const lutStoryContent: StoryContentBlock[] = [
       collection: "bukhari",
       hadithNumber: "3372",
       narrator: "Abu Hurayrah",
+      arabicText: "حَدَّثَنَا أَحْمَدُ بْنُ صَالِحٍ، حَدَّثَنَا ابْنُ وَهْبٍ، قَالَ أَخْبَرَنِي يُونُسُ، عَنِ ابْنِ شِهَابٍ، عَنْ أَبِي سَلَمَةَ بْنِ عَبْدِ الرَّحْمَنِ، وَسَعِيدِ بْنِ الْمُسَيَّبِ، عَنْ أَبِي هُرَيْرَةَ ـ رضى الله عنه ـ أَنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَالَ نَحْنُ أَحَقُّ مِنْ إِبْرَاهِيمَ إِذْ قَالَ {رَبِّ أَرِنِي كَيْفَ تُحْيِي الْمَوْتَى قَالَ أَوَلَمْ تُؤْمِنْ قَالَ بَلَى وَلَكِنْ لِيَطْمَئِنَّ قَلْبِي} وَيَرْحَمُ اللَّهُ لُوطًا، لَقَدْ كَانَ يَأْوِي إِلَى رُكْنٍ شَدِيدٍ وَلَوْ لَبِثْتُ فِي السِّجْنِ طُولَ مَا لَبِثَ يُوسُفُ لأَجَبْتُ الدَّاعِيَ",
       translation: "We have more right to doubt than Ibrahim, when he said: \"My Lord, show me how You give life to the dead.\" He said: \"Have you not believed?\" He said: \"Yes, but that my heart may be satisfied.\" And may Allah have mercy on Lut: he was already taking refuge in a strong support. And had I stayed in prison as long as Yusuf stayed, I would have answered the caller.",
       translationFr: "Nous avons plus de raisons de douter qu'Ibrahim, quand il dit : « Mon Seigneur, montre-moi comment Tu ressuscites les morts. » Il dit : « Ne crois-tu pas ? » Il dit : « Si, mais que mon cœur soit apaisé. » Et qu'Allah fasse miséricorde à Lout : il s'appuyait déjà sur un soutien solide. Et si j'étais resté en prison aussi longtemps que Youssouf, j'aurais répondu à celui qui appelait.",
       grade: "sahih",

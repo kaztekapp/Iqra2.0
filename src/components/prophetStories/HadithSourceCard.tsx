@@ -74,14 +74,8 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
         </View>
       )}
 
-      {/* Arabic Text (if available) - render words separately to avoid RTL wrapping bug */}
-      {source.arabicText && (
-        <View style={styles.arabicContainer}>
-          {source.arabicText.split(' ').map((word, index) => (
-            <Text key={index} style={styles.arabicWord}>{word}</Text>
-          ))}
-        </View>
-      )}
+      {/* The hadith in Arabic, chain and all, as the collection records it. */}
+      {source.arabicText && <Text style={styles.arabic}>{source.arabicText}</Text>}
 
       {/* Translation */}
       <Text style={styles.translation}>"{lc(source.translation, source.translationFr)}"</Text>
@@ -140,18 +134,19 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontStyle: 'italic',
   },
-  arabicContainer: {
-    flexDirection: 'row-reverse',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
-    gap: 6,
-  },
-  arabicWord: {
+  // A hadith is a paragraph, not a phrase: one right-to-left block, set a
+  // little smaller than a quoted ayah and with room between the lines for
+  // the vowel marks. Laying it out word by word, as a short phrase can be,
+  // would put a hundred separate texts on the page and break the line
+  // spacing of a long report.
+  arabic: {
     fontFamily: font.arabic,
     color: color.text,
-    fontSize: 22,
-    lineHeight: 44,
+    fontSize: 19,
+    lineHeight: 38,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+    marginBottom: 10,
   },
   translation: {
     color: color.textMuted,

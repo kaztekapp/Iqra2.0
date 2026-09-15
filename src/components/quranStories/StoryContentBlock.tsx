@@ -105,13 +105,7 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
         </View>
       )}
 
-      {source.arabicText && (
-        <View style={hadithStyles.arabicContainer}>
-          {source.arabicText.split(' ').map((word, index) => (
-            <Text key={index} style={hadithStyles.arabicWord}>{word}</Text>
-          ))}
-        </View>
-      )}
+      {source.arabicText && <Text style={hadithStyles.arabic}>{source.arabicText}</Text>}
 
       <Text style={hadithStyles.translation}>"{lc(source.translation, source.translationFr)}"</Text>
     </View>
@@ -295,18 +289,16 @@ const hadithStyles = StyleSheet.create({
     fontSize: 11,
     fontStyle: 'italic',
   },
-  arabicContainer: {
-    flexDirection: 'row-reverse',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
-    gap: 6,
-  },
-  arabicWord: {
+  // A hadith is a paragraph, not a phrase: one right-to-left block, with room
+  // between the lines for the vowel marks (see HadithSourceCard).
+  arabic: {
     fontFamily: font.arabic,
     color: color.text,
-    fontSize: 22,
-    lineHeight: 44,
+    fontSize: 19,
+    lineHeight: 38,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+    marginBottom: 10,
   },
   translation: {
     color: color.textMuted,
