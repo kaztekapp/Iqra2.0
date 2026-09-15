@@ -59,8 +59,8 @@ export const idrisStoryContent: StoryContentBlock[] = [
     id: 'idris-3',
     type: 'quran_source',
     order: 3,
-    content: "Idris: a man of truth, a prophet, raised to a high station.",
-    contentFr: "Idris : un véridique, un prophète, élevé à une place très haute.",
+    content: "Surah Maryam: Idris: a man of truth, a prophet, raised to a high station.",
+    contentFr: "La sourate Maryam : Idris : un véridique, un prophète, élevé à une place très haute.",
     source: {
       type: "quran",
       surahNumber: 19,
@@ -91,8 +91,8 @@ export const idrisStoryContent: StoryContentBlock[] = [
     id: 'idris-6',
     type: 'quran_source',
     order: 6,
-    content: "Those upon whom Allah bestowed favour fell in prostration, weeping.",
-    contentFr: "Ceux qu'Allah a comblés de Ses faveurs tombaient prosternés, en pleurs.",
+    content: "Surah Maryam: Those upon whom Allah bestowed favour fell in prostration, weeping.",
+    contentFr: "La sourate Maryam : Ceux qu'Allah a comblés de Ses faveurs tombaient prosternés, en pleurs.",
     source: {
       type: "quran",
       surahNumber: 19,
@@ -125,8 +125,8 @@ export const idrisStoryContent: StoryContentBlock[] = [
     id: 'idris-9',
     type: 'quran_source',
     order: 9,
-    content: "Ismail, Idris and Dhul-Kifl: all were of the patient, and admitted into Allah's mercy.",
-    contentFr: "Ismaïl, Idris et Dhul-Kifl : tous étaient des patients, et reçus dans la miséricorde d'Allah.",
+    content: "Surah Al-Anbiya: Ismail, Idris and Dhul-Kifl: all were of the patient, and admitted into Allah's mercy.",
+    contentFr: "La sourate Al-Anbiya : Ismaïl, Idris et Dhul-Kifl : tous étaient des patients, et reçus dans la miséricorde d'Allah.",
     source: {
       type: "quran",
       surahNumber: 21,

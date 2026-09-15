@@ -71,8 +71,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-3',
     type: 'quran_source',
     order: 3,
-    content: "\"Adversity has touched me, and You are the most merciful of the merciful.\"",
-    contentFr: "« Le mal m'a touché, et Tu es le plus miséricordieux des miséricordieux. »",
+    content: "Surah Al-Anbiya: \"Adversity has touched me, and You are the most merciful of the merciful.\"",
+    contentFr: "La sourate Al-Anbiya : « Le mal m'a touché, et Tu es le plus miséricordieux des miséricordieux. »",
     source: {
       type: "quran",
       surahNumber: 21,
@@ -103,8 +103,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-6',
     type: 'quran_source',
     order: 6,
-    content: "\"Strike the ground with your foot.\" \"We found him patient, an excellent servant.\"",
-    contentFr: "« Frappe le sol de ton pied. » « Nous l'avons trouvé patient, un excellent serviteur. »",
+    content: "Surah Sad: \"Strike the ground with your foot.\" \"We found him patient, an excellent servant.\"",
+    contentFr: "La sourate Sad : « Frappe le sol de ton pied. » « Nous l'avons trouvé patient, un excellent serviteur. »",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -130,8 +130,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-8',
     type: 'quran_source',
     order: 8,
-    content: "Allah revealed to Ayyub, as to the prophets before him.",
-    contentFr: "Allah a fait une révélation à Ayyoub, comme aux prophètes avant lui.",
+    content: "Surah An-Nisa: Allah revealed to Ayyub, as to the prophets before him.",
+    contentFr: "La sourate An-Nisa : Allah a fait une révélation à Ayyoub, comme aux prophètes avant lui.",
     source: {
       type: "quran",
       surahNumber: 4,
@@ -155,8 +155,8 @@ export const ayyubStoryContent: StoryContentBlock[] = [
     id: 'ayyub-10',
     type: 'quran_source',
     order: 10,
-    content: "Among the descendants of Ibrahim whom Allah guided: Ayyub.",
-    contentFr: "Parmi les descendants d'Ibrahim qu'Allah a guidés : Ayyoub.",
+    content: "Surah Al-An'am: Among the descendants of Ibrahim whom Allah guided: Ayyub.",
+    contentFr: "La sourate Al-An'am : Parmi les descendants d'Ibrahim qu'Allah a guidés : Ayyoub.",
     source: {
       type: "quran",
       surahNumber: 6,

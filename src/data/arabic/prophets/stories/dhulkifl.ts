@@ -57,8 +57,8 @@ export const dhulkiflStoryContent: StoryContentBlock[] = [
     id: 'dhulkifl-3',
     type: 'quran_source',
     order: 3,
-    content: "Ismail, Idris and Dhul-Kifl: of the patient, admitted into Allah's mercy.",
-    contentFr: "Ismaïl, Idris et Dhoul-Kifl : des patients, reçus dans la miséricorde d'Allah.",
+    content: "Surah Al-Anbiya: Ismail, Idris and Dhul-Kifl: of the patient, admitted into Allah's mercy.",
+    contentFr: "La sourate Al-Anbiya : Ismaïl, Idris et Dhoul-Kifl : des patients, reçus dans la miséricorde d'Allah.",
     source: {
       type: "quran",
       surahNumber: 21,
@@ -89,8 +89,8 @@ export const dhulkiflStoryContent: StoryContentBlock[] = [
     id: 'dhulkifl-6',
     type: 'quran_source',
     order: 6,
-    content: "\"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
-    contentFr: "« Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
+    content: "Surah Sad: \"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
+    contentFr: "La sourate Sad : « Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
     source: {
       type: "quran",
       surahNumber: 38,

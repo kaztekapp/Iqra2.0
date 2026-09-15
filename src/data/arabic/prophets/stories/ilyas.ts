@@ -59,8 +59,8 @@ export const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-3',
     type: 'quran_source',
     order: 3,
-    content: "\"Do you call upon Baal and leave the best of creators?\" \"Peace upon Ilyas.\"",
-    contentFr: "« Invoquez-vous Baal et délaissez-vous le meilleur des créateurs ? » « Paix sur Ilyas. »",
+    content: "Surah As-Saffat: \"Do you call upon Baal and leave the best of creators?\" \"Peace upon Ilyas.\"",
+    contentFr: "La sourate As-Saffat : « Invoquez-vous Baal et délaissez-vous le meilleur des créateurs ? » « Paix sur Ilyas. »",
     source: {
       type: "quran",
       surahNumber: 37,
@@ -91,8 +91,8 @@ export const ilyasStoryContent: StoryContentBlock[] = [
     id: 'ilyas-6',
     type: 'quran_source',
     order: 6,
-    content: "Zakariya, Yahya, Isa and Ilyas: all of the righteous.",
-    contentFr: "Zakariya, Yahya, Issa et Ilyas : tous des vertueux.",
+    content: "Surah Al-An'am: Zakariya, Yahya, Isa and Ilyas: all of the righteous.",
+    contentFr: "La sourate Al-An'am : Zakariya, Yahya, Issa et Ilyas : tous des vertueux.",
     source: {
       type: "quran",
       surahNumber: 6,

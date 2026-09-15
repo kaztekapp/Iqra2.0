@@ -57,8 +57,8 @@ export const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-3',
     type: 'quran_source',
     order: 3,
-    content: "Ismail, Al-Yasa, Yunus and Lut: preferred over the worlds.",
-    contentFr: "Ismaïl, Al-Yasa, Younous et Lout : préférés aux mondes.",
+    content: "Surah Al-An'am: Ismail, Al-Yasa, Yunus and Lut: preferred over the worlds.",
+    contentFr: "La sourate Al-An'am : Ismaïl, Al-Yasa, Younous et Lout : préférés aux mondes.",
     source: {
       type: "quran",
       surahNumber: 6,
@@ -89,8 +89,8 @@ export const alyasaStoryContent: StoryContentBlock[] = [
     id: 'alyasa-6',
     type: 'quran_source',
     order: 6,
-    content: "\"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
-    contentFr: "« Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
+    content: "Surah Sad: \"And remember Ismail, Al-Yasa and Dhul-Kifl; all are among the outstanding.\"",
+    contentFr: "La sourate Sad : « Et rappelle-toi Ismaïl, Al-Yasa et Dhoul-Kifl ; tous sont parmi les meilleurs. »",
     source: {
       type: "quran",
       surahNumber: 38,
