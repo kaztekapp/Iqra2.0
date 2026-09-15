@@ -35,6 +35,7 @@ import {
   prepareArabic,
   discardPreparedArabic,
   setArabicVoiceGender,
+  forgiveArabicEdge,
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
@@ -292,6 +293,9 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
 
   const start = useCallback(
     (fromIndex = 0) => {
+      // A rest taken during the last reading - a tunnel, a dropped signal -
+      // must not decide that this one is read by the phone.
+      forgiveArabicEdge();
       void run(Math.max(0, Math.min(fromIndex, Math.max(0, utterances.length - 1))));
     },
     [run, utterances.length]

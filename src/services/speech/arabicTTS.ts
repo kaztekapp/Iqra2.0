@@ -121,7 +121,7 @@ function edgeRate(speed: number): string {
  * dead socket does not add its timeout to every chunk of a long dua; Google
  * carries the line meanwhile. A voice change forgives it early.
  */
-const EDGE_BACKOFF_MS = 60 * 1000;
+const EDGE_BACKOFF_MS = 30 * 1000;
 let edgeUnavailableUntil = 0;
 
 /**
@@ -131,14 +131,14 @@ let edgeUnavailableUntil = 0;
  * every verse - and still short of the socket's own 15s idle timeout, which
  * would leave a hole in the story.
  */
-const EDGE_BUDGET_MS = 12000;
+const EDGE_BUDGET_MS = 15000;
 
 /**
  * One miss is a slow moment, not an outage. Only a second failure in a row
  * rests the neural voice, and only briefly, because resting it is what makes
  * the reading change voice mid-story.
  */
-const EDGE_STRIKES_BEFORE_REST = 2;
+const EDGE_STRIKES_BEFORE_REST = 3;
 let edgeStrikes = 0;
 
 /**
@@ -226,10 +226,18 @@ async function fetchChunkFromEdge(
  * way: if Hamed cannot be reached the line goes to the voice on the phone,
  * which the reader chose and can hear offline.
  */
-async function fetchChunkToFile(text: string, speed = 1, now = true): Promise<string> {
+async function fetchChunkToFile(
+  text: string,
+  speed = 1,
+  now = true,
+  force = false
+): Promise<string> {
   // The mushaf marks make some voices spell the word out; send plain Arabic.
   const spoken = normalizeArabicForSpeech(text);
-  if (Date.now() < edgeUnavailableUntil) throw new Error('tts_resting');
+  // `force` is the second try at a line that is about to be lost. Resting the
+  // voice is meant to save a queue of lines from waiting on a dead socket; it
+  // is not worth dropping the ayah in front of the reader for.
+  if (!force && Date.now() < edgeUnavailableUntil) throw new Error('tts_resting');
   try {
     const uri = await fetchChunkFromEdge(spoken, speed, now);
     edgeStrikes = 0;
@@ -456,7 +464,7 @@ export async function playArabicLines(
           try {
             await new Promise((r) => setTimeout(r, 400));
             if (myGen !== generation) return;
-            uri = await fetchChunkToFile(chunk, speed);
+            uri = await fetchChunkToFile(chunk, speed, true, true);
           } catch {
             await speakOnDevice(line, speed, myGen, () => generation);
             break;

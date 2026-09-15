@@ -454,6 +454,14 @@ class StoryAudioService {
 
     // Chosen once per session, then held. Deciding per sentence is what made
     // the voice change halfway through a chapter.
+    // The neural voice is the only fetched one now, so a single failure used
+    // to pin the rest of the session to the phone's voice: the session engine
+    // was chosen once and held, and there was no second network rung to fall
+    // to. Once the neural voice has finished resting, take it back.
+    if (this.sessionEngine === 'device' && this.nextFetchedEngine(null) !== null) {
+      this.sessionEngine = null;
+    }
+
     if (this.sessionEngine === null) {
       const candidate = this.nextFetchedEngine(null);
       const canFetch = candidate !== null && (await this.isOnline());
@@ -536,8 +544,10 @@ class StoryAudioService {
    */
   private retire(engine: FetchedEngine) {
     this.failures[engine] += 1;
+    // Resting the only network voice means the phone reads instead, so the
+    // rest is short and only lengthens if it keeps failing.
     this.unavailableUntil[engine] =
-      Date.now() + (this.failures[engine] >= 2 ? SESSION_BACKOFF_MS : NETWORK_BACKOFF_MS);
+      Date.now() + (this.failures[engine] >= 3 ? SESSION_BACKOFF_MS : NETWORK_BACKOFF_MS);
   }
 
   /**
