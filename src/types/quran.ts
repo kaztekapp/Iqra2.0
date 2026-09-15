@@ -220,7 +220,7 @@ export interface Reciter {
   id: string;
   nameArabic: string;
   nameEnglish: string;
-  style: 'murattal' | 'mujawwad'; // Teaching vs melodic
+  style: 'murattal' | 'mujawwad' | 'neural'; // Teaching, melodic, or the app's reading voice
   audioBaseUrl: string;
   hasWordTimestamps: boolean;
 }

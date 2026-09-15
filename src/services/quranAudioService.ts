@@ -6,6 +6,7 @@ import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBu
 import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
+import { synthesizeAyahToFile } from './speech/arabicTTS';
 
 // Available reciters with their audio base URLs from EveryAyah.com
 // Format: https://everyayah.com/data/{reciter_folder}/{surah_number}{ayah_number}.mp3
@@ -296,6 +297,14 @@ class QuranAudioService {
     options?: {
       reciterId?: ReciterId;
       rate?: number;
+      /**
+       * Read the ayah in the app's own Arabic voice instead of playing a
+       * recitation. Learn mode offers this: someone working through the words
+       * wants them said plainly, which a recitation in tajwid does not do.
+       * `text` must come with it - the service does not hold the mushaf.
+       */
+      neural?: boolean;
+      text?: string;
       onComplete?: () => void;
       onError?: (error: Error) => void;
       onStateChange?: (state: AudioState) => void;
@@ -333,20 +342,29 @@ class QuranAudioService {
       this.currentAyah = ayahNumber;
       options?.onStateChange?.('loading');
 
-      const remoteUrl = this.getAyahAudioUrl(surahNumber, ayahNumber, options?.reciterId);
+      const speakIt = options?.neural === true && !!options?.text?.trim();
+      const remoteUrl = speakIt
+        ? ''
+        : this.getAyahAudioUrl(surahNumber, ayahNumber, options?.reciterId);
       const reciterId = options?.reciterId || this.currentReciter;
 
       // Prefer a locally cached copy so playback works fully offline. If the
       // ayah hasn't been saved yet, fall back to the remote stream AND kick off
       // a silent background save so the next listen needs no network.
       let url = remoteUrl;
-      try {
-        url = await audioCacheService.getAudioUrl(remoteUrl, surahNumber, ayahNumber, reciterId);
-      } catch {
-        url = remoteUrl;
-      }
-      if (url === remoteUrl) {
-        this.autoCache(remoteUrl, surahNumber, ayahNumber, reciterId);
+      if (speakIt) {
+        // Nothing to cache: this file is made for this listen. The recitation
+        // cache is per reciter and would be polluted by a synthesized clip.
+        url = await synthesizeAyahToFile(options!.text!);
+      } else {
+        try {
+          url = await audioCacheService.getAudioUrl(remoteUrl, surahNumber, ayahNumber, reciterId);
+        } catch {
+          url = remoteUrl;
+        }
+        if (url === remoteUrl) {
+          this.autoCache(remoteUrl, surahNumber, ayahNumber, reciterId);
+        }
       }
 
       const rate = options?.rate || this.playbackRate;

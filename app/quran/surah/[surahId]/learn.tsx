@@ -52,6 +52,10 @@ export default function LearnModeScreen() {
   const endVerseRef = useRef(ayahs.length || 1);
   const isPlayingRef = useRef(false);
   const playbackSpeedRef = useRef(playbackSpeed);
+  // Recitation, or the app's own Arabic voice reading the words plainly.
+  // Only Learn mode offers the choice: elsewhere the Quran is recited.
+  const [useLearningVoice, setUseLearningVoice] = useState(false);
+  const learningVoiceRef = useRef(false);
 
   const currentAyah = ayahs[currentAyahIndex];
 
@@ -118,6 +122,8 @@ export default function LearnModeScreen() {
 
     quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
       rate: playbackSpeedRef.current,
+      neural: learningVoiceRef.current,
+      text: ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani,
       onStateChange: (state) => {
         setAudioState(state);
         if (state === 'loading') updatePlaybackState({ isLoading: true, isPlaying: false, isPaused: false });
@@ -222,6 +228,11 @@ export default function LearnModeScreen() {
 
   const handleShowHint = () => {
     setShowHint(true);
+  };
+
+  const handleVoiceChange = (learning: boolean) => {
+    setUseLearningVoice(learning);
+    learningVoiceRef.current = learning;
   };
 
   const handleSpeedChange = (speed: number) => {
@@ -590,8 +601,40 @@ export default function LearnModeScreen() {
             </View>
           )}
 
-          {/* Speed Control */}
+          {/* Voice: a reciter, or the app reading the words */}
           <View style={[styles.controlSection, { marginTop: showRangeSelector ? 20 : 0 }]}>
+            <Text style={styles.controlLabel}>{t('surahLearnMode.voice')}</Text>
+            <View style={styles.controlButtons}>
+              {[false, true].map((learning) => (
+                <Pressable
+                  key={String(learning)}
+                  style={[
+                    styles.voiceButton,
+                    useLearningVoice === learning && styles.controlButtonActive,
+                  ]}
+                  onPress={() => handleVoiceChange(learning)}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: useLearningVoice === learning }}
+                >
+                  <Text
+                    style={[
+                      styles.controlButtonText,
+                      useLearningVoice === learning && styles.controlButtonTextActive,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {learning ? t('surahLearnMode.voiceLearning') : t('surahLearnMode.voiceReciter')}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+            <Text style={styles.voiceNote}>
+              {useLearningVoice ? t('surahLearnMode.voiceLearningNote') : t('surahLearnMode.voiceReciterNote')}
+            </Text>
+          </View>
+
+          {/* Speed Control */}
+          <View style={styles.controlSection}>
             <Text style={styles.controlLabel}>{t('surahLearnMode.speed')}</Text>
             <View style={styles.controlButtons}>
               {SPEED_OPTIONS.map((speed) => (
@@ -978,6 +1021,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+  },
+  // Two words, not a number: the voice buttons carry a label, so they share
+  // the row rather than sitting in the same narrow pill as "1.5x".
+  voiceButton: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: radius.full,
+    backgroundColor: color.surfaceSunken,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  voiceNote: {
+    marginTop: 8,
+    fontSize: 12,
+    lineHeight: 18,
+    color: color.textMuted,
   },
   controlButton: {
     paddingHorizontal: 14,

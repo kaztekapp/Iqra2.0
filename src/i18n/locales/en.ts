@@ -1235,6 +1235,11 @@ export default {
     completeTheSentence: 'Complete the sentence:',
   },
   surahLearnMode: {
+    voice: 'Voice',
+    voiceReciter: 'Reciter',
+    voiceLearning: 'Learning voice',
+    voiceReciterNote: 'The recitation, in tajwid, by the reciter you chose.',
+    voiceLearningNote: 'The app reads the verse plainly, word by word. For following the words, not for listening to the Quran.',
     surahNotFound: 'Surah not found',
     loadingVerses: 'Loading verses...',
     learnMode: 'Learn Mode',

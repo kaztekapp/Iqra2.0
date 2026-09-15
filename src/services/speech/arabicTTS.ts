@@ -166,6 +166,27 @@ function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
   });
 }
 
+/**
+ * One ayah in Hamed's voice, as a playable file.
+ *
+ * The Quran screen offers this beside the reciters: a learner following the
+ * words wants them read plainly and slowly, which a recitation in tajwid does
+ * not do. It is deliberately not a reciter and never pretends to be one.
+ *
+ * A whole ayah can be long, so this gets its own budget rather than the one
+ * a line of a story gets.
+ */
+export async function synthesizeAyahToFile(text: string, speed = 1): Promise<string> {
+  const spoken = normalizeArabicForSpeech(text);
+  if (!spoken) throw new Error('tts_empty');
+  const bytes = await withBudget(
+    edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)),
+    45000
+  );
+  if (!bytes.length) throw new Error('tts_empty');
+  return writeChunk(bytes);
+}
+
 export function forgiveArabicEdge(): void {
   edgeUnavailableUntil = 0;
   edgeStrikes = 0;
