@@ -34,6 +34,7 @@ import {
   setArabicNowPlaying,
   prepareArabic,
   discardPreparedArabic,
+  setArabicVoiceGender,
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
@@ -130,6 +131,7 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   }, [speed]);
   useEffect(() => {
     storyAudioService.setGender(voice);
+    setArabicVoiceGender(voice);
   }, [voice]);
 
   /**
@@ -366,6 +368,7 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
       if (next === voice) return;
       storeVoice(next);
       storyAudioService.setGender(next);
+      setArabicVoiceGender(next);
 
       // Take effect on the sentence being read, not the one after it.
       // Deferring it is what made the switch feel broken: tap male, and a

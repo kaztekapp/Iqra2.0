@@ -17,6 +17,7 @@ import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioB
 import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import { normalizeArabicForSpeech } from '../narrationText';
+import { synthesize as edgeSynthesize, voiceFor as edgeVoiceFor } from '../edgeTts';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
@@ -113,16 +114,48 @@ function googleTtsSpeed(speed: number): number {
 }
 
 /**
- * Fetch one chunk as an mp3.
+ * Map a requested speed onto an Edge prosody rate.
  *
- * `speed` goes into the request, not into playback. Google re-synthesises at
- * the requested tempo with the articulation a learner needs; time-stretching
- * the finished mp3 afterwards smears it and is why slow Arabic sounded bad.
+ * Edge takes a real percentage, so the learner's three tempos map to three
+ * distinct rates instead of Google's byte-identical clips above 0.5.
  */
-async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
+function edgeRate(speed: number): string {
+  if (speed >= 0.9) return '-4%';   // normal, same as the story narrator
+  if (speed >= 0.45) return '-30%'; // slow
+  return '-50%';                    // slowest, for picking a word apart
+}
+
+/**
+ * When the Edge voice last failed, it is left alone for this long so that a
+ * dead socket does not add its timeout to every chunk of a long dua; Google
+ * carries the line meanwhile. A voice change forgives it early.
+ */
+const EDGE_BACKOFF_MS = 3 * 60 * 1000;
+let edgeUnavailableUntil = 0;
+
+export function forgiveArabicEdge(): void {
+  edgeUnavailableUntil = 0;
+}
+
+function writeChunk(bytes: Uint8Array): string {
+  const file = new File(
+    Paths.cache,
+    `ar-tts-${Date.now()}-${Math.random().toString(36).slice(2)}.mp3`
+  );
+  file.write(bytes);
+  return file.uri;
+}
+
+/** The same neural voice the English and French narrators use, in Arabic. */
+async function fetchChunkFromEdge(spoken: string, speed: number): Promise<string> {
+  const voice = edgeVoiceFor('ar', preferredGender);
+  const bytes = await edgeSynthesize(spoken, voice, 'ar', edgeRate(speed));
+  if (!bytes.length) throw new Error('tts_empty');
+  return writeChunk(bytes);
+}
+
+async function fetchChunkFromGoogle(spoken: string, speed: number): Promise<string> {
   const ttsSpeed = googleTtsSpeed(speed);
-  // The mushaf marks make some voices spell the word out; send plain Arabic.
-  const spoken = normalizeArabicForSpeech(text);
   const url =
     `https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&ttsspeed=${ttsSpeed}&q=` +
     encodeURIComponent(spoken);
@@ -142,13 +175,28 @@ async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
   const binary = atob(base64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return writeChunk(bytes);
+}
 
-  const file = new File(
-    Paths.cache,
-    `ar-tts-${Date.now()}-${Math.random().toString(36).slice(2)}.mp3`
-  );
-  file.write(bytes);
-  return file.uri;
+/**
+ * Fetch one chunk as an mp3: the Edge neural voice first, Google if Edge is
+ * down or resting.
+ *
+ * `speed` goes into the request, not into playback. Both engines re-synthesise
+ * at the requested tempo with the articulation a learner needs; time-stretching
+ * the finished mp3 afterwards smears it and is why slow Arabic sounded bad.
+ */
+async function fetchChunkToFile(text: string, speed = 1): Promise<string> {
+  // The mushaf marks make some voices spell the word out; send plain Arabic.
+  const spoken = normalizeArabicForSpeech(text);
+  if (Date.now() >= edgeUnavailableUntil) {
+    try {
+      return await fetchChunkFromEdge(spoken, speed);
+    } catch {
+      edgeUnavailableUntil = Date.now() + EDGE_BACKOFF_MS;
+    }
+  }
+  return fetchChunkFromGoogle(spoken, speed);
 }
 
 /** Nothing has started playing by now: the clip is not going to. */
@@ -438,6 +486,7 @@ export function setArabicVoiceGender(gender: 'female' | 'male') {
   if (gender !== preferredGender) {
     preferredGender = gender;
     voicePromise = null; // re-resolve on next use
+    forgiveArabicEdge();
   }
 }
 

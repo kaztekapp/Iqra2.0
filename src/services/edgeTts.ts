@@ -37,13 +37,18 @@ const SYNTH_IDLE_TIMEOUT_MS = 15000;
 const SYNTH_MAX_MS = 120000;
 
 export type EdgeGender = 'female' | 'male';
-export type EdgeLang = 'en' | 'fr';
+export type EdgeLang = 'en' | 'fr' | 'ar';
 
 /** Warm, unhurried voices. Christopher is the one opus-report narrates with. */
 const VOICES: Record<EdgeLang, Record<EdgeGender, string>> = {
   en: { female: 'en-US-AriaNeural', male: 'en-US-ChristopherNeural' },
   fr: { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural' },
+  // The Saudi pair reads full tashkeel cleanly; chosen over the Egyptian pair
+  // for duas and hadith, where every vowel mark matters.
+  ar: { female: 'ar-SA-ZariyahNeural', male: 'ar-SA-HamedNeural' },
 };
+
+const LOCALES: Record<EdgeLang, string> = { en: 'en-US', fr: 'fr-FR', ar: 'ar-SA' };
 
 export function voiceFor(lang: EdgeLang, gender: EdgeGender): string {
   return VOICES[lang][gender];
@@ -198,7 +203,7 @@ export function synthesize(text: string, voice: string, lang: EdgeLang, rate = '
           `{"context":{"synthesis":{"audio":{"metadataoptions":{"sentenceBoundaryEnabled":"false",` +
           `"wordBoundaryEnabled":"false"},"outputFormat":"audio-24khz-48kbitrate-mono-mp3"}}}}`
       );
-      const locale = lang === 'fr' ? 'fr-FR' : 'en-US';
+      const locale = LOCALES[lang];
       const ssml =
         `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${locale}'>` +
         `<voice name='${voice}'><prosody pitch='+0Hz' rate='${rate}' volume='+0%'>${escapeXml(text)}</prosody>` +
