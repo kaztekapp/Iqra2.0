@@ -8,6 +8,9 @@ import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
+
+/** What the player calls the app's own voice, in Arabic. */
+const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 import { useAudioPlayerStore, startContinuousPlay } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 import { color, radius } from '../../../../src/theme/tokens';
@@ -53,9 +56,11 @@ export default function LearnModeScreen() {
   const isPlayingRef = useRef(false);
   const playbackSpeedRef = useRef(playbackSpeed);
   // Recitation, or the app's own Arabic voice reading the words plainly.
-  // Only Learn mode offers the choice: elsewhere the Quran is recited.
-  const [useLearningVoice, setUseLearningVoice] = useState(false);
-  const learningVoiceRef = useRef(false);
+  // Only Learn mode offers the choice: elsewhere the Quran is recited. It
+  // starts on the learning voice, because that is what this screen is for -
+  // someone working through the words, who can switch to a reciter in a tap.
+  const [useLearningVoice, setUseLearningVoice] = useState(true);
+  const learningVoiceRef = useRef(true);
 
   const currentAyah = ayahs[currentAyahIndex];
 
@@ -67,6 +72,15 @@ export default function LearnModeScreen() {
       endVerseRef.current = ayahs.length;
     }
   }, [ayahs.length]);
+
+  // The verse on screen, made ready before it is asked for. Opening Learn mode
+  // and pressing play should not begin with a wait, and the clip is kept, so
+  // this costs one round trip the first time and nothing after.
+  useEffect(() => {
+    if (!useLearningVoice) return;
+    const ayah = ayahs[currentAyahIndex];
+    if (ayah?.textUthmani) quranAudioService.prewarmSpokenAyah(ayah.textUthmani);
+  }, [useLearningVoice, ayahs, currentAyahIndex]);
 
   // Sync learn screen UI when mini player / startContinuousPlay advances ayahs
   const storeAyahNumber = useAudioPlayerStore((s) => s.currentlyPlaying?.ayahNumber);
@@ -114,8 +128,14 @@ export default function LearnModeScreen() {
       surahNameEnglish: surah.nameEnglish,
       ayahNumber,
       totalAyahs: surah.ayahCount,
-      reciterName: currentReciter.nameEnglish,
-      reciterNameArabic: currentReciter.nameArabic,
+      // Name the voice that is actually reading. The player used to say
+      // "Mishary Rashid Alafasy" while the app's own voice read the verse.
+      reciterName: learningVoiceRef.current
+        ? t('surahLearnMode.voiceLearning')
+        : currentReciter.nameEnglish,
+      reciterNameArabic: learningVoiceRef.current
+        ? LEARNING_VOICE_ARABIC
+        : currentReciter.nameArabic,
       isPlayingAll: true,
       source: 'learn',
     });
@@ -239,8 +259,21 @@ export default function LearnModeScreen() {
   };
 
   const handleVoiceChange = (learning: boolean) => {
+    if (learning === learningVoiceRef.current) return;
     setUseLearningVoice(learning);
     learningVoiceRef.current = learning;
+
+    // Change it under the reader, not at the end of the verse. Picking the
+    // same verse up again in the new voice is what the tap means; finishing
+    // in the old one and changing later feels like the switch did nothing.
+    if (isPlayingRef.current && (audioState === 'playing' || audioState === 'loading')) {
+      currentRepeatRef.current = 0;
+      setCurrentRepeat(0);
+      playLearnAyah(currentAyah.ayahNumber);
+    } else if (learning) {
+      // Not playing: make the verse now, so the first press starts at once.
+      quranAudioService.prewarmSpokenAyah(currentAyah?.textUthmani);
+    }
   };
 
   const handleSpeedChange = (speed: number) => {
