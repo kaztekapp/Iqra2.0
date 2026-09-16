@@ -671,7 +671,9 @@ export default function LearnModeScreen() {
           <View style={[styles.controlSection, { marginTop: showRangeSelector ? 20 : 0 }]}>
             <Text style={styles.controlLabel}>{t('surahLearnMode.voice')}</Text>
             <View style={styles.controlButtons}>
-              {[false, true].map((learning) => (
+              {/* The learning voice first: it is what this screen opens in, and
+                  the selected option should not be the second one. */}
+              {[true, false].map((learning) => (
                 <Pressable
                   key={String(learning)}
                   style={[
