@@ -18,6 +18,13 @@ import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import { normalizeArabicForSpeech } from '../narrationText';
 import { synthesize as edgeSynthesize } from '../edgeTts';
+import {
+  clipName,
+  findClip,
+  isKeptClip,
+  keepClip,
+  pruneClips,
+} from './arabicVoiceCache';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
@@ -76,6 +83,9 @@ function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
 }
 
 function deleteQuietly(uri: string) {
+  // A kept clip is the whole point of the store: it outlives the line that
+  // played it. Only the temporary files are swept up here.
+  if (isKeptClip(uri)) return;
   try {
     new File(uri).delete();
   } catch {}
@@ -179,12 +189,36 @@ function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
 export async function synthesizeAyahToFile(text: string, speed = 1): Promise<string> {
   const spoken = normalizeArabicForSpeech(text);
   if (!spoken) throw new Error('tts_empty');
-  const bytes = await withBudget(
-    edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)),
-    45000
-  );
+  const rate = edgeRate(speed);
+  const name = clipName(spoken, ARABIC_VOICE, rate);
+  const kept = findClip(spoken, ARABIC_VOICE, rate);
+  if (kept) return kept;
+  const bytes = await withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), 45000);
   if (!bytes.length) throw new Error('tts_empty');
+  const saved = keepClip(name, bytes);
+  if (saved) {
+    pruneClips();
+    return saved;
+  }
   return writeChunk(bytes);
+}
+
+/** True when this Arabic line can be read with no network. */
+export function hasArabicClip(text: string, speed = 1): boolean {
+  const spoken = normalizeArabicForSpeech(text);
+  if (!spoken) return true;
+  return chunkLine(spoken).every(
+    (chunk) => findClip(chunk, ARABIC_VOICE, edgeRate(speed)) !== null
+  );
+}
+
+/** Put this Arabic line in the store, so it reads offline later. */
+export async function saveArabicClip(text: string, speed = 1): Promise<void> {
+  const line = text?.trim();
+  if (!line) return;
+  for (const chunk of chunkLine(line)) {
+    await fetchChunkToFile(chunk, speed, true, true);
+  }
 }
 
 export function forgiveArabicEdge(): void {
@@ -255,6 +289,13 @@ async function fetchChunkToFile(
 ): Promise<string> {
   // The mushaf marks make some voices spell the word out; send plain Arabic.
   const spoken = normalizeArabicForSpeech(text);
+
+  // A line said before is already on the phone. This look-up comes before
+  // everything else - before the rest, before any thought of a network - so a
+  // dua heard once reads back with no signal at all.
+  const kept = findClip(spoken, ARABIC_VOICE, edgeRate(speed));
+  if (kept) return kept;
+
   // `force` is the second try at a line that is about to be lost. Resting the
   // voice is meant to save a queue of lines from waiting on a dead socket; it
   // is not worth dropping the ayah in front of the reader for.

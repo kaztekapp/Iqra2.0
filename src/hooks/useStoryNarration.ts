@@ -36,6 +36,8 @@ import {
   discardPreparedArabic,
   setArabicVoiceGender,
   forgiveArabicEdge,
+  hasArabicClip,
+  saveArabicClip,
 } from '../services/speech/arabicTTS';
 
 export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
@@ -423,6 +425,45 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     paceRef.current = next;
   }, []);
 
+  /**
+   * Keep this reading on the phone.
+   *
+   * Walks the same lines the reader would hear, in the same voices, and asks
+   * each engine to store its clip. Afterwards the whole thing plays with no
+   * signal. Lines already stored cost nothing, so this is also how a part-saved
+   * reading is finished.
+   */
+  const saveOffline = useCallback(
+    async (onProgress?: (done: number, total: number) => void) => {
+      const total = utterances.length;
+      for (let i = 0; i < total; i++) {
+        const u = utterances[i];
+        try {
+          if (u.lang === 'ar') await saveArabicClip(u.text, ARABIC_PACE_RATE[paceRef.current]);
+          else await storyAudioService.saveClip(u.text, lang);
+        } catch {
+          // One line that will not save should not stop the rest; the reader
+          // gets it from the network when they reach it.
+        }
+        onProgress?.(i + 1, total);
+      }
+    },
+    [utterances, lang]
+  );
+
+  /** How much of this reading is already on the phone. */
+  const offlineCount = useCallback(
+    () =>
+      utterances.reduce((n, u) => {
+        const stored =
+          u.lang === 'ar'
+            ? hasArabicClip(u.text, ARABIC_PACE_RATE[paceRef.current])
+            : storyAudioService.hasClip(u.text, lang);
+        return n + (stored ? 1 : 0);
+      }, 0),
+    [utterances, lang]
+  );
+
   const togglePace = useCallback(() => {
     setPace(paceRef.current === 'normal' ? 'slow' : 'normal');
   }, [setPace]);
@@ -533,6 +574,9 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     seekToFraction,
     setPace,
     togglePace,
+    saveOffline,
+    offlineCount,
+    utteranceCount: utterances.length,
   };
 }
 

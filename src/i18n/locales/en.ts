@@ -847,6 +847,8 @@ export default {
     male: 'Male',
     oneVoice: '1 Voice',
     arabicVoice: 'Voice',
+    saveOffline: 'Save for offline',
+    savedOffline: 'Saved',
     chooseVoice: 'Choose the Arabic voice',
     onlineVoice: 'Hamed, natural voice',
     onlineVoiceDesc: 'The neural voice that reads full tashkeel. Needs a connection; without one the app uses a voice from this phone.',

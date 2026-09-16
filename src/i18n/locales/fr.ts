@@ -847,6 +847,8 @@ export default {
     male: 'Masculin',
     oneVoice: '1 Voix',
     arabicVoice: 'Voix',
+    saveOffline: 'Enregistrer hors ligne',
+    savedOffline: 'Enregistré',
     chooseVoice: 'Choisir la voix arabe',
     onlineVoice: 'Hamed, voix naturelle',
     onlineVoiceDesc: 'La voix neuronale qui lit le tashkil complet. Nécessite une connexion ; sans connexion, l\'app utilise une voix de ce téléphone.',

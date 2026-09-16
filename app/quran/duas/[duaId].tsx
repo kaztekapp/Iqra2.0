@@ -104,7 +104,25 @@ export default function DuaDetailScreen() {
     [dua, lc, categoryLabel]
   );
   const narration = useStoryNarration(blocks, nowPlaying);
+
+  // Keeping this dua on the phone: idle, saving (with a count), or done.
+  const [offline, setOffline] = useState<'unknown' | 'partial' | 'saved'>('unknown');
+  const [saving, setSaving] = useState<number | null>(null);
   const readingId = narration.isActive ? narration.currentBlockId : null;
+
+  useEffect(() => {
+    if (saving !== null) return;
+    const have = narration.offlineCount();
+    setOffline(have >= narration.utteranceCount && narration.utteranceCount > 0 ? 'saved' : 'partial');
+  }, [narration, saving]);
+
+  const handleSaveOffline = useCallback(async () => {
+    if (saving !== null || offline === 'saved') return;
+    setSaving(0);
+    await narration.saveOffline((done, total) => setSaving(Math.round((done / total) * 100)));
+    setSaving(null);
+    setOffline(narration.offlineCount() >= narration.utteranceCount ? 'saved' : 'partial');
+  }, [narration, offline, saving]);
 
 
   // Track view
@@ -275,6 +293,27 @@ export default function DuaDetailScreen() {
               <Ionicons name="chevron-down" size={14} color={color.textFaint} />
             </Pressable>
 
+
+            <Pressable
+              style={styles.offlineButton}
+              onPress={handleSaveOffline}
+              disabled={saving !== null || offline === 'saved'}
+              accessibilityRole="button"
+              accessibilityLabel={t('duasFeature.saveOffline')}
+            >
+              <Ionicons
+                name={offline === 'saved' ? 'checkmark-circle' : 'arrow-down-circle-outline'}
+                size={18}
+                color={offline === 'saved' ? color.accentStrong : color.accent}
+              />
+              <Text style={styles.offlineText} numberOfLines={1}>
+                {saving !== null
+                  ? `${saving}%`
+                  : offline === 'saved'
+                    ? t('duasFeature.savedOffline')
+                    : t('duasFeature.saveOffline')}
+              </Text>
+            </Pressable>
 
             <Pressable
               style={[styles.playButton, narration.isActive && styles.playButtonActive]}
@@ -568,6 +607,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     gap: 12,
+  },
+  offlineButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: radius.full,
+    backgroundColor: color.surfaceSunken,
+  },
+  offlineText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: color.accentStrong,
   },
   voiceButton: {
     flexDirection: 'row',

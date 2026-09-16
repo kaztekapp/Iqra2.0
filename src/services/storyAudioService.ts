@@ -52,7 +52,14 @@ import type { AudioMetadata } from 'expo-audio';
 import type { AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import { File, Paths } from 'expo-file-system';
-import { synthesizeToFile } from './edgeTts';
+import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
+import {
+  clipName,
+  findClip,
+  isKeptClip,
+  keepClip,
+  pruneClips,
+} from './speech/arabicVoiceCache';
 import { chunkForUrl } from './narrationText';
 
 export type SpeakResult = 'done' | 'stopped' | 'error';
@@ -133,6 +140,9 @@ const NETWORK_BACKOFF_MS = 30_000;
  */
 const SESSION_BACKOFF_MS = 5 * 60 * 1000;
 
+/** The rate the neural narrators read at, and part of a kept clip's name. */
+const EDGE_RATE = '-4%';
+
 export function estimateSeconds(text: string, speed: number): number {
   const words = text.trim().split(/\s+/).filter(Boolean).length;
   return (words / WORDS_PER_MINUTE) * 60 * (1 / (speed || 1));
@@ -140,6 +150,8 @@ export function estimateSeconds(text: string, speed: number): number {
 
 /** Best-effort cleanup of a synthesized clip. */
 function deleteQuietly(uri: string) {
+  // Kept clips are the offline store; only temporary files are swept here.
+  if (isKeptClip(uri)) return;
   try {
     new File(uri).delete();
   } catch {
@@ -489,7 +501,7 @@ class StoryAudioService {
     if (this.prepared.has(key) || this.prepared.size >= 3) return;
     this.prepared.set(
       key,
-      synthesizeToFile(body, lang, this.gender).catch((e) => {
+      this.edgeClip(body, lang).catch((e) => {
         this.prepared.delete(key);
         throw e;
       })
@@ -579,6 +591,42 @@ class StoryAudioService {
    * sentence, no clip seams: the socket takes the whole sentence, unlike the
    * URL endpoint below which has to be fed in 180-character pieces.
    */
+  /**
+   * A sentence in the neural voice, kept on the phone.
+   *
+   * The same store the Arabic uses: a sentence said once is there the next
+   * time, with or without a signal. Falls back to a temporary file when the
+   * store is unavailable, so a full disk costs offline playback and not this
+   * reading.
+   */
+  private async edgeClip(body: string, lang: NarrationLang): Promise<string> {
+    const voice = voiceFor(lang, this.gender);
+    const kept = findClip(body, voice, EDGE_RATE);
+    if (kept) return kept;
+    const bytes = await edgeSynthesize(body, voice, lang, EDGE_RATE);
+    if (!bytes.length) throw new Error('edge-tts-empty');
+    const saved = keepClip(clipName(body, voice, EDGE_RATE), bytes);
+    if (saved) {
+      pruneClips();
+      return saved;
+    }
+    return synthesizeToFile(body, lang, this.gender);
+  }
+
+  /** True when this sentence can be read with no network. */
+  hasClip(body: string, lang: NarrationLang): boolean {
+    const text = body?.trim();
+    if (!text) return true;
+    return findClip(text, voiceFor(lang, this.gender), EDGE_RATE) !== null;
+  }
+
+  /** Put this sentence in the store, so it reads offline later. */
+  async saveClip(body: string, lang: NarrationLang): Promise<void> {
+    const text = body?.trim();
+    if (!text) return;
+    await this.edgeClip(text, lang);
+  }
+
   private async speakEdge(
     body: string,
     speed: number,
@@ -589,7 +637,7 @@ class StoryAudioService {
       const key = this.preparedKey(body, lang);
       const ahead = this.prepared.get(key);
       this.prepared.delete(key);
-      const uri = ahead ? await ahead : await synthesizeToFile(body, lang, this.gender);
+      const uri = ahead ? await ahead : await this.edgeClip(body, lang);
       if (generation !== this.generation) {
         deleteQuietly(uri);
         return 'stopped';
