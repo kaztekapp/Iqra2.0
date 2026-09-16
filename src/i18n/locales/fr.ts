@@ -847,7 +847,7 @@ export default {
     male: 'Masculin',
     oneVoice: '1 Voix',
     arabicVoice: 'Voix',
-    saveOffline: 'Enregistrer hors ligne',
+    saveOffline: 'Hors ligne',
     savedOffline: 'Enregistré',
     chooseVoice: 'Choisir la voix arabe',
     onlineVoice: 'Hamed, voix naturelle',

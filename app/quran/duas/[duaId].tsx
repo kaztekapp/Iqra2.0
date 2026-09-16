@@ -108,6 +108,9 @@ export default function DuaDetailScreen() {
   // Keeping this dua on the phone: idle, saving (with a count), or done.
   const [offline, setOffline] = useState<'unknown' | 'partial' | 'saved'>('unknown');
   const [saving, setSaving] = useState<number | null>(null);
+  // A save is worth confirming, once. After that the dua is simply ready, and
+  // a button offering to do what is already done is clutter on the card.
+  const [justSaved, setJustSaved] = useState(false);
   const readingId = narration.isActive ? narration.currentBlockId : null;
 
   useEffect(() => {
@@ -121,8 +124,16 @@ export default function DuaDetailScreen() {
     setSaving(0);
     await narration.saveOffline((done, total) => setSaving(Math.round((done / total) * 100)));
     setSaving(null);
-    setOffline(narration.offlineCount() >= narration.utteranceCount ? 'saved' : 'partial');
+    const done = narration.offlineCount() >= narration.utteranceCount;
+    setOffline(done ? 'saved' : 'partial');
+    if (done) setJustSaved(true);
   }, [narration, offline, saving]);
+
+  useEffect(() => {
+    if (!justSaved) return;
+    const timer = setTimeout(() => setJustSaved(false), 2600);
+    return () => clearTimeout(timer);
+  }, [justSaved]);
 
 
   // Track view
@@ -285,35 +296,46 @@ export default function DuaDetailScreen() {
         <View style={[styles.arabicCard, readingId === `${dua.id}-dua` && styles.reading]}>
           <Text style={styles.arabicText}>{dua.arabicText}</Text>
 
-          {/* Audio Controls */}
+          {/* Audio Controls: what it sounds like, then the one action */}
           <View style={styles.audioControls}>
-            <Pressable style={styles.voiceButton} onPress={openVoiceSheet} accessibilityRole="button" accessibilityLabel={t('duasFeature.chooseVoice')}>
-              <Ionicons name={voiceSource === 'device' ? 'phone-portrait-outline' : 'pulse-outline'} size={18} color={color.accent} />
-              <Text style={[styles.voiceText, styles.voiceTextFemale]} numberOfLines={1}>{voiceLabel}</Text>
-              <Ionicons name="chevron-down" size={14} color={color.textFaint} />
-            </Pressable>
+            <View style={styles.audioSettingsRow}>
+              <Pressable style={styles.voiceButton} onPress={openVoiceSheet} accessibilityRole="button" accessibilityLabel={t('duasFeature.chooseVoice')}>
+                <Ionicons name={voiceSource === 'device' ? 'phone-portrait-outline' : 'pulse-outline'} size={18} color={color.accent} />
+                <Text style={[styles.voiceText, styles.voiceTextFemale]} numberOfLines={1}>{voiceLabel}</Text>
+                {offline === 'saved' && !justSaved && saving === null && (
+                  <Ionicons
+                    name="cloud-done"
+                    size={14}
+                    color={color.accentStrong}
+                    accessibilityLabel={t('duasFeature.savedOffline')}
+                  />
+                )}
+                <Ionicons name="chevron-down" size={14} color={color.textFaint} />
+              </Pressable>
 
-
-            <Pressable
-              style={styles.offlineButton}
-              onPress={handleSaveOffline}
-              disabled={saving !== null || offline === 'saved'}
-              accessibilityRole="button"
-              accessibilityLabel={t('duasFeature.saveOffline')}
-            >
-              <Ionicons
-                name={offline === 'saved' ? 'checkmark-circle' : 'arrow-down-circle-outline'}
-                size={18}
-                color={offline === 'saved' ? color.accentStrong : color.accent}
-              />
-              <Text style={styles.offlineText} numberOfLines={1}>
-                {saving !== null
-                  ? `${saving}%`
-                  : offline === 'saved'
-                    ? t('duasFeature.savedOffline')
-                    : t('duasFeature.saveOffline')}
-              </Text>
-            </Pressable>
+              {(offline !== 'saved' || justSaved || saving !== null) && (
+                <Pressable
+                  style={styles.offlineButton}
+                  onPress={handleSaveOffline}
+                  disabled={saving !== null || offline === 'saved'}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('duasFeature.saveOffline')}
+                >
+                  <Ionicons
+                    name={offline === 'saved' ? 'checkmark-circle' : 'arrow-down-circle-outline'}
+                    size={18}
+                    color={offline === 'saved' ? color.accentStrong : color.accent}
+                  />
+                  <Text style={styles.offlineText} numberOfLines={1}>
+                    {saving !== null
+                      ? `${saving}%`
+                      : offline === 'saved'
+                        ? t('duasFeature.savedOffline')
+                        : t('duasFeature.saveOffline')}
+                  </Text>
+                </Pressable>
+              )}
+            </View>
 
             <Pressable
               style={[styles.playButton, narration.isActive && styles.playButtonActive]}
@@ -601,20 +623,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     writingDirection: 'rtl',
   },
+  // Three controls did not fit on one line - in French the voice name alone
+  // fills half the card - so the two that describe the reading sit together
+  // and the one that starts it spans the card underneath.
   audioControls: {
+    marginTop: 20,
+    gap: 10,
+  },
+  audioSettingsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    gap: 12,
+    gap: 8,
   },
   offlineButton: {
+    flexShrink: 0,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 12,
-    borderRadius: radius.full,
+    borderRadius: radius.sm,
     backgroundColor: color.surfaceSunken,
   },
   offlineText: {
@@ -623,6 +651,8 @@ const styles = StyleSheet.create({
     color: color.accentStrong,
   },
   voiceButton: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: color.surfaceRaised,
@@ -632,6 +662,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   voiceText: {
+    flexShrink: 1,
     fontSize: 13,
     fontWeight: '600',
   },
@@ -670,9 +701,10 @@ const styles = StyleSheet.create({
   playButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: color.accentStrong,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: radius.sm,
     gap: 8,
   },
