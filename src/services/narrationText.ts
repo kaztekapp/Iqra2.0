@@ -85,7 +85,24 @@ export function normalizeArabicForSpeech(input: string): string {
     // that survived every other rule here. Rebuild it as a real ya-seat hamza
     // and keep whatever haraka rode on the stroke. Must run before the tatweel
     // is removed.
+    // The same long ā, written on the mushaf's dummy stroke: tatweel + hamza +
+    // fatha + alef, as in al-ākhirah, bi-āyātinā, yā-Ādam. It has to be caught
+    // BEFORE the stroke becomes a ya-seat below, or the word is read with a
+    // seat vowel and then the alif - the same doubling again. 360 places.
+    .replace(/\u0640\u0654\u064E\u0627/g, '\u0622')
+    // al-āna ("now") writes that same long ā with a dagger instead of an alef:
+    // stroke, hamza, fatha, stroke, dagger. Same word, same merge.
+    .replace(/\u0640\u0654\u064E\u0640?\u0670/g, '\u0622')
     .replace(/\u0640([\u064B-\u0652]*)\u0654/g, '\u0626$1')
+    // The mushaf writes the long ā that opens a word as hamza + fatha + alef:
+    // ءَامَنُوا, ءَادَمَ, ءَايَة, and al-Qurʾān after a sukun. Read letter by
+    // letter that is a short a and THEN a long ā - the alif said twice - where
+    // the word is a single alef-madda. Merge the three into آ, but only where
+    // the hamza opens the word (one prefix letter may precede it) or follows a
+    // sukun. Where the hamza is a real glottal stop between two vowels - raʾā,
+    // tabawwaʾā, tarāʾā - it stays, and so does its stop. 874 places.
+    .replace(/(^|[\s\u0648\u0641\u0644\u0628\u0643][\u064E\u0650]?)\u0621\u064E\u0627/g, '$1\u0622')
+    .replace(/\u0652\u0621\u064E\u0627/g, '\u0652\u0622')
     // A dagger alef on an alef maqsura is not a second letter: ʿalā, ilā,
     // Mūsā, ʿĪsā are written ى + the mark, and turning the mark into a full
     // alef spelled them ʿalayā, ilayā - a non-word, and the single commonest
