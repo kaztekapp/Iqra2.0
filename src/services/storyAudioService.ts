@@ -591,6 +591,9 @@ class StoryAudioService {
    * sentence, no clip seams: the socket takes the whole sentence, unlike the
    * URL endpoint below which has to be fed in 180-character pieces.
    */
+  /** Saves wait their turn, so they never race the sentence being read. */
+  private saveChain: Promise<unknown> = Promise.resolve();
+
   /**
    * A sentence in the neural voice, kept on the phone.
    *
@@ -630,10 +633,14 @@ class StoryAudioService {
     if (!text) return;
     const voice = voiceFor(lang, this.gender);
     if (findClip(text, voice, EDGE_RATE)) return;
-    const bytes = await edgeSynthesize(text, voice, lang, EDGE_RATE);
-    if (!bytes.length) throw new Error('edge-tts-empty');
-    await keepClip(clipName(text, voice, EDGE_RATE), bytes);
-    pruneClips();
+    const queued = this.saveChain.catch(() => {}).then(async () => {
+      const bytes = await edgeSynthesize(text, voice, lang, EDGE_RATE);
+      if (!bytes.length) throw new Error('edge-tts-empty');
+      await keepClip(clipName(text, voice, EDGE_RATE), bytes);
+      pruneClips();
+    });
+    this.saveChain = queued.catch(() => {});
+    await queued;
   }
 
   private async speakEdge(

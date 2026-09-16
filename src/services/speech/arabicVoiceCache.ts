@@ -62,15 +62,22 @@ async function ensureStore(): Promise<string | null> {
 /**
  * A name for a clip, from everything that decides how it sounds.
  *
- * djb2 over the text, the voice and the tempo. A hash collision would play the
- * wrong line, so the length goes into the name as well - two different verses
- * that collide AND match in length are not something this app will meet.
+ * A collision here would play the wrong line - the wrong verse of the Quran,
+ * in a voice that sounds certain - so the name carries two independent hashes
+ * over the text, the voice and the tempo, plus the length. djb2 multiplies by
+ * 33 and sdbm by 65599, so a pair of texts that collide in one will not
+ * collide in the other; 64 bits and a length is not a risk this app runs.
  */
 export function clipName(spoken: string, voice: string, rate: string): string {
   const seed = `${voice}|${rate}|${spoken}`;
-  let h = 5381;
-  for (let i = 0; i < seed.length; i++) h = ((h << 5) + h + seed.charCodeAt(i)) >>> 0;
-  return `${h.toString(36)}-${seed.length.toString(36)}.mp3`;
+  let a = 5381;
+  let b = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const c = seed.charCodeAt(i);
+    a = ((a << 5) + a + c) >>> 0;
+    b = (c + (b << 6) + (b << 16) - b) >>> 0;
+  }
+  return `${a.toString(36)}-${b.toString(36)}-${seed.length.toString(36)}.mp3`;
 }
 
 /**

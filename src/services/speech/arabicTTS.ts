@@ -160,6 +160,13 @@ let edgeStrikes = 0;
  */
 let edgeChain: Promise<unknown> = Promise.resolve();
 
+/** Run this synthesis after whatever is already queued. */
+function enqueueEdge<T>(work: () => Promise<T>): Promise<T> {
+  const queued = edgeChain.catch(() => {}).then(work);
+  edgeChain = queued.catch(() => {});
+  return queued;
+}
+
 function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('edge_budget')), ms);
@@ -251,9 +258,11 @@ export async function saveArabicClip(text: string, speed = 1): Promise<void> {
     if (!spoken) continue;
     const rate = edgeRate(speed);
     if (findClip(spoken, ARABIC_VOICE, rate)) continue;
-    const bytes = await withBudget(
-      edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate),
-      EDGE_BUDGET_MS
+    // Queued, not fired off: a save is a background wish, and the reader
+    // listening right now must not queue behind it or race it. This is the
+    // burst that used to wedge the reader.
+    const bytes = await enqueueEdge(() =>
+      withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), EDGE_BUDGET_MS)
     );
     if (!bytes.length) throw new Error('tts_empty');
     await keepClip(clipName(spoken, ARABIC_VOICE, rate), bytes);
@@ -296,9 +305,9 @@ async function fetchChunkFromEdge(
   // The line being read goes first. Queueing it behind the prefetch of the
   // NEXT line - which is started before it - meant every verse waited for a
   // verse nobody was listening to yet, and then ran out of budget.
-  const work = now ? attempt() : edgeChain.catch(() => {}).then(attempt);
-  // The chain waits for this attempt to settle, not to succeed.
-  edgeChain = work.catch(() => {});
+  // The line being read goes first; everything else waits its turn.
+  const work = now ? attempt() : enqueueEdge(attempt);
+  if (now) edgeChain = work.catch(() => {});
   const bytes = await work;
   if (!bytes.length) throw new Error('tts_empty');
   return writeChunk(bytes);

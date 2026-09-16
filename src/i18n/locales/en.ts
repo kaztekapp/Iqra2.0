@@ -887,6 +887,15 @@ export default {
     rakaat: 'rak\'ahs',
     sunnah: 'SUNNAH',
   },
+  voiceStorage: {
+    title: 'Voice on this phone',
+    size: '{{mb}} MB kept',
+    empty: 'Nothing kept yet',
+    desc: 'Duas, stories and verses you have listened to or saved play without a connection. Clearing frees the space; they are made again when you next listen.',
+    clear: 'Clear',
+    clearTitle: 'Clear the saved voice?',
+    clearBody: 'Everything kept here is made again the next time you listen, with a connection.',
+  },
   listen: {
     tapToStart: 'Tap any paragraph to listen from there',
     listen: 'Listen',

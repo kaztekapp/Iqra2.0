@@ -887,6 +887,15 @@ export default {
     rakaat: 'rakats',
     sunnah: 'SUNNA',
   },
+  voiceStorage: {
+    title: 'Voix sur ce téléphone',
+    size: '{{mb}} Mo conservés',
+    empty: 'Rien de conservé',
+    desc: "Les invocations, histoires et versets déjà écoutés ou enregistrés se lisent sans connexion. Effacer libère l'espace ; ils seront refaits à la prochaine écoute.",
+    clear: 'Effacer',
+    clearTitle: 'Effacer la voix enregistrée ?',
+    clearBody: 'Tout ce qui est conservé ici sera refait à la prochaine écoute, avec une connexion.',
+  },
   listen: {
     tapToStart: 'Touchez un paragraphe pour écouter à partir de là',
     listen: 'Écouter',

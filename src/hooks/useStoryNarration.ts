@@ -456,16 +456,19 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   );
 
   /** How much of this reading is already on the phone. */
+  // `pace` is in the list on purpose, not just `paceRef`: a clip saved at one
+  // pace is a different recording from the same line at another, so switching
+  // pace changes the answer and the screen has to be told to ask again.
   const offlineCount = useCallback(
     () =>
       utterances.reduce((n, u) => {
         const stored =
           u.lang === 'ar'
-            ? hasArabicClip(u.text, ARABIC_PACE_RATE[paceRef.current])
+            ? hasArabicClip(u.text, ARABIC_PACE_RATE[pace])
             : storyAudioService.hasClip(u.text, lang);
         return n + (stored ? 1 : 0);
       }, 0),
-    [utterances, lang]
+    [utterances, lang, pace]
   );
 
   const togglePace = useCallback(() => {

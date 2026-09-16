@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Alert, ActivityIndicator, TextInput, Linking, Platform, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { clipStoreSize, clearClips } from '../../src/services/speech/arabicVoiceCache';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
@@ -37,6 +38,29 @@ export default function ProfileScreen() {
 
   // ── Gamification data ──────────────────────────────────────────
   const [refreshing, setRefreshing] = useState(false);
+
+  // What the reading voices have kept on this phone. Read when the screen
+  // opens rather than watched: it only changes while something is playing or
+  // being saved, and neither happens here.
+  const [voiceBytes, setVoiceBytes] = useState(0);
+  useEffect(() => {
+    setVoiceBytes(clipStoreSize());
+  }, []);
+
+  const handleClearVoice = useCallback(() => {
+    Alert.alert(t('voiceStorage.clearTitle'), t('voiceStorage.clearBody'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('voiceStorage.clear'),
+        style: 'destructive',
+        onPress: () => {
+          clearClips();
+          setVoiceBytes(clipStoreSize());
+        },
+      },
+    ]);
+  }, [t]);
+
   const userId = useSettingsStore((s) => s.user?.id);
 
   const {
@@ -564,6 +588,36 @@ export default function ProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
             </Pressable>
+          </View>
+        </View>
+
+        {/* What the voices have kept here */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('voiceStorage.title')}</Text>
+          <View style={styles.storageCard}>
+            <View style={styles.removeAdsHeader}>
+              <View style={styles.removeAdsIcon}>
+                <Ionicons name="pulse-outline" size={24} color={color.accent} />
+              </View>
+              <View style={styles.removeAdsInfo}>
+                <Text style={styles.storageTitle}>
+                  {voiceBytes > 0
+                    ? t('voiceStorage.size', { mb: (voiceBytes / (1024 * 1024)).toFixed(1) })
+                    : t('voiceStorage.empty')}
+                </Text>
+                <Text style={styles.storageSize}>{t('voiceStorage.desc')}</Text>
+              </View>
+            </View>
+            {voiceBytes > 0 && (
+              <Pressable
+                style={styles.purchaseButton}
+                onPress={handleClearVoice}
+                accessibilityRole="button"
+                accessibilityLabel={t('voiceStorage.clear')}
+              >
+                <Text style={styles.purchaseButtonText}>{t('voiceStorage.clear')}</Text>
+              </Pressable>
+            )}
           </View>
         </View>
 
