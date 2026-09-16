@@ -176,6 +176,9 @@ function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
   });
 }
 
+/** Ayah clips being made right now, so two asks share one round trip. */
+const ayahInFlight = new Map<string, Promise<string>>();
+
 /**
  * One ayah in Hamed's voice, as a playable file.
  *
@@ -193,14 +196,31 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   const name = clipName(spoken, ARABIC_VOICE, rate);
   const kept = findClip(spoken, ARABIC_VOICE, rate);
   if (kept) return kept;
-  const bytes = await withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), 45000);
-  if (!bytes.length) throw new Error('tts_empty');
+
+  // Someone is already making this one. Learn mode starts the next verse while
+  // the current one plays, and a moment later asks for it to play: without
+  // this the second ask began a second round trip and waited out its whole
+  // length, which is the gap between two verses that the head start was meant
+  // to remove.
+  const running = ayahInFlight.get(name);
+  if (running) return running;
+
+  const work = (async () => {
+    const bytes = await withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), 45000);
+    if (!bytes.length) throw new Error('tts_empty');
+    try {
+      const saved = await keepClip(name, bytes);
+      pruneClips();
+      return saved;
+    } catch {
+      return writeChunk(bytes);
+    }
+  })();
+  ayahInFlight.set(name, work);
   try {
-    const saved = await keepClip(name, bytes);
-    pruneClips();
-    return saved;
-  } catch {
-    return writeChunk(bytes);
+    return await work;
+  } finally {
+    ayahInFlight.delete(name);
   }
 }
 
