@@ -195,29 +195,49 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   if (kept) return kept;
   const bytes = await withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), 45000);
   if (!bytes.length) throw new Error('tts_empty');
-  const saved = keepClip(name, bytes);
-  if (saved) {
+  try {
+    const saved = await keepClip(name, bytes);
     pruneClips();
     return saved;
+  } catch {
+    return writeChunk(bytes);
   }
-  return writeChunk(bytes);
 }
 
 /** True when this Arabic line can be read with no network. */
 export function hasArabicClip(text: string, speed = 1): boolean {
-  const spoken = normalizeArabicForSpeech(text);
-  if (!spoken) return true;
-  return chunkLine(spoken).every(
-    (chunk) => findClip(chunk, ARABIC_VOICE, edgeRate(speed)) !== null
-  );
+  const line = text?.trim();
+  if (!line) return true;
+  // Chunk the line, THEN normalise each chunk - the order playback uses. The
+  // other way round splits at different places, names different clips, and no
+  // saved line is ever recognised again.
+  return chunkLine(line).every((chunk) => {
+    const spoken = normalizeArabicForSpeech(chunk);
+    return !spoken || findClip(spoken, ARABIC_VOICE, edgeRate(speed)) !== null;
+  });
 }
 
-/** Put this Arabic line in the store, so it reads offline later. */
+/**
+ * Put this Arabic line in the store, so it reads offline later.
+ *
+ * Unlike playback, this throws when a line cannot be kept. The reader asked
+ * for it and is watching a percentage: silence would be a lie.
+ */
 export async function saveArabicClip(text: string, speed = 1): Promise<void> {
   const line = text?.trim();
   if (!line) return;
   for (const chunk of chunkLine(line)) {
-    await fetchChunkToFile(chunk, speed, true, true);
+    const spoken = normalizeArabicForSpeech(chunk);
+    if (!spoken) continue;
+    const rate = edgeRate(speed);
+    if (findClip(spoken, ARABIC_VOICE, rate)) continue;
+    const bytes = await withBudget(
+      edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate),
+      EDGE_BUDGET_MS
+    );
+    if (!bytes.length) throw new Error('tts_empty');
+    await keepClip(clipName(spoken, ARABIC_VOICE, rate), bytes);
+    pruneClips();
   }
 }
 

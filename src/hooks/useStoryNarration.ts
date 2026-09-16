@@ -436,17 +436,21 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
   const saveOffline = useCallback(
     async (onProgress?: (done: number, total: number) => void) => {
       const total = utterances.length;
+      let failed = 0;
       for (let i = 0; i < total; i++) {
         const u = utterances[i];
         try {
           if (u.lang === 'ar') await saveArabicClip(u.text, ARABIC_PACE_RATE[paceRef.current]);
           else await storyAudioService.saveClip(u.text, lang);
         } catch {
-          // One line that will not save should not stop the rest; the reader
-          // gets it from the network when they reach it.
+          // One line that will not save should not stop the rest - the reader
+          // gets that one from the network - but the count is returned so the
+          // screen can say the save is incomplete instead of claiming success.
+          failed += 1;
         }
         onProgress?.(i + 1, total);
       }
+      return { total, failed };
     },
     [utterances, lang]
   );

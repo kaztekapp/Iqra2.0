@@ -1,36 +1,59 @@
 /**
- * What Hamed has already said, kept on the phone.
+ * What the app's voices have already said, kept on the phone.
  *
- * Every Arabic line used to be synthesized, played, and deleted, so the same
- * dua cost a round trip every single time and was silent without a signal. A
- * clip is the same every time it is made - the same words, the same voice, the
- * same tempo - so it is worth keeping, and a line heard once can be heard
- * again on a train with no bars.
+ * Every line used to be synthesized, played, and deleted, so the same dua cost
+ * a round trip every time and was silent without a signal. A clip is the same
+ * every time it is made - the same words, the same voice, the same tempo - so
+ * it is worth keeping, and a line heard once can be heard again on a train
+ * with no bars.
  *
  * Files live beside the Quran recitations in the document directory rather
  * than in the cache directory, because the system empties the cache directory
  * whenever it wants space and offline audio that vanishes is not offline
  * audio. The store is capped and the oldest files go first.
+ *
+ * The directory is made with the legacy FileSystem call, the same one the
+ * Quran audio cache has always used on device, and the bytes are written the
+ * way every synthesized clip in this app is written. Nothing here invents a
+ * new way to touch the disk: the first version of this file did, and the
+ * result was a Save button that quietly saved nothing.
  */
+import * as LegacyFileSystem from 'expo-file-system/legacy';
 import { Directory, File, Paths } from 'expo-file-system';
 
-/** Roughly forty minutes of speech. Duas and hadith come to a third of it. */
+/** Roughly forty minutes of speech. All 100 duas come to about 7 MB. */
 const MAX_BYTES = 30 * 1024 * 1024;
 
-let dir: Directory | null = null;
+let dirUri: string | null = null;
+let dirReady = false;
 
 /**
  * `Paths.document` is native-only and throws where it is unavailable, so it is
  * read on first use and never at import: an exception at module scope would
  * take the whole bundle down before anything rendered.
  */
-function store(): Directory | null {
-  if (dir) return dir;
+function storeUri(): string | null {
+  if (dirUri) return dirUri;
   try {
-    const d = new Directory(Paths.document, 'arabic-voice');
-    if (!d.exists) d.create({ intermediates: true });
-    dir = d;
-    return d;
+    dirUri = `${Paths.document.uri}arabic-voice/`;
+    return dirUri;
+  } catch {
+    return null;
+  }
+}
+
+/** Make the directory once. Safe to call on every save. */
+async function ensureStore(): Promise<string | null> {
+  const uri = storeUri();
+  if (!uri) return null;
+  if (dirReady) return uri;
+  try {
+    const info = await LegacyFileSystem.getInfoAsync(uri);
+    if (!info.exists) {
+      await LegacyFileSystem.makeDirectoryAsync(uri, { intermediates: true });
+    }
+    dirReady = true;
+    return uri;
   } catch {
     return null;
   }
@@ -57,35 +80,40 @@ export function clipName(spoken: string, voice: string, rate: string): string {
  * how a clip is named.
  */
 export function findClip(spoken: string, voice: string, rate: string): string | null {
-  const d = store();
-  if (!d) return null;
+  const uri = storeUri();
+  if (!uri) return null;
   try {
-    const f = new File(d, clipName(spoken, voice, rate));
-    return f.exists && f.size > 0 ? f.uri : null;
+    const f = new File(uri + clipName(spoken, voice, rate));
+    return f.exists && (f.size ?? 0) > 0 ? f.uri : null;
   } catch {
     return null;
   }
 }
 
-/** Keep a clip. Returns its uri, or null if it could not be stored. */
-export function keepClip(name: string, bytes: Uint8Array): string | null {
-  const d = store();
-  if (!d) return null;
+/**
+ * Keep a clip.
+ *
+ * Throws rather than returning null when the store will not take it: a save
+ * that fails silently is what made this feature look like it worked.
+ */
+export async function keepClip(name: string, bytes: Uint8Array): Promise<string> {
+  const uri = await ensureStore();
+  if (!uri) throw new Error('voice_store_unavailable');
+  const f = new File(uri + name);
   try {
-    const f = new File(d, name);
     if (f.exists) f.delete();
-    f.create();
-    f.write(bytes);
-    return f.uri;
   } catch {
-    return null;
+    // An old clip that will not delete is not a reason to fail the write.
   }
+  f.write(bytes);
+  if (!f.exists || (f.size ?? 0) === 0) throw new Error('voice_store_write_failed');
+  return f.uri;
 }
 
 /** True when this uri is a kept clip rather than a temporary one. */
 export function isKeptClip(uri: string): boolean {
-  const d = store();
-  return !!d && uri.startsWith(d.uri);
+  const dir = storeUri();
+  return !!dir && uri.startsWith(dir);
 }
 
 /**
@@ -95,10 +123,10 @@ export function isKeptClip(uri: string): boolean {
  * something is saved, and walking the directory is cheap next to synthesis.
  */
 export function pruneClips(): void {
-  const d = store();
-  if (!d) return;
+  const uri = storeUri();
+  if (!uri || !dirReady) return;
   try {
-    const files = d.list().filter((e): e is File => e instanceof File);
+    const files = new Directory(uri).list().filter((e): e is File => e instanceof File);
     let total = 0;
     const rows: { f: File; size: number; at: number }[] = [];
     for (const f of files) {
@@ -122,12 +150,12 @@ export function pruneClips(): void {
   }
 }
 
-/** How much is stored, in bytes. For a settings screen or a download check. */
+/** How much is stored, in bytes. */
 export function clipStoreSize(): number {
-  const d = store();
-  if (!d) return 0;
+  const uri = storeUri();
+  if (!uri || !dirReady) return 0;
   try {
-    return d
+    return new Directory(uri)
       .list()
       .filter((e): e is File => e instanceof File)
       .reduce((sum, f) => sum + (f.size ?? 0), 0);
@@ -136,12 +164,12 @@ export function clipStoreSize(): number {
   }
 }
 
-/** Forget everything Hamed has said. */
+/** Forget everything the voices have said. */
 export function clearClips(): void {
-  const d = store();
-  if (!d) return;
+  const uri = storeUri();
+  if (!uri || !dirReady) return;
   try {
-    for (const e of d.list()) {
+    for (const e of new Directory(uri).list()) {
       try {
         e.delete();
       } catch {}

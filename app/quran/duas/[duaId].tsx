@@ -111,6 +111,7 @@ export default function DuaDetailScreen() {
   // A save is worth confirming, once. After that the dua is simply ready, and
   // a button offering to do what is already done is clutter on the card.
   const [justSaved, setJustSaved] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
   const readingId = narration.isActive ? narration.currentBlockId : null;
 
   useEffect(() => {
@@ -122,11 +123,15 @@ export default function DuaDetailScreen() {
   const handleSaveOffline = useCallback(async () => {
     if (saving !== null || offline === 'saved') return;
     setSaving(0);
-    await narration.saveOffline((done, total) => setSaving(Math.round((done / total) * 100)));
+    setSaveFailed(false);
+    const result = await narration.saveOffline((done, total) =>
+      setSaving(Math.round((done / total) * 100))
+    );
     setSaving(null);
-    const done = narration.offlineCount() >= narration.utteranceCount;
+    const done = result.failed === 0 && narration.offlineCount() >= narration.utteranceCount;
     setOffline(done ? 'saved' : 'partial');
     if (done) setJustSaved(true);
+    else setSaveFailed(true);
   }, [narration, offline, saving]);
 
   useEffect(() => {
@@ -134,6 +139,12 @@ export default function DuaDetailScreen() {
     const timer = setTimeout(() => setJustSaved(false), 2600);
     return () => clearTimeout(timer);
   }, [justSaved]);
+
+  useEffect(() => {
+    if (!saveFailed) return;
+    const timer = setTimeout(() => setSaveFailed(false), 5000);
+    return () => clearTimeout(timer);
+  }, [saveFailed]);
 
 
   // Track view
@@ -317,7 +328,7 @@ export default function DuaDetailScreen() {
                 <Pressable
                   style={styles.offlineButton}
                   onPress={handleSaveOffline}
-                  disabled={saving !== null || offline === 'saved'}
+                  disabled={saving !== null}
                   accessibilityRole="button"
                   accessibilityLabel={t('duasFeature.saveOffline')}
                 >
@@ -331,7 +342,9 @@ export default function DuaDetailScreen() {
                       ? `${saving}%`
                       : offline === 'saved'
                         ? t('duasFeature.savedOffline')
-                        : t('duasFeature.saveOffline')}
+                        : saveFailed
+                          ? t('duasFeature.saveOfflineFailed')
+                          : t('duasFeature.saveOffline')}
                   </Text>
                 </Pressable>
               )}

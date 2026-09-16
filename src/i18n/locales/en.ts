@@ -848,6 +848,7 @@ export default {
     oneVoice: '1 Voice',
     arabicVoice: 'Voice',
     saveOffline: 'Save offline',
+    saveOfflineFailed: 'Try again',
     savedOffline: 'Saved',
     chooseVoice: 'Choose the Arabic voice',
     onlineVoice: 'Hamed, natural voice',

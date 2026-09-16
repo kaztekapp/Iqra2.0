@@ -605,12 +605,13 @@ class StoryAudioService {
     if (kept) return kept;
     const bytes = await edgeSynthesize(body, voice, lang, EDGE_RATE);
     if (!bytes.length) throw new Error('edge-tts-empty');
-    const saved = keepClip(clipName(body, voice, EDGE_RATE), bytes);
-    if (saved) {
+    try {
+      const saved = await keepClip(clipName(body, voice, EDGE_RATE), bytes);
       pruneClips();
       return saved;
+    } catch {
+      return synthesizeToFile(body, lang, this.gender);
     }
-    return synthesizeToFile(body, lang, this.gender);
   }
 
   /** True when this sentence can be read with no network. */
@@ -620,11 +621,19 @@ class StoryAudioService {
     return findClip(text, voiceFor(lang, this.gender), EDGE_RATE) !== null;
   }
 
-  /** Put this sentence in the store, so it reads offline later. */
+  /**
+   * Put this sentence in the store, so it reads offline later. Throws if it
+   * cannot be kept: the reader pressed a button and is watching a count.
+   */
   async saveClip(body: string, lang: NarrationLang): Promise<void> {
     const text = body?.trim();
     if (!text) return;
-    await this.edgeClip(text, lang);
+    const voice = voiceFor(lang, this.gender);
+    if (findClip(text, voice, EDGE_RATE)) return;
+    const bytes = await edgeSynthesize(text, voice, lang, EDGE_RATE);
+    if (!bytes.length) throw new Error('edge-tts-empty');
+    await keepClip(clipName(text, voice, EDGE_RATE), bytes);
+    pruneClips();
   }
 
   private async speakEdge(

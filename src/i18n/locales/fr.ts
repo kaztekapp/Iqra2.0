@@ -848,6 +848,7 @@ export default {
     oneVoice: '1 Voix',
     arabicVoice: 'Voix',
     saveOffline: 'Hors ligne',
+    saveOfflineFailed: 'Réessayer',
     savedOffline: 'Enregistré',
     chooseVoice: 'Choisir la voix arabe',
     onlineVoice: 'Hamed, voix naturelle',
