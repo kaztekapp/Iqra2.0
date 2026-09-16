@@ -114,11 +114,14 @@ export default function DuaDetailScreen() {
   const [saveFailed, setSaveFailed] = useState(false);
   const readingId = narration.isActive ? narration.currentBlockId : null;
 
+  // `narration` is a fresh object every render, so depending on it here meant
+  // counting the store - a disk check per line - on every render. The count
+  // and the total are stable, and they are what this depends on.
+  const { offlineCount, utteranceCount } = narration;
   useEffect(() => {
     if (saving !== null) return;
-    const have = narration.offlineCount();
-    setOffline(have >= narration.utteranceCount && narration.utteranceCount > 0 ? 'saved' : 'partial');
-  }, [narration, saving]);
+    setOffline(offlineCount() >= utteranceCount && utteranceCount > 0 ? 'saved' : 'partial');
+  }, [offlineCount, utteranceCount, saving]);
 
   const handleSaveOffline = useCallback(async () => {
     if (saving !== null || offline === 'saved') return;

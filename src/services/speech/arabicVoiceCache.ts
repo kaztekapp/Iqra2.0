@@ -124,7 +124,10 @@ export function isKeptClip(uri: string): boolean {
  */
 export function pruneClips(): void {
   const uri = storeUri();
-  if (!uri || !dirReady) return;
+  // Not gated on the directory having been made this session: it survives
+  // restarts, and gating meant a store that was full from yesterday was never
+  // trimmed until something new was saved into it.
+  if (!uri) return;
   try {
     const files = new Directory(uri).list().filter((e): e is File => e instanceof File);
     let total = 0;
@@ -153,7 +156,7 @@ export function pruneClips(): void {
 /** How much is stored, in bytes. */
 export function clipStoreSize(): number {
   const uri = storeUri();
-  if (!uri || !dirReady) return 0;
+  if (!uri) return 0;
   try {
     return new Directory(uri)
       .list()
@@ -167,7 +170,7 @@ export function clipStoreSize(): number {
 /** Forget everything the voices have said. */
 export function clearClips(): void {
   const uri = storeUri();
-  if (!uri || !dirReady) return;
+  if (!uri) return;
   try {
     for (const e of new Directory(uri).list()) {
       try {

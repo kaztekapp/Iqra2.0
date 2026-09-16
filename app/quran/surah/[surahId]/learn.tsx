@@ -80,9 +80,17 @@ export default function LearnModeScreen() {
   useEffect(() => {
     quranAudioService.setSpokenVoice(
       useLearningVoice,
-      (_surah, ayahNumber) => ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani
+      // The surah has to match. This screen holds one surah's verses, and
+      // playback can move to the next one: answering by ayah number alone
+      // would hand back THIS surah's verse 3 to be read as that surah's verse
+      // 3 - the wrong words of the Quran, spoken confidently. Where the words
+      // are not known, no text means the reciter reads, which is correct.
+      (surahNumber, ayahNumber) =>
+        surahNumber === surah?.surahNumber
+          ? ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani
+          : undefined
     );
-  }, [useLearningVoice, ayahs]);
+  }, [useLearningVoice, ayahs, surah?.surahNumber]);
 
   useEffect(() => {
     return () => {
