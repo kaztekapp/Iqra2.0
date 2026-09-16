@@ -289,6 +289,20 @@ class QuranAudioService {
   }
 
   /**
+   * Make the next ayah's clip while this one plays.
+   *
+   * Only for the learning voice. Synthesis is a round trip, and without this
+   * every verse in Learn mode would begin with a wait; the clip is kept, so
+   * when its turn comes it starts at once. Failures are ignored: it is a
+   * head start, not a requirement.
+   */
+  prewarmSpokenAyah(text?: string): void {
+    const body = text?.trim();
+    if (!body) return;
+    synthesizeAyahToFile(body).catch(() => {});
+  }
+
+  /**
    * Play an ayah
    */
   async playAyah(
@@ -325,8 +339,8 @@ class QuranAudioService {
     // session over to the new player BEFORE tearing this one down, so the
     // iOS lock-screen controls stay alive continuously across ayahs instead
     // of flickering out between every short recitation file.
-    const previousPlayer = this.player;
-    const previousSub = this.statusSubscription;
+    let previousPlayer = this.player;
+    let previousSub = this.statusSubscription;
     this.player = null;
     this.statusSubscription = null;
 
@@ -353,8 +367,20 @@ class QuranAudioService {
       // a silent background save so the next listen needs no network.
       let url = remoteUrl;
       if (speakIt) {
-        // Nothing to cache: this file is made for this listen. The recitation
-        // cache is per reciter and would be polluted by a synthesized clip.
+        // Stop the ayah that is playing BEFORE synthesizing the next one.
+        //
+        // The handover further down is deliberately gapless: it keeps the old
+        // recitation running until the new player owns the lock screen, which
+        // is right when the next file resolves from the cache in a
+        // millisecond. Synthesis is a network round trip - a second, sometimes
+        // three - and for all of it the previous ayah would carry on reading
+        // over the top of what comes next. Two voices at once is worse than a
+        // moment of silence.
+        this.detachPlayer(previousPlayer, previousSub);
+        previousPlayer = null;
+        previousSub = null;
+        // Nothing to cache here: the recitation cache is per reciter and a
+        // synthesized clip does not belong in it. The voice keeps its own.
         url = await synthesizeAyahToFile(options!.text!);
       } else {
         try {

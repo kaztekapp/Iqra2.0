@@ -120,6 +120,14 @@ export default function LearnModeScreen() {
       source: 'learn',
     });
 
+    // With the learning voice, start making the next verse now: it is a
+    // network round trip, and the reader should not hear the wait.
+    if (learningVoiceRef.current) {
+      quranAudioService.prewarmSpokenAyah(
+        ayahs.find((a) => a.ayahNumber === ayahNumber + 1)?.textUthmani
+      );
+    }
+
     quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
       rate: playbackSpeedRef.current,
       neural: learningVoiceRef.current,
