@@ -109,6 +109,18 @@ class QuranAudioService {
   private configurationInProgress = false; // Prevent concurrent configuration
   private playCount = 0; // Track number of plays for periodic reset
 
+  /**
+   * Read with the app's own voice instead of a recitation.
+   *
+   * This is a mode, not an argument. Learn mode used to pass it call by call,
+   * and every control that did not know about it - the mini player's next and
+   * previous, the shared continuous play behind them - dropped back to the
+   * reciter mid-surah. Held here, one screen sets it and every path obeys.
+   * `ayahText` is how the service finds the words: it does not hold the mushaf.
+   */
+  private spokenVoice = false;
+  private ayahText: ((surahNumber: number, ayahNumber: number) => string | undefined) | null = null;
+
   // Track current ayah for toggle play/pause
   private currentSurah: number | null = null;
   private currentAyah: number | null = null;
@@ -288,6 +300,20 @@ class QuranAudioService {
     }
   }
 
+  /** Turn the app's own voice on or off, and say where the words come from. */
+  setSpokenVoice(
+    on: boolean,
+    ayahText?: ((surahNumber: number, ayahNumber: number) => string | undefined) | null
+  ): void {
+    this.spokenVoice = on;
+    if (ayahText !== undefined) this.ayahText = ayahText;
+  }
+
+  /** True when the app's own voice is reading. */
+  isSpokenVoice(): boolean {
+    return this.spokenVoice;
+  }
+
   /**
    * Make the next ayah's clip while this one plays.
    *
@@ -356,7 +382,12 @@ class QuranAudioService {
       this.currentAyah = ayahNumber;
       options?.onStateChange?.('loading');
 
-      const speakIt = options?.neural === true && !!options?.text?.trim();
+      // The call may name the voice and the words; otherwise the mode above
+      // answers, which is what keeps next, previous and the mini player in the
+      // voice the reader chose.
+      const wantSpoken = options?.neural ?? this.spokenVoice;
+      const spokenText = options?.text ?? this.ayahText?.(surahNumber, ayahNumber);
+      const speakIt = wantSpoken && !!spokenText?.trim();
       const remoteUrl = speakIt
         ? ''
         : this.getAyahAudioUrl(surahNumber, ayahNumber, options?.reciterId);
@@ -381,7 +412,7 @@ class QuranAudioService {
         previousSub = null;
         // Nothing to cache here: the recitation cache is per reciter and a
         // synthesized clip does not belong in it. The voice keeps its own.
-        url = await synthesizeAyahToFile(options!.text!);
+        url = await synthesizeAyahToFile(spokenText!);
       } else {
         try {
           url = await audioCacheService.getAudioUrl(remoteUrl, surahNumber, ayahNumber, reciterId);

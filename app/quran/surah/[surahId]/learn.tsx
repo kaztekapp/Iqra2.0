@@ -73,6 +73,23 @@ export default function LearnModeScreen() {
     }
   }, [ayahs.length]);
 
+  // Tell the service which voice this screen reads in, and where the words
+  // are. Every control then obeys it - the play button here, the mini player's
+  // next and previous, the chaining between verses - instead of each caller
+  // having to know. Cleared on the way out, so the rest of the app recites.
+  useEffect(() => {
+    quranAudioService.setSpokenVoice(
+      useLearningVoice,
+      (_surah, ayahNumber) => ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani
+    );
+  }, [useLearningVoice, ayahs]);
+
+  useEffect(() => {
+    return () => {
+      quranAudioService.setSpokenVoice(false, null);
+    };
+  }, []);
+
   // The verse on screen, made ready before it is asked for. Opening Learn mode
   // and pressing play should not begin with a wait, and the clip is kept, so
   // this costs one round trip the first time and nothing after.
