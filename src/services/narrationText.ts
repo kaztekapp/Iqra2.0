@@ -125,10 +125,12 @@ export function normalizeArabicForSpeech(input: string): string {
     // vowel the voice knows: hādhā, dhālika, ibrāhīm, samāwāt)
     .replace(/\u0671/g, '\u0627')
     .replace(/\u0670/g, '\u0627')
-    // A madd sign sits on an alef to make آ, which the voices need. Anywhere
-    // else - innī, qālū, ʿalā, banī - it is a reciter's elongation mark, not
-    // a letter, and it belongs with the other Quranic marks stripped below.
-    .replace(/([^\u0627\u0623\u0625\u0622])\u0653/g, '$1')
+    // The madd sign is a mark for the reciter's ear, never a letter - not on a
+    // waw or a ya, and not on an alef either. Left on an alef it composes into
+    // alef-madda further down, and the voice then reads a glottal stop and a
+    // second vowel: yatasāʾalūn became "yata-sa-a-alūn", wa-mā became
+    // "wa-ma-ā". Every one of them goes.
+    .replace(/\u0653/g, '')
     // small high honorific marks (U+0610–U+061A)
     .replace(/[\u0610-\u061A]/g, '')
     // extended combining marks that are not the standard harakat (U+0656–U+065F)
@@ -145,7 +147,30 @@ export function normalizeArabicForSpeech(input: string): string {
     // ya+hamza as a letter plus a combining mark; ordinary Arabic — and the
     // voices — expect the single characters آ ؤ ئ أ إ. NFC turns one into the
     // other, and leaves everything already composed alone.
-    .normalize('NFC');
+    .normalize('NFC')
+    // An alef carrying a madd sign before a hamza is an ordinary long ā, not
+    // the letter alef-madda: yatasāʾalūn, jāʾa, yashāʾu, as-samāʾ,
+    // al-malāʾikah, Isrāʾīl are written with it, and reading it as the letter
+    // adds a glottal stop and a second vowel - "yata-sa-a-alūn". The mark is
+    // for the reciter's ear, not for the word. 1,220 places in the stories.
+    //
+    // It only applies before a hamza or a hamza seat. Everywhere else the
+    // alef-madda is the real letter - Ādam, āyāt, al-Qurʾān - and stays.
+    // The Quran screens take their text from an API that sends that same mark
+    // already composed, as the single letter alef-madda. Mid-word and at the
+    // end it is the mark, so it becomes a plain alef; at the start of a word
+    // (one prefix letter may precede) it is the real letter - Ādam, āyāt - and
+    // is kept. The sentinel marks those before the rest are converted.
+    // Two places it is the real letter, and both are recognisable: at the start
+    // of a word (one prefix letter may precede) - Ādam, āyāt - and straight
+    // after a sukun - al-ākhirah, bil-Qurʾān. A madd mark cannot sit there: it
+    // belongs on an alef that carries the vowel of the consonant before it.
+    // Those two are set aside, the rest become a plain alef, and then they
+    // come back.
+    .replace(/(^|[\s\u0648\u0641\u0644\u0628\u0643][\u064E\u0650]?)\u0622/g, '$1\u0001')
+    .replace(/\u0652\u0622/g, '\u0652\u0001')
+    .replace(/\u0622/g, '\u0627')
+    .replace(/\u0001/g, '\u0622');
 }
 
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
