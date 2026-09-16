@@ -152,6 +152,12 @@ export function normalizeArabicForSpeech(input: string): string {
     // words, 270 places. Ordinary spelling gives them the alef, and the voice
     // needs it: a maqsura belongs at the end of a word and nowhere else.
     .replace(/\u0649(?=[\u0621-\u064A])/g, '\u0627')
+    // And at the END of a word, after a fatha, the same long ā gets its alef
+    // too - yūḥā, Mūsā, ʿalā, ilā. The letter is correct Quranic spelling and
+    // the voice half-swallows it: measured on yūḥā, the closing syllable is a
+    // weak tail with the dotless form and a fully voiced one with the alef.
+    // Nothing here is displayed, so the spelling may be the plain one.
+    .replace(/\u064E\u0649(?![\u0621-\u064A\u064B-\u0652])/g, '\u064E\u0627')
     // A silent alef after a tanwin DAMMA - the mushaf writes balāʾun with one -
     // is not sounded, and left there it adds a vowel to the end of the word.
     // Only after a damma: after a tanwin fatha the alef is ordinary spelling
