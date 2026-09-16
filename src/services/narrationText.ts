@@ -109,6 +109,14 @@ export function normalizeArabicForSpeech(input: string): string {
     // fault in the reading (2,170 places in the stories). Drop the mark and
     // leave the maqsura, which is how the word is spelled everywhere else.
     .replace(/\u0649\u0670/g, '\u0649')
+    // A dotless ya carrying a vowel is a ya, not an alef maqsura. The mushaf
+    // writes waḥyun, khizyun, shayʾ, hiya, ʿalayya, yā-bunayya with the
+    // undotted form, and read as a maqsura the word comes out wrong - waḥyun
+    // became "waḥtun". A maqsura is a long ā and never takes a vowel, so a
+    // vowel, a tanwin, a sukun or a shadda on it settles the matter. 654
+    // places in the stories. Runs after the dagger alef above, which is the
+    // one mark that leaves it a maqsura.
+    .replace(/\u0649(?=[\u064B-\u0652])/g, '\u064A')
     // A dagger alef after a waw marks a SILENT waw: ṣalāh, zakāh, ḥayāh and
     // najāh are written صلوٰة زكوٰة حيوٰة نجوٰة. Keeping both letters produced
     // ṣalawāh. The waw goes and the mark becomes the alef it stands for.
@@ -131,6 +139,24 @@ export function normalizeArabicForSpeech(input: string): string {
     // second vowel: yatasāʾalūn became "yata-sa-a-alūn", wa-mā became
     // "wa-ma-ā". Every one of them goes.
     .replace(/\u0653/g, '')
+    // A final dotless ya after a KASRA is a long ī, not an alef maqsura: fī,
+    // innī, rabbī, alladhī, lī, banī - 2,962 places, and among the commonest
+    // words in the Quran. Read as a maqsura they come out as fā, innā, rabbā.
+    // After a FATHA the same letter is the long ā it looks like - ʿalā, ilā,
+    // Mūsā, ʿĪsā - and is left alone, as is a maqsura carrying a tanwin:
+    // hudan, fatan, muṣallan. The shadda may sit between the two, as it does
+    // in innī and rabbī, where the mushaf writes the vowel before it.
+    .replace(/\u0650([\u0651\u0652]*)\u0649(?![\u064B-\u0652\u0670])/g, '\u0650$1\u064A')
+    // A dotless ya in the MIDDLE of a word is a long ā that the mushaf writes
+    // without its alef: atāka, at-Tawrāh, iḥdāhumā, li-fatāhu, narāka - 88
+    // words, 270 places. Ordinary spelling gives them the alef, and the voice
+    // needs it: a maqsura belongs at the end of a word and nowhere else.
+    .replace(/\u0649(?=[\u0621-\u064A])/g, '\u0627')
+    // A silent alef after a tanwin DAMMA - the mushaf writes balāʾun with one -
+    // is not sounded, and left there it adds a vowel to the end of the word.
+    // Only after a damma: after a tanwin fatha the alef is ordinary spelling
+    // and is the vowel itself, as in kathīran, shayʾan, qawman.
+    .replace(/\u064C\u0627(?![\u0621-\u064A])/g, '\u064C')
     // small high honorific marks (U+0610–U+061A)
     .replace(/[\u0610-\u061A]/g, '')
     // extended combining marks that are not the standard harakat (U+0656–U+065F)
