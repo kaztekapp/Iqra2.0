@@ -33,7 +33,7 @@ export default function LearnModeScreen() {
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>('idle');
-  const [playbackSpeed, setPlaybackSpeed] = useState<number>(progress.settings.playbackSpeed);
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(Math.min(progress.settings.playbackSpeed, 1.5));
   const [repeatCount, setRepeatCount] = useState(1);
   const [currentRepeat, setCurrentRepeat] = useState(0);
   const [autoAdvance, setAutoAdvance] = useState(true);
@@ -138,7 +138,7 @@ export default function LearnModeScreen() {
     );
   }
 
-  const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 1.75];
+  const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5];
   const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
 
   // Play a specific ayah and chain immediately on complete (same pattern as surah screen)

@@ -27,7 +27,7 @@ interface AyahCardProps {
   onSpeedChange?: (speed: number) => void;
 }
 
-const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 1.75];
+const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5];
 
 export function AyahCard({
   ayah,

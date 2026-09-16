@@ -51,7 +51,7 @@ interface QuranState {
 
   // Settings Actions
   setReciter: (reciterId: string) => void;
-  setPlaybackSpeed: (speed: 0.75 | 1 | 1.25 | 1.5 | 1.75) => void;
+  setPlaybackSpeed: (speed: 0.75 | 1 | 1.25 | 1.5) => void;
   setRepeatCount: (count: 1 | 3 | 5 | 10 | 0) => void;
   toggleTransliteration: () => void;
   toggleTranslation: () => void;
@@ -552,7 +552,7 @@ export const useQuranStore = create<QuranState>()(
           },
         })),
 
-      setPlaybackSpeed: (speed: 0.75 | 1 | 1.25 | 1.5 | 1.75) =>
+      setPlaybackSpeed: (speed: 0.75 | 1 | 1.25 | 1.5) =>
         set((state) => ({
           progress: {
             ...state.progress,

@@ -1272,7 +1272,7 @@ export default {
     guidePlayPauseTitle: 'Lecture / Pause',
     guidePlayPauseDesc: 'Appuyez sur le bouton lecture à côté d\'un verset pour l\'écouter récité. Appuyez à nouveau pour mettre en pause.',
     guideSpeedTitle: 'Vitesse de lecture',
-    guideSpeedDesc: 'Ralentissez (0.75x) pour capter chaque lettre, ou accélérez (1.75x) une fois à l\'aise. Idéal pour perfectionner le tajweed.',
+    guideSpeedDesc: 'Ralentissez (0.75x) pour capter chaque lettre, ou accélérez (1.5x) une fois à l\'aise. Idéal pour perfectionner le tajweed.',
     guideRepeatTitle: 'Répétition',
     guideRepeatDesc: 'Choisissez combien de fois chaque verset se répète (jusqu\'à 10x). Parfait pour la mémorisation.',
     guideAutoAdvanceTitle: 'Avance automatique',

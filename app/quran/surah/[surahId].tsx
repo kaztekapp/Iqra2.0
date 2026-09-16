@@ -69,7 +69,10 @@ export default function SurahDetailScreen() {
     clearPlayer,
   } = useAudioPlayerStore();
 
-  const playbackSpeedRef = useRef<number>(progress.settings.playbackSpeed);
+  // 1.75x is gone. Anyone who had chosen it keeps it in their saved settings,
+  // and without this they would go on hearing it with no speed selected on
+  // screen - the setting still doing something the app no longer offers.
+  const playbackSpeedRef = useRef<number>(Math.min(progress.settings.playbackSpeed, 1.5));
 
   // Get current reciter info
   const currentReciterId = progress.settings.reciterId as ReciterId;
@@ -199,7 +202,7 @@ export default function SurahDetailScreen() {
 
   const handleSpeedChange = useCallback((speed: number) => {
     playbackSpeedRef.current = speed;
-    useQuranStore.getState().setPlaybackSpeed(speed as 0.75 | 1 | 1.25 | 1.5 | 1.75);
+    useQuranStore.getState().setPlaybackSpeed(speed as 0.75 | 1 | 1.25 | 1.5);
     quranAudioService.setRate(speed);
   }, []);
 
@@ -369,7 +372,7 @@ export default function SurahDetailScreen() {
         isLoading={activeAyahId === ayah.id && audioState === 'loading'}
         isPlaying={activeAyahId === ayah.id && audioState === 'playing'}
         isPaused={activeAyahId === ayah.id && audioState === 'paused'}
-        playbackSpeed={progress.settings.playbackSpeed}
+        playbackSpeed={Math.min(progress.settings.playbackSpeed, 1.5)}
         onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
         onBookmark={() => handleBookmark(ayah.id)}
         onPress={() => handleAyahPress(ayah.id)}

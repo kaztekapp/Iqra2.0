@@ -1272,7 +1272,7 @@ export default {
     guidePlayPauseTitle: 'Play / Pause',
     guidePlayPauseDesc: 'Tap the play button next to any verse to hear it recited by the selected reciter. Tap again to pause.',
     guideSpeedTitle: 'Playback Speed',
-    guideSpeedDesc: 'Slow down (0.75x) to catch every letter, or speed up (1.75x) once you\'re comfortable. Great for perfecting tajweed.',
+    guideSpeedDesc: 'Slow down (0.75x) to catch every letter, or speed up (1.5x) once you\'re comfortable. Great for perfecting tajweed.',
     guideRepeatTitle: 'Repeat',
     guideRepeatDesc: 'Set how many times each verse repeats (up to 10x). Perfect for memorization — listen until it sticks.',
     guideAutoAdvanceTitle: 'Auto-Advance',
