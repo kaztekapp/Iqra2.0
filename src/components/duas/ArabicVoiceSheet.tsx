@@ -65,7 +65,7 @@ export function ArabicVoiceSheet({ visible, source, deviceVoiceId, voices, loadi
                 accessibilityState={{ selected: onlineSelected }}
               >
                 <View style={[styles.rowIcon, onlineSelected && styles.rowIconSelected]}>
-                  <Ionicons name="cloud-outline" size={18} color={onlineSelected ? color.textOnAccent : color.textMuted} />
+                  <Ionicons name="pulse-outline" size={18} color={onlineSelected ? color.textOnAccent : color.textMuted} />
                 </View>
                 <View style={styles.rowText}>
                   <Text style={styles.rowTitle}>{t('duasFeature.onlineVoice')}</Text>

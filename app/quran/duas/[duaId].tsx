@@ -270,7 +270,7 @@ export default function DuaDetailScreen() {
           {/* Audio Controls */}
           <View style={styles.audioControls}>
             <Pressable style={styles.voiceButton} onPress={openVoiceSheet} accessibilityRole="button" accessibilityLabel={t('duasFeature.chooseVoice')}>
-              <Ionicons name={voiceSource === 'device' ? 'phone-portrait-outline' : 'cloud-outline'} size={18} color={color.accent} />
+              <Ionicons name={voiceSource === 'device' ? 'phone-portrait-outline' : 'pulse-outline'} size={18} color={color.accent} />
               <Text style={[styles.voiceText, styles.voiceTextFemale]} numberOfLines={1}>{voiceLabel}</Text>
               <Ionicons name="chevron-down" size={14} color={color.textFaint} />
             </Pressable>
