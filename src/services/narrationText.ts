@@ -77,6 +77,31 @@ export function splitQuranRuns(text: string): ProseSegment[] {
 export function normalizeArabicForSpeech(input: string): string {
   if (!input) return '';
   return input
+    // A letter the mushaf marks as silent has to GO, not just lose its mark.
+    //
+    // U+06DF, the small circle above a letter, means the letter is written but
+    // never said. Stripping the circle and leaving the letter is how ar-ribā
+    // came out with two alefs in a row - "ribaa-a" - and how bi-ayd, mala'ihi
+    // and naba' each grew a ya they do not have.
+    //
+    // The one silent letter that stays is the alef after a plural waw -
+    // qālū, tawallaw, ishtarawu, āmanū - whatever vowel or sukun that waw
+    // carries. Modern Arabic writes that alef too, every reader and every
+    // voice knows to skip it, and dropping it would leave words like tawallaw
+    // spelled in a way no one writes. A waw carrying a dagger alef is not
+    // that waw: it is the long ū of ar-ribā, so the alef after it is a
+    // genuine silent letter and goes.
+    .replace(/[\u064A\u0649]\u06DF/g, '')
+    // A silent waw goes too, with one exception that is a closed set: the
+    // ulāʾika / ulū / ulī family, where ordinary Arabic still writes the waw
+    // (أولئك, أولو, أولي) and every reader and voice already knows to skip
+    // it. In all sixteen of those the silent waw is followed by a lam, and in
+    // the only other word that has one - sa-urīkum - it is not.
+    .replace(/\u0648\u06DF(?!\u0644)/g, '')
+    .replace(
+      /(\u0648[\u064B-\u0655\u06E5\u06E6]*)?\u0627\u06DF/g,
+      (_m, waw: string | undefined) => (waw ? waw + '\u0627' : ''),
+    )
     // A tatweel carrying a hamza is a SEAT, not decoration. The mushaf writes
     // anbi'uni as ب + kasra + tatweel + damma + hamza: the hamza rides on a
     // dummy stroke. Stripping the tatweel further down used to leave the beh
