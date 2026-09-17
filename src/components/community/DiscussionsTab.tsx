@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   Pressable,
   Modal,
   TextInput,
@@ -17,7 +18,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { useCommunityStore } from '../../stores/communityStore';
-import { DiscussionCategory } from '../../types/community';
+import { DiscussionCategory, DiscussionThread } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 
@@ -30,7 +31,90 @@ const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string
   { key: 'tips', icon: 'bulb', color: color.warning },
 ];
 
-export function DiscussionsTab() {
+// Fixed for the life of the app, so it is built once rather than on every
+// render of the tab.
+const CATEGORY_COLORS: Record<string, string> = {
+  general: color.textFaint,
+  quran: color.progress,
+  arabic: color.warning,
+  prayer: color.accent,
+  tips: color.warning,
+};
+
+interface ThreadCardProps {
+  thread: DiscussionThread;
+  onLike: (threadId: string) => void;
+}
+
+/**
+ * One discussion in the list, memoized for the same reason as a group card:
+ * liking a thread or pulling to refresh should not rebuild the other forty.
+ */
+const ThreadCard = memo(function ThreadCard({ thread, onLike }: ThreadCardProps) {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
+  const catColor = CATEGORY_COLORS[thread.category] || color.textMuted;
+
+  const timeAgo = () => {
+    const diff = Date.now() - new Date(thread.createdAt).getTime();
+    const hours = Math.floor(diff / 3600000);
+    if (hours < 1) return t('community.justNow');
+    if (hours < 24) return t('community.hoursAgo', { count: hours });
+    return `${Math.floor(hours / 24)}d`;
+  };
+
+  return (
+    <Pressable
+      style={styles.threadCard}
+      onPress={() => router.push(`/community/thread/${thread.id}` as any)}
+    >
+      {/* Pinned indicator */}
+      {thread.isPinned && (
+        <View style={styles.pinnedRow}>
+          <Ionicons name="pin" size={12} color={color.warning} />
+          <Text style={styles.pinnedText}>{t('community.pinned')}</Text>
+        </View>
+      )}
+
+      <Text style={styles.threadTitle}>{lc(thread.title, thread.titleFr)}</Text>
+      <Text style={styles.threadBody} numberOfLines={2}>{lc(thread.body, thread.bodyFr)}</Text>
+
+      <View style={styles.threadFooter}>
+        <View style={[styles.catBadge, { backgroundColor: `${catColor}20` }]}>
+          <Text style={[styles.catBadgeText, { color: catColor }]}>
+            {t(`community.category${thread.category.charAt(0).toUpperCase() + thread.category.slice(1)}`)}
+          </Text>
+        </View>
+        <Text style={styles.threadAuthor}>{thread.authorName}</Text>
+        <Text style={styles.threadDot}>{'·'}</Text>
+        <Text style={styles.threadTime}>{timeAgo()}</Text>
+        <View style={styles.threadStats}>
+          <Pressable
+            onPress={(e) => {
+              e.stopPropagation?.();
+              onLike(thread.id);
+            }}
+            hitSlop={8}
+          >
+            <Ionicons name="heart-outline" size={13} color={color.textFaint} />
+          </Pressable>
+          <Text style={styles.threadStatNum}>{thread.likeCount}</Text>
+          <Ionicons name="chatbubble-outline" size={13} color={color.textFaint} />
+          <Text style={styles.threadStatNum}>{thread.replyCount}</Text>
+        </View>
+      </View>
+
+      {thread.isHot && (
+        <View style={styles.hotTag}>
+          <Ionicons name="flame" size={11} color={color.warning} />
+          <Text style={styles.hotTagText}>{t('community.hot')}</Text>
+        </View>
+      )}
+    </Pressable>
+  );
+});
+
+export function DiscussionsTab({ active = true }: { active?: boolean }) {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const [selectedCategory, setSelectedCategory] = useState<DiscussionCategory | 'all'>('all');
@@ -41,23 +125,27 @@ export function DiscussionsTab() {
   const [postCategory, setPostCategory] = useState<DiscussionCategory>('general');
   const [isPosting, setIsPosting] = useState(false);
 
-  const {
-    discussions,
-    isLoadingDiscussions,
-    loadDiscussions,
-    postThread,
-    toggleLikeThread,
-  } = useCommunityStore();
+  // Narrow subscriptions: this tab used to re-render on any community state
+  // change at all, including ones it never shows.
+  const discussions = useCommunityStore((s) => s.discussions);
+  const isLoadingDiscussions = useCommunityStore((s) => s.isLoadingDiscussions);
+  const loadDiscussions = useCommunityStore((s) => s.loadDiscussions);
+  const postThread = useCommunityStore((s) => s.postThread);
+  const toggleLikeThread = useCommunityStore((s) => s.toggleLikeThread);
 
   useEffect(() => {
-    loadDiscussions(selectedCategory === 'all' ? undefined : selectedCategory);
-  }, [selectedCategory]);
+    if (active) loadDiscussions(selectedCategory === 'all' ? undefined : selectedCategory);
+  }, [active, selectedCategory, loadDiscussions]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await loadDiscussions(selectedCategory === 'all' ? undefined : selectedCategory);
+    await loadDiscussions(selectedCategory === 'all' ? undefined : selectedCategory, true);
     setRefreshing(false);
   }, [selectedCategory, loadDiscussions]);
+
+  const handleLike = useCallback((threadId: string) => {
+    void toggleLikeThread(threadId);
+  }, [toggleLikeThread]);
 
   const handlePost = async () => {
     if (!postTitle.trim() || !postBody.trim()) return;
@@ -71,27 +159,21 @@ export function DiscussionsTab() {
   };
 
   // Sort: pinned first, then by recency
-  const sorted = [...discussions].sort((a, b) => {
-    if (a.isPinned && !b.isPinned) return -1;
-    if (!a.isPinned && b.isPinned) return 1;
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
+  const sorted = useMemo(
+    () =>
+      [...discussions].sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }),
+    [discussions],
+  );
 
-  const categoryColors: Record<string, string> = {
-    general: color.textFaint,
-    quran: color.progress,
-    arabic: color.warning,
-    prayer: color.accent,
-    tips: color.warning,
-  };
-
-  const getTimeAgo = (dateStr: string) => {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const hours = Math.floor(diff / 3600000);
-    if (hours < 1) return t('community.justNow');
-    if (hours < 24) return t('community.hoursAgo', { count: hours });
-    return `${Math.floor(hours / 24)}d`;
-  };
+  const renderThread = useCallback(
+    ({ item }: { item: DiscussionThread }) => <ThreadCard thread={item} onLike={handleLike} />,
+    [handleLike],
+  );
+  const keyExtractor = useCallback((th: DiscussionThread) => th.id, []);
 
   return (
     <View style={styles.container}>
@@ -128,73 +210,26 @@ export function DiscussionsTab() {
       </View>
 
       {/* Threads list */}
-      {isLoadingDiscussions ? (
+      {isLoadingDiscussions && discussions.length === 0 ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator color={color.progress} size="large" />
         </View>
       ) : (
-        <ScrollView
+        <FlatList
+          data={sorted}
+          renderItem={renderThread}
+          keyExtractor={keyExtractor}
           contentContainerStyle={styles.threadList}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          initialNumToRender={6}
+          maxToRenderPerBatch={8}
+          windowSize={7}
+          ListEmptyComponent={<Text style={styles.emptyText}>{t('community.noDiscussions')}</Text>}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={color.progress} />
           }
-        >
-          {sorted.length === 0 ? (
-            <Text style={styles.emptyText}>{t('community.noDiscussions')}</Text>
-          ) : (
-            sorted.map((thread) => (
-              <Pressable
-                key={thread.id}
-                style={styles.threadCard}
-                onPress={() => router.push(`/community/thread/${thread.id}` as any)}
-              >
-                {/* Pinned indicator */}
-                {thread.isPinned && (
-                  <View style={styles.pinnedRow}>
-                    <Ionicons name="pin" size={12} color={color.warning} />
-                    <Text style={styles.pinnedText}>{t('community.pinned')}</Text>
-                  </View>
-                )}
-
-                <Text style={styles.threadTitle}>{lc(thread.title, thread.titleFr)}</Text>
-                <Text style={styles.threadBody} numberOfLines={2}>{lc(thread.body, thread.bodyFr)}</Text>
-
-                <View style={styles.threadFooter}>
-                  <View style={[styles.catBadge, { backgroundColor: `${categoryColors[thread.category] || color.textMuted}20` }]}>
-                    <Text style={[styles.catBadgeText, { color: categoryColors[thread.category] || color.textMuted }]}>
-                      {t(`community.category${thread.category.charAt(0).toUpperCase() + thread.category.slice(1)}`)}
-                    </Text>
-                  </View>
-                  <Text style={styles.threadAuthor}>{thread.authorName}</Text>
-                  <Text style={styles.threadDot}>{'·'}</Text>
-                  <Text style={styles.threadTime}>{getTimeAgo(thread.createdAt)}</Text>
-                  <View style={styles.threadStats}>
-                    <Pressable
-                      onPress={(e) => {
-                        e.stopPropagation?.();
-                        toggleLikeThread(thread.id);
-                      }}
-                      hitSlop={8}
-                    >
-                      <Ionicons name="heart-outline" size={13} color={color.textFaint} />
-                    </Pressable>
-                    <Text style={styles.threadStatNum}>{thread.likeCount}</Text>
-                    <Ionicons name="chatbubble-outline" size={13} color={color.textFaint} />
-                    <Text style={styles.threadStatNum}>{thread.replyCount}</Text>
-                  </View>
-                </View>
-
-                {thread.isHot && (
-                  <View style={styles.hotTag}>
-                    <Ionicons name="flame" size={11} color={color.warning} />
-                    <Text style={styles.hotTagText}>{t('community.hot')}</Text>
-                  </View>
-                )}
-              </Pressable>
-            ))
-          )}
-        </ScrollView>
+        />
       )}
 
       {/* FAB — New Post */}
@@ -204,6 +239,7 @@ export function DiscussionsTab() {
 
       {/* ── New Post Modal ──────────────────────────────────── */}
       <Modal visible={showPostModal} animationType="slide" transparent>
+        {showPostModal && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.modalOverlay}
@@ -264,6 +300,7 @@ export function DiscussionsTab() {
             />
           </View>
         </KeyboardAvoidingView>
+        )}
       </Modal>
     </View>
   );

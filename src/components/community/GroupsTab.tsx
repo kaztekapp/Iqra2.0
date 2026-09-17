@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useDeferredValue, memo } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   Pressable,
   Modal,
   TextInput,
@@ -19,15 +20,101 @@ import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { useCommunityStore } from '../../stores/communityStore';
 import { GROUP_TEMPLATES } from '../../data/community/groupTemplates';
 import { localizeGoal } from '../../data/community/goalLocalization';
-import { GroupTemplate } from '../../types/community';
+import { GroupTemplate, StudyGroup } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 
 const GROUP_ICONS = ['book', 'school', 'mic', 'language', 'moon', 'star', 'people', 'flag'];
 const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent, color.accent, color.warning, color.danger, color.progress];
 
-export function GroupsTab() {
+interface GroupCardProps {
+  group: StudyGroup;
+  onJoin: (groupId: string) => void;
+}
+
+/**
+ * One group in the list.
+ *
+ * Lifted out of the list body and memoized because the list re-renders on
+ * every keystroke in the search field, and a card is five icons, four
+ * translated strings and a goal put through twenty regular expressions. Its
+ * props are the group and one stable callback, so a card only re-renders
+ * when that group itself changes.
+ */
+const GroupCard = memo(function GroupCard({ group, onJoin }: GroupCardProps) {
   const { t } = useTranslation();
   const { lc, language } = useLocalizedContent();
+
+  const isFull = group.memberCount >= group.maxMembers;
+  const goal = useMemo(
+    () => localizeGoal(lc(group.goal, group.goalFr), language),
+    [group.goal, group.goalFr, lc, language],
+  );
+
+  return (
+    <Pressable style={styles.card} onPress={() => router.push(`/community/groups/${group.id}` as any)}>
+      <View style={styles.cardTop}>
+        <View style={[styles.iconCircle, { backgroundColor: `${group.color}20` }]}>
+          <Ionicons name={group.icon as any} size={26} color={group.color} />
+        </View>
+        <View style={styles.cardInfo}>
+          <Text style={styles.groupName}>{lc(group.name, group.nameFr)}</Text>
+          <Text style={styles.groupDesc} numberOfLines={2}>{lc(group.description, group.descriptionFr)}</Text>
+        </View>
+      </View>
+
+      {/* Meta row */}
+      <View style={styles.metaRow}>
+        <View style={styles.metaItem}>
+          <Ionicons name="people-outline" size={14} color={color.textFaint} />
+          <Text style={styles.metaText}>
+            {t('community.members', { count: group.memberCount })}/{group.maxMembers}
+          </Text>
+        </View>
+        {group.isActive && (
+          <View style={styles.metaItem}>
+            <View style={styles.activeDot} />
+            <Text style={styles.activeLabel}>{t('community.activeNow')}</Text>
+          </View>
+        )}
+      </View>
+
+      {/* Goal */}
+      <View style={styles.goalRow}>
+        <Ionicons name="flag-outline" size={14} color={color.textMuted} />
+        <Text style={styles.goalText}>{t('community.groupGoal', { goal })}</Text>
+      </View>
+
+      {/* Progress bar */}
+      <View style={styles.progressBar}>
+        <View
+          style={[
+            styles.progressFill,
+            {
+              width: `${Math.min((group.memberCount / group.maxMembers) * 100, 100)}%`,
+              backgroundColor: group.color,
+            },
+          ]}
+        />
+      </View>
+
+      {/* Join button — hidden once already a member */}
+      {!group.isJoined && (
+        <Pressable
+          style={[styles.joinBtn, isFull && styles.fullBtn]}
+          onPress={() => onJoin(group.id)}
+          disabled={isFull}
+        >
+          <Ionicons name="add" size={16} color={color.text} />
+          <Text style={styles.joinText}>{t('community.joinGroup')}</Text>
+        </Pressable>
+      )}
+    </Pressable>
+  );
+});
+
+export function GroupsTab({ active = true }: { active?: boolean }) {
+  const { t } = useTranslation();
+  const { lc } = useLocalizedContent();
 
   const [refreshing, setRefreshing] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -40,32 +127,40 @@ export function GroupsTab() {
   const [isCreating, setIsCreating] = useState(false);
   const [search, setSearch] = useState('');
 
-  const {
-    groups,
-    isLoadingGroups,
-    loadGroups,
-    joinGroup,
-    leaveGroup,
-    createGroup,
-  } = useCommunityStore();
+  // One selector per field. Taking the whole store re-rendered this tab
+  // whenever anything in it moved — a leaderboard fetch, a challenge tick —
+  // and a re-render here is fifty cards.
+  const groups = useCommunityStore((s) => s.groups);
+  const isLoadingGroups = useCommunityStore((s) => s.isLoadingGroups);
+  const loadGroups = useCommunityStore((s) => s.loadGroups);
+  const joinGroup = useCommunityStore((s) => s.joinGroup);
+  const leaveGroup = useCommunityStore((s) => s.leaveGroup);
+  const createGroup = useCommunityStore((s) => s.createGroup);
 
+  // The pane is kept mounted between tab switches, so this is the moment
+  // the person is actually looking at it. loadGroups decides for itself
+  // whether anything needs fetching, and refreshes behind the list if so.
   useEffect(() => {
-    loadGroups();
-  }, []);
+    if (active) loadGroups();
+  }, [active, loadGroups]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await loadGroups();
+    await loadGroups(true);
     setRefreshing(false);
   }, [loadGroups]);
 
-  const handleJoin = async (groupId: string, isJoined: boolean) => {
-    if (isJoined) {
-      await leaveGroup(groupId);
-    } else {
-      await joinGroup(groupId);
-    }
-  };
+  const handleJoin = useCallback(
+    (groupId: string) => {
+      const group = useCommunityStore.getState().groups.find((g) => g.id === groupId);
+      if (group?.isJoined) {
+        void leaveGroup(groupId);
+      } else {
+        void joinGroup(groupId);
+      }
+    },
+    [joinGroup, leaveGroup],
+  );
 
   const handleCreate = async () => {
     if (!newName.trim() || !newDesc.trim() || !newTopic.trim() || !newGoal.trim()) return;
@@ -81,15 +176,27 @@ export function GroupsTab() {
     setShowCreateModal(false);
   };
 
-  // Filter by search, then sort
-  const filtered = search.trim()
-    ? groups.filter((g) => lc(g.name, g.nameFr).toLowerCase().includes(search.trim().toLowerCase()))
-    : groups;
-  const sorted = [...filtered].sort((a, b) => {
-    if (a.isActive && !b.isActive) return -1;
-    if (!a.isActive && b.isActive) return 1;
-    return b.memberCount - a.memberCount;
-  });
+  // The field stays responsive while the list catches up: React keeps the
+  // previous results on screen for a frame rather than re-filtering fifty
+  // cards between keystrokes.
+  const query = useDeferredValue(search).trim().toLowerCase();
+
+  const sorted = useMemo(() => {
+    const filtered = query
+      ? groups.filter((g) => lc(g.name, g.nameFr).toLowerCase().includes(query))
+      : groups;
+    return [...filtered].sort((a, b) => {
+      if (a.isActive && !b.isActive) return -1;
+      if (!a.isActive && b.isActive) return 1;
+      return b.memberCount - a.memberCount;
+    });
+  }, [groups, query, lc]);
+
+  const renderGroup = useCallback(
+    ({ item }: { item: StudyGroup }) => <GroupCard group={item} onJoin={handleJoin} />,
+    [handleJoin],
+  );
+  const keyExtractor = useCallback((g: StudyGroup) => g.id, []);
 
   return (
     <View style={styles.container}>
@@ -111,91 +218,29 @@ export function GroupsTab() {
         )}
       </View>
 
-      {isLoadingGroups ? (
+      {isLoadingGroups && groups.length === 0 ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator color={color.accent} size="large" />
         </View>
       ) : (
-        <ScrollView
+        <FlatList
+          data={sorted}
+          renderItem={renderGroup}
+          keyExtractor={keyExtractor}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          // Two cards fill a phone screen. Mounting all fifty on arrival was
+          // most of the wait; the rest are built as they come into view.
+          initialNumToRender={4}
+          maxToRenderPerBatch={6}
+          windowSize={7}
+          ListHeaderComponent={<Text style={styles.desc}>{t('community.studyGroupsDesc')}</Text>}
+          ListEmptyComponent={<Text style={styles.emptyText}>{t('community.noGroups')}</Text>}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={color.accent} />
           }
-        >
-          {/* Description */}
-          <Text style={styles.desc}>{t('community.studyGroupsDesc')}</Text>
-
-          {sorted.length === 0 ? (
-            <Text style={styles.emptyText}>{t('community.noGroups')}</Text>
-          ) : (
-            sorted.map((group) => {
-              const isJoined = group.isJoined;
-              const isFull = group.memberCount >= group.maxMembers;
-
-              return (
-                <Pressable key={group.id} style={styles.card} onPress={() => router.push(`/community/groups/${group.id}` as any)}>
-                  <View style={styles.cardTop}>
-                    <View style={[styles.iconCircle, { backgroundColor: `${group.color}20` }]}>
-                      <Ionicons name={group.icon as any} size={26} color={group.color} />
-                    </View>
-                    <View style={styles.cardInfo}>
-                      <Text style={styles.groupName}>{lc(group.name, group.nameFr)}</Text>
-                      <Text style={styles.groupDesc} numberOfLines={2}>{lc(group.description, group.descriptionFr)}</Text>
-                    </View>
-                  </View>
-
-                  {/* Meta row */}
-                  <View style={styles.metaRow}>
-                    <View style={styles.metaItem}>
-                      <Ionicons name="people-outline" size={14} color={color.textFaint} />
-                      <Text style={styles.metaText}>
-                        {t('community.members', { count: group.memberCount })}/{group.maxMembers}
-                      </Text>
-                    </View>
-                    {group.isActive && (
-                      <View style={styles.metaItem}>
-                        <View style={styles.activeDot} />
-                        <Text style={styles.activeLabel}>{t('community.activeNow')}</Text>
-                      </View>
-                    )}
-                  </View>
-
-                  {/* Goal */}
-                  <View style={styles.goalRow}>
-                    <Ionicons name="flag-outline" size={14} color={color.textMuted} />
-                    <Text style={styles.goalText}>{t('community.groupGoal', { goal: localizeGoal(lc(group.goal, group.goalFr), language) })}</Text>
-                  </View>
-
-                  {/* Progress bar */}
-                  <View style={styles.progressBar}>
-                    <View
-                      style={[
-                        styles.progressFill,
-                        {
-                          width: `${Math.min((group.memberCount / group.maxMembers) * 100, 100)}%`,
-                          backgroundColor: group.color,
-                        },
-                      ]}
-                    />
-                  </View>
-
-                  {/* Join button — hidden once already a member */}
-                  {!isJoined && (
-                    <Pressable
-                      style={[styles.joinBtn, isFull && styles.fullBtn]}
-                      onPress={() => handleJoin(group.id, isJoined)}
-                      disabled={isFull}
-                    >
-                      <Ionicons name="add" size={16} color={color.text} />
-                      <Text style={styles.joinText}>{t('community.joinGroup')}</Text>
-                    </Pressable>
-                  )}
-                </Pressable>
-              );
-            })
-          )}
-        </ScrollView>
+        />
       )}
 
       {/* FAB — Create Group */}
@@ -205,6 +250,7 @@ export function GroupsTab() {
 
       {/* ── Create Group Modal ─────────────────────────────── */}
       <Modal visible={showCreateModal} animationType="slide" transparent>
+        {showCreateModal && (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.modalOverlay}
@@ -326,6 +372,7 @@ export function GroupsTab() {
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
+        )}
       </Modal>
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -24,14 +24,22 @@ export default function CommunityScreen() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<CommunityTab>('groups');
 
-  const userId = useSettingsStore((s) => s.user?.id);
-  const progress = useProgressStore((s) => s.progress);
+  // Which tabs have been opened at least once. A ref, not state: it only
+  // ever grows alongside a setActiveTab that re-renders anyway.
+  const visited = useRef<Set<CommunityTab>>(new Set(['groups']));
+  visited.current.add(activeTab);
 
+  const userId = useSettingsStore((s) => s.user?.id);
+
+  // Progress is read when the sync runs, not subscribed to. Subscribing meant
+  // every XP change anywhere in the app re-rendered this screen and all three
+  // panes under it, for a value used once.
   useEffect(() => {
+    const { progress } = useProgressStore.getState();
     if (userId && progress.totalXp > 0) {
       communityService.syncProgress(userId, progress.totalXp, progress.currentStreak, progress.longestStreak);
     }
-  }, []);
+  }, [userId]);
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -75,10 +83,27 @@ export default function CommunityScreen() {
         })}
       </View>
 
+      {/* A tab is built the first time it is opened and then kept, hidden,
+          so going back to it is instant and it returns to where it was
+          scrolled. Only the tab the person actually opens is ever built:
+          mounting all three up front would slow down the arrival, which is
+          the thing this screen most needs to be fast. */}
       <View style={styles.tabContent}>
-        {activeTab === 'groups' && <GroupsTab />}
-        {activeTab === 'discussions' && <DiscussionsTab />}
-        {activeTab === 'challenges' && <ChallengesTab />}
+        {visited.current.has('groups') && (
+          <View style={[styles.pane, activeTab !== 'groups' && styles.paneHidden]}>
+            <GroupsTab active={activeTab === 'groups'} />
+          </View>
+        )}
+        {visited.current.has('discussions') && (
+          <View style={[styles.pane, activeTab !== 'discussions' && styles.paneHidden]}>
+            <DiscussionsTab active={activeTab === 'discussions'} />
+          </View>
+        )}
+        {visited.current.has('challenges') && (
+          <View style={[styles.pane, activeTab !== 'challenges' && styles.paneHidden]}>
+            <ChallengesTab active={activeTab === 'challenges'} />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -130,5 +155,15 @@ const styles = StyleSheet.create({
   },
   tabContent: {
     flex: 1,
+  },
+  pane: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  paneHidden: {
+    display: 'none',
   },
 });

@@ -23,6 +23,13 @@ import {
 import * as communityService from '../services/communityService';
 import * as socialService from '../services/communitySocialService';
 import { clearGroupSnapshot } from '../services/groupContentCache';
+import {
+  cacheDiscussions,
+  cacheGroups,
+  hydrateCommunityCache,
+  patchCachedGroup,
+  removeCachedGroup,
+} from '../services/communityCache';
 import { useProgressStore } from './progressStore';
 import { useSettingsStore } from './settingsStore';
 import { supabase } from '../lib/supabase';
@@ -32,6 +39,19 @@ const CACHE_TTL_MS = 60_000;
 
 const _leaderboardCache: Record<string, { entries: LeaderboardEntry[]; fetchedAt: number }> = {};
 let _statsFetchedAt = 0;
+
+/**
+ * Groups and threads change over hours, not seconds, so a list fetched a
+ * moment ago is refetched only when the person asks for it by pulling down.
+ * Inside this window a return to the tab is instant and silent.
+ */
+const SOCIAL_TTL_MS = 60_000;
+
+let _groupsFetchedAt = 0;
+const _discussionsFetchedAt: Record<string, number> = {};
+
+/** Which discussion fetch is the current one; see loadDiscussions. */
+let _discussionsTicket = 0;
 
 interface CommunityState {
   // Challenge tracking
@@ -82,7 +102,7 @@ interface CommunityState {
   getRecentAchievements: (userAchievements: { title: string; titleArabic: string; icon: string }[]) => CommunityAchievement[];
 
   // Social actions
-  loadDiscussions: (category?: DiscussionCategory) => Promise<void>;
+  loadDiscussions: (category?: DiscussionCategory, forceRefresh?: boolean) => Promise<void>;
   loadThread: (threadId: string) => Promise<void>;
   loadReplies: (threadId: string) => Promise<void>;
   postThread: (title: string, body: string, category: DiscussionCategory) => Promise<DiscussionThread | null>;
@@ -90,7 +110,7 @@ interface CommunityState {
   toggleLikeThread: (threadId: string) => Promise<void>;
   toggleLikeReply: (replyId: string) => Promise<void>;
 
-  loadGroups: () => Promise<void>;
+  loadGroups: (forceRefresh?: boolean) => Promise<void>;
   joinGroup: (groupId: string) => Promise<void>;
   leaveGroup: (groupId: string) => Promise<void>;
   /** Creator only. Resolves true when the group is gone. */
@@ -440,9 +460,35 @@ export const useCommunityStore = create<CommunityState>()(
 
       // ── Social Actions ──────────────────────────────────────────
 
-      loadDiscussions: async (category?) => {
-        set({ isLoadingDiscussions: true });
+      loadDiscussions: async (category?, forceRefresh?) => {
+        const key = category ?? 'all';
+        const cache = await hydrateCommunityCache();
+        const known = cache.discussions[key];
+
+        // Paint the last answer for THIS category first. Always this one,
+        // never whatever happens to be on screen: tapping a filter has to
+        // change the list, or the filter looks broken.
+        if (known && known.length > 0) {
+          set({ discussions: known, isLoadingDiscussions: false });
+        } else if (get().discussions.length > 0 || !get().isLoadingDiscussions) {
+          set({ discussions: [], isLoadingDiscussions: true });
+        }
+
+        // Skip the network only when this category is both known and fresh.
+        const fetchedAt = _discussionsFetchedAt[key] ?? 0;
+        if (!forceRefresh && known && known.length > 0 && Date.now() - fetchedAt < SOCIAL_TTL_MS) {
+          return;
+        }
+
+        // Tapping through filters leaves several fetches in flight. Only the
+        // last one asked for may land, or a slow earlier answer would
+        // overwrite the category the person is actually looking at.
+        const ticket = ++_discussionsTicket;
         const discussions = await socialService.fetchThreads(category);
+        if (ticket !== _discussionsTicket) return;
+
+        _discussionsFetchedAt[key] = Date.now();
+        cacheDiscussions(key, discussions);
         set({ discussions, isLoadingDiscussions: false });
       },
 
@@ -520,8 +566,23 @@ export const useCommunityStore = create<CommunityState>()(
         }));
       },
 
-      loadGroups: async () => {
-        set({ isLoadingGroups: true });
+      loadGroups: async (forceRefresh?) => {
+        if (!forceRefresh && Date.now() - _groupsFetchedAt < SOCIAL_TTL_MS && get().groups.length > 0) {
+          return;
+        }
+
+        // Last session's list, straight onto the screen.
+        if (get().groups.length === 0) {
+          const cache = await hydrateCommunityCache();
+          if (cache.groups.length > 0 && get().groups.length === 0) {
+            set({ groups: cache.groups });
+          }
+        }
+
+        // The spinner is only for a screen with nothing on it. With rows
+        // already showing, the refresh happens behind them and swaps in.
+        if (get().groups.length === 0) set({ isLoadingGroups: true });
+
         const [groups, userGroupIds] = await Promise.all([
           socialService.fetchGroups(),
           (async () => {
@@ -534,6 +595,8 @@ export const useCommunityStore = create<CommunityState>()(
           ...g,
           isJoined: userGroupIds.has(g.id),
         }));
+        _groupsFetchedAt = Date.now();
+        cacheGroups(enrichedGroups);
         set({ groups: enrichedGroups, userGroupIds, isLoadingGroups: false });
       },
 
@@ -544,6 +607,11 @@ export const useCommunityStore = create<CommunityState>()(
         if (get().userGroupIds.has(groupId)) return;
         const success = await socialService.joinGroup(groupId, userId);
         if (success) {
+          const current = get().groups.find((g) => g.id === groupId);
+          patchCachedGroup(groupId, {
+            isJoined: true,
+            memberCount: (current?.memberCount ?? 0) + 1,
+          });
           set((s) => {
             const newIds = new Set(s.userGroupIds);
             newIds.add(groupId);
@@ -568,6 +636,11 @@ export const useCommunityStore = create<CommunityState>()(
         if (!userId) return;
         const success = await socialService.leaveGroup(groupId, userId);
         if (success) {
+          const current = get().groups.find((g) => g.id === groupId);
+          patchCachedGroup(groupId, {
+            isJoined: false,
+            memberCount: Math.max(0, (current?.memberCount ?? 0) - 1),
+          });
           set((s) => {
             const newIds = new Set(s.userGroupIds);
             newIds.delete(groupId);
@@ -587,6 +660,7 @@ export const useCommunityStore = create<CommunityState>()(
         const success = await socialService.deleteGroup(groupId, userId);
         if (success) {
           clearGroupSnapshot(groupId);
+          removeCachedGroup(groupId);
           set((s) => {
             const newIds = new Set(s.userGroupIds);
             newIds.delete(groupId);
@@ -602,6 +676,7 @@ export const useCommunityStore = create<CommunityState>()(
         const group = await socialService.createGroup(userId, name, description, topic, goal, icon, color);
         if (group) {
           const joined = { ...group, isJoined: true };
+          cacheGroups([joined, ...get().groups]);
           set((s) => {
             const newIds = new Set(s.userGroupIds);
             newIds.add(group.id);

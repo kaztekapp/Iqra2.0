@@ -117,13 +117,18 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   );
 };
 
-export function ChallengesTab() {
+export function ChallengesTab({ active = true }: { active?: boolean }) {
   const { t } = useTranslation();
-  const { dailyChallenge, weeklyChallenge, initializeChallenges } = useCommunityStore();
+  const dailyChallenge = useCommunityStore((s) => s.dailyChallenge);
+  const weeklyChallenge = useCommunityStore((s) => s.weeklyChallenge);
+  const initializeChallenges = useCommunityStore((s) => s.initializeChallenges);
 
+  // Community progress is recalculated from the hour of the day, so it is
+  // refreshed each time the tab is opened rather than only when it is first
+  // built - the pane now outlives a tab switch.
   useEffect(() => {
-    initializeChallenges();
-  }, []);
+    if (active) initializeChallenges();
+  }, [active, initializeChallenges]);
 
   return (
     <ScrollView
