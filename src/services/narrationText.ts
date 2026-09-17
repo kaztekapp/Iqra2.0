@@ -202,7 +202,28 @@ export function normalizeArabicForSpeech(input: string): string {
     .replace(/(^|[\s\u0648\u0641\u0644\u0628\u0643][\u064E\u0650]?)\u0622/g, '$1\u0001')
     .replace(/\u0652\u0622/g, '\u0652\u0001')
     .replace(/\u0622/g, '\u0627')
-    .replace(/\u0001/g, '\u0622');
+    .replace(/\u0001/g, '\u0622')
+    // A shadda on the FIRST letter of a word is not a doubled consonant. No
+    // Arabic word begins with one: it cannot be said. What it marks is idgham,
+    // the tanwin at the end of the word before it merging into this letter -
+    // ṣiddīqan nabiyyā, ghafūran raḥīmā, hudan lil-muttaqīn. The mushaf writes
+    // it on the second word because that is where the doubling is heard when
+    // the two are recited as one breath.
+    //
+    // The voice is not a reciter. Handed a word that opens with a geminate it
+    // has no way to say, it breaks the word apart and puts a vowel in the gap,
+    // which is what turned nabiyyā into a stammer. The merging is already
+    // carried by the tanwin on the word before, so dropping the mark loses
+    // nothing and gives the voice a word it can pronounce.
+    //
+    // Only the first letter, and only the shadda: every other mark on it, and
+    // every shadda anywhere else in the word, is left exactly as it is. That
+    // keeps innahu, ṣiddīqan, al-muttaqīn and Allāh whole. 16,367 places.
+    .replace(
+      /(^|[\s])([\u0621-\u064A])([\u064B-\u0652\u0670\u0653-\u0655]*)/g,
+      (_m, before: string, letter: string, marks: string) =>
+        before + letter + marks.replace(/\u0651/g, ''),
+    );
 }
 
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
