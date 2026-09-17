@@ -1802,8 +1802,25 @@ export const muhammadStoryContent: StoryContentBlock[] = [
   },
   {
     id: 'muhammad-146',
-    type: 'quran_source',
+    type: 'hadith_source',
     order: 146,
+    content: "Ka'b ibn Malik tells the fifty nights himself, and how they ended.",
+    contentFr: "Ka'b ibn Malik raconte lui-même les cinquante nuits, et comment elles prirent fin.",
+    source: {
+      type: "hadith",
+      collection: "bukhari",
+      hadithNumber: "4418",
+      narrator: "Ka'b ibn Malik",
+      arabicText: "حَدَّثَنَا يَحْيَى بْنُ بُكَيْرٍ، حَدَّثَنَا اللَّيْثُ، عَنْ عُقَيْلٍ، عَنِ ابْنِ شِهَابٍ، عَنْ عَبْدِ الرَّحْمَنِ بْنِ عَبْدِ اللَّهِ بْنِ كَعْبِ بْنِ مَالِكٍ، أَنَّ عَبْدَ اللَّهِ بْنَ كَعْبِ بْنِ مَالِكٍ ـ وَكَانَ قَائِدَ كَعْبٍ مِنْ بَنِيهِ حِينَ عَمِيَ ـ قَالَ سَمِعْتُ كَعْبَ بْنَ مَالِكٍ، يُحَدِّثُ حِينَ تَخَلَّفَ عَنْ قِصَّةِ، تَبُوكَ قَالَ كَعْبٌ لَمْ أَتَخَلَّفْ عَنْ رَسُولِ اللَّهِ صلى الله عليه وسلم فِي غَزْوَةٍ غَزَاهَا إِلاَّ فِي غَزْوَةِ تَبُوكَ، غَيْرَ أَنِّي كُنْتُ تَخَلَّفْتُ فِي غَزْوَةِ بَدْرٍ، وَلَمْ يُعَاتِبْ أَحَدًا تَخَلَّفَ، عَنْهَا إِنَّمَا خَرَجَ رَسُولُ اللَّهِ صلى الله عليه وسلم يُرِيدُ عِيرَ قُرَيْشٍ، حَتَّى جَمَعَ اللَّهُ بَيْنَهُمْ وَبَيْنَ عَدُوِّهِمْ عَلَى غَيْرِ مِيعَادٍ وَلَقَدْ شَهِدْتُ مَعَ رَسُولِ اللَّهِ صلى الله عليه وسلم لَيْلَةَ الْعَقَبَةِ حِينَ تَوَاثَقْنَا عَلَى الإِسْلاَمِ، وَمَا أُحِبُّ أَنَّ لِي بِهَا مَشْهَدَ بَدْرٍ، وَإِنْ كَانَتْ بَدْرٌ أَذْكَرَ فِي النَّاسِ مِنْهَا، كَانَ مِنْ خَبَرِي أَنِّي لَمْ أَكُنْ قَطُّ أَقْوَى وَلاَ أَيْسَرَ حِينَ تَخَلَّفْتُ عَنْهُ فِي تِلْكَ الْغَزْوَةِ، وَاللَّهِ مَا اجْتَمَعَتْ عِنْدِي قَبْلَهُ رَاحِلَتَانِ قَطُّ حَتَّى جَمَعْتُهُمَا فِي تِلْكَ الْغَزْوَةِ، وَلَمْ يَكُنْ رَسُولُ اللَّهِ صلى الله عليه وسلم يُرِيدُ غَزْوَةً إِلاَّ وَرَّى بِغَيْرِهَا، حَتَّى كَانَتْ تِلْكَ الْغَزْوَةُ، غَزَاهَا رَسُولُ اللَّهِ صلى الله عليه وسلم فِي حَرٍّ شَدِيدٍ، وَاسْتَقْبَلَ سَفَرًا بَعِيدًا وَمَفَازًا وَعَدُوًّا كَثِيرًا، فَجَلَّى لِلْمُسْلِمِينَ أَمْرَهُمْ لِيَتَأَهَّبُوا أُهْبَةَ غَزْوِهِمْ، فَأَخْبَرَهُمْ بِوَجْهِهِ الَّذِي يُرِيدُ، وَالْمُسْلِمُونَ مَعَ رَسُولِ اللَّهِ صلى الله عليه وسلم كَثِيرٌ، وَلاَ يَجْمَعُهُمْ كِتَابٌ حَافِظٌ ـ يُرِيدُ الدِّيوَانَ ـ قَالَ كَعْبٌ فَمَا رَجُلٌ يُرِيدُ أَنْ يَتَغَيَّبَ إِلاَّ ظَنَّ أَنْ سَيَخْفَى لَهُ مَا لَمْ يَنْزِلْ فِيهِ وَحْىُ اللَّهِ، وَغَزَا رَسُولُ اللَّهِ صلى الله عليه وسلم تِلْكَ الْغَزْوَةَ حِينَ طَابَتِ الثِّمَارُ وَالظِّلاَلُ، وَتَجَهَّزَ رَسُولُ اللَّهِ صلى الله عليه وسلم وَالْمُسْلِمُونَ مَعَهُ، فَطَفِقْتُ أَغْدُو لِكَىْ أَتَجَهَّزَ مَعَهُمْ فَأَرْجِعُ وَلَمْ أَقْضِ شَيْئًا، فَأَقُولُ فِي نَفْسِي أَنَا قَادِرٌ عَلَيْهِ. فَلَمْ يَزَلْ يَتَمَادَى بِي حَتَّى اشْتَدَّ بِالنَّاسِ الْجِدُّ، فَأَصْبَحَ رَسُولُ اللَّهِ صلى الله عليه وسلم وَالْمُسْلِمُونَ مَعَهُ وَلَمْ أَقْضِ مِنْ جَهَازِي شَيْئًا، فَقُلْتُ أَتَجَهَّزُ بَعْدَهُ بِيَوْمٍ أَوْ يَوْمَيْنِ ثُمَّ أَلْحَقُهُمْ، فَغَدَوْتُ بَعْدَ أَنْ فَصَلُوا لأَتَجَهَّزَ، فَرَجَعْتُ وَلَمْ أَقْضِ شَيْئًا، ثُمَّ غَدَوْتُ ثُمَّ رَجَعْتُ وَلَمْ أَقْضِ شَيْئًا، فَلَمْ يَزَلْ بِي حَتَّى أَسْرَعُوا وَتَفَارَطَ الْغَزْوُ، وَهَمَمْتُ أَنْ أَرْتَحِلَ فَأُدْرِكَهُمْ، وَلَيْتَنِي فَعَلْتُ، فَلَمْ يُقَدَّرْ لِي ذَلِكَ، فَكُنْتُ إِذَا خَرَجْتُ فِي النَّاسِ بَعْدَ خُرُوجِ رَسُولِ اللَّهِ صلى الله عليه وسلم فَطُفْتُ فِيهِمْ، أَحْزَنَنِي أَنِّي لاَ أَرَى إِلاَّ رَجُلاً مَغْمُوصًا عَلَيْهِ النِّفَاقُ أَوْ رَجُلاً مِمَّنْ عَذَرَ اللَّهُ مِنَ الضُّعَفَاءِ، وَلَمْ يَذْكُرْنِي رَسُولُ اللَّهِ صلى الله عليه وسلم حَتَّى بَلَغَ تَبُوكَ، فَقَالَ وَهْوَ جَالِسٌ فِي الْقَوْمِ بِتَبُوكَ مَا فَعَلَ كَعْبٌ . فَقَالَ رَجُلٌ مِنْ بَنِي سَلِمَةَ يَا رَسُولَ اللَّهِ، حَبَسَهُ بُرْدَاهُ وَنَظَرُهُ فِي عِطْفِهِ. فَقَالَ مُعَاذُ بْنُ جَبَلٍ بِئْسَ مَا قُلْتَ، وَاللَّهِ يَا رَسُولَ اللَّهِ، مَا عَلِمْنَا عَلَيْهِ إِلاَّ خَيْرًا. فَسَكَتَ رَسُولُ اللَّهِ صلى الله عليه وسلم. قَالَ كَعْبُ بْنُ مَالِكٍ فَلَمَّا بَلَغَنِي أَنَّهُ تَوَجَّهَ قَافِلاً حَضَرَنِي هَمِّي، وَطَفِقْتُ أَتَذَكَّرُ الْكَذِبَ وَأَقُولُ بِمَاذَا أَخْرُجُ مِنْ سَخَطِهِ غَدًا وَاسْتَعَنْتُ عَلَى ذَلِكَ بِكُلِّ ذِي رَأْىٍ مِنْ أَهْلِي، فَلَمَّا قِيلَ إِنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَدْ أَظَلَّ قَادِمًا زَاحَ عَنِّي الْبَاطِلُ، وَعَرَفْتُ أَنِّي لَنْ أَخْرُجَ مِنْهُ أَبَدًا بِشَىْءٍ فِيهِ كَذِبٌ، فَأَجْمَعْتُ صِدْقَهُ، وَأَصْبَحَ رَسُولُ اللَّهِ صلى الله عليه وسلم قَادِمًا، وَكَانَ إِذَا قَدِمَ مِنْ سَفَرٍ بَدَأَ بِالْمَسْجِدِ فَيَرْكَعُ فِيهِ رَكْعَتَيْنِ ثُمَّ جَلَسَ لِلنَّاسِ، فَلَمَّا فَعَلَ ذَلِكَ جَاءَهُ الْمُخَلَّفُونَ، فَطَفِقُوا يَعْتَذِرُونَ إِلَيْهِ، وَيَحْلِفُونَ لَهُ، وَكَانُوا بِضْعَةً وَثَمَانِينَ رَجُلاً فَقَبِلَ مِنْهُمْ رَسُولُ اللَّهِ صلى الله عليه وسلم عَلاَنِيَتَهُمْ، وَبَايَعَهُمْ وَاسْتَغْفَرَ لَهُمْ، وَوَكَلَ سَرَائِرَهُمْ إِلَى اللَّهِ، فَجِئْتُهُ فَلَمَّا سَلَّمْتُ عَلَيْهِ تَبَسَّمَ تَبَسُّمَ الْمُغْضَبِ، ثُمَّ قَالَ تَعَالَ . فَجِئْتُ أَمْشِي حَتَّى جَلَسْتُ بَيْنَ يَدَيْهِ، فَقَالَ لِي مَا خَلَّفَكَ أَلَمْ تَكُنْ قَدِ ابْتَعْتَ ظَهْرَكَ . فَقُلْتُ بَلَى، إِنِّي وَاللَّهِ لَوْ جَلَسْتُ عِنْدَ غَيْرِكَ مِنْ أَهْلِ الدُّنْيَا، لَرَأَيْتُ أَنْ سَأَخْرُجُ مِنْ سَخَطِهِ بِعُذْرٍ، وَلَقَدْ أُعْطِيتُ جَدَلاً، وَلَكِنِّي وَاللَّهِ لَقَدْ عَلِمْتُ لَئِنْ حَدَّثْتُكَ الْيَوْمَ حَدِيثَ كَذِبٍ تَرْضَى بِهِ عَنِّي لَيُوشِكَنَّ اللَّهُ أَنْ يُسْخِطَكَ عَلَىَّ، وَلَئِنْ حَدَّثْتُكَ حَدِيثَ صِدْقٍ تَجِدُ عَلَىَّ فِيهِ إِنِّي لأَرْجُو فِيهِ عَفْوَ اللَّهِ، لاَ وَاللَّهِ مَا كَانَ لِي مِنْ عُذْرٍ، وَاللَّهِ مَا كُنْتُ قَطُّ أَقْوَى وَلاَ أَيْسَرَ مِنِّي حِينَ تَخَلَّفْتُ عَنْكَ. فَقَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم أَمَّا هَذَا فَقَدْ صَدَقَ، فَقُمْ حَتَّى يَقْضِيَ اللَّهُ فِيكَ . فَقُمْتُ وَثَارَ رِجَالٌ مِنْ بَنِي سَلِمَةَ فَاتَّبَعُونِي، فَقَالُوا لِي وَاللَّهِ مَا عَلِمْنَاكَ كُنْتَ أَذْنَبْتَ ذَنْبًا قَبْلَ هَذَا، وَلَقَدْ عَجَزْتَ أَنْ لاَ تَكُونَ اعْتَذَرْتَ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم بِمَا اعْتَذَرَ إِلَيْهِ الْمُتَخَلِّفُونَ، قَدْ كَانَ كَافِيَكَ ذَنْبَكَ اسْتِغْفَارُ رَسُولِ اللَّهِ صلى الله عليه وسلم لَكَ، فَوَاللَّهِ مَا زَالُوا يُؤَنِّبُونِي حَتَّى أَرَدْتُ أَنْ أَرْجِعَ فَأُكَذِّبُ نَفْسِي، ثُمَّ قُلْتُ لَهُمْ هَلْ لَقِيَ هَذَا مَعِي أَحَدٌ قَالُوا نَعَمْ، رَجُلاَنِ قَالاَ مِثْلَ مَا قُلْتَ، فَقِيلَ لَهُمَا مِثْلُ مَا قِيلَ لَكَ. فَقُلْتُ مَنْ هُمَا قَالُوا مُرَارَةُ بْنُ الرَّبِيعِ الْعَمْرِيُّ وَهِلاَلُ بْنُ أُمَيَّةَ الْوَاقِفِيُّ. فَذَكَرُوا لِي رَجُلَيْنِ صَالِحَيْنِ قَدْ شَهِدَا بَدْرًا فِيهِمَا إِسْوَةٌ، فَمَضَيْتُ حِينَ ذَكَرُوهُمَا لِي، وَنَهَى رَسُولُ اللَّهِ صلى الله عليه وسلم الْمُسْلِمِينَ عَنْ كَلاَمِنَا أَيُّهَا الثَّلاَثَةُ مِنْ بَيْنِ مَنْ تَخَلَّفَ عَنْهُ، فَاجْتَنَبَنَا النَّاسُ وَتَغَيَّرُوا لَنَا حَتَّى تَنَكَّرَتْ فِي نَفْسِي الأَرْضُ، فَمَا هِيَ الَّتِي أَعْرِفُ، فَلَبِثْنَا عَلَى ذَلِكَ خَمْسِينَ لَيْلَةً، فَأَمَّا صَاحِبَاىَ فَاسْتَكَانَا وَقَعَدَا فِي بُيُوتِهِمَا يَبْكِيَانِ، وَأَمَّا أَنَا فَكُنْتُ أَشَبَّ الْقَوْمِ وَأَجْلَدَهُمْ، فَكُنْتُ أَخْرُجُ فَأَشْهَدُ الصَّلاَةَ مَعَ الْمُسْلِمِينَ وَأَطُوفُ فِي الأَسْوَاقِ، وَلاَ يُكَلِّمُنِي أَحَدٌ، وَآتِي رَسُولَ اللَّهِ صلى الله عليه وسلم فَأُسَلِّمُ عَلَيْهِ وَهْوَ فِي مَجْلِسِهِ بَعْدَ الصَّلاَةِ، فَأَقُولُ فِي نَفْسِي هَلْ حَرَّكَ شَفَتَيْهِ بِرَدِّ السَّلاَمِ عَلَىَّ أَمْ لاَ ثُمَّ أُصَلِّي قَرِيبًا مِنْهُ فَأُسَارِقُهُ النَّظَرَ، فَإِذَا أَقْبَلْتُ عَلَى صَلاَتِي أَقْبَلَ إِلَىَّ، وَإِذَا الْتَفَتُّ نَحْوَهُ أَعْرَضَ عَنِّي، حَتَّى إِذَا طَالَ عَلَىَّ ذَلِكَ مِنْ جَفْوَةِ النَّاسِ مَشَيْتُ حَتَّى تَسَوَّرْتُ جِدَارَ حَائِطِ أَبِي قَتَادَةَ وَهْوَ ابْنُ عَمِّي وَأَحَبُّ النَّاسِ إِلَىَّ، فَسَلَّمْتُ عَلَيْهِ، فَوَاللَّهِ مَا رَدَّ عَلَىَّ السَّلاَمَ، فَقُلْتُ يَا أَبَا قَتَادَةَ، أَنْشُدُكَ بِاللَّهِ هَلْ تَعْلَمُنِي أُحِبُّ اللَّهَ وَرَسُولَهُ فَسَكَتَ، فَعُدْتُ لَهُ فَنَشَدْتُهُ فَسَكَتَ، فَعُدْتُ لَهُ فَنَشَدْتُهُ. فَقَالَ اللَّهُ وَرَسُولُهُ أَعْلَمُ. فَفَاضَتْ عَيْنَاىَ وَتَوَلَّيْتُ حَتَّى تَسَوَّرْتُ الْجِدَارَ، قَالَ فَبَيْنَا أَنَا أَمْشِي بِسُوقِ الْمَدِينَةِ إِذَا نَبَطِيٌّ مِنْ أَنْبَاطِ أَهْلِ الشَّأْمِ مِمَّنْ قَدِمَ بِالطَّعَامِ يَبِيعُهُ بِالْمَدِينَةِ يَقُولُ مَنْ يَدُلُّ عَلَى كَعْبِ بْنِ مَالِكٍ فَطَفِقَ النَّاسُ يُشِيرُونَ لَهُ، حَتَّى إِذَا جَاءَنِي دَفَعَ إِلَىَّ كِتَابًا مِنْ مَلِكِ غَسَّانَ، فَإِذَا فِيهِ أَمَّا بَعْدُ فَإِنَّهُ قَدْ بَلَغَنِي أَنَّ صَاحِبَكَ قَدْ جَفَاكَ، وَلَمْ يَجْعَلْكَ اللَّهُ بِدَارِ هَوَانٍ وَلاَ مَضْيَعَةٍ، فَالْحَقْ بِنَا نُوَاسِكَ. فَقُلْتُ لَمَّا قَرَأْتُهَا وَهَذَا أَيْضًا مِنَ الْبَلاَءِ. فَتَيَمَّمْتُ بِهَا التَّنُّورَ فَسَجَرْتُهُ بِهَا، حَتَّى إِذَا مَضَتْ أَرْبَعُونَ لَيْلَةً مِنَ الْخَمْسِينَ إِذَا رَسُولُ رَسُولِ اللَّهِ صلى الله عليه وسلم يَأْتِينِي فَقَالَ إِنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم يَأْمُرُكَ أَنْ تَعْتَزِلَ امْرَأَتَكَ فَقُلْتُ أُطَلِّقُهَا أَمْ مَاذَا أَفْعَلُ قَالَ لاَ بَلِ اعْتَزِلْهَا وَلاَ تَقْرَبْهَا. وَأَرْسَلَ إِلَى صَاحِبَىَّ مِثْلَ ذَلِكَ، فَقُلْتُ لاِمْرَأَتِي الْحَقِي بِأَهْلِكِ فَتَكُونِي عِنْدَهُمْ حَتَّى يَقْضِيَ اللَّهُ فِي هَذَا الأَمْرِ. قَالَ كَعْبٌ فَجَاءَتِ امْرَأَةُ هِلاَلِ بْنِ أُمَيَّةَ رَسُولَ اللَّهِ صلى الله عليه وسلم فَقَالَتْ يَا رَسُولَ اللَّهِ، إِنَّ هِلاَلَ بْنَ أُمَيَّةَ شَيْخٌ ضَائِعٌ لَيْسَ لَهُ خَادِمٌ فَهَلْ تَكْرَهُ أَنْ أَخْدُمَهُ قَالَ لاَ وَلَكِنْ لاَ يَقْرَبْكِ . قَالَتْ إِنَّهُ وَاللَّهِ مَا بِهِ حَرَكَةٌ إِلَى شَىْءٍ، وَاللَّهِ مَا زَالَ يَبْكِي مُنْذُ كَانَ مِنْ أَمْرِهِ مَا كَانَ إِلَى يَوْمِهِ هَذَا. فَقَالَ لِي بَعْضُ أَهْلِي لَوِ اسْتَأْذَنْتَ رَسُولَ اللَّهِ صلى الله عليه وسلم فِي امْرَأَتِكَ كَمَا أَذِنَ لاِمْرَأَةِ هِلاَلِ بْنِ أُمَيَّةَ أَنْ تَخْدُمَهُ فَقُلْتُ وَاللَّهِ لاَ أَسْتَأْذِنُ فِيهَا رَسُولَ اللَّهِ صلى الله عليه وسلم وَمَا يُدْرِينِي مَا يَقُولُ رَسُولُ اللَّهِ صلى الله عليه وسلم إِذَا اسْتَأْذَنْتُهُ فِيهَا وَأَنَا رَجُلٌ شَابٌّ فَلَبِثْتُ بَعْدَ ذَلِكَ عَشْرَ لَيَالٍ حَتَّى كَمَلَتْ لَنَا خَمْسُونَ لَيْلَةً مِنْ حِينِ نَهَى رَسُولُ اللَّهِ صلى الله عليه وسلم عَنْ كَلاَمِنَا، فَلَمَّا صَلَّيْتُ صَلاَةَ الْفَجْرِ صُبْحَ خَمْسِينَ لَيْلَةً، وَأَنَا عَلَى ظَهْرِ بَيْتٍ مِنْ بُيُوتِنَا، فَبَيْنَا أَنَا جَالِسٌ عَلَى الْحَالِ الَّتِي ذَكَرَ اللَّهُ، قَدْ ضَاقَتْ عَلَىَّ نَفْسِي، وَضَاقَتْ عَلَىَّ الأَرْضُ بِمَا رَحُبَتْ، سَمِعْتُ صَوْتَ صَارِخٍ أَوْفَى عَلَى جَبَلِ سَلْعٍ بِأَعْلَى صَوْتِهِ يَا كَعْبُ بْنَ مَالِكٍ، أَبْشِرْ. قَالَ فَخَرَرْتُ سَاجِدًا، وَعَرَفْتُ أَنْ قَدْ جَاءَ فَرَجٌ، وَآذَنَ رَسُولُ اللَّهِ صلى الله عليه وسلم بِتَوْبَةِ اللَّهِ عَلَيْنَا حِينَ صَلَّى صَلاَةَ الْفَجْرِ، فَذَهَبَ النَّاسُ يُبَشِّرُونَنَا، وَذَهَبَ قِبَلَ صَاحِبَىَّ مُبَشِّرُونَ، وَرَكَضَ إِلَىَّ رَجُلٌ فَرَسًا، وَسَعَى سَاعٍ مِنْ أَسْلَمَ فَأَوْفَى عَلَى الْجَبَلِ وَكَانَ الصَّوْتُ أَسْرَعَ مِنَ الْفَرَسِ، فَلَمَّا جَاءَنِي الَّذِي سَمِعْتُ صَوْتَهُ يُبَشِّرُنِي نَزَعْتُ لَهُ ثَوْبَىَّ، فَكَسَوْتُهُ إِيَّاهُمَا بِبُشْرَاهُ، وَاللَّهِ مَا أَمْلِكُ غَيْرَهُمَا يَوْمَئِذٍ، وَاسْتَعَرْتُ ثَوْبَيْنِ فَلَبِسْتُهُمَا، وَانْطَلَقْتُ إِلَى رَسُولِ اللَّهِ صلى الله عليه وسلم فَيَتَلَقَّانِي النَّاسُ فَوْجًا فَوْجًا يُهَنُّونِي بِالتَّوْبَةِ، يَقُولُونَ لِتَهْنِكَ تَوْبَةُ اللَّهِ عَلَيْكَ. قَالَ كَعْبٌ حَتَّى دَخَلْتُ الْمَسْجِدَ، فَإِذَا رَسُولُ اللَّهِ صلى الله عليه وسلم جَالِسٌ حَوْلَهُ النَّاسُ فَقَامَ إِلَىَّ طَلْحَةُ بْنُ عُبَيْدِ اللَّهِ يُهَرْوِلُ حَتَّى صَافَحَنِي وَهَنَّانِي، وَاللَّهِ مَا قَامَ إِلَىَّ رَجُلٌ مِنَ الْمُهَاجِرِينَ غَيْرُهُ، وَلاَ أَنْسَاهَا لِطَلْحَةَ، قَالَ كَعْبٌ فَلَمَّا سَلَّمْتُ عَلَى رَسُولِ اللَّهِ صلى الله عليه وسلم قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم وَهْوَ يَبْرُقُ وَجْهُهُ مِنَ السُّرُورِ أَبْشِرْ بِخَيْرِ يَوْمٍ مَرَّ عَلَيْكَ مُنْذُ وَلَدَتْكَ أُمُّكَ . قَالَ قُلْتُ أَمِنْ عِنْدِكَ يَا رَسُولَ اللَّهِ أَمْ مِنْ عِنْدِ اللَّهِ قَالَ لاَ، بَلْ مِنْ عِنْدِ اللَّهِ . وَكَانَ رَسُولُ اللَّهِ صلى الله عليه وسلم إِذَا سُرَّ اسْتَنَارَ وَجْهُهُ حَتَّى كَأَنَّهُ قِطْعَةُ قَمَرٍ، وَكُنَّا نَعْرِفُ ذَلِكَ مِنْهُ، فَلَمَّا جَلَسْتُ بَيْنَ يَدَيْهِ قُلْتُ يَا رَسُولَ اللَّهِ، إِنَّ مِنْ تَوْبَتِي أَنْ أَنْخَلِعَ مِنْ مَالِي صَدَقَةً إِلَى اللَّهِ وَإِلَى رَسُولِ اللَّهِ. قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم أَمْسِكْ عَلَيْكَ بَعْضَ مَالِكَ فَهُوَ خَيْرٌ لَكَ . قُلْتُ فَإِنِّي أُمْسِكُ سَهْمِي الَّذِي بِخَيْبَرَ، فَقُلْتُ يَا رَسُولَ اللَّهِ، إِنَّ اللَّهَ إِنَّمَا نَجَّانِي بِالصِّدْقِ، وَإِنَّ مِنْ تَوْبَتِي أَنْ لاَ أُحَدِّثَ إِلاَّ صِدْقًا مَا بَقِيتُ، فَوَاللَّهِ مَا أَعْلَمُ أَحَدًا مِنَ الْمُسْلِمِينَ أَبْلاَهُ اللَّهُ فِي صِدْقِ الْحَدِيثِ مُنْذُ ذَكَرْتُ ذَلِكَ لِرَسُولِ اللَّهِ صلى الله عليه وسلم أَحْسَنَ مِمَّا أَبْلاَنِي، مَا تَعَمَّدْتُ مُنْذُ ذَكَرْتُ ذَلِكَ لِرَسُولِ اللَّهِ صلى الله عليه وسلم إِلَى يَوْمِي هَذَا كَذِبًا، وَإِنِّي لأَرْجُو أَنْ يَحْفَظَنِي اللَّهُ فِيمَا بَقِيتُ وَأَنْزَلَ اللَّهُ عَلَى رَسُولِهِ صلى الله عليه وسلم {لَقَدْ تَابَ اللَّهُ عَلَى النَّبِيِّ وَالْمُهَاجِرِينَ} إِلَى قَوْلِهِ {وَكُونُوا مَعَ الصَّادِقِينَ} فَوَاللَّهِ مَا أَنْعَمَ اللَّهُ عَلَىَّ مِنْ نِعْمَةٍ قَطُّ بَعْدَ أَنْ هَدَانِي لِلإِسْلاَمِ أَعْظَمَ فِي نَفْسِي مِنْ صِدْقِي لِرَسُولِ اللَّهِ صلى الله عليه وسلم أَنْ لاَ أَكُونَ كَذَبْتُهُ، فَأَهْلِكَ كَمَا هَلَكَ الَّذِينَ كَذَبُوا، فَإِنَّ اللَّهَ قَالَ لِلَّذِينَ كَذَبُوا حِينَ أَنْزَلَ الْوَحْىَ شَرَّ مَا قَالَ لأَحَدٍ، فَقَالَ تَبَارَكَ وَتَعَالَى {سَيَحْلِفُونَ بِاللَّهِ لَكُمْ إِذَا انْقَلَبْتُمْ} إِلَى قَوْلِهِ {فَإِنَّ اللَّهَ لاَ يَرْضَى عَنِ الْقَوْمِ الْفَاسِقِينَ}. قَالَ كَعْبٌ وَكُنَّا تَخَلَّفْنَا أَيُّهَا الثَّلاَثَةُ عَنْ أَمْرِ أُولَئِكَ الَّذِينَ قَبِلَ مِنْهُمْ رَسُولُ اللَّهِ صلى الله عليه وسلم حِينَ حَلَفُوا لَهُ، فَبَايَعَهُمْ وَاسْتَغْفَرَ لَهُمْ وَأَرْجَأَ رَسُولُ اللَّهِ صلى الله عليه وسلم أَمْرَنَا حَتَّى قَضَى اللَّهُ فِيهِ، فَبِذَلِكَ قَالَ اللَّهُ {وَعَلَى الثَّلاَثَةِ الَّذِينَ خُلِّفُوا} وَلَيْسَ الَّذِي ذَكَرَ اللَّهُ مِمَّا خُلِّفْنَا عَنِ الْغَزْوِ إِنَّمَا هُوَ تَخْلِيفُهُ إِيَّانَا وَإِرْجَاؤُهُ أَمْرَنَا عَمَّنْ حَلَفَ لَهُ وَاعْتَذَرَ إِلَيْهِ، فَقَبِلَ مِنْهُ",
+      translation: "I never stayed behind from the Messenger of Allah ﷺ in any expedition he fought except the expedition of Tabuk, save that I had stayed behind from Badr, and no one who stayed behind from it was blamed: the Messenger of Allah ﷺ had gone out intending the caravan of Quraysh, until Allah brought them and their enemy together with no appointment between them. I was present with the Messenger of Allah ﷺ on the night of al-Aqabah, when we pledged ourselves to Islam, and I would not exchange it for the day of Badr, though Badr is more spoken of among the people. My news is that I was never stronger nor better off than when I stayed behind from him in that expedition. By Allah, I had never had two riding camels together before I had them in that expedition. The Messenger of Allah ﷺ never intended an expedition but that he disguised it with another, until that expedition: he fought it in severe heat, facing a far journey, a waterless waste and a numerous enemy, so he made the matter plain to the Muslims that they might prepare, and told them the direction he intended. The Muslims with the Messenger of Allah ﷺ were many, and no register gathered them. Ka'b said: There was hardly a man who wished to be absent but thought it would stay hidden, so long as no revelation came down from Allah about him. The Messenger of Allah ﷺ fought that expedition when the fruits and the shade were pleasant, and he and the Muslims with him made ready. I would set out in the morning to make ready with them, and come back having settled nothing, saying to myself: I am able to do it. It kept on with me until the people were in earnest, and the Messenger of Allah ﷺ set out one morning with the Muslims, and I had settled nothing of my preparation. I said: I will make ready a day or two after him and then catch them up. I set out after they had gone to make ready, and came back having settled nothing; then I set out and came back having settled nothing. It kept on with me until they had hurried and the expedition was far. I meant to set off and catch them - and would that I had - but it was not decreed for me. When I went out among the people after the departure of the Messenger of Allah ﷺ and walked among them, it grieved me that I saw only a man suspected of hypocrisy, or a man of the weak whom Allah had excused. The Messenger of Allah ﷺ did not mention me until he reached Tabuk, and he said, sitting among the people at Tabuk: What did Ka'b do? A man of Banu Salimah said: O Messenger of Allah, his two cloaks have kept him back, and his looking at his own flanks. Mu'adh ibn Jabal said: An evil thing you have said. By Allah, O Messenger of Allah, we know nothing of him but good. The Messenger of Allah ﷺ was silent. Ka'b ibn Malik said: When word reached me that he had turned back for home, my grief came upon me, and I began to recall lies and to say: With what shall I come out of his anger tomorrow? And I sought help in that from every person of judgement in my family. When it was said that the Messenger of Allah ﷺ was close upon arriving, falsehood left me, and I knew that I would never come out of it by anything with a lie in it, so I resolved upon truth. The Messenger of Allah ﷺ arrived in the morning, and when he came from a journey he would begin with the mosque, pray two rak'ahs in it, then sit for the people. When he had done that, those who had stayed behind came to him and began to make their excuses and swear to him - they were some eighty-odd men. The Messenger of Allah ﷺ accepted from them what they showed, took their pledge, asked forgiveness for them, and left what was inside them to Allah. Then I came, and when I greeted him he smiled the smile of one angry, then said: Come. I came walking until I sat before him, and he said to me: What kept you back? Had you not bought your mount? I said: Yes. By Allah, were I sitting before anyone else of the people of this world, I would think I could come out of his anger with an excuse, for I have been given some skill in argument. But by Allah, I know that if I tell you today a lying story with which you are pleased with me, Allah will soon make you angry with me; and if I tell you a true story at which you are angry with me, I hope in it for the pardon of Allah. No, by Allah, I had no excuse. By Allah, I was never stronger nor better off than when I stayed behind from you. The Messenger of Allah ﷺ said: As for this one, he has told the truth. Get up until Allah decides about you. I got up, and men of Banu Salimah rose and followed me and said to me: By Allah, we do not know you to have committed a sin before this, and you were unable to offer the Messenger of Allah ﷺ the excuse that those who stayed behind offered him; the asking of forgiveness for you by the Messenger of Allah ﷺ would have been enough for your sin. By Allah, they did not cease reproaching me until I wanted to go back and call myself a liar. Then I said to them: Has anyone else met this with me? They said: Yes, two men said the like of what you said, and they were told the like of what you were told. I said: Who are they? They said: Murarah ibn ar-Rabi' al-Amri and Hilal ibn Umayyah al-Waqifi. They mentioned to me two righteous men who had been present at Badr, in whom there is an example. So I went on when they mentioned them to me. And the Messenger of Allah ﷺ forbade the Muslims to speak to the three of us from among those who had stayed behind from him. The people avoided us and changed towards us, until the earth itself seemed strange to me: it was not the land I knew. We remained so for fifty nights. As for my two companions, they submitted and sat in their houses weeping. As for me, I was the youngest of the people and the strongest of them: I would go out and attend the prayer with the Muslims and walk about in the markets, and no one would speak to me; and I would come to the Messenger of Allah ﷺ and greet him while he sat in his place after the prayer, and say to myself: Has he moved his lips returning my greeting or not? Then I would pray near him and steal a glance at him; when I turned to my prayer he would look at me, and when I turned towards him he would turn away from me. When this harshness of the people had gone on long with me, I walked until I climbed the wall of the garden of Abu Qatadah, who was my cousin and the dearest of people to me, and I greeted him. By Allah, he did not return my greeting. I said: Abu Qatadah, I ask you by Allah, do you know that I love Allah and His Messenger? He was silent. I came back to him and asked him again, and he was silent. I came back and asked him again, and he said: Allah and His Messenger know best. My eyes overflowed, and I turned away and climbed the wall. While I was walking in the market of Madinah, there was a Nabatean of the people of Sham, of those who had come with food to sell it in Madinah, saying: Who will lead me to Ka'b ibn Malik? The people began pointing to me, until he came to me and handed me a letter from the king of Ghassan. In it was: To proceed: it has reached me that your companion has treated you harshly. Allah has not placed you in a house of humiliation nor of waste. Join us and we will comfort you. When I read it I said: This too is part of the trial. I took it to the oven and burned it in it. When forty of the fifty nights had passed, there came a messenger of the Messenger of Allah ﷺ who said: The Messenger of Allah ﷺ orders you to keep away from your wife. I said: Shall I divorce her, or what shall I do? He said: No, keep away from her and do not approach her. He sent the like of that to my two companions. I said to my wife: Join your family and be with them until Allah decides in this matter. Ka'b said: The wife of Hilal ibn Umayyah came to the Messenger of Allah ﷺ and said: O Messenger of Allah, Hilal ibn Umayyah is an old man, helpless, with no servant; do you dislike that I should serve him? He said: No, but let him not approach you. She said: By Allah, he has no movement towards anything. By Allah, he has not ceased weeping from the day his affair was what it was until this day of his. Some of my family said to me: If only you asked the Messenger of Allah ﷺ permission about your wife, as he permitted the wife of Hilal ibn Umayyah to serve him. I said: By Allah, I will not ask the Messenger of Allah ﷺ permission about her, and what do I know what the Messenger of Allah ﷺ would say if I asked him about her, and I a young man? So I stayed ten nights after that, until fifty nights were complete for us from when the Messenger of Allah ﷺ forbade speaking to us. Then I prayed the dawn prayer on the morning of the fiftieth night, on the roof of one of our houses, and while I was sitting in the state that Allah described - my own soul straitened upon me, and the earth straitened upon me for all its breadth - I heard the voice of a crier who had climbed Mount Sal' calling at the top of his voice: Ka'b ibn Malik, rejoice! I fell down in prostration, and I knew that relief had come. The Messenger of Allah ﷺ had announced Allah's turning to us when he prayed the dawn prayer, and the people went to give us the good news. Some went to my two companions giving good news, and a man raced a horse to me, and a man of Aslam ran and climbed the mountain - and the voice was swifter than the horse. When the one whose voice I had heard came to me giving me the good news, I took off my two garments and clothed him in them for his good news; by Allah, I owned nothing else that day. I borrowed two garments and put them on and set off to the Messenger of Allah ﷺ, and the people met me in groups congratulating me on the acceptance of my repentance, saying: May Allah's turning to you bring you joy. Ka'b said: Until I entered the mosque, and there was the Messenger of Allah ﷺ sitting with the people around him. Talhah ibn Ubaydullah rose to me hurrying until he shook my hand and congratulated me. By Allah, no man of the Muhajirun rose to me but him, and I do not forget it for Talhah. Ka'b said: When I greeted the Messenger of Allah ﷺ, his face shining with joy, he said: Rejoice in the best day that has passed over you since your mother bore you. I said: Is it from you, O Messenger of Allah, or from Allah? He said: No, from Allah. When the Messenger of Allah ﷺ was glad his face would shine until it was as though it were a piece of the moon, and we knew that of him. When I sat before him I said: O Messenger of Allah, part of my repentance is that I divest myself of my wealth as charity to Allah and to His Messenger. The Messenger of Allah ﷺ said: Keep some of your wealth for yourself; it is better for you. I said: Then I keep my share that is at Khaybar. And I said: O Messenger of Allah, Allah has saved me only by truth, and part of my repentance is that I shall not speak anything but truth as long as I remain. By Allah, I do not know of anyone among the Muslims whom Allah has tried in truthful speech, since I said that to the Messenger of Allah ﷺ, better than He has tried me. I have not deliberately told a lie from the day I said that to the Messenger of Allah ﷺ until this day of mine, and I hope that Allah will preserve me in what remains. And Allah sent down upon His Messenger ﷺ: \"Allah has already forgiven the Prophet and the Muhajirun\" to His words \"and be with those who are true\". By Allah, Allah has never bestowed upon me any favour, after guiding me to Islam, greater in my soul than my truthfulness to the Messenger of Allah ﷺ, that I did not lie to him and so perish as those who lied perished; for Allah said of those who lied, when He sent down the revelation, the worst that He said of anyone. Allah, Blessed and Exalted, said: \"They will swear by Allah to you when you return to them\" to His words \"for indeed, Allah is not pleased with a defiantly disobedient people\". Ka'b said: We three were kept back from the affair of those whose word the Messenger of Allah ﷺ accepted when they swore to him, and whose pledge he took and for whom he asked forgiveness; and the Messenger of Allah ﷺ deferred our affair until Allah decided in it. By that Allah said: \"and to the three who were left behind\". What Allah mentioned is not our staying behind from the expedition; it is his leaving us behind and deferring our affair from those who swore to him and made their excuses, and he accepted from them.",
+      translationFr: "Je ne suis resté en arrière du Messager d'Allah ﷺ dans aucune expédition qu'il ait menée, sauf l'expédition de Tabouk, si ce n'est que j'étais resté en arrière de Badr, et nul de ceux qui restèrent en arrière de Badr ne fut blâmé : le Messager d'Allah ﷺ était sorti voulant la caravane de Qouraych, jusqu'à ce qu'Allah les réunît avec leur ennemi sans rendez-vous entre eux. J'étais présent avec le Messager d'Allah ﷺ la nuit d'al-Aqaba, quand nous nous engageâmes pour l'islam, et je n'échangerais pas cette nuit contre le jour de Badr, bien que Badr soit plus mentionnée parmi les gens. Mon histoire est que je n'ai jamais été plus fort ni plus à l'aise que lorsque je restai en arrière de lui dans cette expédition. Par Allah, je n'avais jamais eu deux montures ensemble avant de les avoir dans cette expédition. Le Messager d'Allah ﷺ ne voulait jamais une expédition sans la masquer par une autre, jusqu'à cette expédition-là : il la mena par une chaleur intense, face à un voyage lointain, à un désert sans eau et à un ennemi nombreux. Il exposa donc clairement l'affaire aux musulmans afin qu'ils se préparent, et leur dit la direction qu'il voulait. Les musulmans avec le Messager d'Allah ﷺ étaient nombreux, et aucun registre ne les rassemblait. Ka'b dit : Il n'y avait guère d'homme voulant s'absenter qui ne pensât que cela resterait caché, tant qu'aucune révélation d'Allah ne descendrait à son sujet. Le Messager d'Allah ﷺ mena cette expédition quand les fruits et l'ombre étaient agréables, et il se prépara, et les musulmans avec lui. Je sortais le matin pour me préparer avec eux, et je revenais sans rien avoir réglé, me disant : J'en suis capable. Cela dura avec moi jusqu'à ce que les gens fussent pressés, et le Messager d'Allah ﷺ partit un matin avec les musulmans, et je n'avais rien réglé de ma préparation. Je dis : Je me préparerai un jour ou deux après lui, puis je les rejoindrai. Je sortis après leur départ pour me préparer, et revins sans rien avoir réglé ; puis je sortis et revins sans rien avoir réglé. Cela dura avec moi jusqu'à ce qu'ils se fussent hâtés et que l'expédition fût loin. Je voulus partir et les rattraper - et plût à Allah que je l'eusse fait - mais cela ne me fut pas décrété. Quand je sortais parmi les gens après le départ du Messager d'Allah ﷺ et que je marchais parmi eux, il m'attristait de ne voir qu'un homme soupçonné d'hypocrisie, ou un homme parmi les faibles qu'Allah avait excusés. Le Messager d'Allah ﷺ ne me mentionna pas jusqu'à ce qu'il atteignît Tabouk, et il dit, assis parmi les gens à Tabouk : Qu'a fait Ka'b ? Un homme des Banou Salima dit : Ô Messager d'Allah, ses deux manteaux l'ont retenu, et le regard qu'il porte sur ses propres flancs. Mou'adh ibn Jabal dit : Quelle mauvaise parole tu as dite. Par Allah, ô Messager d'Allah, nous ne savons de lui que du bien. Le Messager d'Allah ﷺ se tut. Ka'b ibn Malik dit : Quand me parvint qu'il était reparti vers Médine, mon souci m'envahit, et je me mis à me rappeler des mensonges et à dire : Par quoi sortirai-je demain de sa colère ? Et je demandai conseil pour cela à tout homme de jugement de ma famille. Quand on dit que le Messager d'Allah ﷺ était sur le point d'arriver, le mensonge me quitta, et je sus que je n'en sortirais jamais par quoi que ce fût de mensonger ; je résolus donc la vérité. Le Messager d'Allah ﷺ arriva au matin, et quand il revenait de voyage il commençait par la mosquée, y priait deux rak'as, puis s'asseyait pour les gens. Lorsqu'il fit cela, ceux qui étaient restés en arrière vinrent à lui et se mirent à s'excuser et à lui jurer - ils étaient quatre-vingts et quelques hommes. Le Messager d'Allah ﷺ accepta d'eux ce qu'ils montraient, reçut leur engagement, demanda pardon pour eux, et confia à Allah ce qu'ils cachaient. Puis je vins, et quand je le saluai il sourit du sourire de celui qui est en colère, puis dit : Viens. Je vins en marchant jusqu'à m'asseoir devant lui, et il me dit : Qu'est-ce qui t'a retenu ? N'avais-tu pas acheté ta monture ? Je dis : Si. Par Allah, si j'étais assis devant un autre que toi parmi les gens de ce monde, je penserais sortir de sa colère par une excuse, car il m'a été donné quelque habileté dans l'argumentation. Mais par Allah, je sais que si je te raconte aujourd'hui un récit mensonger dont tu sois content de moi, Allah ne tardera pas à te mettre en colère contre moi ; et si je te raconte un récit véridique dont tu sois fâché contre moi, j'espère en cela le pardon d'Allah. Non, par Allah, je n'avais aucune excuse. Par Allah, je n'ai jamais été plus fort ni plus à l'aise que lorsque je suis resté en arrière de toi. Le Messager d'Allah ﷺ dit : Quant à celui-ci, il a dit vrai. Lève-toi jusqu'à ce qu'Allah décide à ton sujet. Je me levai, et des hommes des Banou Salima se levèrent et me suivirent et me dirent : Par Allah, nous ne te connaissons pas d'avoir commis un péché avant cela, et tu n'as pas été capable de présenter au Messager d'Allah ﷺ l'excuse que lui ont présentée ceux qui sont restés en arrière ; la demande de pardon du Messager d'Allah ﷺ pour toi aurait suffi à ton péché. Par Allah, ils ne cessèrent de me réprimander jusqu'à ce que je voulusse retourner et me démentir moi-même. Puis je leur dis : Quelqu'un d'autre a-t-il rencontré cela avec moi ? Ils dirent : Oui, deux hommes ont dit comme tu as dit, et il leur a été dit comme il t'a été dit. Je dis : Qui sont-ils ? Ils dirent : Mourara ibn ar-Rabi' al-Amri et Hilal ibn Oumayya al-Waqifi. Ils me mentionnèrent deux hommes vertueux qui avaient été présents à Badr, en qui il y a un exemple. Je poursuivis donc mon chemin quand ils me les mentionnèrent. Et le Messager d'Allah ﷺ interdit aux musulmans de nous parler, à nous trois parmi ceux qui étaient restés en arrière de lui. Les gens nous évitèrent et changèrent envers nous, jusqu'à ce que la terre elle-même me parût étrangère : ce n'était pas la terre que je connaissais. Nous demeurâmes ainsi cinquante nuits. Quant à mes deux compagnons, ils se soumirent et restèrent assis dans leurs maisons à pleurer. Quant à moi, j'étais le plus jeune des gens et le plus endurant : je sortais, j'assistais à la prière avec les musulmans et je circulais dans les marchés, et personne ne me parlait ; et je venais au Messager d'Allah ﷺ et le saluais alors qu'il était assis à sa place après la prière, et je me disais : A-t-il remué ses lèvres en me rendant le salut, ou non ? Puis je priais près de lui et le regardais à la dérobée ; quand je me tournais vers ma prière il me regardait, et quand je me tournais vers lui il se détournait de moi. Quand cette dureté des gens eut duré longtemps avec moi, je marchai jusqu'à escalader le mur du jardin d'Abou Qatada, qui était mon cousin et l'homme le plus cher pour moi, et je le saluai. Par Allah, il ne me rendit pas le salut. Je dis : Abou Qatada, je t'adjure par Allah, sais-tu que j'aime Allah et Son Messager ? Il se tut. Je revins à lui et l'adjurai, et il se tut. Je revins et l'adjurai, et il dit : Allah et Son Messager savent mieux. Mes yeux débordèrent, et je me détournai et escaladai le mur. Tandis que je marchais dans le marché de Médine, voici qu'un Nabatéen des gens de Cham, de ceux qui étaient venus avec de la nourriture pour la vendre à Médine, disait : Qui me conduira à Ka'b ibn Malik ? Les gens se mirent à me désigner, jusqu'à ce qu'il vînt à moi et me remît une lettre du roi de Ghassan. Il y était écrit : Ensuite : il m'est parvenu que ton compagnon t'a traité durement. Allah ne t'a pas placé dans une demeure d'humiliation ni de perte. Rejoins-nous et nous te consolerons. Quand je la lus je dis : Ceci aussi fait partie de l'épreuve. Je la portai au four et l'y brûlai. Quand quarante des cinquante nuits furent passées, voici qu'un envoyé du Messager d'Allah ﷺ vint à moi et dit : Le Messager d'Allah ﷺ t'ordonne de t'écarter de ta femme. Je dis : Dois-je la répudier, ou que dois-je faire ? Il dit : Non, écarte-toi d'elle et ne l'approche pas. Il envoya la même chose à mes deux compagnons. Je dis à ma femme : Rejoins ta famille et sois chez eux jusqu'à ce qu'Allah décide dans cette affaire. Ka'b dit : La femme de Hilal ibn Oumayya vint au Messager d'Allah ﷺ et dit : Ô Messager d'Allah, Hilal ibn Oumayya est un vieillard démuni qui n'a pas de serviteur ; détestes-tu que je le serve ? Il dit : Non, mais qu'il ne t'approche pas. Elle dit : Par Allah, il n'a aucun mouvement vers quoi que ce soit. Par Allah, il n'a cessé de pleurer depuis le jour où son affaire fut ce qu'elle fut jusqu'à ce jour-ci. Certains des miens me dirent : Si seulement tu demandais au Messager d'Allah ﷺ la permission pour ta femme, comme il a permis à la femme de Hilal ibn Oumayya de le servir. Je dis : Par Allah, je ne demanderai pas au Messager d'Allah ﷺ la permission à son sujet, et qu'en sais-je de ce que dirait le Messager d'Allah ﷺ si je le lui demandais, moi qui suis un homme jeune ? Je demeurai ainsi dix nuits encore, jusqu'à ce que cinquante nuits fussent accomplies pour nous depuis que le Messager d'Allah ﷺ avait interdit qu'on nous parlât. Puis je priai la prière de l'aube au matin de la cinquantième nuit, sur le toit d'une de nos maisons, et tandis que j'étais assis dans l'état qu'Allah a décrit - mon âme resserrée sur moi, et la terre resserrée sur moi malgré son étendue - j'entendis la voix d'un crieur qui avait gravi le mont Sal', appelant de toute sa voix : Ka'b ibn Malik, réjouis-toi ! Je tombai prosterné, et je sus que la délivrance était venue. Le Messager d'Allah ﷺ avait annoncé qu'Allah avait agréé notre repentir lorsqu'il pria la prière de l'aube, et les gens allèrent nous annoncer la bonne nouvelle. Certains allèrent vers mes deux compagnons pour la leur annoncer, un homme lança vers moi un cheval, et un homme d'Aslam courut et gravit la montagne - et la voix fut plus rapide que le cheval. Quand celui dont j'avais entendu la voix vint à moi m'annoncer la bonne nouvelle, j'ôtai mes deux vêtements et l'en revêtis pour sa nouvelle ; par Allah, je ne possédais rien d'autre ce jour-là. J'empruntai deux vêtements, les mis, et partis vers le Messager d'Allah ﷺ, et les gens me rencontraient par groupes en me félicitant de l'agrément de mon repentir, disant : Que l'agrément d'Allah te soit une joie. Ka'b dit : Jusqu'à ce que j'entrasse dans la mosquée, et voici le Messager d'Allah ﷺ assis, les gens autour de lui. Talha ibn Oubaydoullah se leva vers moi en hâte jusqu'à me serrer la main et me féliciter. Par Allah, aucun homme des Mouhajiroun ne se leva vers moi hormis lui, et je ne l'oublie pas à Talha. Ka'b dit : Quand je saluai le Messager d'Allah ﷺ, son visage rayonnant de joie, il dit : Réjouis-toi du meilleur jour qui soit passé sur toi depuis que ta mère t'a enfanté. Je dis : Est-ce de toi, ô Messager d'Allah, ou d'Allah ? Il dit : Non, d'Allah. Quand le Messager d'Allah ﷺ était joyeux, son visage s'illuminait jusqu'à être comme un morceau de lune, et nous le connaissions à cela. Quand je m'assis devant lui je dis : Ô Messager d'Allah, une part de mon repentir est que je me dépouille de mes biens en aumône à Allah et à Son Messager. Le Messager d'Allah ﷺ dit : Garde pour toi une partie de tes biens ; cela vaut mieux pour toi. Je dis : Alors je garde ma part qui est à Khaybar. Et je dis : Ô Messager d'Allah, Allah ne m'a sauvé que par la vérité, et une part de mon repentir est que je ne dirai que la vérité tant que je vivrai. Par Allah, je ne connais personne parmi les musulmans qu'Allah ait éprouvé dans la parole véridique, depuis que j'ai dit cela au Messager d'Allah ﷺ, mieux qu'Il ne m'a éprouvé. Je n'ai pas délibérément menti depuis le jour où j'ai dit cela au Messager d'Allah ﷺ jusqu'à ce jour-ci, et j'espère qu'Allah me préservera dans ce qui reste. Et Allah fit descendre sur Son Messager ﷺ : « Allah a certes agréé le repentir du Prophète et des Mouhajiroun » jusqu'à Sa parole « et soyez avec les véridiques ». Par Allah, Allah ne m'a jamais accordé de bienfait, après m'avoir guidé vers l'islam, plus grand à mes yeux que ma véracité envers le Messager d'Allah ﷺ, de ne lui avoir pas menti et de n'avoir pas péri comme périrent ceux qui mentirent ; car Allah dit de ceux qui mentirent, quand Il fit descendre la révélation, le pire de ce qu'Il dit de quiconque. Allah, Béni et Exalté, dit : « Ils vous jureront par Allah quand vous reviendrez vers eux » jusqu'à Sa parole « car Allah n'agrée pas les gens pervers ». Ka'b dit : Nous trois fûmes laissés en arrière de l'affaire de ceux dont le Messager d'Allah ﷺ accepta la parole lorsqu'ils lui jurèrent, dont il reçut l'engagement et pour qui il demanda pardon ; et le Messager d'Allah ﷺ ajourna notre affaire jusqu'à ce qu'Allah y décidât. C'est par cela qu'Allah dit : « et aux trois qui étaient restés en arrière ». Ce qu'Allah a mentionné n'est pas notre fait d'être restés en arrière de l'expédition ; c'est le fait qu'il nous ait laissés en arrière et ajourné notre affaire, à la différence de ceux qui lui jurèrent et s'excusèrent, et dont il accepta.",
+      grade: "sahih",
+    } as HadithReference,
+  },
+  {
+    id: 'muhammad-147',
+    type: 'quran_source',
+    order: 147,
     content: "Surah At-Tawbah: it was not for the people of Madinah and the bedouins around them to remain behind the Messenger of Allah, nor to prefer themselves to him.",
     contentFr: "La sourate At-Tawbah : il n'appartenait pas aux gens de Médine ni aux bédouins d'alentour de rester en arrière du Messager d'Allah, ni de se préférer à lui.",
     source: {
@@ -1819,23 +1836,23 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-147',
+    id: 'muhammad-148',
     type: 'narrative',
-    order: 147,
+    order: 148,
     content: "﴿مَا كَانَ لِأَهْلِ ٱلْمَدِينَةِ وَمَنْ حَوْلَهُم مِّنَ ٱلْأَعْرَابِ أَن يَتَخَلَّفُوا۟ عَن رَّسُولِ ٱللَّهِ وَلَا يَرْغَبُوا۟ بِأَنفُسِهِمْ عَن نَّفْسِهِۦ ۚ ذَٰلِكَ بِأَنَّهُمْ لَا يُصِيبُهُمْ ظَمَأٌ وَلَا نَصَبٌ وَلَا مَخْمَصَةٌ فِى سَبِيلِ ٱللَّهِ وَلَا يَطَـُٔونَ مَوْطِئًا يَغِيظُ ٱلْكُفَّارَ وَلَا يَنَالُونَ مِنْ عَدُوٍّ نَّيْلًا إِلَّا كُتِبَ لَهُم بِهِۦ عَمَلٌ صَـٰلِحٌ ۚ إِنَّ ٱللَّهَ لَا يُضِيعُ أَجْرَ ٱلْمُحْسِنِينَ﴾ It was not [proper] for the people of Madinah and those surrounding them of the bedouins that they remain behind after [the departure of] the Messenger of Allah or that they prefer themselves over his self.1 That is because they are not afflicted by thirst or fatigue or hunger in the cause of Allah, nor do they tread on any ground that enrages the disbelievers, nor do they inflict upon an enemy any infliction but that it is registered for them as a righteous deed. Indeed, Allah does not allow to be lost the reward of the doers of good. ﴿وَلَا يُنفِقُونَ نَفَقَةً صَغِيرَةً وَلَا كَبِيرَةً وَلَا يَقْطَعُونَ وَادِيًا إِلَّا كُتِبَ لَهُمْ لِيَجْزِيَهُمُ ٱللَّهُ أَحْسَنَ مَا كَانُوا۟ يَعْمَلُونَ﴾ Nor do they spend an expenditure, small or large, or cross a valley but that it is registered for them that Allah may reward them for the best of what they were doing. ﴿۞ وَمَا كَانَ ٱلْمُؤْمِنُونَ لِيَنفِرُوا۟ كَآفَّةً ۚ فَلَوْلَا نَفَرَ مِن كُلِّ فِرْقَةٍ مِّنْهُمْ طَآئِفَةٌ لِّيَتَفَقَّهُوا۟ فِى ٱلدِّينِ وَلِيُنذِرُوا۟ قَوْمَهُمْ إِذَا رَجَعُوٓا۟ إِلَيْهِمْ لَعَلَّهُمْ يَحْذَرُونَ﴾ And it is not for the believers to go forth [to battle] all at once. For there should separate from every division of them a group [remaining] to obtain understanding in the religion and warn [i.e., advise] their people when they return to them that they might be cautious.",
     contentFr: "﴿مَا كَانَ لِأَهْلِ ٱلْمَدِينَةِ وَمَنْ حَوْلَهُم مِّنَ ٱلْأَعْرَابِ أَن يَتَخَلَّفُوا۟ عَن رَّسُولِ ٱللَّهِ وَلَا يَرْغَبُوا۟ بِأَنفُسِهِمْ عَن نَّفْسِهِۦ ۚ ذَٰلِكَ بِأَنَّهُمْ لَا يُصِيبُهُمْ ظَمَأٌ وَلَا نَصَبٌ وَلَا مَخْمَصَةٌ فِى سَبِيلِ ٱللَّهِ وَلَا يَطَـُٔونَ مَوْطِئًا يَغِيظُ ٱلْكُفَّارَ وَلَا يَنَالُونَ مِنْ عَدُوٍّ نَّيْلًا إِلَّا كُتِبَ لَهُم بِهِۦ عَمَلٌ صَـٰلِحٌ ۚ إِنَّ ٱللَّهَ لَا يُضِيعُ أَجْرَ ٱلْمُحْسِنِينَ﴾ Il ne convient pas aux habitants de Médine et aux bédouins des alentours de rester derrière le Messager d’Allah, ni de lui préférer leurs propres personnes. Car ils ne connaîtront ni soif, ni fatigue, ni faim dans le chemin d’Allah, ne fouleront aucun sol au mépris des mécréants, et n’infligeront aucune défaite à l’ennemi, qui ne leur soit inscrite au nombre de leurs bonnes œuvres. Allah ne laisse pas se perdre la récompense des bienfaiteurs ﴿وَلَا يُنفِقُونَ نَفَقَةً صَغِيرَةً وَلَا كَبِيرَةً وَلَا يَقْطَعُونَ وَادِيًا إِلَّا كُتِبَ لَهُمْ لِيَجْزِيَهُمُ ٱللَّهُ أَحْسَنَ مَا كَانُوا۟ يَعْمَلُونَ﴾ Ils n’engageront, non plus, aucune dépense, petite ou grande, ne traverseront aucune vallée qui ne leur soit inscrite. Cela, afin qu’Allah les récompense de leurs meilleures œuvres ﴿۞ وَمَا كَانَ ٱلْمُؤْمِنُونَ لِيَنفِرُوا۟ كَآفَّةً ۚ فَلَوْلَا نَفَرَ مِن كُلِّ فِرْقَةٍ مِّنْهُمْ طَآئِفَةٌ لِّيَتَفَقَّهُوا۟ فِى ٱلدِّينِ وَلِيُنذِرُوا۟ قَوْمَهُمْ إِذَا رَجَعُوٓا۟ إِلَيْهِمْ لَعَلَّهُمْ يَحْذَرُونَ﴾ Les croyants n’ont pas à accourir tous (pour aller combattre). Ne vaudrait-il pas mieux que, de chaque groupe (de guerriers), quelques-uns se consacrent à approfondir leurs connaissances en religion et avertir leur peuple à leur retour, afin que ce dernier soit vigilant",
   },
   {
-    id: 'muhammad-148',
+    id: 'muhammad-149',
     type: 'narrative',
-    order: 148,
+    order: 149,
     content: "Surah Al-Ma'idah carries the verse that came down near the end: this day I have perfected for you your religion.",
     contentFr: "La sourate Al-Ma'ida porte le verset descendu vers la fin : aujourd'hui J'ai parachevé pour vous votre religion.",
   },
   {
-    id: 'muhammad-149',
+    id: 'muhammad-150',
     type: 'quran_source',
-    order: 149,
+    order: 150,
     content: "Surah Al-Ma'idah: \"This day I have perfected for you your religion and completed My favour upon you.\"",
     contentFr: "La sourate Al-Ma'idah : « Aujourd'hui J'ai parachevé pour vous votre religion et accompli sur vous Mon bienfait. »",
     source: {
@@ -1851,23 +1868,23 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-150',
+    id: 'muhammad-151',
     type: 'narrative',
-    order: 150,
+    order: 151,
     content: "﴿حُرِّمَتْ عَلَيْكُمُ ٱلْمَيْتَةُ وَٱلدَّمُ وَلَحْمُ ٱلْخِنزِيرِ وَمَآ أُهِلَّ لِغَيْرِ ٱللَّهِ بِهِۦ وَٱلْمُنْخَنِقَةُ وَٱلْمَوْقُوذَةُ وَٱلْمُتَرَدِّيَةُ وَٱلنَّطِيحَةُ وَمَآ أَكَلَ ٱلسَّبُعُ إِلَّا مَا ذَكَّيْتُمْ وَمَا ذُبِحَ عَلَى ٱلنُّصُبِ وَأَن تَسْتَقْسِمُوا۟ بِٱلْأَزْلَـٰمِ ۚ ذَٰلِكُمْ فِسْقٌ ۗ ٱلْيَوْمَ يَئِسَ ٱلَّذِينَ كَفَرُوا۟ مِن دِينِكُمْ فَلَا تَخْشَوْهُمْ وَٱخْشَوْنِ ۚ ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ ٱلْإِسْلَـٰمَ دِينًا ۚ فَمَنِ ٱضْطُرَّ فِى مَخْمَصَةٍ غَيْرَ مُتَجَانِفٍ لِّإِثْمٍ ۙ فَإِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ﴾ Prohibited to you are dead animals, blood, the flesh of swine, and that which has been dedicated to other than Allah, and [those animals] killed by strangling or by a violent blow or by a head-long fall or by the goring of horns, and those from which a wild animal has eaten, except what you [are able to] slaughter [before its death], and those which are sacrificed on stone altars, and [prohibited is] that you seek decision through divining arrows. That is grave disobedience. This day those who disbelieve have despaired of [defeating] your religion; so fear them not, but fear Me. This day I have perfected for you your religion and completed My favor upon you and have approved for you Islam as religion. But whoever is forced by severe hunger with no inclination to sin - then indeed, Allah is Forgiving and Merciful.",
     contentFr: "﴿حُرِّمَتْ عَلَيْكُمُ ٱلْمَيْتَةُ وَٱلدَّمُ وَلَحْمُ ٱلْخِنزِيرِ وَمَآ أُهِلَّ لِغَيْرِ ٱللَّهِ بِهِۦ وَٱلْمُنْخَنِقَةُ وَٱلْمَوْقُوذَةُ وَٱلْمُتَرَدِّيَةُ وَٱلنَّطِيحَةُ وَمَآ أَكَلَ ٱلسَّبُعُ إِلَّا مَا ذَكَّيْتُمْ وَمَا ذُبِحَ عَلَى ٱلنُّصُبِ وَأَن تَسْتَقْسِمُوا۟ بِٱلْأَزْلَـٰمِ ۚ ذَٰلِكُمْ فِسْقٌ ۗ ٱلْيَوْمَ يَئِسَ ٱلَّذِينَ كَفَرُوا۟ مِن دِينِكُمْ فَلَا تَخْشَوْهُمْ وَٱخْشَوْنِ ۚ ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ ٱلْإِسْلَـٰمَ دِينًا ۚ فَمَنِ ٱضْطُرَّ فِى مَخْمَصَةٍ غَيْرَ مُتَجَانِفٍ لِّإِثْمٍ ۙ فَإِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ﴾ Il vous est défendu (de consommer la chair de) la bête morte, le sang, la viande de porc, et tout ce qui a été (égorgé) sous l’invocation d’un autre nom que celui d’Allah ; la bête étranglée ou étouffée, frappée à mort, morte d’une chute ou d’un coup de corne ; la bête dévorée par un fauve, à moins que celle-ci n’ait déjà été égorgée. (Il vous est également défendu de consommer) la chair de la bête immolée sur les autels (des idolâtres), et de consulter le sort au moyen de flèches (divinatoires). Voilà qui est vraiment pervers. Aujourd’hui, ceux qui ont mécru désespèrent de (vous voir abjurer) votre religion. Ne les craignez donc pas, et craignez-Moi. Aujourd’hui, J’ai mené votre religion à son point d’accomplissement, Je vous ai comblés de Ma grâce tout entière, et J’ai agréé pour vous l’Islam comme religion. Quiconque, cependant, se trouve contraint, en temps de famine et sans l’intention de pécher, de consommer de ces aliments défendus, (doit savoir qu’) Allah est Absoluteur et Tout Miséricordieux.",
   },
   {
-    id: 'muhammad-151',
+    id: 'muhammad-152',
     type: 'narrative',
-    order: 151,
+    order: 152,
     content: "At the farewell pilgrimage he ﷺ spoke to the people, and Abu Bakrah remembered what he said about their blood, their property and their honour (Sahih al-Bukhari 67).",
     contentFr: "Au pèlerinage d'adieu il ﷺ parla aux gens, et Abou Bakra se souvint de ce qu'il dit de leur sang, de leurs biens et de leur honneur (Sahih al-Boukhari 67).",
   },
   {
-    id: 'muhammad-152',
+    id: 'muhammad-153',
     type: 'hadith_source',
-    order: 152,
+    order: 153,
     content: "\"Your blood, your property and your honour are sacred to you.\"",
     contentFr: "« Votre sang, vos biens et votre honneur sont sacrés pour vous. »",
     source: {
@@ -1884,16 +1901,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
 
   // ============ PART 15: HIS DEATH ============
   {
-    id: 'muhammad-153',
+    id: 'muhammad-154',
     type: 'narrative',
-    order: 153,
+    order: 154,
     content: "Surah Al Imran had already said what Muhammad ﷺ was, and what would happen when he died.",
     contentFr: "La sourate Al Imran avait déjà dit ce qu'était Muhammad ﷺ, et ce qui arriverait à sa mort.",
   },
   {
-    id: 'muhammad-154',
+    id: 'muhammad-155',
     type: 'quran_source',
-    order: 154,
+    order: 155,
     content: "Surah Ali 'Imran: \"Muhammad is not but a messenger. Messengers have passed on before him.\"",
     contentFr: "La sourate Ali 'Imran : « Muhammad n'est qu'un messager. Des messagers avant lui sont passés. »",
     source: {
@@ -1909,16 +1926,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-155',
+    id: 'muhammad-156',
     type: 'narrative',
-    order: 155,
+    order: 156,
     content: "﴿وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ ٱلرُّسُلُ ۚ أَفَإِي۟ن مَّاتَ أَوْ قُتِلَ ٱنقَلَبْتُمْ عَلَىٰٓ أَعْقَـٰبِكُمْ ۚ وَمَن يَنقَلِبْ عَلَىٰ عَقِبَيْهِ فَلَن يَضُرَّ ٱللَّهَ شَيْـًٔا ۗ وَسَيَجْزِى ٱللَّهُ ٱلشَّـٰكِرِينَ﴾ Muhammad is not but a messenger. [Other] messengers have passed on before him. So if he was to die or be killed, would you turn back on your heels [to unbelief]? And he who turns back on his heels will never harm Allah at all; but Allah will reward the grateful.",
     contentFr: "﴿وَمَا مُحَمَّدٌ إِلَّا رَسُولٌ قَدْ خَلَتْ مِن قَبْلِهِ ٱلرُّسُلُ ۚ أَفَإِي۟ن مَّاتَ أَوْ قُتِلَ ٱنقَلَبْتُمْ عَلَىٰٓ أَعْقَـٰبِكُمْ ۚ وَمَن يَنقَلِبْ عَلَىٰ عَقِبَيْهِ فَلَن يَضُرَّ ٱللَّهَ شَيْـًٔا ۗ وَسَيَجْزِى ٱللَّهُ ٱلشَّـٰكِرِينَ﴾ Muhammad n’est qu’un Messager que d’autres Messagers ont précédé. S’il venait à mourir, ou s’il était tué, tourneriez-vous donc les talons ? Celui qui tourne les talons ne nuira en rien à Allah, et Allah récompensera les reconnaissants.",
   },
   {
-    id: 'muhammad-156',
+    id: 'muhammad-157',
     type: 'quran_source',
-    order: 156,
+    order: 157,
     content: "Surah Al-Qasas: \"He who imposed upon you the Quran will take you back to a place of return.\"",
     contentFr: "La sourate Al-Qasas : « Celui qui t'a prescrit le Coran te ramènera certainement là où tu veux retourner. »",
     source: {
@@ -1934,23 +1951,23 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-157',
+    id: 'muhammad-158',
     type: 'narrative',
-    order: 157,
+    order: 158,
     content: "﴿إِنَّ ٱلَّذِى فَرَضَ عَلَيْكَ ٱلْقُرْءَانَ لَرَآدُّكَ إِلَىٰ مَعَادٍ ۚ قُل رَّبِّىٓ أَعْلَمُ مَن جَآءَ بِٱلْهُدَىٰ وَمَنْ هُوَ فِى ضَلَـٰلٍ مُّبِينٍ﴾ Indeed, [O Muhammad], He who imposed upon you the Quran will take you back to a place of return. Say, \"My Lord is most knowing of who brings guidance and who is in clear error.\"",
     contentFr: "﴿إِنَّ ٱلَّذِى فَرَضَ عَلَيْكَ ٱلْقُرْءَانَ لَرَآدُّكَ إِلَىٰ مَعَادٍ ۚ قُل رَّبِّىٓ أَعْلَمُ مَن جَآءَ بِٱلْهُدَىٰ وَمَنْ هُوَ فِى ضَلَـٰلٍ مُّبِينٍ﴾ Celui qui t’a imposé le Coran entend te ramener au (lieu amène) d’un retour. Dis : « Mon Seigneur est le Meilleur à Savoir qui indique (aux hommes) la bonne direction (hudâ) et qui est dans un égarement manifeste. »",
   },
   {
-    id: 'muhammad-158',
+    id: 'muhammad-159',
     type: 'narrative',
-    order: 158,
+    order: 159,
     content: "Ibn Abbas counted his years, and Aisha told his last words, and where he died (Sahih al-Bukhari 3902).",
     contentFr: "Ibn Abbas compta ses années, et Aïcha rapporta ses derniers mots, et où il mourut (Sahih al-Boukhari 3902).",
   },
   {
-    id: 'muhammad-159',
+    id: 'muhammad-160',
     type: 'hadith_source',
-    order: 159,
+    order: 160,
     content: "Sent at forty; thirteen years in Makkah; ten in Madinah; died at sixty-three.",
     contentFr: "Envoyé à quarante ans ; treize ans à La Mecque ; dix à Médine ; mort à soixante-trois ans.",
     source: {
@@ -1965,9 +1982,9 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'muhammad-160',
+    id: 'muhammad-161',
     type: 'hadith_source',
-    order: 160,
+    order: 161,
     content: "His last words: \"O Allah, the highest companion.\"",
     contentFr: "Ses derniers mots : « Ô Allah, le Compagnon le plus haut. »",
     source: {
@@ -1982,9 +1999,9 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'muhammad-161',
+    id: 'muhammad-162',
     type: 'hadith_source',
-    order: 161,
+    order: 162,
     content: "Where he died.",
     contentFr: "Où il mourut.",
     source: {
@@ -2001,16 +2018,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
 
   // ============ PART 16: WHAT ALLAH SAYS OF HIM ============
   {
-    id: 'muhammad-162',
+    id: 'muhammad-163',
     type: 'narrative',
-    order: 162,
+    order: 163,
     content: "The Quran describes him in many places: who he is, what he was sent as, how he was with those around him, and what is owed to him. Each of those verses is given here.",
     contentFr: "Le Coran le décrit en bien des endroits : qui il est, comme quoi il fut envoyé, comment il était avec ceux qui l'entouraient, et ce qui lui est dû. Chacun de ces versets est donné ici.",
   },
   {
-    id: 'muhammad-163',
+    id: 'muhammad-164',
     type: 'quran_source',
-    order: 163,
+    order: 164,
     content: "Surah Al-Ahzab: \"The Messenger of Allah and seal of the prophets.\"",
     contentFr: "La sourate Al-Ahzab : « Le Messager d'Allah et le sceau des prophètes. »",
     source: {
@@ -2026,16 +2043,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-164',
+    id: 'muhammad-165',
     type: 'narrative',
-    order: 164,
+    order: 165,
     content: "﴿مَّا كَانَ مُحَمَّدٌ أَبَآ أَحَدٍ مِّن رِّجَالِكُمْ وَلَـٰكِن رَّسُولَ ٱللَّهِ وَخَاتَمَ ٱلنَّبِيِّـۧنَ ۗ وَكَانَ ٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمًا﴾ Muhammad is not the father of [any] one of your men, but [he is] the Messenger of Allah and seal [i.e., last] of the prophets. And ever is Allah, of all things, Knowing.",
     contentFr: "﴿مَّا كَانَ مُحَمَّدٌ أَبَآ أَحَدٍ مِّن رِّجَالِكُمْ وَلَـٰكِن رَّسُولَ ٱللَّهِ وَخَاتَمَ ٱلنَّبِيِّـۧنَ ۗ وَكَانَ ٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمًا﴾ Muhammad n’est le père d’aucun homme parmi vous, mais (il est) le Messager d’Allah et le Sceau des Prophètes. Allah est de Toute chose Omniscient.",
   },
   {
-    id: 'muhammad-165',
+    id: 'muhammad-166',
     type: 'quran_source',
-    order: 165,
+    order: 166,
     content: "Surah Al-Anbiya: \"We have not sent you except as a mercy to the worlds.\"",
     contentFr: "La sourate Al-Anbiya : « Nous ne t'avons envoyé qu'en miséricorde pour les mondes. »",
     source: {
@@ -2051,16 +2068,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-166',
+    id: 'muhammad-167',
     type: 'narrative',
-    order: 166,
+    order: 167,
     content: "﴿وَمَآ أَرْسَلْنَـٰكَ إِلَّا رَحْمَةً لِّلْعَـٰلَمِينَ﴾ And We have not sent you, [O Muhammad], except as a mercy to the worlds.",
     contentFr: "﴿وَمَآ أَرْسَلْنَـٰكَ إِلَّا رَحْمَةً لِّلْعَـٰلَمِينَ﴾ Nous ne t’avons envoyé qu’en miséricorde pour l’Univers.",
   },
   {
-    id: 'muhammad-167',
+    id: 'muhammad-168',
     type: 'quran_source',
-    order: 167,
+    order: 168,
     content: "Surah Al-Qalam: \"You are of a great moral character.\"",
     contentFr: "La sourate Al-Qalam : « Tu es d'une moralité éminente. »",
     source: {
@@ -2076,16 +2093,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-168',
+    id: 'muhammad-169',
     type: 'narrative',
-    order: 168,
+    order: 169,
     content: "﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ And indeed, you are of a great moral character.",
     contentFr: "﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾ Et tu es moralement très noble.",
   },
   {
-    id: 'muhammad-169',
+    id: 'muhammad-170',
     type: 'quran_source',
-    order: 169,
+    order: 170,
     content: "Surah Al-Ahzab: \"An excellent pattern in the Messenger of Allah.\"",
     contentFr: "La sourate Al-Ahzab : « Un excellent modèle dans le Messager d'Allah. »",
     source: {
@@ -2101,16 +2118,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-170',
+    id: 'muhammad-171',
     type: 'narrative',
-    order: 170,
+    order: 171,
     content: "﴿لَّقَدْ كَانَ لَكُمْ فِى رَسُولِ ٱللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُوا۟ ٱللَّهَ وَٱلْيَوْمَ ٱلْـَٔاخِرَ وَذَكَرَ ٱللَّهَ كَثِيرًا﴾ There has certainly been for you in the Messenger of Allah an excellent pattern for anyone whose hope is in Allah and the Last Day and [who] remembers Allah often.",
     contentFr: "﴿لَّقَدْ كَانَ لَكُمْ فِى رَسُولِ ٱللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُوا۟ ٱللَّهَ وَٱلْيَوْمَ ٱلْـَٔاخِرَ وَذَكَرَ ٱللَّهَ كَثِيرًا﴾ Vous avez dans le Messager d’Allah un bel exemple (à suivre) par quiconque espère en Allah et au Jour Dernier, et qui souvent évoque Allah.",
   },
   {
-    id: 'muhammad-171',
+    id: 'muhammad-172',
     type: 'quran_source',
-    order: 171,
+    order: 172,
     content: "Surah Al-Ahzab: A witness, a bringer of good tidings, a warner, one who invites to Allah, an illuminating lamp.",
     contentFr: "La sourate Al-Ahzab : Un témoin, un annonciateur, un avertisseur, celui qui appelle à Allah, une lampe éclairante.",
     source: {
@@ -2126,16 +2143,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-172',
+    id: 'muhammad-173',
     type: 'narrative',
-    order: 172,
+    order: 173,
     content: "﴿يَـٰٓأَيُّهَا ٱلنَّبِىُّ إِنَّآ أَرْسَلْنَـٰكَ شَـٰهِدًا وَمُبَشِّرًا وَنَذِيرًا﴾ O Prophet, indeed We have sent you as a witness and a bringer of good tidings and a warner ﴿وَدَاعِيًا إِلَى ٱللَّهِ بِإِذْنِهِۦ وَسِرَاجًا مُّنِيرًا﴾ And one who invites to Allah, by His permission, and an illuminating lamp. ﴿وَبَشِّرِ ٱلْمُؤْمِنِينَ بِأَنَّ لَهُم مِّنَ ٱللَّهِ فَضْلًا كَبِيرًا﴾ And give good tidings to the believers that they will have from Allah great bounty. ﴿وَلَا تُطِعِ ٱلْكَـٰفِرِينَ وَٱلْمُنَـٰفِقِينَ وَدَعْ أَذَىٰهُمْ وَتَوَكَّلْ عَلَى ٱللَّهِ ۚ وَكَفَىٰ بِٱللَّهِ وَكِيلًا﴾ And do not obey the disbelievers and the hypocrites and disregard their annoyance, and rely upon Allah. And sufficient is Allah as Disposer of affairs.",
     contentFr: "﴿يَـٰٓأَيُّهَا ٱلنَّبِىُّ إِنَّآ أَرْسَلْنَـٰكَ شَـٰهِدًا وَمُبَشِّرًا وَنَذِيرًا﴾ Ô Prophète ! Nous t’avons envoyé en témoin, en annonciateur et en avertisseur, ﴿وَدَاعِيًا إِلَى ٱللَّهِ بِإِذْنِهِۦ وَسِرَاجًا مُّنِيرًا﴾ pour appeler à Allah avec Sa permission, et pour (éclairer) en flambeau lumineux. ﴿وَبَشِّرِ ٱلْمُؤْمِنِينَ بِأَنَّ لَهُم مِّنَ ٱللَّهِ فَضْلًا كَبِيرًا﴾ Annonce l’heureuse nouvelle aux croyants qu’ils auront d’Allah une grande faveur. ﴿وَلَا تُطِعِ ٱلْكَـٰفِرِينَ وَٱلْمُنَـٰفِقِينَ وَدَعْ أَذَىٰهُمْ وَتَوَكَّلْ عَلَى ٱللَّهِ ۚ وَكَفَىٰ بِٱللَّهِ وَكِيلًا﴾ N’obéis pas aux mécréants et aux hypocrites ! Ne fais pas grand cas de leurs méfaits ! Confie-toi à Allah ! Qu’Allah te suffise en parfait protecteur.",
   },
   {
-    id: 'muhammad-173',
+    id: 'muhammad-174',
     type: 'quran_source',
-    order: 173,
+    order: 174,
     content: "Surah At-Tawbah: \"Grievous to him is what you suffer; to the believers kind and merciful.\"",
     contentFr: "La sourate At-Tawbah : « Il lui tient à cœur ce que vous endurez ; envers les croyants il est compatissant et miséricordieux. »",
     source: {
@@ -2151,16 +2168,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-174',
+    id: 'muhammad-175',
     type: 'narrative',
-    order: 174,
+    order: 175,
     content: "﴿لَقَدْ جَآءَكُمْ رَسُولٌ مِّنْ أَنفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُّمْ حَرِيصٌ عَلَيْكُم بِٱلْمُؤْمِنِينَ رَءُوفٌ رَّحِيمٌ﴾ There has certainly come to you a Messenger from among yourselves. Grievous to him is what you suffer; [he is] concerned over you [i.e., your guidance] and to the believers is kind and merciful. ﴿فَإِن تَوَلَّوْا۟ فَقُلْ حَسْبِىَ ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ ٱلْعَرْشِ ٱلْعَظِيمِ﴾ But if they turn away, [O Muhammad], say, \"Sufficient for me is Allah; there is no deity except Him. On Him I have relied, and He is the Lord of the Great Throne.\"",
     contentFr: "﴿لَقَدْ جَآءَكُمْ رَسُولٌ مِّنْ أَنفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُّمْ حَرِيصٌ عَلَيْكُم بِٱلْمُؤْمِنِينَ رَءُوفٌ رَّحِيمٌ﴾ Il vous est venu un Messager (choisi) parmi vous. Il lui pèse de vous voir souffrir, et il lui importe de vous voir heureux. Et, envers les croyants, il est plein de pitié et de compassion. ﴿فَإِن تَوَلَّوْا۟ فَقُلْ حَسْبِىَ ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ ٱلْعَرْشِ ٱلْعَظِيمِ﴾ S’ils se détournent, indifférents, alors dis : « Allah me suffit! Point d’autre divinité que Lui ! C’est à Lui que je m’en remets, et c’est Lui le Seigneur du Sublime Trône. »",
   },
   {
-    id: 'muhammad-175',
+    id: 'muhammad-176',
     type: 'quran_source',
-    order: 175,
+    order: 176,
     content: "Surah Ali 'Imran: \"By mercy from Allah you were lenient with them.\"",
     contentFr: "La sourate Ali 'Imran : « C'est par une miséricorde d'Allah que tu as été doux envers eux. »",
     source: {
@@ -2176,16 +2193,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-176',
+    id: 'muhammad-177',
     type: 'narrative',
-    order: 176,
+    order: 177,
     content: "﴿فَبِمَا رَحْمَةٍ مِّنَ ٱللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ ٱلْقَلْبِ لَٱنفَضُّوا۟ مِنْ حَوْلِكَ ۖ فَٱعْفُ عَنْهُمْ وَٱسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِى ٱلْأَمْرِ ۖ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى ٱللَّهِ ۚ إِنَّ ٱللَّهَ يُحِبُّ ٱلْمُتَوَكِّلِينَ﴾ So by mercy from Allah, [O Muhammad], you were lenient with them. And if you had been rude [in speech] and harsh in heart, they would have disbanded from about you. So pardon them and ask forgiveness for them and consult them in the matter. And when you have decided, then rely upon Allah. Indeed, Allah loves those who rely [upon Him].",
     contentFr: "﴿فَبِمَا رَحْمَةٍ مِّنَ ٱللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ ٱلْقَلْبِ لَٱنفَضُّوا۟ مِنْ حَوْلِكَ ۖ فَٱعْفُ عَنْهُمْ وَٱسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِى ٱلْأَمْرِ ۖ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى ٱللَّهِ ۚ إِنَّ ٱللَّهَ يُحِبُّ ٱلْمُتَوَكِّلِينَ﴾ C’est par une miséricorde d’Allah que tu t’es montré conciliant à leur égard. Si tu avais été rude et avais eu le cœur dur, ils se seraient dispersés autour de toi. Alors, pardonne-leur, prie pour leur pardon et consulte-les en cas de décision (ayant un rapport) avec les affaires (importantes). Et lorsque tu as pris ta décision, mets ta confiance en Allah, car Allah aime ceux qui s’en remettent à Lui.",
   },
   {
-    id: 'muhammad-177',
+    id: 'muhammad-178',
     type: 'quran_source',
-    order: 177,
+    order: 178,
     content: "Surah Al-A'raf: \"O mankind, indeed I am the Messenger of Allah to you all.\"",
     contentFr: "La sourate Al-A'raf : « Ô hommes, je suis pour vous tous le Messager d'Allah. »",
     source: {
@@ -2201,16 +2218,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-178',
+    id: 'muhammad-179',
     type: 'narrative',
-    order: 178,
+    order: 179,
     content: "﴿قُلْ يَـٰٓأَيُّهَا ٱلنَّاسُ إِنِّى رَسُولُ ٱللَّهِ إِلَيْكُمْ جَمِيعًا ٱلَّذِى لَهُۥ مُلْكُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۖ لَآ إِلَـٰهَ إِلَّا هُوَ يُحْىِۦ وَيُمِيتُ ۖ فَـَٔامِنُوا۟ بِٱللَّهِ وَرَسُولِهِ ٱلنَّبِىِّ ٱلْأُمِّىِّ ٱلَّذِى يُؤْمِنُ بِٱللَّهِ وَكَلِمَـٰتِهِۦ وَٱتَّبِعُوهُ لَعَلَّكُمْ تَهْتَدُونَ﴾ Say, [O Muhammad], \"O mankind, indeed I am the Messenger of Allah to you all, [from Him] to whom belongs the dominion of the heavens and the earth. There is no deity except Him; He gives life and causes death.\" So believe in Allah and His Messenger, the unlettered prophet, who believes in Allah and His words, and follow him that you may be guided.",
     contentFr: "﴿قُلْ يَـٰٓأَيُّهَا ٱلنَّاسُ إِنِّى رَسُولُ ٱللَّهِ إِلَيْكُمْ جَمِيعًا ٱلَّذِى لَهُۥ مُلْكُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۖ لَآ إِلَـٰهَ إِلَّا هُوَ يُحْىِۦ وَيُمِيتُ ۖ فَـَٔامِنُوا۟ بِٱللَّهِ وَرَسُولِهِ ٱلنَّبِىِّ ٱلْأُمِّىِّ ٱلَّذِى يُؤْمِنُ بِٱللَّهِ وَكَلِمَـٰتِهِۦ وَٱتَّبِعُوهُ لَعَلَّكُمْ تَهْتَدُونَ﴾ Dis : « Ô hommes ! Je suis le Messager d’Allah pour vous tous, (Envoyé par) Celui à Qui appartient la royauté des cieux et de la terre, point d’autre divinité que Lui ! Il fait vivre et fait mourir. Croyez donc en Allah et en Son Messager, le Prophète illettré qui croit en Allah et en Ses paroles ; et suivez-le, peut-être trouverez-vous le droit chemin. »",
   },
   {
-    id: 'muhammad-179',
+    id: 'muhammad-180',
     type: 'quran_source',
-    order: 179,
+    order: 180,
     content: "Surah Al-Jumu'ah: Sent among the unlettered, reciting, purifying, teaching the Book and wisdom.",
     contentFr: "La sourate Al-Jumu'ah : Envoyé parmi les illettrés, récitant, purifiant, enseignant le Livre et la sagesse.",
     source: {
@@ -2226,16 +2243,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-180',
+    id: 'muhammad-181',
     type: 'narrative',
-    order: 180,
+    order: 181,
     content: "﴿هُوَ ٱلَّذِى بَعَثَ فِى ٱلْأُمِّيِّـۧنَ رَسُولًا مِّنْهُمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍ مُّبِينٍ﴾ It is He who has sent among the unlettered [Arabs] a Messenger from themselves reciting to them His verses and purifying them and teaching them the Book [i.e., the Quran] and wisdom [i.e., the sunnah] - although they were before in clear error -",
     contentFr: "﴿هُوَ ٱلَّذِى بَعَثَ فِى ٱلْأُمِّيِّـۧنَ رَسُولًا مِّنْهُمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍ مُّبِينٍ﴾ C’est Lui Qui envoya parmi les illettrés un Messager issu de leur peuple, qui leur récite Ses versets, les purifie et les initie au Livre et à la sagesse, même si, autrefois, ils étaient dans un égarement manifeste.",
   },
   {
-    id: 'muhammad-181',
+    id: 'muhammad-182',
     type: 'quran_source',
-    order: 181,
+    order: 182,
     content: "Surah Al-Baqarah: \"A messenger from yourselves, teaching you that which you did not know.\"",
     contentFr: "La sourate Al-Baqarah : « Un messager issu de vous, vous enseignant ce que vous ne saviez pas. »",
     source: {
@@ -2251,16 +2268,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-182',
+    id: 'muhammad-183',
     type: 'narrative',
-    order: 182,
+    order: 183,
     content: "﴿كَمَآ أَرْسَلْنَا فِيكُمْ رَسُولًا مِّنكُمْ يَتْلُوا۟ عَلَيْكُمْ ءَايَـٰتِنَا وَيُزَكِّيكُمْ وَيُعَلِّمُكُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَيُعَلِّمُكُم مَّا لَمْ تَكُونُوا۟ تَعْلَمُونَ﴾ Just as We have sent among you a messenger from yourselves reciting to you Our verses and purifying you and teaching you the Book and wisdom and teaching you that which you did not know.",
     contentFr: "﴿كَمَآ أَرْسَلْنَا فِيكُمْ رَسُولًا مِّنكُمْ يَتْلُوا۟ عَلَيْكُمْ ءَايَـٰتِنَا وَيُزَكِّيكُمْ وَيُعَلِّمُكُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَيُعَلِّمُكُم مَّا لَمْ تَكُونُوا۟ تَعْلَمُونَ﴾ Nous avons ainsi envoyé vers vous un Messager des vôtres qui vous récite Nos versets, vous purifie et vous enseigne le Livre et la sagesse ; et qui vous enseigne ce que vous ne saviez pas.",
   },
   {
-    id: 'muhammad-183',
+    id: 'muhammad-184',
     type: 'quran_source',
-    order: 183,
+    order: 184,
     content: "Surah Ali 'Imran: Allah conferred favour upon the believers when He sent among them a Messenger.",
     contentFr: "La sourate Ali 'Imran : Allah a fait une faveur aux croyants lorsqu'Il a envoyé parmi eux un Messager.",
     source: {
@@ -2276,16 +2293,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-184',
+    id: 'muhammad-185',
     type: 'narrative',
-    order: 184,
+    order: 185,
     content: "﴿لَقَدْ مَنَّ ٱللَّهُ عَلَى ٱلْمُؤْمِنِينَ إِذْ بَعَثَ فِيهِمْ رَسُولًا مِّنْ أَنفُسِهِمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍ مُّبِينٍ﴾ Certainly did Allah confer [great] favor upon the believers when He sent among them a Messenger from themselves, reciting to them His verses and purifying them and teaching them the Book [i.e., the Quran] and wisdom, although they had been before in manifest error.",
     contentFr: "﴿لَقَدْ مَنَّ ٱللَّهُ عَلَى ٱلْمُؤْمِنِينَ إِذْ بَعَثَ فِيهِمْ رَسُولًا مِّنْ أَنفُسِهِمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍ مُّبِينٍ﴾ Allah a certes accordé une faveur aux croyants en leur envoyant un Messager d’entre eux, qui leur récite Ses versets, les purifie (de leurs péchés) et leur enseigne le Livre et la Sagesse, eux qui étaient auparavant dans un égarement manifeste.",
   },
   {
-    id: 'muhammad-185',
+    id: 'muhammad-186',
     type: 'quran_source',
-    order: 185,
+    order: 186,
     content: "Surah Ya-Sin: Not poetry: a message and a clear Quran.",
     contentFr: "La sourate Ya-Sin : Pas de la poésie : un rappel et une Lecture claire.",
     source: {
@@ -2301,16 +2318,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-186',
+    id: 'muhammad-187',
     type: 'narrative',
-    order: 186,
+    order: 187,
     content: "﴿وَمَا عَلَّمْنَـٰهُ ٱلشِّعْرَ وَمَا يَنۢبَغِى لَهُۥٓ ۚ إِنْ هُوَ إِلَّا ذِكْرٌ وَقُرْءَانٌ مُّبِينٌ﴾ And We did not give him [i.e., Prophet Muhammad (ﷺ)] knowledge of poetry, nor is it befitting for him. It is not but a message and a clear Quran ﴿لِّيُنذِرَ مَن كَانَ حَيًّا وَيَحِقَّ ٱلْقَوْلُ عَلَى ٱلْكَـٰفِرِينَ﴾ To warn whoever is alive and justify the word [i.e., decree] against the disbelievers.",
     contentFr: "﴿وَمَا عَلَّمْنَـٰهُ ٱلشِّعْرَ وَمَا يَنۢبَغِى لَهُۥٓ ۚ إِنْ هُوَ إِلَّا ذِكْرٌ وَقُرْءَانٌ مُّبِينٌ﴾ Nous ne lui (Muhammad) avons jamais enseigné la poésie, et cela ne lui sied point. Ce n’est qu’un Rappel et une Lecture parfaitement claire, ﴿لِّيُنذِرَ مَن كَانَ حَيًّا وَيَحِقَّ ٱلْقَوْلُ عَلَى ٱلْكَـٰفِرِينَ﴾ pour qu’il avertisse quiconque est vivant et que soit justifié l’accomplissement de la Parole (d’Allah) contre les mécréants.",
   },
   {
-    id: 'muhammad-187',
+    id: 'muhammad-188',
     type: 'quran_source',
-    order: 187,
+    order: 188,
     content: "Surah Ash-Shura: \"You did not know what is the Book or what is faith.\"",
     contentFr: "La sourate Ash-Shura : « Tu ne savais ni ce qu'est le Livre ni ce qu'est la foi. »",
     source: {
@@ -2326,16 +2343,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-188',
+    id: 'muhammad-189',
     type: 'narrative',
-    order: 188,
+    order: 189,
     content: "﴿وَكَذَٰلِكَ أَوْحَيْنَآ إِلَيْكَ رُوحًا مِّنْ أَمْرِنَا ۚ مَا كُنتَ تَدْرِى مَا ٱلْكِتَـٰبُ وَلَا ٱلْإِيمَـٰنُ وَلَـٰكِن جَعَلْنَـٰهُ نُورًا نَّهْدِى بِهِۦ مَن نَّشَآءُ مِنْ عِبَادِنَا ۚ وَإِنَّكَ لَتَهْدِىٓ إِلَىٰ صِرَٰطٍ مُّسْتَقِيمٍ﴾ And thus We have revealed to you an inspiration of Our command [i.e., the Quran]. You did not know what is the Book or [what is] faith, but We have made it a light by which We guide whom We will of Our servants. And indeed, [O Muhammad], you guide to a straight path -",
     contentFr: "﴿وَكَذَٰلِكَ أَوْحَيْنَآ إِلَيْكَ رُوحًا مِّنْ أَمْرِنَا ۚ مَا كُنتَ تَدْرِى مَا ٱلْكِتَـٰبُ وَلَا ٱلْإِيمَـٰنُ وَلَـٰكِن جَعَلْنَـٰهُ نُورًا نَّهْدِى بِهِۦ مَن نَّشَآءُ مِنْ عِبَادِنَا ۚ وَإِنَّكَ لَتَهْدِىٓ إِلَىٰ صِرَٰطٍ مُّسْتَقِيمٍ﴾ C’est ainsi que Nous t’avons révélé un Esprit émanant de Notre ordre. Tu ne savais pas ce qu’est le Livre, pas plus que tu ne savais ce qu’est la foi. Mais Nous en avons fait la lumière dont Nous guidons qui Nous voulons parmi Nos serviteurs. Tu ne guides en vérité que vers une voie droite,",
   },
   {
-    id: 'muhammad-189',
+    id: 'muhammad-190',
     type: 'quran_source',
-    order: 189,
+    order: 190,
     content: "Surah Al-An'am: \"They do not call you untruthful, but it is the verses of Allah that the wrongdoers reject.\"",
     contentFr: "La sourate Al-An'am : « Ce n'est pas toi qu'ils traitent de menteur, mais ce sont les versets d'Allah que les injustes renient. »",
     source: {
@@ -2351,16 +2368,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-190',
+    id: 'muhammad-191',
     type: 'narrative',
-    order: 190,
+    order: 191,
     content: "﴿قَدْ نَعْلَمُ إِنَّهُۥ لَيَحْزُنُكَ ٱلَّذِى يَقُولُونَ ۖ فَإِنَّهُمْ لَا يُكَذِّبُونَكَ وَلَـٰكِنَّ ٱلظَّـٰلِمِينَ بِـَٔايَـٰتِ ٱللَّهِ يَجْحَدُونَ﴾ We know that you, [O Muhammad], are saddened by what they say. And indeed, they do not call you untruthful, but it is the verses of Allah that the wrongdoers reject.",
     contentFr: "﴿قَدْ نَعْلَمُ إِنَّهُۥ لَيَحْزُنُكَ ٱلَّذِى يَقُولُونَ ۖ فَإِنَّهُمْ لَا يُكَذِّبُونَكَ وَلَـٰكِنَّ ٱلظَّـٰلِمِينَ بِـَٔايَـٰتِ ٱللَّهِ يَجْحَدُونَ﴾ Nous savons combien leurs paroles t’affligent. Ce n’est pas vraiment toi qu’ils taxent de mensonge, mais ce sont les Signes d’Allah que les gens injustes refusent d’admettre.",
   },
   {
-    id: 'muhammad-191',
+    id: 'muhammad-192',
     type: 'quran_source',
-    order: 191,
+    order: 192,
     content: "Surah Ali 'Imran: \"If you should love Allah, then follow me, so Allah will love you.\"",
     contentFr: "La sourate Ali 'Imran : « Si vous aimez Allah, suivez-moi, Allah vous aimera alors. »",
     source: {
@@ -2376,16 +2393,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-192',
+    id: 'muhammad-193',
     type: 'narrative',
-    order: 192,
+    order: 193,
     content: "﴿قُلْ إِن كُنتُمْ تُحِبُّونَ ٱللَّهَ فَٱتَّبِعُونِى يُحْبِبْكُمُ ٱللَّهُ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَٱللَّهُ غَفُورٌ رَّحِيمٌ﴾ Say, [O Muhammad], \"If you should love Allah, then follow me, [so] Allah will love you and forgive you your sins. And Allah is Forgiving and Merciful.\"",
     contentFr: "﴿قُلْ إِن كُنتُمْ تُحِبُّونَ ٱللَّهَ فَٱتَّبِعُونِى يُحْبِبْكُمُ ٱللَّهُ وَيَغْفِرْ لَكُمْ ذُنُوبَكُمْ ۗ وَٱللَّهُ غَفُورٌ رَّحِيمٌ﴾ Dis : « Qui, parmi vous, aime Allah me suive ! Allah vous aimera alors et vous pardonnera vos péchés ; et Allah est Tout Absoluteur,Tout Miséricordieux ! »",
   },
   {
-    id: 'muhammad-193',
+    id: 'muhammad-194',
     type: 'quran_source',
-    order: 193,
+    order: 194,
     content: "Surah An-Nisa: \"He who obeys the Messenger has obeyed Allah.\"",
     contentFr: "La sourate An-Nisa : « Quiconque obéit au Messager obéit certainement à Allah. »",
     source: {
@@ -2401,16 +2418,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-194',
+    id: 'muhammad-195',
     type: 'narrative',
-    order: 194,
+    order: 195,
     content: "﴿مَّن يُطِعِ ٱلرَّسُولَ فَقَدْ أَطَاعَ ٱللَّهَ ۖ وَمَن تَوَلَّىٰ فَمَآ أَرْسَلْنَـٰكَ عَلَيْهِمْ حَفِيظًا﴾ He who obeys the Messenger has obeyed Allah; but those who turn away - We have not sent you over them as a guardian.",
     contentFr: "﴿مَّن يُطِعِ ٱلرَّسُولَ فَقَدْ أَطَاعَ ٱللَّهَ ۖ وَمَن تَوَلَّىٰ فَمَآ أَرْسَلْنَـٰكَ عَلَيْهِمْ حَفِيظًا﴾ Celui qui obéit au Messager a obéi à Allah, quant à ceux qui se détournent, Nous ne t’avons pas envoyé pour être leur gardien.",
   },
   {
-    id: 'muhammad-195',
+    id: 'muhammad-196',
     type: 'quran_source',
-    order: 195,
+    order: 196,
     content: "Surah Al-Hujurat: Do not raise your voices above the voice of the Prophet.",
     contentFr: "La sourate Al-Hujurat : N'élevez pas vos voix au-dessus de la voix du Prophète.",
     source: {
@@ -2426,16 +2443,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-196',
+    id: 'muhammad-197',
     type: 'narrative',
-    order: 196,
+    order: 197,
     content: "﴿ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تُقَدِّمُوا۟ بَيْنَ يَدَىِ ٱللَّهِ وَرَسُولِهِۦ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ سَمِيعٌ عَلِيمٌ﴾ O you who have believed, do not put [yourselves] before Allah and His Messenger but fear Allah. Indeed, Allah is Hearing and Knowing. ﴿يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تَرْفَعُوٓا۟ أَصْوَٰتَكُمْ فَوْقَ صَوْتِ ٱلنَّبِىِّ وَلَا تَجْهَرُوا۟ لَهُۥ بِٱلْقَوْلِ كَجَهْرِ بَعْضِكُمْ لِبَعْضٍ أَن تَحْبَطَ أَعْمَـٰلُكُمْ وَأَنتُمْ لَا تَشْعُرُونَ﴾ O you who have believed, do not raise your voices above the voice of the Prophet or be loud to him in speech like the loudness of some of you to others, lest your deeds become worthless while you perceive not. ﴿إِنَّ ٱلَّذِينَ يَغُضُّونَ أَصْوَٰتَهُمْ عِندَ رَسُولِ ٱللَّهِ أُو۟لَـٰٓئِكَ ٱلَّذِينَ ٱمْتَحَنَ ٱللَّهُ قُلُوبَهُمْ لِلتَّقْوَىٰ ۚ لَهُم مَّغْفِرَةٌ وَأَجْرٌ عَظِيمٌ﴾ Indeed, those who lower their voices before the Messenger of Allah - they are the ones whose hearts Allah has tested for righteousness. For them is forgiveness and great reward.",
     contentFr: "﴿ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تُقَدِّمُوا۟ بَيْنَ يَدَىِ ٱللَّهِ وَرَسُولِهِۦ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ سَمِيعٌ عَلِيمٌ﴾ Ô vous qui avez cru ! Gardez-vous de précéder (les décisions) d’Allah et de Son Messager ! Craignez Allah, car Allah Entend et Sait Tout. ﴿يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تَرْفَعُوٓا۟ أَصْوَٰتَكُمْ فَوْقَ صَوْتِ ٱلنَّبِىِّ وَلَا تَجْهَرُوا۟ لَهُۥ بِٱلْقَوْلِ كَجَهْرِ بَعْضِكُمْ لِبَعْضٍ أَن تَحْبَطَ أَعْمَـٰلُكُمْ وَأَنتُمْ لَا تَشْعُرُونَ﴾ Ô vous qui avez cru ! N’élevez pas la voix au-dessus de celle du Prophète, ni ne haussez le ton en lui adressant la parole, comme vous le faites vous-mêmes les uns avec les autres. Ou alors vos œuvres deviendraient vaines sans que vous ne puissiez le sentir. ﴿إِنَّ ٱلَّذِينَ يَغُضُّونَ أَصْوَٰتَهُمْ عِندَ رَسُولِ ٱللَّهِ أُو۟لَـٰٓئِكَ ٱلَّذِينَ ٱمْتَحَنَ ٱللَّهُ قُلُوبَهُمْ لِلتَّقْوَىٰ ۚ لَهُم مَّغْفِرَةٌ وَأَجْرٌ عَظِيمٌ﴾ Ceux qui baissent la voix auprès du Messager d’Allah, sont ceux dont Allah a éprouvé les cœurs. Ils auront le pardon et une immense récompense.",
   },
   {
-    id: 'muhammad-197',
+    id: 'muhammad-198',
     type: 'quran_source',
-    order: 197,
+    order: 198,
     content: "Surah An-Nur: Do not call the Messenger as you call one another.",
     contentFr: "La sourate An-Nur : Ne considérez pas l'appel du Messager comme un appel que vous vous adresseriez les uns aux autres.",
     source: {
@@ -2451,16 +2468,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-198',
+    id: 'muhammad-199',
     type: 'narrative',
-    order: 198,
+    order: 199,
     content: "﴿لَّا تَجْعَلُوا۟ دُعَآءَ ٱلرَّسُولِ بَيْنَكُمْ كَدُعَآءِ بَعْضِكُم بَعْضًا ۚ قَدْ يَعْلَمُ ٱللَّهُ ٱلَّذِينَ يَتَسَلَّلُونَ مِنكُمْ لِوَاذًا ۚ فَلْيَحْذَرِ ٱلَّذِينَ يُخَالِفُونَ عَنْ أَمْرِهِۦٓ أَن تُصِيبَهُمْ فِتْنَةٌ أَوْ يُصِيبَهُمْ عَذَابٌ أَلِيمٌ﴾ Do not make [your] calling of the Messenger among yourselves as the call of one of you to another. Already Allah knows those of you who slip away, concealed by others. So let those beware who dissent from his [i.e., the Prophet's] order, lest fitnah strike them or a painful punishment.",
     contentFr: "﴿لَّا تَجْعَلُوا۟ دُعَآءَ ٱلرَّسُولِ بَيْنَكُمْ كَدُعَآءِ بَعْضِكُم بَعْضًا ۚ قَدْ يَعْلَمُ ٱللَّهُ ٱلَّذِينَ يَتَسَلَّلُونَ مِنكُمْ لِوَاذًا ۚ فَلْيَحْذَرِ ٱلَّذِينَ يُخَالِفُونَ عَنْ أَمْرِهِۦٓ أَن تُصِيبَهُمْ فِتْنَةٌ أَوْ يُصِيبَهُمْ عَذَابٌ أَلِيمٌ﴾ N’appelez point le Messager comme vous vous appelez les uns les autres. Allah connaît d’ailleurs ceux qui d’entre vous se faufilent et se retirent en secret. Que ceux qui enfreignent ses ordres redoutent d’être soumis à une épreuve ou de subir un supplice très douloureux.",
   },
   {
-    id: 'muhammad-199',
+    id: 'muhammad-200',
     type: 'quran_source',
-    order: 199,
+    order: 200,
     content: "Surah Al-Ahzab: Allah and His angels confer blessing upon the Prophet; ask blessing upon him.",
     contentFr: "La sourate Al-Ahzab : Allah et Ses anges prient sur le Prophète ; priez sur lui.",
     source: {
@@ -2476,16 +2493,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-200',
+    id: 'muhammad-201',
     type: 'narrative',
-    order: 200,
+    order: 201,
     content: "﴿إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟ تَسْلِيمًا﴾ Indeed, Allah confers blessing upon the Prophet, and His angels [ask Him to do so]. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.",
     contentFr: "﴿إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟ تَسْلِيمًا﴾ Allah et Ses Anges répandent les bénédictions sur le Prophète ; ô vous qui avez cru, répandez donc sur lui bénédiction et salut !",
   },
   {
-    id: 'muhammad-201',
+    id: 'muhammad-202',
     type: 'quran_source',
-    order: 201,
+    order: 202,
     content: "Surah Muhammad: Those who believe in what was sent down upon Muhammad.",
     contentFr: "La sourate Muhammad : Ceux qui croient en ce qui a été descendu sur Muhammad.",
     source: {
@@ -2501,16 +2518,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-202',
+    id: 'muhammad-203',
     type: 'narrative',
-    order: 202,
+    order: 203,
     content: "﴿وَٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ وَءَامَنُوا۟ بِمَا نُزِّلَ عَلَىٰ مُحَمَّدٍ وَهُوَ ٱلْحَقُّ مِن رَّبِّهِمْ ۙ كَفَّرَ عَنْهُمْ سَيِّـَٔاتِهِمْ وَأَصْلَحَ بَالَهُمْ﴾ And those who believe and do righteous deeds and believe in what has been sent down upon Muhammad - and it is the truth from their Lord - He will remove from them their misdeeds and amend their condition.",
     contentFr: "﴿وَٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ وَءَامَنُوا۟ بِمَا نُزِّلَ عَلَىٰ مُحَمَّدٍ وَهُوَ ٱلْحَقُّ مِن رَّبِّهِمْ ۙ كَفَّرَ عَنْهُمْ سَيِّـَٔاتِهِمْ وَأَصْلَحَ بَالَهُمْ﴾ Ceux qui ont cru et accompli les bonnes œuvres, et ont eu foi en ce qui a été révélé à Muhammad – qui est la pure vérité émanant de leur Seigneur – (Allah) rachètera leurs mauvaises actions et rendra meilleures leurs dispositions.",
   },
   {
-    id: 'muhammad-203',
+    id: 'muhammad-204',
     type: 'quran_source',
-    order: 203,
+    order: 204,
     content: "Surah Al-Fath: \"Muhammad is the Messenger of Allah; and those with him...\"",
     contentFr: "La sourate Al-Fath : « Muhammad est le Messager d'Allah ; et ceux qui sont avec lui... »",
     source: {
@@ -2526,16 +2543,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-204',
+    id: 'muhammad-205',
     type: 'narrative',
-    order: 204,
+    order: 205,
     content: "﴿مُّحَمَّدٌ رَّسُولُ ٱللَّهِ ۚ وَٱلَّذِينَ مَعَهُۥٓ أَشِدَّآءُ عَلَى ٱلْكُفَّارِ رُحَمَآءُ بَيْنَهُمْ ۖ تَرَىٰهُمْ رُكَّعًا سُجَّدًا يَبْتَغُونَ فَضْلًا مِّنَ ٱللَّهِ وَرِضْوَٰنًا ۖ سِيمَاهُمْ فِى وُجُوهِهِم مِّنْ أَثَرِ ٱلسُّجُودِ ۚ ذَٰلِكَ مَثَلُهُمْ فِى ٱلتَّوْرَىٰةِ ۚ وَمَثَلُهُمْ فِى ٱلْإِنجِيلِ كَزَرْعٍ أَخْرَجَ شَطْـَٔهُۥ فَـَٔازَرَهُۥ فَٱسْتَغْلَظَ فَٱسْتَوَىٰ عَلَىٰ سُوقِهِۦ يُعْجِبُ ٱلزُّرَّاعَ لِيَغِيظَ بِهِمُ ٱلْكُفَّارَ ۗ وَعَدَ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ مِنْهُم مَّغْفِرَةً وَأَجْرًا عَظِيمًۢا﴾ Muhammad is the Messenger of Allah; and those with him are forceful against the disbelievers, merciful among themselves. You see them bowing and prostrating [in prayer], seeking bounty from Allah and [His] pleasure. Their sign is in their faces from the effect of prostration [i.e., prayer]. That is their description in the Torah. And their description in the Gospel is as a plant which produces its offshoots and strengthens them so they grow firm and stand upon their stalks, delighting the sowers - so that He [i.e., Allah] may enrage by them the disbelievers. Allah has promised those who believe and do righteous deeds among them forgiveness and a great reward.",
     contentFr: "﴿مُّحَمَّدٌ رَّسُولُ ٱللَّهِ ۚ وَٱلَّذِينَ مَعَهُۥٓ أَشِدَّآءُ عَلَى ٱلْكُفَّارِ رُحَمَآءُ بَيْنَهُمْ ۖ تَرَىٰهُمْ رُكَّعًا سُجَّدًا يَبْتَغُونَ فَضْلًا مِّنَ ٱللَّهِ وَرِضْوَٰنًا ۖ سِيمَاهُمْ فِى وُجُوهِهِم مِّنْ أَثَرِ ٱلسُّجُودِ ۚ ذَٰلِكَ مَثَلُهُمْ فِى ٱلتَّوْرَىٰةِ ۚ وَمَثَلُهُمْ فِى ٱلْإِنجِيلِ كَزَرْعٍ أَخْرَجَ شَطْـَٔهُۥ فَـَٔازَرَهُۥ فَٱسْتَغْلَظَ فَٱسْتَوَىٰ عَلَىٰ سُوقِهِۦ يُعْجِبُ ٱلزُّرَّاعَ لِيَغِيظَ بِهِمُ ٱلْكُفَّارَ ۗ وَعَدَ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ مِنْهُم مَّغْفِرَةً وَأَجْرًا عَظِيمًۢا﴾ Muhammad est le Messager d’Allah. Ceux qui sont avec lui sont intraitables face aux mécréants, pleins de mansuétude les uns envers les autres. Tu les vois qui s’inclinent et se prosternent, espérant les faveurs et la satisfaction d’Allah. Leurs marques distinctives sont là sur leurs visages, (gravées) par l’effet de la prosternation. C’est ainsi qu’ils sont décrits dans la Torah. Tandis que dans l’Évangile, ils sont comparés à la semence qui laisse surgir ses pousses, devient (une plante) vigoureuse, généreuse et ferme sur sa tige, au grand bonheur du cultivateur. (Allah les a faits tels) pour en faire mourir d’envie les mécréants, et Il promet à ceux qui, parmi eux, ont cru et ont accompli les bonnes œuvres, le pardon et une immense récompense",
   },
   {
-    id: 'muhammad-205',
+    id: 'muhammad-206',
     type: 'quran_source',
-    order: 205,
+    order: 206,
     content: "Surah Al-Kawthar: \"We have granted you al-Kawthar.\"",
     contentFr: "La sourate Al-Kawthar : « Nous t'avons accordé l'Abondance. »",
     source: {
@@ -2551,16 +2568,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-206',
+    id: 'muhammad-207',
     type: 'narrative',
-    order: 206,
+    order: 207,
     content: "﴿ إِنَّآ أَعْطَيْنَـٰكَ ٱلْكَوْثَرَ﴾ Indeed, We have granted you, [O Muhammad], al-Kawthar. ﴿فَصَلِّ لِرَبِّكَ وَٱنْحَرْ﴾ So pray to your Lord and offer sacrifice [to Him alone]. ﴿إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ﴾ Indeed, your enemy is the one cut off.",
     contentFr: "﴿ إِنَّآ أَعْطَيْنَـٰكَ ٱلْكَوْثَرَ﴾ Nous t’avons certes donné un Fleuve d’Abondance. ﴿فَصَلِّ لِرَبِّكَ وَٱنْحَرْ﴾ Observe donc la Çalât pour ton Seigneur, et sacrifie ! ﴿إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ﴾ C’est celui qui te hait qui sera sans postérité.",
   },
   {
-    id: 'muhammad-207',
+    id: 'muhammad-208',
     type: 'quran_source',
-    order: 207,
+    order: 208,
     content: "Surah An-Nur: Those who came with the slander: do not think it bad for you; rather it is good for you.",
     contentFr: "La sourate An-Nur : Ceux qui sont venus avec la calomnie : ne pensez pas que c'est un mal pour vous ; c'est plutôt un bien pour vous.",
     source: {
@@ -2576,16 +2593,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-208',
+    id: 'muhammad-209',
     type: 'narrative',
-    order: 208,
+    order: 209,
     content: "﴿إِنَّ ٱلَّذِينَ جَآءُو بِٱلْإِفْكِ عُصْبَةٌ مِّنكُمْ ۚ لَا تَحْسَبُوهُ شَرًّا لَّكُم ۖ بَلْ هُوَ خَيْرٌ لَّكُمْ ۚ لِكُلِّ ٱمْرِئٍ مِّنْهُم مَّا ٱكْتَسَبَ مِنَ ٱلْإِثْمِ ۚ وَٱلَّذِى تَوَلَّىٰ كِبْرَهُۥ مِنْهُمْ لَهُۥ عَذَابٌ عَظِيمٌ﴾ Indeed, those who came with falsehood are a group among you. Do not think it bad for you; rather, it is good for you. For every person among them is what [punishment] he has earned from the sin, and he who took upon himself the greater portion thereof - for him is a great punishment [i.e., Hellfire].",
     contentFr: "﴿إِنَّ ٱلَّذِينَ جَآءُو بِٱلْإِفْكِ عُصْبَةٌ مِّنكُمْ ۚ لَا تَحْسَبُوهُ شَرًّا لَّكُم ۖ بَلْ هُوَ خَيْرٌ لَّكُمْ ۚ لِكُلِّ ٱمْرِئٍ مِّنْهُم مَّا ٱكْتَسَبَ مِنَ ٱلْإِثْمِ ۚ وَٱلَّذِى تَوَلَّىٰ كِبْرَهُۥ مِنْهُمْ لَهُۥ عَذَابٌ عَظِيمٌ﴾ Ceux qui répandent des calomnies sont un groupe parmi vous. Ne croyez pas que ce soit un mal pour vous, mais plutôt un bien. Chacun d’entre eux devra répondre de son péché. Mais l’auteur de la plus grande part (de ces calomnies), aura un terrible supplice.",
   },
   {
-    id: 'muhammad-209',
+    id: 'muhammad-210',
     type: 'quran_source',
-    order: 209,
+    order: 210,
     content: "Surah Al-Ahzab: What Allah revealed about Zayd, and the marriage to Zaynab.",
     contentFr: "La sourate Al-Ahzab : Ce qu'Allah a révélé au sujet de Zayd, et le mariage avec Zaynab.",
     source: {
@@ -2601,18 +2618,18 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-210',
+    id: 'muhammad-211',
     type: 'narrative',
-    order: 210,
+    order: 211,
     content: "﴿وَإِذْ تَقُولُ لِلَّذِىٓ أَنْعَمَ ٱللَّهُ عَلَيْهِ وَأَنْعَمْتَ عَلَيْهِ أَمْسِكْ عَلَيْكَ زَوْجَكَ وَٱتَّقِ ٱللَّهَ وَتُخْفِى فِى نَفْسِكَ مَا ٱللَّهُ مُبْدِيهِ وَتَخْشَى ٱلنَّاسَ وَٱللَّهُ أَحَقُّ أَن تَخْشَىٰهُ ۖ فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا زَوَّجْنَـٰكَهَا لِكَىْ لَا يَكُونَ عَلَى ٱلْمُؤْمِنِينَ حَرَجٌ فِىٓ أَزْوَٰجِ أَدْعِيَآئِهِمْ إِذَا قَضَوْا۟ مِنْهُنَّ وَطَرًا ۚ وَكَانَ أَمْرُ ٱللَّهِ مَفْعُولًا﴾ And [remember, O Muhammad], when you said to the one on whom Allah bestowed favor and you bestowed favor, \"Keep your wife and fear Allah,\" while you concealed within yourself that which Allah is to disclose. And you feared the people, while Allah has more right that you fear Him. So when Zayd had no longer any need for her, We married her to you in order that there not be upon the believers any discomfort [i.e., guilt] concerning the wives of their claimed [i.e., adopted] sons when they no longer have need of them. And ever is the command [i.e., decree] of Allah accomplished.",
     contentFr: "﴿وَإِذْ تَقُولُ لِلَّذِىٓ أَنْعَمَ ٱللَّهُ عَلَيْهِ وَأَنْعَمْتَ عَلَيْهِ أَمْسِكْ عَلَيْكَ زَوْجَكَ وَٱتَّقِ ٱللَّهَ وَتُخْفِى فِى نَفْسِكَ مَا ٱللَّهُ مُبْدِيهِ وَتَخْشَى ٱلنَّاسَ وَٱللَّهُ أَحَقُّ أَن تَخْشَىٰهُ ۖ فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا زَوَّجْنَـٰكَهَا لِكَىْ لَا يَكُونَ عَلَى ٱلْمُؤْمِنِينَ حَرَجٌ فِىٓ أَزْوَٰجِ أَدْعِيَآئِهِمْ إِذَا قَضَوْا۟ مِنْهُنَّ وَطَرًا ۚ وَكَانَ أَمْرُ ٱللَّهِ مَفْعُولًا﴾ (Souviens-toi, Muhammad) quand tu disais à celui qu’Allah a comblé de Ses faveurs, et que tu as aussi comblé des tiennes : « Garde auprès de toi ton épouse et crains Allah ! » Tu cachais alors en toi-même ce qu’Allah allait dévoiler. Tu craignais les hommes alors qu’Allah est plus digne que tu Le craignes. Lorsque Zeyd eut mis fin à tout rapport avec elle, Nous te la donnâmes comme épouse, afin que les croyants n’aient plus à s’embarrasser d’épouser les femmes de leurs fils adoptifs, une fois que ces derniers cessent tout rapport avec elles. L’arrêt d’Allah doit être ainsi accompli.",
   },
 
   // ============ PART 17: WHAT HE ﷺ SAID OF HIMSELF ============
   {
-    id: 'muhammad-211',
+    id: 'muhammad-212',
     type: 'quran_source',
-    order: 211,
+    order: 212,
     content: "Surah Al-Ahzab: there is no blame upon the Prophet for what Allah has made lawful for him, as was Allah's way with those who passed before.",
     contentFr: "La sourate Al-Ahzab : nul grief à faire au Prophète pour ce qu'Allah lui a rendu licite, telle fut la voie d'Allah pour ceux qui passèrent avant.",
     source: {
@@ -2628,23 +2645,23 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as QuranReference,
   },
   {
-    id: 'muhammad-212',
+    id: 'muhammad-213',
     type: 'narrative',
-    order: 212,
+    order: 213,
     content: "﴿مَّا كَانَ عَلَى ٱلنَّبِىِّ مِنْ حَرَجٍ فِيمَا فَرَضَ ٱللَّهُ لَهُۥ ۖ سُنَّةَ ٱللَّهِ فِى ٱلَّذِينَ خَلَوْا۟ مِن قَبْلُ ۚ وَكَانَ أَمْرُ ٱللَّهِ قَدَرًا مَّقْدُورًا﴾ There is not to be upon the Prophet any discomfort concerning that which Allah has imposed upon him.1 [This is] the established way of Allah with those [prophets] who have passed on before. And ever is the command of Allah a destiny decreed. ﴿ٱلَّذِينَ يُبَلِّغُونَ رِسَـٰلَـٰتِ ٱللَّهِ وَيَخْشَوْنَهُۥ وَلَا يَخْشَوْنَ أَحَدًا إِلَّا ٱللَّهَ ۗ وَكَفَىٰ بِٱللَّهِ حَسِيبًا﴾ [Allah praises] those who convey the messages of Allah1 and fear Him and do not fear anyone but Allah. And sufficient is Allah as Accountant.",
     contentFr: "﴿مَّا كَانَ عَلَى ٱلنَّبِىِّ مِنْ حَرَجٍ فِيمَا فَرَضَ ٱللَّهُ لَهُۥ ۖ سُنَّةَ ٱللَّهِ فِى ٱلَّذِينَ خَلَوْا۟ مِن قَبْلُ ۚ وَكَانَ أَمْرُ ٱللَّهِ قَدَرًا مَّقْدُورًا﴾ Il n’est aucun reproche à faire au Prophète en ce qu’Allah lui a prescrit selon la règle divine établie depuis toujours pour ceux qui ont vécu par le passé. L’ordre d’Allah est un arrêt inéluctable ﴿ٱلَّذِينَ يُبَلِّغُونَ رِسَـٰلَـٰتِ ٱللَّهِ وَيَخْشَوْنَهُۥ وَلَا يَخْشَوْنَ أَحَدًا إِلَّا ٱللَّهَ ۗ وَكَفَىٰ بِٱللَّهِ حَسِيبًا﴾ Ceux qui transmettaient les messages d’Allah, craignaient Allah et ne craignaient nul autre que Lui. Allah suffit pour dresser les comptes",
   },
   {
-    id: 'muhammad-213',
+    id: 'muhammad-214',
     type: 'narrative',
-    order: 213,
+    order: 214,
     content: "He ﷺ told what he had been given that no prophet before him was given (Sahih al-Bukhari 335).",
     contentFr: "Il ﷺ dit ce qui lui avait été donné qu'aucun prophète avant lui n'avait reçu (Sahih al-Boukhari 335).",
   },
   {
-    id: 'muhammad-214',
+    id: 'muhammad-215',
     type: 'hadith_source',
-    order: 214,
+    order: 215,
     content: "\"I have been given five things that no one before me was given.\"",
     contentFr: "« On m'a donné cinq choses qui n'ont été données à personne avant moi. »",
     source: {
@@ -2659,9 +2676,9 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'muhammad-215',
+    id: 'muhammad-216',
     type: 'hadith_source',
-    order: 215,
+    order: 216,
     content: "\"I am that brick, and I am the seal of the prophets.\"",
     contentFr: "« Je suis cette brique, et je suis le sceau des prophètes. »",
     source: {
@@ -2676,9 +2693,9 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'muhammad-216',
+    id: 'muhammad-217',
     type: 'hadith_source',
-    order: 216,
+    order: 217,
     content: "\"I am the master of the children of Adam on the Day of Resurrection.\"",
     contentFr: "« Je suis le maître des enfants d'Adam au Jour de la Résurrection. »",
     source: {
@@ -2693,16 +2710,16 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     } as HadithReference,
   },
   {
-    id: 'muhammad-217',
+    id: 'muhammad-218',
     type: 'narrative',
-    order: 217,
+    order: 218,
     content: "And Anas, who served him for ten years, described him (Sahih al-Bukhari 3547).",
     contentFr: "Et Anas, qui le servit dix ans, le décrivit (Sahih al-Boukhari 3547).",
   },
   {
-    id: 'muhammad-218',
+    id: 'muhammad-219',
     type: 'hadith_source',
-    order: 218,
+    order: 219,
     content: "Anas describes him.",
     contentFr: "Anas le décrit.",
     source: {
@@ -2719,9 +2736,9 @@ export const muhammadStoryContent: StoryContentBlock[] = [
 
   // ============ PART 18: WHAT IS NOT HERE ============
   {
-    id: 'muhammad-219',
+    id: 'muhammad-220',
     type: 'narrative',
-    order: 219,
+    order: 220,
     content: "What is here is a small part. The Quran does not narrate his birth, his marriages, or the order of his battles, and the authentic hadith that tell of them fill volumes beyond these pages. Nothing here was invented, and nothing missing from here should be. Peace and blessings upon him. Allah knows best.",
     contentFr: "Ce qui est ici est une petite part. Le Coran ne raconte ni sa naissance, ni ses mariages, ni l'ordre de ses batailles, et les hadiths authentiques qui les racontent remplissent des volumes au-delà de ces pages. Rien ici n'a été inventé, et rien de ce qui manque ici ne doit l'être. Paix et bénédictions sur lui. Allah est le plus savant.",
   },
