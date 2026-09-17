@@ -174,7 +174,7 @@ export const habilQabilStory: QuranStory = {
         translation: "No soul is killed unjustly except that a share of its blood is upon the first son of Adam, because he was the first to introduce killing.",
         translationFr: "Aucune âme n'est tuée injustement sans qu'une part de son sang ne retombe sur le premier fils d'Adam, car il fut le premier à instaurer le meurtre.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنَا عُمَرُ بْنُ حَفْصِ بْنِ غِيَاثٍ، حَدَّثَنَا أَبِي، حَدَّثَنَا الأَعْمَشُ، قَالَ حَدَّثَنِي عَبْدُ اللَّهِ بْنُ مُرَّةَ، عَنْ مَسْرُوقٍ، عَنْ عَبْدِ اللَّهِ ـ رضى الله عنه ـ قَالَ قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم لاَ تُقْتَلُ نَفْسٌ ظُلْمًا إِلاَّ كَانَ عَلَى ابْنِ آدَمَ الأَوَّلِ كِفْلٌ مِنْ دَمِهَا، لأَنَّهُ أَوَّلُ مَنْ سَنَّ الْقَتْلَ",
       } as HadithReference,
     },
 

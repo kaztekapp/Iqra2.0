@@ -144,7 +144,7 @@ export const talutStory: QuranStory = {
         translation: "We, the companions of Muhammad ﷺ, used to say that the number of those at Badr was the number of the companions of Talut who crossed the river with him - and none crossed with him but a believer: three hundred and some ten men.",
         translationFr: "Nous, les compagnons de Muhammad ﷺ, disions que le nombre de ceux de Badr était le nombre des compagnons de Talout qui traversèrent la rivière avec lui - et nul ne traversa avec lui sinon un croyant : trois cent dix et quelques hommes.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنِي عَبْدُ اللَّهِ بْنُ أَبِي شَيْبَةَ، حَدَّثَنَا يَحْيَى، عَنْ سُفْيَانَ، عَنْ أَبِي إِسْحَاقَ، عَنِ الْبَرَاءِ،. وَحَدَّثَنَا مُحَمَّدُ بْنُ كَثِيرٍ، أَخْبَرَنَا سُفْيَانُ، عَنْ أَبِي إِسْحَاقَ، عَنِ الْبَرَاءِ ـ رضى الله عنه ـ قَالَ كُنَّا نَتَحَدَّثُ أَنَّ أَصْحَابَ بَدْرٍ ثَلاَثُمِائَةٍ وَبِضْعَةَ عَشَرَ، بِعِدَّةِ أَصْحَابِ طَالُوتَ الَّذِينَ جَاوَزُوا مَعَهُ النَّهَرَ، وَمَا جَاوَزَ مَعَهُ إِلاَّ مُؤْمِنٌ",
       } as HadithReference,
     },
 

@@ -432,7 +432,7 @@ export const maryamStory: QuranStory = {
         translation: "Many men have reached perfection, but none among women reached perfection except Maryam, the daughter of Imran, and Asiya, the wife of Pharaoh. And the superiority of Aisha over other women is like the superiority of tharid over other food.",
         translationFr: "Beaucoup d'hommes ont atteint la perfection, mais parmi les femmes nulle ne l'a atteinte sauf Maryam, fille d'Imran, et Asiya, femme de Pharaon. Et la supériorité d'Aïcha sur les autres femmes est comme la supériorité du tharid sur les autres mets.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنَا يَحْيَى بْنُ جَعْفَرٍ، حَدَّثَنَا وَكِيعٌ، عَنْ شُعْبَةَ، عَنْ عَمْرِو بْنِ مُرَّةَ، عَنْ مُرَّةَ الْهَمْدَانِيِّ، عَنْ أَبِي مُوسَى ـ رضى الله عنه ـ قَالَ قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم كَمَلَ مِنَ الرِّجَالِ كَثِيرٌ، وَلَمْ يَكْمُلْ مِنَ النِّسَاءِ إِلاَّ آسِيَةُ امْرَأَةُ فِرْعَوْنَ، وَمَرْيَمُ بِنْتُ عِمْرَانَ، وَإِنَّ فَضْلَ عَائِشَةَ عَلَى النِّسَاءِ كَفَضْلِ الثَّرِيدِ عَلَى سَائِرِ الطَّعَامِ",
       } as HadithReference,
     },
     {
@@ -449,7 +449,7 @@ export const maryamStory: QuranStory = {
         translation: "The best of its women is Maryam, the daughter of Imran; and the best of its women is Khadijah.",
         translationFr: "La meilleure de ses femmes est Maryam, fille d'Imran ; et la meilleure de ses femmes est Khadija.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنِي أَحْمَدُ بْنُ أَبِي رَجَاءٍ، حَدَّثَنَا النَّضْرُ، عَنْ هِشَامٍ، قَالَ أَخْبَرَنِي أَبِي قَالَ، سَمِعْتُ عَبْدَ اللَّهِ بْنَ جَعْفَرٍ، قَالَ سَمِعْتُ عَلِيًّا ـ رضى الله عنه ـ يَقُولُ سَمِعْتُ النَّبِيَّ صلى الله عليه وسلم يَقُولُ خَيْرُ نِسَائِهَا مَرْيَمُ ابْنَةُ عِمْرَانَ، وَخَيْرُ نِسَائِهَا خَدِيجَةُ",
       } as HadithReference,
     },
     {
@@ -466,7 +466,7 @@ export const maryamStory: QuranStory = {
         translation: "There is no child born but that Satan touches it when it is born, so that it cries out from Satan's touch - except Maryam and her son.",
         translationFr: "Il n'est pas d'enfant qui naisse sans que Satan ne le touche à sa naissance, de sorte qu'il crie sous le toucher de Satan - sauf Maryam et son fils.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنَا أَبُو الْيَمَانِ، أَخْبَرَنَا شُعَيْبٌ، عَنِ الزُّهْرِيِّ، قَالَ حَدَّثَنِي سَعِيدُ بْنُ الْمُسَيَّبِ، قَالَ قَالَ أَبُو هُرَيْرَةَ ـ رضى الله عنه ـ سَمِعْتُ رَسُولَ اللَّهِ صلى الله عليه وسلم يَقُولُ مَا مِنْ بَنِي آدَمَ مَوْلُودٌ إِلاَّ يَمَسُّهُ الشَّيْطَانُ حِينَ يُولَدُ، فَيَسْتَهِلُّ صَارِخًا مِنْ مَسِّ الشَّيْطَانِ، غَيْرَ مَرْيَمَ وَابْنِهَا . ثُمَّ يَقُولُ أَبُو هُرَيْرَةَ {وَإِنِّي أُعِيذُهَا بِكَ وَذُرِّيَّتَهَا مِنَ الشَّيْطَانِ الرَّجِيمِ }",
       } as HadithReference,
     },
 

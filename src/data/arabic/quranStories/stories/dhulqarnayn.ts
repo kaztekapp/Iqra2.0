@@ -206,7 +206,7 @@ export const dhulQarnaynStory: QuranStory = {
         translation: "The Prophet ﷺ came in to her alarmed, saying: There is no deity but Allah. Woe to the Arabs from an evil that has drawn near. Today a gap has been opened in the barrier of Yajuj and Majuj like this - and he made a circle with his thumb and the finger next to it. Zaynab bint Jahsh said: O Messenger of Allah, shall we be destroyed while the righteous are among us? He said: Yes, when evil increases.",
         translationFr: "Le Prophète ﷺ entra chez elle alarmé, disant : Il n'y a de divinité qu'Allah. Malheur aux Arabes d'un mal qui s'est approché. Aujourd'hui une brèche a été ouverte dans la barrière de Yajouj et Majouj, grande comme ceci - et il fit un cercle avec son pouce et le doigt voisin. Zaynab bint Jahch dit : Ô Messager d'Allah, serons-nous détruits alors que les vertueux sont parmi nous ? Il dit : Oui, quand le mal se multiplie.",
         grade: "sahih",
-        arabicText: "",
+        arabicText: "حَدَّثَنَا يَحْيَى بْنُ بُكَيْرٍ، حَدَّثَنَا اللَّيْثُ، عَنْ عُقَيْلٍ، عَنِ ابْنِ شِهَابٍ، عَنْ عُرْوَةَ بْنِ الزُّبَيْرِ، أَنَّ زَيْنَبَ ابْنَةَ أَبِي سَلَمَةَ، حَدَّثَتْهُ عَنْ أُمِّ حَبِيبَةَ بِنْتِ أَبِي سُفْيَانَ، عَنْ زَيْنَبَ ابْنَةِ جَحْشٍ ـ رضى الله عنهن أَنَّ النَّبِيَّ صلى الله عليه وسلم دَخَلَ عَلَيْهَا فَزِعًا يَقُولُ لاَ إِلَهَ إِلاَّ اللَّهُ، وَيْلٌ لِلْعَرَبِ مِنْ شَرٍّ قَدِ اقْتَرَبَ فُتِحَ الْيَوْمَ مِنْ رَدْمِ يَأْجُوجَ وَمَأْجُوجَ مِثْلُ هَذِهِ . وَحَلَّقَ بِإِصْبَعِهِ الإِبْهَامِ وَالَّتِي تَلِيهَا. قَالَتْ زَيْنَبُ ابْنَةُ جَحْشٍ فَقُلْتُ يَا رَسُولَ اللَّهِ أَنَهْلِكُ وَفِينَا الصَّالِحُونَ قَالَ نَعَمْ، إِذَا كَثُرَ الْخُبْثُ",
       } as HadithReference,
     },
 
