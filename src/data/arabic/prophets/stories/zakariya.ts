@@ -239,12 +239,19 @@ export const zakariyaStoryContent: StoryContentBlock[] = [
       grade: "sahih",
     } as HadithReference,
   },
-
-  // ============ PART 5: WHAT WAS NOT TOLD ============
   {
     id: 'zakariya-18',
     type: 'narrative',
     order: 18,
+    content: "⟨أَنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَالَ كَانَ زَكَرِيَّاءُ نَجَّارًا⟩ Zakariya was a carpenter.",
+    contentFr: "⟨أَنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَالَ كَانَ زَكَرِيَّاءُ نَجَّارًا⟩ Zakariya était charpentier.",
+  },
+
+  // ============ PART 5: WHAT WAS NOT TOLD ============
+  {
+    id: 'zakariya-19',
+    type: 'narrative',
+    order: 19,
     content: "The Quran does not say how Zakariya came to be chosen as Maryam's guardian beyond the casting of pens it mentions elsewhere, does not tell his years with Yahya, and does not tell how he died. What was not told, we leave untold. Allah knows best.",
     contentFr: "Le Coran ne dit pas comment Zakariya fut choisi comme tuteur de Maryam au-delà du tirage au sort qu'il mentionne ailleurs, ne raconte pas ses années avec Yahya, et ne raconte pas sa mort. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
   },

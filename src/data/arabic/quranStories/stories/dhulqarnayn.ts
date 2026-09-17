@@ -209,12 +209,26 @@ export const dhulQarnaynStory: QuranStory = {
         arabicText: "حَدَّثَنَا يَحْيَى بْنُ بُكَيْرٍ، حَدَّثَنَا اللَّيْثُ، عَنْ عُقَيْلٍ، عَنِ ابْنِ شِهَابٍ، عَنْ عُرْوَةَ بْنِ الزُّبَيْرِ، أَنَّ زَيْنَبَ ابْنَةَ أَبِي سَلَمَةَ، حَدَّثَتْهُ عَنْ أُمِّ حَبِيبَةَ بِنْتِ أَبِي سُفْيَانَ، عَنْ زَيْنَبَ ابْنَةِ جَحْشٍ ـ رضى الله عنهن أَنَّ النَّبِيَّ صلى الله عليه وسلم دَخَلَ عَلَيْهَا فَزِعًا يَقُولُ لاَ إِلَهَ إِلاَّ اللَّهُ، وَيْلٌ لِلْعَرَبِ مِنْ شَرٍّ قَدِ اقْتَرَبَ فُتِحَ الْيَوْمَ مِنْ رَدْمِ يَأْجُوجَ وَمَأْجُوجَ مِثْلُ هَذِهِ . وَحَلَّقَ بِإِصْبَعِهِ الإِبْهَامِ وَالَّتِي تَلِيهَا. قَالَتْ زَيْنَبُ ابْنَةُ جَحْشٍ فَقُلْتُ يَا رَسُولَ اللَّهِ أَنَهْلِكُ وَفِينَا الصَّالِحُونَ قَالَ نَعَمْ، إِذَا كَثُرَ الْخُبْثُ",
       } as HadithReference,
     },
-
-    // ============ PART 4: WHAT WAS NOT TOLD ============
     {
       id: 'dhulqarnayn-16',
       type: 'narrative',
       order: 16,
+      content: "⟨أَنَّ النَّبِيَّ صلى الله عليه وسلم دَخَلَ عَلَيْهَا فَزِعًا يَقُولُ لاَ إِلَهَ إِلاَّ اللَّهُ، وَيْلٌ لِلْعَرَبِ مِنْ شَرٍّ قَدِ اقْتَرَبَ فُتِحَ الْيَوْمَ مِنْ رَدْمِ يَأْجُوجَ وَمَأْجُوجَ مِثْلُ هَذِهِ . وَحَلَّقَ بِإِصْبَعِهِ الإِبْهَامِ وَالَّتِي تَلِيهَا.⟩ The Prophet ﷺ came in to her alarmed, saying: There is no deity but Allah. Woe to the Arabs from an evil that has drawn near. Today a gap has been opened in the barrier of Yajuj and Majuj like this - and he made a circle with his thumb and the finger next to it.",
+      contentFr: "⟨أَنَّ النَّبِيَّ صلى الله عليه وسلم دَخَلَ عَلَيْهَا فَزِعًا يَقُولُ لاَ إِلَهَ إِلاَّ اللَّهُ، وَيْلٌ لِلْعَرَبِ مِنْ شَرٍّ قَدِ اقْتَرَبَ فُتِحَ الْيَوْمَ مِنْ رَدْمِ يَأْجُوجَ وَمَأْجُوجَ مِثْلُ هَذِهِ . وَحَلَّقَ بِإِصْبَعِهِ الإِبْهَامِ وَالَّتِي تَلِيهَا.⟩ Le Prophète ﷺ entra chez elle alarmé, disant : Il n'y a de divinité qu'Allah. Malheur aux Arabes d'un mal qui s'est approché. Aujourd'hui une brèche a été ouverte dans la barrière de Yajouj et Majouj, grande comme ceci - et il fit un cercle avec son pouce et le doigt voisin.",
+    },
+    {
+      id: 'dhulqarnayn-17',
+      type: 'narrative',
+      order: 17,
+      content: "⟨قَالَتْ زَيْنَبُ ابْنَةُ جَحْشٍ فَقُلْتُ يَا رَسُولَ اللَّهِ أَنَهْلِكُ وَفِينَا الصَّالِحُونَ قَالَ نَعَمْ، إِذَا كَثُرَ الْخُبْثُ⟩ Zaynab bint Jahsh said: O Messenger of Allah, shall we be destroyed while the righteous are among us? He said: Yes, when evil increases.",
+      contentFr: "⟨قَالَتْ زَيْنَبُ ابْنَةُ جَحْشٍ فَقُلْتُ يَا رَسُولَ اللَّهِ أَنَهْلِكُ وَفِينَا الصَّالِحُونَ قَالَ نَعَمْ، إِذَا كَثُرَ الْخُبْثُ⟩ Zaynab bint Jahch dit : Ô Messager d'Allah, serons-nous détruits alors que les vertueux sont parmi nous ? Il dit : Oui, quand le mal se multiplie.",
+    },
+
+    // ============ PART 4: WHAT WAS NOT TOLD ============
+    {
+      id: 'dhulqarnayn-18',
+      type: 'narrative',
+      order: 18,
       content: "The Quran does not say who Dhul-Qarnayn was, when he lived, where the sun set for him or rose, or where the barrier stands. It gives his journeys, his judgement, his refusal of payment, and his words about his Lord. What was not told, we leave untold. Allah knows best.",
       contentFr: "Le Coran ne dit ni qui était Dhul-Qarnayn, ni quand il vécut, ni où le soleil se coucha pour lui ou se leva, ni où se dresse la barrière. Il donne ses voyages, son jugement, son refus du paiement, et ses mots sur son Seigneur. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
     },

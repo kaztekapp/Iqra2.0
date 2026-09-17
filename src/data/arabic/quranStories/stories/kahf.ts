@@ -247,12 +247,19 @@ export const kahfStory: QuranStory = {
         arabicText: "وَحَدَّثَنَا مُحَمَّدُ بْنُ الْمُثَنَّى، حَدَّثَنَا مُعَاذُ بْنُ هِشَامٍ، حَدَّثَنِي أَبِي، عَنْ قَتَادَةَ، عَنْ سَالِمِ، بْنِ أَبِي الْجَعْدِ الْغَطَفَانِيِّ عَنْ مَعْدَانَ بْنِ أَبِي طَلْحَةَ الْيَعْمَرِيِّ، عَنْ أَبِي الدَّرْدَاءِ، أَنَّ النَّبِيَّ صلى الله عليه وسلم قَالَ مَنْ حَفِظَ عَشْرَ آيَاتٍ مِنْ أَوَّلِ سُورَةِ الْكَهْفِ عُصِمَ مِنَ الدَّجَّالِ",
       } as HadithReference,
     },
-
-    // ============ PART 5: WHAT WAS NOT TOLD ============
     {
       id: 'kahf-19',
       type: 'narrative',
       order: 19,
+      content: "⟨مَنْ حَفِظَ عَشْرَ آيَاتٍ مِنْ أَوَّلِ سُورَةِ الْكَهْفِ عُصِمَ مِنَ الدَّجَّالِ⟩ Whoever memorises ten verses from the beginning of Surat al-Kahf will be protected from the Dajjal.",
+      contentFr: "⟨مَنْ حَفِظَ عَشْرَ آيَاتٍ مِنْ أَوَّلِ سُورَةِ الْكَهْفِ عُصِمَ مِنَ الدَّجَّالِ⟩ Quiconque mémorise dix versets du début de la sourate Al-Kahf sera protégé du Dajjal.",
+    },
+
+    // ============ PART 5: WHAT WAS NOT TOLD ============
+    {
+      id: 'kahf-20',
+      type: 'narrative',
+      order: 20,
       content: "The Quran does not name the youths, their city, their king, or their dog, and it tells those who argue about their number not to. What it tells is what they said, how they were kept, and how they woke. What was not told, we leave untold. Allah knows best.",
       contentFr: "Le Coran ne nomme ni les jeunes gens, ni leur cité, ni leur roi, ni leur chien, et il dit à ceux qui disputent de leur nombre de ne pas le faire. Ce qu'il raconte, c'est ce qu'ils dirent, comment ils furent gardés, et comment ils se réveillèrent. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
     },

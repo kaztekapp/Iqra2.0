@@ -41,22 +41,49 @@ export type NarrationLang = 'en' | 'fr';
  */
 export const QURAN_RUN = /﴿([^﴾]*)﴾/g;
 
-export type ProseSegment = { kind: 'prose'; text: string } | { kind: 'quran'; text: string };
+/**
+ * A spoken line of a HADITH inside story prose, marked with plain angle
+ * brackets: `⟨قَالَ رَسُولُ اللَّهِ ﷺ ...⟩ The Messenger of Allah ﷺ said...`.
+ *
+ * A hadith is reported the way the Quran is - one segment of Arabic, then
+ * its meaning - but it is not the Quran, and must not be dressed as it. The
+ * ornate brackets are the Quran's; this pair is never shown to the reader at
+ * all. It only tells the reader and the narration where the Arabic is.
+ */
+export const HADITH_RUN = /⟨([^⟩]*)⟩/g;
 
-/** Cut prose into the story's own words and the Quranic lines quoted in it. */
+/** Either kind of quoted Arabic, in the order it appears. */
+const ARABIC_RUN = /﴿([^﴾]*)﴾|⟨([^⟩]*)⟩/g;
+
+export type ProseSegment =
+  | { kind: 'prose'; text: string }
+  | { kind: 'quran'; text: string }
+  | { kind: 'hadith'; text: string };
+
+/** Cut prose into the story's own words and the Arabic quoted in it. */
 export function splitQuranRuns(text: string): ProseSegment[] {
   const out: ProseSegment[] = [];
   if (!text) return out;
   let last = 0;
-  for (const m of text.matchAll(QURAN_RUN)) {
+  for (const m of text.matchAll(ARABIC_RUN)) {
     const at = m.index ?? 0;
     if (at > last) out.push({ kind: 'prose', text: text.slice(last, at) });
-    const arabic = m[1].trim();
-    if (arabic) out.push({ kind: 'quran', text: arabic });
+    if (m[1] !== undefined) {
+      const arabic = m[1].trim();
+      if (arabic) out.push({ kind: 'quran', text: arabic });
+    } else {
+      const arabic = (m[2] ?? '').trim();
+      if (arabic) out.push({ kind: 'hadith', text: arabic });
+    }
     last = at + m[0].length;
   }
   if (last < text.length) out.push({ kind: 'prose', text: text.slice(last) });
   return out;
+}
+
+/** True when a paragraph carries a hadith segment. */
+export function hasHadithRun(text: string | undefined): boolean {
+  return !!text && /⟨[^⟩]*⟩/.test(text);
 }
 
 /**
@@ -195,6 +222,10 @@ export function normalizeArabicForSpeech(input: string): string {
     // Quranic annotation & waqf signs (U+06D6–U+06ED) and small super letters
     .replace(/[\u06D6-\u06ED]/g, '')
     .replace(/[\u06E5\u06E6]/g, '')
+    // The collections set a quoted verse inside a hadith in braces, and an
+    // aside in square brackets. They are for the eye; a voice handed a brace
+    // names it or stops on it.
+    .replace(/[{}\[\]]/g, ' ')
     // tatweel (kashida) and zero-width joiners
     .replace(/\u0640/g, '')
     .replace(/[\u200B-\u200F\u2060]/g, '')

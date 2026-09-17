@@ -177,12 +177,19 @@ export const habilQabilStory: QuranStory = {
         arabicText: "حَدَّثَنَا عُمَرُ بْنُ حَفْصِ بْنِ غِيَاثٍ، حَدَّثَنَا أَبِي، حَدَّثَنَا الأَعْمَشُ، قَالَ حَدَّثَنِي عَبْدُ اللَّهِ بْنُ مُرَّةَ، عَنْ مَسْرُوقٍ، عَنْ عَبْدِ اللَّهِ ـ رضى الله عنه ـ قَالَ قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم لاَ تُقْتَلُ نَفْسٌ ظُلْمًا إِلاَّ كَانَ عَلَى ابْنِ آدَمَ الأَوَّلِ كِفْلٌ مِنْ دَمِهَا، لأَنَّهُ أَوَّلُ مَنْ سَنَّ الْقَتْلَ",
       } as HadithReference,
     },
-
-    // ============ PART 4: WHAT WAS NOT TOLD ============
     {
       id: 'habilqabil-13',
       type: 'narrative',
       order: 13,
+      content: "⟨لاَ تُقْتَلُ نَفْسٌ ظُلْمًا إِلاَّ كَانَ عَلَى ابْنِ آدَمَ الأَوَّلِ كِفْلٌ مِنْ دَمِهَا، لأَنَّهُ أَوَّلُ مَنْ سَنَّ الْقَتْلَ⟩ No soul is killed unjustly except that a share of its blood is upon the first son of Adam, because he was the first to introduce killing.",
+      contentFr: "⟨لاَ تُقْتَلُ نَفْسٌ ظُلْمًا إِلاَّ كَانَ عَلَى ابْنِ آدَمَ الأَوَّلِ كِفْلٌ مِنْ دَمِهَا، لأَنَّهُ أَوَّلُ مَنْ سَنَّ الْقَتْلَ⟩ Aucune âme n'est tuée injustement sans qu'une part de son sang ne retombe sur le premier fils d'Adam, car il fut le premier à instaurer le meurtre.",
+    },
+
+    // ============ PART 4: WHAT WAS NOT TOLD ============
+    {
+      id: 'habilqabil-14',
+      type: 'narrative',
+      order: 14,
       content: "The Quran does not name the two sons - the names Habil and Qabil are not in it - does not say what they offered, and does not say what became of the killer after his regret. What was not told, we leave untold. Allah knows best.",
       contentFr: "Le Coran ne nomme pas les deux fils - les noms Habil et Qabil n'y sont pas - ne dit pas ce qu'ils offrirent, et ne dit pas ce qu'il advint du meurtrier après son regret. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
     },

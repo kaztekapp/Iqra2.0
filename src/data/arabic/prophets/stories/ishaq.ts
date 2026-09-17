@@ -560,13 +560,20 @@ export const ishaqStoryContent: StoryContentBlock[] = [
     id: 'ishaq-45',
     type: 'narrative',
     order: 45,
+    content: "⟨الْكَرِيمُ ابْنُ الْكَرِيمِ ابْنِ الْكَرِيمِ ابْنِ الْكَرِيمِ يُوسُفُ ابْنُ يَعْقُوبَ بْنِ إِسْحَاقَ بْنِ إِبْرَاهِيمَ ـ عَلَيْهِمُ السَّلاَمُ⟩ The noble, son of the noble, son of the noble, son of the noble: Yusuf son of Yaqub son of Ishaq son of Ibrahim.",
+    contentFr: "⟨الْكَرِيمُ ابْنُ الْكَرِيمِ ابْنِ الْكَرِيمِ ابْنِ الْكَرِيمِ يُوسُفُ ابْنُ يَعْقُوبَ بْنِ إِسْحَاقَ بْنِ إِبْرَاهِيمَ ـ عَلَيْهِمُ السَّلاَمُ⟩ Le noble, fils du noble, fils du noble, fils du noble : Youssouf fils de Yaqub fils d'Ishaq fils d'Ibrahim.",
+  },
+  {
+    id: 'ishaq-46',
+    type: 'narrative',
+    order: 46,
     content: "And he ﷺ said what Ibrahim used to say over Ismail and Ishaq (Sahih al-Bukhari 3371).",
     contentFr: "Et il ﷺ dit ce qu'Ibrahim disait sur Ismaïl et Ishaq (Sahih al-Boukhari 3371).",
   },
   {
-    id: 'ishaq-46',
+    id: 'ishaq-47',
     type: 'hadith_source',
-    order: 46,
+    order: 47,
     content: "What Ibrahim said over Ismail and Ishaq.",
     contentFr: "Ce qu'Ibrahim disait sur Ismaïl et Ishaq.",
     source: {
@@ -580,12 +587,26 @@ export const ishaqStoryContent: StoryContentBlock[] = [
       grade: "sahih",
     } as HadithReference,
   },
+  {
+    id: 'ishaq-48',
+    type: 'narrative',
+    order: 48,
+    content: "⟨كَانَ النَّبِيُّ صلى الله عليه وسلم يُعَوِّذُ الْحَسَنَ وَالْحُسَيْنَ وَيَقُولُ إِنَّ أَبَاكُمَا كَانَ يُعَوِّذُ بِهَا إِسْمَاعِيلَ وَإِسْحَاقَ،⟩ The Prophet ﷺ used to seek refuge for al-Hasan and al-Husayn, and say: Your father used to seek refuge with these words for Ismail and Ishaq:",
+    contentFr: "⟨كَانَ النَّبِيُّ صلى الله عليه وسلم يُعَوِّذُ الْحَسَنَ وَالْحُسَيْنَ وَيَقُولُ إِنَّ أَبَاكُمَا كَانَ يُعَوِّذُ بِهَا إِسْمَاعِيلَ وَإِسْحَاقَ،⟩ Le Prophète ﷺ demandait la protection pour al-Hasan et al-Housayn, et disait : Votre père demandait la protection avec ces mots pour Ismaïl et Ishaq :",
+  },
+  {
+    id: 'ishaq-49',
+    type: 'narrative',
+    order: 49,
+    content: "⟨أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لاَمَّةٍ⟩ I seek refuge in the perfect words of Allah from every devil and every poisonous creature, and from every evil eye.",
+    contentFr: "⟨أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لاَمَّةٍ⟩ Je cherche refuge dans les paroles parfaites d'Allah contre tout démon et toute bête venimeuse, et contre tout mauvais œil.",
+  },
 
   // ============ PART 5: WHAT WAS NOT TOLD ============
   {
-    id: 'ishaq-47',
+    id: 'ishaq-50',
     type: 'narrative',
-    order: 47,
+    order: 50,
     content: "The Quran does not tell where Ishaq lived, whom he was sent to, or how he died. It tells that he was announced, that he was a prophet, that he was blessed, and that Yaqub was his son. What was not told, we leave untold. Allah knows best.",
     contentFr: "Le Coran ne dit ni où Ishaq vécut, ni à qui il fut envoyé, ni comment il mourut. Il dit qu'il fut annoncé, qu'il fut prophète, qu'il fut béni, et que Yaqub fut son fils. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
   },

@@ -141,18 +141,25 @@ export const talutStory: QuranStory = {
         collection: "Sahih al-Bukhari",
         hadithNumber: "3959",
         narrator: "al-Bara ibn Azib",
-        translation: "We, the companions of Muhammad ﷺ, used to say that the number of those at Badr was the number of the companions of Talut who crossed the river with him - and none crossed with him but a believer: three hundred and some ten men.",
-        translationFr: "Nous, les compagnons de Muhammad ﷺ, disions que le nombre de ceux de Badr était le nombre des compagnons de Talout qui traversèrent la rivière avec lui - et nul ne traversa avec lui sinon un croyant : trois cent dix et quelques hommes.",
+        translation: "We used to say that the companions of Badr were three hundred and some ten men, the number of the companions of Talut who crossed the river with him - and none crossed with him but a believer.",
+        translationFr: "Nous disions que les compagnons de Badr étaient trois cent dix et quelques hommes, le nombre des compagnons de Talout qui traversèrent la rivière avec lui - et nul ne traversa avec lui sinon un croyant.",
         grade: "sahih",
         arabicText: "حَدَّثَنِي عَبْدُ اللَّهِ بْنُ أَبِي شَيْبَةَ، حَدَّثَنَا يَحْيَى، عَنْ سُفْيَانَ، عَنْ أَبِي إِسْحَاقَ، عَنِ الْبَرَاءِ،. وَحَدَّثَنَا مُحَمَّدُ بْنُ كَثِيرٍ، أَخْبَرَنَا سُفْيَانُ، عَنْ أَبِي إِسْحَاقَ، عَنِ الْبَرَاءِ ـ رضى الله عنه ـ قَالَ كُنَّا نَتَحَدَّثُ أَنَّ أَصْحَابَ بَدْرٍ ثَلاَثُمِائَةٍ وَبِضْعَةَ عَشَرَ، بِعِدَّةِ أَصْحَابِ طَالُوتَ الَّذِينَ جَاوَزُوا مَعَهُ النَّهَرَ، وَمَا جَاوَزَ مَعَهُ إِلاَّ مُؤْمِنٌ",
       } as HadithReference,
     },
-
-    // ============ PART 4: WHAT WAS NOT TOLD ============
     {
       id: 'talut-10',
       type: 'narrative',
       order: 10,
+      content: "⟨كُنَّا نَتَحَدَّثُ أَنَّ أَصْحَابَ بَدْرٍ ثَلاَثُمِائَةٍ وَبِضْعَةَ عَشَرَ، بِعِدَّةِ أَصْحَابِ طَالُوتَ الَّذِينَ جَاوَزُوا مَعَهُ النَّهَرَ، وَمَا جَاوَزَ مَعَهُ إِلاَّ مُؤْمِنٌ⟩ We used to say that the companions of Badr were three hundred and some ten men, the number of the companions of Talut who crossed the river with him - and none crossed with him but a believer.",
+      contentFr: "⟨كُنَّا نَتَحَدَّثُ أَنَّ أَصْحَابَ بَدْرٍ ثَلاَثُمِائَةٍ وَبِضْعَةَ عَشَرَ، بِعِدَّةِ أَصْحَابِ طَالُوتَ الَّذِينَ جَاوَزُوا مَعَهُ النَّهَرَ، وَمَا جَاوَزَ مَعَهُ إِلاَّ مُؤْمِنٌ⟩ Nous disions que les compagnons de Badr étaient trois cent dix et quelques hommes, le nombre des compagnons de Talout qui traversèrent la rivière avec lui - et nul ne traversa avec lui sinon un croyant.",
+    },
+
+    // ============ PART 4: WHAT WAS NOT TOLD ============
+    {
+      id: 'talut-11',
+      type: 'narrative',
+      order: 11,
       content: "The Quran does not name the prophet who was asked for a king, does not name the river, and does not say what the chest contained beyond what it says. What was not told, we leave untold. Allah knows best.",
       contentFr: "Le Coran ne nomme pas le prophète à qui un roi fut demandé, ne nomme pas la rivière, et ne dit pas ce que contenait le coffre au-delà de ce qu'il dit. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
     },

@@ -27,7 +27,7 @@ interface StoryProseProps {
  */
 export function StoryProse({ text, style }: StoryProseProps) {
   const segments = splitQuranRuns(text);
-  const hasQuran = segments.some((s) => s.kind === 'quran');
+  const hasQuran = segments.some((s) => s.kind !== 'prose');
 
   if (!hasQuran) {
     return <Text style={style}>{text}</Text>;
@@ -40,6 +40,13 @@ export function StoryProse({ text, style }: StoryProseProps) {
           return (
             <Text key={i} style={styles.ayah} allowFontScaling>
               {`﴿ ${segment.text} ﴾`}
+            </Text>
+          );
+        }
+        if (segment.kind === 'hadith') {
+          return (
+            <Text key={i} style={styles.hadith} allowFontScaling>
+              {segment.text}
             </Text>
           );
         }
@@ -67,6 +74,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     writingDirection: 'rtl',
     marginVertical: 10,
+  },
+  // A segment of a hadith. It is set exactly as the hadith card sets its
+  // Arabic - the Naskh face, the card's size, right to left from the right
+  // edge - and with nothing added: no brackets, no rule, no label. The Quran
+  // above is centred in its own face inside ﴿ ﴾; a report is a paragraph of
+  // speech and reads as one. The difference in face, size and alignment is
+  // the whole distinction, and it is enough.
+  hadith: {
+    fontFamily: font.arabic,
+    fontSize: 19,
+    lineHeight: 36,
+    color: color.text,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+    marginTop: 10,
+    marginBottom: 6,
   },
   // The meaning under a verse: the paragraph's own style, set apart just
   // enough that the verse above it reads as the source and this as its sense.

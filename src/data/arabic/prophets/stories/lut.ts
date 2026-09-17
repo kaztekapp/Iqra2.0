@@ -837,12 +837,26 @@ export const lutStoryContent: StoryContentBlock[] = [
       grade: "sahih",
     } as HadithReference,
   },
-
-  // ============ PART 8: WHAT WAS NOT TOLD ============
   {
     id: 'lut-69',
     type: 'narrative',
     order: 69,
+    content: "⟨نَحْنُ أَحَقُّ مِنْ إِبْرَاهِيمَ إِذْ قَالَ {رَبِّ أَرِنِي كَيْفَ تُحْيِي الْمَوْتَى قَالَ أَوَلَمْ تُؤْمِنْ قَالَ بَلَى وَلَكِنْ لِيَطْمَئِنَّ قَلْبِي}⟩ We have more right to doubt than Ibrahim, when he said: \"My Lord, show me how You give life to the dead.\" He said: \"Have you not believed?\" He said: \"Yes, but that my heart may be satisfied.\"",
+    contentFr: "⟨نَحْنُ أَحَقُّ مِنْ إِبْرَاهِيمَ إِذْ قَالَ {رَبِّ أَرِنِي كَيْفَ تُحْيِي الْمَوْتَى قَالَ أَوَلَمْ تُؤْمِنْ قَالَ بَلَى وَلَكِنْ لِيَطْمَئِنَّ قَلْبِي}⟩ Nous avons plus de raisons de douter qu'Ibrahim, quand il dit : « Mon Seigneur, montre-moi comment Tu ressuscites les morts. » Il dit : « Ne crois-tu pas ? » Il dit : « Si, mais que mon cœur soit apaisé. »",
+  },
+  {
+    id: 'lut-70',
+    type: 'narrative',
+    order: 70,
+    content: "⟨وَيَرْحَمُ اللَّهُ لُوطًا، لَقَدْ كَانَ يَأْوِي إِلَى رُكْنٍ شَدِيدٍ وَلَوْ لَبِثْتُ فِي السِّجْنِ طُولَ مَا لَبِثَ يُوسُفُ لأَجَبْتُ الدَّاعِيَ⟩ And may Allah have mercy on Lut: he was already taking refuge in a strong support. And had I stayed in prison as long as Yusuf stayed, I would have answered the caller.",
+    contentFr: "⟨وَيَرْحَمُ اللَّهُ لُوطًا، لَقَدْ كَانَ يَأْوِي إِلَى رُكْنٍ شَدِيدٍ وَلَوْ لَبِثْتُ فِي السِّجْنِ طُولَ مَا لَبِثَ يُوسُفُ لأَجَبْتُ الدَّاعِيَ⟩ Et qu'Allah fasse miséricorde à Lout : il s'appuyait déjà sur un soutien solide. Et si j'étais resté en prison aussi longtemps que Youssouf, j'aurais répondu à celui qui appelait.",
+  },
+
+  // ============ PART 8: WHAT WAS NOT TOLD ============
+  {
+    id: 'lut-71',
+    type: 'narrative',
+    order: 71,
     content: "The Quran does not name Lut's city or his wife, does not say where he went in the night, and does not tell how he died. It says his family was saved, all but one, as a favour from Allah - and that the place is on an established road. What was not told, we leave untold. Allah knows best.",
     contentFr: "Le Coran ne nomme ni la cité de Lout ni sa femme, ne dit pas où il alla dans la nuit, et ne raconte pas sa mort. Il dit que sa famille fut sauvée, sauf une, par grâce d'Allah - et que l'endroit se trouve sur une route établie. Ce qui ne fut pas raconté, nous le laissons non raconté. Allah est le plus savant.",
   },

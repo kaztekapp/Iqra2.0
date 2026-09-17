@@ -24,7 +24,8 @@ import {
   NarrationEngine,
   VoiceGender,
 } from '../services/storyAudioService';
-import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns } from '../services/narrationText';
+import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns, hasHadithRun } from '../services/narrationText';
+import { hadithReferenceLine } from '../services/hadithReference';
 import { releaseAudioSessionIfIdle } from '../services/audioBus';
 import {
   speakArabic,
@@ -71,6 +72,9 @@ export interface NarratableBlock {
     type: 'quran' | 'hadith';
     translation: string;
     translationFr?: string;
+    collection?: string;
+    hadithNumber?: string;
+    narrator?: string;
   } | null;
 }
 
@@ -164,9 +168,13 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
    * ayahs a second time as ﴿Arabic﴾ runs in its prose, that prose is what
    * carries them to the ear, woven into the telling rather than announced.
    *
-   * A hadith block keeps its translation, because there the caption only
-   * frames the report ("the Prophet spoke of Musa and the Angel of Death")
-   * and the report itself is what carries the story.
+   * A hadith is reported the way the Quran is: after its card, the story
+   * sets it as ⟨Arabic⟩ runs, one segment and its meaning at a time, and
+   * those runs carry it to the ear. Before the first of them the reference
+   * is said once - collection, number, who reported it - so the listener
+   * knows what is being read before it is read. A hadith card that has no
+   * runs after it yet keeps reading its translation whole, so nothing is
+   * passed over in silence while the stories are being reshaped.
    *
    * A caption that merely restates the line before it is dropped rather than
    * said twice.
@@ -181,7 +189,7 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
       // voice, the Arabic by the Arabic voice, and the meaning by the story's
       // voice again — the same cadence a teacher uses.
       for (const segment of splitQuranRuns(raw)) {
-        if (segment.kind === 'quran') {
+        if (segment.kind === 'quran' || segment.kind === 'hadith') {
           const key = speechKey(segment.text);
           if (!key || key === lastKey) continue;
           lastKey = key;
@@ -206,12 +214,32 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
       }
       push(caption, block.id, blockIndex);
 
+      const isHadith = block.source?.type === 'hadith';
+      if (isHadith && block.source) {
+        push(
+          hadithReferenceLine(
+            {
+              collection: block.source.collection ?? '',
+              hadithNumber: block.source.hadithNumber,
+              narrator: block.source.narrator,
+            },
+            lang,
+          ),
+          block.id,
+          blockIndex,
+        );
+      }
+
       const translation = block.source ? lc(block.source.translation, block.source.translationFr) : '';
       if (!translation) return;
 
+      const next = blocks[blockIndex + 1];
+      const hasRuns = isHadith && next?.type === 'narrative' && hasHadithRun(lc(next.content, next.contentFr));
+
       // Read a verse only when there is no caption to carry the block, so
-      // that a block without one is never passed over in silence.
-      const readsTranslation = block.source?.type === 'hadith' || !caption.trim();
+      // that a block without one is never passed over in silence. A hadith
+      // is read whole only until its runs exist.
+      const readsTranslation = (isHadith && !hasRuns) || !caption.trim();
       if (readsTranslation) push(translation, block.id, blockIndex);
     });
 
