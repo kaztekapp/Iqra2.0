@@ -10,6 +10,7 @@ import { color, radius } from '../../theme/tokens';
 import { quietly } from '../../lib/report';
 import type { IoniconName } from '../../theme/icons';
 import type { TFunction } from 'i18next';
+import i18n from 'i18next';
 
 interface Props {
   group: StudyGroup;
@@ -79,7 +80,7 @@ export function GroupInfoTab({
       </View>
 
       {/* Invite Link */}
-      <Pressable style={styles.inviteCard} onPress={handleShareInvite}>
+      <Pressable accessibilityRole="button" style={styles.inviteCard} onPress={handleShareInvite}>
         <Ionicons name="link" size={20} color={color.accent} />
         <View style={{ flex: 1 }}>
           <Text style={styles.inviteTitle}>{t('community.shareInvite', { defaultValue: 'Share Invite Link' })}</Text>
@@ -97,7 +98,7 @@ export function GroupInfoTab({
         <Ionicons name="calendar" size={18} color={color.accent} />
         <Text style={styles.sectionTitle}>{t('community.sessions', { defaultValue: 'Study Sessions' })}</Text>
         {canManage && onCreateSession && (
-          <Pressable style={styles.addBtn} onPress={onCreateSession}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.addBtn} onPress={onCreateSession}>
             <Ionicons name="add" size={18} color={color.accent} />
           </Pressable>
         )}
@@ -129,7 +130,7 @@ export function GroupInfoTab({
         <Ionicons name="flash" size={18} color={color.warning} />
         <Text style={styles.sectionTitle}>{t('community.groupChallenges', { defaultValue: 'Group Challenges' })}</Text>
         {canManage && onCreateChallenge && (
-          <Pressable style={styles.addBtn} onPress={onCreateChallenge}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.addBtn} onPress={onCreateChallenge}>
             <Ionicons name="add" size={18} color={color.warning} />
           </Pressable>
         )}

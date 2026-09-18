@@ -5,6 +5,7 @@ import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 interface PracticeCardProps {
   title: string;
@@ -17,7 +18,7 @@ interface PracticeCardProps {
 
 function PracticeCard({ title, titleArabic, description, icon, color, route }: PracticeCardProps) {
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={[styles.practiceCard, { borderColor: color + '40' }]}
       onPress={() => router.push(route as Href)}
     >
@@ -81,7 +82,7 @@ export default function PracticeScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={tk.text} />
           </Pressable>
           <View style={styles.headerText}>

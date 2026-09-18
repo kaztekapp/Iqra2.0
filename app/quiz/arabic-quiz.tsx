@@ -20,6 +20,7 @@ import { DEFAULT_QUIZ_CONFIG } from '../../src/types/arabicQuiz';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { QuizIntro } from '../../src/components/quiz/QuizIntro';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
@@ -258,7 +259,7 @@ export default function ArabicQuizScreen() {
       <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={handleGoBack}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={handleGoBack}>
             <Ionicons name="close" size={24} color={color.textMuted} />
           </Pressable>
           <Text style={styles.headerText}>
@@ -295,7 +296,7 @@ export default function ArabicQuizScreen() {
             {currentQuestion.questionArabic && (
               <View style={styles.arabicQuestionRow}>
                 <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
-                <Pressable
+                <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={styles.audioButton}
                   onPress={() => playArabicAudio(currentQuestion.questionArabic!)}
                 >
@@ -320,7 +321,7 @@ export default function ArabicQuizScreen() {
               const isSelected = screenState === 'feedback' && index === selectedOptionIndex;
 
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={index}
                   style={[
                     styles.optionButton,
@@ -390,7 +391,7 @@ export default function ArabicQuizScreen() {
                 <Text style={styles.explanationTitle}>{t('arabicQuiz.learnThisWord')}</Text>
 
                 <View style={styles.wordDisplay}>
-                  <Pressable
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={styles.audioButtonLarge}
                     onPress={() => playArabicAudio(currentQuestion.explanation.arabic)}
                   >
@@ -422,7 +423,7 @@ export default function ArabicQuizScreen() {
                 )}
               </View>
 
-              <Pressable style={styles.nextButton} onPress={handleNext}>
+              <Pressable accessibilityRole="button" style={styles.nextButton} onPress={handleNext}>
                 <Text style={styles.nextButtonText}>
                   {currentIndex >= currentQuestions.length - 1 ? t('arabicQuiz.seeResults') : t('arabicQuiz.nextQuestion')}
                 </Text>
@@ -551,7 +552,7 @@ export default function ArabicQuizScreen() {
                   {/* Detailed explanation in review */}
                   <View style={styles.reviewExplanationBox}>
                     <View style={styles.reviewWordRow}>
-                      <Pressable
+                      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                         style={styles.audioButtonSmall}
                         onPress={() => playArabicAudio(question.explanation.arabic)}
                       >
@@ -575,16 +576,16 @@ export default function ArabicQuizScreen() {
           {/* Action Buttons */}
           <View style={styles.resultActions}>
             {quizResult.passed ? (
-              <Pressable style={styles.startButton} onPress={generateNewQuiz}>
+              <Pressable accessibilityRole="button" style={styles.startButton} onPress={generateNewQuiz}>
                 <Text style={styles.startButtonText}>{t('arabicQuiz.newQuizNewWords')}</Text>
               </Pressable>
             ) : (
-              <Pressable style={styles.startButton} onPress={handleTryAgain}>
+              <Pressable accessibilityRole="button" style={styles.startButton} onPress={handleTryAgain}>
                 <Text style={styles.startButtonText}>{t('arabicQuiz.tryAgainSameWords')}</Text>
               </Pressable>
             )}
 
-            <Pressable style={styles.backTextButton} onPress={handleGoBack}>
+            <Pressable accessibilityRole="button" style={styles.backTextButton} onPress={handleGoBack}>
               <Text style={styles.backTextButtonLabel}>{t('arabicQuiz.backToCommunity')}</Text>
             </Pressable>
           </View>

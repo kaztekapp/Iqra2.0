@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, Image, GestureResponderEvent } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -70,7 +71,7 @@ interface Props {
 function ReplyQuote({ preview, groupColor, isMe, onPress }: { preview: NonNullable<MessageBubbleMessage['replyPreview']>; groupColor: string; isMe: boolean; onPress?: () => void }) {
   const snippet = preview.type === 'voice' ? '🎤 Voice note' : preview.type === 'image' ? '📷 Photo' : preview.type === 'shared' ? '📖 Shared content' : preview.body;
   return (
-    <Pressable onPress={onPress} style={[styles.replyQuote, { borderLeftColor: isMe ? 'rgba(255,255,255,0.6)' : groupColor }]}>
+    <Pressable accessibilityRole="button" onPress={onPress} style={[styles.replyQuote, { borderLeftColor: isMe ? 'rgba(255,255,255,0.6)' : groupColor }]}>
       <Text style={[styles.replyAuthor, { color: isMe ? 'rgba(255,255,255,0.9)' : groupColor }]} numberOfLines={1}>{preview.authorName}</Text>
       <Text style={[styles.replySnippet, isMe && { color: 'rgba(255,255,255,0.7)' }]} numberOfLines={1}>{snippet}</Text>
     </Pressable>
@@ -243,7 +244,7 @@ function ImageContent({ msg, onImagePress, isMe, groupColor }: { msg: MessageBub
   const h = Math.min(320, maxW * ratio);
   return (
     <View>
-      <Pressable onPress={() => msg.imageUrl && onImagePress?.(msg.imageUrl)}>
+      <Pressable accessibilityLabel={i18n.t('a11y.openImage')} onPress={() => msg.imageUrl && onImagePress?.(msg.imageUrl)}>
         <Image source={{ uri: msg.imageUrl }} style={[styles.image, { width: maxW, height: h }]} resizeMode="cover" />
       </Pressable>
       {msg.body ? (
@@ -364,10 +365,10 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
   const timeLabel = isPlaying || progress > 0 ? elapsedStr : durationStr;
 
   const voiceInner = (
-    <Pressable style={isMe ? styles.voiceBubbleMe : styles.voiceBubbleOther} onLongPress={onLongPress} delayLongPress={250}>
+    <Pressable accessibilityRole="button" style={isMe ? styles.voiceBubbleMe : styles.voiceBubbleOther} onLongPress={onLongPress} delayLongPress={250}>
       {/* Row 1: play button aligned with the waveform's vertical center */}
       <View style={styles.voiceTopRow}>
-        <Pressable style={styles.playBtn} onPress={handlePlay} hitSlop={8}>
+        <Pressable accessibilityLabel={i18n.t('a11y.playPause')} style={styles.playBtn} onPress={handlePlay} hitSlop={8}>
           <Ionicons
             name={isPlaying ? 'pause' : 'play'}
             size={26}
@@ -409,7 +410,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
         <Ionicons name="mic" size={11} color={isMe ? 'rgba(255,255,255,0.75)' : color.textMuted} />
         <Text style={isMe ? styles.voiceDurationMe : styles.voiceDurationOther}>{timeLabel}</Text>
         <View style={{ flex: 1 }} />
-        <Pressable
+        <Pressable accessibilityRole="button"
           onPress={cycleRate}
           hitSlop={8}
           style={[styles.rateBtn, {

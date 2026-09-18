@@ -17,6 +17,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useArabicTextsStore } from '../../../src/stores/arabicTextsStore';
 import { color, radius } from '../../../src/theme/tokens';
+import i18n from 'i18next';
 
 const BRAND = color.progress;
 
@@ -58,7 +59,7 @@ export default function ArabicEditorScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.iconBtn} hitSlop={8} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.iconBtn} hitSlop={8} onPress={() => router.back()}>
           <Ionicons name="close" size={26} color={color.text} />
         </Pressable>
         <Text style={styles.headerTitle}>
@@ -120,7 +121,7 @@ export default function ArabicEditorScreen() {
 
         {/* Save */}
         <View style={styles.footer}>
-          <Pressable onPress={handleSave} disabled={!canSave}>
+          <Pressable accessibilityRole="button" onPress={handleSave} disabled={!canSave}>
             <LinearGradient
               colors={canSave ? [color.progress, color.accent] : [color.borderStrong, color.borderStrong]}
               start={{ x: 0, y: 0 }}

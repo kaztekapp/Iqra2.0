@@ -20,7 +20,7 @@ export default function SpeechSpeedControl({ showIcon = true }: { showIcon?: boo
         {ARABIC_SPEECH_SPEEDS.map((v) => {
           const active = Math.abs(v - speed) < 0.001;
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={v}
               onPress={() => setSpeed(v)}
               style={[styles.pill, active && styles.pillActive]}

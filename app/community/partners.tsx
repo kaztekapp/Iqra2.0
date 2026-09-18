@@ -17,6 +17,7 @@ import { StudyPartner } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import type { TFunction } from 'i18next';
+import i18n from 'i18next';
 
 const LEVEL_COLORS: Record<string, string> = {
   beginner: color.progress,
@@ -70,7 +71,7 @@ export default function StudyPartnersScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -190,7 +191,7 @@ function PartnerCard({
       </View>
 
       {/* Connect button */}
-      <Pressable
+      <Pressable accessibilityRole="button"
         style={[
           styles.connectBtn,
           isConnected && styles.connectedBtn,

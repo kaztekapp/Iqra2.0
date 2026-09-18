@@ -11,7 +11,7 @@ interface Props {
 
 export const NewMessagesPill = React.memo(function NewMessagesPill({ count, groupColor, onPress }: Props) {
   return (
-    <Pressable style={[styles.pill, { backgroundColor: groupColor }]} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={[styles.pill, { backgroundColor: groupColor }]} onPress={onPress}>
       <Ionicons name="arrow-down" size={15} color={color.text} />
       <Text style={styles.text}>
         {count > 0 ? `${count} new message${count > 1 ? 's' : ''}` : 'Jump to latest'}

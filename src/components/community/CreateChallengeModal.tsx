@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, TextInput, Modal, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -51,11 +52,11 @@ export function CreateChallengeModal({ visible, onClose, onCreate, groupColor }:
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Pressable onPress={onClose}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose}>
               <Ionicons name="close" size={24} color={color.textMuted} />
             </Pressable>
             <Text style={styles.headerTitle}>{t('community.challengeTitle')}</Text>
-            <Pressable style={[styles.createBtn, (!title.trim() || !targetValue) && { opacity: 0.4 }]} onPress={handleCreate} disabled={!title.trim() || !targetValue}>
+            <Pressable accessibilityRole="button" style={[styles.createBtn, (!title.trim() || !targetValue) && { opacity: 0.4 }]} onPress={handleCreate} disabled={!title.trim() || !targetValue}>
               <Text style={styles.createBtnText}>{t('community.create')}</Text>
             </Pressable>
           </View>
@@ -67,7 +68,7 @@ export function CreateChallengeModal({ visible, onClose, onCreate, groupColor }:
             <Text style={styles.label}>{t('community.whatTracking')}</Text>
             <View style={styles.optionRow}>
               {TARGET_TYPES.map((t) => (
-                <Pressable key={t.key} style={[styles.typeBtn, targetType === t.key && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setTargetType(t.key)}>
+                <Pressable accessibilityRole="button" key={t.key} style={[styles.typeBtn, targetType === t.key && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setTargetType(t.key)}>
                   <Ionicons name={t.icon as IoniconName} size={16} color={targetType === t.key ? groupColor: color.textFaint} />
                   <Text style={[styles.typeText, targetType === t.key && { color: groupColor }]}>{t.label}</Text>
                 </Pressable>
@@ -80,7 +81,7 @@ export function CreateChallengeModal({ visible, onClose, onCreate, groupColor }:
             <Text style={styles.label}>{t('community.timeLimit')}</Text>
             <View style={styles.optionRow}>
               {DURATION_OPTIONS.map((opt) => (
-                <Pressable key={opt.days} style={[styles.optionBtn, durationDays === opt.days && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setDurationDays(opt.days)}>
+                <Pressable accessibilityRole="button" key={opt.days} style={[styles.optionBtn, durationDays === opt.days && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setDurationDays(opt.days)}>
                   <Text style={[styles.optionText, durationDays === opt.days && { color: groupColor }]}>{opt.label}</Text>
                 </Pressable>
               ))}

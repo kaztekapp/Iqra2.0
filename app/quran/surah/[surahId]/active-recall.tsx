@@ -17,6 +17,7 @@ import { getHintText } from '../../../../src/utils/arabicTextUtils';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../../src/theme/icons';
+import i18n from 'i18next';
 
 const METHOD_COLOR = color.accent;
 
@@ -323,7 +324,7 @@ export default function ActiveRecallScreen() {
 
   // --- Audio button component ---
   const renderAudioButton = () => (
-    <Pressable
+    <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
       style={styles.audioButton}
       onPress={playAyahAudio}
     >
@@ -408,7 +409,7 @@ export default function ActiveRecallScreen() {
                 </Text>
               ))}
             </View>
-            <Pressable style={styles.actionButton} onPress={() => setIsRevealed(true)}>
+            <Pressable accessibilityRole="button" style={styles.actionButton} onPress={() => setIsRevealed(true)}>
               <Ionicons name="eye-outline" size={20} color={METHOD_COLOR} />
               <Text style={styles.actionButtonText}>{t('activeRecall.showAnswer')}</Text>
             </Pressable>
@@ -448,7 +449,7 @@ export default function ActiveRecallScreen() {
 
         {/* Sub-mode toggle */}
         <View style={styles.subModeToggle}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.subModeTab, fillBlankSubMode === 'arabic_fill' && styles.subModeTabActive]}
             onPress={() => { setFillBlankSubMode('arabic_fill'); resetState(); }}
           >
@@ -456,7 +457,7 @@ export default function ActiveRecallScreen() {
               {t('activeRecall.arabicFill')}
             </Text>
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.subModeTab, fillBlankSubMode === 'meaning_match' && styles.subModeTabActive]}
             onPress={() => { setFillBlankSubMode('meaning_match'); resetState(); }}
           >
@@ -500,7 +501,7 @@ export default function ActiveRecallScreen() {
                     : null;
 
                 return (
-                  <Pressable key={word.id || i} onPress={() => handleBlankTap(i)}>
+                  <Pressable accessibilityRole="button" key={word.id || i} onPress={() => handleBlankTap(i)}>
                     <View style={[styles.meaningBlankBox, blankExtraStyle]}>
                       <Text style={styles.meaningBlankText}>
                         {filled || '___'}
@@ -534,7 +535,7 @@ export default function ActiveRecallScreen() {
                     : null;
 
                 return (
-                  <Pressable key={word.id || i} onPress={() => handleBlankTap(i)}>
+                  <Pressable accessibilityRole="button" key={word.id || i} onPress={() => handleBlankTap(i)}>
                     <View style={[styles.blankBox, blankExtraStyle]}>
                       <Text style={styles.blankText}>
                         {filled || '____'}
@@ -578,7 +579,7 @@ export default function ActiveRecallScreen() {
             <Text style={styles.wordBankLabel}>{t('activeRecall.wordBank')}</Text>
             <View style={isMeaning ? styles.wordBankRowLtr : styles.wordBankRow}>
               {availableBank.map((item, i) => (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={`${item.index}-${i}`}
                   style={isMeaning ? styles.wordBankPillMeaning : styles.wordBankPill}
                   onPress={() => handleWordBankTap(item.text)}
@@ -594,7 +595,7 @@ export default function ActiveRecallScreen() {
 
         {/* Check button */}
         {!isChecked && Object.keys(filledWords).length > 0 && (
-          <Pressable style={styles.actionButton} onPress={handleCheck}>
+          <Pressable accessibilityRole="button" style={styles.actionButton} onPress={handleCheck}>
             <Ionicons name="checkmark-circle-outline" size={20} color={METHOD_COLOR} />
             <Text style={styles.actionButtonText}>{t('activeRecall.check')}</Text>
           </Pressable>
@@ -637,7 +638,7 @@ export default function ActiveRecallScreen() {
         {!isRevealed ? (
           <>
             <Text style={styles.instructionText}>{t('activeRecall.recallTheRest')}</Text>
-            <Pressable style={styles.actionButton} onPress={() => setIsRevealed(true)}>
+            <Pressable accessibilityRole="button" style={styles.actionButton} onPress={() => setIsRevealed(true)}>
               <Ionicons name="eye-outline" size={20} color={METHOD_COLOR} />
               <Text style={styles.actionButtonText}>{t('activeRecall.showRest')}</Text>
             </Pressable>
@@ -669,7 +670,7 @@ export default function ActiveRecallScreen() {
             <Text style={styles.translationHint}>{ayahTranslation}</Text>
 
             <Text style={styles.instructionText}>{t('activeRecall.reciteFromMemory')}</Text>
-            <Pressable style={styles.actionButton} onPress={() => setIsRevealed(true)}>
+            <Pressable accessibilityRole="button" style={styles.actionButton} onPress={() => setIsRevealed(true)}>
               <Ionicons name="eye-outline" size={20} color={METHOD_COLOR} />
               <Text style={styles.actionButtonText}>{t('activeRecall.showAnswer')}</Text>
             </Pressable>
@@ -712,7 +713,7 @@ export default function ActiveRecallScreen() {
         <Text style={styles.ratingPrompt}>{t('activeRecall.rateRecall')}</Text>
         <View style={styles.ratingGrid}>
           {RATING_CONFIG.map(({ rating, labelKey, color }) => (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={rating}
               style={[
                 styles.ratingButton,
@@ -733,7 +734,7 @@ export default function ActiveRecallScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')}
           style={styles.closeButton}
           onPress={() => {
             quranAudioService.stop();
@@ -770,7 +771,7 @@ export default function ActiveRecallScreen() {
         {MODE_TABS.map((tab) => {
           const isActive = mode === tab.key;
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={tab.key}
               style={[styles.modeTab, isActive && styles.modeTabActive]}
               onPress={() => handleModeChange(tab.key)}
@@ -796,7 +797,7 @@ export default function ActiveRecallScreen() {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
           style={[styles.navButton, currentAyahIndex === 0 && styles.navButtonDisabled]}
           onPress={handlePrevAyah}
           disabled={currentAyahIndex === 0}
@@ -810,7 +811,7 @@ export default function ActiveRecallScreen() {
         <Text style={styles.navCounter}>
           {t('activeRecall.ayahNumber', { number: currentAyah.ayahNumber })}
         </Text>
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
           style={[
             styles.navButton,
             currentAyahIndex >= ayahs.length - 1 && styles.navButtonDisabled,

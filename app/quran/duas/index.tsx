@@ -11,6 +11,7 @@ import { useDuasStore } from '../../../src/stores/duasStore';
 import { DuaCategory, DUA_CATEGORY_LABELS, DuaListItem } from '../../../src/types/duas';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type FilterCategory = 'all' | DuaCategory;
 
@@ -52,7 +53,7 @@ export default function DuasListScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -87,7 +88,7 @@ export default function DuasListScreen() {
         style={styles.filterContainer}
         contentContainerStyle={styles.filterContent}
       >
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[
             styles.filterChip,
             selectedCategory === 'all' && styles.filterChipActive,
@@ -104,7 +105,7 @@ export default function DuasListScreen() {
           </Text>
         </Pressable>
         {categories.map((category) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={category}
             style={[
               styles.filterChip,

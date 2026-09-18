@@ -23,6 +23,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { VocabularyWord } from '../../src/types/arabic';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function FlashcardsScreen() {
   // Live width: a value captured at import is wrong after a rotation and in
@@ -159,7 +160,7 @@ export default function FlashcardsScreen() {
 
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.known * 2 })}</Text>
 
-          <Pressable style={styles.doneButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
             <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
@@ -173,7 +174,7 @@ export default function FlashcardsScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -203,7 +204,7 @@ export default function FlashcardsScreen() {
       <View style={styles.cardContainer}>
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[styles.cardWrapper, cardStyle]}>
-            <Pressable onPress={flipCard} style={styles.cardPressable}>
+            <Pressable accessibilityRole="button" onPress={flipCard} style={styles.cardPressable}>
               {/* Front of Card (Arabic) */}
               <Animated.View style={[styles.card, frontAnimatedStyle]}>
                 <View style={styles.cardContent}>
@@ -213,7 +214,7 @@ export default function FlashcardsScreen() {
                   <Text style={styles.cardTranslit}>
                     {currentWord.transliteration}
                   </Text>
-                  <Pressable
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.cardAudioBtn, isSpeaking && styles.cardAudioBtnActive]}
                     onPress={(e) => {
                       e.stopPropagation();
@@ -255,14 +256,14 @@ export default function FlashcardsScreen() {
 
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.actionButton, styles.learningButton]}
           onPress={() => handleNext(false)}
         >
           <Ionicons name="refresh" size={24} color={color.warning} />
           <Text style={styles.learningButtonText}>{t('vocabulary.stillLearning')}</Text>
         </Pressable>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.actionButton, styles.knowButton]}
           onPress={() => handleNext(true)}
         >

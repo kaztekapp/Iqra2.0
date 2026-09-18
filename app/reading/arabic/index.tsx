@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useArabicTextsStore } from '../../../src/stores/arabicTextsStore';
 import { SavedArabicText } from '../../../src/types/arabicText';
 import { font, color, radius } from '../../../src/theme/tokens';
+import i18n from 'i18next';
 
 const BRAND = color.progress;
 
@@ -31,16 +32,16 @@ const TextCard = React.memo(function TextCard(
     const { t } = useTranslation();
     const preview = item.content.replace(/\n+/g, ' ').trim();
     return (
-      <Pressable style={styles.card} onPress={() => onOpen(item.id)}>
+      <Pressable accessibilityRole="button" style={styles.card} onPress={() => onOpen(item.id)}>
         <View style={styles.cardTopRow}>
           <Text style={styles.cardTitle} numberOfLines={1}>
             {item.title}
           </Text>
           <View style={styles.cardActions}>
-            <Pressable hitSlop={8} onPress={() => onEdit(item.id)} style={styles.cardIconBtn}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.edit')} hitSlop={8} onPress={() => onEdit(item.id)} style={styles.cardIconBtn}>
               <Ionicons name="create-outline" size={18} color={color.textMuted} />
             </Pressable>
-            <Pressable hitSlop={8} onPress={() => onDelete(item)} style={styles.cardIconBtn}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.delete')} hitSlop={8} onPress={() => onDelete(item)} style={styles.cardIconBtn}>
               <Ionicons name="trash-outline" size={18} color={color.danger} />
             </Pressable>
           </View>
@@ -113,7 +114,7 @@ export default function ArabicLibraryScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerText}>
@@ -132,7 +133,7 @@ export default function ArabicLibraryScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <Pressable onPress={openNew}>
+          <Pressable accessibilityRole="button" onPress={openNew}>
             <LinearGradient
               colors={[color.progress, color.accent]}
               start={{ x: 0, y: 0 }}

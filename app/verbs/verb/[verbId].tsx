@@ -12,6 +12,7 @@ import { ShareToGroupModal } from '../../../src/components/community/ShareToGrou
 import type { SharedContent } from '../../../src/data/community/socialData';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -90,11 +91,11 @@ export default function VerbDetailScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.verbTitleContainer}
               onPress={() => speak(verb.pastTense)}
             >
@@ -142,11 +143,11 @@ export default function VerbDetailScreen() {
             </View>
           </View>
           <View style={styles.infoRow}>
-            <Pressable style={styles.tensePreview} onPress={() => speak(verb.presentTense)}>
+            <Pressable accessibilityRole="button" style={styles.tensePreview} onPress={() => speak(verb.presentTense)}>
               <Text style={styles.tensePreviewLabel}>{t('verbDetail.present')}</Text>
               <Text style={styles.tensePreviewValue}>{verb.presentTense}</Text>
             </Pressable>
-            <Pressable style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
+            <Pressable accessibilityRole="button" style={styles.tensePreview} onPress={() => speak(verb.pastTense)}>
               <Text style={styles.tensePreviewLabel}>{t('verbDetail.past')}</Text>
               <Text style={styles.tensePreviewValue}>{verb.pastTense}</Text>
             </Pressable>
@@ -156,7 +157,7 @@ export default function VerbDetailScreen() {
         {/* Tense Tabs */}
         <View style={styles.tenseTabs}>
           {(['present', 'past', 'future', 'imperative'] as TenseType[]).map((tense) => (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={tense}
               style={[
                 styles.tenseTab,
@@ -194,7 +195,7 @@ export default function VerbDetailScreen() {
             {currentLabels.map((person) => {
               const conjugation = getConjugation(activeTense, person.key);
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={person.key}
                   style={styles.conjugationRow}
                   onPress={() => speak(conjugation)}
@@ -218,7 +219,7 @@ export default function VerbDetailScreen() {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{t('verbDetail.examples')}</Text>
             {getExamplesForTense(activeTense).map((example, idx) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={idx}
                 style={styles.exampleCard}
                 onPress={() => speak(example.arabic)}
@@ -237,7 +238,7 @@ export default function VerbDetailScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('verbDetail.allExamples')}</Text>
           {verb.examples?.map((example, idx) => (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={idx}
               style={styles.exampleCard}
               onPress={() => speak(example.arabic)}

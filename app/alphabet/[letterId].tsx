@@ -14,6 +14,7 @@ import { ShareToGroupModal } from '../../src/components/community/ShareToGroupMo
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function LetterDetailScreen() {
   const { letterId } = useLocalSearchParams<{ letterId: string }>();
@@ -46,7 +47,7 @@ export default function LetterDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('common.notFound')}</Text>
-          <Pressable style={styles.backLink} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backLink} onPress={() => router.back()}>
             <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -86,7 +87,7 @@ export default function LetterDetailScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -108,7 +109,7 @@ export default function LetterDetailScreen() {
           >
             <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
             onPress={() => {
               // Speak the letter name for better pronunciation
@@ -140,7 +141,7 @@ export default function LetterDetailScreen() {
           {/* Writing-style selector — applies to the letter, its forms and examples */}
           <View style={styles.scriptRow}>
             {SCRIPT_META.map((s) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={s.key}
                 style={[styles.scriptPill, script === s.key && { backgroundColor: `${s.color}22`, borderColor: s.color }]}
                 onPress={() => setScript(s.key)}
@@ -194,7 +195,7 @@ export default function LetterDetailScreen() {
                   <Text style={styles.positionText}>{example.position}</Text>
                 </View>
               </View>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                 style={styles.exampleAudioBtn}
                 onPress={() => speak(example.word)}
               >
@@ -206,7 +207,7 @@ export default function LetterDetailScreen() {
 
         {/* Writing Practice Button */}
         <View style={styles.section}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.writingButton}
             onPress={() =>
               router.push({
@@ -223,13 +224,13 @@ export default function LetterDetailScreen() {
         {/* Action Buttons */}
         <View style={styles.section}>
           {!isLearned && (
-            <Pressable style={styles.primaryButton} onPress={handleMarkLearned}>
+            <Pressable accessibilityRole="button" style={styles.primaryButton} onPress={handleMarkLearned}>
               <Ionicons name="checkmark-circle" size={20} color={color.text} />
               <Text style={styles.primaryButtonText}>{t('alphabet.markLearned')}</Text>
             </Pressable>
           )}
           {isLearned && !isMastered && (
-            <Pressable style={styles.masterButton} onPress={handleMarkMastered}>
+            <Pressable accessibilityRole="button" style={styles.masterButton} onPress={handleMarkMastered}>
               <Ionicons name="star" size={20} color={color.textOnAccent} />
               <Text style={styles.masterButtonText}>{t('alphabet.markMastered')}</Text>
             </Pressable>
@@ -240,7 +241,7 @@ export default function LetterDetailScreen() {
         <View style={[styles.section, { marginBottom: 100 }]}>
           <View style={styles.navButtons}>
             {prevLetter ? (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={styles.navButton}
                 onPress={() => router.replace(`/alphabet/${prevLetter.id}`)}
               >
@@ -251,7 +252,7 @@ export default function LetterDetailScreen() {
               <View style={styles.navButtonPlaceholder} />
             )}
             {nextLetter ? (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={styles.navButton}
                 onPress={() => router.replace(`/alphabet/${nextLetter.id}`)}
               >

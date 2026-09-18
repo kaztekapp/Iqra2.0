@@ -8,6 +8,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -122,7 +123,7 @@ export default function TenseDetailScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -178,12 +179,12 @@ export default function TenseDetailScreen() {
           {arabicVerbs.map((verb) => (
             <View key={verb.id} style={styles.verbCard}>
               {/* Verb Header */}
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={styles.verbHeader}
                 onPress={() => setSelectedVerb(selectedVerb === verb.id ? null : verb.id)}
               >
                 <View style={styles.verbInfo}>
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     style={[styles.verbArabic, { backgroundColor: tense.color + '20' }]}
                     onPress={() => speak(verb.pastTense)}
                   >
@@ -210,7 +211,7 @@ export default function TenseDetailScreen() {
                   {/* Conjugation Table */}
                   <View style={styles.conjugationTable}>
                     {tense.personLabels.map((person) => (
-                      <Pressable
+                      <Pressable accessibilityRole="button"
                         key={person.key}
                         style={styles.conjugationRow}
                         onPress={() => speak(getConjugation(verb, person.key))}
@@ -234,7 +235,7 @@ export default function TenseDetailScreen() {
                     <View style={styles.examplesSection}>
                       <Text style={styles.examplesTitle}>{t('verbTense.examples')}</Text>
                       {getExamplesForTense(verb).map((example, idx) => (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           key={idx}
                           style={styles.exampleCard}
                           onPress={() => speak(example.arabic)}

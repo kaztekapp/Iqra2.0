@@ -80,6 +80,7 @@ import { color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import type { AlertButton, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import i18n from 'i18next';
 
 type Tab = 'chat' | 'members' | 'info';
 
@@ -1045,7 +1046,7 @@ export default function GroupDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable onPress={() => router.back()} style={styles.backBtn}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <Text style={styles.headerTitle}>{t('community.studyGroups')}</Text>
@@ -1062,7 +1063,7 @@ export default function GroupDetailScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.headerTopRow}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <Text style={styles.headerTopTitle} numberOfLines={1}>{t('community.studyGroups')}</Text>
@@ -1098,7 +1099,7 @@ export default function GroupDetailScreen() {
             )}
           </View>
         </View>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.headerAction, isJoined ? styles.headerActionLeave : null]}
           onPress={handleJoinLeave}
         >
@@ -1140,7 +1141,7 @@ export default function GroupDetailScreen() {
             </View>
           ) : null}
 
-          <Pressable style={[styles.previewJoinBtn, { backgroundColor: group.color }]} onPress={() => joinGroup(id!)}>
+          <Pressable accessibilityRole="button" style={[styles.previewJoinBtn, { backgroundColor: group.color }]} onPress={() => joinGroup(id!)}>
             <Ionicons name="people" size={20} color={color.text} />
             <Text style={styles.previewJoinText}>{t('community.joinGroup')}</Text>
           </Pressable>
@@ -1152,14 +1153,14 @@ export default function GroupDetailScreen() {
       {/* Settings sub-header (shown when viewing About / Members) */}
       {activeTab !== 'chat' && (
         <View style={styles.settingsHeader}>
-          <Pressable onPress={() => setActiveTab('chat')} style={styles.settingsBackBtn}>
+          <Pressable accessibilityRole="button" onPress={() => setActiveTab('chat')} style={styles.settingsBackBtn}>
             <Ionicons name="chevron-back" size={20} color={group.color} />
             <Text style={[styles.settingsBackText, { color: group.color }]}>
               {t('community.backToChat', { defaultValue: 'Chat' })}
             </Text>
           </Pressable>
           <View style={styles.settingsSeg}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.settingsSegBtn, activeTab === 'info' && { backgroundColor: `${group.color}25` }]}
               onPress={() => setActiveTab('info')}
             >
@@ -1167,7 +1168,7 @@ export default function GroupDetailScreen() {
                 {t('community.groupInfo')}
               </Text>
             </Pressable>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.settingsSegBtn, activeTab === 'members' && { backgroundColor: `${group.color}25` }]}
               onPress={() => setActiveTab('members')}
             >
@@ -1287,7 +1288,7 @@ export default function GroupDetailScreen() {
         {activeTab === 'members' && (
           <>
             <View style={styles.segmentedControl}>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.segment, memberTab === 'members' && { backgroundColor: `${group.color}25` }]}
                 onPress={() => setMemberTab('members')}
               >
@@ -1295,7 +1296,7 @@ export default function GroupDetailScreen() {
                   {t('community.allMembers', { defaultValue: 'All Members' })}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.segment, memberTab === 'leaderboard' && { backgroundColor: `${group.color}25` }]}
                 onPress={() => setMemberTab('leaderboard')}
               >
@@ -1319,7 +1320,7 @@ export default function GroupDetailScreen() {
                     autoCorrect={false}
                   />
                   {memberSearch.length > 0 && (
-                    <Pressable onPress={() => setMemberSearch('')}>
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.clear')} onPress={() => setMemberSearch('')}>
                       <Ionicons name="close-circle" size={16} color={color.textFaint} />
                     </Pressable>
                   )}

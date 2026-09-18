@@ -20,6 +20,7 @@ import {
   getQuestionsBySet,
 } from '../../../src/data/arabic/quran/quizzes';
 import { font, color, radius } from '../../../src/theme/tokens';
+import i18n from 'i18next';
 
 const CARD_HEIGHT = 280;
 
@@ -92,7 +93,7 @@ function SurahFlashcard({
       </View>
 
       {/* Flashcard */}
-      <Pressable onPress={onFlip} style={styles.cardPressable}>
+      <Pressable accessibilityRole="button" onPress={onFlip} style={styles.cardPressable}>
         <View style={styles.cardWrapper}>
           {/* Front of card - Surah Number */}
           <Animated.View style={[styles.card, styles.cardFront, frontAnimatedStyle]}>
@@ -154,7 +155,7 @@ function SurahFlashcard({
 
       {/* Navigation buttons */}
       <View style={styles.navRow}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.navButton, currentIndex === 0 && styles.navButtonDisabled]}
           onPress={onPrev}
           disabled={currentIndex === 0}
@@ -168,7 +169,7 @@ function SurahFlashcard({
             {t('common.previous')}
           </Text>
         </Pressable>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.navButton, currentIndex === totalCount - 1 && styles.navButtonDisabled]}
           onPress={onNext}
           disabled={currentIndex === totalCount - 1}
@@ -219,7 +220,7 @@ function RangeSelector({
       contentContainerStyle={styles.rangeSelectorContent}
     >
       {ranges.map((range) => (
-        <Pressable
+        <Pressable accessibilityRole="button"
           key={range.id}
           style={[
             styles.rangeButton,
@@ -255,7 +256,7 @@ function QuizSetCard({
 }) {
   const { t } = useTranslation();
   return (
-    <Pressable style={styles.quizSetCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
         <Text style={styles.quizSetNumber}>{setIndex + 1}</Text>
       </View>
@@ -348,7 +349,7 @@ export default function SurahLearnScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -376,7 +377,7 @@ export default function SurahLearnScreen() {
               },
             ]}
           />
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('learn')}
           >
@@ -394,7 +395,7 @@ export default function SurahLearnScreen() {
               {t('surahLearn.learn')}
             </Text>
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('quiz')}
           >
@@ -421,7 +422,7 @@ export default function SurahLearnScreen() {
           <View style={styles.content}>
             {/* Type Filter - Meccan/Medinan */}
             <View style={styles.filterRow}>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterButton, selectedFilter === 'all' && styles.filterButtonActive]}
                 onPress={() => handleFilterChange('all')}
               >
@@ -429,7 +430,7 @@ export default function SurahLearnScreen() {
                   {t('surahLearn.all114')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterButton, selectedFilter === 'meccan' && styles.filterButtonActive]}
                 onPress={() => handleFilterChange('meccan')}
               >
@@ -437,7 +438,7 @@ export default function SurahLearnScreen() {
                   {t('surahLearn.meccan86')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterButton, selectedFilter === 'medinan' && styles.filterButtonActive]}
                 onPress={() => handleFilterChange('medinan')}
               >
@@ -467,7 +468,7 @@ export default function SurahLearnScreen() {
             )}
 
             {/* Shuffle Button */}
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.shuffleButton}
               onPress={() => {
                 const randomIndex = Math.floor(Math.random() * filteredSurahs.length);
@@ -520,7 +521,7 @@ export default function SurahLearnScreen() {
             </View>
 
             {/* Random Quiz Option */}
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.randomQuizButton}
               onPress={() => router.push('/quran/quiz/surah_structure')}
             >

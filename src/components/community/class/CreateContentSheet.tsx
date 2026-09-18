@@ -23,13 +23,13 @@ export function CreateContentSheet({ visible, onSelect, onClose }: Props) {
   const { t } = useTranslation();
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose}>
+      <Pressable accessibilityRole="button" style={styles.backdrop} onPress={onClose}>
         <View>
-          <Pressable style={styles.sheet} onPress={(e) => e.stopPropagation()}>
+          <Pressable accessibilityRole="button" style={styles.sheet} onPress={(e) => e.stopPropagation()}>
             <View style={styles.handle} />
             <Text style={styles.title}>{t('community.createClassContent')}</Text>
             {ITEMS.map((it) => (
-              <Pressable key={it.kind} style={styles.row} onPress={() => { onSelect(it.kind); onClose(); }}>
+              <Pressable accessibilityRole="button" key={it.kind} style={styles.row} onPress={() => { onSelect(it.kind); onClose(); }}>
                 <View style={[styles.icon, { backgroundColor: `${it.color}22` }]}>
                   <Ionicons name={it.icon as IoniconName} size={22} color={it.color} />
                 </View>
@@ -40,7 +40,7 @@ export function CreateContentSheet({ visible, onSelect, onClose }: Props) {
                 <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
               </Pressable>
             ))}
-            <Pressable style={styles.cancel} onPress={onClose}>
+            <Pressable accessibilityRole="button" style={styles.cancel} onPress={onClose}>
               <Text style={styles.cancelText}>{t('common.cancel')}</Text>
             </Pressable>
           </Pressable>

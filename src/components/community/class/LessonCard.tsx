@@ -24,7 +24,7 @@ export const LessonCard = React.memo(function LessonCard({ lesson, groupColor, a
 
   return (
     <>
-      <Pressable style={styles.card} onPress={() => setOpen(true)}>
+      <Pressable accessibilityRole="button" style={styles.card} onPress={() => setOpen(true)}>
         <View style={[styles.band, { backgroundColor: `${groupColor}18` }]}>
           <View style={[styles.badge, { backgroundColor: groupColor }]}>
             <Ionicons name="book" size={13} color={color.text} />

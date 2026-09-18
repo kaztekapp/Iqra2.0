@@ -10,6 +10,7 @@ import { useQuranStore } from '../../../src/stores/quranStore';
 import { TajweedRuleId } from '../../../src/types/quran';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 const CATEGORY_KEYS: Record<string, { key: string; arabic: string }> = {
   noon_sakinah: { key: 'tajweedFeature.noonSakinah', arabic: 'النون الساكنة والتنوين' },
@@ -46,7 +47,7 @@ export default function TajweedRulesScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerTitle}>
@@ -114,7 +115,7 @@ export default function TajweedRulesScreen() {
                   const isMastered = isTajweedRuleMastered(rule.id);
 
                   return (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       key={rule.id}
                       style={[styles.ruleCard, isLearned && styles.ruleCardLearned]}
                       onPress={() => handleRulePress(rule.id)}

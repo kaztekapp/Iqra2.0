@@ -69,14 +69,14 @@ export function SessionCard({ session, groupColor, onRsvp, isPast }: Props) {
 
         {!isPast && (
           <View style={styles.rsvpRow}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.rsvpBtn, session.userRsvp === 'going' && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]}
               onPress={() => onRsvp(session.id, 'going')}
             >
               <Ionicons name="checkmark" size={14} color={session.userRsvp === 'going' ? groupColor: color.textFaint} />
               <Text style={[styles.rsvpText, session.userRsvp === 'going' && { color: groupColor }]}>{t('community.going')}</Text>
             </Pressable>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.rsvpBtn, session.userRsvp === 'not_going' && { backgroundColor: withAlpha(color.danger, 0.13), borderColor: color.danger }]}
               onPress={() => onRsvp(session.id, 'not_going')}
             >

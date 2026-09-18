@@ -18,6 +18,7 @@ import { QuizOption, QuizOptionState } from '../../src/components/quiz/QuizOptio
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function VerbsQuizPracticeScreen() {
   const { t } = useTranslation();
@@ -47,7 +48,7 @@ export default function VerbsQuizPracticeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('verbQuiz.noQuizExercises')}</Text>
-          <Pressable style={styles.backLink} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backLink} onPress={() => router.back()}>
             <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -197,11 +198,11 @@ export default function VerbsQuizPracticeScreen() {
           <Text style={styles.xpEarned}>{t('verbQuiz.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
-            <Pressable style={styles.retryButton} onPress={handleRetry}>
+            <Pressable accessibilityRole="button" style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color={color.accent} />
               <Text style={styles.retryButtonText}>{t('verbQuiz.tryAgain')}</Text>
             </Pressable>
-            <Pressable style={styles.doneButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
               <Text style={styles.doneButtonText}>{t('verbQuiz.done')}</Text>
             </Pressable>
           </View>
@@ -214,7 +215,7 @@ export default function VerbsQuizPracticeScreen() {
     <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>

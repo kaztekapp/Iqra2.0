@@ -15,7 +15,7 @@ export function DuaCard({ dua, onPress }: DuaCardProps) {
   const collectionName = HADITH_COLLECTION_NAMES[dua.source.collection];
 
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.container} onPress={onPress}>
       <View style={styles.orderContainer}>
         <Text style={styles.orderNumber}>{dua.order}</Text>
       </View>

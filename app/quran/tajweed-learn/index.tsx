@@ -28,6 +28,7 @@ import {
 } from '../../../src/data/arabic/quran/quizzes';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 
 type TabType = 'learn' | 'quiz';
@@ -68,7 +69,7 @@ function QuizSetCard({
 }) {
   const { t } = useTranslation();
   return (
-    <Pressable style={styles.quizSetCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
         <Text style={styles.quizSetNumber}>{setIndex + 1}</Text>
       </View>
@@ -124,7 +125,7 @@ export default function TajweedLearnScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -152,7 +153,7 @@ export default function TajweedLearnScreen() {
               },
             ]}
           />
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('learn')}
           >
@@ -170,7 +171,7 @@ export default function TajweedLearnScreen() {
               {t('tajweedFeature.learn')}
             </Text>
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('quiz')}
           >
@@ -254,7 +255,7 @@ export default function TajweedLearnScreen() {
                       const isMastered = isTajweedRuleMastered(rule.id);
 
                       return (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           key={rule.id}
                           style={[styles.ruleCard, isLearned && styles.ruleCardLearned]}
                           onPress={() => handleRulePress(rule.id)}
@@ -325,7 +326,7 @@ export default function TajweedLearnScreen() {
             </View>
 
             {/* Random Quiz Option */}
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.randomQuizButton}
               onPress={() => router.push('/quran/quiz/tajweed')}
             >

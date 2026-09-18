@@ -17,7 +17,7 @@ const GOLD = color.sacred;
 /** Shared gold CTA used for Next / Continue / See results across quizzes. */
 export function QuizPrimaryButton({ label, onPress, disabled, icon = 'arrow-forward', style }: QuizPrimaryButtonProps) {
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={[styles.button, disabled && styles.disabled, style]}
       onPress={onPress}
       disabled={disabled}

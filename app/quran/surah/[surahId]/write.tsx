@@ -18,6 +18,7 @@ import ArabicKeyboard from '../../../../src/components/arabic/ArabicKeyboard';
 import { getHintText } from '../../../../src/utils/arabicTextUtils';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type WritingMode = 'hints_only' | 'with_reference';
 
@@ -360,7 +361,7 @@ export default function WritingExerciseScreen() {
       <View style={styles.mainContainer}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -380,7 +381,7 @@ export default function WritingExerciseScreen() {
           <TouchableWithoutFeedback onPress={() => setIsKeyboardVisible(false)}>
             <View>
           {/* Ayah Selector */}
-          <Pressable style={styles.ayahSelector} onPress={() => setShowAyahPicker(true)}>
+          <Pressable accessibilityRole="button" style={styles.ayahSelector} onPress={() => setShowAyahPicker(true)}>
             <View style={styles.ayahSelectorLeft}>
               <View style={styles.ayahNumber}>
                 <Text style={styles.ayahNumberText}>{selectedAyahIndex + 1}</Text>
@@ -393,7 +394,7 @@ export default function WritingExerciseScreen() {
               </View>
             </View>
             <View style={styles.ayahNavButtons}>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
                 style={[styles.navBtn, selectedAyahIndex === 0 && styles.navBtnDisabled]}
                 onPress={handlePreviousAyah}
                 disabled={selectedAyahIndex === 0}
@@ -404,7 +405,7 @@ export default function WritingExerciseScreen() {
                   color={selectedAyahIndex === 0 ? color.borderStrong : color.accent}
                 />
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
                 style={[styles.navBtn, selectedAyahIndex === ayahs.length - 1 && styles.navBtnDisabled]}
                 onPress={handleNextAyah}
                 disabled={selectedAyahIndex === ayahs.length - 1}
@@ -415,7 +416,7 @@ export default function WritingExerciseScreen() {
                   color={selectedAyahIndex === ayahs.length - 1 ? color.borderStrong : color.accent}
                 />
               </Pressable>
-              <Pressable style={styles.selectBtn} onPress={() => setShowAyahPicker(true)}>
+              <Pressable accessibilityRole="button" style={styles.selectBtn} onPress={() => setShowAyahPicker(true)}>
                 <Text style={styles.selectBtnText}>{t('surahWrite.select')}</Text>
               </Pressable>
             </View>
@@ -423,7 +424,7 @@ export default function WritingExerciseScreen() {
 
           {/* Mode Toggle */}
           <View style={styles.modeContainer}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.modeButton, writingMode === 'hints_only' && styles.modeButtonActive]}
               onPress={() => setWritingMode('hints_only')}
             >
@@ -436,7 +437,7 @@ export default function WritingExerciseScreen() {
                 {t('surahWrite.fromMemory')}
               </Text>
             </Pressable>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.modeButton, writingMode === 'with_reference' && styles.modeButtonActive]}
               onPress={() => setWritingMode('with_reference')}
             >
@@ -487,12 +488,12 @@ export default function WritingExerciseScreen() {
             <View style={styles.inputHeader}>
               <Text style={styles.inputLabel}>{t('surahWrite.writeTheAyah')}</Text>
               {userInput.length > 0 && !hasSubmitted && (
-                <Pressable onPress={() => { setUserInput(''); setCursorPosition(0); }}>
+                <Pressable accessibilityRole="button" onPress={() => { setUserInput(''); setCursorPosition(0); }}>
                   <Text style={styles.clearText}>{t('surahWrite.clear')}</Text>
                 </Pressable>
               )}
             </View>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.textDisplay, isKeyboardVisible && styles.textDisplayFocused]}
               onPress={() => {
                 // Skip if an inner character was tapped (prevents event bubbling conflict)
@@ -575,7 +576,7 @@ export default function WritingExerciseScreen() {
 
               {/* Show Solution Button */}
               {!comparisonResult.isCorrect && (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.solutionButton}
                   onPress={() => setShowSolution(!showSolution)}
                 >
@@ -629,7 +630,7 @@ export default function WritingExerciseScreen() {
           {/* Action Buttons */}
           <View style={styles.actionButtons}>
             {!hasSubmitted ? (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.submitButton, !userInput.trim() && styles.submitButtonDisabled]}
                 onPress={handleSubmit}
                 disabled={!userInput.trim()}
@@ -639,12 +640,12 @@ export default function WritingExerciseScreen() {
               </Pressable>
             ) : (
               <View style={styles.postSubmitButtons}>
-                <Pressable style={styles.tryAgainButton} onPress={handleReset}>
+                <Pressable accessibilityRole="button" style={styles.tryAgainButton} onPress={handleReset}>
                   <Ionicons name="refresh" size={18} color={color.progress} />
                   <Text style={styles.tryAgainText}>{t('common.tryAgain')}</Text>
                 </Pressable>
                 {selectedAyahIndex < ayahs.length - 1 && (
-                  <Pressable style={styles.nextAyahButton} onPress={handleNextAyah}>
+                  <Pressable accessibilityRole="button" style={styles.nextAyahButton} onPress={handleNextAyah}>
                     <Text style={styles.nextAyahText}>{t('surahWrite.nextAyah')}</Text>
                     <Ionicons name="arrow-forward" size={18} color={color.text} />
                   </Pressable>
@@ -669,13 +670,13 @@ export default function WritingExerciseScreen() {
             <View style={styles.modalContent}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>{t('surahWrite.selectAyah')}</Text>
-                <Pressable onPress={() => setShowAyahPicker(false)}>
+                <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowAyahPicker(false)}>
                   <Ionicons name="close" size={24} color={color.text} />
                 </Pressable>
               </View>
               <ScrollView style={styles.ayahList}>
                 {ayahs.map((ayah, index) => (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     key={ayah.id}
                     style={[
                       styles.ayahOption,

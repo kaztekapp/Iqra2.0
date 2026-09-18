@@ -14,7 +14,7 @@ export function QuranStoryCard({ story, onPress }: QuranStoryCardProps) {
   const categoryLabel = STORY_CATEGORY_LABELS[story.category];
 
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.container} onPress={onPress}>
       <View style={styles.iconContainer}>
         <Text style={styles.icon}>{story.icon}</Text>
       </View>

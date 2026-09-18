@@ -4,6 +4,7 @@ import { View, Text, TextInput, StyleSheet, Pressable, ActivityIndicator } from 
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import i18n from 'i18next';
 
 interface Props {
   isJoined: boolean;
@@ -33,7 +34,7 @@ export function ChatInputBar({
         <View style={styles.editBanner}>
           <Ionicons name="create-outline" size={14} color={groupColor} />
           <Text style={[styles.editBannerText, { color: groupColor }]}>{t('community.editingMessage')}</Text>
-          <Pressable onPress={onCancelEdit} hitSlop={8}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onCancelEdit} hitSlop={8}>
             <Ionicons name="close" size={16} color={color.textMuted} />
           </Pressable>
         </View>
@@ -42,7 +43,7 @@ export function ChatInputBar({
         {isJoined ? (
           <>
             {!editing && (
-              <Pressable style={styles.createBtn} onPress={onCreate} hitSlop={6}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.createBtn} onPress={onCreate} hitSlop={6}>
                 <Ionicons name="add" size={26} color={groupColor} />
               </Pressable>
             )}
@@ -56,7 +57,7 @@ export function ChatInputBar({
               maxLength={500}
             />
             {hasText ? (
-              <Pressable
+              <Pressable accessibilityLabel={i18n.t('a11y.send')}
                 style={[styles.sendBtn, { backgroundColor: groupColor }, (isSending) && styles.sendBtnDisabled]}
                 disabled={!hasText || isSending}
                 onPress={onSend}
@@ -68,7 +69,7 @@ export function ChatInputBar({
                 )}
               </Pressable>
             ) : (
-              <Pressable
+              <Pressable accessibilityLabel={i18n.t('a11y.record')}
                 style={[styles.micBtn, { backgroundColor: groupColor }, isRecording && styles.micBtnRecording]}
                 onPress={onMicPress}
               >

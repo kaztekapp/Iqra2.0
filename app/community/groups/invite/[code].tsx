@@ -10,6 +10,7 @@ import { useSettingsStore } from '../../../../src/stores/settingsStore';
 import { StudyGroup } from '../../../../src/types/community';
 import { color, radius } from '../../../../src/theme/tokens';
 import type { IoniconName } from '../../../../src/theme/icons';
+import i18n from 'i18next';
 
 export default function InviteLandingScreen() {
   const { code } = useLocalSearchParams<{ code: string }>();
@@ -67,7 +68,7 @@ export default function InviteLandingScreen() {
           </View>
           <Text style={styles.errorTitle}>{t('community.invalidInviteCode')}</Text>
           <Text style={styles.errorDesc}>{t('community.inviteExpired')}</Text>
-          <Pressable style={styles.backBtn} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backBtn} onPress={() => router.back()}>
             <Text style={styles.backBtnText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -81,7 +82,7 @@ export default function InviteLandingScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.headerBack}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.headerBack}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <Text style={styles.headerTitle}>{t('community.joinViaInvite')}</Text>
@@ -120,7 +121,7 @@ export default function InviteLandingScreen() {
         </View>
 
         {/* Join button */}
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.joinBtn, { backgroundColor: group.color }, isFull && styles.joinBtnDisabled]}
           onPress={handleJoin}
           disabled={isFull || isJoining}

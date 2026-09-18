@@ -41,7 +41,7 @@ function ReactionButton({ emoji, onPress }: { emoji: string; onPress: () => void
   const isArabic = emoji.length > 2;
 
   return (
-    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress}>
+    <Pressable accessibilityRole="button" onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress}>
       <Animated.View style={[styles.emojiBtn, { transform: [{ scale }] }]}>
         <Text style={[styles.emoji, isArabic && styles.arabicEmoji]}>{emoji}</Text>
       </Animated.View>

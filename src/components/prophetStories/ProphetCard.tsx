@@ -12,7 +12,7 @@ interface ProphetCardProps {
 
 export function ProphetCard({ prophet, onPress }: ProphetCardProps) {
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.container} onPress={onPress}>
       <View style={styles.orderContainer}>
         <Text style={styles.orderNumber}>{prophet.order}</Text>
       </View>

@@ -16,6 +16,7 @@ import { JUZ_LESSONS, getJuzLesson } from '../../../src/data/arabic/quran/lesson
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 // Expandable Section Component
 function ExpandableSection({
@@ -35,7 +36,7 @@ function ExpandableSection({
 
   return (
     <View style={styles.expandableSection}>
-      <Pressable
+      <Pressable accessibilityRole="button"
         style={styles.expandableHeader}
         onPress={() => setExpanded(!expanded)}
       >
@@ -111,7 +112,7 @@ export default function JuzDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('juzFeature.juzNotFound')}</Text>
-          <Pressable style={styles.backButtonError} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backButtonError} onPress={() => router.back()}>
             <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -143,14 +144,14 @@ export default function JuzDetailScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.headerText}>{t('juzFeature.juz')} {juz.id}</Text>
         </View>
         <View style={styles.headerNav}>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
             style={[styles.navArrow, !prevJuz && styles.navArrowDisabled]}
             onPress={() => prevJuz && handleNavigation(prevJuz.id)}
             disabled={!prevJuz}
@@ -161,7 +162,7 @@ export default function JuzDetailScreen() {
               color={prevJuz ? color.accent : color.borderStrong}
             />
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
             style={[styles.navArrow, !nextJuz && styles.navArrowDisabled]}
             onPress={() => nextJuz && handleNavigation(nextJuz.id)}
             disabled={!nextJuz}
@@ -350,7 +351,7 @@ export default function JuzDetailScreen() {
               contentContainerStyle={styles.quickNavContent}
             >
               {JUZ_LESSONS.map((j) => (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={j.id}
                   style={[
                     styles.quickNavItem,

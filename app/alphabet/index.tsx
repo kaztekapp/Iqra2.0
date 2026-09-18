@@ -9,6 +9,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function AlphabetScreen() {
   const { t } = useTranslation();
@@ -41,7 +42,7 @@ export default function AlphabetScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -74,7 +75,7 @@ export default function AlphabetScreen() {
         </View>
 
         {/* Print vs Handwriting entry */}
-        <Pressable style={styles.scriptsCard} onPress={() => router.push('/alphabet/styles')}>
+        <Pressable accessibilityRole="button" style={styles.scriptsCard} onPress={() => router.push('/alphabet/styles')}>
           <View style={styles.scriptsIcon}>
             <Ionicons name="brush" size={20} color={color.accentStrong} />
           </View>
@@ -109,7 +110,7 @@ export default function AlphabetScreen() {
               const status = getLetterStatus(letter.id);
               const statusColor = getStatusColor(status);
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={letter.id}
                   style={[styles.letterCard, { borderColor: statusColor }]}
                   onPress={() => router.push(`/alphabet/${letter.id}`)}
@@ -117,7 +118,7 @@ export default function AlphabetScreen() {
                   <Text style={styles.letterArabic}>{letter.letter}</Text>
                   <Text style={styles.letterName}>{lc(letter.name, letter.nameFr)}</Text>
                   <Text style={styles.letterTranslit}>{letter.transliteration}</Text>
-                  <Pressable
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={styles.letterAudioBtn}
                     onPress={(e) => {
                       e.stopPropagation();
@@ -143,7 +144,7 @@ export default function AlphabetScreen() {
 
         {/* Sun & Moon Letters Card */}
         <View style={styles.specialSection}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.sunMoonCard}
             onPress={() => router.push('/alphabet/sun-moon-letters')}
           >

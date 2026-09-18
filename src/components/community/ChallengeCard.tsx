@@ -78,7 +78,7 @@ export const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge }) => {
   };
 
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={styles.container}
       onPress={handlePress}
     >

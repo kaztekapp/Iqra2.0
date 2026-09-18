@@ -17,6 +17,7 @@ import { VocabularyWord, VocabularyReviewItem, ReviewRating } from '../../src/ty
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 
 // Rating descriptions for SM-2 scale
@@ -118,7 +119,7 @@ export default function VocabularyReviewScreen() {
           <Text style={styles.emptySubtitle}>
             {t('vocabulary.noReviewsDue')}
           </Text>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.back()}>
             <Text style={styles.backButtonText}>{t('vocabulary.backToVocabulary')}</Text>
           </Pressable>
         </View>
@@ -165,7 +166,7 @@ export default function VocabularyReviewScreen() {
 
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.totalXp })}</Text>
 
-          <Pressable style={styles.doneButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
             <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
@@ -189,7 +190,7 @@ export default function VocabularyReviewScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -218,7 +219,7 @@ export default function VocabularyReviewScreen() {
 
       {/* Card */}
       <View style={styles.cardContainer}>
-        <Pressable onPress={flipCard} style={styles.cardWrapper}>
+        <Pressable accessibilityRole="button" onPress={flipCard} style={styles.cardWrapper}>
           {/* Front of Card (Arabic) */}
           <Animated.View style={[styles.card, frontAnimatedStyle]}>
             <View style={styles.cardContent}>
@@ -228,7 +229,7 @@ export default function VocabularyReviewScreen() {
               <Text style={styles.cardTranslit}>
                 {currentWord.transliteration}
               </Text>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                 style={[styles.cardAudioBtn, isSpeaking && styles.cardAudioBtnActive]}
                 onPress={(e) => {
                   e.stopPropagation();
@@ -274,7 +275,7 @@ export default function VocabularyReviewScreen() {
             {([0, 1, 2, 3, 4, 5] as ReviewRating[]).map((rating) => {
               const config = RATING_DESCRIPTIONS[rating];
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={rating}
                   style={[styles.ratingButton, { borderColor: config.color }]}
                   onPress={() => handleRating(rating)}

@@ -147,7 +147,7 @@ export function WordByWordText({
       {words.map((word, index) => {
         const isHighlighted = currentWordIndex === index;
         return (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={index}
             style={[
               styles.wordItem,

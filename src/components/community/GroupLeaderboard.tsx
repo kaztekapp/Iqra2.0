@@ -47,7 +47,7 @@ export function GroupLeaderboard({ entries, groupColor, currentUserId }: Props) 
       {/* Metric toggle */}
       <View style={styles.toggleRow}>
         {(['xp', 'streak', 'messages'] as Metric[]).map((m) => (
-          <Pressable key={m} style={[styles.toggleBtn, metric === m && { backgroundColor: `${groupColor}25` }]} onPress={() => setMetric(m)}>
+          <Pressable accessibilityRole="button" key={m} style={[styles.toggleBtn, metric === m && { backgroundColor: `${groupColor}25` }]} onPress={() => setMetric(m)}>
             <Ionicons name={m === 'xp' ? 'star' : m === 'streak' ? 'flame' : 'chatbubble'} size={14} color={metric === m ? groupColor: color.textFaint} />
             <Text style={[styles.toggleText, metric === m && { color: groupColor }]}>{m === 'xp' ? 'XP' : m === 'streak' ? 'Streak' : 'Messages'}</Text>
           </Pressable>

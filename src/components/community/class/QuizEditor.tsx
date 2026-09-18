@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { QuizContent, QuizQuestion } from '../../../types/classContent';
 import { color, radius } from '../../../theme/tokens';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -68,9 +69,9 @@ export function QuizEditor({ visible, groupColor, initial, onSave, onClose }: Pr
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <SafeAreaProvider style={{ flex: 1 }}><SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
-          <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
           <Text style={styles.headerTitle}>{initial ? 'Edit quiz' : 'New quiz'}</Text>
-          <Pressable onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
+          <Pressable accessibilityRole="button" onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.saveText}>{initial ? 'Update' : 'Post'}</Text>
           </Pressable>
         </View>
@@ -84,15 +85,15 @@ export function QuizEditor({ visible, groupColor, initial, onSave, onClose }: Pr
                 <View style={styles.qBar}>
                   <Text style={[styles.qNum, { color: groupColor }]}>{t('community.qNum', { num: qi + 1 })}</Text>
                   <View style={styles.qTypeToggle}>
-                    <Pressable onPress={() => patch(qi, blankQuestion('multiple_choice'))} style={[styles.qTypeBtn, q.type === 'multiple_choice' && { backgroundColor: `${groupColor}30` }]}>
+                    <Pressable accessibilityRole="button" onPress={() => patch(qi, blankQuestion('multiple_choice'))} style={[styles.qTypeBtn, q.type === 'multiple_choice' && { backgroundColor: `${groupColor}30` }]}>
                       <Text style={[styles.qTypeText, q.type === 'multiple_choice' && { color: groupColor }]}>{t('community.choice')}</Text>
                     </Pressable>
-                    <Pressable onPress={() => patch(qi, blankQuestion('fill_blank'))} style={[styles.qTypeBtn, q.type === 'fill_blank' && { backgroundColor: `${groupColor}30` }]}>
+                    <Pressable accessibilityRole="button" onPress={() => patch(qi, blankQuestion('fill_blank'))} style={[styles.qTypeBtn, q.type === 'fill_blank' && { backgroundColor: `${groupColor}30` }]}>
                       <Text style={[styles.qTypeText, q.type === 'fill_blank' && { color: groupColor }]}>{t('community.fillBlank')}</Text>
                     </Pressable>
                   </View>
                   {questions.length > 1 && (
-                    <Pressable onPress={() => setQuestions((prev) => prev.filter((_, k) => k !== qi))} hitSlop={6}>
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.delete')} onPress={() => setQuestions((prev) => prev.filter((_, k) => k !== qi))} hitSlop={6}>
                       <Ionicons name="trash-outline" size={16} color={color.danger} />
                     </Pressable>
                   )}
@@ -104,17 +105,17 @@ export function QuizEditor({ visible, groupColor, initial, onSave, onClose }: Pr
                   <View style={styles.options}>
                     {(q.options || []).map((opt, oi) => (
                       <View key={oi} style={styles.optRow}>
-                        <Pressable onPress={() => patch(qi, { correctIndex: oi })} hitSlop={6}>
+                        <Pressable accessibilityLabel={i18n.t('a11y.markCorrect')} onPress={() => patch(qi, { correctIndex: oi })} hitSlop={6}>
                           <Ionicons name={q.correctIndex === oi ? 'checkmark-circle' : 'ellipse-outline'} size={22} color={q.correctIndex === oi ? color.progress : color.borderStrong} />
                         </Pressable>
                         <TextInput style={styles.optInput} placeholder={`Option ${oi + 1}`} placeholderTextColor={color.textFaint} value={opt} onChangeText={(t) => setOption(qi, oi, t)} />
                         {(q.options || []).length > 2 && (
-                          <Pressable onPress={() => removeOption(qi, oi)} hitSlop={6}><Ionicons name="close" size={18} color={color.textFaint} /></Pressable>
+                          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => removeOption(qi, oi)} hitSlop={6}><Ionicons name="close" size={18} color={color.textFaint} /></Pressable>
                         )}
                       </View>
                     ))}
                     {(q.options || []).length < 6 && (
-                      <Pressable onPress={() => addOption(qi)} style={styles.addOpt}>
+                      <Pressable accessibilityRole="button" onPress={() => addOption(qi)} style={styles.addOpt}>
                         <Ionicons name="add" size={16} color={groupColor} />
                         <Text style={[styles.addOptText, { color: groupColor }]}>{t('community.addOption')}</Text>
                       </Pressable>
@@ -129,7 +130,7 @@ export function QuizEditor({ visible, groupColor, initial, onSave, onClose }: Pr
               </View>
             ))}
 
-            <Pressable style={styles.addQ} onPress={() => setQuestions((prev) => [...prev, blankQuestion('multiple_choice')])}>
+            <Pressable accessibilityRole="button" style={styles.addQ} onPress={() => setQuestions((prev) => [...prev, blankQuestion('multiple_choice')])}>
               <Ionicons name="add-circle" size={20} color={groupColor} />
               <Text style={[styles.addQText, { color: groupColor }]}>{t('community.addQuestion')}</Text>
             </Pressable>

@@ -10,6 +10,7 @@ import { usePrayerStore } from '../../../src/stores/prayerStore';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 type TabFilter = 'prayer_guide' | 'sujud_sahw';
 
@@ -38,7 +39,7 @@ export default function PrayerIndexScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -68,7 +69,7 @@ export default function PrayerIndexScreen() {
 
       {/* Tab Filter */}
       <View style={styles.tabContainer}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.tab, activeTab === 'prayer_guide' && styles.tabActiveGreen]}
           onPress={() => setActiveTab('prayer_guide')}
         >
@@ -89,7 +90,7 @@ export default function PrayerIndexScreen() {
             <Text style={[styles.tabBadgeText, activeTab === 'prayer_guide' && styles.tabBadgeTextActiveGreen]}>5</Text>
           </View>
         </Pressable>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.tab, activeTab === 'sujud_sahw' && styles.tabActiveGold]}
           onPress={() => setActiveTab('sujud_sahw')}
         >
@@ -121,7 +122,7 @@ export default function PrayerIndexScreen() {
         {filteredLessons.map((lesson) => {
           const completed = isCompleted(lesson.id);
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={lesson.id}
               style={styles.lessonCard}
               onPress={() => handleLessonPress(lesson.id)}

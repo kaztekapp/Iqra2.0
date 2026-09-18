@@ -13,6 +13,7 @@ import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { ReviewRating } from '../../../../src/types/quran';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 const METHOD_COLOR = color.accent;
 
@@ -164,7 +165,7 @@ export default function SpacedRepetitionScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -196,7 +197,7 @@ export default function SpacedRepetitionScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -231,7 +232,7 @@ export default function SpacedRepetitionScreen() {
             </View>
 
             {newDueCount > 0 && (
-              <Pressable style={styles.newSessionButton} onPress={handleStartNewSession}>
+              <Pressable accessibilityRole="button" style={styles.newSessionButton} onPress={handleStartNewSession}>
                 <Ionicons name="refresh" size={20} color={color.text} />
                 <Text style={styles.newSessionButtonText}>
                   {t('spacedRepetition.startNewSession')}
@@ -250,7 +251,7 @@ export default function SpacedRepetitionScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -293,7 +294,7 @@ export default function SpacedRepetitionScreen() {
 
             {/* Arabic text: hidden or revealed */}
             {!isRevealed ? (
-              <Pressable style={styles.revealButton} onPress={handleReveal}>
+              <Pressable accessibilityRole="button" style={styles.revealButton} onPress={handleReveal}>
                 <Ionicons name="eye-outline" size={24} color={METHOD_COLOR} />
                 <Text style={styles.revealButtonText}>{t('spacedRepetition.reveal')}</Text>
               </Pressable>
@@ -331,7 +332,7 @@ export default function SpacedRepetitionScreen() {
             <Text style={styles.ratingPrompt}>{t('spacedRepetition.rateRecall')}</Text>
             <View style={styles.ratingGrid}>
               {RATING_CONFIG.map(({ rating, labelKey, color }) => (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={rating}
                   style={[styles.ratingButton, { backgroundColor: `${color}20`, borderColor: `${color}40` }]}
                   onPress={() => handleRate(rating)}

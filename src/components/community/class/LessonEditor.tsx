@@ -7,6 +7,7 @@ import type { LessonBlock, LessonContent } from '../../../types/classContent';
 import { wrapSelection, MarkerName } from './richText';
 import { font, color, radius } from '../../../theme/tokens';
 import type { IoniconName } from '../../../theme/icons';
+import i18n from 'i18next';
 
 interface EditBlock {
   id: string;
@@ -102,9 +103,9 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <SafeAreaProvider style={{ flex: 1 }}><SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
-          <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
           <Text style={styles.headerTitle}>{initial ? 'Edit lesson' : 'New lesson'}</Text>
-          <Pressable onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
+          <Pressable accessibilityRole="button" onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.saveText}>{initial ? 'Update' : 'Post'}</Text>
           </Pressable>
         </View>
@@ -125,9 +126,9 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
                 <View style={styles.blockBar}>
                   <Text style={[styles.blockType, { color: groupColor }]}>{b.type}</Text>
                   <View style={{ flex: 1 }} />
-                  <Pressable onPress={() => moveBlock(i, -1)} hitSlop={6}><Ionicons name="chevron-up" size={16} color={color.textFaint} /></Pressable>
-                  <Pressable onPress={() => moveBlock(i, 1)} hitSlop={6}><Ionicons name="chevron-down" size={16} color={color.textFaint} /></Pressable>
-                  <Pressable onPress={() => removeBlock(i)} hitSlop={6}><Ionicons name="trash-outline" size={16} color={color.danger} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showLess')} onPress={() => moveBlock(i, -1)} hitSlop={6}><Ionicons name="chevron-up" size={16} color={color.textFaint} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showMore')} onPress={() => moveBlock(i, 1)} hitSlop={6}><Ionicons name="chevron-down" size={16} color={color.textFaint} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.delete')} onPress={() => removeBlock(i)} hitSlop={6}><Ionicons name="trash-outline" size={16} color={color.danger} /></Pressable>
                 </View>
 
                 {b.type === 'divider' ? (
@@ -167,7 +168,7 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
                     {b.type === 'callout' && (
                       <View style={styles.toneRow}>
                         {(['info', 'tip', 'warn'] as const).map((tone) => (
-                          <Pressable key={tone} onPress={() => updateBlock(i, { tone })} style={[styles.tonePill, b.tone === tone && { backgroundColor: `${groupColor}30` }]}>
+                          <Pressable accessibilityRole="button" key={tone} onPress={() => updateBlock(i, { tone })} style={[styles.tonePill, b.tone === tone && { backgroundColor: `${groupColor}30` }]}>
                             <Text style={[styles.toneText, b.tone === tone && { color: groupColor }]}>{tone}</Text>
                           </Pressable>
                         ))}
@@ -182,7 +183,7 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
             <Text style={styles.addLabel}>{t('community.addBlock')}</Text>
             <View style={styles.addRow}>
               {BLOCK_MENU.map((m) => (
-                <Pressable key={m.type} style={styles.addBtn} onPress={() => addBlock(m.type)}>
+                <Pressable accessibilityRole="button" key={m.type} style={styles.addBtn} onPress={() => addBlock(m.type)}>
                   <Ionicons name={m.icon as IoniconName} size={18} color={color.textMuted} />
                   <Text style={styles.addBtnText}>{m.label}</Text>
                 </Pressable>
@@ -195,7 +196,7 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
           <View style={styles.formatBar}>
             <Text style={styles.formatHint}>{t('community.formatSelection')}</Text>
             {([['bold', 'B'], ['italic', 'I'], ['underline', 'U'], ['highlight', 'H']] as [MarkerName, string][]).map(([m, lbl]) => (
-              <Pressable key={m} style={styles.formatBtn} onPress={() => applyFormat(m)}>
+              <Pressable accessibilityRole="button" key={m} style={styles.formatBtn} onPress={() => applyFormat(m)}>
                 <Text style={[
                   styles.formatBtnText,
                   m === 'bold' && { fontWeight: '700' },

@@ -7,6 +7,7 @@ import type { LessonContent, LessonBlock } from '../../../types/classContent';
 import { renderRichText } from './richText';
 import { font, color, radius } from '../../../theme/tokens';
 import type { IoniconName } from '../../../theme/icons';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -70,10 +71,10 @@ export function LessonViewer({ visible, lesson, groupColor, authorName, canEdit,
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <SafeAreaProvider style={{ flex: 1 }}><SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
-          <Pressable onPress={onClose} hitSlop={8}><Ionicons name="chevron-down" size={26} color={color.text} /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showMore')} onPress={onClose} hitSlop={8}><Ionicons name="chevron-down" size={26} color={color.text} /></Pressable>
           <Text style={styles.headerLabel}>{t('community.lesson')}</Text>
           {canEdit ? (
-            <Pressable onPress={onEdit} hitSlop={8} style={styles.editBtn}>
+            <Pressable accessibilityRole="button" onPress={onEdit} hitSlop={8} style={styles.editBtn}>
               <Ionicons name="create-outline" size={18} color={groupColor} />
               <Text style={[styles.editText, { color: groupColor }]}>{t('community.edit')}</Text>
             </Pressable>

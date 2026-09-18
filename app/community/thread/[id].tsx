@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { useCommunityStore } from '../../../src/stores/communityStore';
 import { color, radius } from '../../../src/theme/tokens';
+import i18n from 'i18next';
 
 const categoryColors: Record<string, string> = {
   general: color.textFaint,
@@ -75,7 +76,7 @@ export default function ThreadDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable onPress={() => router.back()} style={styles.backBtn}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <Text style={styles.headerTitle}>{t('community.discussions')}</Text>
@@ -94,7 +95,7 @@ export default function ThreadDetailScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -135,7 +136,7 @@ export default function ThreadDetailScreen() {
             </View>
 
             <View style={styles.threadActions}>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={styles.actionBtn}
                 onPress={() => toggleLikeThread(currentThread.id)}
               >
@@ -170,7 +171,7 @@ export default function ThreadDetailScreen() {
                       <Text style={styles.replyAuthor}>{reply.authorName}</Text>
                       <Text style={styles.replyTime}>{getTimeAgo(reply.createdAt)}</Text>
                     </View>
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={styles.replyLikeBtn}
                       onPress={() => toggleLikeReply(reply.id)}
                     >
@@ -204,7 +205,7 @@ export default function ThreadDetailScreen() {
             multiline
             maxLength={1000}
           />
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.send')}
             style={[styles.sendBtn, (!replyText.trim() || isSending) && styles.sendBtnDisabled]}
             onPress={handleReply}
             disabled={!replyText.trim() || isSending}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { font, color, radius } from '../../theme/tokens';
+import i18n from 'i18next';
 
 export type QuizOptionState = 'idle' | 'selected' | 'correct' | 'wrong';
 
@@ -49,7 +50,7 @@ export const QuizOption = React.memo(function QuizOption({
   const isSelected = state === 'selected';
 
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={[
         styles.card,
         isSelected && styles.cardSelected,
@@ -100,7 +101,7 @@ export const QuizOption = React.memo(function QuizOption({
       </View>
 
       {onAudio && state === 'idle' ? (
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
           style={styles.audioButton}
           onPress={(e) => {
             e.stopPropagation?.();

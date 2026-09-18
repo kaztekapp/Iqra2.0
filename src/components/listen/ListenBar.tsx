@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { color, radius, type, weight, space, gutter } from '../../theme/tokens';
 import { NarrationPace, NarrationStatus } from '../../hooks/useStoryNarration';
 import { formatMinutesLeft } from './format';
+import i18n from 'i18next';
 
 interface Props {
   title: string;
@@ -83,7 +84,7 @@ export function ListenBar({
           >
             <Text style={styles.paceText}>{t(`listen.pace_${pace}`)}</Text>
           </Pressable>
-          <Pressable onPress={onExpand} hitSlop={8} style={styles.chevron} accessibilityRole="button">
+          <Pressable accessibilityLabel={i18n.t('a11y.showLess')} onPress={onExpand} hitSlop={8} style={styles.chevron} accessibilityRole="button">
             <Ionicons name="chevron-up" size={20} color={color.textMuted} />
           </Pressable>
         </View>

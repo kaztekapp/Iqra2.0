@@ -9,6 +9,7 @@ import { sendSharedContentMessage } from '../../services/communitySocialService'
 import type { SharedContent } from '../../data/community/socialData';
 import { color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -52,7 +53,7 @@ export function ShareToGroupModal({ visible, content, onClose, onShared }: Props
           <View style={styles.handle} />
           <View style={styles.header}>
             <Text style={styles.title}>{t('community.shareToAGroup')}</Text>
-            <Pressable onPress={onClose} hitSlop={10}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={10}>
               <Ionicons name="close" size={22} color={color.textMuted} />
             </Pressable>
           </View>
@@ -68,7 +69,7 @@ export function ShareToGroupModal({ visible, content, onClose, onShared }: Props
               keyExtractor={(g) => g.id}
               contentContainerStyle={{ paddingBottom: 20 }}
               renderItem={({ item: g }) => (
-                <Pressable style={styles.row} onPress={() => handleShare(g.id)} disabled={!!sendingId}>
+                <Pressable accessibilityRole="button" style={styles.row} onPress={() => handleShare(g.id)} disabled={!!sendingId}>
                   <View style={[styles.icon, { backgroundColor: `${g.color}20` }]}>
                     <Ionicons name={g.icon as IoniconName} size={20} color={g.color} />
                   </View>

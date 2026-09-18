@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PlaybackSpeed, AudioPlaybackState } from '../../types/prophetStories';
 import { color, radius } from '../../theme/tokens';
+import i18n from 'i18next';
 
 interface StoryAudioPlayerProps {
   playbackState: AudioPlaybackState;
@@ -49,13 +50,13 @@ export function StoryAudioPlayer({
 
       <View style={styles.controls}>
         {/* Left Section: Speed */}
-        <Pressable style={styles.speedButton} onPress={handleSpeedCycle}>
+        <Pressable accessibilityRole="button" style={styles.speedButton} onPress={handleSpeedCycle}>
           <Text style={styles.speedText}>{playbackSpeed}x</Text>
         </Pressable>
 
         {/* Center Section: Play Controls */}
         <View style={styles.playControls}>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
             style={[styles.navButton, currentBlockIndex === 0 && styles.navButtonDisabled]}
             onPress={onPrevious}
             disabled={currentBlockIndex === 0}
@@ -67,7 +68,7 @@ export function StoryAudioPlayer({
             />
           </Pressable>
 
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.sleepTimer')}
             style={[styles.playButton, isPlaying && styles.playButtonActive]}
             onPress={onPlayPause}
             disabled={isLoading}
@@ -83,7 +84,7 @@ export function StoryAudioPlayer({
             )}
           </Pressable>
 
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
             style={[styles.navButton, currentBlockIndex >= totalBlocks - 1 && styles.navButtonDisabled]}
             onPress={onNext}
             disabled={currentBlockIndex >= totalBlocks - 1}
@@ -102,7 +103,7 @@ export function StoryAudioPlayer({
             {currentBlockIndex + 1}/{totalBlocks}
           </Text>
           {onClose && (
-            <Pressable style={styles.closeButton} onPress={onClose}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={onClose}>
               <Ionicons name="close" size={18} color={color.textMuted} />
             </Pressable>
           )}

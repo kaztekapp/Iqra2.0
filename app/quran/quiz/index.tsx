@@ -9,6 +9,7 @@ import { QuizCategoryInfo } from '../../../src/types/quran';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 interface CategoryCardProps {
   category: QuizCategoryInfo;
@@ -19,7 +20,7 @@ function CategoryCard({ category, onPress }: CategoryCardProps) {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   return (
-    <Pressable style={styles.categoryCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.categoryCard} onPress={onPress}>
       <View style={[styles.categoryIcon, { backgroundColor: `${category.color}20` }]}>
         <Ionicons name={category.icon as IoniconName} size={28} color={category.color} />
       </View>
@@ -63,7 +64,7 @@ export default function QuizCategoriesScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerTitle}>

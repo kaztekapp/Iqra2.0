@@ -26,6 +26,7 @@ import {
 } from '../../../src/data/arabic/quran/quizzes';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 
 type TabType = 'learn' | 'quiz';
@@ -42,7 +43,7 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
   };
 
   return (
-    <Pressable style={styles.introCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.introCard} onPress={onPress}>
       <LinearGradient
         colors={[color.accent, color.accentStrong]}
         start={{ x: 0, y: 0 }}
@@ -83,7 +84,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
   };
 
   return (
-    <Pressable style={styles.juzCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.juzCard} onPress={onPress}>
       <View style={styles.juzCardHeader}>
         <View style={styles.juzNumber}>
           <Text style={styles.juzNumberText}>{juz.id}</Text>
@@ -142,7 +143,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
             {t('juzFeature.daysToMemorize', { days: juz.memorization.estimatedDays })}
           </Text>
         </View>
-        <Pressable style={styles.viewButton} onPress={onPress}>
+        <Pressable accessibilityRole="button" style={styles.viewButton} onPress={onPress}>
           <Text style={styles.viewButtonText}>{t('juzFeature.view')}</Text>
           <Ionicons name="arrow-forward" size={16} color={color.text} />
         </Pressable>
@@ -165,7 +166,7 @@ function QuizSetCard({
 }) {
   const { t } = useTranslation();
   return (
-    <Pressable style={styles.quizSetCard} onPress={onPress}>
+    <Pressable accessibilityRole="button" style={styles.quizSetCard} onPress={onPress}>
       <View style={styles.quizSetIcon}>
         <Text style={styles.quizSetNumber}>{setIndex + 1}</Text>
       </View>
@@ -213,7 +214,7 @@ export default function JuzMainScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -241,7 +242,7 @@ export default function JuzMainScreen() {
               },
             ]}
           />
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('learn')}
           >
@@ -259,7 +260,7 @@ export default function JuzMainScreen() {
               {t('juzFeature.learn')}
             </Text>
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.tab}
             onPress={() => handleTabChange('quiz')}
           >
@@ -378,7 +379,7 @@ export default function JuzMainScreen() {
             </View>
 
             {/* Random Quiz Option */}
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.randomQuizButton}
               onPress={() => router.push('/quran/quiz/juz')}
             >

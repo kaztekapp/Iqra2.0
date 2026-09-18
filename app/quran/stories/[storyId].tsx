@@ -14,6 +14,7 @@ import { useStoryNarration } from '../../../src/hooks/useStoryNarration';
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function QuranStoryDetailScreen() {
   const { t } = useTranslation();
@@ -141,7 +142,7 @@ export default function QuranStoryDetailScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -245,7 +246,7 @@ export default function QuranStoryDetailScreen() {
 
           {/* Mark Complete Button */}
           {story.content.length > 0 && !isCompleted && (
-            <Pressable style={styles.completeButton} onPress={handleMarkComplete}>
+            <Pressable accessibilityRole="button" style={styles.completeButton} onPress={handleMarkComplete}>
               <Ionicons name="checkmark-circle-outline" size={20} color={color.progress} />
               <Text style={styles.completeButtonText}>{t('storiesFeature.markComplete')}</Text>
             </Pressable>

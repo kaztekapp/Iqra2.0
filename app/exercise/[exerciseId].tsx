@@ -19,6 +19,7 @@ import { QuizOption } from '../../src/components/quiz/QuizOption';
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 interface Question {
   id: string;
@@ -255,7 +256,7 @@ export default function ExerciseScreen() {
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.retryButton}
               onPress={() => {
                 setCurrentIndex(0);
@@ -274,7 +275,7 @@ export default function ExerciseScreen() {
               <Ionicons name="refresh" size={20} color={color.accentStrong} />
               <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
-            <Pressable style={styles.doneButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
               <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
@@ -289,7 +290,7 @@ export default function ExerciseScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -324,7 +325,7 @@ export default function ExerciseScreen() {
         {currentQuestion.questionArabic && (
           <View style={styles.questionArabicContainer}>
             <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
-            <Pressable
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
               style={[styles.questionAudioBtn, isSpeaking && styles.questionAudioBtnActive]}
               onPress={() => speak(currentQuestion.questionArabic!)}
             >

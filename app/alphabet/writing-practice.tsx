@@ -15,6 +15,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 
 export default function WritingPracticeScreen() {
@@ -118,7 +119,7 @@ export default function WritingPracticeScreen() {
       <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -127,7 +128,7 @@ export default function WritingPracticeScreen() {
               {t('alphabet.letterOf', { current: currentLetterIndex + 1, total: arabicLetters.length })}
             </Text>
           </View>
-          <Pressable
+          <Pressable accessibilityLabel={i18n.t('a11y.toggleGuide')}
             style={[styles.guideButton, showGuide && styles.guideButtonActive]}
             onPress={() => setShowGuide(!showGuide)}
           >
@@ -155,7 +156,7 @@ export default function WritingPracticeScreen() {
         <View style={styles.letterInfo}>
           <Text style={styles.letterName}>{lc(currentLetter.name, currentLetter.nameFr)}</Text>
           <Text style={styles.letterNameAr}>{currentLetter.nameArabic}</Text>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
             onPress={() => speak(currentLetter.letter)}
           >
@@ -240,12 +241,12 @@ export default function WritingPracticeScreen() {
 
         {/* Action Buttons */}
         <View style={styles.actionButtons}>
-          <Pressable style={styles.clearButton} onPress={clearCanvas}>
+          <Pressable accessibilityRole="button" style={styles.clearButton} onPress={clearCanvas}>
             <Ionicons name="refresh" size={20} color={color.danger} />
             <Text style={styles.clearButtonText}>{t('common.clear')}</Text>
           </Pressable>
 
-          <Pressable style={styles.submitButton} onPress={handleSubmit}>
+          <Pressable accessibilityRole="button" style={styles.submitButton} onPress={handleSubmit}>
             <Ionicons name="checkmark" size={20} color={color.text} />
             <Text style={styles.submitButtonText}>{t('alphabet.submitXp')}</Text>
           </Pressable>
@@ -253,7 +254,7 @@ export default function WritingPracticeScreen() {
 
         {/* Navigation */}
         <View style={styles.navigation}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.navButton, currentLetterIndex === 0 && styles.navButtonDisabled]}
             onPress={goToPrevLetter}
             disabled={currentLetterIndex === 0}
@@ -273,7 +274,7 @@ export default function WritingPracticeScreen() {
             </Text>
           </Pressable>
 
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[
               styles.navButton,
               currentLetterIndex === arabicLetters.length - 1 && styles.navButtonDisabled,

@@ -68,7 +68,7 @@ export const BoardCard = React.memo(function BoardCard({ board, groupColor, auth
 
   return (
     <>
-      <Pressable style={styles.card} onPress={() => setOpen(true)} onLongPress={onLongPress} delayLongPress={300}>
+      <Pressable accessibilityRole="button" style={styles.card} onPress={() => setOpen(true)} onLongPress={onLongPress} delayLongPress={300}>
         <View style={[styles.band, { backgroundColor: `${groupColor}18` }]}>
           <View style={[styles.badge, { backgroundColor: groupColor }]}>
             <Ionicons name="brush" size={13} color={color.text} />

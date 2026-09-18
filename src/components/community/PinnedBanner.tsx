@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import i18n from 'i18next';
 
 interface PinnedMessage {
   id: string;
@@ -29,7 +30,7 @@ export function PinnedBanner({ messages, onDismiss }: Props) {
   };
 
   return (
-    <Pressable style={styles.banner} onPress={handleNext}>
+    <Pressable accessibilityRole="button" style={styles.banner} onPress={handleNext}>
       <Ionicons name="pin" size={14} color={color.accent} />
       <View style={styles.content}>
         <Text style={styles.author}>{current.authorName}</Text>
@@ -38,7 +39,7 @@ export function PinnedBanner({ messages, onDismiss }: Props) {
       {messages.length > 1 && (
         <Text style={styles.counter}>{currentIndex + 1}/{messages.length}</Text>
       )}
-      <Pressable onPress={onDismiss} hitSlop={8}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onDismiss} hitSlop={8}>
         <Ionicons name="close" size={16} color={color.textFaint} />
       </Pressable>
     </Pressable>

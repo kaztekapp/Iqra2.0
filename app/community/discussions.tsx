@@ -21,6 +21,7 @@ import { DiscussionCategory } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string }[] = [
   { key: 'all', icon: 'apps', color: color.textMuted },
@@ -95,7 +96,7 @@ export default function DiscussionsScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -118,7 +119,7 @@ export default function DiscussionsScreen() {
             ? t('common.all')
             : t(`community.category${cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}`);
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={cat.key}
               style={[styles.categoryChip, isActive && styles.categoryChipActive]}
               onPress={() => setSelectedCategory(cat.key)}
@@ -154,7 +155,7 @@ export default function DiscussionsScreen() {
             <Text style={styles.emptyText}>{t('community.noDiscussions')}</Text>
           ) : (
             sorted.map((thread) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={thread.id}
                 style={styles.threadCard}
                 onPress={() => router.push(`/community/thread/${thread.id}`)}
@@ -180,7 +181,7 @@ export default function DiscussionsScreen() {
                   <Text style={styles.threadDot}>{'\u00b7'}</Text>
                   <Text style={styles.threadTime}>{getTimeAgo(thread.createdAt)}</Text>
                   <View style={styles.threadStats}>
-                    <Pressable
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.like')}
                       onPress={(e) => {
                         e.stopPropagation?.();
                         toggleLikeThread(thread.id);
@@ -208,7 +209,7 @@ export default function DiscussionsScreen() {
       )}
 
       {/* FAB — New Post */}
-      <Pressable style={styles.fab} onPress={() => setShowPostModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowPostModal(true)}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -220,11 +221,11 @@ export default function DiscussionsScreen() {
         >
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Pressable onPress={() => setShowPostModal(false)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowPostModal(false)}>
                 <Ionicons name="close" size={24} color={color.textMuted} />
               </Pressable>
               <Text style={styles.modalTitle}>{t('community.newDiscussion')}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.postBtn, (!postTitle.trim() || !postBody.trim() || isPosting) && styles.postBtnDisabled]}
                 onPress={handlePost}
                 disabled={!postTitle.trim() || !postBody.trim() || isPosting}
@@ -241,7 +242,7 @@ export default function DiscussionsScreen() {
               {CATEGORIES.filter((c) => c.key !== 'all').map((cat) => {
                 const isSelected = postCategory === cat.key;
                 return (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     key={cat.key}
                     style={[styles.catPickerChip, isSelected && { backgroundColor: cat.color, borderColor: cat.color }]}
                     onPress={() => setPostCategory(cat.key as DiscussionCategory)}

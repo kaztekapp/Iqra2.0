@@ -8,6 +8,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function VocabularyScreen() {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export default function VocabularyScreen() {
   const renderThemeCard = (theme: (typeof vocabularyThemes)[number]) => {
     const status = getThemeStatus(theme.id);
     return (
-      <Pressable
+      <Pressable accessibilityRole="button"
         key={theme.id}
         style={styles.themeCard}
         onPress={() => router.push(`/vocabulary/${theme.id}`)}
@@ -68,7 +69,7 @@ export default function VocabularyScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -134,7 +135,7 @@ export default function VocabularyScreen() {
         {/* Spaced Review */}
         {reviewStats.dueToday > 0 && (
           <View style={styles.section}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.reviewCard}
               onPress={() => router.push('/vocabulary/review')}
             >
@@ -172,7 +173,7 @@ export default function VocabularyScreen() {
           <Text style={styles.sectionTitle}>{t('vocabulary.practiceMode')}</Text>
 
           {/* SRS Review - always visible */}
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.practiceCard, { marginBottom: 12, borderColor: reviewStats.dueToday > 0 ? color.accent : 'transparent', borderWidth: reviewStats.dueToday > 0 ? 1 : 0 }]}
             onPress={() => router.push('/vocabulary/review')}
           >
@@ -197,7 +198,7 @@ export default function VocabularyScreen() {
             </View>
           </Pressable>
 
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.practiceCard, { marginBottom: 12 }]}
             onPress={() => router.push('/vocabulary/flashcards')}
           >
@@ -215,7 +216,7 @@ export default function VocabularyScreen() {
             </View>
           </Pressable>
 
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.practiceCard}
             onPress={() => router.push('/vocabulary/speaking-practice')}
           >

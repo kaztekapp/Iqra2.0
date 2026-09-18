@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SubStory } from '../../types/prophetStories';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import i18n from 'i18next';
 
 interface SubStoryNavProps {
   subStories: SubStory[];
@@ -48,7 +49,7 @@ export function SubStoryNav({
     <View style={styles.container}>
       {/* Navigation Arrows and Tabs */}
       <View style={styles.navRow}>
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
           style={[styles.arrowButton, currentIndex === 0 && styles.arrowButtonDisabled]}
           onPress={handlePrevious}
           disabled={currentIndex === 0}
@@ -71,7 +72,7 @@ export function SubStoryNav({
             const isCompleted = completedSubStories.includes(subStory.id);
 
             return (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={subStory.id}
                 style={[
                   styles.tab,
@@ -100,7 +101,7 @@ export function SubStoryNav({
           })}
         </ScrollView>
 
-        <Pressable
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
           style={[styles.arrowButton, currentIndex === subStories.length - 1 && styles.arrowButtonDisabled]}
           onPress={handleNext}
           disabled={currentIndex === subStories.length - 1}

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { LEGAL_CONSTANTS, LegalSection } from '../../data/legal';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import i18n from 'i18next';
 
 interface LegalScreenProps {
   title: string;
@@ -20,7 +21,7 @@ export function LegalScreen({ title, sections }: LegalScreenProps) {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <Text style={styles.headerTitle} numberOfLines={1}>{title}</Text>
@@ -55,7 +56,7 @@ export function LegalScreen({ title, sections }: LegalScreenProps) {
         {/* Contact Footer */}
         <View style={styles.contactFooter}>
           <Text style={styles.contactLabel}>{t('legal.contactUs')}</Text>
-          <Pressable
+          <Pressable accessibilityRole="button"
             onPress={() => Linking.openURL(`mailto:${LEGAL_CONSTANTS.email}`)}
             style={styles.emailButton}
           >

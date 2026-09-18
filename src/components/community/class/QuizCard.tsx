@@ -103,7 +103,7 @@ export const QuizCard = React.memo(function QuizCard({ messageId, groupId, quiz,
                       const revealCorrect = submitted && oi === q.correctIndex;
                       const revealWrong = submitted && selected && oi !== q.correctIndex;
                       return (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           key={oi}
                           disabled={submitted}
                           onPress={() => setAnswers((prev) => ({ ...prev, [q.id]: oi }))}
@@ -145,7 +145,7 @@ export const QuizCard = React.memo(function QuizCard({ messageId, groupId, quiz,
             })}
 
             {!submitted ? (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 disabled={!answeredAll}
                 onPress={handleSubmit}
                 style={[styles.submitBtn, { backgroundColor: groupColor }, !answeredAll && { opacity: 0.4 }]}
@@ -160,7 +160,7 @@ export const QuizCard = React.memo(function QuizCard({ messageId, groupId, quiz,
             )}
 
             {isAuthor && !isLocal && (
-              <Pressable style={styles.resultsToggle} onPress={() => setShowResults((v) => !v)}>
+              <Pressable accessibilityRole="button" style={styles.resultsToggle} onPress={() => setShowResults((v) => !v)}>
                 <Ionicons name="bar-chart" size={15} color={groupColor} />
                 <Text style={[styles.resultsText, { color: groupColor }]}>
                   {showResults ? 'Hide' : 'View'} results ({responses.length} answered)

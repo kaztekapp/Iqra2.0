@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { font, color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import i18n from 'i18next';
 
 export interface QuizIntroFeature {
   icon: string;
@@ -54,7 +55,7 @@ export function QuizIntro({
 }: QuizIntroProps) {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <Pressable style={styles.backButton} onPress={onBack} hitSlop={8}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={onBack} hitSlop={8}>
         <Ionicons name="arrow-back" size={24} color={color.textMuted} />
       </Pressable>
 
@@ -74,7 +75,7 @@ export function QuizIntro({
           <View style={styles.errorCard}>
             <Ionicons name="warning" size={24} color={color.warning} />
             <Text style={styles.errorText}>{error}</Text>
-            <Pressable style={styles.retryButton} onPress={onRetry}>
+            <Pressable accessibilityRole="button" style={styles.retryButton} onPress={onRetry}>
               <Text style={styles.retryButtonText}>{retryLabel}</Text>
             </Pressable>
           </View>
@@ -106,7 +107,7 @@ export function QuizIntro({
         )}
 
         {!error && (
-          <Pressable style={styles.startButton} onPress={onStart}>
+          <Pressable accessibilityRole="button" style={styles.startButton} onPress={onStart}>
             <Text style={styles.startButtonText}>{startLabel}</Text>
             <Ionicons name="arrow-forward" size={20} color={color.textOnAccent} />
           </Pressable>

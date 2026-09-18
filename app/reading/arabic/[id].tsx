@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useArabicTextsStore } from '../../../src/stores/arabicTextsStore';
 import { playArabicLines, stopArabic } from '../../../src/services/speech/arabicTTS';
 import { color, radius } from '../../../src/theme/tokens';
+import i18n from 'i18next';
 
 const BRAND = color.progress;
 const SPEEDS = [
@@ -118,7 +119,7 @@ export default function ArabicPlayerScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <Text style={styles.headerTitle}>{t('reading.memo.notFound')}</Text>
@@ -133,7 +134,7 @@ export default function ArabicPlayerScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={handleBack}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={handleBack}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTextContainer}>
@@ -159,7 +160,7 @@ export default function ArabicPlayerScreen() {
           if (isBlank) return <View key={index} style={styles.stanzaGap} />;
           const isActive = index === activeLine;
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={index}
               onPress={() => handleLineTap(index)}
               onLayout={(e) => {
@@ -184,7 +185,7 @@ export default function ArabicPlayerScreen() {
             {SPEEDS.map((s) => {
               const selected = s.value === speed;
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={s.value}
                   onPress={() => handleSpeedChange(s.value)}
                   style={[styles.speedPill, selected && styles.speedPillActive]}
@@ -199,11 +200,11 @@ export default function ArabicPlayerScreen() {
         </View>
 
         <View style={styles.playRow}>
-          <Pressable style={styles.secondaryBtn} onPress={handleRestart}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')} style={styles.secondaryBtn} onPress={handleRestart}>
             <Ionicons name="play-skip-back" size={22} color={color.textMuted} />
           </Pressable>
 
-          <Pressable onPress={handlePlayPause} style={styles.playBtnWrap}>
+          <Pressable accessibilityLabel={i18n.t('a11y.playPause')} onPress={handlePlayPause} style={styles.playBtnWrap}>
             <LinearGradient
               colors={[color.progress, color.accent]}
               start={{ x: 0, y: 0 }}

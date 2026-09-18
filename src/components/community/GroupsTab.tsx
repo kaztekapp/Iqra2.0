@@ -23,6 +23,7 @@ import { localizeGoal } from '../../data/community/goalLocalization';
 import { GroupTemplate, StudyGroup } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import i18n from 'i18next';
 
 const GROUP_ICONS = ['book', 'school', 'mic', 'language', 'moon', 'star', 'people', 'flag'];
 const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent, color.accent, color.warning, color.danger, color.progress];
@@ -52,7 +53,7 @@ const GroupCard = memo(function GroupCard({ group, onJoin }: GroupCardProps) {
   );
 
   return (
-    <Pressable style={styles.card} onPress={() => router.push(`/community/groups/${group.id}`)}>
+    <Pressable accessibilityRole="button" style={styles.card} onPress={() => router.push(`/community/groups/${group.id}`)}>
       <View style={styles.cardTop}>
         <View style={[styles.iconCircle, { backgroundColor: `${group.color}20` }]}>
           <Ionicons name={group.icon as IoniconName} size={26} color={group.color} />
@@ -100,7 +101,7 @@ const GroupCard = memo(function GroupCard({ group, onJoin }: GroupCardProps) {
 
       {/* Join button — hidden once already a member */}
       {!group.isJoined && (
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.joinBtn, isFull && styles.fullBtn]}
           onPress={() => onJoin(group.id)}
           disabled={isFull}
@@ -213,7 +214,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
           autoCorrect={false}
         />
         {search.length > 0 && (
-          <Pressable onPress={() => setSearch('')}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.clear')} onPress={() => setSearch('')}>
             <Ionicons name="close-circle" size={18} color={color.textFaint} />
           </Pressable>
         )}
@@ -245,7 +246,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
       )}
 
       {/* FAB — Create Group */}
-      <Pressable style={styles.fab} onPress={() => setShowCreateModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowCreateModal(true)}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -258,11 +259,11 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
         >
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Pressable onPress={() => setShowCreateModal(false)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowCreateModal(false)}>
                 <Ionicons name="close" size={24} color={color.textMuted} />
               </Pressable>
               <Text style={styles.modalTitle}>{t('community.createGroup')}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.createBtn, (!newName.trim() || !newDesc.trim() || !newTopic.trim() || !newGoal.trim() || isCreating) && styles.createBtnDisabled]}
                 onPress={handleCreate}
                 disabled={!newName.trim() || !newDesc.trim() || !newTopic.trim() || !newGoal.trim() || isCreating}
@@ -279,7 +280,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 16 }}>
                 <View style={{ flexDirection: 'row', gap: 10, paddingRight: 12 }}>
                   {GROUP_TEMPLATES.map((tpl: GroupTemplate) => (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       key={tpl.id}
                       style={[styles.templateCard, selectedIcon === tpl.icon && selectedColor === tpl.color && newName === tpl.name && { borderColor: tpl.color }]}
                       onPress={() => {
@@ -349,7 +350,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
               <Text style={styles.pickerLabel}>{t('community.icon')}</Text>
               <View style={styles.pickerRow}>
                 {GROUP_ICONS.map((icon) => (
-                  <Pressable
+                  <Pressable accessibilityLabel={i18n.t('a11y.chooseIcon')}
                     key={icon}
                     style={[styles.pickerItem, selectedIcon === icon && { borderColor: selectedColor }]}
                     onPress={() => setSelectedIcon(icon)}

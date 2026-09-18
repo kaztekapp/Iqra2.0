@@ -11,6 +11,7 @@ import { LeaderboardType, LeaderboardEntry } from '../../src/types/community';
 import * as communityService from '../../src/services/communityService';
 import { medal, font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
@@ -135,7 +136,7 @@ export default function LeaderboardScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitles}>
@@ -148,7 +149,7 @@ export default function LeaderboardScreen() {
       {/* Tab Selector */}
       <View style={styles.tabContainer}>
         {TAB_KEYS.map((tab) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={tab.type}
             style={[styles.tab, currentType === tab.type && styles.tabActive]}
             onPress={() => setCurrentType(tab.type)}

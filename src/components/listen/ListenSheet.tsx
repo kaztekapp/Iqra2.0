@@ -14,6 +14,7 @@ import { color, radius, type, weight, space, gutter, font, arabicType } from '..
 import { NarrationPace, NarrationStatus, SleepOption } from '../../hooks/useStoryNarration';
 import type { VoiceGender } from '../../services/storyAudioService';
 import { formatClock } from './format';
+import i18n from 'i18next';
 
 const PACES: NarrationPace[] = ['normal', 'slow'];
 const SLEEP_OPTIONS: SleepOption[] = ['off', 5, 15, 30, 45];
@@ -142,11 +143,11 @@ export function ListenSheet({
               </View>
 
               <View style={styles.transport}>
-                <Pressable onPress={() => onSkip?.(-1)} style={styles.skip} accessibilityRole="button">
+                <Pressable accessibilityLabel={i18n.t('a11y.previous')} onPress={() => onSkip?.(-1)} style={styles.skip} accessibilityRole="button">
                   <Ionicons name="play-back" size={22} color={color.accentStrong} />
                 </Pressable>
 
-                <Pressable onPress={() => onToggle?.()} style={styles.play} accessibilityRole="button">
+                <Pressable accessibilityLabel={i18n.t('a11y.playPause')} onPress={() => onToggle?.()} style={styles.play} accessibilityRole="button">
                   <Ionicons
                     name={loading ? 'ellipsis-horizontal' : playing ? 'pause' : 'play'}
                     size={30}
@@ -155,7 +156,7 @@ export function ListenSheet({
                   />
                 </Pressable>
 
-                <Pressable onPress={() => onSkip?.(1)} style={styles.skip} accessibilityRole="button">
+                <Pressable accessibilityLabel={i18n.t('a11y.next')} onPress={() => onSkip?.(1)} style={styles.skip} accessibilityRole="button">
                   <Ionicons name="play-forward" size={22} color={color.accentStrong} />
                 </Pressable>
               </View>

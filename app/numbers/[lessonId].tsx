@@ -7,6 +7,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getNumbersLesson, NUMBERS_LESSONS, NumbersBlock } from '../../src/data/arabic/numbers/numbersCourse';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 export default function NumbersLessonScreen() {
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
@@ -23,7 +24,7 @@ export default function NumbersLessonScreen() {
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
             <Ionicons name="arrow-back" size={24} color={color.textMuted} />
           </Pressable>
           <View style={{ flex: 1 }} />
@@ -46,7 +47,7 @@ export default function NumbersLessonScreen() {
             {block.title && <Text style={styles.blockTitle}>{lc(block.title, block.titleFr)}</Text>}
             <View style={styles.numberGrid}>
               {block.items.map((item, j) => (
-                <Pressable key={j} style={styles.numberCard} onPress={() => speak(item.arabic)}>
+                <Pressable accessibilityRole="button" key={j} style={styles.numberCard} onPress={() => speak(item.arabic)}>
                   <View style={styles.numberTopRow}>
                     {!!item.digit && <Text style={styles.numberDigit}>{item.digit}</Text>}
                     {!!item.value && <Text style={styles.numberValue}>{item.value}</Text>}
@@ -76,7 +77,7 @@ export default function NumbersLessonScreen() {
           <View key={i} style={styles.section}>
             {block.title && <Text style={styles.blockTitle}>{lc(block.title, block.titleFr)}</Text>}
             {block.items.map((ex, j) => (
-              <Pressable key={j} style={styles.exampleRow} onPress={() => speak(ex.arabic)}>
+              <Pressable accessibilityRole="button" key={j} style={styles.exampleRow} onPress={() => speak(ex.arabic)}>
                 <View style={styles.exampleText}>
                   <Text style={styles.exampleArabic}>{ex.arabic}</Text>
                   <Text style={styles.exampleTranslit}>{ex.translit}</Text>
@@ -134,7 +135,7 @@ export default function NumbersLessonScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
           <Ionicons name="arrow-back" size={24} color={color.textMuted} />
         </Pressable>
         <View style={styles.headerTitles}>
@@ -150,13 +151,13 @@ export default function NumbersLessonScreen() {
         {/* Prev / Next */}
         <View style={styles.navRow}>
           {prev ? (
-            <Pressable style={styles.navBtn} onPress={() => router.replace(`/numbers/${prev.id}`)}>
+            <Pressable accessibilityRole="button" style={styles.navBtn} onPress={() => router.replace(`/numbers/${prev.id}`)}>
               <Ionicons name="chevron-back" size={18} color={color.textMuted} />
               <Text style={styles.navText} numberOfLines={1}>{lc(prev.title, prev.titleFr)}</Text>
             </Pressable>
           ) : <View style={{ flex: 1 }} />}
           {next ? (
-            <Pressable style={[styles.navBtn, styles.navBtnNext]} onPress={() => router.replace(`/numbers/${next.id}`)}>
+            <Pressable accessibilityRole="button" style={[styles.navBtn, styles.navBtnNext]} onPress={() => router.replace(`/numbers/${next.id}`)}>
               <Text style={styles.navText} numberOfLines={1}>{lc(next.title, next.titleFr)}</Text>
               <Ionicons name="chevron-forward" size={18} color={color.textMuted} />
             </Pressable>

@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { PollContent } from '../../../types/classContent';
 import { color, radius } from '../../../theme/tokens';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -35,9 +36,9 @@ export function PollEditor({ visible, groupColor, initial, onSave, onClose }: Pr
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <SafeAreaProvider style={{ flex: 1 }}><SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
-          <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
           <Text style={styles.headerTitle}>{initial ? 'Edit poll' : 'New poll'}</Text>
-          <Pressable onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
+          <Pressable accessibilityRole="button" onPress={handleSave} style={[styles.saveBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.saveText}>{initial ? 'Update' : 'Post'}</Text>
           </Pressable>
         </View>
@@ -51,18 +52,18 @@ export function PollEditor({ visible, groupColor, initial, onSave, onClose }: Pr
               <View key={i} style={styles.optRow}>
                 <TextInput style={styles.optInput} placeholder={`Option ${i + 1}`} placeholderTextColor={color.textFaint} value={opt} onChangeText={(t) => setOpt(i, t)} />
                 {options.length > 2 && (
-                  <Pressable onPress={() => removeOpt(i)} hitSlop={6}><Ionicons name="close" size={20} color={color.textFaint} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => removeOpt(i)} hitSlop={6}><Ionicons name="close" size={20} color={color.textFaint} /></Pressable>
                 )}
               </View>
             ))}
             {options.length < 6 && (
-              <Pressable style={styles.addOpt} onPress={addOpt}>
+              <Pressable accessibilityRole="button" style={styles.addOpt} onPress={addOpt}>
                 <Ionicons name="add" size={16} color={groupColor} />
                 <Text style={[styles.addOptText, { color: groupColor }]}>{t('community.addOption')}</Text>
               </Pressable>
             )}
 
-            <Pressable style={styles.multiRow} onPress={() => setAllowMultiple((v) => !v)}>
+            <Pressable accessibilityRole="button" style={styles.multiRow} onPress={() => setAllowMultiple((v) => !v)}>
               <Ionicons name={allowMultiple ? 'checkbox' : 'square-outline'} size={22} color={allowMultiple ? groupColor: color.textFaint} />
               <Text style={styles.multiText}>{t('community.allowMultiple')}</Text>
             </Pressable>

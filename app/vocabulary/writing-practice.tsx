@@ -19,6 +19,7 @@ import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function VocabularyWritingPracticeScreen() {
   const { t } = useTranslation();
@@ -60,7 +61,7 @@ export default function VocabularyWritingPracticeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('vocabulary.noWritingExercises')}</Text>
-          <Pressable style={styles.backLink} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backLink} onPress={() => router.back()}>
             <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -183,11 +184,11 @@ export default function VocabularyWritingPracticeScreen() {
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
-            <Pressable style={styles.retryButton} onPress={handleRetry}>
+            <Pressable accessibilityRole="button" style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color={color.sacred} />
               <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
-            <Pressable style={styles.doneButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
               <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
@@ -200,7 +201,7 @@ export default function VocabularyWritingPracticeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -234,7 +235,7 @@ export default function VocabularyWritingPracticeScreen() {
           {currentExercise.questionArabic && (
             <View style={styles.questionArabicRow}>
               <Text style={styles.questionArabic}>{currentExercise.questionArabic}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                 style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
                 onPress={() => speak(currentExercise.questionArabic || '')}
               >
@@ -246,7 +247,7 @@ export default function VocabularyWritingPracticeScreen() {
 
         {/* Hint Button */}
         {currentExercise.hint && !showHint && !isAnswered && (
-          <Pressable style={styles.hintButton} onPress={() => setShowHint(true)}>
+          <Pressable accessibilityRole="button" style={styles.hintButton} onPress={() => setShowHint(true)}>
             <Ionicons name="bulb-outline" size={18} color={color.sacred} />
             <Text style={styles.hintButtonText}>{t('vocabulary.showHint')}</Text>
           </Pressable>
@@ -277,7 +278,7 @@ export default function VocabularyWritingPracticeScreen() {
             {!isCorrect && (
               <View style={styles.correctAnswerBox}>
                 <Text style={styles.correctAnswerLabel}>{t('vocabulary.correctAnswer')}</Text>
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.correctAnswerRow}
                   onPress={() => speak((currentExercise.correctAnswer as string[])[0])}
                 >

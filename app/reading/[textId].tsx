@@ -12,6 +12,7 @@ import { ShareToGroupModal } from '../../src/components/community/ShareToGroupMo
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 // Reading content
 const readingContent: Record<string, {
@@ -315,7 +316,7 @@ const SentenceCard = memo(function SentenceCard({ index, arabic, english, color,
         <View style={[styles.sentenceNumber, { backgroundColor: color + '20' }]}>
           <Text style={[styles.sentenceNumberText, { color }]}>{index + 1}</Text>
         </View>
-        <Pressable
+        <Pressable accessibilityLabel={i18n.t('a11y.playPause')}
           style={[
             styles.playButton,
             { backgroundColor: color },
@@ -426,7 +427,7 @@ export default function ReadingDetailScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.comingSoon}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={tk.text} />
           </Pressable>
           <View style={styles.comingSoonContent}>
@@ -446,7 +447,7 @@ export default function ReadingDetailScreen() {
       <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={tk.text} />
           </Pressable>
           <View style={styles.headerTitle}>
@@ -499,7 +500,7 @@ export default function ReadingDetailScreen() {
             {/* Numbered speed control (app-wide) */}
             <SpeechSpeedControl showIcon={false} />
             {/* Play All Button */}
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[
                 styles.playAllButton,
                 { backgroundColor: text.color },
@@ -542,7 +543,7 @@ export default function ReadingDetailScreen() {
 
         {/* Complete Button */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.completeButton, { backgroundColor: text.color }]}
             onPress={handleComplete}
           >

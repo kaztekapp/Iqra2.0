@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, Modal, TextInput, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import type { CurriculumItem } from '../../../data/arabic/curriculumSource';
 import { color, radius } from '../../../theme/tokens';
+import i18n from 'i18next';
 
 /**
  * Pick one of the app's own lessons to put on the board as a course.
@@ -45,7 +46,7 @@ export function CoursePickerModal({ visible, groupColor, curriculum, onPick, onC
               <Ionicons name="library" size={16} color={groupColor} />
             </View>
             <Text style={styles.title}>{t('community.fromAppLesson')}</Text>
-            <Pressable onPress={onClose} hitSlop={8}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}>
               <Ionicons name="close" size={22} color={color.textMuted} />
             </Pressable>
           </View>

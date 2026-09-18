@@ -2,6 +2,7 @@ import { Text, TextProps, Pressable, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useProgressStore } from '../../stores/progressStore';
 import { color, font, radius, space, type } from '../../theme/tokens';
+import i18n from 'i18next';
 
 interface ArabicTextProps extends TextProps {
   children: string;
@@ -80,7 +81,7 @@ export function ArabicText({
   if (showSpeaker && onPlayAudio) {
     return (
       <View style={styles.speakerContainer}>
-        <Pressable
+        <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
           onPress={onPlayAudio}
           style={[
             styles.speakerButton,
@@ -123,7 +124,7 @@ export function TappableArabicText({
   };
 
   return (
-    <Pressable onPress={handlePress} style={styles.tappable}>
+    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')} onPress={handlePress} style={styles.tappable}>
       <View style={styles.tappableContent}>
         <ArabicText {...props}>{children}</ArabicText>
         {onPlayAudio && (
@@ -162,7 +163,7 @@ export function ArabicDisplay({
 }: ArabicDisplayProps) {
   return (
     <View style={styles.displayContainer}>
-      <Pressable
+      <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
         onPress={onPlayAudio}
         disabled={!onPlayAudio}
         style={styles.displayPressable}

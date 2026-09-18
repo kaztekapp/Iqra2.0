@@ -83,7 +83,7 @@ export const PollCard = React.memo(function PollCard({ messageId, groupId, poll,
               const pct = totalVoters > 0 ? Math.round((counts[i] / totalVoters) * 100) : 0;
               const isSel = selected.includes(i);
               return (
-                <Pressable key={i} onPress={() => toggle(i)} style={[styles.option, isSel && !voted && { borderColor: groupColor }]}>
+                <Pressable accessibilityRole="button" key={i} onPress={() => toggle(i)} style={[styles.option, isSel && !voted && { borderColor: groupColor }]}>
                   {showResults && <View style={[styles.fill, { width: `${pct}%`, backgroundColor: `${groupColor}2e` }]} />}
                   <View style={styles.optContent}>
                     {!voted && (
@@ -101,7 +101,7 @@ export const PollCard = React.memo(function PollCard({ messageId, groupId, poll,
             })}
 
             {!voted ? (
-              <Pressable disabled={selected.length === 0} onPress={handleVote} style={[styles.voteBtn, { backgroundColor: groupColor }, selected.length === 0 && { opacity: 0.4 }]}>
+              <Pressable accessibilityRole="button" disabled={selected.length === 0} onPress={handleVote} style={[styles.voteBtn, { backgroundColor: groupColor }, selected.length === 0 && { opacity: 0.4 }]}>
                 <Text style={styles.voteText}>{t('community.vote')}</Text>
               </Pressable>
             ) : (

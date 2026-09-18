@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import i18n from 'i18next';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -109,7 +110,7 @@ export default function ResetPasswordScreen() {
                 autoCapitalize="none"
                 accessibilityLabel={t('auth.newPassword')}
               />
-              <TouchableOpacity
+              <TouchableOpacity accessibilityLabel={i18n.t('a11y.togglePassword')}
                 onPress={() => setShowPassword(!showPassword)}
                 activeOpacity={0.6}
                 accessibilityRole="button"
@@ -139,7 +140,7 @@ export default function ResetPasswordScreen() {
                 autoCapitalize="none"
                 accessibilityLabel={t('auth.confirmNewPassword')}
               />
-              <TouchableOpacity
+              <TouchableOpacity accessibilityLabel={i18n.t('a11y.togglePassword')}
                 onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                 activeOpacity={0.6}
                 accessibilityRole="button"

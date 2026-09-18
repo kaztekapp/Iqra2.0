@@ -11,6 +11,7 @@ import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore'
 import { ProphetListItem } from '../../../src/types/prophetStories';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function ProphetListScreen() {
   const { t } = useTranslation();
@@ -67,7 +68,7 @@ export default function ProphetListScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -113,7 +114,7 @@ export default function ProphetListScreen() {
               autoCapitalize="none"
             />
             {searchQuery.length > 0 && (
-              <Pressable onPress={() => setSearchQuery('')}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.clear')} onPress={() => setSearchQuery('')}>
                 <Ionicons name="close-circle" size={18} color={color.textFaint} />
               </Pressable>
             )}

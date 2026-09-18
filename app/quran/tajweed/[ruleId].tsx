@@ -19,6 +19,7 @@ import {
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 // Recommended reciters for Tajweed learning (clear pronunciation)
 const TAJWEED_RECITERS = [
@@ -147,7 +148,7 @@ export default function TajweedRuleDetailScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -185,7 +186,7 @@ export default function TajweedRuleDetailScreen() {
         </View>
 
         {/* Reciter Selection */}
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={styles.reciterSelector}
           onPress={() => setShowReciterModal(true)}
         >
@@ -219,7 +220,7 @@ export default function TajweedRuleDetailScreen() {
             <Text style={styles.sectionHint}>{t('tajweedFeature.tapLetterToHear')}</Text>
             <View style={styles.lettersContainer}>
               {rule.letters.map((letter, index) => (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={index}
                   style={styles.letterButton}
                   onPress={() => playLetter(letter)}
@@ -301,7 +302,7 @@ export default function TajweedRuleDetailScreen() {
 
                 {/* Play button and controls */}
                 <View style={styles.audioControlsRow}>
-                  <Pressable
+                  <Pressable accessibilityLabel={i18n.t('a11y.playPause')}
                     style={[
                       styles.playButton,
                       isPlaying && styles.playButtonActive,
@@ -351,13 +352,13 @@ export default function TajweedRuleDetailScreen() {
         {/* Action Buttons */}
         <View style={[styles.actionsContainer, { marginBottom: 100 }]}>
           {!isLearned && (
-            <Pressable style={styles.primaryButton} onPress={handleMarkLearned}>
+            <Pressable accessibilityRole="button" style={styles.primaryButton} onPress={handleMarkLearned}>
               <Ionicons name="checkmark" size={20} color={color.text} />
               <Text style={styles.primaryButtonText}>{t('tajweedFeature.markLearned')}</Text>
             </Pressable>
           )}
           {isLearned && !isMastered && (
-            <Pressable style={styles.masterButton} onPress={handleMarkMastered}>
+            <Pressable accessibilityRole="button" style={styles.masterButton} onPress={handleMarkMastered}>
               <Ionicons name="star" size={20} color={color.text} />
               <Text style={styles.masterButtonText}>{t('tajweedFeature.markMastered')}</Text>
             </Pressable>
@@ -382,7 +383,7 @@ export default function TajweedRuleDetailScreen() {
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{t('tajweedFeature.chooseReciter')}</Text>
-              <Pressable onPress={() => setShowReciterModal(false)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowReciterModal(false)}>
                 <Ionicons name="close" size={24} color={color.text} />
               </Pressable>
             </View>
@@ -391,7 +392,7 @@ export default function TajweedRuleDetailScreen() {
             </Text>
 
             {TAJWEED_RECITERS.map((reciter) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={reciter.id}
                 style={[
                   styles.reciterOption,

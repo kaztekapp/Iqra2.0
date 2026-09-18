@@ -15,6 +15,7 @@ import { ProphetListItem } from '../../../src/types/prophetStories';
 import { QuranStoryListItem } from '../../../src/types/quranStories';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type TabType = 'prophets' | 'other';
 
@@ -121,7 +122,7 @@ export default function StoriesScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -133,7 +134,7 @@ export default function StoriesScreen() {
 
       {/* Tabs */}
       <View style={styles.tabContainer}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.tab, activeTab === 'prophets' && styles.activeTab]}
           onPress={() => { setActiveTab('prophets'); setSearchQuery(''); }}
         >
@@ -151,7 +152,7 @@ export default function StoriesScreen() {
             </Text>
           </View>
         </Pressable>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.tab, activeTab === 'other' && styles.activeTab]}
           onPress={() => { setActiveTab('other'); setSearchQuery(''); }}
         >
@@ -211,7 +212,7 @@ export default function StoriesScreen() {
               autoCapitalize="none"
             />
             {searchQuery.length > 0 && (
-              <Pressable onPress={() => setSearchQuery('')}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.clear')} onPress={() => setSearchQuery('')}>
                 <Ionicons name="close-circle" size={18} color={color.textFaint} />
               </Pressable>
             )}

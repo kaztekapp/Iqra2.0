@@ -7,6 +7,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { CALENDAR_LESSONS } from '../../src/data/arabic/calendar/calendarCourse';
 import { font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 export default function CalendarIndexScreen() {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function CalendarIndexScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()} hitSlop={8}>
           <Ionicons name="arrow-back" size={24} color={color.textMuted} />
         </Pressable>
         <View style={styles.headerTitles}>

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 // Sun Letters (الحروف الشمسية) - 14 letters
 // The "ل" in "ال" assimilates to these letters
@@ -54,7 +55,7 @@ export default function SunMoonLettersScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -111,14 +112,14 @@ export default function SunMoonLettersScreen() {
 
           <View style={styles.letterGrid}>
             {sunLetters.map((item, index) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={index}
                 style={[styles.letterCard, styles.sunCard]}
                 onPress={() => speak(item.example)}
               >
                 <View style={styles.letterMain}>
                   <Text style={styles.letterArabic}>{item.letter}</Text>
-                  <Pressable
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.sunAudioBtn]}
                     onPress={() => speak(item.example)}
                   >
@@ -159,14 +160,14 @@ export default function SunMoonLettersScreen() {
 
           <View style={styles.letterGrid}>
             {moonLetters.map((item, index) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={index}
                 style={[styles.letterCard, styles.moonCard]}
                 onPress={() => speak(item.example)}
               >
                 <View style={styles.letterMain}>
                   <Text style={styles.letterArabic}>{item.letter}</Text>
-                  <Pressable
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.moonAudioBtn]}
                     onPress={() => speak(item.example)}
                   >

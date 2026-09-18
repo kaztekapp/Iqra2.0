@@ -98,14 +98,14 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
 
       {!challenge.isCompleted && (
         <View style={styles.actionButtons}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.actionButton}
             onPress={() => router.push('/quiz/arabic-quiz')}
           >
             <Ionicons name="book" size={18} color={color.text} />
             <Text style={styles.actionButtonText}>{t('community.vocabulary')}</Text>
           </Pressable>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.actionButton, styles.actionButtonSecondary]}
             onPress={() => router.push('/quiz/grammar-quiz')}
           >

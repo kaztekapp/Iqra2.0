@@ -22,7 +22,7 @@ export function ReactionBadges({ reactions, onToggle }: Props) {
       {reactions.map((r) => {
         const isArabic = r.emoji.length > 2;
         return (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={r.emoji}
             style={[styles.badge, r.hasReacted && styles.badgeActive]}
             onPress={() => onToggle(r.emoji)}

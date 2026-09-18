@@ -36,7 +36,7 @@ export function MemberRow({ member, getDaysAgo, canManage, onAction }: Props) {
   const rc = roleConfig[member.role] || roleConfig.member;
 
   return (
-    <Pressable style={styles.memberRow} onPress={canManage ? onAction : undefined}>
+    <Pressable accessibilityRole="button" style={styles.memberRow} onPress={canManage ? onAction : undefined}>
       <View style={[styles.memberAvatar, member.role !== 'member' && { borderColor: rc.color, borderWidth: 2 }]}>
         <Text style={styles.memberAvatarText}>{member.avatar}</Text>
       </View>

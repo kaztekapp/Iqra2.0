@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -41,14 +42,14 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
         <Text style={[styles.kind, { color: groupColor }]}>{meta.label}</Text>
         {content.ref ? <Text style={styles.ref} numberOfLines={1}>{content.ref}</Text> : null}
         {audioText ? (
-          <Pressable style={[styles.audioBtn, { backgroundColor: `${groupColor}22` }]} onPress={() => speak(audioText)} hitSlop={6}>
+          <Pressable accessibilityLabel={i18n.t('a11y.playAudio')} style={[styles.audioBtn, { backgroundColor: `${groupColor}22` }]} onPress={() => speak(audioText)} hitSlop={6}>
             <Ionicons name={isSpeaking ? 'volume-high' : 'volume-medium'} size={16} color={groupColor} />
           </Pressable>
         ) : null}
       </View>
 
       {content.arabic ? (
-        <Pressable onPress={() => audioText && speak(audioText)}>
+        <Pressable accessibilityRole="button" onPress={() => audioText && speak(audioText)}>
           <Text style={styles.arabic}>{content.arabic}</Text>
         </Pressable>
       ) : null}
@@ -67,13 +68,13 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
 
       <View style={styles.actionsRow}>
         {content.route ? (
-          <Pressable style={styles.openRow} onPress={() => router.push(content.route as Href)}>
+          <Pressable accessibilityRole="button" style={styles.openRow} onPress={() => router.push(content.route as Href)}>
             <Ionicons name="open-outline" size={13} color={groupColor} />
             <Text style={[styles.openText, { color: groupColor }]}>{t('community.open')}</Text>
           </Pressable>
         ) : null}
         {onPractice ? (
-          <Pressable style={[styles.practiceBtn, { backgroundColor: groupColor }]} onPress={onPractice}>
+          <Pressable accessibilityRole="button" style={[styles.practiceBtn, { backgroundColor: groupColor }]} onPress={onPractice}>
             <Ionicons name="people" size={13} color={color.text} />
             <Text style={styles.practiceText}>{t('community.practiceTogether')}</Text>
           </Pressable>

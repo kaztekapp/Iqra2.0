@@ -11,6 +11,7 @@ import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 // Helper function to extract Arabic text from a string (removes English part)
 const extractArabicText = (text: string): string => {
@@ -302,13 +303,13 @@ export default function QuizScreen() {
       <SafeAreaView style={styles.container}>
         {/* Header for results */}
         <View style={styles.reviewHeader}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <Text style={styles.reviewHeaderTitle}>
             {showReview ? t('quranQuiz.reviewAnswers') : t('quranQuiz.results')}
           </Text>
-          <Pressable
+          <Pressable accessibilityLabel={i18n.t('a11y.toggleReview')}
             style={styles.reviewToggleBtn}
             onPress={() => setShowReview(!showReview)}
           >
@@ -371,12 +372,12 @@ export default function QuizScreen() {
               <View style={styles.resultActions}>
                 {/* Primary row: Try Again + Next */}
                 <View style={styles.primaryButtonRow}>
-                  <Pressable style={styles.tryAgainBtn} onPress={handleRestart}>
+                  <Pressable accessibilityRole="button" style={styles.tryAgainBtn} onPress={handleRestart}>
                     <Ionicons name="refresh" size={16} color={color.text} />
                     <Text style={styles.tryAgainBtnText}>{t('common.tryAgain')}</Text>
                   </Pressable>
                   {hasNextSet && (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={[styles.nextSetBtn, !passed && styles.nextSetBtnDisabled]}
                       onPress={handleNextSet}
                       disabled={!passed}
@@ -388,7 +389,7 @@ export default function QuizScreen() {
                 </View>
 
                 {/* View Answers */}
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.viewAnswersButton}
                   onPress={() => setShowReview(true)}
                 >
@@ -397,7 +398,7 @@ export default function QuizScreen() {
                 </Pressable>
 
                 {/* Back */}
-                <Pressable style={styles.backButton} onPress={() => router.back()}>
+                <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.back()}>
                   <Text style={styles.backButtonText}>{t('quranQuiz.backToCategories')}</Text>
                 </Pressable>
               </View>
@@ -407,7 +408,7 @@ export default function QuizScreen() {
             <View style={styles.reviewContainer}>
               {/* Return button and Summary bar */}
               <View style={styles.reviewTopBar}>
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.returnButton}
                   onPress={() => setShowReview(false)}
                 >
@@ -533,12 +534,12 @@ export default function QuizScreen() {
 
               {/* Bottom actions */}
               <View style={styles.reviewBottomActions}>
-                <Pressable style={styles.restartButton} onPress={handleRestart}>
+                <Pressable accessibilityRole="button" style={styles.restartButton} onPress={handleRestart}>
                   <Ionicons name="refresh" size={16} color={color.text} />
                   <Text style={styles.restartButtonText}>{t('common.tryAgain')}</Text>
                 </Pressable>
                 {hasNextSet && (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     style={[styles.nextSetButton, !passed && styles.nextSetButtonDisabled]}
                     onPress={handleNextSet}
                     disabled={!passed}
@@ -559,7 +560,7 @@ export default function QuizScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.progressContainer}>
@@ -612,7 +613,7 @@ export default function QuizScreen() {
             {currentQuestion.questionArabic && (
               <View style={styles.arabicQuestionBox}>
                 <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
-                <Pressable
+                <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={[
                     styles.questionAudioBtn,
                     isSpeaking && playingText === currentQuestion.questionArabic && styles.questionAudioBtnActive
@@ -645,7 +646,7 @@ export default function QuizScreen() {
               const { isNumberAnswer, number } = extractNumberFromAnswer(displayOption);
 
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={index}
                   style={getOptionStyle(option)}
                   onPress={() => handleSelectAnswer(option)}
@@ -671,7 +672,7 @@ export default function QuizScreen() {
                         <View style={styles.optionArabicRow}>
                           <Text style={styles.optionArabicText}>{arabic}</Text>
                           {showAudio && (
-                            <Pressable
+                            <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                               style={[
                                 styles.tinyAudioBtn,
                                 isSpeaking && playingText === option && styles.tinyAudioBtnActive
@@ -707,7 +708,7 @@ export default function QuizScreen() {
 
       {/* Action Button */}
       <View style={styles.actionContainer}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.nextButton, !selectedAnswer && styles.nextButtonDisabled]}
           onPress={handleNext}
           disabled={!selectedAnswer}

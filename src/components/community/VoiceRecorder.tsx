@@ -11,6 +11,7 @@ import {
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 import { quietly } from '../../lib/report';
+import i18n from 'i18next';
 
 interface Props {
   onSend: (uri: string, durationMs: number, waveform: number[]) => void;
@@ -108,7 +109,7 @@ export function VoiceRecorder({ onSend, onCancel }: Props) {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.cancelBtn} onPress={() => finish(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.delete')} style={styles.cancelBtn} onPress={() => finish(true)}>
         <Ionicons name="trash" size={20} color={color.danger} />
       </Pressable>
 
@@ -119,7 +120,7 @@ export function VoiceRecorder({ onSend, onCancel }: Props) {
       <Text style={[styles.timer, maxReached && { color: color.danger }]}>{timeStr}</Text>
       <Text style={styles.maxLabel}>{maxReached ? 'Max reached' : '/1:00'}</Text>
 
-      <Pressable style={styles.sendBtn} onPress={() => finish(false)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.send')} style={styles.sendBtn} onPress={() => finish(false)}>
         <Ionicons name="send" size={18} color={color.text} />
       </Pressable>
     </View>

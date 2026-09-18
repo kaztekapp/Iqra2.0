@@ -22,6 +22,7 @@ import { DiscussionCategory, DiscussionThread } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 import type { IoniconName } from '../../theme/icons';
+import i18n from 'i18next';
 
 const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string }[] = [
   { key: 'all', icon: 'apps', color: color.textMuted },
@@ -65,7 +66,7 @@ const ThreadCard = memo(function ThreadCard({ thread, onLike }: ThreadCardProps)
   };
 
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={styles.threadCard}
       onPress={() => router.push(`/community/thread/${thread.id}`)}
     >
@@ -90,7 +91,7 @@ const ThreadCard = memo(function ThreadCard({ thread, onLike }: ThreadCardProps)
         <Text style={styles.threadDot}>{'·'}</Text>
         <Text style={styles.threadTime}>{timeAgo()}</Text>
         <View style={styles.threadStats}>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.like')}
             onPress={(e) => {
               e.stopPropagation?.();
               onLike(thread.id);
@@ -190,7 +191,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
               ? t('common.all')
               : t(`community.category${cat.key.charAt(0).toUpperCase() + cat.key.slice(1)}`);
             return (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={cat.key}
                 style={[styles.categoryChip, isActive && styles.categoryChipActive]}
                 onPress={() => setSelectedCategory(cat.key)}
@@ -233,7 +234,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
       )}
 
       {/* FAB — New Post */}
-      <Pressable style={styles.fab} onPress={() => setShowPostModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowPostModal(true)}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -246,11 +247,11 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
         >
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Pressable onPress={() => setShowPostModal(false)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowPostModal(false)}>
                 <Ionicons name="close" size={24} color={color.textMuted} />
               </Pressable>
               <Text style={styles.modalTitle}>{t('community.newDiscussion')}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.postBtn, (!postTitle.trim() || !postBody.trim() || isPosting) && styles.postBtnDisabled]}
                 onPress={handlePost}
                 disabled={!postTitle.trim() || !postBody.trim() || isPosting}
@@ -267,7 +268,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
               {CATEGORIES.filter((c) => c.key !== 'all').map((cat) => {
                 const isSelected = postCategory === cat.key;
                 return (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     key={cat.key}
                     style={[styles.catPickerChip, isSelected && { backgroundColor: cat.color, borderColor: cat.color }]}
                     onPress={() => setPostCategory(cat.key as DiscussionCategory)}

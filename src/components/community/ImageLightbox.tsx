@@ -3,6 +3,7 @@ import { StyleSheet, Pressable, Image, Modal, useWindowDimensions } from 'react-
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { color, radius } from '../../theme/tokens';
+import i18n from 'i18next';
 
 interface Props {
   uri: string | null;
@@ -16,10 +17,10 @@ export function ImageLightbox({ uri, onClose }: Props) {
   return (
     <Modal visible={!!uri} transparent animationType="fade" onRequestClose={onClose}>
       <SafeAreaView style={styles.container}>
-        <Pressable style={styles.closeBtn} onPress={onClose} hitSlop={12}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeBtn} onPress={onClose} hitSlop={12}>
           <Ionicons name="close" size={28} color={color.text} />
         </Pressable>
-        <Pressable style={styles.imageWrap} onPress={onClose}>
+        <Pressable accessibilityLabel={i18n.t('a11y.close')} style={styles.imageWrap} onPress={onClose}>
           {uri ? (
             <Image
               source={{ uri }}

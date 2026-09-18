@@ -18,6 +18,7 @@ import { VocabularyWord } from '../../src/types/arabic';
 import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function TypingPracticeScreen() {
   const showVowels = useProgressStore((s) => s.showVowels);
@@ -180,11 +181,11 @@ export default function TypingPracticeScreen() {
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
-            <Pressable style={styles.retryButton} onPress={handleRetry}>
+            <Pressable accessibilityRole="button" style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color={color.accentStrong} />
               <Text style={styles.retryButtonText}>{t('common.tryAgain')}</Text>
             </Pressable>
-            <Pressable style={styles.doneButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
               <Text style={styles.doneButtonText}>{t('common.done')}</Text>
             </Pressable>
           </View>
@@ -197,7 +198,7 @@ export default function TypingPracticeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -231,7 +232,7 @@ export default function TypingPracticeScreen() {
           <Text style={styles.questionText}>{lc(currentWord.english, currentWord.french)}</Text>
           <View style={styles.questionArabicRow}>
             <Text style={styles.transliteration}>({currentWord.transliteration})</Text>
-            <Pressable
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
               style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
               onPress={() => speak(currentWord.arabicWithVowels || currentWord.arabic)}
             >
@@ -242,7 +243,7 @@ export default function TypingPracticeScreen() {
 
         {/* Hint Button */}
         {!showHint && !isAnswered && (
-          <Pressable style={styles.hintButton} onPress={() => setShowHint(true)}>
+          <Pressable accessibilityRole="button" style={styles.hintButton} onPress={() => setShowHint(true)}>
             <Ionicons name="eye-outline" size={18} color={color.accentStrong} />
             <Text style={styles.hintButtonText}>{t('exercise.showAnswer')}</Text>
           </Pressable>
@@ -274,7 +275,7 @@ export default function TypingPracticeScreen() {
             {!isCorrect && (
               <View style={styles.correctAnswerBox}>
                 <Text style={styles.correctAnswerLabel}>{t('exercise.correctAnswerLabel')}</Text>
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.correctAnswerRow}
                   onPress={() => speak(currentWord.arabicWithVowels || currentWord.arabic)}
                 >
@@ -303,7 +304,7 @@ export default function TypingPracticeScreen() {
         />
       ) : (
         <View style={styles.actionContainer}>
-          <Pressable style={styles.nextButton} onPress={handleNext}>
+          <Pressable accessibilityRole="button" style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
               {currentIndex < words.length - 1 ? t('exercise.nextWord') : t('exercise.seeResults')}
             </Text>

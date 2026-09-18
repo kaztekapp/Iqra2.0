@@ -102,7 +102,7 @@ export function LeaderboardPreview({ entries, isLoading, currentType, onTypeChan
       {/* Section header */}
       <View style={styles.lbSectionHeader}>
         <Text style={styles.lbSectionTitle}>{t('community.leaderboard')}</Text>
-        <Pressable onPress={() => router.push('/community/leaderboard')}>
+        <Pressable accessibilityRole="button" onPress={() => router.push('/community/leaderboard')}>
           <Text style={styles.lbSeeAll}>{t('community.seeAll', { defaultValue: 'See all' })}</Text>
         </Pressable>
       </View>
@@ -110,7 +110,7 @@ export function LeaderboardPreview({ entries, isLoading, currentType, onTypeChan
       {/* Tab selector */}
       <View style={styles.lbTabContainer}>
         {TAB_KEYS.map((tab) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={tab.type}
             style={[styles.lbTab, currentType === tab.type && styles.lbTabActive]}
             onPress={() => onTypeChange(tab.type)}

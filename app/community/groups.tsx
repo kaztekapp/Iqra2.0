@@ -21,6 +21,7 @@ import { GROUP_TEMPLATES } from '../../src/data/community/groupTemplates';
 import { GroupTemplate } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 const GROUP_ICONS = ['book', 'school', 'mic', 'language', 'moon', 'star', 'people', 'flag'];
 const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent, color.accent, color.warning, color.danger, color.progress];
@@ -94,7 +95,7 @@ export default function StudyGroupsScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -116,7 +117,7 @@ export default function StudyGroupsScreen() {
           autoCorrect={false}
         />
         {search.length > 0 && (
-          <Pressable onPress={() => setSearch('')}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.clear')} onPress={() => setSearch('')}>
             <Ionicons name="close-circle" size={18} color={color.textFaint} />
           </Pressable>
         )}
@@ -145,7 +146,7 @@ export default function StudyGroupsScreen() {
               const isFull = group.memberCount >= group.maxMembers;
 
               return (
-                <Pressable key={group.id} style={styles.card} onPress={() => router.push(`/community/groups/${group.id}`)}>
+                <Pressable accessibilityRole="button" key={group.id} style={styles.card} onPress={() => router.push(`/community/groups/${group.id}`)}>
                   <View style={styles.cardTop}>
                     <View style={[styles.iconCircle, { backgroundColor: `${group.color}20` }]}>
                       <Ionicons name={group.icon as IoniconName} size={26} color={group.color} />
@@ -193,7 +194,7 @@ export default function StudyGroupsScreen() {
 
                   {/* Join button — hidden once already a member */}
                   {!isJoined && (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={[styles.joinBtn, isFull && styles.fullBtn]}
                       onPress={() => handleJoin(group.id, isJoined)}
                       disabled={isFull}
@@ -210,7 +211,7 @@ export default function StudyGroupsScreen() {
       )}
 
       {/* FAB — Create Group */}
-      <Pressable style={styles.fab} onPress={() => setShowCreateModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowCreateModal(true)}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -222,11 +223,11 @@ export default function StudyGroupsScreen() {
         >
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Pressable onPress={() => setShowCreateModal(false)}>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => setShowCreateModal(false)}>
                 <Ionicons name="close" size={24} color={color.textMuted} />
               </Pressable>
               <Text style={styles.modalTitle}>{t('community.createGroup')}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.createBtn, (!newName.trim() || !newDesc.trim() || !newTopic.trim() || !newGoal.trim() || isCreating) && styles.createBtnDisabled]}
                 onPress={handleCreate}
                 disabled={!newName.trim() || !newDesc.trim() || !newTopic.trim() || !newGoal.trim() || isCreating}
@@ -243,7 +244,7 @@ export default function StudyGroupsScreen() {
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 16 }}>
                 <View style={{ flexDirection: 'row', gap: 10, paddingRight: 12 }}>
                   {GROUP_TEMPLATES.map((tpl: GroupTemplate) => (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       key={tpl.id}
                       style={[styles.templateCard, selectedIcon === tpl.icon && selectedColor === tpl.color && newName === tpl.name && { borderColor: tpl.color }]}
                       onPress={() => {
@@ -313,7 +314,7 @@ export default function StudyGroupsScreen() {
               <Text style={styles.pickerLabel}>{t('community.icon')}</Text>
               <View style={styles.pickerRow}>
                 {GROUP_ICONS.map((icon) => (
-                  <Pressable
+                  <Pressable accessibilityLabel={i18n.t('a11y.chooseIcon')}
                     key={icon}
                     style={[styles.pickerItem, selectedIcon === icon && { borderColor: selectedColor }]}
                     onPress={() => setSelectedIcon(icon)}

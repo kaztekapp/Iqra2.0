@@ -18,6 +18,7 @@ import { useSettingsStore } from '../../../stores/settingsStore';
 import { color as tk, radius } from '../../../theme/tokens';
 import type { IoniconName } from '../../../theme/icons';
 import type { GestureResponderEvent } from 'react-native';
+import i18n from 'i18next';
 
 type Tool = 'move' | 'pen' | 'highlighter' | 'eraser' | 'line' | 'arrow' | 'rect' | 'circle' | 'text';
 
@@ -447,16 +448,16 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
       <SafeAreaProvider style={{ flex: 1 }}><SafeAreaView style={styles.container} edges={['top', 'bottom']}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={tk.text} /></Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={tk.text} /></Pressable>
           <Text style={styles.headerTitle}>{initial ? 'Edit board' : 'Board'}</Text>
-          <Pressable onPress={() => setBuilderOpen(true)} style={styles.iconBtn} hitSlop={6}>
+          <Pressable accessibilityLabel={i18n.t('a11y.openCourseBuilder')} onPress={() => setBuilderOpen(true)} style={styles.iconBtn} hitSlop={6}>
             <Ionicons name="list" size={20} color={tk.textMuted} />
           </Pressable>
           <Pressable onPress={() => setPickerOpen(true)} style={styles.aiBtn} hitSlop={6} accessibilityRole="button">
             <Ionicons name="library" size={18} color={groupColor} />
             <Text style={[styles.aiBtnText, { color: groupColor }]}>{t('community.course')}</Text>
           </Pressable>
-          <Pressable onPress={handleSave} style={[styles.postBtn, { backgroundColor: groupColor }]}>
+          <Pressable accessibilityRole="button" onPress={handleSave} style={[styles.postBtn, { backgroundColor: groupColor }]}>
             <Text style={styles.postText}>{initial ? 'Update' : 'Post'}</Text>
           </Pressable>
         </View>
@@ -534,7 +535,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
                 <Ionicons name="library" size={18} color={tk.text} />
                 <Text style={styles.draftText}>{t('community.pickCourse')}</Text>
               </Pressable>
-              <Pressable style={styles.buildBtn} onPress={() => setBuilderOpen(true)}>
+              <Pressable accessibilityRole="button" style={styles.buildBtn} onPress={() => setBuilderOpen(true)}>
                 <Ionicons name="list" size={17} color={tk.textMuted} />
                 <Text style={styles.buildText}>{t('community.buildCourseManually')}</Text>
               </Pressable>
@@ -551,7 +552,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
               {SHAPES.map((s) => {
                 const on = tool === s.tool;
                 return (
-                  <Pressable key={s.tool} onPress={() => changeTool(s.tool)} style={[styles.shapeBtn, on && { backgroundColor: `${groupColor}22`, borderColor: groupColor }]}>
+                  <Pressable accessibilityRole="button" key={s.tool} onPress={() => changeTool(s.tool)} style={[styles.shapeBtn, on && { backgroundColor: `${groupColor}22`, borderColor: groupColor }]}>
                     <Ionicons name={s.icon as IoniconName} size={16} color={on ? groupColor: tk.textMuted} />
                     <Text style={[styles.shapeText, on && { color: groupColor }]}>{s.label}</Text>
                   </Pressable>
@@ -565,16 +566,16 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
             <View style={styles.selBar}>
               {elements[selectedIndex].type !== 'stroke' && (
                 <View style={styles.selResize}>
-                  <Pressable style={styles.stepBtn} onPress={() => resizeSelected(-1)}><Ionicons name="remove" size={18} color={tk.text} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.remove')} style={styles.stepBtn} onPress={() => resizeSelected(-1)}><Ionicons name="remove" size={18} color={tk.text} /></Pressable>
                   <Text style={styles.selResizeLabel}>{t('community.size')}</Text>
-                  <Pressable style={styles.stepBtn} onPress={() => resizeSelected(1)}><Ionicons name="add" size={18} color={tk.text} /></Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.stepBtn} onPress={() => resizeSelected(1)}><Ionicons name="add" size={18} color={tk.text} /></Pressable>
                 </View>
               )}
               {elements[selectedIndex].type === 'text' && (
-                <Pressable style={styles.selAction} onPress={editSelected}><Ionicons name="create-outline" size={17} color={tk.textMuted} /><Text style={styles.selActionText}>{t('community.edit')}</Text></Pressable>
+                <Pressable accessibilityRole="button" style={styles.selAction} onPress={editSelected}><Ionicons name="create-outline" size={17} color={tk.textMuted} /><Text style={styles.selActionText}>{t('community.edit')}</Text></Pressable>
               )}
-              <Pressable style={styles.selAction} onPress={deleteSelected}><Ionicons name="trash-outline" size={17} color={tk.danger} /><Text style={[styles.selActionText, { color: tk.danger }]}>{t('community.delete')}</Text></Pressable>
-              <Pressable style={styles.selAction} onPress={() => setSelectedIndex(null)}><Text style={[styles.selActionText, { color: groupColor }]}>{t('common.done')}</Text></Pressable>
+              <Pressable accessibilityRole="button" style={styles.selAction} onPress={deleteSelected}><Ionicons name="trash-outline" size={17} color={tk.danger} /><Text style={[styles.selActionText, { color: tk.danger }]}>{t('community.delete')}</Text></Pressable>
+              <Pressable accessibilityRole="button" style={styles.selAction} onPress={() => setSelectedIndex(null)}><Text style={[styles.selActionText, { color: groupColor }]}>{t('common.done')}</Text></Pressable>
             </View>
           ) : tool === 'move' && !editing ? (
             <Text style={styles.moveHint}>{t('community.moveHintSelect')}</Text>
@@ -589,7 +590,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
             {PRIMARY.map((t) => {
               const active = t.tool === 'shapes' ? isShape : tool === t.tool;
               return (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={t.tool}
                   style={styles.toolCol}
                   onPress={() => (t.tool === 'shapes' ? (!isShape && changeTool('arrow')) : changeTool(t.tool as Tool))}
@@ -614,7 +615,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
             </ScrollView>
             <View style={styles.sizeGroup}>
               {SIZES.map((s) => (
-                <Pressable key={s.label} onPress={() => setWidth(s.v)} style={[styles.sizeBtn, width === s.v && { backgroundColor: `${groupColor}30` }]}>
+                <Pressable accessibilityRole="button" key={s.label} onPress={() => setWidth(s.v)} style={[styles.sizeBtn, width === s.v && { backgroundColor: `${groupColor}30` }]}>
                   <Text style={[styles.sizeText, width === s.v && { color: groupColor }]}>{s.label}</Text>
                 </Pressable>
               ))}
@@ -623,15 +624,15 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
 
           {/* Actions (labeled) */}
           <View style={styles.actionsRow}>
-            <Pressable style={styles.action} onPress={undo}><Ionicons name="arrow-undo" size={19} color={tk.textMuted} /><Text style={styles.actionText}>{t('community.undo')}</Text></Pressable>
-            <Pressable style={styles.action} onPress={doRedo}><Ionicons name="arrow-redo" size={19} color={tk.textMuted} /><Text style={styles.actionText}>{t('community.redo')}</Text></Pressable>
-            <Pressable style={styles.action} onPress={() => setBackground((b) => BACKGROUNDS[(BACKGROUNDS.indexOf(b) + 1) % BACKGROUNDS.length])}>
+            <Pressable accessibilityRole="button" style={styles.action} onPress={undo}><Ionicons name="arrow-undo" size={19} color={tk.textMuted} /><Text style={styles.actionText}>{t('community.undo')}</Text></Pressable>
+            <Pressable accessibilityRole="button" style={styles.action} onPress={doRedo}><Ionicons name="arrow-redo" size={19} color={tk.textMuted} /><Text style={styles.actionText}>{t('community.redo')}</Text></Pressable>
+            <Pressable accessibilityRole="button" style={styles.action} onPress={() => setBackground((b) => BACKGROUNDS[(BACKGROUNDS.indexOf(b) + 1) % BACKGROUNDS.length])}>
               <View style={[styles.paperSwatch, { backgroundColor: BOARD_BG[background] }]} /><Text style={styles.actionText}>{t('community.paper')}</Text>
             </Pressable>
-            <Pressable style={styles.action} onPress={() => setGrid((g) => (g === 'none' ? 'lines' : g === 'lines' ? 'grid' : 'none'))}>
+            <Pressable accessibilityRole="button" style={styles.action} onPress={() => setGrid((g) => (g === 'none' ? 'lines' : g === 'lines' ? 'grid' : 'none'))}>
               <Ionicons name={grid === 'grid' ? 'grid' : grid === 'lines' ? 'reorder-four' : 'square-outline'} size={19} color={tk.textMuted} /><Text style={styles.actionText}>{t('community.grid')}</Text>
             </Pressable>
-            <Pressable style={styles.action} onPress={clearAll}><Ionicons name="trash-outline" size={19} color={tk.danger} /><Text style={[styles.actionText, { color: tk.danger }]}>{t('common.clear')}</Text></Pressable>
+            <Pressable accessibilityRole="button" style={styles.action} onPress={clearAll}><Ionicons name="trash-outline" size={19} color={tk.danger} /><Text style={[styles.actionText, { color: tk.danger }]}>{t('common.clear')}</Text></Pressable>
           </View>
         </View>
 
@@ -643,16 +644,16 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
             pointerEvents="box-none"
           >
             <View style={styles.textBar}>
-              <Pressable style={styles.stepBtn} onPress={() => setTextSize((s) => Math.max(14, s - 3))}><Ionicons name="remove" size={20} color={tk.text} /></Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.remove')} style={styles.stepBtn} onPress={() => setTextSize((s) => Math.max(14, s - 3))}><Ionicons name="remove" size={20} color={tk.text} /></Pressable>
               <Text style={styles.stepVal}>{textSize}</Text>
-              <Pressable style={styles.stepBtn} onPress={() => setTextSize((s) => Math.min(80, s + 3))}><Ionicons name="add" size={20} color={tk.text} /></Pressable>
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.stepBtn} onPress={() => setTextSize((s) => Math.min(80, s + 3))}><Ionicons name="add" size={20} color={tk.text} /></Pressable>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.textBarSwatches} contentContainerStyle={{ gap: 10, alignItems: 'center', paddingHorizontal: 4 }} keyboardShouldPersistTaps="handled">
                 {PALETTE.map((c) => (
                   <Pressable key={c} onPress={() => setTextColor(c)} style={[styles.swatch, { backgroundColor: c }, textColor === c && styles.swatchActive]} />
                 ))}
               </ScrollView>
-              <Pressable onPress={cancelInlineText} hitSlop={6}><Text style={styles.textCancel}>{t('common.cancel')}</Text></Pressable>
-              <Pressable onPress={commitInlineText} style={[styles.textAdd, { backgroundColor: groupColor }]}><Text style={styles.textAddText}>{t('common.done')}</Text></Pressable>
+              <Pressable accessibilityRole="button" onPress={cancelInlineText} hitSlop={6}><Text style={styles.textCancel}>{t('common.cancel')}</Text></Pressable>
+              <Pressable accessibilityRole="button" onPress={commitInlineText} style={[styles.textAdd, { backgroundColor: groupColor }]}><Text style={styles.textAddText}>{t('common.done')}</Text></Pressable>
             </View>
           </KeyboardAvoidingView>
         )}

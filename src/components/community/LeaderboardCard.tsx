@@ -67,7 +67,7 @@ export const LeaderboardCard: React.FC<LeaderboardCardProps> = ({
       {/* Tab Selector */}
       <View style={styles.tabs}>
         {TAB_OPTIONS.map((tab) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={tab.type}
             style={[styles.tab, currentType === tab.type && styles.tabActive]}
             onPress={() => onTypeChange(tab.type)}

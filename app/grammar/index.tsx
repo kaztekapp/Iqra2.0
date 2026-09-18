@@ -8,6 +8,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { grammarLessons as lessonsData } from '../../src/data/arabic/grammar/lessons';
 import { font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
+import i18n from 'i18next';
 
 // Map category to icon and color
 const categoryConfig: Record<string, { icon: string; color: string }> = {
@@ -66,7 +67,7 @@ export default function GrammarScreen() {
   const renderCard = (lesson: (typeof grammarLessons)[number]) => {
     const status = getLessonStatus(lesson.id);
     return (
-      <Pressable
+      <Pressable accessibilityRole="button"
         key={lesson.id}
         style={styles.lessonCard}
         onPress={() => router.push(`/grammar/${lesson.id}`)}
@@ -122,7 +123,7 @@ export default function GrammarScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>

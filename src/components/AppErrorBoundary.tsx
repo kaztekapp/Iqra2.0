@@ -53,7 +53,7 @@ export class AppErrorBoundary extends Component<Props, State> {
               {i18n.t('profile.errorBoundaryMessage')}
             </Text>
 
-            <Pressable style={styles.button} onPress={this.handleRestart}>
+            <Pressable accessibilityRole="button" style={styles.button} onPress={this.handleRestart}>
               <Ionicons name="refresh" size={20} color={color.text} />
               <Text style={styles.buttonText}>{i18n.t('profile.restartApp')}</Text>
             </Pressable>

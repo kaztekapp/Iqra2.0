@@ -14,6 +14,7 @@ import { ShareToGroupModal } from '../../src/components/community/ShareToGroupMo
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 // Part of speech labels with colors
 const partOfSpeechConfig: Record<string, { label: string; labelArabic: string; color: string }> = {
@@ -71,7 +72,7 @@ export default function ThemeDetailScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('common.notFound')}</Text>
-          <Pressable style={styles.backLink} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backLink} onPress={() => router.back()}>
             <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -130,7 +131,7 @@ export default function ThemeDetailScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -193,7 +194,7 @@ export default function ThemeDetailScreen() {
         <View style={styles.filterSection}>
           <Text style={styles.filterTitle}>{t('vocabulary.filterByType')}</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.filterChip, viewMode === 'all' && styles.filterChipActive]}
               onPress={() => setViewMode('all')}
             >
@@ -202,7 +203,7 @@ export default function ThemeDetailScreen() {
               </Text>
             </Pressable>
             {wordsByType.nouns > 0 && (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterChip, viewMode === 'nouns' && { backgroundColor: withAlpha(color.progress, 0.19), borderColor: color.progress }]}
                 onPress={() => setViewMode('nouns')}
               >
@@ -212,7 +213,7 @@ export default function ThemeDetailScreen() {
               </Pressable>
             )}
             {wordsByType.adjectives > 0 && (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterChip, viewMode === 'adjectives' && { backgroundColor: withAlpha(color.warning, 0.19), borderColor: color.warning }]}
                 onPress={() => setViewMode('adjectives')}
               >
@@ -222,7 +223,7 @@ export default function ThemeDetailScreen() {
               </Pressable>
             )}
             {wordsByType.other > 0 && (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.filterChip, viewMode === 'other' && { backgroundColor: withAlpha(color.textFaint, 0.19), borderColor: color.textFaint }]}
                 onPress={() => setViewMode('other')}
               >
@@ -260,7 +261,7 @@ export default function ThemeDetailScreen() {
             </Text>
             <View style={styles.examplesGrid}>
               {wordsWithExamples.slice(0, 6).map((word) => (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   key={word.id}
                   style={styles.exampleCard}
                   onPress={() => speak(word.exampleSentence!.arabic)}
@@ -298,13 +299,13 @@ export default function ThemeDetailScreen() {
             return (
               <View key={word.id} style={styles.wordCard}>
                 {/* Word Header */}
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.wordHeader}
                   onPress={() => setExpandedWordId(isExpanded ? null : word.id)}
                 >
                   <View style={styles.wordMain}>
                     {/* Arabic and Audio */}
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={styles.wordArabicContainer}
                       onPress={(e) => {
                         e.stopPropagation();
@@ -374,7 +375,7 @@ export default function ThemeDetailScreen() {
                       {word.plural && (
                         <View style={styles.wordDetail}>
                           <Text style={styles.wordDetailLabel}>{t('vocabulary.plural')}</Text>
-                          <Pressable
+                          <Pressable accessibilityRole="button"
                             style={styles.wordDetailValue}
                             onPress={() => speak(word.plural!)}
                           >
@@ -405,7 +406,7 @@ export default function ThemeDetailScreen() {
 
                     {/* Example sentence */}
                     {word.exampleSentence && (
-                      <Pressable
+                      <Pressable accessibilityRole="button"
                         style={styles.exampleSection}
                         onPress={() => speak(word.exampleSentence!.arabic)}
                       >
@@ -426,7 +427,7 @@ export default function ThemeDetailScreen() {
                     {/* Action buttons */}
                     <View style={styles.actionButtons}>
                       {status === 'new' && (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           style={styles.learnButton}
                           onPress={() => handleMarkLearned(word.id)}
                         >
@@ -435,7 +436,7 @@ export default function ThemeDetailScreen() {
                         </Pressable>
                       )}
                       {status === 'learned' && (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           style={styles.masterButton}
                           onPress={() => handleMarkMastered(word.id)}
                         >
@@ -451,7 +452,7 @@ export default function ThemeDetailScreen() {
                           <Text style={styles.masteredText}>{t('vocabulary.masteredBadge')}</Text>
                         </View>
                       )}
-                      <Pressable
+                      <Pressable accessibilityRole="button"
                         style={styles.shareButton}
                         onPress={() => shareWord(word)}
                         accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
@@ -474,7 +475,7 @@ export default function ThemeDetailScreen() {
             <Text style={styles.sectionTitle}>{t('common.practice')}</Text>
           </View>
 
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.practiceButton, { backgroundColor: theme.color }]}
             onPress={() => router.push(`/vocabulary/flashcards?themeId=${theme.id}`)}
           >
@@ -484,7 +485,7 @@ export default function ThemeDetailScreen() {
           </Pressable>
 
           {writingExercises.length > 0 && (
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={[styles.practiceButton, styles.writingPracticeButton]}
               onPress={() => router.push(`/vocabulary/writing-practice?themeId=${theme.id}`)}
             >

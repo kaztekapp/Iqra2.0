@@ -271,7 +271,7 @@ export default function ShadowingScreen() {
 
         {/* Phase Instruction — tappable to play audio in listen/shadow */}
         {(phase === 'listen' || phase === 'shadow') ? (
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={styles.instructionCard}
             onPress={audioState === 'idle' ? playAudio : undefined}
             disabled={audioState !== 'idle'}
@@ -300,7 +300,7 @@ export default function ShadowingScreen() {
           <View style={styles.ratingSection}>
             <Text style={styles.ratingTitle}>{t('shadowing.rateYourself')}</Text>
             <View style={styles.ratingButtons}>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingNeedsWork]}
                 onPress={() => handleRate('needsWork')}
               >
@@ -309,7 +309,7 @@ export default function ShadowingScreen() {
                   {t('shadowing.needsWork')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingGood]}
                 onPress={() => handleRate('good')}
               >
@@ -318,7 +318,7 @@ export default function ShadowingScreen() {
                   {t('shadowing.good')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingMastered]}
                 onPress={() => handleRate('mastered')}
               >
@@ -334,7 +334,7 @@ export default function ShadowingScreen() {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.navButton, currentAyahIndex === 0 && styles.navButtonDisabled]}
           onPress={handlePrevAyah}
           disabled={currentAyahIndex === 0}
@@ -356,7 +356,7 @@ export default function ShadowingScreen() {
 
         {/* Phase action button (Next Phase for listen/shadow) */}
         {phase !== 'solo' && (
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[
               styles.nextPhaseButton,
               !phaseComplete && styles.nextPhaseButtonDisabled,
@@ -380,7 +380,7 @@ export default function ShadowingScreen() {
           </Pressable>
         )}
 
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[
             styles.navButton,
             currentAyahIndex >= totalAyahs - 1 && styles.navButtonDisabled,

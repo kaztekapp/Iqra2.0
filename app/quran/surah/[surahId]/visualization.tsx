@@ -354,7 +354,7 @@ export default function VisualizationScreen() {
         )}
 
         {vizMode === 'study' && !sceneMemorized && (
-          <Pressable style={styles.actionButton} onPress={handleMemorized}>
+          <Pressable accessibilityRole="button" style={styles.actionButton} onPress={handleMemorized}>
             <Ionicons name="checkmark-circle-outline" size={20} color={color.text} />
             <Text style={styles.actionButtonText}>
               {t('visualization.memorizedScene')}
@@ -375,7 +375,7 @@ export default function VisualizationScreen() {
           <View style={styles.ratingSection}>
             <Text style={styles.ratingTitle}>{t('visualization.rateRecall')}</Text>
             <View style={styles.ratingButtons}>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingYes]}
                 onPress={() => handleRate(5)}
               >
@@ -384,7 +384,7 @@ export default function VisualizationScreen() {
                   {t('visualization.recallYes')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingPartial]}
                 onPress={() => handleRate(3)}
               >
@@ -393,7 +393,7 @@ export default function VisualizationScreen() {
                   {t('visualization.recallPartial')}
                 </Text>
               </Pressable>
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={[styles.ratingButton, styles.ratingNo]}
                 onPress={() => handleRate(1)}
               >

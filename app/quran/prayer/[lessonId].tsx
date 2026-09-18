@@ -16,6 +16,7 @@ import {
 import { font, color as tk, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
+import i18n from 'i18next';
 
 export default function PrayerLessonScreen() {
   const { t } = useTranslation();
@@ -119,7 +120,7 @@ export default function PrayerLessonScreen() {
           </View>
         )}
         {block.arabic && (
-          <Pressable onPress={() => handlePlayArabic(block.arabic!)}>
+          <Pressable accessibilityRole="button" onPress={() => handlePlayArabic(block.arabic!)}>
             <View style={styles.arabicTextContainer}>
               <Text style={styles.arabicText}>{block.arabic}</Text>
               <Ionicons
@@ -208,7 +209,7 @@ export default function PrayerLessonScreen() {
       )}
       <View style={styles.examplesContainer}>
         {block.examples.map((example, i) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={i}
             style={styles.exampleCard}
             onPress={() => handlePlayArabic(example.arabic)}
@@ -250,7 +251,7 @@ export default function PrayerLessonScreen() {
         </View>
 
         {/* Arabic Text */}
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={styles.prayerStepArabicContainer}
           onPress={() => handlePlayArabic(step.arabic)}
         >
@@ -317,7 +318,7 @@ export default function PrayerLessonScreen() {
               </View>
               <Text style={styles.stepListDescription}>{lc(step.description, step.descriptionFr)}</Text>
               {step.arabic && (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   onPress={() => handlePlayArabic(step.arabic!)}
                   style={styles.stepListArabicContainer}
                 >
@@ -428,7 +429,7 @@ export default function PrayerLessonScreen() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={tk.text} />
         </Pressable>
         <View style={styles.headerTitle}>
@@ -452,7 +453,7 @@ export default function PrayerLessonScreen() {
           <Ionicons name="paper-plane-outline" size={22} color={tk.accent} />
         </Pressable>
         <View style={styles.headerNav}>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
             style={[styles.navButton, !hasPrevious && styles.navButtonDisabled]}
             onPress={handlePrevious}
             disabled={!hasPrevious}
@@ -466,7 +467,7 @@ export default function PrayerLessonScreen() {
           <Text style={styles.lessonNumber}>
             {lesson.order}/{allLessons.length}
           </Text>
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
             style={[styles.navButton, !hasNext && styles.navButtonDisabled]}
             onPress={handleNext}
             disabled={!hasNext}
@@ -489,7 +490,7 @@ export default function PrayerLessonScreen() {
         {lesson.content.map((block, index) => renderContent(block, index))}
 
         {/* Complete Button */}
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={[styles.completeButton, completed && styles.completeButtonActive]}
           onPress={handleComplete}
         >

@@ -10,6 +10,7 @@ import { verbLessons } from '../../src/data/arabic/verbs/verbLessons';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function VerbsScreen() {
   const { t } = useTranslation();
@@ -65,7 +66,7 @@ export default function VerbsScreen() {
   ];
 
   const renderLessonCard = (lesson: (typeof verbLessons)[number], color: string) => (
-    <Pressable
+    <Pressable accessibilityRole="button"
       key={lesson.id}
       style={styles.lessonCard}
       onPress={() => router.push(`/grammar/${lesson.id}`)}
@@ -89,7 +90,7 @@ export default function VerbsScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={tk.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -140,7 +141,7 @@ export default function VerbsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('verbs.tensesAndMoods')}</Text>
           {tenseCategories.map((category) => (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={category.id}
               style={styles.categoryCard}
               onPress={() => router.push(`/verbs/${category.id}`)}
@@ -164,12 +165,12 @@ export default function VerbsScreen() {
           <Text style={styles.sectionSubtitle}>{t('verbs.allVerbsDesc')}</Text>
           <View style={styles.verbsGrid}>
             {arabicVerbs.map((verb) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={verb.id}
                 style={styles.verbCard}
                 onPress={() => router.push(`/verbs/verb/${verb.id}`)}
               >
-                <Pressable
+                <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={styles.verbAudioButton}
                   onPress={(e) => {
                     e.stopPropagation();
@@ -225,7 +226,7 @@ export default function VerbsScreen() {
           <Text style={styles.sectionTitle}>{t('common.practice')}</Text>
 
           {/* Quiz Practice */}
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.practiceButton, { backgroundColor: tk.progress }]}
             onPress={() =>
               router.push({
@@ -246,7 +247,7 @@ export default function VerbsScreen() {
           </Pressable>
 
           {/* Writing Practice */}
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.practiceButton, { backgroundColor: tk.sacred }]}
             onPress={() =>
               router.push({

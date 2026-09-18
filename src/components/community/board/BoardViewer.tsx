@@ -7,6 +7,7 @@ import { BoardCanvas, boardContentHeight } from './BoardCanvas';
 import type { BoardContent } from '../../../types/classContent';
 import { BOARD_BG } from '../../../types/classContent';
 import { color } from '../../../theme/tokens';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -34,10 +35,10 @@ export function BoardViewer({ visible, board, groupColor, authorName, canEdit, o
       <SafeAreaProvider style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
           <View style={styles.header}>
-            <Pressable onPress={onClose} hitSlop={8}><Ionicons name="chevron-down" size={26} color={color.text} /></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showMore')} onPress={onClose} hitSlop={8}><Ionicons name="chevron-down" size={26} color={color.text} /></Pressable>
             <Text style={styles.headerLabel}>{t('community.boardBy', { author: authorName })}</Text>
             {canEdit ? (
-              <Pressable onPress={onEdit} hitSlop={8} style={styles.editBtn}>
+              <Pressable accessibilityRole="button" onPress={onEdit} hitSlop={8} style={styles.editBtn}>
                 <Ionicons name="create-outline" size={18} color={groupColor} />
                 <Text style={[styles.editText, { color: groupColor }]}>{t('community.edit')}</Text>
               </Pressable>

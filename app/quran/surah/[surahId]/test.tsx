@@ -9,6 +9,7 @@ import { fetchSurahAyahsById } from '../../../../src/services/staticQuranService
 import { Ayah } from '../../../../src/types/quran';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type TestType = 'fill_blank' | 'continue_from' | 'what_next';
 
@@ -116,7 +117,7 @@ export default function TestModeScreen() {
             <Text style={styles.completePercent}>
               {Math.round((correctAnswers / questions.length) * 100)}%
             </Text>
-            <Pressable style={styles.completeButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.completeButton} onPress={() => router.back()}>
               <Text style={styles.completeButtonText}>{t('surahTest.backToSurah')}</Text>
             </Pressable>
           </View>
@@ -197,7 +198,7 @@ export default function TestModeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -237,7 +238,7 @@ export default function TestModeScreen() {
           const showWrong = showResult && isSelected && !isCorrect;
 
           return (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={index}
               style={[
                 styles.optionButton,
@@ -270,7 +271,7 @@ export default function TestModeScreen() {
       {/* Submit/Next Button */}
       <View style={styles.bottomContainer}>
         {!showResult ? (
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.submitButton, !selectedAnswer && styles.submitButtonDisabled]}
             onPress={handleSubmit}
             disabled={!selectedAnswer}
@@ -278,7 +279,7 @@ export default function TestModeScreen() {
             <Text style={styles.submitButtonText}>{t('surahTest.checkAnswer')}</Text>
           </Pressable>
         ) : (
-          <Pressable style={styles.nextButton} onPress={handleNext}>
+          <Pressable accessibilityRole="button" style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>
               {currentQuestionIndex < questions.length - 1 ? t('surahTest.nextQuestion') : t('surahTest.seeResults')}
             </Text>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
+import i18n from 'i18next';
 
 interface Props {
   visible: boolean;
@@ -45,11 +46,11 @@ export function CreateSessionModal({ visible, onClose, onCreate, groupColor }: P
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Pressable onPress={onClose}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose}>
               <Ionicons name="close" size={24} color={color.textMuted} />
             </Pressable>
             <Text style={styles.headerTitle}>{t('community.sessionTitle')}</Text>
-            <Pressable style={[styles.createBtn, !title.trim() && { opacity: 0.4 }]} onPress={handleCreate} disabled={!title.trim()}>
+            <Pressable accessibilityRole="button" style={[styles.createBtn, !title.trim() && { opacity: 0.4 }]} onPress={handleCreate} disabled={!title.trim()}>
               <Text style={styles.createBtnText}>{t('community.create')}</Text>
             </Pressable>
           </View>
@@ -62,7 +63,7 @@ export function CreateSessionModal({ visible, onClose, onCreate, groupColor }: P
             <Text style={styles.label}>{t('community.when')}</Text>
             <View style={styles.optionRow}>
               {dayOptions.map((opt) => (
-                <Pressable key={opt.key} style={[styles.optionBtn, selectedDay === opt.value && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setSelectedDay(opt.value)}>
+                <Pressable accessibilityRole="button" key={opt.key} style={[styles.optionBtn, selectedDay === opt.value && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setSelectedDay(opt.value)}>
                   <Text style={[styles.optionText, selectedDay === opt.value && { color: groupColor }]}>{opt.label}</Text>
                 </Pressable>
               ))}
@@ -71,7 +72,7 @@ export function CreateSessionModal({ visible, onClose, onCreate, groupColor }: P
             <Text style={styles.label}>{t('community.duration')}</Text>
             <View style={styles.optionRow}>
               {DURATION_OPTIONS.map((dur) => (
-                <Pressable key={dur} style={[styles.optionBtn, selectedDuration === dur && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setSelectedDuration(dur)}>
+                <Pressable accessibilityRole="button" key={dur} style={[styles.optionBtn, selectedDuration === dur && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setSelectedDuration(dur)}>
                   <Text style={[styles.optionText, selectedDuration === dur && { color: groupColor }]}>{dur}min</Text>
                 </Pressable>
               ))}

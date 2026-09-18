@@ -17,6 +17,7 @@ import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 export default function VerbsWritingPracticeScreen() {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ export default function VerbsWritingPracticeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('verbWriting.noWritingExercises')}</Text>
-          <Pressable style={styles.backLink} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backLink} onPress={() => router.back()}>
             <Text style={styles.backLinkText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -176,11 +177,11 @@ export default function VerbsWritingPracticeScreen() {
           <Text style={styles.xpEarned}>{t('verbWriting.xpEarned', { count: xpEarned })}</Text>
 
           <View style={styles.completeButtons}>
-            <Pressable style={styles.retryButton} onPress={handleRetry}>
+            <Pressable accessibilityRole="button" style={styles.retryButton} onPress={handleRetry}>
               <Ionicons name="refresh" size={20} color={color.accent} />
               <Text style={styles.retryButtonText}>{t('verbWriting.tryAgain')}</Text>
             </Pressable>
-            <Pressable style={styles.doneButton} onPress={() => router.back()}>
+            <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
               <Text style={styles.doneButtonText}>{t('verbWriting.done')}</Text>
             </Pressable>
           </View>
@@ -193,7 +194,7 @@ export default function VerbsWritingPracticeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -227,7 +228,7 @@ export default function VerbsWritingPracticeScreen() {
           {currentExercise.questionArabic && (
             <View style={styles.questionArabicRow}>
               <Text style={styles.questionArabic}>{currentExercise.questionArabic}</Text>
-              <Pressable
+              <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                 style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
                 onPress={() => speak(currentExercise.questionArabic || '')}
               >
@@ -239,7 +240,7 @@ export default function VerbsWritingPracticeScreen() {
 
         {/* Hint Button */}
         {currentExercise.hint && !showHint && !isAnswered && (
-          <Pressable style={styles.hintButton} onPress={() => setShowHint(true)}>
+          <Pressable accessibilityRole="button" style={styles.hintButton} onPress={() => setShowHint(true)}>
             <Ionicons name="bulb-outline" size={18} color={color.accent} />
             <Text style={styles.hintButtonText}>{t('verbWriting.showHint')}</Text>
           </Pressable>
@@ -270,7 +271,7 @@ export default function VerbsWritingPracticeScreen() {
             {!isCorrect && (
               <View style={styles.correctAnswerBox}>
                 <Text style={styles.correctAnswerLabel}>{t('verbWriting.correctAnswer')}</Text>
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={styles.correctAnswerRow}
                   onPress={() => speak((currentExercise.correctAnswer as string[])[0])}
                 >

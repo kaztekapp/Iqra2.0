@@ -21,6 +21,7 @@ import { playArabicAudio } from '../../src/lib/arabicVocabularyApi';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { QuizIntro } from '../../src/components/quiz/QuizIntro';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
@@ -275,7 +276,7 @@ export default function GrammarQuizScreen() {
       <SafeAreaView style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={handleGoBack}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={handleGoBack}>
             <Ionicons name="close" size={24} color={color.textMuted} />
           </Pressable>
           <Text style={styles.headerText}>
@@ -320,7 +321,7 @@ export default function GrammarQuizScreen() {
                       currentQuestion.questionArabic!.split(/[=:→]/)[1]?.trim() || currentQuestion.questionArabic!
                     : currentQuestion.questionArabic!}
                 </Text>
-                <Pressable
+                <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={styles.audioButton}
                   onPress={() => {
                     // Get the displayed Arabic text
@@ -377,7 +378,7 @@ export default function GrammarQuizScreen() {
                 ];
 
                 return (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     key={option.id}
                     style={optionStyle}
                     onPress={() => handleSelectOption(option.id)}
@@ -386,7 +387,7 @@ export default function GrammarQuizScreen() {
                     <View style={styles.optionContent}>
                       <Text style={textStyle}>{lc(option.text, option.textFr)}</Text>
                       {hasArabic && (
-                        <Pressable
+                        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                           style={styles.optionAudioButton}
                           onPress={(e) => {
                             e.stopPropagation();
@@ -448,7 +449,7 @@ export default function GrammarQuizScreen() {
                 textAlign="center"
               />
               {screenState === 'playing' && (
-                <Pressable
+                <Pressable accessibilityRole="button"
                   style={[styles.submitButton, !fillBlankAnswer.trim() && styles.submitButtonDisabled]}
                   onPress={handleSubmitFillBlank}
                   disabled={!fillBlankAnswer.trim()}
@@ -465,7 +466,7 @@ export default function GrammarQuizScreen() {
                         ? currentQuestion.correctAnswer[0]
                         : currentQuestion.correctAnswer}
                     </Text>
-                    <Pressable
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                       style={styles.audioButtonSmall}
                       onPress={() => {
                         const answer = Array.isArray(currentQuestion.correctAnswer)
@@ -506,7 +507,7 @@ export default function GrammarQuizScreen() {
 
                   {/* Extract and play the first Arabic phrase from explanation */}
                   {/[\u0600-\u06FF]/.test(currentQuestion.explanation) && (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={styles.listenButton}
                       onPress={() => {
                         // Extract the first Arabic phrase (words with spaces between them)
@@ -530,7 +531,7 @@ export default function GrammarQuizScreen() {
                 </View>
               )}
 
-              <Pressable style={styles.nextButton} onPress={handleNext}>
+              <Pressable accessibilityRole="button" style={styles.nextButton} onPress={handleNext}>
                 <Text style={styles.nextButtonText}>
                   {currentIndex >= currentQuestions.length - 1 ? t('grammarQuiz.seeResults') : t('grammarQuiz.nextQuestion')}
                 </Text>
@@ -636,7 +637,7 @@ export default function GrammarQuizScreen() {
                   {question.questionArabic && (
                     <View style={styles.reviewArabicRow}>
                       <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
-                      <Pressable
+                      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                         style={styles.audioButtonSmall}
                         onPress={() => playArabicAudio(question.questionArabic!)}
                       >
@@ -656,7 +657,7 @@ export default function GrammarQuizScreen() {
                           {userAnswer}
                         </Text>
                         {/[\u0600-\u06FF]/.test(userAnswer) && (
-                          <Pressable
+                          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                             style={styles.audioButtonMini}
                             onPress={() => playArabicAudio(userAnswer)}
                           >
@@ -674,7 +675,7 @@ export default function GrammarQuizScreen() {
                             {correctAnswer}
                           </Text>
                           {/[\u0600-\u06FF]/.test(correctAnswer) && (
-                            <Pressable
+                            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                               style={styles.audioButtonMini}
                               onPress={() => playArabicAudio(correctAnswer)}
                             >
@@ -690,7 +691,7 @@ export default function GrammarQuizScreen() {
                     <View style={styles.reviewExplanationBox}>
                       <Text style={styles.reviewExplanation}>{lc(question.explanation, question.explanationFr)}</Text>
                       {/[\u0600-\u06FF]/.test(question.explanation) && (
-                        <Pressable
+                        <Pressable accessibilityRole="button"
                           style={styles.reviewListenButton}
                           onPress={() => {
                             // Extract the first Arabic phrase (words with spaces)
@@ -719,16 +720,16 @@ export default function GrammarQuizScreen() {
           {/* Action Buttons */}
           <View style={styles.resultActions}>
             {quizResult.passed ? (
-              <Pressable style={styles.startButton} onPress={generateNewQuiz}>
+              <Pressable accessibilityRole="button" style={styles.startButton} onPress={generateNewQuiz}>
                 <Text style={styles.startButtonText}>{t('grammarQuiz.newQuiz')}</Text>
               </Pressable>
             ) : (
-              <Pressable style={styles.startButton} onPress={handleTryAgain}>
+              <Pressable accessibilityRole="button" style={styles.startButton} onPress={handleTryAgain}>
                 <Text style={styles.startButtonText}>{t('grammarQuiz.tryAgain')}</Text>
               </Pressable>
             )}
 
-            <Pressable style={styles.backTextButton} onPress={handleGoBack}>
+            <Pressable accessibilityRole="button" style={styles.backTextButton} onPress={handleGoBack}>
               <Text style={styles.backTextButtonLabel}>{t('grammarQuiz.backToCommunity')}</Text>
             </Pressable>
           </View>

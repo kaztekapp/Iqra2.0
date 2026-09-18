@@ -8,6 +8,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 const readingTexts = [
   {
@@ -166,7 +167,7 @@ export default function ReadingScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -190,7 +191,7 @@ export default function ReadingScreen() {
         </View>
 
         {/* Arabic memorization entry */}
-        <Pressable
+        <Pressable accessibilityRole="button"
           style={styles.arabicCardWrap}
           onPress={() => router.push('/reading/arabic')}
         >
@@ -229,7 +230,7 @@ export default function ReadingScreen() {
           {beginnerTexts.map((text) => {
             const status = getTextStatus(text.id);
             return (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
                 onPress={() => router.push(`/reading/${text.id}`)}
@@ -278,7 +279,7 @@ export default function ReadingScreen() {
           {intermediateTexts.map((text) => {
             const status = getTextStatus(text.id);
             return (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
                 onPress={() => router.push(`/reading/${text.id}`)}
@@ -327,7 +328,7 @@ export default function ReadingScreen() {
           {advancedTexts.map((text) => {
             const status = getTextStatus(text.id);
             return (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
                 onPress={() => router.push(`/reading/${text.id}`)}

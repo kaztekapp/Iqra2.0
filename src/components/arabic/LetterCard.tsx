@@ -1,4 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import i18n from 'i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { ArabicLetter } from '../../types/arabic';
@@ -36,7 +37,7 @@ export function LetterCard({
   const currentSize = sizeStyles[size];
 
   return (
-    <Pressable
+    <Pressable accessibilityRole="button"
       onPress={onPress}
       // Plain array, not style={({pressed}) => ...}: NativeWind's css-interop
       // wraps Pressable and never invokes the function form, so those styles
@@ -71,7 +72,7 @@ export function LetterCard({
 
       {/* Audio button */}
       {onPlayAudio && (
-        <Pressable
+        <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
           onPress={(e) => {
             e.stopPropagation();
             onPlayAudio();
@@ -137,7 +138,7 @@ export function LetterDetail({ letter, onPlayAudio, isPlaying }: LetterDetailPro
   return (
     <View style={styles.detailContainer}>
       {/* Main letter display */}
-      <Pressable onPress={onPlayAudio} style={styles.mainLetterContainer}>
+      <Pressable accessibilityRole="button" onPress={onPlayAudio} style={styles.mainLetterContainer}>
         <Text style={styles.mainLetter}>{letter.letter}</Text>
         {onPlayAudio && (
           <View style={[styles.detailAudioButton, isPlaying && styles.audioButtonActive]}>

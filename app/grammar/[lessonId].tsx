@@ -17,6 +17,7 @@ import { lessonContent, getGrammarId } from '../../src/data/arabic/grammar/lesso
 import { QuizOption, QuizOptionState } from '../../src/components/quiz/QuizOption';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 // Note: lessonContent and helper functions are now imported from
 // '../../src/data/arabic/grammar/lessonContent'
@@ -245,7 +246,7 @@ export default function GrammarLessonScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.comingSoon}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.comingSoonContent}>
@@ -329,7 +330,7 @@ export default function GrammarLessonScreen() {
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
-            <Pressable style={styles.backButton} onPress={() => setShowExercises(false)}>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.backButton} onPress={() => setShowExercises(false)}>
               <Ionicons name="close" size={24} color={color.text} />
             </Pressable>
             <View style={styles.headerText}>
@@ -341,7 +342,7 @@ export default function GrammarLessonScreen() {
             <Text style={styles.noExercisesText}>
               {t('grammar.noPractice')}
             </Text>
-            <Pressable style={styles.backToLessonBtn} onPress={() => setShowExercises(false)}>
+            <Pressable accessibilityRole="button" style={styles.backToLessonBtn} onPress={() => setShowExercises(false)}>
               <Text style={styles.backToLessonText}>{t('grammar.backToLesson')}</Text>
             </Pressable>
           </View>
@@ -366,7 +367,7 @@ export default function GrammarLessonScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => setShowExercises(false)}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.backButton} onPress={() => setShowExercises(false)}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -399,7 +400,7 @@ export default function GrammarLessonScreen() {
           <View style={styles.questionCard}>
             <Text style={styles.questionText}>{lc(currentExercise.question, currentExercise.questionFr)}</Text>
             {showQuestionArabic && (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 style={styles.questionArabicRow}
                 onPress={() => currentExercise.questionArabic && speak(currentExercise.questionArabic)}
               >
@@ -556,7 +557,7 @@ export default function GrammarLessonScreen() {
 
           {/* Next Button */}
           {showResult && (
-            <Pressable style={styles.nextBtn} onPress={handleNextExercise}>
+            <Pressable accessibilityRole="button" style={styles.nextBtn} onPress={handleNextExercise}>
               <Text style={styles.nextBtnText}>
                 {currentExerciseIndex < activeExercises.length - 1 ? t('grammar.nextQuestion') : t('grammar.finishPractice')}
               </Text>
@@ -584,7 +585,7 @@ export default function GrammarLessonScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>
@@ -606,7 +607,7 @@ export default function GrammarLessonScreen() {
                 <HighlightedText text={lc(section.content, section.contentFr)} style={styles.descriptionText} />
                 {section.arabicDescription && (
                   <View>
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={styles.arabicDescriptionRow}
                       onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                     >
@@ -637,7 +638,7 @@ export default function GrammarLessonScreen() {
                 {/* Comparison rows */}
                 {section.comparisons?.map((comp, compIndex) => (
                   <View key={compIndex} style={styles.comparisonRow}>
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={[styles.comparisonCard, styles.comparisonCardLeft]}
                       onPress={() => speak(comp.left.arabic)}
                     >
@@ -649,7 +650,7 @@ export default function GrammarLessonScreen() {
                       <Text style={styles.comparisonEnglish}>{lc(comp.left.label, comp.left.labelFr)}</Text>
                     </Pressable>
                     <Ionicons name="arrow-forward" size={16} color={color.progress} />
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       style={[styles.comparisonCard, styles.comparisonCardRight]}
                       onPress={() => speak(comp.right.arabic)}
                     >
@@ -678,7 +679,7 @@ export default function GrammarLessonScreen() {
                 </View>
                 <View style={styles.lettersGrid}>
                   {section.letters?.map((letter: string, letterIndex: number) => (
-                    <Pressable
+                    <Pressable accessibilityRole="button"
                       key={letterIndex}
                       style={[
                         styles.letterCell,
@@ -698,7 +699,7 @@ export default function GrammarLessonScreen() {
               /* Examples Grid - multiple example cards */
               <View style={styles.examplesGrid}>
                 {section.examples?.map((example, exIndex) => (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     key={exIndex}
                     style={styles.exampleCard}
                     onPress={() => speak(isLetterBuild(example.arabic) ? buildFinalWord(example.arabic) : example.arabic)}
@@ -745,7 +746,7 @@ export default function GrammarLessonScreen() {
                       />
                       {section.arabicDescription && (
                         <View>
-                          <Pressable
+                          <Pressable accessibilityRole="button"
                             style={[
                               styles.arabicDescriptionRow,
                               { backgroundColor: section.itemType === 'rule' ? '#10b98110' : '#f59e0b10' }
@@ -782,7 +783,7 @@ export default function GrammarLessonScreen() {
 
                 {/* Arabic description for other types (not rule/note) */}
                 {section.arabicDescription && section.itemType !== 'rule' && section.itemType !== 'note' && (
-                  <Pressable
+                  <Pressable accessibilityRole="button"
                     style={styles.arabicDescriptionRow}
                     onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                   >
@@ -796,7 +797,7 @@ export default function GrammarLessonScreen() {
                 {section.examples && section.examples.length > 0 && (
                   <View style={styles.examplesBox}>
                     {section.examples.map((example, exIndex) => (
-                      <Pressable
+                      <Pressable accessibilityRole="button"
                         key={exIndex}
                         style={[
                           styles.exampleRow,
@@ -837,7 +838,7 @@ export default function GrammarLessonScreen() {
 
             {/* Regular Practice Button */}
             {regularExercises.length > 0 && (
-              <Pressable style={styles.practiceRow} onPress={() => handleStartPractice('regular')}>
+              <Pressable accessibilityRole="button" style={styles.practiceRow} onPress={() => handleStartPractice('regular')}>
                 <View style={[styles.practiceIconChip, styles.quizChip]}>
                   <Ionicons name="play" size={19} color={color.progress} />
                 </View>
@@ -850,7 +851,7 @@ export default function GrammarLessonScreen() {
 
             {/* Writing Practice Button */}
             {writingExercises.length > 0 && (
-              <Pressable style={styles.practiceRow} onPress={() => handleStartPractice('writing')}>
+              <Pressable accessibilityRole="button" style={styles.practiceRow} onPress={() => handleStartPractice('writing')}>
                 <View style={[styles.practiceIconChip, styles.writingChip]}>
                   <Ionicons name="create" size={19} color={color.accent} />
                 </View>
@@ -865,7 +866,7 @@ export default function GrammarLessonScreen() {
 
         {/* Complete Button */}
         <View style={[styles.section, { marginBottom: 100 }]}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.completeButton, isCompleted && styles.completeButtonDone]}
             onPress={handleComplete}
             disabled={isCompleted}

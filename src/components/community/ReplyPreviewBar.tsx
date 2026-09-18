@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color } from '../../theme/tokens';
+import i18n from 'i18next';
 
 export interface ReplyTarget {
   id: string;
@@ -33,7 +34,7 @@ export const ReplyPreviewBar = React.memo(function ReplyPreviewBar({ target, gro
         </Text>
         <Text style={styles.snippet} numberOfLines={1}>{snippet(target)}</Text>
       </View>
-      <Pressable onPress={onCancel} hitSlop={8} style={styles.close}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onCancel} hitSlop={8} style={styles.close}>
         <Ionicons name="close" size={18} color={color.textMuted} />
       </Pressable>
     </View>

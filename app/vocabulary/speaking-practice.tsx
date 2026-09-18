@@ -22,6 +22,7 @@ import { VocabularyWord } from '../../src/types/arabic';
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 type PracticeState = 'ready' | 'listening' | 'recording' | 'processing' | 'result';
 
@@ -180,7 +181,7 @@ export default function SpeakingPracticeScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Pressable style={styles.closeButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
@@ -202,7 +203,7 @@ export default function SpeakingPracticeScreen() {
             <Text style={styles.codeText}>npx expo prebuild</Text>
             <Text style={styles.codeText}>npx expo run:ios</Text>
           </View>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backButton} onPress={() => router.back()}>
             <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -248,7 +249,7 @@ export default function SpeakingPracticeScreen() {
 
           <Text style={styles.xpEarned}>{t('common.xpEarned', { count: stats.totalXp })}</Text>
 
-          <Pressable style={styles.doneButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.doneButton} onPress={() => router.back()}>
             <Text style={styles.doneButtonText}>{t('common.done')}</Text>
           </Pressable>
         </View>
@@ -262,7 +263,7 @@ export default function SpeakingPracticeScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} style={styles.closeButton} onPress={() => router.back()}>
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
@@ -300,7 +301,7 @@ export default function SpeakingPracticeScreen() {
 
         {/* Listen Button */}
         <View style={styles.actionSection}>
-          <Pressable
+          <Pressable accessibilityRole="button"
             style={[styles.listenButton, isSpeaking && styles.listenButtonActive]}
             onPress={handlePlayExample}
           >
@@ -329,7 +330,7 @@ export default function SpeakingPracticeScreen() {
             </Text>
 
             <Animated.View style={[styles.recordButtonWrapper, recordingAnimatedStyle]}>
-              <Pressable
+              <Pressable accessibilityLabel={i18n.t('a11y.record')}
                 style={[
                   styles.recordButton,
                   (isListening || practiceState === 'recording') && styles.recordButtonRecording,
@@ -419,7 +420,7 @@ export default function SpeakingPracticeScreen() {
 
             <View style={styles.resultActions}>
               {!result.isCorrect && (
-                <Pressable style={styles.tryAgainButton} onPress={handleTryAgain}>
+                <Pressable accessibilityRole="button" style={styles.tryAgainButton} onPress={handleTryAgain}>
                   <Ionicons name="refresh" size={20} color={color.warning} />
                   <Text style={styles.tryAgainText}>{t('common.tryAgain')}</Text>
                 </Pressable>

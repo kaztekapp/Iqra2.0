@@ -7,6 +7,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { writingLessons } from '../../src/data/arabic/writing/writingLessons';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 const ACCENT = color.accent;
 
@@ -30,7 +31,7 @@ export default function WritingScreen() {
     const isDone = completed.includes(lesson.id);
     const number = lessons.findIndex((l) => l.id === lesson.id) + 1;
     return (
-      <Pressable
+      <Pressable accessibilityRole="button"
         key={lesson.id}
         style={styles.lessonCard}
         onPress={() => router.push(`/grammar/${lesson.id}`)}
@@ -58,7 +59,7 @@ export default function WritingScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerText}>

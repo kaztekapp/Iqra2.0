@@ -22,7 +22,7 @@ export function MentionAutocomplete({ members, query, groupColor, onSelect }: Pr
     <View style={styles.container}>
       <ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: 220 }}>
         {matches.map((m) => (
-          <Pressable key={m.id} style={styles.row} onPress={() => onSelect(m)}>
+          <Pressable accessibilityRole="button" key={m.id} style={styles.row} onPress={() => onSelect(m)}>
             <View style={[styles.avatar, { backgroundColor: `${groupColor}25` }]}>
               <Text style={[styles.avatarText, { color: groupColor }]}>{m.avatar}</Text>
             </View>

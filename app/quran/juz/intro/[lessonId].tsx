@@ -16,6 +16,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_INTRO_LESSONS } from '../../../../src/data/arabic/quran/lessons/juzLessons';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import i18n from 'i18next';
 
 // Content Block Component
 function ContentBlock({ item }: { item: { type: string; text: string; textFr?: string; icon?: string } }) {
@@ -97,7 +98,7 @@ export default function IntroLessonScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{t('juzFeature.lessonNotFound')}</Text>
-          <Pressable style={styles.backButtonError} onPress={() => router.back()}>
+          <Pressable accessibilityRole="button" style={styles.backButtonError} onPress={() => router.back()}>
             <Text style={styles.backButtonText}>{t('common.goBack')}</Text>
           </Pressable>
         </View>
@@ -126,7 +127,7 @@ export default function IntroLessonScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerProgress}>
@@ -163,7 +164,7 @@ export default function IntroLessonScreen() {
         {/* Navigation Buttons */}
         <View style={styles.navigationContainer}>
           {prevLesson ? (
-            <Pressable style={styles.navButtonPrev} onPress={handlePrev}>
+            <Pressable accessibilityRole="button" style={styles.navButtonPrev} onPress={handlePrev}>
               <Ionicons name="arrow-back" size={20} color={color.accent} />
               <View style={styles.navButtonContent}>
                 <Text style={styles.navButtonLabel}>{t('common.previous')}</Text>
@@ -177,7 +178,7 @@ export default function IntroLessonScreen() {
           )}
 
           {nextLesson ? (
-            <Pressable style={styles.navButtonNext} onPress={handleNext}>
+            <Pressable accessibilityRole="button" style={styles.navButtonNext} onPress={handleNext}>
               <View style={styles.navButtonContent}>
                 <Text style={[styles.navButtonLabel, { textAlign: 'right' }]}>{t('common.next')}</Text>
                 <Text style={[styles.navButtonTitle, { textAlign: 'right' }]} numberOfLines={1}>
@@ -187,7 +188,7 @@ export default function IntroLessonScreen() {
               <Ionicons name="arrow-forward" size={20} color={color.text} />
             </Pressable>
           ) : (
-            <Pressable
+            <Pressable accessibilityRole="button"
               style={styles.navButtonComplete}
               onPress={() => router.back()}
             >

@@ -9,6 +9,7 @@ import { arabicLetters } from '../../src/data/arabic/alphabet/letters';
 import { ARABIC_SCRIPT_FONTS, SCRIPT_META } from '../../src/data/arabic/alphabet/scriptFonts';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
+import i18n from 'i18next';
 
 const FONT_ASSETS = ARABIC_SCRIPT_FONTS;
 const STYLES = SCRIPT_META;
@@ -27,7 +28,7 @@ export default function AlphabetStylesScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.back')} style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerText}>
@@ -62,7 +63,7 @@ export default function AlphabetStylesScreen() {
           <Text style={styles.formLabel}>{t('alphabet.scriptsForm')}</Text>
           <View style={styles.formRow}>
             {FORMS.map((f) => (
-              <Pressable
+              <Pressable accessibilityRole="button"
                 key={f}
                 style={[styles.formPill, form === f && styles.formPillActive]}
                 onPress={() => setForm(f)}

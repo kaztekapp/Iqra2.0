@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from 'i18next';
 import { View, Text, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { QuranReference } from '../../types/prophetStories';
@@ -39,7 +40,7 @@ export function QuranSourceCard({
           </Text>
         </View>
         {onPlayArabic && (
-          <Pressable
+          <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
             style={[styles.playButton, isPlaying && styles.playButtonActive]}
             onPress={onPlayArabic}
             disabled={isLoading}

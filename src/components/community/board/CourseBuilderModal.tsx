@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { CourseSpec, CourseSection } from '../../../types/aiBoard';
 import { font, color, radius } from '../../../theme/tokens';
+import i18n from 'i18next';
 
 interface EditSection {
   id: string;
@@ -83,9 +84,9 @@ export function CourseBuilderModal({ visible, groupColor, initial, onSave, onClo
       <SafeAreaProvider style={{ flex: 1 }}>
         <SafeAreaView style={styles.container} edges={['top']}>
           <View style={styles.header}>
-            <Pressable onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={onClose} hitSlop={8}><Ionicons name="close" size={24} color={color.text} /></Pressable>
             <Text style={styles.headerTitle}>{t('community.courseContent')}</Text>
-            <Pressable onPress={apply} style={[styles.applyBtn, { backgroundColor: groupColor }]}>
+            <Pressable accessibilityRole="button" onPress={apply} style={[styles.applyBtn, { backgroundColor: groupColor }]}>
               <Text style={styles.applyText}>{t('community.apply')}</Text>
             </Pressable>
           </View>
@@ -102,9 +103,9 @@ export function CourseBuilderModal({ visible, groupColor, initial, onSave, onClo
                     <View style={[styles.badge, { backgroundColor: groupColor }]}><Text style={styles.badgeText}>{i + 1}</Text></View>
                     <Text style={styles.cardLabel}>{t('community.section')}</Text>
                     <View style={{ flex: 1 }} />
-                    <Pressable onPress={() => move(i, -1)} hitSlop={6}><Ionicons name="chevron-up" size={18} color={color.textFaint} /></Pressable>
-                    <Pressable onPress={() => move(i, 1)} hitSlop={6}><Ionicons name="chevron-down" size={18} color={color.textFaint} /></Pressable>
-                    {sections.length > 1 && <Pressable onPress={() => removeSection(i)} hitSlop={6}><Ionicons name="trash-outline" size={17} color={color.danger} /></Pressable>}
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showLess')} onPress={() => move(i, -1)} hitSlop={6}><Ionicons name="chevron-up" size={18} color={color.textFaint} /></Pressable>
+                    <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.showMore')} onPress={() => move(i, 1)} hitSlop={6}><Ionicons name="chevron-down" size={18} color={color.textFaint} /></Pressable>
+                    {sections.length > 1 && <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.delete')} onPress={() => removeSection(i)} hitSlop={6}><Ionicons name="trash-outline" size={17} color={color.danger} /></Pressable>}
                   </View>
 
                   <TextInput style={styles.headingInput} value={s.heading} onChangeText={(t) => patch(i, { heading: t })} placeholder={t('community.sectionHeadingPlaceholder')} {...inputProps} />
@@ -114,11 +115,11 @@ export function CourseBuilderModal({ visible, groupColor, initial, onSave, onClo
                     <View key={pi} style={styles.pointRow}>
                       <View style={styles.dot} />
                       <TextInput style={styles.pointInput} value={p} onChangeText={(t) => setPoint(i, pi, t)} placeholder={`Point ${pi + 1}`} {...inputProps} multiline />
-                      {s.points.length > 1 && <Pressable onPress={() => removePoint(i, pi)} hitSlop={6}><Ionicons name="close" size={16} color={color.textFaint} /></Pressable>}
+                      {s.points.length > 1 && <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.close')} onPress={() => removePoint(i, pi)} hitSlop={6}><Ionicons name="close" size={16} color={color.textFaint} /></Pressable>}
                     </View>
                   ))}
                   {s.points.length < 4 && (
-                    <Pressable style={styles.addRow} onPress={() => addPoint(i)}><Ionicons name="add" size={15} color={groupColor} /><Text style={[styles.addRowText, { color: groupColor }]}>{t('community.addPoint')}</Text></Pressable>
+                    <Pressable accessibilityRole="button" style={styles.addRow} onPress={() => addPoint(i)}><Ionicons name="add" size={15} color={groupColor} /><Text style={[styles.addRowText, { color: groupColor }]}>{t('community.addPoint')}</Text></Pressable>
                   )}
 
                   <Text style={styles.miniLabel}>{t('community.arabicExampleOptional')}</Text>
@@ -128,7 +129,7 @@ export function CourseBuilderModal({ visible, groupColor, initial, onSave, onClo
                 </View>
               ))}
 
-              <Pressable style={styles.addSection} onPress={addSection}>
+              <Pressable accessibilityRole="button" style={styles.addSection} onPress={addSection}>
                 <Ionicons name="add-circle" size={20} color={groupColor} />
                 <Text style={[styles.addSectionText, { color: groupColor }]}>{t('community.addSection')}</Text>
               </Pressable>

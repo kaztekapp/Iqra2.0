@@ -36,7 +36,7 @@ export function MessageActionSheet({
 }: Props) {
   const { t } = useTranslation();
   const item = (icon: string, label: string, onPress: () => void, danger = false) => (
-    <Pressable
+    <Pressable accessibilityRole="button"
       style={styles.row}
       onPress={() => { onPress(); onClose(); }}
     >
@@ -47,8 +47,8 @@ export function MessageActionSheet({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose}>
-        <Pressable style={styles.sheet} onPress={(e) => e.stopPropagation()}>
+      <Pressable accessibilityRole="button" style={styles.backdrop} onPress={onClose}>
+        <Pressable accessibilityRole="button" style={styles.sheet} onPress={(e) => e.stopPropagation()}>
           {actions.canReact && (
             <View style={styles.reactionRow}>
               <ReactionPicker
@@ -64,7 +64,7 @@ export function MessageActionSheet({
           {actions.canPin && item(actions.isPinned ? 'remove-circle-outline' : 'pin', actions.isPinned ? 'Unpin' : 'Pin', onPinToggle)}
           {actions.canEdit && item('create-outline', 'Edit', onEdit)}
           {actions.canDelete && item('trash-outline', 'Delete', onDelete, true)}
-          <Pressable style={styles.cancel} onPress={onClose}>
+          <Pressable accessibilityRole="button" style={styles.cancel} onPress={onClose}>
             <Text style={styles.cancelText}>{t('common.cancel')}</Text>
           </Pressable>
         </Pressable>

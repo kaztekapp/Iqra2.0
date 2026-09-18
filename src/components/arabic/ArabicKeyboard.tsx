@@ -2,6 +2,7 @@ import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import { useRef } from 'react';
 import { color, radius } from '../../theme/tokens';
+import i18n from 'i18next';
 
 
 interface ArabicKeyboardProps {
@@ -90,7 +91,7 @@ export default function ArabicKeyboard({
       {/* Row 1: Diacritics / Tashkeel */}
       <View style={styles.specialRow}>
         {diacritics.map((item) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={item.key}
             style={[styles.specialKey, { width: keyWidth, height: keyWidth * 1.35 }]}
             onPress={() => onKeyPress(item.key)}
@@ -103,7 +104,7 @@ export default function ArabicKeyboard({
       {/* Row 2: Hamza carriers + Quranic marks */}
       <View style={styles.specialRow}>
         {specialChars.map((item) => (
-          <Pressable
+          <Pressable accessibilityRole="button"
             key={item.key}
             style={[styles.specialKey, { width: keyWidth, height: keyWidth * 1.35 }]}
             onPress={() => onKeyPress(item.key)}
@@ -119,7 +120,7 @@ export default function ArabicKeyboard({
       {keyboardRows.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.row}>
           {row.map((key, keyIndex) => (
-            <Pressable
+            <Pressable accessibilityRole="button"
               key={`${key}-${keyIndex}`}
               style={[styles.key, { width: keyWidth, height: keyWidth * 1.4 }]}
               onPress={() => onKeyPress(key)}
@@ -128,7 +129,7 @@ export default function ArabicKeyboard({
             </Pressable>
           ))}
           {rowIndex === keyboardRows.length - 1 && (
-            <Pressable
+            <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.backspace')}
               style={[styles.backspaceKey, { height: keyWidth * 1.4 }]}
               onPress={onBackspace}
             >
@@ -141,7 +142,7 @@ export default function ArabicKeyboard({
       {/* Bottom Row */}
       <View style={styles.bottomRow}>
         {onCursorLeft && (
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
             style={styles.arrowKey}
             onPressIn={() => handlePressIn(onCursorLeft)}
             onPressOut={handlePressOut}
@@ -150,7 +151,7 @@ export default function ArabicKeyboard({
           </Pressable>
         )}
         {onCursorRight && (
-          <Pressable
+          <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.next')}
             style={styles.arrowKey}
             onPressIn={() => handlePressIn(onCursorRight)}
             onPressOut={handlePressOut}
@@ -158,10 +159,10 @@ export default function ArabicKeyboard({
             <Ionicons name="chevron-forward" size={22} color={color.text} />
           </Pressable>
         )}
-        <Pressable style={styles.spaceKey} onPress={onSpace}>
+        <Pressable accessibilityRole="button" style={styles.spaceKey} onPress={onSpace}>
           <Text style={styles.spaceKeyText}>مسافة</Text>
         </Pressable>
-        <Pressable style={styles.submitKey} onPress={onSubmit}>
+        <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.done')} style={styles.submitKey} onPress={onSubmit}>
           <Ionicons name="checkmark" size={24} color={color.text} />
         </Pressable>
       </View>
