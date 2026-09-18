@@ -25,7 +25,9 @@ export default function WritingPracticeScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { letterId } = useLocalSearchParams<{ letterId?: string }>();
-  const { markLetterPracticed, addXp, updateStreak } = useProgressStore();
+  const markLetterPracticed = useProgressStore((s) => s.markLetterPracticed);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
   const { speak, isSpeaking } = useArabicSpeech();
 
   // If no specific letter, start with first letter

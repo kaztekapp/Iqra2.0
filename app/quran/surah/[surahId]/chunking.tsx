@@ -125,7 +125,8 @@ export default function ChunkingScreen() {
 
   const surah = getSurahById(surahId);
   const { ayahs, isLoading } = useQuranSurah(surahId);
-  const { markAyahLearned, isAyahLearned } = useQuranStore();
+  const markAyahLearned = useQuranStore((s) => s.markAyahLearned);
+  const isAyahLearned = useQuranStore((s) => s.isAyahLearned);
 
   // Fetch language-specific translations (EN/FR based on user setting)
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);

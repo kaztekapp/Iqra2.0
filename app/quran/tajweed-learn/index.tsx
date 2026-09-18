@@ -89,7 +89,9 @@ export default function TajweedLearnScreen() {
   const { lc } = useLocalizedContent();
   const [activeTab, setActiveTab] = useState<TabType>('learn');
   const slideAnim = useRef(new Animated.Value(0)).current;
-  const { isTajweedRuleLearned, isTajweedRuleMastered, progress } = useQuranStore();
+  const isTajweedRuleLearned = useQuranStore((s) => s.isTajweedRuleLearned);
+  const isTajweedRuleMastered = useQuranStore((s) => s.isTajweedRuleMastered);
+  const progress = useQuranStore((s) => s.progress);
 
   const categories = getAllTajweedCategories();
 

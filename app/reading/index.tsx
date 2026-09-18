@@ -147,7 +147,7 @@ const readingTexts = [
 export default function ReadingScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { progress } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
   const completedTexts = progress.readingProgress.textsCompleted;
   const startedTexts = progress.readingProgress.textsStarted;
 

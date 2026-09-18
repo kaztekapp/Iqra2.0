@@ -53,7 +53,8 @@ const TIPS_COUNT = 5;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const { progress, lastAccessed } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const lastAccessed = useProgressStore((s) => s.lastAccessed);
 
   const tipIndex = useMemo(() => {
     const now = new Date();

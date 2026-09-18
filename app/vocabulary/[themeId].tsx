@@ -33,15 +33,13 @@ export default function ThemeDetailScreen() {
   const theme = getThemeById(themeId || '');
   const words = getWordsByTheme(themeId || '');
 
-  const {
-    progress,
-    showVowels,
-    markWordLearned,
-    markWordMastered,
-    startTheme,
-    addXp,
-    updateStreak,
-  } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const showVowels = useProgressStore((s) => s.showVowels);
+  const markWordLearned = useProgressStore((s) => s.markWordLearned);
+  const markWordMastered = useProgressStore((s) => s.markWordMastered);
+  const startTheme = useProgressStore((s) => s.startTheme);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
 
   const [expandedWordId, setExpandedWordId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'all' | 'nouns' | 'verbs' | 'adjectives' | 'other'>('all');

@@ -34,16 +34,14 @@ import { color, space, radius, gutter } from '../../src/theme/tokens';
 export default function QuranScreen() {
   const { t } = useTranslation();
   const progress = useQuranStore((s) => s.progress);
-  const {
-    getOverallCompletionPercent,
-    getTotalSurahsCompleted,
-    getJuzCompleted,
-    getHizbCompleted,
-  } = useQuranStore();
+  const getOverallCompletionPercent = useQuranStore((s) => s.getOverallCompletionPercent);
+  const getTotalSurahsCompleted = useQuranStore((s) => s.getTotalSurahsCompleted);
+  const getJuzCompleted = useQuranStore((s) => s.getJuzCompleted);
+  const getHizbCompleted = useQuranStore((s) => s.getHizbCompleted);
 
-  const { getTotalStoriesCompleted: getProphetStoriesCompleted } = useProphetStoriesStore();
-  const { getTotalStoriesCompleted: getQuranStoriesCompleted } = useQuranStoriesStore();
-  const { getMemorizedCount } = useDuasStore();
+  const getProphetStoriesCompleted = useProphetStoriesStore((s) => s.getTotalStoriesCompleted);
+  const getQuranStoriesCompleted = useQuranStoriesStore((s) => s.getTotalStoriesCompleted);
+  const getMemorizedCount = useDuasStore((s) => s.getMemorizedCount);
 
   const overallProgress = useMemo(() => getOverallCompletionPercent(), [progress]);
   const surahsCompleted = useMemo(() => getTotalSurahsCompleted(), [progress]);

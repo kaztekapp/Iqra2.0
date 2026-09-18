@@ -24,11 +24,9 @@ export default function QuranStoryDetailScreen() {
   const [playingSourceId, setPlayingSourceId] = useState<string | null>(null);
   const [audioState, setAudioState] = useState<AudioState>('idle');
 
-  const {
-    updateProgress,
-    markStoryComplete,
-    isStoryCompleted,
-  } = useQuranStoriesStore();
+  const updateProgress = useQuranStoriesStore((s) => s.updateProgress);
+  const markStoryComplete = useQuranStoriesStore((s) => s.markStoryComplete);
+  const isStoryCompleted = useQuranStoriesStore((s) => s.isStoryCompleted);
 
   // Get story data
   const story = storyId ? getQuranStoryById(storyId) : undefined;

@@ -20,7 +20,10 @@ export default function PrayerLessonScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
-  const { isCompleted, completeLesson, startLesson, setLastViewed } = usePrayerStore();
+  const isCompleted = usePrayerStore((s) => s.isCompleted);
+  const completeLesson = usePrayerStore((s) => s.completeLesson);
+  const startLesson = usePrayerStore((s) => s.startLesson);
+  const setLastViewed = usePrayerStore((s) => s.setLastViewed);
   const { speak, stop, isSpeaking } = useArabicSpeech();
   const [speakingText, setSpeakingText] = useState<string | null>(null);
   const [shareContent, setShareContent] = useState<SharedContent | null>(null);

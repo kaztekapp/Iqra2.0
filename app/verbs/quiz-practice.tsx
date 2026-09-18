@@ -23,7 +23,9 @@ export default function VerbsQuizPracticeScreen() {
   const { t } = useTranslation();
   const quizExercises = verbExercises.filter(ex => ex.type !== 'writing');
 
-  const { addXp, updateStreak, recordExerciseResult } = useProgressStore();
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
+  const recordExerciseResult = useProgressStore((s) => s.recordExerciseResult);
   const { speak } = useArabicSpeech();
 
   const [currentIndex, setCurrentIndex] = useState(0);

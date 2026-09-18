@@ -22,7 +22,8 @@ export function LetterCard({
   size = 'md',
   showStatus = true,
 }: LetterCardProps) {
-  const { isLetterLearned, progress } = useProgressStore();
+  const isLetterLearned = useProgressStore((s) => s.isLetterLearned);
+  const progress = useProgressStore((s) => s.progress);
   const isLearned = isLetterLearned(letter.id);
   const isMastered = progress.alphabetProgress.masteredLetters.includes(letter.id);
 

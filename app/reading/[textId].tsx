@@ -345,7 +345,10 @@ export default function ReadingDetailScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { textId } = useLocalSearchParams<{ textId: string }>();
-  const { startReading, completeReading, addXp, updateStreak } = useProgressStore();
+  const startReading = useProgressStore((s) => s.startReading);
+  const completeReading = useProgressStore((s) => s.completeReading);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
 
   const { speak, stop, isSpeaking } = useArabicSpeech();
   const text = readingContent[textId || ''];

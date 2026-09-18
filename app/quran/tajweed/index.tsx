@@ -25,7 +25,9 @@ const CATEGORY_KEYS: Record<string, { key: string; arabic: string }> = {
 export default function TajweedRulesScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { isTajweedRuleLearned, isTajweedRuleMastered, progress } = useQuranStore();
+  const isTajweedRuleLearned = useQuranStore((s) => s.isTajweedRuleLearned);
+  const isTajweedRuleMastered = useQuranStore((s) => s.isTajweedRuleMastered);
+  const progress = useQuranStore((s) => s.progress);
 
   const categories = getAllTajweedCategories();
 

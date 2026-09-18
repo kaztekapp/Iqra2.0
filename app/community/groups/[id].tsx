@@ -143,7 +143,10 @@ export default function GroupDetailScreen() {
   const flatListRef = useRef<FlatList>(null);
 
   const user = useSettingsStore((s) => s.user);
-  const { groups, joinGroup, leaveGroup, deleteGroup } = useCommunityStore();
+  const groups = useCommunityStore((s) => s.groups);
+  const joinGroup = useCommunityStore((s) => s.joinGroup);
+  const leaveGroup = useCommunityStore((s) => s.leaveGroup);
+  const deleteGroup = useCommunityStore((s) => s.deleteGroup);
 
   const [activeTab, setActiveTab] = useState<Tab>('chat');
   const [messageText, setMessageText] = useState('');

@@ -20,7 +20,10 @@ import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 
 export default function TypingPracticeScreen() {
-  const { showVowels, recordExerciseResult, addXp, updateStreak } = useProgressStore();
+  const showVowels = useProgressStore((s) => s.showVowels);
+  const recordExerciseResult = useProgressStore((s) => s.recordExerciseResult);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
   const { speak, isSpeaking } = useArabicSpeech();
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();

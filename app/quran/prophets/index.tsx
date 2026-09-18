@@ -16,7 +16,9 @@ export default function ProphetListScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const [searchQuery, setSearchQuery] = useState('');
-  const { getStoryProgress, isStoryCompleted, getTotalStoriesCompleted } = useProphetStoriesStore();
+  const getStoryProgress = useProphetStoriesStore((s) => s.getStoryProgress);
+  const isStoryCompleted = useProphetStoriesStore((s) => s.isStoryCompleted);
+  const getTotalStoriesCompleted = useProphetStoriesStore((s) => s.getTotalStoriesCompleted);
 
   // Filter prophets based on search query
   const filteredProphets = useMemo(() => {

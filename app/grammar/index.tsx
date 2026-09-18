@@ -47,7 +47,8 @@ const grammarLessons = lessonsData.map((lesson, i) => ({
 export default function GrammarScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { progress, getGrammarCompletionPercent } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const getGrammarCompletionPercent = useProgressStore((s) => s.getGrammarCompletionPercent);
   const completedLessons = progress.grammarProgress.lessonsCompleted;
   const startedLessons = progress.grammarProgress.lessonsStarted;
 

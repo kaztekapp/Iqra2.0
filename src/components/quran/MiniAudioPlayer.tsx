@@ -12,16 +12,14 @@ export function MiniAudioPlayer() {
   const router = useRouter();
   const segments = useSegments();
   const insets = useSafeAreaInsets();
-  const {
-    currentlyPlaying,
-    isPlaying,
-    isPaused,
-    isLoading,
-    progress,
-    setCurrentlyPlaying,
-    updatePlaybackState,
-    clearPlayer,
-  } = useAudioPlayerStore();
+  const currentlyPlaying = useAudioPlayerStore((s) => s.currentlyPlaying);
+  const isPlaying = useAudioPlayerStore((s) => s.isPlaying);
+  const isPaused = useAudioPlayerStore((s) => s.isPaused);
+  const isLoading = useAudioPlayerStore((s) => s.isLoading);
+  const progress = useAudioPlayerStore((s) => s.progress);
+  const setCurrentlyPlaying = useAudioPlayerStore((s) => s.setCurrentlyPlaying);
+  const updatePlaybackState = useAudioPlayerStore((s) => s.updatePlaybackState);
+  const clearPlayer = useAudioPlayerStore((s) => s.clearPlayer);
 
   const slideAnim = useRef(new Animated.Value(100)).current;
   const progressAnim = useRef(new Animated.Value(0)).current;

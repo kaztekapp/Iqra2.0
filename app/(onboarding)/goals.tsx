@@ -18,7 +18,8 @@ const CARD_WIDTH = '48.5%';
 export default function GoalsScreen() {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<LearningGoalId[]>([]);
-  const { setLearningGoals, completeOnboarding } = useSettingsStore();
+  const setLearningGoals = useSettingsStore((s) => s.setLearningGoals);
+  const completeOnboarding = useSettingsStore((s) => s.completeOnboarding);
 
   const toggleGoal = (id: LearningGoalId) => {
     setSelected((prev) =>

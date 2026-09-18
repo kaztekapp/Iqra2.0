@@ -24,12 +24,12 @@ export default function StoriesScreen() {
   const [activeTab, setActiveTab] = useState<TabType>('prophets');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { getStoryProgress, isStoryCompleted, getTotalStoriesCompleted } = useProphetStoriesStore();
-  const {
-    getStoryProgress: getQuranStoryProgress,
-    isStoryCompleted: isQuranStoryCompleted,
-    getTotalStoriesCompleted: getTotalQuranStoriesCompleted
-  } = useQuranStoriesStore();
+  const getStoryProgress = useProphetStoriesStore((s) => s.getStoryProgress);
+  const isStoryCompleted = useProphetStoriesStore((s) => s.isStoryCompleted);
+  const getTotalStoriesCompleted = useProphetStoriesStore((s) => s.getTotalStoriesCompleted);
+  const getQuranStoryProgress = useQuranStoriesStore((s) => s.getStoryProgress);
+  const isQuranStoryCompleted = useQuranStoriesStore((s) => s.isStoryCompleted);
+  const getTotalQuranStoriesCompleted = useQuranStoriesStore((s) => s.getTotalStoriesCompleted);
 
   // Filter prophets based on search query
   const filteredProphets = useMemo(() => {

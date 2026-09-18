@@ -48,23 +48,19 @@ export default function SurahDetailScreen() {
   // Fetch translations based on user's language (EN or FR)
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
 
-  const {
-    getSurahProgress,
-    isAyahLearned,
-    isAyahMemorized,
-    bookmarkAyah,
-    unbookmarkAyah,
-    progress,
-    setReciter,
-    toggleTranslation,
-    toggleTransliteration,
-  } = useQuranStore();
+  const getSurahProgress = useQuranStore((s) => s.getSurahProgress);
+  const isAyahLearned = useQuranStore((s) => s.isAyahLearned);
+  const isAyahMemorized = useQuranStore((s) => s.isAyahMemorized);
+  const bookmarkAyah = useQuranStore((s) => s.bookmarkAyah);
+  const unbookmarkAyah = useQuranStore((s) => s.unbookmarkAyah);
+  const progress = useQuranStore((s) => s.progress);
+  const setReciter = useQuranStore((s) => s.setReciter);
+  const toggleTranslation = useQuranStore((s) => s.toggleTranslation);
+  const toggleTransliteration = useQuranStore((s) => s.toggleTransliteration);
 
-  const {
-    setCurrentlyPlaying,
-    updatePlaybackState,
-    clearPlayer,
-  } = useAudioPlayerStore();
+  const setCurrentlyPlaying = useAudioPlayerStore((s) => s.setCurrentlyPlaying);
+  const updatePlaybackState = useAudioPlayerStore((s) => s.updatePlaybackState);
+  const clearPlayer = useAudioPlayerStore((s) => s.clearPlayer);
 
   // 1.75x is gone. Anyone who had chosen it keeps it in their saved settings,
   // and without this they would go on hearing it with no speed selected on

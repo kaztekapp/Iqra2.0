@@ -34,12 +34,10 @@ export default function ProphetStoryScreen() {
   const [playingSourceId, setPlayingSourceId] = useState<string | null>(null);
   const [audioState, setAudioState] = useState<AudioState>('idle');
 
-  const {
-    startStory,
-    markSubStoryCompleted,
-    getStoryProgress,
-    isSubStoryCompleted,
-  } = useProphetStoriesStore();
+  const startStory = useProphetStoriesStore((s) => s.startStory);
+  const markSubStoryCompleted = useProphetStoriesStore((s) => s.markSubStoryCompleted);
+  const getStoryProgress = useProphetStoriesStore((s) => s.getStoryProgress);
+  const isSubStoryCompleted = useProphetStoriesStore((s) => s.isSubStoryCompleted);
 
   // Get prophet story data
   // Memoized so the block list keeps one identity for the life of the screen.

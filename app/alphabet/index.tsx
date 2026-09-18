@@ -13,7 +13,8 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 export default function AlphabetScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { progress, getAlphabetCompletionPercent } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const getAlphabetCompletionPercent = useProgressStore((s) => s.getAlphabetCompletionPercent);
   const { speak } = useArabicSpeech();
   const learnedLetters = progress.alphabetProgress.lettersLearned;
   const masteredLetters = progress.alphabetProgress.masteredLetters;

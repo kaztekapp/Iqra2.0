@@ -19,11 +19,9 @@ export default function DuasListScreen() {
   const { lc } = useLocalizedContent();
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>('all');
 
-  const {
-    isFavorite,
-    isMemorized,
-    getMemorizedCount,
-  } = useDuasStore();
+  const isFavorite = useDuasStore((s) => s.isFavorite);
+  const isMemorized = useDuasStore((s) => s.isMemorized);
+  const getMemorizedCount = useDuasStore((s) => s.getMemorizedCount);
 
   const duas = getAllDuas();
   const categories = getAvailableCategories();

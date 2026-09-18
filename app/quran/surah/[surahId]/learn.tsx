@@ -23,8 +23,10 @@ export default function LearnModeScreen() {
   const surah = getSurahById(surahId);
   const { ayahs, isLoading: isLoadingAyahs } = useQuranSurah(surahId);
 
-  const { progress } = useQuranStore();
-  const { setCurrentlyPlaying, updatePlaybackState, clearPlayer } = useAudioPlayerStore();
+  const progress = useQuranStore((s) => s.progress);
+  const setCurrentlyPlaying = useAudioPlayerStore((s) => s.setCurrentlyPlaying);
+  const updatePlaybackState = useAudioPlayerStore((s) => s.updatePlaybackState);
+  const clearPlayer = useAudioPlayerStore((s) => s.clearPlayer);
 
   // Get current reciter info for the mini player
   const currentReciterId = progress.settings.reciterId as ReciterId;

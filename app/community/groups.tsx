@@ -40,14 +40,12 @@ export default function StudyGroupsScreen() {
   const [isCreating, setIsCreating] = useState(false);
   const [search, setSearch] = useState('');
 
-  const {
-    groups,
-    isLoadingGroups,
-    loadGroups,
-    joinGroup,
-    leaveGroup,
-    createGroup,
-  } = useCommunityStore();
+  const groups = useCommunityStore((s) => s.groups);
+  const isLoadingGroups = useCommunityStore((s) => s.isLoadingGroups);
+  const loadGroups = useCommunityStore((s) => s.loadGroups);
+  const joinGroup = useCommunityStore((s) => s.joinGroup);
+  const leaveGroup = useCommunityStore((s) => s.leaveGroup);
+  const createGroup = useCommunityStore((s) => s.createGroup);
 
   useEffect(() => {
     loadGroups();

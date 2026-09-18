@@ -21,17 +21,17 @@ import { color, space, gutter, font, radius } from '../../src/theme/tokens';
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const { language, setLanguage, isAuthenticated } = useSettingsStore();
+  const language = useSettingsStore((s) => s.language);
+  const setLanguage = useSettingsStore((s) => s.setLanguage);
+  const isAuthenticated = useSettingsStore((s) => s.isAuthenticated);
 
-  const {
-    progress,
-    getAccuracy,
-    resetProgress,
-    unlockedAchievements,
-    newAchievement,
-    clearNewAchievement,
-    getUnlockedAchievements,
-  } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const getAccuracy = useProgressStore((s) => s.getAccuracy);
+  const resetProgress = useProgressStore((s) => s.resetProgress);
+  const unlockedAchievements = useProgressStore((s) => s.unlockedAchievements);
+  const newAchievement = useProgressStore((s) => s.newAchievement);
+  const clearNewAchievement = useProgressStore((s) => s.clearNewAchievement);
+  const getUnlockedAchievements = useProgressStore((s) => s.getUnlockedAchievements);
 
   const unlockedList = getUnlockedAchievements();
   const lockedList = ACHIEVEMENTS.filter((a) => !unlockedAchievements.includes(a.id));
@@ -63,10 +63,8 @@ export default function ProfileScreen() {
 
   const userId = useSettingsStore((s) => s.user?.id);
 
-  const {
-    dailyChallenge,
-    initializeChallenges,
-  } = useCommunityStore();
+  const dailyChallenge = useCommunityStore((s) => s.dailyChallenge);
+  const initializeChallenges = useCommunityStore((s) => s.initializeChallenges);
 
   useEffect(() => {
     initializeChallenges();

@@ -33,13 +33,11 @@ export function useProphetStory(prophetId: string | undefined): UseProphetStoryR
   const [isLoading, setIsLoading] = useState(true);
   const [currentSubStoryId, setCurrentSubStoryId] = useState<string | null>(null);
 
-  const {
-    startStory,
-    completeStory,
-    markSubStoryCompleted,
-    getStoryProgress,
-    isStoryCompleted: checkStoryCompleted,
-  } = useProphetStoriesStore();
+  const startStory = useProphetStoriesStore((s) => s.startStory);
+  const completeStory = useProphetStoriesStore((s) => s.completeStory);
+  const markSubStoryCompleted = useProphetStoriesStore((s) => s.markSubStoryCompleted);
+  const getStoryProgress = useProphetStoriesStore((s) => s.getStoryProgress);
+  const checkStoryCompleted = useProphetStoriesStore((s) => s.isStoryCompleted);
 
   // Get prophet story data
   const storyData = prophetId ? getProphetStory(prophetId) : undefined;

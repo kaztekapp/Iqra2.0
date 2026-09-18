@@ -12,7 +12,8 @@ export default function MethodPickerScreen() {
   const { t } = useTranslation();
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
   const surah = getSurahById(surahId);
-  const { setLastSelectedMethod, startSurah } = useQuranStore();
+  const setLastSelectedMethod = useQuranStore((s) => s.setLastSelectedMethod);
+  const startSurah = useQuranStore((s) => s.startSurah);
 
   const AGE_LABELS: Record<AgeGroup, string> = {
     under_25: t('learningMethods.ageUnder25'),

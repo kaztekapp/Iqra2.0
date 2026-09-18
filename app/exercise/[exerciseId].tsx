@@ -96,7 +96,9 @@ const generateVocabularyQuizQuestions = (count: number): Question[] => {
 
 export default function ExerciseScreen() {
   const { exerciseId } = useLocalSearchParams<{ exerciseId: string }>();
-  const { recordExerciseResult, addXp, updateStreak } = useProgressStore();
+  const recordExerciseResult = useProgressStore((s) => s.recordExerciseResult);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
   const { speak, isSpeaking } = useArabicSpeech();
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();

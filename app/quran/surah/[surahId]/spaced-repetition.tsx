@@ -32,14 +32,12 @@ export default function SpacedRepetitionScreen() {
 
   const surah = getSurahById(surahId);
   const { ayahs, isLoading } = useQuranSurah(surahId);
-  const {
-    progress,
-    getDueReviews,
-    updateReviewItem,
-    scheduleReview,
-    updateMemorizationStreak,
-    isAyahLearned,
-  } = useQuranStore();
+  const progress = useQuranStore((s) => s.progress);
+  const getDueReviews = useQuranStore((s) => s.getDueReviews);
+  const updateReviewItem = useQuranStore((s) => s.updateReviewItem);
+  const scheduleReview = useQuranStore((s) => s.scheduleReview);
+  const updateMemorizationStreak = useQuranStore((s) => s.updateMemorizationStreak);
+  const isAyahLearned = useQuranStore((s) => s.isAyahLearned);
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
 
   const [sessionItems, setSessionItems] = useState<string[]>([]);

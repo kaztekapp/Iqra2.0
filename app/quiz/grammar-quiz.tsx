@@ -46,30 +46,29 @@ export default function GrammarQuizScreen() {
   const [quizResult, setQuizResult] = useState<{ passed: boolean; xpEarned: number } | null>(null);
   const [loadingMessage, setLoadingMessage] = useState(t('grammarQuiz.preparingQuiz'));
 
-  const {
-    currentQuestions,
-    currentAnswers,
-    currentIndex,
-    attempts,
-    bestScore,
-    streak,
-    maxStreak,
-    isPlaying,
-    error,
-    hasActiveQuiz,
-    setQuestions,
-    setLoading,
-    setError,
-    startAttempt,
-    submitAnswer,
-    nextQuestion,
-    recordAttempt,
-    resetSession,
-    clearQuiz,
-  } = useGrammarQuizStore();
+  const currentQuestions = useGrammarQuizStore((s) => s.currentQuestions);
+  const currentAnswers = useGrammarQuizStore((s) => s.currentAnswers);
+  const currentIndex = useGrammarQuizStore((s) => s.currentIndex);
+  const attempts = useGrammarQuizStore((s) => s.attempts);
+  const bestScore = useGrammarQuizStore((s) => s.bestScore);
+  const streak = useGrammarQuizStore((s) => s.streak);
+  const maxStreak = useGrammarQuizStore((s) => s.maxStreak);
+  const isPlaying = useGrammarQuizStore((s) => s.isPlaying);
+  const error = useGrammarQuizStore((s) => s.error);
+  const hasActiveQuiz = useGrammarQuizStore((s) => s.hasActiveQuiz);
+  const setQuestions = useGrammarQuizStore((s) => s.setQuestions);
+  const setLoading = useGrammarQuizStore((s) => s.setLoading);
+  const setError = useGrammarQuizStore((s) => s.setError);
+  const startAttempt = useGrammarQuizStore((s) => s.startAttempt);
+  const submitAnswer = useGrammarQuizStore((s) => s.submitAnswer);
+  const nextQuestion = useGrammarQuizStore((s) => s.nextQuestion);
+  const recordAttempt = useGrammarQuizStore((s) => s.recordAttempt);
+  const resetSession = useGrammarQuizStore((s) => s.resetSession);
+  const clearQuiz = useGrammarQuizStore((s) => s.clearQuiz);
 
-  const { addXp, updateStreak } = useProgressStore();
-  const { contributeToChallenge } = useCommunityStore();
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
+  const contributeToChallenge = useCommunityStore((s) => s.contributeToChallenge);
 
   const currentQuestion = currentQuestions[currentIndex];
   const quizStats = getTotalGrammarQuestions();

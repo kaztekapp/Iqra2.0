@@ -13,7 +13,7 @@ const ACCENT = color.accent;
 export default function WritingScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { progress } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
   const completed = progress.grammarProgress.lessonsCompleted;
 
   const lessons = [...writingLessons].sort((a, b) => a.order - b.order);

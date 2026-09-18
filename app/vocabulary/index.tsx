@@ -12,7 +12,9 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 export default function VocabularyScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const { progress, getVocabularyCompletionPercent, getVocabularyReviewStats } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const getVocabularyCompletionPercent = useProgressStore((s) => s.getVocabularyCompletionPercent);
+  const getVocabularyReviewStats = useProgressStore((s) => s.getVocabularyReviewStats);
   const startedThemes = progress.vocabularyProgress.themesStarted;
   const completedThemes = progress.vocabularyProgress.themesCompleted;
   const wordsLearned = progress.vocabularyProgress.wordsLearned.length;

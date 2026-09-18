@@ -31,13 +31,11 @@ const RATING_DESCRIPTIONS: Record<ReviewRating, { label: string; color: string; 
 export default function VocabularyReviewScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
-  const {
-    showVowels,
-    getDueVocabularyReviews,
-    updateVocabularyReviewItem,
-    addXp,
-    updateStreak,
-  } = useProgressStore();
+  const showVowels = useProgressStore((s) => s.showVowels);
+  const getDueVocabularyReviews = useProgressStore((s) => s.getDueVocabularyReviews);
+  const updateVocabularyReviewItem = useProgressStore((s) => s.updateVocabularyReviewItem);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
 
   const [dueReviews, setDueReviews] = useState<VocabularyReviewItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

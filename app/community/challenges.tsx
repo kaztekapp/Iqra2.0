@@ -120,7 +120,9 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
 
 export default function ChallengesScreen() {
   const { t } = useTranslation();
-  const { dailyChallenge, weeklyChallenge, initializeChallenges } = useCommunityStore();
+  const dailyChallenge = useCommunityStore((s) => s.dailyChallenge);
+  const weeklyChallenge = useCommunityStore((s) => s.weeklyChallenge);
+  const initializeChallenges = useCommunityStore((s) => s.initializeChallenges);
 
   useEffect(() => {
     initializeChallenges();

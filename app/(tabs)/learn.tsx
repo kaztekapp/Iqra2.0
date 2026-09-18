@@ -87,7 +87,10 @@ const ModuleCard = memo(function ModuleCard({
 
 export default function LearnScreen() {
   const { t } = useTranslation();
-  const { getAlphabetCompletionPercent, getVocabularyCompletionPercent, getGrammarCompletionPercent, setLastAccessed } = useProgressStore();
+  const getAlphabetCompletionPercent = useProgressStore((s) => s.getAlphabetCompletionPercent);
+  const getVocabularyCompletionPercent = useProgressStore((s) => s.getVocabularyCompletionPercent);
+  const getGrammarCompletionPercent = useProgressStore((s) => s.getGrammarCompletionPercent);
+  const setLastAccessed = useProgressStore((s) => s.setLastAccessed);
 
   const handleModulePress = (moduleId: ModuleType, title: string) => {
     setLastAccessed({

@@ -60,7 +60,10 @@ export default function VisualizationScreen() {
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
   const surah = getSurahById(surahId);
   const { ayahs, isLoading } = useQuranSurah(surahId);
-  const { progress, markAyahLearned, scheduleReview, updateReviewItem } = useQuranStore();
+  const progress = useQuranStore((s) => s.progress);
+  const markAyahLearned = useQuranStore((s) => s.markAyahLearned);
+  const scheduleReview = useQuranStore((s) => s.scheduleReview);
+  const updateReviewItem = useQuranStore((s) => s.updateReviewItem);
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
 
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);

@@ -40,13 +40,11 @@ export default function DiscussionsScreen() {
   const [postCategory, setPostCategory] = useState<DiscussionCategory>('general');
   const [isPosting, setIsPosting] = useState(false);
 
-  const {
-    discussions,
-    isLoadingDiscussions,
-    loadDiscussions,
-    postThread,
-    toggleLikeThread,
-  } = useCommunityStore();
+  const discussions = useCommunityStore((s) => s.discussions);
+  const isLoadingDiscussions = useCommunityStore((s) => s.isLoadingDiscussions);
+  const loadDiscussions = useCommunityStore((s) => s.loadDiscussions);
+  const postThread = useCommunityStore((s) => s.postThread);
+  const toggleLikeThread = useCommunityStore((s) => s.toggleLikeThread);
 
   useEffect(() => {
     loadDiscussions(selectedCategory === 'all' ? undefined : selectedCategory);

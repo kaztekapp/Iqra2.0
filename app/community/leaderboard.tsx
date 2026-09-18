@@ -108,9 +108,11 @@ const LeaderboardSkeleton = () => (
 export default function LeaderboardScreen() {
   const { t } = useTranslation();
   const [currentType, setCurrentType] = useState<LeaderboardType>('weekly');
-  const { fetchLeaderboard, leaderboardEntries: entries, isLoadingLeaderboard } = useCommunityStore();
+  const fetchLeaderboard = useCommunityStore((s) => s.fetchLeaderboard);
+  const entries = useCommunityStore((s) => s.leaderboardEntries);
+  const isLoadingLeaderboard = useCommunityStore((s) => s.isLoadingLeaderboard);
   const userId = useSettingsStore((s) => s.user?.id);
-  const { progress } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
 
   // Sync existing local progress to Supabase on first load
   useEffect(() => {

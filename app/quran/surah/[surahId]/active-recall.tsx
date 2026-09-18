@@ -47,12 +47,10 @@ export default function ActiveRecallScreen() {
 
   const surah = getSurahById(surahId);
   const { ayahs, isLoading } = useQuranSurah(surahId);
-  const {
-    progress,
-    updateReviewItem,
-    scheduleReview,
-    markAyahLearned,
-  } = useQuranStore();
+  const progress = useQuranStore((s) => s.progress);
+  const updateReviewItem = useQuranStore((s) => s.updateReviewItem);
+  const scheduleReview = useQuranStore((s) => s.scheduleReview);
+  const markAyahLearned = useQuranStore((s) => s.markAyahLearned);
   const { translations: langTranslations } = useAyahTranslations(surah?.surahNumber ?? null);
   const language = useSettingsStore((s) => s.language);
 

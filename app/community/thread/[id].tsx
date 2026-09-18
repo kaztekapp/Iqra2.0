@@ -35,16 +35,14 @@ export default function ThreadDetailScreen() {
   const [replyText, setReplyText] = useState('');
   const [isSending, setIsSending] = useState(false);
 
-  const {
-    currentThread,
-    replies,
-    isLoadingReplies,
-    loadThread,
-    loadReplies,
-    postReply,
-    toggleLikeThread,
-    toggleLikeReply,
-  } = useCommunityStore();
+  const currentThread = useCommunityStore((s) => s.currentThread);
+  const replies = useCommunityStore((s) => s.replies);
+  const isLoadingReplies = useCommunityStore((s) => s.isLoadingReplies);
+  const loadThread = useCommunityStore((s) => s.loadThread);
+  const loadReplies = useCommunityStore((s) => s.loadReplies);
+  const postReply = useCommunityStore((s) => s.postReply);
+  const toggleLikeThread = useCommunityStore((s) => s.toggleLikeThread);
+  const toggleLikeReply = useCommunityStore((s) => s.toggleLikeReply);
 
   useEffect(() => {
     if (id) {

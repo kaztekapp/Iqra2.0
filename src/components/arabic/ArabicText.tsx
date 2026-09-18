@@ -52,7 +52,7 @@ export function ArabicText({
   style,
   ...props
 }: ArabicTextProps) {
-  const { showVowels } = useProgressStore();
+  const showVowels = useProgressStore((s) => s.showVowels);
 
   // Use voweled text if available and showVowels is true
   const displayText = showVowels && withVowels ? withVowels : children;

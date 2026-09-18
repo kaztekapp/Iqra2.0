@@ -33,30 +33,29 @@ export default function ArabicQuizScreen() {
   const [quizResult, setQuizResult] = useState<{ passed: boolean; xpEarned: number } | null>(null);
   const [loadingMessage, setLoadingMessage] = useState(t('arabicQuiz.preparingQuiz'));
 
-  const {
-    currentQuestions,
-    currentAnswers,
-    currentIndex,
-    attempts,
-    bestScore,
-    streak,
-    maxStreak,
-    isPlaying,
-    error,
-    hasActiveQuiz,
-    setQuestions,
-    setLoading,
-    setError,
-    startAttempt,
-    submitAnswer,
-    nextQuestion,
-    recordAttempt,
-    resetSession,
-    clearQuiz,
-  } = useArabicQuizStore();
+  const currentQuestions = useArabicQuizStore((s) => s.currentQuestions);
+  const currentAnswers = useArabicQuizStore((s) => s.currentAnswers);
+  const currentIndex = useArabicQuizStore((s) => s.currentIndex);
+  const attempts = useArabicQuizStore((s) => s.attempts);
+  const bestScore = useArabicQuizStore((s) => s.bestScore);
+  const streak = useArabicQuizStore((s) => s.streak);
+  const maxStreak = useArabicQuizStore((s) => s.maxStreak);
+  const isPlaying = useArabicQuizStore((s) => s.isPlaying);
+  const error = useArabicQuizStore((s) => s.error);
+  const hasActiveQuiz = useArabicQuizStore((s) => s.hasActiveQuiz);
+  const setQuestions = useArabicQuizStore((s) => s.setQuestions);
+  const setLoading = useArabicQuizStore((s) => s.setLoading);
+  const setError = useArabicQuizStore((s) => s.setError);
+  const startAttempt = useArabicQuizStore((s) => s.startAttempt);
+  const submitAnswer = useArabicQuizStore((s) => s.submitAnswer);
+  const nextQuestion = useArabicQuizStore((s) => s.nextQuestion);
+  const recordAttempt = useArabicQuizStore((s) => s.recordAttempt);
+  const resetSession = useArabicQuizStore((s) => s.resetSession);
+  const clearQuiz = useArabicQuizStore((s) => s.clearQuiz);
 
-  const { addXp, updateStreak } = useProgressStore();
-  const { contributeToChallenge } = useCommunityStore();
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
+  const contributeToChallenge = useCommunityStore((s) => s.contributeToChallenge);
 
   const currentQuestion = currentQuestions[currentIndex];
 

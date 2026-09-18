@@ -27,13 +27,11 @@ export default function StudyPartnersScreen() {
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
 
-  const {
-    partners,
-    isLoadingPartners,
-    loadPartners,
-    connectPartner,
-    disconnectPartner,
-  } = useCommunityStore();
+  const partners = useCommunityStore((s) => s.partners);
+  const isLoadingPartners = useCommunityStore((s) => s.isLoadingPartners);
+  const loadPartners = useCommunityStore((s) => s.loadPartners);
+  const connectPartner = useCommunityStore((s) => s.connectPartner);
+  const disconnectPartner = useCommunityStore((s) => s.disconnectPartner);
 
   useEffect(() => {
     loadPartners();

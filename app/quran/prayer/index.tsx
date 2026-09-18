@@ -20,7 +20,8 @@ export default function PrayerIndexScreen() {
     tab === 'sujud-sahw' ? 'sujud_sahw' : 'prayer_guide'
   );
 
-  const { isCompleted, getCompletedCount } = usePrayerStore();
+  const isCompleted = usePrayerStore((s) => s.isCompleted);
+  const getCompletedCount = usePrayerStore((s) => s.getCompletedCount);
   const lessons = getAllPrayerLessons();
   const completedCount = getCompletedCount();
 

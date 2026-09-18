@@ -14,7 +14,7 @@ export default function InviteLandingScreen() {
   const { code } = useLocalSearchParams<{ code: string }>();
   const { t } = useTranslation();
   const user = useSettingsStore((s) => s.user);
-  const { joinGroup } = useCommunityStore();
+  const joinGroup = useCommunityStore((s) => s.joinGroup);
 
   const [group, setGroup] = useState<StudyGroup | null>(null);
   const [isLoading, setIsLoading] = useState(true);

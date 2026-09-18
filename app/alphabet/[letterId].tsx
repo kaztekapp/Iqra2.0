@@ -18,13 +18,11 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 export default function LetterDetailScreen() {
   const { letterId } = useLocalSearchParams<{ letterId: string }>();
   const letter = getLetterById(letterId || '');
-  const {
-    progress,
-    markLetterLearned,
-    markLetterMastered,
-    addXp,
-    updateStreak,
-  } = useProgressStore();
+  const progress = useProgressStore((s) => s.progress);
+  const markLetterLearned = useProgressStore((s) => s.markLetterLearned);
+  const markLetterMastered = useProgressStore((s) => s.markLetterMastered);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
 
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();

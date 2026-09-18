@@ -26,11 +26,9 @@ export default function DuaDetailScreen() {
   const { lc } = useLocalizedContent();
   const { duaId } = useLocalSearchParams<{ duaId: string }>();
 
-  const {
-    isMemorized,
-    toggleMemorized,
-    setLastViewed,
-  } = useDuasStore();
+  const isMemorized = useDuasStore((s) => s.isMemorized);
+  const toggleMemorized = useDuasStore((s) => s.toggleMemorized);
+  const setLastViewed = useDuasStore((s) => s.setLastViewed);
 
   // Audio/Speech functionality
   const { voiceSource, deviceVoiceId, setArabicVoice, listDeviceVoices } = useArabicSpeech();

@@ -29,7 +29,9 @@ export default function SpeakingPracticeScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId?: string }>();
-  const { showVowels, addXp, updateStreak } = useProgressStore();
+  const showVowels = useProgressStore((s) => s.showVowels);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
 
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

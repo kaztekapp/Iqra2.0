@@ -66,7 +66,11 @@ export default function GrammarLessonScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
-  const { startLesson, completeLesson, addXp, updateStreak, progress } = useProgressStore();
+  const startLesson = useProgressStore((s) => s.startLesson);
+  const completeLesson = useProgressStore((s) => s.completeLesson);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
+  const progress = useProgressStore((s) => s.progress);
   const isCompleted = !!lessonId && progress.grammarProgress.lessonsCompleted.includes(lessonId);
   const { speak } = useArabicSpeech();
   const [showExercises, setShowExercises] = useState(false);

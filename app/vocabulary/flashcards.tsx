@@ -33,7 +33,11 @@ export default function FlashcardsScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { themeId } = useLocalSearchParams<{ themeId?: string }>();
-  const { showVowels, markWordLearned, addXp, updateStreak, scheduleVocabularyReview } = useProgressStore();
+  const showVowels = useProgressStore((s) => s.showVowels);
+  const markWordLearned = useProgressStore((s) => s.markWordLearned);
+  const addXp = useProgressStore((s) => s.addXp);
+  const updateStreak = useProgressStore((s) => s.updateStreak);
+  const scheduleVocabularyReview = useProgressStore((s) => s.scheduleVocabularyReview);
 
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

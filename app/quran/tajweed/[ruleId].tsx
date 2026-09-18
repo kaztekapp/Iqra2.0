@@ -62,12 +62,10 @@ export default function TajweedRuleDetailScreen() {
   const [audioState, setAudioState] = useState<AudioState>('idle');
 
   const rule = getTajweedRuleById(ruleId as TajweedRuleId);
-  const {
-    markTajweedRuleLearned,
-    markTajweedRuleMastered,
-    isTajweedRuleLearned,
-    isTajweedRuleMastered,
-  } = useQuranStore();
+  const markTajweedRuleLearned = useQuranStore((s) => s.markTajweedRuleLearned);
+  const markTajweedRuleMastered = useQuranStore((s) => s.markTajweedRuleMastered);
+  const isTajweedRuleLearned = useQuranStore((s) => s.isTajweedRuleLearned);
+  const isTajweedRuleMastered = useQuranStore((s) => s.isTajweedRuleMastered);
 
   // Cleanup audio on unmount
   useEffect(() => {
