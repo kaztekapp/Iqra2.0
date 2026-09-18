@@ -190,6 +190,14 @@ export default ${constName};
 `;
 }
 
+// The first juz a surah appears in: the only folder that holds its file
+function homeJuz(surahNum) {
+  for (let juz = 1; juz <= 30; juz++) {
+    if (JUZ_MAPPING[juz].includes(surahNum)) return juz;
+  }
+  throw new Error(`surah ${surahNum} is in no juz`);
+}
+
 // Generate index file for a juz
 function generateJuzIndex(juzNumber, surahNumbers) {
   const imports = [];
@@ -199,15 +207,20 @@ function generateJuzIndex(juzNumber, surahNumbers) {
     const info = SURAH_INFO[num];
     const constName = info.nameEnglish.toUpperCase().replace(/[^A-Z]/g, '_') + '_AYAHS';
     const fileName = `${String(num).padStart(3, '0')}-${info.id}`;
+    // A surah that spans several juz is stored once, in the first juz it
+    // appears in; later juz import that one file instead of carrying a copy
+    // (al-Baqarah alone is 1.5 MB, and the app used to bundle it three times).
+    const home = homeJuz(num);
+    const from = home === juzNumber ? `./${fileName}` : `../juz${home}/${fileName}`;
 
-    imports.push(`import ${constName} from './${fileName}';`);
+    imports.push(`import ${constName} from '${from}';`);
     exports.push(`  '${info.id}': ${constName},`);
   }
 
   return `// Juz ${juzNumber} - Surah Index
 // Auto-generated - DO NOT EDIT MANUALLY
 
-import { Ayah } from '../../../../types/quran';
+import { Ayah } from '../../../../../types/quran';
 
 ${imports.join('\n')}
 
@@ -248,6 +261,12 @@ async function main() {
       const info = SURAH_INFO[surahNum];
       const fileName = `${String(surahNum).padStart(3, '0')}-${info.id}.ts`;
       const filePath = path.join(juzDir, fileName);
+
+      // The file lives in the surah's first juz only; other juz just import it
+      if (homeJuz(surahNum) !== juz) {
+        console.log(`  ${info.nameEnglish} lives in juz${homeJuz(surahNum)}, importing it from there`);
+        continue;
+      }
 
       // Skip if file already exists (for resuming interrupted downloads)
       if (fs.existsSync(filePath)) {

@@ -3,7 +3,7 @@
 
 import { Ayah } from '../../../../../types/quran';
 
-import AL_BAQARAH_AYAHS from './002-al-baqarah';
+import AL_BAQARAH_AYAHS from '../juz1/002-al-baqarah';
 
 export const JUZ_2_SURAHS: Record<string, Ayah[]> = {
   'al-baqarah': AL_BAQARAH_AYAHS,

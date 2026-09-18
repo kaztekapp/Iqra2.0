@@ -3,7 +3,7 @@
 
 import { Ayah } from '../../../../../types/quran';
 
-import AT_TAWBAH_AYAHS from './009-at-tawbah';
+import AT_TAWBAH_AYAHS from '../juz10/009-at-tawbah';
 import YUNUS_AYAHS from './010-yunus';
 import HUD_AYAHS from './011-hud';
 
