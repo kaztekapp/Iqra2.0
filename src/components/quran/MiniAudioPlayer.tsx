@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAudioPlayerStore, startContinuousPlay } from '../../stores/audioPlayerStore';
 import { quranAudioService } from '../../services/quranAudioService';
+import { useNarrationStore } from '../../services/storyNarration';
 import { getSurahByNumber } from '../../data/arabic/quran';
 import { font, color, radius } from '../../theme/tokens';
 
@@ -20,6 +21,9 @@ export function MiniAudioPlayer() {
   const setCurrentlyPlaying = useAudioPlayerStore((s) => s.setCurrentlyPlaying);
   const updatePlaybackState = useAudioPlayerStore((s) => s.updatePlaybackState);
   const clearPlayer = useAudioPlayerStore((s) => s.clearPlayer);
+  // A story being read has its own bar in this spot; starting it silenced
+  // the recitation, so this one has nothing to show until the story stops.
+  const storyReading = useNarrationStore((s) => s.status !== 'idle');
 
   const slideAnim = useRef(new Animated.Value(100)).current;
   const progressAnim = useRef(new Animated.Value(0)).current;
@@ -134,7 +138,7 @@ export function MiniAudioPlayer() {
     }
   };
 
-  if (!currentlyPlaying) return null;
+  if (!currentlyPlaying || storyReading) return null;
 
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 1],

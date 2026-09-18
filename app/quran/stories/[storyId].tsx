@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -44,7 +44,11 @@ export default function QuranStoryDetailScreen() {
   const sourceCount = story?.content.filter((block) => block.type !== 'narrative').length || 0;
 
   // Listening
-  const narration = useStoryNarration(story?.content || []);
+  const storyNowPlaying = useMemo(
+    () => ({ title: lc(story?.titleEnglish ?? '', story?.titleFrench), artist: story?.titleArabic }),
+    [story, lc]
+  );
+  const narration = useStoryNarration(story?.content || [], storyNowPlaying);
   const [playerOpen, setPlayerOpen] = useState(false);
 
   const blockOffsets = useRef<Record<string, number>>({});

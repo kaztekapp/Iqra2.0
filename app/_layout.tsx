@@ -16,6 +16,7 @@ import { iapService } from '../src/services/iapService';
 import { useSettingsStore } from '../src/stores/settingsStore';
 import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
+import { NarrationMiniPlayer } from '../src/components/listen/NarrationMiniPlayer';
 import { UpdateModal } from '../src/components/UpdateModal';
 import StopSpeechOnNavigate from '../src/components/StopSpeechOnNavigate';
 import { prewarmArabicVoice } from '../src/services/speech/arabicTTS';
@@ -296,6 +297,7 @@ function RootLayout() {
           <Stack.Screen name="terms-of-service" />
         </Stack>
         <MiniAudioPlayer />
+        <NarrationMiniPlayer />
         <StopSpeechOnNavigate />
         <UpdateModal />
       </GestureHandlerRootView>

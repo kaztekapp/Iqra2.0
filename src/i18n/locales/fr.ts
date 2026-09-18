@@ -897,6 +897,10 @@ export default {
     clearBody: 'Tout ce qui est conservé ici sera refait à la prochaine écoute, avec une connexion.',
   },
   listen: {
+    nowReading: 'Lecture en cours',
+    minutesLeft_one: '{{count}} min restante',
+    minutesLeft_other: '{{count}} min restantes',
+    backToStory: 'Revenir \u00e0 {{title}}',
     tapToStart: 'Touchez un paragraphe pour écouter à partir de là',
     listen: 'Écouter',
     play: 'Lecture',

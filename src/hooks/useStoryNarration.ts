@@ -1,579 +1,89 @@
 /**
- * Listening to a story.
+ * A screen's handle on the story reading.
  *
- * The story is flattened once into a queue of sentence-sized utterances, each
- * remembering which block it came from. Playback is a single async loop over
- * that queue, and the loop is owned by a "run" number: starting playback
- * increments it, and any older loop that wakes up to find the number changed
- * returns without speaking or advancing.
- *
- * That is the whole defence against hearing something twice. Every control —
- * play, pause, skip, speed, changing chapter, leaving the screen — either
- * lets the current loop continue or supersedes it; nothing ever leaves two
- * loops running, and a superseded loop cannot advance the index it no longer
- * owns.
+ * The reading itself lives in `services/storyNarration` and outlives the
+ * screen: pressing back leaves the voice going, and the "now reading" bar
+ * elsewhere in the app pauses, stops or returns to it. This hook builds the
+ * queue for the blocks on screen, attaches it (a no-op when it is the same
+ * reading the engine already holds, which is what makes coming back
+ * seamless), and exposes the engine's state and controls under the names
+ * the screens have always used.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AppState } from 'react-native';
+import { useEffect, useMemo } from 'react';
+import { usePathname } from 'expo-router';
 import { useLocalizedContent } from './useLocalizedContent';
 import { useSettingsStore } from '../stores/settingsStore';
+import { NarrationLang } from '../services/storyAudioService';
 import {
-  storyAudioService,
-  estimateSeconds,
-  NarrationLang,
-  NarrationEngine,
-  VoiceGender,
-} from '../services/storyAudioService';
-import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns, hasHadithRun } from '../services/narrationText';
-import { hadithReferenceLine } from '../services/hadithReference';
-import { releaseAudioSessionIfIdle } from '../services/audioBus';
-import {
-  speakArabic,
-  stopArabic,
-  prewarmArabicVoice,
-  isArabicSpeaking,
-  setArabicNowPlaying,
-  prepareArabic,
-  discardPreparedArabic,
-  setArabicVoiceGender,
-  forgiveArabicEdge,
-  hasArabicClip,
-  saveArabicClip,
-} from '../services/speech/arabicTTS';
+  useNarrationStore,
+  buildUtterances,
+  secondsFrom,
+  attachNarration,
+  startNarration,
+  stopNarration,
+  pauseNarration,
+  resumeNarration,
+  toggleNarration,
+  skipNarrationBlocks,
+  seekNarrationToBlock,
+  seekNarrationToFraction,
+  setNarrationPace,
+  toggleNarrationPace,
+  setNarrationSleep,
+  setNarrationVoice,
+  saveNarrationOffline,
+  narrationOfflineCount,
+} from '../services/storyNarration';
 
-export type NarrationStatus = 'idle' | 'loading' | 'playing' | 'paused';
-/**
- * How fast the reading goes.
- *
- * There used to be four multipliers. A multiplier is a setting for a podcast;
- * this is a story with the Quran in it, and nobody wants an ayah at 1.5. Two
- * paces: the one the story is written for, and one for following along.
- */
-export type NarrationPace = 'normal' | 'slow';
+import type { NarratableBlock, NarrationNowPlaying } from '../services/storyNarration';
 
-/**
- * The pace applies to the ARABIC voice only - a quoted ayah, a dua, the words
- * of a hadith. The story around it is prose in a language the reader speaks,
- * and slowing that down helps nobody; the Arabic is the part someone wants to
- * follow word by word, or recite along with. The number is a prosody rate for
- * the Arabic engine (see edgeRate in arabicTTS), not a stretched clip.
- */
-const ARABIC_PACE_RATE: Record<NarrationPace, number> = { normal: 1, slow: 0.6 };
-/** Minutes, or off. Listening at night is the reason this exists. */
-export type SleepOption = 'off' | 5 | 15 | 30 | 45;
+export type {
+  NarrationStatus,
+  NarrationPace,
+  SleepOption,
+  NarratableBlock,
+  NarrationNowPlaying,
+} from '../services/storyNarration';
 
-/** The shape both prophet-story and Quran-story blocks already have. */
-export interface NarratableBlock {
-  id: string;
-  type: 'narrative' | 'quran_source' | 'hadith_source';
-  content: string;
-  contentFr?: string;
-  source?: {
-    type: 'quran' | 'hadith';
-    translation: string;
-    translationFr?: string;
-    collection?: string;
-    hadithNumber?: string;
-    narrator?: string;
-  } | null;
+export interface NarrationOptions {
+  /** The chapter these blocks belong to, so the screen can reopen on it. */
+  chapterId?: string;
 }
 
-/**
- * A line of the Quran quoted inside the prose is its own utterance, spoken by
- * the app's Arabic voice — the English and French voices cannot read it.
- */
-type UtteranceLang = NarrationLang | 'ar';
-
-interface Utterance {
-  text: string;
-  lang: UtteranceLang;
-  blockId: string;
-  blockIndex: number;
-  seconds: number;
-}
-
-/** Breath between sentences, and a longer settling pause between blocks. */
-const GAP_SENTENCE = 260;
-const GAP_BLOCK = 620;
-
-/**
- * One quoted line of the Quran, through the Arabic voice the learner chose.
- *
- * `speakArabic` resolves whether the line finished or was cut off, so the
- * finish is taken from its own callback: a line that was stopped — by a
- * pause, a skip, or another producer claiming the audio — must not advance
- * the queue, exactly as a stopped story sentence does not.
- */
-async function speakQuranLine(text: string, speed: number): Promise<'done' | 'stopped'> {
-  let finished = false;
-  await speakArabic(text, {
-    speed,
-    onDone: () => { finished = true; },
-    // No Arabic voice at all, online or on the phone: the meaning that
-    // follows still gets read rather than the story falling silent here.
-    onError: () => { finished = true; },
-  });
-  return finished ? 'done' : 'stopped';
-}
-
-/** What the lock screen names while this story is being read. */
-export interface NarrationNowPlaying {
-  title: string;
-  artist?: string;
-}
-
-export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: NarrationNowPlaying) {
+export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: NarrationNowPlaying, options?: NarrationOptions) {
   // Narration follows the same language setting the text on screen does, so
   // the voice never reads English while the reader shows French.
   const { lc, language } = useLocalizedContent();
   const lang: NarrationLang = language === 'fr' ? 'fr' : 'en';
-
+  const route = usePathname();
   const voice = useSettingsStore((s) => s.narrationVoice);
-  const storeVoice = useSettingsStore((s) => s.setNarrationVoice);
 
-  const [status, setStatus] = useState<NarrationStatus>('idle');
-  const [index, setIndex] = useState(0);
-  const [pace, setPaceState] = useState<NarrationPace>('normal');
-  const [sleep, setSleep] = useState<SleepOption>('off');
-  const [engine, setEngine] = useState<NarrationEngine | null>(null);
+  const utterances = useMemo(() => buildUtterances(blocks, lang, lc), [blocks, lang, lc]);
 
-  const runRef = useRef(0);
-  const indexRef = useRef(0);
-  const statusRef = useRef<NarrationStatus>('idle');
-  const paceRef = useRef<NarrationPace>('normal');
-  const pausedByStopRef = useRef(false);
+  // Same story, same chapter, same language: the same reading. The ids at
+  // both ends and the count tell chapters of one story apart.
+  const key = `${route}|${lang}|${blocks.length}|${blocks[0]?.id ?? ''}|${blocks[blocks.length - 1]?.id ?? ''}`;
+  const title = nowPlaying?.title ?? '';
+  const artist = nowPlaying?.artist;
+  const chapterId = options?.chapterId;
 
   useEffect(() => {
-    indexRef.current = index;
-  }, [index]);
-  useEffect(() => {
-    statusRef.current = status;
-  }, [status]);
-  useEffect(() => {
-    paceRef.current = pace;
-  }, [pace]);
-  useEffect(() => {
-    storyAudioService.setGender(voice);
-    setArabicVoiceGender(voice);
-  }, [voice]);
+    if (!blocks.length) return;
+    attachNarration({ key, route, chapterId, title, artist, lang, utterances, blockCount: blocks.length });
+  }, [key, route, chapterId, title, artist, lang, utterances, blocks.length]);
 
-  /**
-   * Flatten the story.
-   *
-   * A Quran block is read by its caption alone. The caption is the verse put
-   * into the story's own words, and reading the ayah and then its meaning
-   * after it turns the listening into a recitation drill — lead, Arabic,
-   * translation, lead, Arabic, translation — which is not what a story
-   * sounds like. The verse is on screen to be read. Where a story sets its
-   * ayahs a second time as ﴿Arabic﴾ runs in its prose, that prose is what
-   * carries them to the ear, woven into the telling rather than announced.
-   *
-   * A hadith is reported the way the Quran is: after its card, the story
-   * sets it as ⟨Arabic⟩ runs, one segment and its meaning at a time, and
-   * those runs carry it to the ear. Before the first of them the reference
-   * is said once - collection, number, who reported it - so the listener
-   * knows what is being read before it is read. A hadith card that has no
-   * runs after it yet keeps reading its translation whole, so nothing is
-   * passed over in silence while the stories are being reshaped.
-   *
-   * A caption that merely restates the line before it is dropped rather than
-   * said twice.
-   */
-  const utterances = useMemo<Utterance[]>(() => {
-    const out: Utterance[] = [];
-    let lastKey = '';
+  const session = useNarrationStore((s) => s.session);
+  const mine = session?.key === key;
+  const status = useNarrationStore((s) => (mine ? s.status : 'idle'));
+  const index = useNarrationStore((s) => (mine ? s.index : 0));
+  const pace = useNarrationStore((s) => s.pace);
+  const sleep = useNarrationStore((s) => s.sleep);
+  const engine = useNarrationStore((s) => s.engine);
 
-    const push = (raw: string, blockId: string, blockIndex: number) => {
-      // A conversation in the story quotes the Quran line by line: the
-      // Arabic first, then its meaning. "Musa said," is read by the story's
-      // voice, the Arabic by the Arabic voice, and the meaning by the story's
-      // voice again — the same cadence a teacher uses.
-      for (const segment of splitQuranRuns(raw)) {
-        if (segment.kind === 'quran' || segment.kind === 'hadith') {
-          const key = speechKey(segment.text);
-          if (!key || key === lastKey) continue;
-          lastKey = key;
-          out.push({ text: segment.text, lang: 'ar', blockId, blockIndex, seconds: 0 });
-          continue;
-        }
-        const prepared = prepareForSpeech(segment.text, lang);
-        for (const sentence of splitSentences(prepared)) {
-          const key = speechKey(sentence);
-          if (!key || key === lastKey) continue;
-          lastKey = key;
-          out.push({ text: sentence, lang, blockId, blockIndex, seconds: 0 });
-        }
-      }
-    };
-
-    blocks.forEach((block, blockIndex) => {
-      const caption = lc(block.content, block.contentFr);
-      if (block.type === 'narrative') {
-        push(caption, block.id, blockIndex);
-        return;
-      }
-      push(caption, block.id, blockIndex);
-
-      const isHadith = block.source?.type === 'hadith';
-      if (isHadith && block.source) {
-        push(
-          hadithReferenceLine(
-            {
-              collection: block.source.collection ?? '',
-              hadithNumber: block.source.hadithNumber,
-              narrator: block.source.narrator,
-            },
-            lang,
-          ),
-          block.id,
-          blockIndex,
-        );
-      }
-
-      const translation = block.source ? lc(block.source.translation, block.source.translationFr) : '';
-      if (!translation) return;
-
-      const next = blocks[blockIndex + 1];
-      const hasRuns = isHadith && next?.type === 'narrative' && hasHadithRun(lc(next.content, next.contentFr));
-
-      // Read a verse only when there is no caption to carry the block, so
-      // that a block without one is never passed over in silence. A hadith
-      // is read whole only until its runs exist.
-      const readsTranslation = (isHadith && !hasRuns) || !caption.trim();
-      if (readsTranslation) push(translation, block.id, blockIndex);
-    });
-
-    return out;
-  }, [blocks, lang, lc]);
-
-  const totalSeconds = useMemo(
-    () =>
-      utterances.reduce(
-        (sum, u) => sum + estimateSeconds(u.text, u.lang === 'ar' ? ARABIC_PACE_RATE[pace] : 1),
-        0
-      ),
-    [utterances, pace]
-  );
-
-  const remainingSeconds = useMemo(() => {
-    let sum = 0;
-    for (let i = index; i < utterances.length; i++) {
-      const u = utterances[i];
-      sum += estimateSeconds(u.text, u.lang === 'ar' ? ARABIC_PACE_RATE[pace] : 1);
-    }
-    return sum;
-  }, [utterances, index, pace]);
+  const totalSeconds = useMemo(() => secondsFrom(utterances, 0, pace), [utterances, pace]);
+  const remainingSeconds = useMemo(() => secondsFrom(utterances, index, pace), [utterances, index, pace]);
 
   const current = utterances[index];
-  const currentBlockId = current?.blockId ?? null;
-  const currentBlockIndex = current?.blockIndex ?? 0;
-
-  /** The loop. Owns `run`; exits the moment it stops being current. */
-  const run = useCallback(
-    async (from: number) => {
-      const mine = ++runRef.current;
-      pausedByStopRef.current = false;
-
-      setStatus('loading');
-      await storyAudioService.prime(lang);
-      if (mine !== runRef.current) return;
-      if (utterances.some((u) => u.lang === 'ar')) prewarmArabicVoice();
-      setStatus('playing');
-
-      for (let i = from; i < utterances.length; i++) {
-        if (mine !== runRef.current) return;
-
-        setIndex(i);
-        indexRef.current = i;
-
-        const utterance = utterances[i];
-        // Fetch the next line while this one plays, so the gap between them
-        // is a file swap and not a network round trip.
-        const upcoming = utterances[i + 1];
-        if (upcoming) {
-          if (upcoming.lang === 'ar') prepareArabic(upcoming.text, ARABIC_PACE_RATE[paceRef.current]);
-          else storyAudioService.prepare(upcoming.text, lang);
-        }
-        const result =
-          utterance.lang === 'ar'
-            ? await speakQuranLine(utterance.text, ARABIC_PACE_RATE[paceRef.current])
-            : await storyAudioService.speak(utterance.text, 1, lang);
-        setEngine(storyAudioService.getEngine());
-
-        if (mine !== runRef.current) return;
-        if (result === 'error') {
-          setStatus('idle');
-          return;
-        }
-        if (result !== 'done') return; // stopped by someone else — do not advance
-
-        const next = utterances[i + 1];
-        const gap = next && next.blockIndex !== utterance.blockIndex ? GAP_BLOCK : GAP_SENTENCE;
-        await new Promise((r) => setTimeout(r, gap));
-        if (mine !== runRef.current) return;
-      }
-
-      if (mine !== runRef.current) return;
-      setStatus('idle');
-      setIndex(0);
-      indexRef.current = 0;
-    },
-    [utterances, lang]
-  );
-
-  const start = useCallback(
-    (fromIndex = 0) => {
-      // A rest taken during the last reading - a tunnel, a dropped signal -
-      // must not decide that this one is read by the phone.
-      forgiveArabicEdge();
-      void run(Math.max(0, Math.min(fromIndex, Math.max(0, utterances.length - 1))));
-    },
-    [run, utterances.length]
-  );
-
-  const stop = useCallback(async () => {
-    runRef.current++;
-    pausedByStopRef.current = false;
-    storyAudioService.resetSession();
-    stopArabic();
-    discardPreparedArabic();
-    storyAudioService.discardPrepared();
-    await storyAudioService.stop();
-    setStatus('idle');
-    setIndex(0);
-    indexRef.current = 0;
-  }, []);
-
-  /**
-   * Pause without killing the loop where the platform supports it: the
-   * pending utterance promise simply stays pending, so resuming picks the
-   * sentence up mid-word. Where it does not, the loop ends and resuming
-   * restarts that one sentence.
-   */
-  const pause = useCallback(async () => {
-    // The Arabic voice has no pause; the line is cut and restarted on resume.
-    if (utterances[indexRef.current]?.lang === 'ar') {
-      stopArabic();
-      pausedByStopRef.current = true;
-      setStatus('paused');
-      return;
-    }
-    const reallyPaused = await storyAudioService.pause();
-    pausedByStopRef.current = !reallyPaused;
-    setStatus('paused');
-  }, [utterances]);
-
-  // Sleep timer. It pauses rather than stops, so the story is exactly where
-  // it was left when the listener comes back to it.
-  useEffect(() => {
-    if (sleep === 'off') return;
-    const handle = setTimeout(() => {
-      void pause();
-      setSleep('off');
-    }, sleep * 60 * 1000);
-    return () => clearTimeout(handle);
-  }, [sleep, pause]);
-
-  const resume = useCallback(async () => {
-    if (pausedByStopRef.current) {
-      pausedByStopRef.current = false;
-      void run(indexRef.current);
-      return;
-    }
-    setStatus('playing');
-    await storyAudioService.resume();
-  }, [run]);
-
-  const toggle = useCallback(() => {
-    if (status === 'playing') void pause();
-    else if (status === 'paused') void resume();
-    else start(indexRef.current);
-  }, [status, pause, resume, start]);
-
-  /** Jump whole blocks — a paragraph is the unit a listener thinks in. */
-  const skipBlocks = useCallback(
-    (delta: number) => {
-      if (!utterances.length) return;
-      const here = utterances[indexRef.current]?.blockIndex ?? 0;
-      const target = here + delta;
-      let candidate = utterances.findIndex((u) => u.blockIndex === target);
-      if (candidate === -1) candidate = delta < 0 ? 0 : utterances.length - 1;
-      void run(candidate);
-    },
-    [utterances, run]
-  );
-
-  const seekToBlock = useCallback(
-    (blockIndex: number) => {
-      const candidate = utterances.findIndex((u) => u.blockIndex === blockIndex);
-      if (candidate >= 0) void run(candidate);
-    },
-    [utterances, run]
-  );
-
-  const seekToFraction = useCallback(
-    (fraction: number) => {
-      if (!utterances.length) return;
-      const target = Math.round(fraction * (utterances.length - 1));
-      void run(Math.max(0, Math.min(target, utterances.length - 1)));
-    },
-    [utterances, run]
-  );
-
-  const setVoice = useCallback(
-    (next: VoiceGender) => {
-      if (next === voice) return;
-      storeVoice(next);
-      storyAudioService.setGender(next);
-      setArabicVoiceGender(next);
-
-      // Take effect on the sentence being read, not the one after it.
-      // Deferring it is what made the switch feel broken: tap male, and a
-      // long sentence keeps you listening to the old voice for another
-      // twenty seconds, which reads as nothing having happened.
-      //
-      // Re-reading the line from its start is the only honest way to change
-      // voice mid-sentence, and it is exactly the teardown a skip already
-      // performs, so it is no more dangerous than the back button.
-      //
-      // Asking for male also sends the session back to the top of the engine
-      // ladder, since the fetched neural voice is the only one that has a
-      // male option. If it cannot be reached, the reading stays female
-      // rather than dropping to the phone's own male voice.
-      if (status === 'playing' || status === 'loading') void run(indexRef.current);
-    },
-    [voice, storeVoice, status, run]
-  );
-
-  const setPace = useCallback((next: NarrationPace) => {
-    // The engine fixes rate when an utterance starts, so this lands on the
-    // next sentence. Restarting the current one to apply it sooner would mean
-    // saying it twice, which is never worth it.
-    setPaceState(next);
-    paceRef.current = next;
-  }, []);
-
-  /**
-   * Keep this reading on the phone.
-   *
-   * Walks the same lines the reader would hear, in the same voices, and asks
-   * each engine to store its clip. Afterwards the whole thing plays with no
-   * signal. Lines already stored cost nothing, so this is also how a part-saved
-   * reading is finished.
-   */
-  const saveOffline = useCallback(
-    async (onProgress?: (done: number, total: number) => void) => {
-      const total = utterances.length;
-      let failed = 0;
-      for (let i = 0; i < total; i++) {
-        const u = utterances[i];
-        try {
-          if (u.lang === 'ar') await saveArabicClip(u.text, ARABIC_PACE_RATE[paceRef.current]);
-          else await storyAudioService.saveClip(u.text, lang);
-        } catch {
-          // One line that will not save should not stop the rest - the reader
-          // gets that one from the network - but the count is returned so the
-          // screen can say the save is incomplete instead of claiming success.
-          failed += 1;
-        }
-        onProgress?.(i + 1, total);
-      }
-      return { total, failed };
-    },
-    [utterances, lang]
-  );
-
-  /** How much of this reading is already on the phone. */
-  // `pace` is in the list on purpose, not just `paceRef`: a clip saved at one
-  // pace is a different recording from the same line at another, so switching
-  // pace changes the answer and the screen has to be told to ask again.
-  const offlineCount = useCallback(
-    () =>
-      utterances.reduce((n, u) => {
-        const stored =
-          u.lang === 'ar'
-            ? hasArabicClip(u.text, ARABIC_PACE_RATE[pace])
-            : storyAudioService.hasClip(u.text, lang);
-        return n + (stored ? 1 : 0);
-      }, 0),
-    [utterances, lang, pace]
-  );
-
-  const togglePace = useCallback(() => {
-    setPace(paceRef.current === 'normal' ? 'slow' : 'normal');
-  }, [setPace]);
-
-  /**
-   * Lock-screen controls, the same ones the Quran player puts up.
-   *
-   * The title is the story, not the sentence: a listener glancing at a locked
-   * phone wants to know what is being read, and a line of narration changing
-   * four times a minute is noise. The transport works the story rather than
-   * the clip - pausing from the lock screen pauses the reading, and playing
-   * resumes it - so the two never disagree about whether a story is running.
-   */
-  const title = nowPlaying?.title;
-  const artist = nowPlaying?.artist;
-  useEffect(() => {
-    if (!title) return;
-    const meta = { title, artist, albumTitle: artist };
-    storyAudioService.setNowPlaying(meta);
-    setArabicNowPlaying(meta);
-    storyAudioService.setTransportListener((next) => {
-      setStatus((current) => (current === 'idle' ? current : next));
-    });
-    return () => {
-      storyAudioService.setTransportListener(null);
-      storyAudioService.setNowPlaying(null);
-      setArabicNowPlaying(null);
-    };
-  }, [title, artist]);
-
-  // Leaving the screen must not leave a voice talking, or the audio session
-  // held open behind it.
-  useEffect(() => {
-    return () => {
-      runRef.current++;
-      stopArabic();
-      discardPreparedArabic();
-      storyAudioService.discardPrepared();
-      storyAudioService.setNarrating(false);
-      void storyAudioService.stop().then(() => releaseAudioSessionIfIdle());
-    };
-  }, []);
-
-  /**
-   * Coming back to the foreground, an utterance that lost its audio while the
-   * app was suspended is cleared rather than waited on.
-   */
-  useEffect(() => {
-    const sub = AppState.addEventListener('change', (next) => {
-      if (next !== 'active') return;
-      if (statusRef.current !== 'playing' && isArabicSpeaking()) stopArabic();
-    });
-    return () => sub.remove();
-  }, []);
-
-  // The service is asked "are you busy?" when the app goes to the background,
-  // and a story that is playing or paused must answer yes even in the silent
-  // quarter-second between two sentences. Releasing the session is decided on
-  // the audio bus, with every producer consulted - not here.
-  useEffect(() => {
-    storyAudioService.setNarrating(status !== 'idle');
-  }, [status]);
-
-  // Changing chapter replaces the queue; anything still speaking is stale.
-  useEffect(() => {
-    runRef.current++;
-    storyAudioService.resetSession();
-    stopArabic();
-    discardPreparedArabic();
-    storyAudioService.discardPrepared();
-    void storyAudioService.stop();
-    setStatus('idle');
-    setIndex(0);
-    indexRef.current = 0;
-  }, [utterances]);
 
   return {
     status,
@@ -582,35 +92,35 @@ export function useStoryNarration(blocks: NarratableBlock[], nowPlaying?: Narrat
     pace,
     index,
     total: utterances.length,
-    currentBlockId,
-    currentBlockIndex,
+    currentBlockId: current?.blockId ?? null,
+    currentBlockIndex: current?.blockIndex ?? 0,
     blockCount: blocks.length,
     progress: utterances.length ? index / utterances.length : 0,
     remainingSeconds,
     elapsedSeconds: Math.max(0, totalSeconds - remainingSeconds),
     totalSeconds,
     sleep,
-    setSleep,
+    setSleep: setNarrationSleep,
     voice,
-    setVoice,
+    setVoice: setNarrationVoice,
     // True once the device's own voice is doing the reading, which on iOS
     // means quality depends on what the owner has downloaded.
     usingDeviceVoice: engine === 'device',
     // False when a male voice was asked for but the reading is female,
     // because only the fetched neural voice has a male option.
     voiceApplies: voice === 'female' || engine === null || engine === 'edge',
-    start,
-    stop,
-    toggle,
-    pause,
-    resume,
-    skipBlocks,
-    seekToBlock,
-    seekToFraction,
-    setPace,
-    togglePace,
-    saveOffline,
-    offlineCount,
+    start: startNarration,
+    stop: stopNarration,
+    toggle: toggleNarration,
+    pause: pauseNarration,
+    resume: resumeNarration,
+    skipBlocks: skipNarrationBlocks,
+    seekToBlock: seekNarrationToBlock,
+    seekToFraction: seekNarrationToFraction,
+    setPace: setNarrationPace,
+    togglePace: toggleNarrationPace,
+    saveOffline: saveNarrationOffline,
+    offlineCount: narrationOfflineCount,
     utteranceCount: utterances.length,
   };
 }

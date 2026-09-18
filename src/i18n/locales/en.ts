@@ -897,6 +897,10 @@ export default {
     clearBody: 'Everything kept here is made again the next time you listen, with a connection.',
   },
   listen: {
+    nowReading: 'Now reading',
+    minutesLeft_one: '{{count}} min left',
+    minutesLeft_other: '{{count}} min left',
+    backToStory: 'Back to {{title}}',
     tapToStart: 'Tap any paragraph to listen from there',
     listen: 'Listen',
     play: 'Play',

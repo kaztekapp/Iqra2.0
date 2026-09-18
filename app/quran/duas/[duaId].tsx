@@ -114,11 +114,13 @@ export default function DuaDetailScreen() {
   // `narration` is a fresh object every render, so depending on it here meant
   // counting the store - a disk check per line - on every render. The count
   // and the total are stable, and they are what this depends on.
-  const { offlineCount, utteranceCount } = narration;
+  // The pace is in the list because a clip saved at one pace is a different
+  // recording from the same line at another: switching pace changes the count.
+  const { offlineCount, utteranceCount, pace: narrationPace } = narration;
   useEffect(() => {
     if (saving !== null) return;
     setOffline(offlineCount() >= utteranceCount && utteranceCount > 0 ? 'saved' : 'partial');
-  }, [offlineCount, utteranceCount, saving]);
+  }, [offlineCount, utteranceCount, saving, narrationPace]);
 
   const handleSaveOffline = useCallback(async () => {
     if (saving !== null || offline === 'saved') return;

@@ -11,6 +11,7 @@ import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore'
 import { SubStory, QuranReference } from '../../../src/types/prophetStories';
 import { quranAudioService, AudioState } from '../../../src/services/quranAudioService';
 import { useStoryNarration } from '../../../src/hooks/useStoryNarration';
+import { narrationSession } from '../../../src/services/storyNarration';
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
@@ -52,7 +53,14 @@ export default function ProphetStoryScreen() {
     if (prophetId && subStories.length > 0 && !currentSubStoryId) {
       startStory(prophetId);
       const savedProgress = getStoryProgress(prophetId);
-      setCurrentSubStoryId(savedProgress.currentSubStoryId || subStories[0].id);
+      // Coming back while a chapter of this story is being read: open on
+      // that chapter, so the reading carries on instead of being replaced.
+      const reading = narrationSession();
+      const readingChapter =
+        reading && reading.chapterId && reading.route.endsWith(`/${prophetId}`) && subStories.some((s) => s.id === reading.chapterId)
+          ? reading.chapterId
+          : null;
+      setCurrentSubStoryId(readingChapter || savedProgress.currentSubStoryId || subStories[0].id);
     }
   }, [prophetId, subStories, currentSubStoryId]);
 
@@ -80,7 +88,7 @@ export default function ProphetStoryScreen() {
     }),
     [currentSubStory, lc, prophet]
   );
-  const narration = useStoryNarration(currentContent, narrationNowPlaying);
+  const narration = useStoryNarration(currentContent, narrationNowPlaying, { chapterId: currentSubStoryId ?? undefined });
   const { seekToBlock } = narration;
   const [playerOpen, setPlayerOpen] = useState(false);
 
