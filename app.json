@@ -72,6 +72,7 @@
       ],
       "expo-status-bar",
       "expo-web-browser",
+      ["expo-notifications", { "color": "#1F7A4D" }],
       ["@sentry/react-native/expo", { "organization": "", "project": "" }]
     ],
     "experiments": {

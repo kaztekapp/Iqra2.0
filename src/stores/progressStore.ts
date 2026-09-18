@@ -51,6 +51,8 @@ export interface LastAccessedInfo {
   lessonId?: string;
   lessonTitle?: string;
   lessonTitleArabic?: string;
+  /** When it was opened, ms since epoch; reminders pick the latest thing. */
+  at?: number;
 }
 
 interface ProgressState {
@@ -197,7 +199,7 @@ export const useProgressStore = create<ProgressState>()(
 
       setShowVowels: (show) => set({ showVowels: show }),
       setLastAccessedModule: (module) => set({ lastAccessedModule: module }),
-      setLastAccessed: (info) => set({ lastAccessed: info, lastAccessedModule: info.module }),
+      setLastAccessed: (info) => set({ lastAccessed: { ...info, at: Date.now() }, lastAccessedModule: info.module }),
 
       // Achievement Methods
       checkAchievements: (quranSurahsCompleted = 0) => {

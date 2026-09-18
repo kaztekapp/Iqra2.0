@@ -19,6 +19,7 @@ import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src
 import { color, space, gutter, font, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import { errorMessage } from '../../src/lib/report';
+import { RemindersCard } from '../../src/components/RemindersCard';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -557,6 +558,7 @@ export default function ProfileScreen() {
               </Pressable>
             </View>
           </View>
+          <RemindersCard />
         </View>
 
         {/* Legal */}

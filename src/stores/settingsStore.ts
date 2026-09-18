@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Session, User } from '@supabase/supabase-js';
+import { DEFAULT_REMINDER_SETTINGS, ReminderSettings } from '../services/reminders/plan';
 
 interface SettingsState {
   // Language
@@ -33,6 +34,13 @@ interface SettingsState {
   arabicDeviceVoiceId: string | null;
   setArabicVoice: (source: 'online' | 'device', voiceId?: string | null) => void;
   setNarrationVoice: (voice: 'female' | 'male') => void;
+
+  // Local reminders (continue, streak, reviews, Friday al-Kahf)
+  reminders: ReminderSettings;
+  setReminders: (patch: Partial<ReminderSettings>) => void;
+  /** The one automatic permission ask has happened. */
+  remindersAsked: boolean;
+  setRemindersAsked: () => void;
 
   // Auth (NOT persisted - Supabase manages its own session)
   session: Session | null;
@@ -67,6 +75,12 @@ export const useSettingsStore = create<SettingsState>()(
       arabicDeviceVoiceId: null,
       setArabicVoice: (source, voiceId = null) => set({ arabicVoiceSource: source, arabicDeviceVoiceId: voiceId }),
 
+      // Reminders
+      reminders: DEFAULT_REMINDER_SETTINGS,
+      setReminders: (patch) => set((state) => ({ reminders: { ...state.reminders, ...patch } })),
+      remindersAsked: false,
+      setRemindersAsked: () => set({ remindersAsked: true }),
+
       // Auth
       session: null,
       user: null,
@@ -81,6 +95,11 @@ export const useSettingsStore = create<SettingsState>()(
     {
       name: 'iqra-settings',
       storage: createJSONStorage(() => AsyncStorage),
+      // Settings saved before a reminder field existed still get its default.
+      merge: (persisted, current) => {
+        const saved = (persisted ?? {}) as Partial<SettingsState>;
+        return { ...current, ...saved, reminders: { ...DEFAULT_REMINDER_SETTINGS, ...(saved.reminders ?? {}) } };
+      },
       partialize: (state) => ({
         language: state.language,
         hasCompletedOnboarding: state.hasCompletedOnboarding,
@@ -89,6 +108,8 @@ export const useSettingsStore = create<SettingsState>()(
         narrationVoice: state.narrationVoice,
         arabicVoiceSource: state.arabicVoiceSource,
         arabicDeviceVoiceId: state.arabicDeviceVoiceId,
+        reminders: state.reminders,
+        remindersAsked: state.remindersAsked,
         // session, user, isAuthenticated are NOT persisted
       }),
     }

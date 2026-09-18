@@ -22,6 +22,7 @@ import { prewarmArabicVoice } from '../src/services/speech/arabicTTS';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 import { color } from '../src/theme/tokens';
 import { initReporting, wrapRoot , quietly , errorMessage } from '../src/lib/report';
+import { startReminders, handleColdStartTap, maybeAskOnce } from '../src/services/reminders';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -66,6 +67,21 @@ function RootLayout() {
       setFontTimedOut(true);
     }, 5000);
     return () => clearTimeout(fallback);
+  }, []);
+
+  // Local reminders: OS setup, tap routing, and a re-plan on launch and on
+  // every foreground/background change. A tap that cold-launched the app is
+  // replayed once the router can navigate.
+  useEffect(() => {
+    const stop = startReminders();
+    const later = setTimeout(() => {
+      handleColdStartTap().catch(() => {});
+      maybeAskOnce().catch(() => {});
+    }, 2500);
+    return () => {
+      clearTimeout(later);
+      stop();
+    };
   }, []);
 
   // OTA update checking + the restart prompt live in <UpdateModal /> (it uses
