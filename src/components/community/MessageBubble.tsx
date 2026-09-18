@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, Image, GestureResponderEvent } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createAudioPlayer, setAudioModeAsync } from 'expo-audio';
-import type { AudioPlayer } from 'expo-audio';
+import type { AudioPlayer , AudioStatus } from 'expo-audio';
 import type { SharedContent } from '../../data/community/socialData';
 import { SharedContentCard } from './SharedContentCard';
 import { LessonCard } from './class/LessonCard';
@@ -14,6 +14,7 @@ import { renderMessageText, isPredominantlyArabic } from './chatText';
 import { ReactionBadges } from './ReactionBadges';
 import { font, color, radius } from '../../theme/tokens';
 import { quietly } from '../../lib/report';
+import type { ClassContent } from '../../types/classContent';
 
 export interface MessageBubbleMessage {
   id: string;
@@ -36,7 +37,7 @@ export interface MessageBubbleMessage {
   imageW?: number;
   imageH?: number;
   sharedContent?: SharedContent | null;
-  classContent?: any | null;
+  classContent?: ClassContent | null;
 }
 
 interface Props {
@@ -88,7 +89,7 @@ export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo
   if ((msg.type === 'lesson' || msg.type === 'quiz' || msg.type === 'poll' || msg.type === 'board') && msg.classContent && !msg.isDeleted) {
     return (
       <Pressable style={styles.classRow} onLongPress={onLongPress} delayLongPress={300}>
-        {msg.type === 'board' && (
+        {msg.type === 'board' && msg.classContent.kind === 'board' && (
           <BoardCard
             board={msg.classContent}
             groupColor={groupColor}
@@ -98,7 +99,7 @@ export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo
             onLongPress={onLongPress}
           />
         )}
-        {msg.type === 'lesson' && (
+        {msg.type === 'lesson' && msg.classContent.kind === 'lesson' && (
           <LessonCard
             lesson={msg.classContent}
             groupColor={groupColor}
@@ -107,7 +108,7 @@ export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo
             onEdit={() => onEditClass?.(msg)}
           />
         )}
-        {msg.type === 'quiz' && (
+        {msg.type === 'quiz' && msg.classContent.kind === 'quiz' && (
           <QuizCard
             messageId={msg.id}
             groupId={groupId || ''}
@@ -119,7 +120,7 @@ export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo
             isAuthor={isMe}
           />
         )}
-        {msg.type === 'poll' && (
+        {msg.type === 'poll' && msg.classContent.kind === 'poll' && (
           <PollCard
             messageId={msg.id}
             groupId={groupId || ''}
@@ -311,7 +312,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
     setAudioModeAsync({ playsInSilentMode: true }).catch(() => {});
     const player = createAudioPlayer({ uri: msg.audioUrl });
     player.setPlaybackRate(rate);
-    subRef.current = player.addListener('playbackStatusUpdate', (status: any) => {
+    subRef.current = player.addListener('playbackStatusUpdate', (status: AudioStatus) => {
       if (!status.isLoaded) return;
       const dur = status.duration || 0;
       if (dur > 0) setProgress(Math.min(1, (status.currentTime || 0) / dur));

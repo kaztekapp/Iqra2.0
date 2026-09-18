@@ -88,7 +88,7 @@ export default function SurahDetailScreen() {
 
   useEffect(() => {
     if (currentlyPlayingSurahId && currentlyPlayingSurahId !== surahId) {
-      router.replace(`/quran/surah/${currentlyPlayingSurahId}` as any);
+      router.replace(`/quran/surah/${currentlyPlayingSurahId}`);
     }
   }, [currentlyPlayingSurahId, surahId]);
 
@@ -174,11 +174,11 @@ export default function SurahDetailScreen() {
 
   // Handler functions
   const handleLearn = useCallback(() => {
-    router.push(`/quran/surah/${surahId}/methods` as any);
+    router.push(`/quran/surah/${surahId}/methods`);
   }, [surahId]);
 
   const handleWrite = useCallback(() => {
-    router.push(`/quran/surah/${surahId}/write` as any);
+    router.push(`/quran/surah/${surahId}/write`);
   }, [surahId]);
 
   const handleAyahPress = useCallback((_ayahId: string) => {
@@ -297,7 +297,7 @@ export default function SurahDetailScreen() {
       const prevSurah = getSurahByNumber(surah.surahNumber - 1);
       if (prevSurah) {
         quranAudioService.stop();
-        router.replace(`/quran/surah/${prevSurah.id}` as any);
+        router.replace(`/quran/surah/${prevSurah.id}`);
       }
     }
   }, [surah]);
@@ -307,7 +307,7 @@ export default function SurahDetailScreen() {
       const nextSurah = getSurahByNumber(surah.surahNumber + 1);
       if (nextSurah) {
         quranAudioService.stop();
-        router.replace(`/quran/surah/${nextSurah.id}` as any);
+        router.replace(`/quran/surah/${nextSurah.id}`);
       }
     }
   }, [surah]);

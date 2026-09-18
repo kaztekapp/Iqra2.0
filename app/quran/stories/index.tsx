@@ -110,11 +110,11 @@ export default function StoriesScreen() {
   const overallProgress = Math.round((currentCompleted / currentTotal) * 100);
 
   const handleProphetPress = (prophetId: string) => {
-    router.push(`/quran/prophets/${prophetId}` as any);
+    router.push(`/quran/prophets/${prophetId}`);
   };
 
   const handleQuranStoryPress = (storyId: string) => {
-    router.push(`/quran/stories/${storyId}` as any);
+    router.push(`/quran/stories/${storyId}`);
   };
 
   return (

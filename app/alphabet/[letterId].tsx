@@ -212,7 +212,7 @@ export default function LetterDetailScreen() {
               router.push({
                 pathname: '/alphabet/writing-practice',
                 params: { letterId: letter.id },
-              } as any)
+              })
             }
           >
             <Ionicons name="pencil" size={20} color={color.accent} />
@@ -242,7 +242,7 @@ export default function LetterDetailScreen() {
             {prevLetter ? (
               <Pressable
                 style={styles.navButton}
-                onPress={() => router.replace(`/alphabet/${prevLetter.id}` as any)}
+                onPress={() => router.replace(`/alphabet/${prevLetter.id}`)}
               >
                 <Ionicons name="chevron-back" size={20} color={color.text} />
                 <Text style={styles.navButtonText}>{lc(prevLetter.name, prevLetter.nameFr)}</Text>
@@ -253,7 +253,7 @@ export default function LetterDetailScreen() {
             {nextLetter ? (
               <Pressable
                 style={styles.navButton}
-                onPress={() => router.replace(`/alphabet/${nextLetter.id}` as any)}
+                onPress={() => router.replace(`/alphabet/${nextLetter.id}`)}
               >
                 <Text style={styles.navButtonText}>{lc(nextLetter.name, nextLetter.nameFr)}</Text>
                 <Ionicons name="chevron-forward" size={20} color={color.text} />

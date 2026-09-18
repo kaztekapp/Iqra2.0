@@ -10,6 +10,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { LeaderboardType, LeaderboardEntry } from '../../src/types/community';
 import * as communityService from '../../src/services/communityService';
 import { medal, font, color, radius } from '../../src/theme/tokens';
+import type { IoniconName } from '../../src/theme/icons';
 
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
@@ -153,7 +154,7 @@ export default function LeaderboardScreen() {
             onPress={() => setCurrentType(tab.type)}
           >
             <Ionicons
-              name={tab.icon as any}
+              name={tab.icon as IoniconName}
               size={16}
               color={currentType === tab.type ? color.surface : color.textMuted}
             />

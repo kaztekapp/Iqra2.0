@@ -13,6 +13,7 @@ import { useAyahTranslations } from '../../../../src/hooks/useAyahTranslations';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { useSettingsStore } from '../../../../src/stores/settingsStore';
 import { font, color, radius } from '../../../../src/theme/tokens';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 // ============ Types ============
 
@@ -374,7 +375,7 @@ export default function ChunkingScreen() {
                 accessibilityLabel={audioState === 'playing' ? t('common.pause') : t('common.play')}
               >
                 <Ionicons
-                  name={audioIcon as any}
+                  name={audioIcon as IoniconName}
                   size={18}
                   color={METHOD_COLOR}
                 />
@@ -575,7 +576,7 @@ export default function ChunkingScreen() {
             accessibilityLabel={getActionLabel()}
           >
             <Ionicons
-              name={getActionIcon() as any}
+              name={getActionIcon() as IoniconName}
               size={20}
               color={isLastStep ? '#000000' : TEXT_PRIMARY}
             />

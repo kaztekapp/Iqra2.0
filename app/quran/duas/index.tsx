@@ -45,7 +45,7 @@ export default function DuasListScreen() {
   }, [filteredDuas, isFavorite, isMemorized]);
 
   const handleDuaPress = useCallback((duaId: string) => {
-    router.push(`/quran/duas/${duaId}` as any);
+    router.push(`/quran/duas/${duaId}`);
   }, []);
 
   return (

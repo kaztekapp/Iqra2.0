@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, TextInput, Modal, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface Props {
   visible: boolean;
@@ -67,7 +68,7 @@ export function CreateChallengeModal({ visible, onClose, onCreate, groupColor }:
             <View style={styles.optionRow}>
               {TARGET_TYPES.map((t) => (
                 <Pressable key={t.key} style={[styles.typeBtn, targetType === t.key && { backgroundColor: `${groupColor}25`, borderColor: groupColor }]} onPress={() => setTargetType(t.key)}>
-                  <Ionicons name={t.icon as any} size={16} color={targetType === t.key ? groupColor: color.textFaint} />
+                  <Ionicons name={t.icon as IoniconName} size={16} color={targetType === t.key ? groupColor: color.textFaint} />
                   <Text style={[styles.typeText, targetType === t.key && { color: groupColor }]}>{t.label}</Text>
                 </Pressable>
               ))}

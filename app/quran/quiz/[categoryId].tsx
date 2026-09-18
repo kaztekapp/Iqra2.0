@@ -10,6 +10,7 @@ import { QuizQuestion, QuizCategory, QuizAnswer } from '../../../src/types/quran
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 // Helper function to extract Arabic text from a string (removes English part)
 const extractArabicText = (text: string): string => {
@@ -580,7 +581,7 @@ export default function QuizScreen() {
           {/* Category Badge */}
           <View style={styles.badgeRow}>
             <View style={[styles.categoryBadge, { backgroundColor: `${category.color}20` }]}>
-              <Ionicons name={category.icon as any} size={16} color={category.color} />
+              <Ionicons name={category.icon as IoniconName} size={16} color={category.color} />
               <Text style={[styles.categoryBadgeText, { color: category.color }]}>
                 {lc(category.nameEnglish, category.nameFrench)}
               </Text>

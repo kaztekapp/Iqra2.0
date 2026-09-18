@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Pressable, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface QuizPrimaryButtonProps {
   label: string;
@@ -22,7 +23,7 @@ export function QuizPrimaryButton({ label, onPress, disabled, icon = 'arrow-forw
       disabled={disabled}
     >
       <Text style={styles.text}>{label}</Text>
-      {icon ? <Ionicons name={icon as any} size={20} color={color.textOnAccent} /> : null}
+      {icon ? <Ionicons name={icon as IoniconName} size={20} color={color.textOnAccent} /> : null}
     </Pressable>
   );
 }

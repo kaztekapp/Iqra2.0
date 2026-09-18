@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { NUMBERS_LESSONS } from '../../src/data/arabic/numbers/numbersCourse';
 import { font, color, radius } from '../../src/theme/tokens';
+import type { IoniconName } from '../../src/theme/icons';
 
 export default function NumbersIndexScreen() {
   const { t } = useTranslation();
@@ -32,12 +33,12 @@ export default function NumbersIndexScreen() {
           <Pressable
             key={lesson.id}
             style={styles.lessonCard}
-            onPress={() => router.push(`/numbers/${lesson.id}` as any)}
+            onPress={() => router.push(`/numbers/${lesson.id}`)}
             accessibilityRole="button"
             accessibilityLabel={lc(lesson.title, lesson.titleFr)}
           >
             <View style={[styles.lessonIcon, { backgroundColor: lesson.color + '22' }]}>
-              <Ionicons name={lesson.icon as any} size={22} color={lesson.color} />
+              <Ionicons name={lesson.icon as IoniconName} size={22} color={lesson.color} />
             </View>
             <View style={styles.lessonText}>
               <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>

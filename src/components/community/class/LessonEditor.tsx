@@ -6,6 +6,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { LessonBlock, LessonContent } from '../../../types/classContent';
 import { wrapSelection, MarkerName } from './richText';
 import { font, color, radius } from '../../../theme/tokens';
+import type { IoniconName } from '../../../theme/icons';
 
 interface EditBlock {
   id: string;
@@ -33,7 +34,7 @@ function toEditBlocks(content?: LessonContent | null): EditBlock[] {
     if (b.type === 'arabic') return { id: newId(), type: 'arabic', text: b.text, translation: b.translation };
     if (b.type === 'callout') return { id: newId(), type: 'callout', text: b.text, tone: b.tone };
     if (b.type === 'divider') return { id: newId(), type: 'divider', text: '' };
-    return { id: newId(), type: b.type, text: (b as any).text || '' };
+    return { id: newId(), type: b.type, text: b.text || '' };
   });
 }
 
@@ -182,7 +183,7 @@ export function LessonEditor({ visible, groupColor, initial, onSave, onClose }: 
             <View style={styles.addRow}>
               {BLOCK_MENU.map((m) => (
                 <Pressable key={m.type} style={styles.addBtn} onPress={() => addBlock(m.type)}>
-                  <Ionicons name={m.icon as any} size={18} color={color.textMuted} />
+                  <Ionicons name={m.icon as IoniconName} size={18} color={color.textMuted} />
                   <Text style={styles.addBtnText}>{m.label}</Text>
                 </Pressable>
               ))}

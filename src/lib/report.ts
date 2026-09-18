@@ -78,3 +78,20 @@ export function identifyUser(id: string | null): void {
   if (!reportingEnabled) return;
   Sentry.setUser(id ? { id } : null);
 }
+
+/** The message of whatever was thrown. Catch variables are `unknown`. */
+export function errorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'string') return error;
+  if (error && typeof error === 'object' && 'message' in error) return String((error as { message: unknown }).message);
+  return String(error);
+}
+
+/** A `code` on the thrown value, if it carries one (auth and network errors do). */
+export function errorCode(error: unknown): string | undefined {
+  if (error && typeof error === 'object' && 'code' in error) {
+    const code = (error as { code: unknown }).code;
+    return code == null ? undefined : String(code);
+  }
+  return undefined;
+}

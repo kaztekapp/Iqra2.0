@@ -32,7 +32,7 @@ export default function TajweedRulesScreen() {
   const categories = getAllTajweedCategories();
 
   const handleRulePress = (ruleId: TajweedRuleId) => {
-    router.push(`/quran/tajweed/${ruleId}` as any);
+    router.push(`/quran/tajweed/${ruleId}`);
   };
 
   const getTotalProgress = () => {

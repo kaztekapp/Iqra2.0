@@ -10,7 +10,7 @@ interface SpeakOptions {
   rate?: number;
   gender?: VoiceGender;
   onDone?: () => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
 }
 
 class AudioService {

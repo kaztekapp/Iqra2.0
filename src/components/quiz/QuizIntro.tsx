@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { font, color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 export interface QuizIntroFeature {
   icon: string;
@@ -61,7 +62,7 @@ export function QuizIntro({
         {/* Hero */}
         <View style={styles.heroOuter}>
           <View style={styles.heroInner}>
-            <Ionicons name={icon as any} size={48} color={color.sacred} />
+            <Ionicons name={icon as IoniconName} size={48} color={color.sacred} />
           </View>
         </View>
 
@@ -96,7 +97,7 @@ export function QuizIntro({
             {features.map((f, i) => (
               <View key={i} style={[styles.featureItem, i > 0 && styles.featureItemBorder]}>
                 <View style={styles.featureIconChip}>
-                  <Ionicons name={f.icon as any} size={17} color={color.accent} />
+                  <Ionicons name={f.icon as IoniconName} size={17} color={color.accent} />
                 </View>
                 <Text style={styles.featureText}>{f.text}</Text>
               </View>

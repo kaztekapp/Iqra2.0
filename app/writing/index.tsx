@@ -33,19 +33,19 @@ export default function WritingScreen() {
       <Pressable
         key={lesson.id}
         style={styles.lessonCard}
-        onPress={() => router.push(`/grammar/${lesson.id}` as any)}
+        onPress={() => router.push(`/grammar/${lesson.id}`)}
       >
         <View style={styles.lessonNumber}>
           <Text style={styles.lessonNumberText}>{number}</Text>
         </View>
         <View style={styles.lessonContent}>
           <View style={styles.lessonTitleRow}>
-            <Text style={styles.lessonTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
+            <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
             {isDone && <Ionicons name="checkmark-circle" size={18} color={color.progress} />}
           </View>
           <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
           <Text style={styles.lessonDescription} numberOfLines={2}>
-            {lc(lesson.description, (lesson as any).descriptionFr)}
+            {lc(lesson.description, lesson.descriptionFr)}
           </Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color={color.textFaint} />

@@ -60,7 +60,7 @@ export default function QuranScreen() {
       tint: color.sacred,
       title: t('quran.quranTitle'),
       desc: t('quran.allSurahs'),
-      onPress: () => router.push('/quran/all-surahs' as any),
+      onPress: () => router.push('/quran/all-surahs'),
     },
     {
       key: 'stories',
@@ -69,7 +69,7 @@ export default function QuranScreen() {
       title: t('quran.stories'),
       desc: t('quran.prophetsAndMore'),
       badge: `${totalStoriesCompleted}/${totalStories}`,
-      onPress: () => router.push('/quran/stories' as any),
+      onPress: () => router.push('/quran/stories'),
     },
     {
       key: 'duas',
@@ -78,7 +78,7 @@ export default function QuranScreen() {
       title: t('quran.duas'),
       desc: t('quran.propheticPrayers'),
       badge: `${duasMemorized}/${TOTAL_DUAS}`,
-      onPress: () => router.push('/quran/duas' as any),
+      onPress: () => router.push('/quran/duas'),
     },
     {
       key: 'quiz',
@@ -86,7 +86,7 @@ export default function QuranScreen() {
       tint: color.accent,
       title: t('quran.quizzes'),
       desc: t('quran.testKnowledge'),
-      onPress: () => router.push('/quran/quiz' as any),
+      onPress: () => router.push('/quran/quiz'),
     },
   ];
 
@@ -152,7 +152,7 @@ export default function QuranScreen() {
         {/* Islamic practice */}
         <Section title={t('quran.islamicPractice')}>
           <Card
-            onPress={() => router.push('/quran/prayer' as any)}
+            onPress={() => router.push('/quran/prayer')}
             accent={color.progress}
             accessibilityLabel={t('quran.prayerPractice')}
             style={styles.practiceCard}

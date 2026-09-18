@@ -1,3 +1,4 @@
+import type { IoniconName } from '../../../../theme/icons';
 // Comprehensive Juz Learning Content
 // Interactive lessons covering all 30 Juz of the Quran
 
@@ -42,7 +43,7 @@ export interface JuzIntroLesson {
     type: 'text' | 'fact' | 'tip' | 'example';
     text: string;
     textFr?: string;
-    icon?: string;
+    icon?: IoniconName;
   }[];
 }
 

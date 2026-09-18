@@ -214,7 +214,7 @@ export function synthesize(text: string, voice: string, lang: EdgeLang, rate = '
       );
     };
 
-    socket.onmessage = (event: any) => {
+    socket.onmessage = (event: MessageEvent) => {
       stillAlive();
       const data = event.data;
       if (typeof data === 'string') {

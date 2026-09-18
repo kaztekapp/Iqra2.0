@@ -1,4 +1,4 @@
-import type { BoardContent, BoardElement, BoardBackground } from '../../../types/classContent';
+import type { BoardContent, BoardElement, BoardBackground, BoardText } from '../../../types/classContent';
 import type { CourseSpec, CourseSection } from '../../../types/aiBoard';
 import { wrapBoardText } from './BoardCanvas';
 
@@ -112,7 +112,7 @@ function addArabicBox(els: BoardElement[], x: number, top: number, boxW: number,
   const padX = 14, padY = 12;
   const innerW = boxW - 2 * padX;
   let iy = top + padY;
-  const parts: { text: string; size: number; color: string; weight: any }[] = [];
+  const parts: { text: string; size: number; color: string; weight: BoardText['weight'] }[] = [];
 
   const aSize = 26;
   parts.push({ text: s.arabic!, size: aSize, color: c.arabic, weight: '700' });

@@ -50,7 +50,7 @@ export default function ArabicEditorScreen() {
     } else {
       const newId = addText({ title: draftTitle, content: draftContent });
       // Replace so Back returns to the library, not this editor.
-      router.replace(`/reading/arabic/${newId}` as any);
+      router.replace(`/reading/arabic/${newId}`);
     }
   }, [canSave, isEditing, existing, draftTitle, draftContent, updateText, addText, t]);
 

@@ -6,6 +6,7 @@ import { Ayah } from '../../types/quran';
 import { TajweedText } from './TajweedText';
 import { withAlpha } from '../ui/Primitives';
 import { color, font, radius, space, type, weight } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface AyahCardProps {
   ayah: Ayah;
@@ -114,7 +115,7 @@ export function AyahCard({
             {isLoading ? (
               <ActivityIndicator size="small" color={color.textOnAccent} />
             ) : (
-              <Ionicons name={getPlayButtonIcon() as any} size={18} color={color.textOnAccent} />
+              <Ionicons name={getPlayButtonIcon() as IoniconName} size={18} color={color.textOnAccent} />
             )}
           </Pressable>
         </View>

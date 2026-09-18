@@ -74,7 +74,7 @@ export default function AlphabetScreen() {
         </View>
 
         {/* Print vs Handwriting entry */}
-        <Pressable style={styles.scriptsCard} onPress={() => router.push('/alphabet/styles' as any)}>
+        <Pressable style={styles.scriptsCard} onPress={() => router.push('/alphabet/styles')}>
           <View style={styles.scriptsIcon}>
             <Ionicons name="brush" size={20} color={color.accentStrong} />
           </View>
@@ -112,7 +112,7 @@ export default function AlphabetScreen() {
                 <Pressable
                   key={letter.id}
                   style={[styles.letterCard, { borderColor: statusColor }]}
-                  onPress={() => router.push(`/alphabet/${letter.id}` as any)}
+                  onPress={() => router.push(`/alphabet/${letter.id}`)}
                 >
                   <Text style={styles.letterArabic}>{letter.letter}</Text>
                   <Text style={styles.letterName}>{lc(letter.name, letter.nameFr)}</Text>
@@ -145,7 +145,7 @@ export default function AlphabetScreen() {
         <View style={styles.specialSection}>
           <Pressable
             style={styles.sunMoonCard}
-            onPress={() => router.push('/alphabet/sun-moon-letters' as any)}
+            onPress={() => router.push('/alphabet/sun-moon-letters')}
           >
             <View style={styles.sunMoonIcons}>
               <View style={styles.sunIcon}>

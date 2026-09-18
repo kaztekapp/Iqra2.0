@@ -9,6 +9,7 @@ import { useCommunityStore } from '../../../../src/stores/communityStore';
 import { useSettingsStore } from '../../../../src/stores/settingsStore';
 import { StudyGroup } from '../../../../src/types/community';
 import { color, radius } from '../../../../src/theme/tokens';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 export default function InviteLandingScreen() {
   const { code } = useLocalSearchParams<{ code: string }>();
@@ -43,7 +44,7 @@ export default function InviteLandingScreen() {
       await joinGroupService(group.id, user.id);
     }
     setIsJoining(false);
-    router.replace(`/community/groups/${group.id}` as any);
+    router.replace(`/community/groups/${group.id}`);
   };
 
   if (isLoading) {
@@ -91,7 +92,7 @@ export default function InviteLandingScreen() {
         {/* Group card */}
         <View style={styles.card}>
           <View style={[styles.iconLarge, { backgroundColor: `${group.color}20` }]}>
-            <Ionicons name={group.icon as any} size={40} color={group.color} />
+            <Ionicons name={group.icon as IoniconName} size={40} color={group.color} />
           </View>
           <Text style={styles.groupName}>{group.name}</Text>
           <Text style={styles.groupTopic}>{group.topic}</Text>

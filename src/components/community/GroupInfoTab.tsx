@@ -8,6 +8,8 @@ import { SessionCard } from './SessionCard';
 import { GroupChallengeCard } from './GroupChallengeCard';
 import { color, radius } from '../../theme/tokens';
 import { quietly } from '../../lib/report';
+import type { IoniconName } from '../../theme/icons';
+import type { TFunction } from 'i18next';
 
 interface Props {
   group: StudyGroup;
@@ -15,7 +17,7 @@ interface Props {
   sessions: StudySession[];
   challenges: GroupChallenge[];
   getDaysAgo: (d: string) => string;
-  t: any;
+  t: TFunction;
   canManage: boolean;
   inviteCode: string | null;
   onGenerateInvite: () => void;
@@ -50,7 +52,7 @@ export function GroupInfoTab({
       {/* Group description card */}
       <View style={styles.infoCard}>
         <View style={[styles.infoIconLarge, { backgroundColor: `${group.color}20` }]}>
-          <Ionicons name={group.icon as any} size={36} color={group.color} />
+          <Ionicons name={group.icon as IoniconName} size={36} color={group.color} />
         </View>
         <Text style={styles.infoName}>{lc(group.name, group.nameFr)}</Text>
         <Text style={styles.infoTopic}>{lc(group.topic, group.topicFr)}</Text>

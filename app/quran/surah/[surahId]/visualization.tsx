@@ -14,6 +14,7 @@ import { ReviewRating } from '../../../../src/types/quran';
 import { buildAyahScene, AnchorWord } from '../../../../src/utils/sceneBuilder';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 // ============ Types & Constants ============
 
@@ -265,7 +266,7 @@ export default function VisualizationScreen() {
             <View style={styles.roomIconArea}>
               <View style={[styles.roomIconCircle, { backgroundColor: mainElement.color + '15', borderColor: mainElement.color + '25' }]}>
                 <Text style={styles.roomIconEmoji}>{mainElement.emoji}</Text>
-                <Ionicons name={mainElement.ionicon as any} size={22} color={mainElement.color} style={{ marginTop: 4 }} />
+                <Ionicons name={mainElement.ionicon as IoniconName} size={22} color={mainElement.color} style={{ marginTop: 4 }} />
                 <Text style={[styles.roomIconLabel, { color: mainElement.color }]}>{mainElement.label}</Text>
               </View>
             </View>

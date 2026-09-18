@@ -18,6 +18,7 @@ import {
 } from '../../../src/services/quranAudioService';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 // Recommended reciters for Tajweed learning (clear pronunciation)
 const TAJWEED_RECITERS = [
@@ -403,7 +404,7 @@ export default function TajweedRuleDetailScreen() {
               >
                 <View style={styles.reciterOptionIcon}>
                   <Ionicons
-                    name={reciter.icon as any}
+                    name={reciter.icon as IoniconName}
                     size={24}
                     color={selectedReciter === reciter.id ? color.progress : color.textMuted}
                   />

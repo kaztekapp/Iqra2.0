@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { LeaderboardEntry, LeaderboardType } from '../../types/community';
 import { medal, color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'allTime', labelKey: 'community.allTime', icon: 'trophy' },
@@ -115,7 +116,7 @@ export function LeaderboardPreview({ entries, isLoading, currentType, onTypeChan
             onPress={() => onTypeChange(tab.type)}
           >
             <Ionicons
-              name={tab.icon as any}
+              name={tab.icon as IoniconName}
               size={14}
               color={currentType === tab.type ? color.textOnAccent : color.textMuted}
             />

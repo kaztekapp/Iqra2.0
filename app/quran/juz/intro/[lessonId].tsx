@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import type { IoniconName } from '../../../../src/theme/icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
@@ -69,7 +70,7 @@ function ContentBlock({ item }: { item: { type: string; text: string; textFr?: s
     >
       <View style={[styles.blockIconContainer, { backgroundColor: style.iconBg }]}>
         <Ionicons
-          name={item.icon as any || 'information-circle'}
+          name={(item.icon as IoniconName | undefined) || 'information-circle'}
           size={20}
           color={style.iconColor}
         />
@@ -111,13 +112,13 @@ export default function IntroLessonScreen() {
 
   const handleNext = () => {
     if (nextLesson) {
-      router.replace(`/quran/juz/intro/${nextLesson.id}` as any);
+      router.replace(`/quran/juz/intro/${nextLesson.id}`);
     }
   };
 
   const handlePrev = () => {
     if (prevLesson) {
-      router.replace(`/quran/juz/intro/${prevLesson.id}` as any);
+      router.replace(`/quran/juz/intro/${prevLesson.id}`);
     }
   };
 

@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore, ModuleType } from '../../src/stores/progressStore';
 import {
@@ -44,7 +44,7 @@ const ModuleCard = memo(function ModuleCard({
   const handlePress = () => {
     if (locked) return;
     onPress(moduleId, title);
-    router.push(route as any);
+    router.push(route as Href);
   };
 
   return (

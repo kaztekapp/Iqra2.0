@@ -339,7 +339,7 @@ export default function SurahLearnScreen() {
   };
 
   const handleQuizSetPress = (setIndex: number) => {
-    router.push(`/quran/quiz/surah_structure?setIndex=${setIndex}` as any);
+    router.push(`/quran/quiz/surah_structure?setIndex=${setIndex}`);
   };
 
   const totalSets = getTotalSets('surah_structure');
@@ -522,7 +522,7 @@ export default function SurahLearnScreen() {
             {/* Random Quiz Option */}
             <Pressable
               style={styles.randomQuizButton}
-              onPress={() => router.push('/quran/quiz/surah_structure' as any)}
+              onPress={() => router.push('/quran/quiz/surah_structure')}
             >
               <LinearGradient
                 colors={[color.progress, color.accent]}

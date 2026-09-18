@@ -62,6 +62,33 @@ function LetterBuild({ text, highlight }: { text: string; highlight?: boolean })
   );
 }
 
+interface LessonExample {
+  arabic: string;
+  transliteration?: string;
+  english: string;
+  french?: string;
+}
+
+/** One rendered section of a lesson, built from the lesson's content items. */
+interface LessonSection {
+  title: string;
+  titleFr?: string;
+  content: string;
+  contentFr?: string;
+  arabicDescription?: string;
+  arabicTranslation?: string;
+  arabicTranslationFr?: string;
+  examples?: LessonExample[];
+  letters?: string[];
+  letterType?: 'sun' | 'moon';
+  comparisons?: NonNullable<GrammarContent['comparisons']>;
+  leftLabel?: string;
+  leftLabelFr?: string;
+  rightLabel?: string;
+  rightLabelFr?: string;
+  itemType: string;
+}
+
 export default function GrammarLessonScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
@@ -91,20 +118,20 @@ export default function GrammarLessonScreen() {
   // Use data lesson if available, converting its content structure
   const lesson = dataLesson ? {
     title: dataLesson.title,
-    titleFr: (dataLesson as any).titleFr,
+    titleFr: dataLesson.titleFr,
     titleArabic: dataLesson.titleArabic,
-    description: (dataLesson as any).description,
-    descriptionFr: (dataLesson as any).descriptionFr,
+    description: dataLesson.description,
+    descriptionFr: dataLesson.descriptionFr,
     contentItems: dataLesson.content, // Keep original GrammarContent for new rendering
-    sections: dataLesson.content.reduce((acc: any[], item: GrammarContent) => {
+    sections: dataLesson.content.reduce((acc: LessonSection[], item: GrammarContent) => {
       if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
         acc.push({
           title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
           content: item.content,
-          contentFr: (item as any).contentFr,
+          contentFr: item.contentFr,
           arabicDescription: item.arabicDescription,
           arabicTranslation: item.arabicTranslation,
-          arabicTranslationFr: (item as any).arabicTranslationFr,
+          arabicTranslationFr: item.arabicTranslationFr,
           examples: [],
           itemType: item.type,
         });
@@ -112,17 +139,17 @@ export default function GrammarLessonScreen() {
         acc.push({
           title: '',
           content: item.content,
-          contentFr: (item as any).contentFr,
+          contentFr: item.contentFr,
           arabicDescription: item.arabicDescription,
           arabicTranslation: item.arabicTranslation,
-          arabicTranslationFr: (item as any).arabicTranslationFr,
+          arabicTranslationFr: item.arabicTranslationFr,
           examples: [],
           itemType: 'description',
         });
       } else if (item.type === 'letters_grid') {
         acc.push({
           title: item.content,
-          titleFr: (item as any).contentFr,
+          titleFr: item.contentFr,
           content: '',
           examples: [],
           letters: item.letters,
@@ -132,9 +159,9 @@ export default function GrammarLessonScreen() {
       } else if (item.type === 'examples_grid') {
         acc.push({
           title: item.content,
-          titleFr: (item as any).contentFr,
+          titleFr: item.contentFr,
           content: '',
-          examples: (item.examples || []).map((ex: any) => ({
+          examples: (item.examples || []).map((ex) => ({
             ...ex,
             french: ex.french,
           })),
@@ -143,16 +170,16 @@ export default function GrammarLessonScreen() {
       } else if (item.type === 'comparison_grid') {
         acc.push({
           title: item.content,
-          titleFr: (item as any).contentFr,
+          titleFr: item.contentFr,
           content: '',
-          comparisons: (item.comparisons || []).map((comp: any) => ({
+          comparisons: (item.comparisons || []).map((comp) => ({
             left: { ...comp.left, labelFr: comp.left?.labelFr },
             right: { ...comp.right, labelFr: comp.right?.labelFr },
           })),
           leftLabel: item.leftLabel,
-          leftLabelFr: (item as any).leftLabelFr,
+          leftLabelFr: item.leftLabelFr,
           rightLabel: item.rightLabel,
-          rightLabelFr: (item as any).rightLabelFr,
+          rightLabelFr: item.rightLabelFr,
           itemType: 'comparison_grid',
         });
       } else if (item.type === 'example') {
@@ -163,18 +190,18 @@ export default function GrammarLessonScreen() {
             arabic: item.arabic || '',
             transliteration: item.transliteration || '',
             english: item.translation || '',
-            french: (item as any).translationFr || '',
+            french: item.translationFr || '',
           });
         } else {
           acc.push({
             title: item.content || 'Examples',
-            titleFr: (item as any).contentFr,
+            titleFr: item.contentFr,
             content: '',
             examples: [{
               arabic: item.arabic || '',
               transliteration: item.transliteration || '',
               english: item.translation || '',
-              french: (item as any).translationFr || '',
+              french: item.translationFr || '',
             }],
             itemType: 'example',
           });
@@ -188,7 +215,7 @@ export default function GrammarLessonScreen() {
         }));
         acc.push({
           title: item.content || 'Reference',
-          titleFr: (item as any).contentFr,
+          titleFr: item.contentFr,
           content: `Columns: ${item.tableData.headers.join(' | ')}`,
           examples,
           itemType: 'table',
@@ -328,7 +355,7 @@ export default function GrammarLessonScreen() {
     // otherwise "choose the correct: '<phrase>'" questions give the answer away.
     const stripTashkeel = (s: string) => s.replace(/[ً-ْٰـ]/g, '').replace(/\s+/g, ' ').trim();
     const correctOpt = currentExercise.options?.find((o) => o.isCorrect);
-    const correctText = correctOpt ? (correctOpt.textArabic || lc(correctOpt.text, (correctOpt as any).textFr)) : '';
+    const correctText = correctOpt ? (correctOpt.textArabic || lc(correctOpt.text, correctOpt.textFr)) : '';
     const questionArabicRevealsAnswer =
       !!currentExercise.questionArabic &&
       !!correctText &&
@@ -370,7 +397,7 @@ export default function GrammarLessonScreen() {
 
           {/* Question */}
           <View style={styles.questionCard}>
-            <Text style={styles.questionText}>{lc(currentExercise.question, (currentExercise as any).questionFr)}</Text>
+            <Text style={styles.questionText}>{lc(currentExercise.question, currentExercise.questionFr)}</Text>
             {showQuestionArabic && (
               <Pressable
                 style={styles.questionArabicRow}
@@ -397,7 +424,7 @@ export default function GrammarLessonScreen() {
                   ? 'selected'
                   : 'idle';
                 const hasArabic = !!option.textArabic;
-                const translation = lc(option.text, (option as any).textFr);
+                const translation = lc(option.text, option.textFr);
 
                 return (
                   <QuizOption
@@ -421,7 +448,7 @@ export default function GrammarLessonScreen() {
               {currentExercise.hint && !showResult && (
                 <View style={styles.hintBox}>
                   <Ionicons name="bulb-outline" size={16} color={color.sacred} />
-                  <Text style={styles.hintText}>{lc(currentExercise.hint, (currentExercise as any).hintFr)}</Text>
+                  <Text style={styles.hintText}>{lc(currentExercise.hint, currentExercise.hintFr)}</Text>
                 </View>
               )}
 
@@ -473,7 +500,7 @@ export default function GrammarLessonScreen() {
               {currentExercise.hint && !showResult && (
                 <View style={styles.hintBox}>
                   <Ionicons name="bulb-outline" size={16} color={color.sacred} />
-                  <Text style={styles.hintText}>{lc(currentExercise.hint, (currentExercise as any).hintFr)}</Text>
+                  <Text style={styles.hintText}>{lc(currentExercise.hint, currentExercise.hintFr)}</Text>
                 </View>
               )}
 
@@ -523,7 +550,7 @@ export default function GrammarLessonScreen() {
           {showResult && currentExercise.explanation && (
             <View style={styles.explanationBox}>
               <Ionicons name="bulb" size={20} color={color.sacred} />
-              <Text style={styles.explanationText}>{lc(currentExercise.explanation, (currentExercise as any).explanationFr)}</Text>
+              <Text style={styles.explanationText}>{lc(currentExercise.explanation, currentExercise.explanationFr)}</Text>
             </View>
           )}
 
@@ -567,7 +594,7 @@ export default function GrammarLessonScreen() {
         </View>
 
         {/* Lesson Content */}
-        {lesson.sections.map((section: any, index: number) => (
+        {(lesson.sections as LessonSection[]).map((section, index) => (
           <View key={index} style={styles.section}>
             {/* Section Title */}
             {section.title ? <Text style={styles.sectionTitle}>{lc(section.title, section.titleFr)}</Text> : null}
@@ -581,7 +608,7 @@ export default function GrammarLessonScreen() {
                   <View>
                     <Pressable
                       style={styles.arabicDescriptionRow}
-                      onPress={() => speak(section.arabicDescription)}
+                      onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                     >
                       <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
                       <View style={styles.audioBtn}>
@@ -608,7 +635,7 @@ export default function GrammarLessonScreen() {
                   </View>
                 </View>
                 {/* Comparison rows */}
-                {section.comparisons?.map((comp: any, compIndex: number) => (
+                {section.comparisons?.map((comp, compIndex) => (
                   <View key={compIndex} style={styles.comparisonRow}>
                     <Pressable
                       style={[styles.comparisonCard, styles.comparisonCardLeft]}
@@ -670,7 +697,7 @@ export default function GrammarLessonScreen() {
             ) : section.itemType === 'examples_grid' ? (
               /* Examples Grid - multiple example cards */
               <View style={styles.examplesGrid}>
-                {section.examples?.map((example: any, exIndex: number) => (
+                {section.examples?.map((example, exIndex) => (
                   <Pressable
                     key={exIndex}
                     style={styles.exampleCard}
@@ -723,7 +750,7 @@ export default function GrammarLessonScreen() {
                               styles.arabicDescriptionRow,
                               { backgroundColor: section.itemType === 'rule' ? '#10b98110' : '#f59e0b10' }
                             ]}
-                            onPress={() => speak(section.arabicDescription)}
+                            onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                           >
                             <Text style={[
                               styles.arabicDescriptionText,
@@ -757,7 +784,7 @@ export default function GrammarLessonScreen() {
                 {section.arabicDescription && section.itemType !== 'rule' && section.itemType !== 'note' && (
                   <Pressable
                     style={styles.arabicDescriptionRow}
-                    onPress={() => speak(section.arabicDescription)}
+                    onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                   >
                     <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
                     <View style={styles.audioBtn}>
@@ -768,7 +795,7 @@ export default function GrammarLessonScreen() {
 
                 {section.examples && section.examples.length > 0 && (
                   <View style={styles.examplesBox}>
-                    {section.examples.map((example: any, exIndex: number) => (
+                    {section.examples.map((example, exIndex) => (
                       <Pressable
                         key={exIndex}
                         style={[

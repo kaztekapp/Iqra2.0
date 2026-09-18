@@ -7,6 +7,7 @@ import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { LEARNING_METHODS, LearningMethodOption, AgeGroup } from '../../../../src/types/learningMethod';
 import { font, color, radius } from '../../../../src/theme/tokens';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 export default function MethodPickerScreen() {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ export default function MethodPickerScreen() {
   const handleMethodSelect = (method: LearningMethodOption) => {
     setLastSelectedMethod(method.id);
     startSurah(surahId);
-    router.push(`/quran/surah/${surahId}/${method.route}` as any);
+    router.push(`/quran/surah/${surahId}/${method.route}`);
   };
 
   return (
@@ -74,7 +75,7 @@ export default function MethodPickerScreen() {
               {/* Icon */}
               <View style={[styles.iconCircle, { backgroundColor: `${method.color}20` }]}>
                 <Ionicons
-                  name={method.icon as any}
+                  name={method.icon as IoniconName}
                   size={24}
                   color={method.color}
                 />

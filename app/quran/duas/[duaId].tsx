@@ -202,7 +202,7 @@ export default function DuaDetailScreen() {
     if (hasPrevious) {
       await narration.stop();
       const prevDua = allDuas[currentIndex - 1];
-      router.replace(`/quran/duas/${prevDua.id}` as any);
+      router.replace(`/quran/duas/${prevDua.id}`);
     }
   }, [hasPrevious, currentIndex, allDuas, narration]);
 
@@ -210,7 +210,7 @@ export default function DuaDetailScreen() {
     if (hasNext) {
       await narration.stop();
       const nextDua = allDuas[currentIndex + 1];
-      router.replace(`/quran/duas/${nextDua.id}` as any);
+      router.replace(`/quran/duas/${nextDua.id}`);
     }
   }, [hasNext, currentIndex, allDuas, narration]);
 

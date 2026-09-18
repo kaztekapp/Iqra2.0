@@ -16,6 +16,8 @@ import { listCurriculum } from '../../../data/arabic/curriculumSource';
 import { courseSpecFromCurriculum } from '../../../data/arabic/courseFromCurriculum';
 import { useSettingsStore } from '../../../stores/settingsStore';
 import { color as tk, radius } from '../../../theme/tokens';
+import type { IoniconName } from '../../../theme/icons';
+import type { GestureResponderEvent } from 'react-native';
 
 type Tool = 'move' | 'pen' | 'highlighter' | 'eraser' | 'line' | 'arrow' | 'rect' | 'circle' | 'text';
 
@@ -168,7 +170,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
   // The draw layer always grabs the touch (except while typing). In Move mode we
   // pan the board ourselves and only start moving an element after a long-press,
   // so a normal drag scrolls the board instead of dragging whatever it lands on.
-  const shouldClaim = (e: any) => {
+  const shouldClaim = (e: GestureResponderEvent) => {
     if (editingRef.current) return false; // typing: let taps reach the input
     const { locationX: x, locationY: y } = e.nativeEvent;
     return Number.isFinite(x) && Number.isFinite(y);
@@ -181,7 +183,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
     for (let i = els.length - 1; i >= 0; i--) {
       const el = els[i];
       // Only re-edit normal left-aligned text (skip centered headings/badges).
-      if (el.type === 'text' && (el as any).align !== 'center' && hitTest(el, x, y, cw)) { hitIdx = i; break; }
+      if (el.type === 'text' && el.align !== 'center' && hitTest(el, x, y, cw)) { hitIdx = i; break; }
     }
     if (hitIdx >= 0) {
       const el = els[hitIdx] as Extract<BoardElement, { type: 'text' }>;
@@ -550,7 +552,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
                 const on = tool === s.tool;
                 return (
                   <Pressable key={s.tool} onPress={() => changeTool(s.tool)} style={[styles.shapeBtn, on && { backgroundColor: `${groupColor}22`, borderColor: groupColor }]}>
-                    <Ionicons name={s.icon as any} size={16} color={on ? groupColor: tk.textMuted} />
+                    <Ionicons name={s.icon as IoniconName} size={16} color={on ? groupColor: tk.textMuted} />
                     <Text style={[styles.shapeText, on && { color: groupColor }]}>{s.label}</Text>
                   </Pressable>
                 );
@@ -593,7 +595,7 @@ export function BoardEditor({ visible, groupColor, initial, seedText, onSave, on
                   onPress={() => (t.tool === 'shapes' ? (!isShape && changeTool('arrow')) : changeTool(t.tool as Tool))}
                 >
                   <View style={[styles.toolIcon, active && { backgroundColor: groupColor }]}>
-                    <Ionicons name={t.icon as any} size={22} color={active ? tk.textOnAccent : tk.textMuted} />
+                    <Ionicons name={t.icon as IoniconName} size={22} color={active ? tk.textOnAccent : tk.textMuted} />
                   </View>
                   <Text style={[styles.toolLabel, active && { color: groupColor }]}>{t.label}</Text>
                 </Pressable>

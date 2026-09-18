@@ -105,11 +105,11 @@ export default function TajweedLearnScreen() {
   };
 
   const handleRulePress = (ruleId: TajweedRuleId) => {
-    router.push(`/quran/tajweed/${ruleId}` as any);
+    router.push(`/quran/tajweed/${ruleId}`);
   };
 
   const handleQuizSetPress = (setIndex: number) => {
-    router.push(`/quran/quiz/tajweed?setIndex=${setIndex}` as any);
+    router.push(`/quran/quiz/tajweed?setIndex=${setIndex}`);
   };
 
   const getTotalProgress = () => {
@@ -327,7 +327,7 @@ export default function TajweedLearnScreen() {
             {/* Random Quiz Option */}
             <Pressable
               style={styles.randomQuizButton}
-              onPress={() => router.push('/quran/quiz/tajweed' as any)}
+              onPress={() => router.push('/quran/quiz/tajweed')}
             >
               <LinearGradient
                 colors={[color.progress, color.accent]}

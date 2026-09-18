@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 import { color, radius } from '../src/theme/tokens';
+import { errorMessage, errorCode } from '../src/lib/report';
 
 // Feature flag: set to true once Google/Apple OAuth credentials are configured
 const ENABLE_SOCIAL_LOGIN = false;
@@ -77,8 +78,8 @@ export default function AuthScreen() {
         await signInWithEmail(email, password);
         router.replace('/(tabs)');
       }
-    } catch (err: any) {
-      const msg = (err.message || '').toLowerCase();
+    } catch (err) {
+      const msg = errorMessage(err).toLowerCase();
       let userMessage = t('auth.genericError');
       if (msg.includes('invalid login') || msg.includes('invalid password') || msg.includes('unauthorized')) {
         userMessage = t('auth.invalidCredentials');
@@ -90,9 +91,9 @@ export default function AuthScreen() {
         userMessage = t('auth.networkError');
       } else if (msg.includes('rate') || msg.includes('too many')) {
         userMessage = t('auth.tooManyAttempts');
-      } else if (err.message) {
+      } else if (errorMessage(err)) {
         // Show actual error for unhandled cases
-        userMessage = err.message;
+        userMessage = errorMessage(err);
       }
       Alert.alert(t('common.error'), userMessage);
     } finally {
@@ -111,13 +112,13 @@ export default function AuthScreen() {
       Alert.alert('', t('auth.resetSent'));
       setShowResetModal(false);
       setResetEmail('');
-    } catch (err: any) {
-      const msg = (err.message || '').toLowerCase();
+    } catch (err) {
+      const msg = errorMessage(err).toLowerCase();
       let userMessage = t('auth.genericError');
       if (msg.includes('rate') || msg.includes('too many')) {
         userMessage = t('auth.tooManyAttempts');
-      } else if (err.message) {
-        userMessage = err.message;
+      } else if (errorMessage(err)) {
+        userMessage = errorMessage(err);
       }
       Alert.alert(t('common.error'), userMessage);
     } finally {
@@ -138,13 +139,13 @@ export default function AuthScreen() {
     try {
       await signInWithGoogle();
       router.replace('/(tabs)');
-    } catch (err: any) {
+    } catch (err) {
       // statusCodes.SIGN_IN_CANCELLED = '12501', IN_PROGRESS = '12502'
-      const code = err?.code;
+      const code = errorCode(err);
       if (code === '12501' || code === 'SIGN_IN_CANCELLED') return;
       if (code === '12502' || code === 'IN_PROGRESS') return;
 
-      const msg = (err.message || '').toLowerCase();
+      const msg = errorMessage(err).toLowerCase();
       if (msg.includes('canceled') || msg.includes('cancelled')) return;
       if (msg.includes('play services')) {
         Alert.alert(t('common.error'), t('auth.googlePlayServicesError'));
@@ -162,10 +163,10 @@ export default function AuthScreen() {
     try {
       await signInWithApple();
       router.replace('/(tabs)');
-    } catch (err: any) {
+    } catch (err) {
       // ERR_REQUEST_CANCELED = user dismissed the Apple prompt
-      if (err?.code === 'ERR_REQUEST_CANCELED' || err?.code === 'ERR_CANCELED') return;
-      const msg = (err.message || '').toLowerCase();
+      if (errorCode(err) === 'ERR_REQUEST_CANCELED' || errorCode(err) === 'ERR_CANCELED') return;
+      const msg = errorMessage(err).toLowerCase();
       if (msg.includes('canceled') || msg.includes('cancelled')) return;
       Alert.alert(t('common.error'), t('auth.genericError'));
     } finally {
@@ -438,7 +439,7 @@ export default function AuthScreen() {
             <View style={styles.legalLinks}>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => router.push('/terms-of-service' as any)}
+                onPress={() => router.push('/terms-of-service')}
                 accessibilityRole="button"
                 accessibilityLabel={t('legal.termsOfService')}
               >
@@ -447,7 +448,7 @@ export default function AuthScreen() {
               <Text style={styles.legalText}> {t('legal.and')} </Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => router.push('/privacy-policy' as any)}
+                onPress={() => router.push('/privacy-policy')}
                 accessibilityRole="button"
                 accessibilityLabel={t('legal.privacyPolicy')}
               >

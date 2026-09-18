@@ -2,9 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { Challenge } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface ChallengeCardProps {
   challenge: Challenge;
@@ -72,7 +73,7 @@ export const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge }) => {
 
   const handlePress = () => {
     if (!challenge.isCompleted) {
-      router.push(getNavigationRoute() as any);
+      router.push(getNavigationRoute() as Href);
     }
   };
 
@@ -83,7 +84,7 @@ export const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge }) => {
     >
       <View style={styles.header}>
         <View style={styles.typeTag}>
-          <Ionicons name={getTypeIcon() as any} size={14} color={color.sacred} />
+          <Ionicons name={getTypeIcon() as IoniconName} size={14} color={color.sacred} />
           <Text style={styles.typeText}>{getTypeLabel()}</Text>
         </View>
         {challenge.isCompleted && (

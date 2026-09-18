@@ -127,9 +127,9 @@ export function MiniAudioPlayer() {
   const handleNavigateToSurah = () => {
     if (currentlyPlaying) {
       if (currentlyPlaying.source === 'learn') {
-        router.push(`/quran/surah/${currentlyPlaying.surahId}/learn` as any);
+        router.push(`/quran/surah/${currentlyPlaying.surahId}/learn`);
       } else {
-        router.push(`/quran/surah/${currentlyPlaying.surahId}` as any);
+        router.push(`/quran/surah/${currentlyPlaying.surahId}`);
       }
     }
   };

@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { GroupMember, GroupLeaderboardEntry } from '../data/community/socialData';
+import type { StudySession, GroupChallenge } from '../types/community';
 
 /**
  * What a study group looked like the last time it was open.
@@ -15,12 +17,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * takes the refresh to fill it in.
  */
 export interface GroupSnapshot {
-  messages: any[];
-  reactions: Record<string, any[]>;
-  members: any[];
-  sessions: any[];
-  challenges: any[];
-  leaderboard: any[];
+  /** The chat screen's own message rows; it casts them back on read. */
+  messages: unknown[];
+  reactions: Record<string, unknown[]>;
+  members: GroupMember[];
+  sessions: StudySession[];
+  challenges: GroupChallenge[];
+  leaderboard: GroupLeaderboardEntry[];
 }
 
 /** Enough for the groups someone flips between; the oldest is dropped. */
@@ -59,9 +62,10 @@ const DISK_MESSAGES = 40;
 const timers = new Map<string, ReturnType<typeof setTimeout>>();
 
 /** A message with any board drawing stripped, so the disk copy stays small. */
-function slim(m: any): any {
-  if (m?.type === 'board' && m.classContent?.elements?.length) {
-    return { ...m, classContent: { ...m.classContent, elements: [] } };
+function slim(m: unknown): unknown {
+  const row = m as { type?: string; classContent?: { elements?: unknown[] } } | null;
+  if (row?.type === 'board' && row.classContent?.elements?.length) {
+    return { ...row, classContent: { ...row.classContent, elements: [] } };
   }
   return m;
 }
@@ -75,7 +79,7 @@ export function persistGroupSnapshot(groupId: string, snapshot: GroupSnapshot): 
     setTimeout(() => {
       timers.delete(groupId);
       const messages = snapshot.messages.slice(-DISK_MESSAGES).map(slim);
-      const ids = new Set(messages.map((m) => m.id));
+      const ids = new Set(messages.map((m) => (m as { id: string }).id));
       const reactions: Record<string, any[]> = {};
       for (const k of Object.keys(snapshot.reactions)) if (ids.has(k)) reactions[k] = snapshot.reactions[k];
       const copy: GroupSnapshot = { ...snapshot, messages, reactions };

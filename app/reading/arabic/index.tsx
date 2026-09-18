@@ -73,15 +73,15 @@ export default function ArabicLibraryScreen() {
   const deleteText = useArabicTextsStore((s) => s.deleteText);
 
   const openNew = useCallback(() => {
-    router.push('/reading/arabic/editor' as any);
+    router.push('/reading/arabic/editor');
   }, []);
 
   const openEdit = useCallback((id: string) => {
-    router.push({ pathname: '/reading/arabic/editor', params: { id } } as any);
+    router.push({ pathname: '/reading/arabic/editor', params: { id } });
   }, []);
 
   const openText = useCallback((id: string) => {
-    router.push(`/reading/arabic/${id}` as any);
+    router.push(`/reading/arabic/${id}`);
   }, []);
 
   const handleDelete = useCallback(

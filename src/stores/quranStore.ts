@@ -764,10 +764,11 @@ export const useQuranStore = create<QuranState>()(
       name: 'quran-progress-storage',
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-      migrate: (persisted: any, version: number) => {
-        if (version === 0 && persisted?.progress?.settings) {
-          persisted.progress.settings.showTranslation = true;
-          persisted.progress.settings.showTransliteration = true;
+      migrate: (persisted: unknown, version: number) => {
+        const state = persisted as { progress?: { settings?: { showTranslation?: boolean; showTransliteration?: boolean } } } | undefined;
+        if (version === 0 && state?.progress?.settings) {
+          state.progress.settings.showTranslation = true;
+          state.progress.settings.showTransliteration = true;
         }
         return persisted;
       },

@@ -1279,7 +1279,7 @@ export function subscribeToReactions(
         },
         (payload) => {
           // Only process reactions belonging to messages in this group
-          const msgId = (payload.new as any)?.message_id || (payload.old as any)?.message_id;
+          const msgId = (payload.new as { message_id?: string } | null)?.message_id || (payload.old as { message_id?: string } | null)?.message_id;
           if (msgId && msgIdSet.has(msgId)) {
             onReactionChange(payload);
           }

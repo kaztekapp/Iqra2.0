@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -19,7 +19,7 @@ function PracticeCard({ title, titleArabic, description, icon, color, route }: P
   return (
     <Pressable
       style={[styles.practiceCard, { borderColor: color + '40' }]}
-      onPress={() => router.push(route as any)}
+      onPress={() => router.push(route as Href)}
     >
       <View style={[styles.practiceIcon, { backgroundColor: color + '20' }]}>
         <Ionicons name={icon} size={28} color={color} />

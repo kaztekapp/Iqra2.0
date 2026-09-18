@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ReactionPicker } from './ReactionPicker';
 import { color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 export interface MessageActions {
   canReply: boolean;
@@ -39,7 +40,7 @@ export function MessageActionSheet({
       style={styles.row}
       onPress={() => { onPress(); onClose(); }}
     >
-      <Ionicons name={icon as any} size={20} color={danger ? color.danger : color.text} />
+      <Ionicons name={icon as IoniconName} size={20} color={danger ? color.danger : color.text} />
       <Text style={[styles.rowText, danger && { color: color.danger }]}>{label}</Text>
     </Pressable>
   );

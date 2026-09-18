@@ -76,8 +76,8 @@ const generateVocabularyQuizQuestions = (count: number): Question[] => {
       .slice(0, 3);
 
     const options = [
-      { id: correctWord.id, text: correctWord.english, textFr: (correctWord as any).french },
-      ...wrongWords.map((w) => ({ id: w.id, text: w.english, textFr: (w as any).french })),
+      { id: correctWord.id, text: correctWord.english, textFr: correctWord.french },
+      ...wrongWords.map((w) => ({ id: w.id, text: w.english, textFr: w.french })),
     ].sort(() => Math.random() - 0.5);
 
     questions.push({

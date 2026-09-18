@@ -6,6 +6,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import type { LessonContent, LessonBlock } from '../../../types/classContent';
 import { renderRichText } from './richText';
 import { font, color, radius } from '../../../theme/tokens';
+import type { IoniconName } from '../../../theme/icons';
 
 interface Props {
   visible: boolean;
@@ -51,7 +52,7 @@ function Block({ block, groupColor }: { block: LessonBlock; groupColor: string }
       const meta = CALLOUT_META[block.tone || 'info'];
       return (
         <View style={[styles.callout, { borderColor: `${meta.color}55`, backgroundColor: `${meta.color}14` }]}>
-          <Ionicons name={meta.icon as any} size={18} color={meta.color} style={{ marginTop: 1 }} />
+          <Ionicons name={meta.icon as IoniconName} size={18} color={meta.color} style={{ marginTop: 1 }} />
           <Text style={styles.calloutText}>{renderRichText(block.text)}</Text>
         </View>
       );

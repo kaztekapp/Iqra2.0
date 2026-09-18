@@ -192,7 +192,7 @@ export default function ReadingScreen() {
         {/* Arabic memorization entry */}
         <Pressable
           style={styles.arabicCardWrap}
-          onPress={() => router.push('/reading/arabic' as any)}
+          onPress={() => router.push('/reading/arabic')}
         >
           <LinearGradient
             colors={[color.progress, color.accent]}
@@ -232,7 +232,7 @@ export default function ReadingScreen() {
               <Pressable
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
-                onPress={() => router.push(`/reading/${text.id}` as any)}
+                onPress={() => router.push(`/reading/${text.id}`)}
               >
                 <View style={[styles.textIconContainer, { backgroundColor: text.color + '20' }]}>
                   <Text style={styles.textIcon}>{text.icon}</Text>
@@ -281,7 +281,7 @@ export default function ReadingScreen() {
               <Pressable
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
-                onPress={() => router.push(`/reading/${text.id}` as any)}
+                onPress={() => router.push(`/reading/${text.id}`)}
               >
                 <View style={[styles.textIconContainer, { backgroundColor: text.color + '20' }]}>
                   <Text style={styles.textIcon}>{text.icon}</Text>
@@ -330,7 +330,7 @@ export default function ReadingScreen() {
               <Pressable
                 key={text.id}
                 style={[styles.textCard, { borderLeftColor: text.color }]}
-                onPress={() => router.push(`/reading/${text.id}` as any)}
+                onPress={() => router.push(`/reading/${text.id}`)}
               >
                 <View style={[styles.textIconContainer, { backgroundColor: text.color + '20' }]}>
                   <Text style={styles.textIcon}>{text.icon}</Text>

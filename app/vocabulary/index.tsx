@@ -38,7 +38,7 @@ export default function VocabularyScreen() {
       <Pressable
         key={theme.id}
         style={styles.themeCard}
-        onPress={() => router.push(`/vocabulary/${theme.id}` as any)}
+        onPress={() => router.push(`/vocabulary/${theme.id}`)}
       >
         <View style={[styles.themeIconBg, { backgroundColor: theme.color + '20' }]}>
           <Text style={styles.themeIcon}>{theme.icon}</Text>
@@ -136,7 +136,7 @@ export default function VocabularyScreen() {
           <View style={styles.section}>
             <Pressable
               style={styles.reviewCard}
-              onPress={() => router.push('/vocabulary/review' as any)}
+              onPress={() => router.push('/vocabulary/review')}
             >
               <View style={styles.reviewContent}>
                 <View style={styles.reviewIcon}>
@@ -174,7 +174,7 @@ export default function VocabularyScreen() {
           {/* SRS Review - always visible */}
           <Pressable
             style={[styles.practiceCard, { marginBottom: 12, borderColor: reviewStats.dueToday > 0 ? color.accent : 'transparent', borderWidth: reviewStats.dueToday > 0 ? 1 : 0 }]}
-            onPress={() => router.push('/vocabulary/review' as any)}
+            onPress={() => router.push('/vocabulary/review')}
           >
             <View style={styles.practiceContent}>
               <View style={[styles.practiceIcon, { backgroundColor: withAlpha(color.accentStrong, 0.13) }]}>
@@ -199,7 +199,7 @@ export default function VocabularyScreen() {
 
           <Pressable
             style={[styles.practiceCard, { marginBottom: 12 }]}
-            onPress={() => router.push('/vocabulary/flashcards' as any)}
+            onPress={() => router.push('/vocabulary/flashcards')}
           >
             <View style={styles.practiceContent}>
               <View style={styles.practiceIcon}>
@@ -217,7 +217,7 @@ export default function VocabularyScreen() {
 
           <Pressable
             style={styles.practiceCard}
-            onPress={() => router.push('/vocabulary/speaking-practice' as any)}
+            onPress={() => router.push('/vocabulary/speaking-practice')}
           >
             <View style={styles.practiceContent}>
               <View style={[styles.practiceIcon, { backgroundColor: withAlpha(color.progress, 0.13) }]}>

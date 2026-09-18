@@ -15,6 +15,7 @@ import {
 } from '../../../src/types/prayer';
 import { font, color as tk, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 export default function PrayerLessonScreen() {
   const { t } = useTranslation();
@@ -71,7 +72,7 @@ export default function PrayerLessonScreen() {
     if (hasPrevious) {
       await stop();
       const prev = allLessons[currentIndex - 1];
-      router.replace(`/quran/prayer/${prev.id}` as any);
+      router.replace(`/quran/prayer/${prev.id}`);
     }
   }, [hasPrevious, currentIndex, allLessons, stop]);
 
@@ -79,7 +80,7 @@ export default function PrayerLessonScreen() {
     if (hasNext) {
       await stop();
       const next = allLessons[currentIndex + 1];
-      router.replace(`/quran/prayer/${next.id}` as any);
+      router.replace(`/quran/prayer/${next.id}`);
     }
   }, [hasNext, currentIndex, allLessons, stop]);
 
@@ -137,7 +138,7 @@ export default function PrayerLessonScreen() {
   const renderRule = (block: PrayerContent & { type: 'rule' }, index: number) => (
     <View key={index} style={styles.ruleCard}>
       <View style={styles.ruleHeader}>
-        <Ionicons name={(block.icon as any) || 'shield-checkmark'} size={18} color={tk.progress} />
+        <Ionicons name={(block.icon as IoniconName | undefined) || 'shield-checkmark'} size={18} color={tk.progress} />
         {block.title && <Text style={styles.ruleTitle}>{lc(block.title, block.titleFr)}</Text>}
       </View>
       <Text style={styles.ruleContent}>{lc(block.content, block.contentFr)}</Text>
@@ -1061,7 +1062,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 4,
     flex: 1,
-    minWidth: '45%' as any,
+    minWidth: '45%',
   },
   prayerTimeDetailText: {
     fontSize: 12,

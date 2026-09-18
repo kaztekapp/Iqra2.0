@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore, ModuleType } from '../../src/stores/progressStore';
 import {
@@ -109,7 +109,7 @@ export default function HomeScreen() {
         {/* Continue */}
         <Section title={t('home.continueLearning')}>
           <Card
-            onPress={() => router.push(currentModule.route as any)}
+            onPress={() => router.push(currentModule.route as Href)}
             accent={currentModule.color}
             raised
             accessibilityLabel={`${t('home.continueLearning')}: ${getModuleName()}`}
@@ -137,7 +137,7 @@ export default function HomeScreen() {
             {EXPLORE.map((m) => (
               <Card
                 key={m.route}
-                onPress={() => router.push(m.route as any)}
+                onPress={() => router.push(m.route as Href)}
                 accessibilityLabel={t(m.titleKey)}
                 style={styles.moduleCard}
               >

@@ -1,8 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 
 // Try to import expo-speech-recognition, but handle if it's not available
-let ExpoSpeechRecognitionModule: any = null;
-let useSpeechRecognitionEvent: any = null;
+type SpeechModule = typeof import('expo-speech-recognition');
+let ExpoSpeechRecognitionModule: SpeechModule['ExpoSpeechRecognitionModule'] | null = null;
+let useSpeechRecognitionEvent: SpeechModule['useSpeechRecognitionEvent'] | null = null;
 
 try {
   const speechRecognition = require('expo-speech-recognition');
@@ -133,7 +134,7 @@ function useSpeechRecognitionNative() {
   const onResultRef = useRef<((result: PronunciationResult) => void) | null>(null);
 
   // Handle speech recognition results
-  useSpeechRecognitionEvent?.('result', (event: any) => {
+  useSpeechRecognitionEvent?.('result', (event) => {
     const transcript = event.results[0]?.transcript || '';
     setState((prev) => ({ ...prev, transcript }));
 
@@ -161,7 +162,7 @@ function useSpeechRecognitionNative() {
     }
   });
 
-  useSpeechRecognitionEvent?.('error', (event: any) => {
+  useSpeechRecognitionEvent?.('error', (event) => {
     __DEV__ && console.error('Speech recognition error:', event.error);
     setState((prev) => ({
       ...prev,
@@ -180,6 +181,10 @@ function useSpeechRecognitionNative() {
       onResult: (result: PronunciationResult) => void
     ) => {
       try {
+        if (!ExpoSpeechRecognitionModule) {
+          setState((prev) => ({ ...prev, error: 'Speech recognition is not available' }));
+          return;
+        }
         const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
         if (!granted) {
           setState((prev) => ({ ...prev, error: 'Microphone permission denied' }));
@@ -226,7 +231,7 @@ function useSpeechRecognitionNative() {
 
   const checkSupport = useCallback(async () => {
     try {
-      const isAvailable = await ExpoSpeechRecognitionModule?.isRecognitionAvailable();
+      const isAvailable = !!(await ExpoSpeechRecognitionModule?.isRecognitionAvailable());
       setState((prev) => ({ ...prev, isSupported: isAvailable }));
       return isAvailable;
     } catch {

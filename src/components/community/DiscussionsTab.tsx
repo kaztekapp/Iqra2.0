@@ -21,6 +21,7 @@ import { useCommunityStore } from '../../stores/communityStore';
 import { DiscussionCategory, DiscussionThread } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import type { IoniconName } from '../../theme/icons';
 
 const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string }[] = [
   { key: 'all', icon: 'apps', color: color.textMuted },
@@ -66,7 +67,7 @@ const ThreadCard = memo(function ThreadCard({ thread, onLike }: ThreadCardProps)
   return (
     <Pressable
       style={styles.threadCard}
-      onPress={() => router.push(`/community/thread/${thread.id}` as any)}
+      onPress={() => router.push(`/community/thread/${thread.id}`)}
     >
       {/* Pinned indicator */}
       {thread.isPinned && (
@@ -195,7 +196,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
                 onPress={() => setSelectedCategory(cat.key)}
               >
                 <Ionicons
-                  name={cat.icon as any}
+                  name={cat.icon as IoniconName}
                   size={14}
                   color={isActive ? color.surface : cat.color}
                 />

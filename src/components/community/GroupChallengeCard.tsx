@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { GroupChallenge } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import type { IoniconName } from '../../theme/icons';
 
 interface Props {
   challenge: GroupChallenge;
@@ -45,7 +46,7 @@ export function GroupChallengeCard({ challenge, groupColor }: Props) {
     <View style={[styles.card, isCompleted && { borderColor: withAlpha(color.progress, 0.25) }]}>
       <View style={styles.topRow}>
         <View style={[styles.iconCircle, { backgroundColor: isCompleted ? '#10b98120' : `${groupColor}20` }]}>
-          <Ionicons name={(targetTypeIcons[challenge.targetType] || 'flag') as any} size={18} color={isCompleted ? color.progress : groupColor} />
+          <Ionicons name={(targetTypeIcons[challenge.targetType] || 'flag') as IoniconName} size={18} color={isCompleted ? color.progress : groupColor} />
         </View>
         <View style={styles.info}>
           <Text style={styles.title}>{challenge.title}</Text>

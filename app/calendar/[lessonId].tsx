@@ -168,13 +168,13 @@ export default function CalendarLessonScreen() {
         {/* Prev / Next */}
         <View style={styles.navRow}>
           {prev ? (
-            <Pressable style={styles.navBtn} onPress={() => router.replace(`/calendar/${prev.id}` as any)}>
+            <Pressable style={styles.navBtn} onPress={() => router.replace(`/calendar/${prev.id}`)}>
               <Ionicons name="chevron-back" size={18} color={color.textMuted} />
               <Text style={styles.navText} numberOfLines={1}>{lc(prev.title, prev.titleFr)}</Text>
             </Pressable>
           ) : <View style={{ flex: 1 }} />}
           {next ? (
-            <Pressable style={[styles.navBtn, styles.navBtnNext]} onPress={() => router.replace(`/calendar/${next.id}` as any)}>
+            <Pressable style={[styles.navBtn, styles.navBtnNext]} onPress={() => router.replace(`/calendar/${next.id}`)}>
               <Text style={styles.navText} numberOfLines={1}>{lc(next.title, next.titleFr)}</Text>
               <Ionicons name="chevron-forward" size={18} color={color.textMuted} />
             </Pressable>

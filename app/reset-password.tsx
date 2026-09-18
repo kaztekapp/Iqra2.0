@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { updatePassword } from '../src/services/authService';
 import { color, radius } from '../src/theme/tokens';
 import { withAlpha } from '../src/components/ui/Primitives';
+import { errorMessage } from '../src/lib/report';
 
 export default function ResetPasswordScreen() {
   const { t } = useTranslation();
@@ -47,8 +48,8 @@ export default function ResetPasswordScreen() {
       setTimeout(() => {
         router.replace('/auth');
       }, 2000);
-    } catch (err: any) {
-      const msg = (err.message || '').toLowerCase();
+    } catch (err) {
+      const msg = errorMessage(err).toLowerCase();
       let userMessage = t('auth.genericError');
       if (msg.includes('same password') || msg.includes('different')) {
         userMessage = t('auth.samePasswordError');

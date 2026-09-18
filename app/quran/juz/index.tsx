@@ -196,15 +196,15 @@ export default function JuzMainScreen() {
   };
 
   const handleIntroPress = (lessonId: string) => {
-    router.push(`/quran/juz/intro/${lessonId}` as any);
+    router.push(`/quran/juz/intro/${lessonId}`);
   };
 
   const handleJuzPress = (juzId: number) => {
-    router.push(`/quran/juz/${juzId}` as any);
+    router.push(`/quran/juz/${juzId}`);
   };
 
   const handleQuizSetPress = (setIndex: number) => {
-    router.push(`/quran/quiz/juz?setIndex=${setIndex}` as any);
+    router.push(`/quran/quiz/juz?setIndex=${setIndex}`);
   };
 
   const totalSets = getTotalSets('juz');
@@ -380,7 +380,7 @@ export default function JuzMainScreen() {
             {/* Random Quiz Option */}
             <Pressable
               style={styles.randomQuizButton}
-              onPress={() => router.push('/quran/quiz/juz' as any)}
+              onPress={() => router.push('/quran/quiz/juz')}
             >
               <LinearGradient
                 colors={[color.accent, color.accentStrong]}

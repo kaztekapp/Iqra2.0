@@ -8,6 +8,7 @@ import { QUIZ_CATEGORIES } from '../../../src/data/arabic/quran/quizzes';
 import { QuizCategoryInfo } from '../../../src/types/quran';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 interface CategoryCardProps {
   category: QuizCategoryInfo;
@@ -20,7 +21,7 @@ function CategoryCard({ category, onPress }: CategoryCardProps) {
   return (
     <Pressable style={styles.categoryCard} onPress={onPress}>
       <View style={[styles.categoryIcon, { backgroundColor: `${category.color}20` }]}>
-        <Ionicons name={category.icon as any} size={28} color={category.color} />
+        <Ionicons name={category.icon as IoniconName} size={28} color={category.color} />
       </View>
       <View style={styles.categoryInfo}>
         <Text style={styles.categoryName}>{lc(category.nameEnglish, category.nameFrench)}</Text>
@@ -41,20 +42,20 @@ export default function QuizCategoriesScreen() {
   const handleCategoryPress = (categoryId: string) => {
     // Juz category has its own dedicated learning screen with Learn/Quiz tabs
     if (categoryId === 'juz') {
-      router.push('/quran/juz' as any);
+      router.push('/quran/juz');
       return;
     }
     // Surah Structure category has its own dedicated learning screen with Learn/Quiz tabs
     if (categoryId === 'surah_structure') {
-      router.push('/quran/surah-learn' as any);
+      router.push('/quran/surah-learn');
       return;
     }
     // Tajweed category has its own dedicated learning screen with Learn/Quiz tabs
     if (categoryId === 'tajweed') {
-      router.push('/quran/tajweed-learn' as any);
+      router.push('/quran/tajweed-learn');
       return;
     }
-    router.push(`/quran/quiz/${categoryId}` as any);
+    router.push(`/quran/quiz/${categoryId}`);
   };
 
   return (

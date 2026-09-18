@@ -17,6 +17,8 @@ import { useCommunityStore } from '../../src/stores/communityStore';
 import * as communityService from '../../src/services/communityService';
 import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src/components/ui/Primitives';
 import { color, space, gutter, font, radius } from '../../src/theme/tokens';
+import type { IoniconName } from '../../src/theme/icons';
+import { errorMessage } from '../../src/lib/report';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -125,8 +127,8 @@ export default function ProfileScreen() {
                     setIsDeletingAccount(true);
                     try {
                       await deleteAccount();
-                    } catch (e: any) {
-                      Alert.alert(t('common.error') || 'Error', e.message || 'Could not delete account. Please try again.');
+                    } catch (e) {
+                      Alert.alert(t('common.error') || 'Error', errorMessage(e) || 'Could not delete account. Please try again.');
                       setIsDeletingAccount(false);
                       return;
                     }
@@ -165,8 +167,8 @@ export default function ProfileScreen() {
     setIsPurchasing(true);
     try {
       await iapService.purchaseRemoveAds();
-    } catch (e: any) {
-      Alert.alert(t('ads.purchaseError'), e.message || t('ads.purchaseErrorDesc'));
+    } catch (e) {
+      Alert.alert(t('ads.purchaseError'), errorMessage(e) || t('ads.purchaseErrorDesc'));
     } finally {
       setIsPurchasing(false);
     }
@@ -181,8 +183,8 @@ export default function ProfileScreen() {
       } else {
         Alert.alert(t('ads.restoreNone'), t('ads.restoreNoneDesc'));
       }
-    } catch (e: any) {
-      Alert.alert(t('ads.restoreError'), e.message || t('ads.restoreErrorDesc'));
+    } catch (e) {
+      Alert.alert(t('ads.restoreError'), errorMessage(e) || t('ads.restoreErrorDesc'));
     } finally {
       setIsRestoring(false);
     }
@@ -451,7 +453,7 @@ export default function ProfileScreen() {
                       { backgroundColor: categoryColors[achievement.category] + '20' }
                     ]}>
                       <Ionicons
-                        name={achievement.icon as any}
+                        name={achievement.icon as IoniconName}
                         size={24}
                         color={categoryColors[achievement.category]}
                       />
@@ -486,7 +488,7 @@ export default function ProfileScreen() {
                     >
                       <View style={[styles.achievementIcon, styles.achievementIconLocked]}>
                         <Ionicons
-                          name={achievement.icon as any}
+                          name={achievement.icon as IoniconName}
                           size={24}
                           color={color.textFaint}
                         />
@@ -758,7 +760,7 @@ export default function ProfileScreen() {
                   { backgroundColor: categoryColors[newAchievement.category] + '20' }
                 ]}>
                   <Ionicons
-                    name={newAchievement.icon as any}
+                    name={newAchievement.icon as IoniconName}
                     size={48}
                     color={categoryColors[newAchievement.category]}
                   />

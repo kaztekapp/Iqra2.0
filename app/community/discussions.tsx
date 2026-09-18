@@ -20,6 +20,7 @@ import { useCommunityStore } from '../../src/stores/communityStore';
 import { DiscussionCategory } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import type { IoniconName } from '../../src/theme/icons';
 
 const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string }[] = [
   { key: 'all', icon: 'apps', color: color.textMuted },
@@ -123,7 +124,7 @@ export default function DiscussionsScreen() {
               onPress={() => setSelectedCategory(cat.key)}
             >
               <Ionicons
-                name={cat.icon as any}
+                name={cat.icon as IoniconName}
                 size={14}
                 color={isActive ? color.surface : cat.color}
               />
@@ -156,7 +157,7 @@ export default function DiscussionsScreen() {
               <Pressable
                 key={thread.id}
                 style={styles.threadCard}
-                onPress={() => router.push(`/community/thread/${thread.id}` as any)}
+                onPress={() => router.push(`/community/thread/${thread.id}`)}
               >
                 {/* Pinned indicator */}
                 {thread.isPinned && (

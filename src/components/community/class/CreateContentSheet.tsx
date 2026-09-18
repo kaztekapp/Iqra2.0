@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { ClassContentKind } from '../../../types/classContent';
 import { color, radius } from '../../../theme/tokens';
+import type { IoniconName } from '../../../theme/icons';
 
 interface Props {
   visible: boolean;
@@ -30,7 +31,7 @@ export function CreateContentSheet({ visible, onSelect, onClose }: Props) {
             {ITEMS.map((it) => (
               <Pressable key={it.kind} style={styles.row} onPress={() => { onSelect(it.kind); onClose(); }}>
                 <View style={[styles.icon, { backgroundColor: `${it.color}22` }]}>
-                  <Ionicons name={it.icon as any} size={22} color={it.color} />
+                  <Ionicons name={it.icon as IoniconName} size={22} color={it.color} />
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={styles.label}>{it.label}</Text>

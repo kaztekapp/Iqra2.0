@@ -41,7 +41,7 @@ export interface ArabicPlayOptions {
   onLineStart?: (index: number) => void;
   /** Called once all lines finished (not called if stopped early). */
   onDone?: () => void;
-  onError?: (error?: any) => void;
+  onError?: (error?: unknown) => void;
 }
 
 async function ensureAudioInit() {
@@ -591,7 +591,7 @@ export async function playArabicLines(
       }
     }
     if (myGen === generation) options.onDone?.();
-  } catch (e: any) {
+  } catch (e) {
     if (myGen === generation) options.onError?.(e);
   }
 }

@@ -196,8 +196,9 @@ class QuranApiService {
       const translationData: QuranApiResponse<any> = await translationResponse.json();
 
       const translationsMap = new Map<number, string>();
-      translationData.translations?.forEach((t: any) => {
-        translationsMap.set(t.verse_number || t.resource_id, t.text);
+      translationData.translations?.forEach((t: { verse_number?: number; resource_id?: number; text: string }) => {
+        const key = t.verse_number ?? t.resource_id;
+        if (key != null) translationsMap.set(key, t.text);
       });
 
       const surahId = this.getSurahId(surahNumber);
@@ -301,7 +302,7 @@ class QuranApiService {
       const data: QuranApiResponse<any> = await response.json();
 
       const translations = new Map<number, string>();
-      data.translations?.forEach((t: any, index: number) => {
+      data.translations?.forEach((t: { text: string }, index: number) => {
         // API returns translations in verse order, use index+1 as verse number
         translations.set(index + 1, this.cleanTranslation(t.text));
       });

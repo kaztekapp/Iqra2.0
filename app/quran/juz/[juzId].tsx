@@ -15,6 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { JUZ_LESSONS, getJuzLesson } from '../../../src/data/arabic/quran/lessons/juzLessons';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 // Expandable Section Component
 function ExpandableSection({
@@ -39,7 +40,7 @@ function ExpandableSection({
         onPress={() => setExpanded(!expanded)}
       >
         <View style={[styles.sectionIcon, { backgroundColor: `${iconColor}20` }]}>
-          <Ionicons name={icon as any} size={18} color={iconColor} />
+          <Ionicons name={icon as IoniconName} size={18} color={iconColor} />
         </View>
         <Text style={styles.sectionTitle}>{title}</Text>
         <Ionicons
@@ -69,7 +70,7 @@ function StaticSection({
     <View style={styles.expandableSection}>
       <View style={styles.staticHeader}>
         <View style={[styles.sectionIcon, { backgroundColor: `${iconColor}20` }]}>
-          <Ionicons name={icon as any} size={18} color={iconColor} />
+          <Ionicons name={icon as IoniconName} size={18} color={iconColor} />
         </View>
         <Text style={styles.sectionTitle}>{title}</Text>
       </View>
@@ -135,7 +136,7 @@ export default function JuzDetailScreen() {
   const nextJuz = JUZ_LESSONS.find((j) => j.id === juzNumber + 1);
 
   const handleNavigation = (id: number) => {
-    router.replace(`/quran/juz/${id}` as any);
+    router.replace(`/quran/juz/${id}`);
   };
 
   return (

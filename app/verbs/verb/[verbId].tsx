@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { getVerbById } from '../../../src/data/arabic/verbs/conjugations';
+import type { ConjugationTable } from '../../../src/types/arabic';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { useState } from 'react';
@@ -73,9 +74,9 @@ export default function VerbDetailScreen() {
 
   const getConjugation = (tense: TenseType, personKey: string): string => {
     if (tense === 'imperative') {
-      return (verb.conjugations.imperative as any)?.[personKey] || '-';
+      return verb.conjugations.imperative?.[personKey as keyof NonNullable<typeof verb.conjugations.imperative>] || '-';
     }
-    return (verb.conjugations[tense] as any)?.[personKey] || '-';
+    return verb.conjugations[tense][personKey as keyof ConjugationTable] || '-';
   };
 
   const getExamplesForTense = (tense: TenseType) => {

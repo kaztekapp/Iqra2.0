@@ -8,6 +8,7 @@ import { useSettingsStore } from '../../stores/settingsStore';
 import { sendSharedContentMessage } from '../../services/communitySocialService';
 import type { SharedContent } from '../../data/community/socialData';
 import { color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface Props {
   visible: boolean;
@@ -38,7 +39,7 @@ export function ShareToGroupModal({ visible, content, onClose, onShared }: Props
   const handleShare = async (groupId: string) => {
     if (!content || !user || sendingId) return;
     setSendingId(groupId);
-    await sendSharedContentMessage(groupId, user.id, displayName, content as any);
+    await sendSharedContentMessage(groupId, user.id, displayName, content);
     setSendingId(null);
     onShared?.(groupId);
     onClose();
@@ -69,7 +70,7 @@ export function ShareToGroupModal({ visible, content, onClose, onShared }: Props
               renderItem={({ item: g }) => (
                 <Pressable style={styles.row} onPress={() => handleShare(g.id)} disabled={!!sendingId}>
                   <View style={[styles.icon, { backgroundColor: `${g.color}20` }]}>
-                    <Ionicons name={g.icon as any} size={20} color={g.color} />
+                    <Ionicons name={g.icon as IoniconName} size={20} color={g.color} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.groupName} numberOfLines={1}>{g.name}</Text>

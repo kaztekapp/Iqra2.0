@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import type { IoniconName } from '../../theme/icons';
 
 export interface MemberRowData {
   id: string;
@@ -44,7 +45,7 @@ export function MemberRow({ member, getDaysAgo, canManage, onAction }: Props) {
           <Text style={styles.memberName}>{member.name}</Text>
           {member.role !== 'member' && (
             <View style={[styles.roleBadge, { backgroundColor: `${rc.color}20` }]}>
-              <Ionicons name={rc.icon as any} size={10} color={rc.color} style={{ marginRight: 3 }} />
+              <Ionicons name={rc.icon as IoniconName} size={10} color={rc.color} style={{ marginRight: 3 }} />
               <Text style={[styles.roleBadgeText, { color: rc.color }]}>{rc.label}</Text>
             </View>
           )}

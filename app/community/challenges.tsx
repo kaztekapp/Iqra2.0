@@ -9,6 +9,7 @@ import { useCommunityStore } from '../../src/stores/communityStore';
 import { Challenge } from '../../src/types/community';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import type { IoniconName } from '../../src/theme/icons';
 
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
     >
       <View style={styles.challengeHeader}>
         <View style={styles.challengeType}>
-          <Ionicons name={getTypeIcon() as any} size={16} color={color.sacred} />
+          <Ionicons name={getTypeIcon() as IoniconName} size={16} color={color.sacred} />
           <Text style={styles.challengeTypeText}>{getTypeLabel()}</Text>
         </View>
         {challenge.isCompleted && (

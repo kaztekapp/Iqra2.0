@@ -22,6 +22,7 @@ import { GROUP_TEMPLATES } from '../../data/community/groupTemplates';
 import { localizeGoal } from '../../data/community/goalLocalization';
 import { GroupTemplate, StudyGroup } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 const GROUP_ICONS = ['book', 'school', 'mic', 'language', 'moon', 'star', 'people', 'flag'];
 const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent, color.accent, color.warning, color.danger, color.progress];
@@ -51,10 +52,10 @@ const GroupCard = memo(function GroupCard({ group, onJoin }: GroupCardProps) {
   );
 
   return (
-    <Pressable style={styles.card} onPress={() => router.push(`/community/groups/${group.id}` as any)}>
+    <Pressable style={styles.card} onPress={() => router.push(`/community/groups/${group.id}`)}>
       <View style={styles.cardTop}>
         <View style={[styles.iconCircle, { backgroundColor: `${group.color}20` }]}>
-          <Ionicons name={group.icon as any} size={26} color={group.color} />
+          <Ionicons name={group.icon as IoniconName} size={26} color={group.color} />
         </View>
         <View style={styles.cardInfo}>
           <Text style={styles.groupName}>{lc(group.name, group.nameFr)}</Text>
@@ -300,7 +301,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
                       }}
                     >
                       <View style={[styles.templateIcon, { backgroundColor: `${tpl.color}20` }]}>
-                        <Ionicons name={tpl.icon as any} size={22} color={tpl.color} />
+                        <Ionicons name={tpl.icon as IoniconName} size={22} color={tpl.color} />
                       </View>
                       <Text style={styles.templateName} numberOfLines={1}>{t(tpl.nameKey, { defaultValue: tpl.name })}</Text>
                     </Pressable>
@@ -353,7 +354,7 @@ export function GroupsTab({ active = true }: { active?: boolean }) {
                     style={[styles.pickerItem, selectedIcon === icon && { borderColor: selectedColor }]}
                     onPress={() => setSelectedIcon(icon)}
                   >
-                    <Ionicons name={icon as any} size={22} color={selectedIcon === icon ? selectedColor: color.textFaint} />
+                    <Ionicons name={icon as IoniconName} size={22} color={selectedIcon === icon ? selectedColor: color.textFaint} />
                   </Pressable>
                 ))}
               </View>

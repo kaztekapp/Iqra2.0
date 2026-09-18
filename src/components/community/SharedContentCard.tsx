@@ -2,11 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { useArabicSpeech } from '../../hooks/useArabicSpeech';
 import type { SharedContent } from '../../data/community/socialData';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import type { IoniconName } from '../../theme/icons';
 
 interface Props {
   content: SharedContent;
@@ -36,7 +37,7 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
     <View style={[styles.card, isMe ? styles.cardMe : styles.cardOther]}>
       {/* Header: kind + reference + audio */}
       <View style={styles.header}>
-        <Ionicons name={meta.icon as any} size={14} color={groupColor} />
+        <Ionicons name={meta.icon as IoniconName} size={14} color={groupColor} />
         <Text style={[styles.kind, { color: groupColor }]}>{meta.label}</Text>
         {content.ref ? <Text style={styles.ref} numberOfLines={1}>{content.ref}</Text> : null}
         {audioText ? (
@@ -66,7 +67,7 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
 
       <View style={styles.actionsRow}>
         {content.route ? (
-          <Pressable style={styles.openRow} onPress={() => router.push(content.route as any)}>
+          <Pressable style={styles.openRow} onPress={() => router.push(content.route as Href)}>
             <Ionicons name="open-outline" size={13} color={groupColor} />
             <Text style={[styles.openText, { color: groupColor }]}>{t('community.open')}</Text>
           </Pressable>

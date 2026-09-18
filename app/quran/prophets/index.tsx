@@ -60,7 +60,7 @@ export default function ProphetListScreen() {
   const overallProgress = Math.round((totalCompleted / PROPHETS.length) * 100);
 
   const handleProphetPress = (prophetId: string) => {
-    router.push(`/quran/prophets/${prophetId}` as any);
+    router.push(`/quran/prophets/${prophetId}`);
   };
 
   return (

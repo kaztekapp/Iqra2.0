@@ -9,6 +9,7 @@ import { getAllPrayerLessons } from '../../../src/data/arabic/prayer';
 import { usePrayerStore } from '../../../src/stores/prayerStore';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
 
 type TabFilter = 'prayer_guide' | 'sujud_sahw';
 
@@ -30,7 +31,7 @@ export default function PrayerIndexScreen() {
   }, [lessons, activeTab]);
 
   const handleLessonPress = (lessonId: string) => {
-    router.push(`/quran/prayer/${lessonId}` as any);
+    router.push(`/quran/prayer/${lessonId}`);
   };
 
   return (
@@ -148,7 +149,7 @@ export default function PrayerIndexScreen() {
                     <Text style={styles.lessonMetaText}>{lesson.estimatedMinutes} {t('prayerFeature.min')}</Text>
                   </View>
                   <View style={styles.lessonMetaItem}>
-                    <Ionicons name={lesson.icon as any} size={12} color={color.textFaint} />
+                    <Ionicons name={lesson.icon as IoniconName} size={12} color={color.textFaint} />
                     <Text style={styles.lessonMetaText}>
                       {lesson.content.length} {t('prayerFeature.sections')}
                     </Text>

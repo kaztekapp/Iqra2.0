@@ -16,6 +16,7 @@ import { useCommunityStore } from '../../src/stores/communityStore';
 import { StudyPartner } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import type { TFunction } from 'i18next';
 
 const LEVEL_COLORS: Record<string, string> = {
   beginner: color.progress,
@@ -146,7 +147,7 @@ function PartnerCard({
   isConnected: boolean;
   onConnect: () => void;
   getLastActive: (d: string) => string;
-  t: any;
+  t: TFunction;
 }) {
   const levelColor = LEVEL_COLORS[partner.level] || color.textFaint;
 

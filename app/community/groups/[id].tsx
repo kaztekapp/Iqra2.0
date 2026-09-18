@@ -78,6 +78,8 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../src/theme/icons';
+import type { AlertButton, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 type Tab = 'chat' | 'members' | 'info';
 
@@ -92,7 +94,7 @@ type MappedMessage = GroupMessage & {
   replyToId?: string | null;
   editedAt?: string | null;
   isDeleted?: boolean;
-  classContent?: any | null;
+  classContent?: ClassContent | null;
 };
 
 // A chat list row is either a message or an injected date separator.
@@ -134,6 +136,13 @@ function dayLabel(dateStr: string): string {
   if (sameDay(d, today)) return 'Today';
   if (sameDay(d, yest)) return 'Yesterday';
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: d.getFullYear() !== today.getFullYear() ? 'numeric' : undefined });
+}
+
+/** What a class post is called in the chat list: its title, or the poll's question. */
+function classContentLabel(content: ClassContent): string {
+  if ('title' in content && content.title) return content.title;
+  if ('question' in content) return content.question;
+  return 'Class content';
 }
 
 export default function GroupDetailScreen() {
@@ -314,9 +323,10 @@ export default function GroupDetailScreen() {
     seenIds.current.clear();
 
     const paint = (snap: GroupSnapshot) => {
-      snap.messages.forEach((m) => seenIds.current.add(m.id));
-      setMessages(snap.messages);
-      setReactions(snap.reactions);
+      const rows = snap.messages as MappedMessage[];
+      rows.forEach((m) => seenIds.current.add(m.id));
+      setMessages(rows);
+      setReactions(snap.reactions as Record<string, MessageReaction[]>);
       setMembers(snap.members);
       setSessions(snap.sessions);
       setChallenges(snap.challenges);
@@ -657,7 +667,7 @@ export default function GroupDetailScreen() {
     if (!id || !canManage || member.userId === user?.id || member.id === user?.id) return;
     if (isModerator && member.role === 'admin') return;
 
-    const buttons: any[] = [];
+    const buttons: AlertButton[] = [];
     if (isAdmin) {
       if (member.role === 'member') {
         buttons.push({ text: 'Make Moderator', onPress: async () => {
@@ -797,7 +807,7 @@ export default function GroupDetailScreen() {
         authorName: displayName,
         avatar: displayName.charAt(0).toUpperCase(),
         body: 'Voice note',
-        type: 'voice' as any,
+        type: 'voice',
         createdAt: new Date().toISOString(),
         audioUrl: uri,
         durationMs,
@@ -829,7 +839,7 @@ export default function GroupDetailScreen() {
       const newChallenge: GroupChallenge = {
         id: result.id || `ch-${Date.now()}`,
         groupId: id, creatorId: user.id, creatorName: displayName,
-        title, targetType: targetType as any, targetValue,
+        title, targetType: targetType as GroupChallenge['targetType'], targetValue,
         currentValue: 0, participantCount: 0,
         startDate, endDate, isActive: true, createdAt: new Date().toISOString(),
       };
@@ -878,7 +888,7 @@ export default function GroupDetailScreen() {
     setEditorKind('board');
   }, []);
 
-  const openEditClass = useCallback((msg: { id: string; classContent?: any }) => {
+  const openEditClass = useCallback((msg: { id: string; classContent?: ClassContent | null }) => {
     if (!msg.classContent) return;
     setEditorInitial(msg.classContent);
     setEditingClassMsgId(msg.id);
@@ -900,12 +910,12 @@ export default function GroupDetailScreen() {
     if (editingId) {
       // Edit existing content in place.
       setMessages((prev) => prev.map((m) => (m.id === editingId ? { ...m, classContent: content, body: (content as any).title || (content as any).question || m.body } : m)));
-      await updateClassContent(editingId, content as any);
+      await updateClassContent(editingId, content);
       return;
     }
 
     // Post new content.
-    const sent = await sendClassContent(id, user.id, displayName, content.kind, content as any);
+    const sent = await sendClassContent(id, user.id, displayName, content.kind, content);
     if (sent) {
       seenIds.current.add(sent.id);
       reactionSubRef.current?.addMessageId(sent.id);
@@ -916,7 +926,7 @@ export default function GroupDetailScreen() {
         userId: user.id,
         authorName: displayName,
         avatar: displayName.charAt(0).toUpperCase(),
-        body: (content as any).title || (content as any).question || 'Class content',
+        body: classContentLabel(content),
         type: content.kind,
         createdAt: new Date().toISOString(),
         classContent: content,
@@ -995,7 +1005,7 @@ export default function GroupDetailScreen() {
   // In an inverted list the bottom is offset 0. State is only touched when
   // the answer changes: setting it on every scroll frame re-rendered this
   // whole screen sixty times a second while the thumb was moving.
-  const handleScroll = useCallback((e: any) => {
+  const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const atBottom = e.nativeEvent.contentOffset.y < 80;
     if (atBottom === isAtBottomRef.current) return;
     isAtBottomRef.current = atBottom;
@@ -1071,7 +1081,7 @@ export default function GroupDetailScreen() {
 
       <View style={styles.headerGroupInfo}>
         <View style={[styles.headerIcon, { backgroundColor: `${group.color}20` }]}>
-          <Ionicons name={group.icon as any} size={22} color={group.color} />
+          <Ionicons name={group.icon as IoniconName} size={22} color={group.color} />
         </View>
         <View style={styles.headerInfoBlock}>
           <Text style={styles.headerTitle} numberOfLines={2}>{lc(group.name, group.nameFr)}</Text>
@@ -1103,7 +1113,7 @@ export default function GroupDetailScreen() {
         <ScrollView contentContainerStyle={styles.previewContent} showsVerticalScrollIndicator={false}>
           <View style={styles.previewCard}>
             <View style={[styles.previewIconLarge, { backgroundColor: `${group.color}20` }]}>
-              <Ionicons name={group.icon as any} size={40} color={group.color} />
+              <Ionicons name={group.icon as IoniconName} size={40} color={group.color} />
             </View>
             <Text style={styles.previewName}>{lc(group.name, group.nameFr)}</Text>
             <Text style={styles.previewTopic}>{lc(group.topic, group.topicFr)}</Text>
@@ -1471,12 +1481,12 @@ export default function GroupDetailScreen() {
 }
 
 // FIX #10: Lazy-loaded modal wrappers
-function CreateSessionModalLazy(props: any) {
+function CreateSessionModalLazy(props: React.ComponentProps<typeof import('../../../src/components/community/CreateSessionModal').CreateSessionModal>) {
   const { CreateSessionModal } = require('../../../src/components/community/CreateSessionModal');
   return <CreateSessionModal {...props} />;
 }
 
-function CreateChallengeModalLazy(props: any) {
+function CreateChallengeModalLazy(props: React.ComponentProps<typeof import('../../../src/components/community/CreateChallengeModal').CreateChallengeModal>) {
   const { CreateChallengeModal } = require('../../../src/components/community/CreateChallengeModal');
   return <CreateChallengeModal {...props} />;
 }

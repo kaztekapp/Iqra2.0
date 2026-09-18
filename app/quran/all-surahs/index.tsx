@@ -67,7 +67,7 @@ export default function AllSurahsScreen() {
   }), [debouncedQuery]);
 
   const handleSurahPress = (surahId: string) => {
-    router.push(`/quran/surah/${surahId}` as any);
+    router.push(`/quran/surah/${surahId}`);
   };
 
   return (

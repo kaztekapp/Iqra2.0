@@ -77,7 +77,7 @@ export function useLocalAudioPlayer(): UseAudioPlayerReturn {
     setIsPlaying(false);
   }, []);
 
-  const play = useCallback(async (_source: any) => {
+  const play = useCallback(async (_source: unknown) => {
     try {
       setError(null);
       setIsLoading(true);

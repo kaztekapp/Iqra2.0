@@ -16,6 +16,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { VocabularyWord, VocabularyReviewItem, ReviewRating } from '../../src/types/arabic';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import type { IoniconName } from '../../src/theme/icons';
 
 
 // Rating descriptions for SM-2 scale
@@ -278,7 +279,7 @@ export default function VocabularyReviewScreen() {
                   style={[styles.ratingButton, { borderColor: config.color }]}
                   onPress={() => handleRating(rating)}
                 >
-                  <Ionicons name={config.icon as any} size={20} color={config.color} />
+                  <Ionicons name={config.icon as IoniconName} size={20} color={config.color} />
                   <Text style={[styles.ratingLabel, { color: config.color }]}>
                     {config.label}
                   </Text>

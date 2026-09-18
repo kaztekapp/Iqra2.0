@@ -21,7 +21,7 @@ import StopSpeechOnNavigate from '../src/components/StopSpeechOnNavigate';
 import { prewarmArabicVoice } from '../src/services/speech/arabicTTS';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 import { color } from '../src/theme/tokens';
-import { initReporting, wrapRoot , quietly } from '../src/lib/report';
+import { initReporting, wrapRoot , quietly , errorMessage } from '../src/lib/report';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -160,9 +160,9 @@ function RootLayout() {
         if (accessToken && refreshToken) {
           await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
         }
-      } catch (e: any) {
+      } catch (e) {
         // Stale/expired tokens — silently ignore, user can request a new reset
-        console.warn('[DeepLink] Auth token error:', e.message || e);
+        console.warn('[DeepLink] Auth token error:', errorMessage(e));
       }
     }
 

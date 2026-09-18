@@ -68,16 +68,16 @@ export default function VerbsScreen() {
     <Pressable
       key={lesson.id}
       style={styles.lessonCard}
-      onPress={() => router.push(`/grammar/${lesson.id}` as any)}
+      onPress={() => router.push(`/grammar/${lesson.id}`)}
     >
       <View style={[styles.lessonNumber, { backgroundColor: color + '30' }]}>
         <Text style={[styles.lessonNumberText, { color }]}>{lessonNumber[lesson.id]}</Text>
       </View>
       <View style={styles.lessonContent}>
-        <Text style={styles.lessonTitle}>{lc(lesson.title, (lesson as any).titleFr)}</Text>
+        <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
         <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
         <Text style={styles.lessonDescription} numberOfLines={2}>
-          {lc(lesson.description, (lesson as any).descriptionFr)}
+          {lc(lesson.description, lesson.descriptionFr)}
         </Text>
       </View>
       <Ionicons name="chevron-forward" size={20} color={tk.textFaint} />
@@ -143,7 +143,7 @@ export default function VerbsScreen() {
             <Pressable
               key={category.id}
               style={styles.categoryCard}
-              onPress={() => router.push(`/verbs/${category.id}` as any)}
+              onPress={() => router.push(`/verbs/${category.id}`)}
             >
               <View style={[styles.categoryIcon, { backgroundColor: category.color + '20' }]}>
                 <Ionicons name={category.icon} size={24} color={category.color} />
@@ -167,7 +167,7 @@ export default function VerbsScreen() {
               <Pressable
                 key={verb.id}
                 style={styles.verbCard}
-                onPress={() => router.push(`/verbs/verb/${verb.id}` as any)}
+                onPress={() => router.push(`/verbs/verb/${verb.id}`)}
               >
                 <Pressable
                   style={styles.verbAudioButton}
@@ -179,7 +179,7 @@ export default function VerbsScreen() {
                   <Ionicons name="volume-high" size={16} color={tk.progress} />
                 </Pressable>
                 <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
-                <Text style={styles.verbMeaningText}>{lc(verb.meaning, (verb as any).meaningFr)}</Text>
+                <Text style={styles.verbMeaningText}>{lc(verb.meaning, verb.meaningFr)}</Text>
                 <Text style={styles.verbRootText}>{verb.root}</Text>
               </Pressable>
             ))}
@@ -230,7 +230,7 @@ export default function VerbsScreen() {
             onPress={() =>
               router.push({
                 pathname: '/verbs/quiz-practice',
-              } as any)
+              })
             }
           >
             <Ionicons name="help-circle" size={24} color={tk.text} />
@@ -251,7 +251,7 @@ export default function VerbsScreen() {
             onPress={() =>
               router.push({
                 pathname: '/verbs/writing-practice',
-              } as any)
+              })
             }
           >
             <Ionicons name="pencil" size={24} color={tk.text} />

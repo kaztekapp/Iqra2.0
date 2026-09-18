@@ -228,7 +228,7 @@ export default function TypingPracticeScreen() {
         {/* Question */}
         <Animated.View style={[styles.questionContainer, shakeStyle, fadeStyle]}>
           <Text style={styles.instructionText}>{t('exercise.typeInArabic')}</Text>
-          <Text style={styles.questionText}>{lc(currentWord.english, (currentWord as any).french)}</Text>
+          <Text style={styles.questionText}>{lc(currentWord.english, currentWord.french)}</Text>
           <View style={styles.questionArabicRow}>
             <Text style={styles.transliteration}>({currentWord.transliteration})</Text>
             <Pressable

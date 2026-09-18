@@ -8,6 +8,7 @@ import { LEARNING_GOALS, LearningGoalId } from '../../src/types/onboarding';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import type { IoniconName } from '../../src/theme/icons';
 
 const CARD_GAP = 12;
 const HORIZONTAL_PADDING = 20;
@@ -73,7 +74,7 @@ export default function GoalsScreen() {
                     { backgroundColor: goal.color + '20' },
                   ]}
                 >
-                  <Ionicons name={goal.icon as any} size={24} color={goal.color} />
+                  <Ionicons name={goal.icon as IoniconName} size={24} color={goal.color} />
                 </View>
                 <Text style={[styles.goalLabel, isSelected && { color: color.text }]}>
                   {t(goal.labelKey)}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import type { LessonContent } from '../../../types/classContent';
+import type { LessonContent , LessonBlock } from '../../../types/classContent';
 import { LessonViewer } from './LessonViewer';
 import { color, radius } from '../../../theme/tokens';
 
@@ -18,7 +18,7 @@ export const LessonCard = React.memo(function LessonCard({ lesson, groupColor, a
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const firstText = lesson.blocks.find((b) => b.type === 'paragraph' || b.type === 'heading') as any;
+  const firstText = lesson.blocks.find((b): b is Extract<LessonBlock, { type: 'paragraph' | 'heading' }> => b.type === 'paragraph' || b.type === 'heading');
   const snippet = firstText?.text?.replace(/\*\*|==|__|\*/g, '') || '';
   const sections = lesson.blocks.filter((b) => b.type === 'heading').length;
 

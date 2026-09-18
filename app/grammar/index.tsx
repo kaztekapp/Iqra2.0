@@ -7,6 +7,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { grammarLessons as lessonsData } from '../../src/data/arabic/grammar/lessons';
 import { font, color, radius } from '../../src/theme/tokens';
+import type { IoniconName } from '../../src/theme/icons';
 
 // Map category to icon and color
 const categoryConfig: Record<string, { icon: string; color: string }> = {
@@ -34,10 +35,10 @@ const grammarLessons = lessonsData.map((lesson, i) => ({
   id: lesson.id,
   number: i + 1,
   title: lesson.title,
-  titleFr: (lesson as any).titleFr,
+  titleFr: lesson.titleFr,
   titleArabic: lesson.titleArabic,
   description: lesson.description,
-  descriptionFr: (lesson as any).descriptionFr,
+  descriptionFr: lesson.descriptionFr,
   level: lesson.level,
   category: lesson.category,
   icon: categoryConfig[lesson.category]?.icon || 'book',
@@ -68,10 +69,10 @@ export default function GrammarScreen() {
       <Pressable
         key={lesson.id}
         style={styles.lessonCard}
-        onPress={() => router.push(`/grammar/${lesson.id}` as any)}
+        onPress={() => router.push(`/grammar/${lesson.id}`)}
       >
         <View style={[styles.lessonIcon, { backgroundColor: lesson.color + '20' }]}>
-          <Ionicons name={lesson.icon as any} size={24} color={lesson.color} />
+          <Ionicons name={lesson.icon as IoniconName} size={24} color={lesson.color} />
           <View style={styles.lessonNumberBadge}>
             <Text style={styles.lessonNumberText}>{lesson.number}</Text>
           </View>

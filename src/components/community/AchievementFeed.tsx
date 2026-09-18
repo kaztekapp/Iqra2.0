@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommunityAchievement } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
+import type { IoniconName } from '../../theme/icons';
 
 interface AchievementFeedProps {
   achievements: CommunityAchievement[];
@@ -76,7 +77,7 @@ export const AchievementFeed: React.FC<AchievementFeedProps> = ({ achievements }
             >
               <View style={[styles.iconContainer, { backgroundColor: `${iconColor}20` }]}>
                 <Ionicons
-                  name={achievement.icon as any}
+                  name={achievement.icon as IoniconName}
                   size={18}
                   color={iconColor}
                 />

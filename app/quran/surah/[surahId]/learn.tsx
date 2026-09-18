@@ -12,6 +12,7 @@ import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 /** What the player calls the app's own voice, in Arabic. */
 const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
@@ -482,7 +483,7 @@ export default function LearnModeScreen() {
                 <ActivityIndicator color={color.progress} size="small" />
               ) : (
                 <Ionicons
-                  name={getPlayIcon() as any}
+                  name={getPlayIcon() as IoniconName}
                   size={18}
                   color={audioState === 'playing' ? color.surface : audioState === 'paused' ? color.warning : color.progress}
                 />

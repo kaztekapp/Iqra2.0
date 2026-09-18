@@ -16,6 +16,7 @@ import { quranAudioService, AudioState } from '../../../../src/services/quranAud
 import { getHintText } from '../../../../src/utils/arabicTextUtils';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import type { IoniconName } from '../../../../src/theme/icons';
 
 const METHOD_COLOR = color.accent;
 
@@ -326,7 +327,7 @@ export default function ActiveRecallScreen() {
       style={styles.audioButton}
       onPress={playAyahAudio}
     >
-      <Ionicons name={audioIcon as any} size={18} color={METHOD_COLOR} />
+      <Ionicons name={audioIcon as IoniconName} size={18} color={METHOD_COLOR} />
     </Pressable>
   );
 

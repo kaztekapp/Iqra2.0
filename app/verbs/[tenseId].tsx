@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { arabicVerbs } from '../../src/data/arabic/verbs/conjugations';
+import type { ConjugationTable } from '../../src/types/arabic';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -107,9 +108,9 @@ export default function TenseDetailScreen() {
 
   const getConjugation = (verb: typeof arabicVerbs[0], personKey: string): string => {
     if (tenseId === 'imperative') {
-      return (verb.conjugations.imperative as any)?.[personKey] || '-';
+      return verb.conjugations.imperative?.[personKey as keyof NonNullable<typeof verb.conjugations.imperative>] || '-';
     }
-    return (verb.conjugations[tenseId as 'past' | 'present' | 'future'] as any)?.[personKey] || '-';
+    return verb.conjugations[tenseId as 'past' | 'present' | 'future'][personKey as keyof ConjugationTable] || '-';
   };
 
   const getExamplesForTense = (verb: typeof arabicVerbs[0]) => {
