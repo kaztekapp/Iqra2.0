@@ -10,6 +10,7 @@ import {
 } from 'expo-audio';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { quietly } from '../../lib/report';
 
 interface Props {
   onSend: (uri: string, durationMs: number, waveform: number[]) => void;
@@ -57,7 +58,7 @@ export function VoiceRecorder({ onSend, onCancel }: Props) {
     })();
     return () => {
       if (!finishedRef.current) {
-        try { recorder.stop(); } catch {}
+        try { recorder.stop(); } catch (e) { quietly(e, 'components/community/VoiceRecorder'); }
       }
     };
   }, []);

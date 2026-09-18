@@ -24,6 +24,7 @@ import {
   keepClip,
   pruneClips,
 } from './arabicVoiceCache';
+import { quietly } from '../../lib/report';
 
 let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
@@ -87,7 +88,7 @@ function deleteQuietly(uri: string) {
   if (isKeptClip(uri)) return;
   try {
     new File(uri).delete();
-  } catch {}
+  } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
 }
 
 function teardownCurrent() {
@@ -98,10 +99,10 @@ function teardownCurrent() {
   } else if (currentPlayer) {
     try {
       currentPlayer.pause();
-    } catch {}
+    } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
     try {
       currentPlayer.remove();
-    } catch {}
+    } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
     currentPlayer = null;
   }
 }
@@ -407,8 +408,9 @@ function playFile(uri: string): Promise<void> {
           showSeekForward: false,
           showSeekBackward: false,
         });
-      } catch {
-        // Not available everywhere; the line still plays.
+      } catch (e) {
+        quietly(e, 'services/speech/arabicTTS');
+  // Not available everywhere; the line still plays.
       }
     }
 
@@ -434,13 +436,13 @@ function playFile(uri: string): Promise<void> {
       if (watchdog) clearTimeout(watchdog);
       try {
         subscription.remove();
-      } catch {}
+      } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         player.pause();
-      } catch {}
+      } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         player.remove();
-      } catch {}
+      } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       if (currentPlayer === player) currentPlayer = null;
       if (interruptCurrent === finish) interruptCurrent = null;
       deleteQuietly(uri);
@@ -743,7 +745,7 @@ function speakOnDevice(text: string, speed: number, myGen: number, gen: () => nu
       // The device voice is the one that spells the mushaf out; give it the
       // same plain Arabic the network voice gets.
       const spoken = normalizeArabicForSpeech(text) || text;
-      try { Speech.stop(); } catch {}
+      try { Speech.stop(); } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         Speech.speak(spoken, {
           language: 'ar',
@@ -774,7 +776,7 @@ const AUDIO_ID = 'arabicTTS';
 registerAudioProducer(AUDIO_ID, 'speech', () => stopArabic());
 
 export function stopArabic(): void {
-  try { Speech.stop(); } catch {}
+  try { Speech.stop(); } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
   generation++;
   teardownCurrent();
 }

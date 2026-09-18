@@ -21,6 +21,7 @@ import StopSpeechOnNavigate from '../src/components/StopSpeechOnNavigate';
 import { prewarmArabicVoice } from '../src/services/speech/arabicTTS';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 import { color } from '../src/theme/tokens';
+import { initReporting, wrapRoot , quietly } from '../src/lib/report';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -28,9 +29,11 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
+initReporting();
+
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-export default function RootLayout() {
+function RootLayout() {
   const { i18n } = useTranslation();
   const router = useRouter();
   const segments = useSegments();
@@ -203,7 +206,7 @@ export default function RootLayout() {
   const hideSplash = useCallback(async () => {
     if (splashHidden.current) return;
     splashHidden.current = true;
-    try { await SplashScreen.hideAsync(); } catch {}
+    try { await SplashScreen.hideAsync(); } catch (e) { quietly(e, '_layout'); }
   }, []);
 
   // Defensive: hide as soon as we're ready (independent of layout timing) and,
@@ -283,3 +286,5 @@ export default function RootLayout() {
     </AppErrorBoundary>
   );
 }
+
+export default wrapRoot(RootLayout);

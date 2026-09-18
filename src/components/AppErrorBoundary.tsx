@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Updates from 'expo-updates';
 import i18n from 'i18next';
 import { font, color, radius } from '../theme/tokens';
+import { reportError } from '../lib/report';
 
 interface Props {
   children: ReactNode;
@@ -21,7 +22,7 @@ export class AppErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    __DEV__ && console.error('[ErrorBoundary] Caught error:', error.message, info.componentStack);
+    reportError(error, { componentStack: info.componentStack });
   }
 
   handleRestart = async () => {

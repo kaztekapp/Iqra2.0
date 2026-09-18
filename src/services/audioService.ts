@@ -1,6 +1,7 @@
 import * as Speech from 'expo-speech';
 import { ensureAudioSession } from './audioBus';
 import { speakArabic as speakArabicOnce, stopArabic } from './speech/arabicTTS';
+import { quietly } from '../lib/report';
 
 export type VoiceGender = 'female' | 'male';
 
@@ -420,7 +421,7 @@ class AudioService {
     }
     try {
       await Speech.stop();
-    } catch {}
+    } catch (e) { quietly(e, 'services/audioService'); }
     this.isSpeaking = false;
   }
 

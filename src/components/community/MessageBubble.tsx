@@ -13,6 +13,7 @@ import { BoardCard } from './board/BoardCard';
 import { renderMessageText, isPredominantlyArabic } from './chatText';
 import { ReactionBadges } from './ReactionBadges';
 import { font, color, radius } from '../../theme/tokens';
+import { quietly } from '../../lib/report';
 
 export interface MessageBubbleMessage {
   id: string;
@@ -289,7 +290,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
       subRef.current?.remove();
       subRef.current = null;
       if (playerRef.current) {
-        try { playerRef.current.remove(); } catch {}
+        try { playerRef.current.remove(); } catch (e) { quietly(e, 'components/community/MessageBubble'); }
         playerRef.current = null;
       }
     };
@@ -318,7 +319,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
       if (finished) {
         setIsPlaying(false);
         setProgress(0);
-        try { player.seekTo(0); } catch {}
+        try { player.seekTo(0); } catch (e) { quietly(e, 'components/community/MessageBubble'); }
       }
     });
     playerRef.current = player;
@@ -344,7 +345,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
   const cycleRate = () => {
     const next = rate === 1 ? 1.5 : rate === 1.5 ? 2 : 1;
     setRate(next);
-    try { playerRef.current?.setPlaybackRate(next); } catch {}
+    try { playerRef.current?.setPlaybackRate(next); } catch (e) { quietly(e, 'components/community/MessageBubble'); }
   };
 
   const seekTo = (e: GestureResponderEvent) => {
@@ -352,7 +353,7 @@ function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPres
     setProgress(frac);
     const player = ensureLoaded();
     if (player && msg.durationMs) {
-      try { player.seekTo((frac * msg.durationMs) / 1000); } catch {}
+      try { player.seekTo((frac * msg.durationMs) / 1000); } catch (e) { quietly(e, 'components/community/MessageBubble'); }
     }
   };
 

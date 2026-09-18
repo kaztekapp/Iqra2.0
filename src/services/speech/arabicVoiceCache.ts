@@ -20,6 +20,7 @@
  */
 import * as LegacyFileSystem from 'expo-file-system/legacy';
 import { Directory, File, Paths } from 'expo-file-system';
+import { quietly } from '../../lib/report';
 
 /** Roughly forty minutes of speech. All 100 duas come to about 7 MB. */
 const MAX_BYTES = 30 * 1024 * 1024;
@@ -109,8 +110,9 @@ export async function keepClip(name: string, bytes: Uint8Array): Promise<string>
   const f = new File(uri + name);
   try {
     if (f.exists) f.delete();
-  } catch {
-    // An old clip that will not delete is not a reason to fail the write.
+  } catch (e) {
+    quietly(e, 'services/speech/arabicVoiceCache');
+  // An old clip that will not delete is not a reason to fail the write.
   }
   f.write(bytes);
   if (!f.exists || (f.size ?? 0) === 0) throw new Error('voice_store_write_failed');
@@ -151,12 +153,14 @@ export function pruneClips(): void {
       try {
         row.f.delete();
         total -= row.size;
-      } catch {
-        // A file that will not delete is not worth failing a save over.
+      } catch (e) {
+        quietly(e, 'services/speech/arabicVoiceCache');
+  // A file that will not delete is not worth failing a save over.
       }
     }
-  } catch {
-    // Pruning is housekeeping: never let it break playback.
+  } catch (e) {
+    quietly(e, 'services/speech/arabicVoiceCache');
+  // Pruning is housekeeping: never let it break playback.
   }
 }
 
@@ -182,7 +186,7 @@ export function clearClips(): void {
     for (const e of new Directory(uri).list()) {
       try {
         e.delete();
-      } catch {}
+      } catch (e) { quietly(e, 'services/speech/arabicVoiceCache'); }
     }
-  } catch {}
+  } catch (e) { quietly(e, 'services/speech/arabicVoiceCache'); }
 }

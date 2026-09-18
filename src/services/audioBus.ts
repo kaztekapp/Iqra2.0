@@ -1,5 +1,6 @@
 import { AppState } from 'react-native';
 import { setAudioModeAsync, setIsAudioActiveAsync } from 'expo-audio';
+import { quietly } from '../lib/report';
 
 /**
  * One place that knows what is making sound.
@@ -149,8 +150,9 @@ function runStop(id: string, entry: { stop: Stopper }) {
     if (result && typeof (result as Promise<void>).catch === 'function') {
       (result as Promise<void>).catch(() => {});
     }
-  } catch {
-    // A producer that fails to stop must not prevent the others from stopping.
+  } catch (e) {
+    quietly(e, 'services/audioBus');
+  // A producer that fails to stop must not prevent the others from stopping.
   }
 }
 

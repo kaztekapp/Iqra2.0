@@ -7,6 +7,7 @@ import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
 import { synthesizeAyahToFile } from './speech/arabicTTS';
+import { quietly } from '../lib/report';
 
 // Available reciters with their audio base URLs from EveryAyah.com
 // Format: https://everyayah.com/data/{reciter_folder}/{surah_number}{ayah_number}.mp3
@@ -189,8 +190,9 @@ class QuranAudioService {
         try {
           const status = await audioCacheService.getCacheStatus(surahNumber, ayah, reciterId);
           if (status.isCached) continue;
-        } catch {
-          // If the cache check fails, fall through and attempt the download.
+        } catch (e) {
+          quietly(e, 'services/quranAudioService');
+  // If the cache check fails, fall through and attempt the download.
         }
 
         if (generation !== this.prefetchGeneration) return;
@@ -199,8 +201,9 @@ class QuranAudioService {
         try {
           const remoteUrl = this.getAyahAudioUrl(surahNumber, ayah, reciterId);
           await audioCacheService.cacheAudio(remoteUrl, surahNumber, ayah, reciterId);
-        } catch {
-          // Best-effort — skip ayahs that fail to download.
+        } catch (e) {
+          quietly(e, 'services/quranAudioService');
+  // Best-effort — skip ayahs that fail to download.
         } finally {
           this.cachingInFlight.delete(inFlightKey);
         }
@@ -447,8 +450,9 @@ class QuranAudioService {
           this.buildLockScreenMetadata(surahNumber, ayahNumber, options?.reciterId),
           { showSeekForward: true, showSeekBackward: true }
         );
-      } catch {
-        // Lock screen controls may not be available (e.g. on simulators)
+      } catch (e) {
+        quietly(e, 'services/quranAudioService');
+  // Lock screen controls may not be available (e.g. on simulators)
       }
 
       // The new player now owns the lock screen — safe to release the old one
@@ -493,7 +497,7 @@ class QuranAudioService {
               // active one — now release it and clear the lock screen controls.
               if (this.player === finishedPlayer) {
                 if (finishedPlayer) {
-                  try { finishedPlayer.clearLockScreenControls(); } catch {}
+                  try { finishedPlayer.clearLockScreenControls(); } catch (e) { quietly(e, 'services/quranAudioService'); }
                 }
                 this.detachPlayer(finishedPlayer, null);
                 this.player = null;
@@ -665,16 +669,19 @@ class QuranAudioService {
     sub: { remove: () => void } | null
   ): void {
     if (sub) {
-      try { sub.remove(); } catch {
-        // Ignore listener removal errors
+      try { sub.remove(); } catch (e) {
+        quietly(e, 'services/quranAudioService');
+  // Ignore listener removal errors
       }
     }
     if (player) {
-      try { player.pause(); } catch {
-        // Ignore pause errors
+      try { player.pause(); } catch (e) {
+        quietly(e, 'services/quranAudioService');
+  // Ignore pause errors
       }
-      try { player.remove(); } catch {
-        // Ignore remove errors
+      try { player.remove(); } catch (e) {
+        quietly(e, 'services/quranAudioService');
+  // Ignore remove errors
       }
     }
   }
@@ -701,8 +708,9 @@ class QuranAudioService {
     // Explicitly tear down the lock-screen session (this is a real stop, not a
     // swap to the next ayah), then release the player resources.
     if (this.player) {
-      try { this.player.clearLockScreenControls(); } catch {
-        // Ignore lock screen cleanup errors
+      try { this.player.clearLockScreenControls(); } catch (e) {
+        quietly(e, 'services/quranAudioService');
+  // Ignore lock screen cleanup errors
       }
     }
     this.detachPlayer(this.player, this.statusSubscription);

@@ -7,6 +7,7 @@ import { localizeGoal } from '../../data/community/goalLocalization';
 import { SessionCard } from './SessionCard';
 import { GroupChallengeCard } from './GroupChallengeCard';
 import { color, radius } from '../../theme/tokens';
+import { quietly } from '../../lib/report';
 
 interface Props {
   group: StudyGroup;
@@ -38,7 +39,7 @@ export function GroupInfoTab({
       await Share.share({
         message: `Join my study group "${group.name}" on Iqra! Use invite code: ${code}\n\niqra2://group/invite/${code}`,
       });
-    } catch {}
+    } catch (e) { quietly(e, 'components/community/GroupInfoTab'); }
   };
 
   const upcomingSessions = sessions.filter((s) => new Date(s.scheduledAt) > new Date());

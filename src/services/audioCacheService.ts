@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 import { Paths } from 'expo-file-system';
+import { quietly } from '../lib/report';
 
 /**
  * Cache directory, resolved on first use rather than at import.
@@ -76,7 +77,8 @@ class AudioCacheService {
           size: info.size,
         };
       }
-    } catch (error) {
+    } catch (e) {
+      quietly(e, 'services/audioCacheService');
       // File doesn't exist
     }
 
@@ -151,8 +153,9 @@ class AudioCacheService {
       // Clean up failed download
       try {
         await FileSystem.deleteAsync(localPath, { idempotent: true });
-      } catch {
-        // Ignore cleanup errors
+      } catch (e) {
+        quietly(e, 'services/audioCacheService');
+  // Ignore cleanup errors
       }
       throw error;
     }

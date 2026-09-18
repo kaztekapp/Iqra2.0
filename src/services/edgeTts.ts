@@ -22,6 +22,7 @@
  *   4. `Path:turn.end` on a text frame means the utterance is complete.
  */
 import { File, Paths } from 'expo-file-system';
+import { quietly } from '../lib/report';
 
 const TRUSTED_CLIENT_TOKEN = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
 const GEC_VERSION = '1-143.0.3650.75';
@@ -185,7 +186,7 @@ export function synthesize(text: string, voice: string, lang: EdgeLang, rate = '
       clearTimeout(cap);
       try {
         socket.close();
-      } catch {}
+      } catch (e) { quietly(e, 'services/edgeTts'); }
       fn();
     };
 

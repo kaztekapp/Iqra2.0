@@ -60,6 +60,7 @@ import {
   pruneClips,
 } from './speech/arabicVoiceCache';
 import { chunkForUrl } from './narrationText';
+import { quietly } from '../lib/report';
 
 export type SpeakResult = 'done' | 'stopped' | 'error';
 export type NarrationLang = 'en' | 'fr';
@@ -390,7 +391,7 @@ class StoryAudioService {
     if (!sub) return;
     try {
       sub.remove();
-    } catch {}
+    } catch (e) { quietly(e, 'services/storyAudioService'); }
   }
 
   /**
@@ -405,7 +406,7 @@ class StoryAudioService {
     if (!this.player) return;
     try {
       this.player.pause();
-    } catch {}
+    } catch (e) { quietly(e, 'services/storyAudioService'); }
   }
 
   /**
@@ -419,7 +420,7 @@ class StoryAudioService {
     if (!player) return;
     try {
       player.remove();
-    } catch {}
+    } catch (e) { quietly(e, 'services/storyAudioService'); }
   }
 
   private async isOnline(): Promise<boolean> {
@@ -457,7 +458,7 @@ class StoryAudioService {
       this.deviceSpeaking = false;
       try {
         await Speech.stop();
-      } catch {}
+      } catch (e) { quietly(e, 'services/storyAudioService'); }
     }
 
     await this.configureAudio();
@@ -773,7 +774,7 @@ class StoryAudioService {
           this.detachClipListener();
           try {
             player.pause();
-          } catch {}
+          } catch (e) { quietly(e, 'services/storyAudioService'); }
         }
         if (temporary) deleteQuietly(uri);
         fn();
@@ -948,7 +949,7 @@ class StoryAudioService {
       this.paused = true;
       try {
         this.player.pause();
-      } catch {}
+      } catch (e) { quietly(e, 'services/storyAudioService'); }
       return true;
     }
 
@@ -975,7 +976,7 @@ class StoryAudioService {
     if (this.clipPlaying && this.player) {
       try {
         this.player.play();
-      } catch {}
+      } catch (e) { quietly(e, 'services/storyAudioService'); }
       return;
     }
     try {
@@ -1056,8 +1057,8 @@ class StoryAudioService {
     const player = this.keepAlive;
     this.keepAlive = null;
     if (!player) return;
-    try { player.pause(); } catch {}
-    try { player.remove(); } catch {}
+    try { player.pause(); } catch (e) { quietly(e, 'services/storyAudioService'); }
+    try { player.remove(); } catch (e) { quietly(e, 'services/storyAudioService'); }
   }
 
   isBusy(): boolean {
@@ -1080,8 +1081,9 @@ class StoryAudioService {
         showSeekForward: false,
         showSeekBackward: false,
       });
-    } catch {
-      // Not available on every platform or simulator; playback is unaffected.
+    } catch (e) {
+      quietly(e, 'services/storyAudioService');
+  // Not available on every platform or simulator; playback is unaffected.
     }
   }
 
