@@ -74,7 +74,7 @@
       "expo-web-browser",
       "./plugins/withoutPushEntitlement.js",
       ["expo-notifications", { "color": "#1F7A4D" }],
-      ["@sentry/react-native/expo", { "organization": "", "project": "" }]
+      ["@sentry/react-native/expo", { "organization": "kaztek-llc", "project": "iqra2" }]
     ],
     "experiments": {
       "typedRoutes": true
