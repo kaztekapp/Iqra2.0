@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable, Share } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StudyGroup, StudySession, GroupChallenge } from '../../types/community';

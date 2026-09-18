@@ -1,9 +1,9 @@
 import { View, Text, Pressable, StyleSheet, Animated, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useSegments } from 'expo-router';
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAudioPlayerStore, startContinuousPlay, advanceToNextSurah } from '../../stores/audioPlayerStore';
+import { useAudioPlayerStore, startContinuousPlay } from '../../stores/audioPlayerStore';
 import { quranAudioService } from '../../services/quranAudioService';
 import { getSurahByNumber } from '../../data/arabic/quran';
 import { font, color, radius } from '../../theme/tokens';

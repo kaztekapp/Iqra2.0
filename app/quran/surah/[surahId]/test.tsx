@@ -6,7 +6,6 @@ import { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { fetchSurahAyahsById } from '../../../../src/services/staticQuranService';
-import { useQuranStore } from '../../../../src/stores/quranStore';
 import { Ayah } from '../../../../src/types/quran';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
@@ -29,7 +28,6 @@ export default function TestModeScreen() {
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { markAyahMemorized, scheduleReview } = useQuranStore();
 
   useEffect(() => {
     fetchSurahAyahsById(surahId).then((data) => {

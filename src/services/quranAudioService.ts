@@ -131,10 +131,6 @@ class QuranAudioService {
   private prefetchGeneration = 0; // bumped to cancel/supersede an in-flight prefetch
   private activePrefetchKey: string | null = null; // `${reciterId}-${surahNumber}` currently prefetching
 
-  constructor() {
-    // Audio will be configured on first use
-  }
-
   /**
    * Silently save an ayah to the offline cache in the background so the next
    * play works with no network. Best-effort — failures are ignored and never

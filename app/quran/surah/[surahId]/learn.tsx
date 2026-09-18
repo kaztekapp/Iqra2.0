@@ -8,13 +8,13 @@ import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
-
-/** What the player calls the app's own voice, in Arabic. */
-const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
-import { useAudioPlayerStore, startContinuousPlay } from '../../../../src/stores/audioPlayerStore';
+import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+
+/** What the player calls the app's own voice, in Arabic. */
+const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 
 export default function LearnModeScreen() {
   const { t } = useTranslation();
@@ -23,15 +23,14 @@ export default function LearnModeScreen() {
   const surah = getSurahById(surahId);
   const { ayahs, isLoading: isLoadingAyahs } = useQuranSurah(surahId);
 
-  const { progress, isAyahLearned } = useQuranStore();
-  const { currentlyPlaying, setCurrentlyPlaying, updatePlaybackState, clearPlayer } = useAudioPlayerStore();
+  const { progress } = useQuranStore();
+  const { setCurrentlyPlaying, updatePlaybackState, clearPlayer } = useAudioPlayerStore();
 
   // Get current reciter info for the mini player
   const currentReciterId = progress.settings.reciterId as ReciterId;
   const currentReciter = QURAN_RECITERS[currentReciterId] || QURAN_RECITERS['mishary-alafasy'];
 
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
-  const [showHint, setShowHint] = useState(false);
   const [audioState, setAudioState] = useState<AudioState>('idle');
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(Math.min(progress.settings.playbackSpeed, 1.5));
   const [repeatCount, setRepeatCount] = useState(1);
@@ -215,7 +214,6 @@ export default function LearnModeScreen() {
 
             currentAyahIndexRef.current = nextIndex;
             setCurrentAyahIndex(nextIndex);
-            setShowHint(false);
 
             const nextAyah = ayahs[nextIndex];
             if (nextAyah) {
@@ -227,7 +225,6 @@ export default function LearnModeScreen() {
               const nextIdx = currentAyahIndexRef.current + 1;
               currentAyahIndexRef.current = nextIdx;
               setCurrentAyahIndex(nextIdx);
-              setShowHint(false);
               playLearnAyah(ayahNumber + 1);
             } else {
               // Surah finished — stop
@@ -277,10 +274,6 @@ export default function LearnModeScreen() {
   const getPlayIcon = () => {
     if (audioState === 'playing') return 'pause';
     return 'play';
-  };
-
-  const handleShowHint = () => {
-    setShowHint(true);
   };
 
   const handleVoiceChange = (learning: boolean) => {

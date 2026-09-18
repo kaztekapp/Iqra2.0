@@ -27,7 +27,6 @@ export default function QuranStoryDetailScreen() {
   const {
     updateProgress,
     markStoryComplete,
-    getStoryProgress,
     isStoryCompleted,
   } = useQuranStoriesStore();
 

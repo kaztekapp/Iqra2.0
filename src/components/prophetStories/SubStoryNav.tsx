@@ -66,7 +66,7 @@ export function SubStoryNav({
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.tabsContainer}
         >
-          {subStories.map((subStory, index) => {
+          {subStories.map((subStory) => {
             const isActive = subStory.id === currentSubStoryId;
             const isCompleted = completedSubStories.includes(subStory.id);
 

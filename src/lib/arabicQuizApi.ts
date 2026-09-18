@@ -114,7 +114,7 @@ function generateMultipleChoiceQuestion(
 // Create a detailed, educational explanation for each word
 function createDetailedExplanation(
   word: ArabicVocabularyWord,
-  direction: QuizDirection
+  _direction: QuizDirection
 ): DetailedExplanation {
   const explanation: DetailedExplanation = {
     summary: `"${word.english}" in Arabic is "${word.arabic}"`,

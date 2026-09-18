@@ -11,10 +11,9 @@
 // verses/play are tapped rapidly.
 
 import { createAudioPlayer } from 'expo-audio';
-import type { AudioMetadata } from 'expo-audio';
+import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
-import type { AudioPlayer } from 'expo-audio';
 import { File, Paths } from 'expo-file-system';
 import { normalizeArabicForSpeech } from '../narrationText';
 import { synthesize as edgeSynthesize } from '../edgeTts';

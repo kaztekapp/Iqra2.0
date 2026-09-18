@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Image, Modal, Dimensions, useWindowDimensions } from 'react-native';
+import { StyleSheet, Pressable, Image, Modal, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { color, radius } from '../../theme/tokens';

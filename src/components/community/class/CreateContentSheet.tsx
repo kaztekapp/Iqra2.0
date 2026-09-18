@@ -18,7 +18,7 @@ const ITEMS: { kind: ClassContentKind; icon: string; label: string; desc: string
   { kind: 'board', icon: 'brush', label: 'Board', desc: 'Draw, write, highlight & annotate on a canvas', color: color.accent },
 ];
 
-export function CreateContentSheet({ visible, groupColor, onSelect, onClose }: Props) {
+export function CreateContentSheet({ visible, onSelect, onClose }: Props) {
   const { t } = useTranslation();
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>

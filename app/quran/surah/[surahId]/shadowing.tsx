@@ -21,7 +21,7 @@ export default function ShadowingScreen() {
   const { surahId } = useLocalSearchParams<{ surahId: string }>();
   const surah = getSurahById(surahId);
   const { ayahs, isLoading } = useQuranSurah(surahId);
-  const { markAyahLearned, updateReviewItem, scheduleReview, isAyahLearned } = useQuranStore();
+  const { markAyahLearned, updateReviewItem, scheduleReview } = useQuranStore();
 
   const isMountedRef = useRef(true);
 

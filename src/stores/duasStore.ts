@@ -4,8 +4,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DuasProgress } from '../types/duas';
-import { TOTAL_DUAS } from '../types/duas';
+import { DuasProgress , TOTAL_DUAS } from '../types/duas';
 
 interface DuasState {
   progress: DuasProgress;

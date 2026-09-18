@@ -16,8 +16,8 @@ function countLines(content: string): number {
 }
 
 // ─── Saved text card ────────────────────────────────────────────────
-const TextCard = React.memo(
-  ({
+const TextCard = React.memo(function TextCard(
+  {
     item,
     onOpen,
     onEdit,
@@ -27,7 +27,7 @@ const TextCard = React.memo(
     onOpen: (id: string) => void;
     onEdit: (id: string) => void;
     onDelete: (item: SavedArabicText) => void;
-  }) => {
+  }) {
     const { t } = useTranslation();
     const preview = item.content.replace(/\n+/g, ' ').trim();
     return (

@@ -249,10 +249,13 @@ function useSpeechRecognitionNative() {
 
 // Main hook that selects the appropriate implementation
 export function useSpeechRecognition() {
-  // Check if native module is available
+  // The native module either loaded at startup or it did not; the condition
+  // is a module constant, so the same hook runs on every render of a mount.
   if (!ExpoSpeechRecognitionModule) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     return useSpeechRecognitionFallback();
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   return useSpeechRecognitionNative();
 }
 

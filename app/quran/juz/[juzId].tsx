@@ -5,7 +5,6 @@ import {
   ScrollView,
   Pressable,
   StyleSheet,
-  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -100,7 +99,7 @@ function VerseCard({
 
 export default function JuzDetailScreen() {
   const { t } = useTranslation();
-  const { lc, lcArray } = useLocalizedContent();
+  const { lcArray } = useLocalizedContent();
   const { juzId } = useLocalSearchParams<{ juzId: string }>();
   const juzNumber = parseInt(juzId || '1', 10);
 

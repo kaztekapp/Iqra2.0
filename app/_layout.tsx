@@ -182,8 +182,7 @@ export default function RootLayout() {
 
     const inOnboarding = segments[0] === '(onboarding)';
     const inAuth = segments[0] === 'auth';
-    const inTabs = segments[0] === '(tabs)';
-    const seg = segments[0] as string;
+      const seg = segments[0] as string;
     const inLegal = seg === 'privacy-policy' || seg === 'terms-of-service';
     const inResetPassword = seg === 'reset-password';
 

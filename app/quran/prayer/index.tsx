@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getAllPrayerLessons } from '../../../src/data/arabic/prayer';
 import { usePrayerStore } from '../../../src/stores/prayerStore';
-import { PrayerCategory, PrayerLesson } from '../../../src/types/prayer';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 

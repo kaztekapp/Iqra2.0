@@ -31,7 +31,7 @@ interface Props {
 }
 
 export function MessageActionSheet({
-  visible, actions, groupColor, onReact, onReply, onCopy, onBoard, onPinToggle, onEdit, onDelete, onClose,
+  visible, actions, onReact, onReply, onCopy, onBoard, onPinToggle, onEdit, onDelete, onClose,
 }: Props) {
   const { t } = useTranslation();
   const item = (icon: string, label: string, onPress: () => void, danger = false) => (

@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { Ayah } from '../../types/quran';
 import { TajweedText } from './TajweedText';
-import { useQuranStore } from '../../stores/quranStore';
 import { withAlpha } from '../ui/Primitives';
 import { color, font, radius, space, type, weight } from '../../theme/tokens';
 

@@ -14,7 +14,7 @@ import Animated, {
   withSpring,
   cancelAnimation,
 } from 'react-native-reanimated';
-import { vocabularyWords, getWordsByTheme, getThemeById } from '../../src/data/arabic/vocabulary';
+import { vocabularyWords, getWordsByTheme } from '../../src/data/arabic/vocabulary';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useSpeechRecognition, PronunciationResult } from '../../src/hooks/useSpeechRecognition';
@@ -43,13 +43,11 @@ export default function SpeakingPracticeScreen() {
     isListening,
     transcript,
     error: speechError,
-    isSupported,
     isFallbackMode,
     startListening,
     stopListening,
   } = useSpeechRecognition();
 
-  const theme = themeId ? getThemeById(themeId) : null;
 
   // Animations
   const recordingScale = useSharedValue(1);

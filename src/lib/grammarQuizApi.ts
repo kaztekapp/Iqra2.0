@@ -12,7 +12,7 @@ import {
   DEFAULT_GRAMMAR_QUIZ_CONFIG,
   GrammarQuizDifficulty,
 } from '../types/grammarQuiz';
-import { Exercise, GrammarLesson } from '../types/arabic';
+import { Exercise } from '../types/arabic';
 
 // Cache version for invalidation
 export const GRAMMAR_QUIZ_VERSION = 1;

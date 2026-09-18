@@ -307,7 +307,7 @@ interface SentenceCardProps {
   onPlay: () => void;
 }
 
-const SentenceCard = memo(function SentenceCard({ index, arabic, english, french, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
+const SentenceCard = memo(function SentenceCard({ index, arabic, english, color, isPlaying, isLoading, onPlay }: SentenceCardProps) {
   return (
     <View style={styles.sentenceCard}>
       {/* Header with Number and Play Button */}
@@ -437,12 +437,6 @@ export default function ReadingDetailScreen() {
       </SafeAreaView>
     );
   }
-
-  const levelColors = {
-    beginner: tk.progress,
-    intermediate: tk.accentStrong,
-    advanced: tk.sacred,
-  };
 
   return (
     <SafeAreaView style={styles.container}>

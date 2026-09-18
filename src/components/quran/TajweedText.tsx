@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { TajweedOccurrence, TajweedRuleId } from '../../types/quran';
 import { TAJWEED_COLORS } from '../../data/arabic/quran/tajweed/colors';
-import { getTajweedRuleById } from '../../data/arabic/quran/tajweed/rules';
 import { color, font, radius, space } from '../../theme/tokens';
 
 interface TajweedTextProps {
@@ -34,8 +33,6 @@ export function TajweedText({
   tajweedRules = [],
   showTajweed = true,
   fontSize = 32,
-  highlightWordIndex,
-  onWordPress,
   onTajweedPress,
 }: TajweedTextProps) {
   // Handle undefined or empty text
@@ -129,7 +126,7 @@ export function TajweedText({
 
 // Component for word-by-word display with highlighting
 interface WordByWordTextProps {
-  words: Array<{ text: string; transliteration: string; translation: string }>;
+  words: { text: string; transliteration: string; translation: string }[];
   currentWordIndex?: number;
   showTransliteration?: boolean;
   showTranslation?: boolean;

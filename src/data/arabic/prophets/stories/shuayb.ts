@@ -3,7 +3,7 @@
 // Every Quranic passage about Shuayb is reported; conversations are given ayah by
 // ayah, verbatim, with no paraphrase around them.
 
-import { Prophet, SubStory, StoryContentBlock, QuranReference, HadithReference } from '../../../../types/prophetStories';
+import { Prophet, SubStory, StoryContentBlock, QuranReference } from '../../../../types/prophetStories';
 
 // Full prophet data with story details
 export const shuaybStory: Prophet = {

@@ -1,4 +1,4 @@
-import { GrammarLesson, GrammarContent } from '../../../types/arabic';
+import { GrammarLesson } from '../../../types/arabic';
 import { verbLessons } from '../verbs/verbLessons';
 import { writingLessons } from '../writing/writingLessons';
 import { ADDITIONAL_GRAMMAR_LESSONS } from './additionalLessons';

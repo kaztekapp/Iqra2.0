@@ -13,7 +13,6 @@ import { useQuranStore } from '../../../src/stores/quranStore';
 import { TajweedRuleId, TajweedExample } from '../../../src/types/quran';
 import {
   quranAudioService,
-  QURAN_RECITERS,
   ReciterId,
   AudioState
 } from '../../../src/services/quranAudioService';

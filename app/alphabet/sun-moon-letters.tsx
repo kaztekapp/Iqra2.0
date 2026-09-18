@@ -47,7 +47,7 @@ const moonLetters = [
 
 export default function SunMoonLettersScreen() {
   const { t } = useTranslation();
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak } = useArabicSpeech();
 
   return (
     <SafeAreaView style={styles.container}>

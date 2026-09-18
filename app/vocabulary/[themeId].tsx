@@ -8,9 +8,8 @@ import { getThemeById, getWordsByTheme } from '../../src/data/arabic/vocabulary'
 import { getWritingExercisesForVocabularyTheme } from '../../src/data/arabic/exercises';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
-import { useEffect, useState, memo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { VocabularyWord } from '../../src/types/arabic';
-import HighlightedText from '../../src/components/ui/HighlightedText';
 import { ShareToGroupModal } from '../../src/components/community/ShareToGroupModal';
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';

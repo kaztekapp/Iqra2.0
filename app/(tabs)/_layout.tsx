@@ -19,9 +19,11 @@ const ICONS: Record<string, { on: keyof typeof Ionicons.glyphMap; off: keyof typ
 };
 
 function tabIcon(name: keyof typeof ICONS) {
-  return ({ color: tint, focused }: { color: ColorValue; focused: boolean }) => (
+  const TabIcon = ({ color: tint, focused }: { color: ColorValue; focused: boolean }) => (
     <Ionicons name={focused ? ICONS[name].on : ICONS[name].off} size={23} color={tint} />
   );
+  TabIcon.displayName = `TabIcon(${name})`;
+  return TabIcon;
 }
 
 export default function TabLayout() {

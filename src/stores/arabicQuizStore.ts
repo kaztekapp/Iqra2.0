@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { QuizQuestion, DetailedExplanation } from '../lib/arabicQuizApi';
+import { QuizQuestion } from '../lib/arabicQuizApi';
 import { DEFAULT_QUIZ_CONFIG } from '../types/arabicQuiz';
 
 // Increment this to force clearing old quiz questions when vocabulary changes

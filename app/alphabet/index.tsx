@@ -14,7 +14,7 @@ export default function AlphabetScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { progress, getAlphabetCompletionPercent } = useProgressStore();
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak } = useArabicSpeech();
   const learnedLetters = progress.alphabetProgress.lettersLearned;
   const masteredLetters = progress.alphabetProgress.masteredLetters;
 

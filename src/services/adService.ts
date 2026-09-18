@@ -6,10 +6,6 @@ import { useAdStore } from '../stores/adStore';
 // to app.json, set ENABLE_ADS = true, and restore the SDK integration code.
 export const ENABLE_ADS = false;
 
-// ── Interstitial frequency cap ────────────────────────────────────
-const INTERSTITIAL_FREQUENCY = 4; // Show every Nth qualifying navigation
-let navigationCount = 0;
-
 // ── Single source of truth ────────────────────────────────────────
 export function shouldShowAds(): boolean {
   if (!ENABLE_ADS) return false;
@@ -23,11 +19,10 @@ export function initialize(): void {
   if (!shouldShowAds()) return;
 }
 
-/** Call on qualifying navigations (e.g. surah detail entry).
- *  Only shows an ad every INTERSTITIAL_FREQUENCY navigations. */
+/** Call on qualifying navigations (e.g. surah detail entry). A stub while
+ *  ads are off; the frequency cap returns with the SDK. */
 export function showInterstitialIfReady(): void {
   if (!shouldShowAds()) return;
-  navigationCount += 1;
 }
 
 /** Tear down listeners */

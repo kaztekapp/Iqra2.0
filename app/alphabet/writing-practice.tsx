@@ -2,17 +2,14 @@ import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-na
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
+import {
   runOnJS,
 } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
-import { arabicLetters, getLetterById } from '../../src/data/arabic/alphabet/letters';
+import { arabicLetters } from '../../src/data/arabic/alphabet/letters';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';

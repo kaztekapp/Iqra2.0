@@ -242,13 +242,6 @@ export default function ChunkingScreen() {
     }
   };
 
-  const handlePrevAyah = () => {
-    if (currentAyahIndex > 0) {
-      setCurrentAyahIndex((prev) => prev - 1);
-      setCurrentStepIndex(0);
-    }
-  };
-
   const handleNextAyah = () => {
     if (!isLastAyah) {
       setCurrentAyahIndex((prev) => prev + 1);

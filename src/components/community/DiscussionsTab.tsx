@@ -116,7 +116,6 @@ const ThreadCard = memo(function ThreadCard({ thread, onLike }: ThreadCardProps)
 
 export function DiscussionsTab({ active = true }: { active?: boolean }) {
   const { t } = useTranslation();
-  const { lc } = useLocalizedContent();
   const [selectedCategory, setSelectedCategory] = useState<DiscussionCategory | 'all'>('all');
   const [refreshing, setRefreshing] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);

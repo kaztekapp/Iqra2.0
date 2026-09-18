@@ -25,7 +25,7 @@ interface Props {
   onAction: () => void;
 }
 
-export function MemberRow({ member, groupColor, getDaysAgo, canManage, onAction }: Props) {
+export function MemberRow({ member, getDaysAgo, canManage, onAction }: Props) {
   const { t } = useTranslation();
   const roleConfig: Record<string, { label: string; color: string; icon: string }> = {
     admin: { label: 'Admin', color: color.warning, icon: 'shield' },

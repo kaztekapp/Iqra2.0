@@ -276,7 +276,7 @@ function buildDisplayBars(src: number[] | null | undefined, n: number, seed: str
 }
 
 // ── Voice bubble (real waveform + seek + speed) ─────────────────
-function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, onReplyPress, reactionRow }: Props) {
+function VoiceBubble({ msg, getTimeAgo, groupColor, isMe, showAvatar, onLongPress, reactionRow }: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0); // 0..1
   const [rate, setRate] = useState(1);

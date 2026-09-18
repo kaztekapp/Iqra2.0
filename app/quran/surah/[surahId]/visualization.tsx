@@ -65,7 +65,6 @@ export default function VisualizationScreen() {
 
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [vizMode, setVizMode] = useState<VisualizationMode>('study');
-  const [isAyahRevealed, setIsAyahRevealed] = useState(false);
   const [sceneMemorized, setSceneMemorized] = useState(false);
   const [revealedAnchors, setRevealedAnchors] = useState<Set<number>>(new Set());
 
@@ -123,10 +122,6 @@ export default function VisualizationScreen() {
     advanceAyah();
   };
 
-  const handleReveal = () => {
-    setIsAyahRevealed(true);
-  };
-
   const handleRate = (rating: ReviewRating) => {
     scheduleReview(currentAyah.id, surahId);
     updateReviewItem(currentAyah.id, rating);
@@ -140,7 +135,6 @@ export default function VisualizationScreen() {
       router.back();
       return;
     }
-    setIsAyahRevealed(false);
     setSceneMemorized(false);
     setRevealedAnchors(new Set());
   };
@@ -148,7 +142,6 @@ export default function VisualizationScreen() {
   const handlePrevAyah = () => {
     if (currentAyahIndex > 0) {
       setCurrentAyahIndex((prev) => prev - 1);
-      setIsAyahRevealed(false);
       setSceneMemorized(false);
       setRevealedAnchors(new Set());
     }
@@ -157,7 +150,6 @@ export default function VisualizationScreen() {
   const handleNextAyah = () => {
     if (currentAyahIndex < totalAyahs - 1) {
       setCurrentAyahIndex((prev) => prev + 1);
-      setIsAyahRevealed(false);
       setSceneMemorized(false);
       setRevealedAnchors(new Set());
     }
@@ -210,7 +202,6 @@ export default function VisualizationScreen() {
             style={[styles.modePill, vizMode === 'study' && styles.modePillActive]}
             onPress={() => {
               setVizMode('study');
-              setIsAyahRevealed(false);
               setSceneMemorized(false);
               setRevealedAnchors(new Set());
             }}
@@ -230,7 +221,6 @@ export default function VisualizationScreen() {
             style={[styles.modePill, vizMode === 'review' && styles.modePillActive]}
             onPress={() => {
               setVizMode('review');
-              setIsAyahRevealed(false);
               setSceneMemorized(false);
               setRevealedAnchors(new Set());
             }}

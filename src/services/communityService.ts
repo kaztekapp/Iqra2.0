@@ -129,14 +129,14 @@ function formatName(raw: string | null | undefined): string {
  * Map raw Supabase rows to LeaderboardEntry[].
  */
 function mapLeaderboardRows(
-  rows: Array<{
+  rows: {
     user_id: string;
     display_name?: string | null;
     avatar_url?: string | null;
     total_xp?: number | null;
     current_streak?: number | null;
     weekly_xp?: number | null;
-  }>,
+  }[],
   currentUserId?: string
 ): LeaderboardEntry[] {
   return rows.map((row, index) => ({

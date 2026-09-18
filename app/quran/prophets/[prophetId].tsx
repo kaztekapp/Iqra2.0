@@ -39,7 +39,6 @@ export default function ProphetStoryScreen() {
     markSubStoryCompleted,
     getStoryProgress,
     isSubStoryCompleted,
-    progress,
   } = useProphetStoriesStore();
 
   // Get prophet story data
@@ -174,21 +173,6 @@ export default function ProphetStoryScreen() {
     };
   }, []);
 
-  if (!prophet) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={color.accentStrong} />
-          <Text style={styles.loadingText}>{t('prophetsFeature.loadingStory')}</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  const isCurrentSubStoryCompleted = currentSubStoryId
-    ? isSubStoryCompleted(prophetId!, currentSubStoryId)
-    : false;
-
   const keyExtractor = useCallback((block: SubStory['content'][number]) => block.id, []);
 
   /**
@@ -219,6 +203,21 @@ export default function ProphetStoryScreen() {
     ),
     [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio, seekToBlock]
   );
+
+  if (!prophet) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={color.accentStrong} />
+          <Text style={styles.loadingText}>{t('prophetsFeature.loadingStory')}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  const isCurrentSubStoryCompleted = currentSubStoryId
+    ? isSubStoryCompleted(prophetId!, currentSubStoryId)
+    : false;
 
   const storyHeader = currentSubStory ? (
           <View style={styles.subStoryHeader}>

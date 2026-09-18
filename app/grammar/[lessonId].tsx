@@ -2,13 +2,13 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getExercisesForGrammarLesson } from '../../src/data/arabic/exercises';
-import { Exercise, GrammarLesson, GrammarContent } from '../../src/types/arabic';
+import { Exercise, GrammarContent } from '../../src/types/arabic';
 import ArabicKeyboard from '../../src/components/arabic/ArabicKeyboard';
 import ArabicVowelText from '../../src/components/arabic/ArabicVowelText';
 import { getLessonById } from '../../src/data/arabic/grammar/lessons';
@@ -92,7 +92,7 @@ export default function GrammarLessonScreen() {
     description: (dataLesson as any).description,
     descriptionFr: (dataLesson as any).descriptionFr,
     contentItems: dataLesson.content, // Keep original GrammarContent for new rendering
-    sections: dataLesson.content.reduce((acc: any[], item: GrammarContent, index: number) => {
+    sections: dataLesson.content.reduce((acc: any[], item: GrammarContent) => {
       if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
         acc.push({
           title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',

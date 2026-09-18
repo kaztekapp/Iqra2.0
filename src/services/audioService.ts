@@ -1,6 +1,6 @@
 import * as Speech from 'expo-speech';
 import { ensureAudioSession } from './audioBus';
-import { speakArabic as speakArabicOnce, stopArabic, setArabicVoiceGender } from './speech/arabicTTS';
+import { speakArabic as speakArabicOnce, stopArabic } from './speech/arabicTTS';
 
 export type VoiceGender = 'female' | 'male';
 

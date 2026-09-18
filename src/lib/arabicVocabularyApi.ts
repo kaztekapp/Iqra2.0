@@ -6,7 +6,6 @@ import {
   isArabicSpeaking,
 } from '../services/speech/arabicTTS';
 
-const MYMEMORY_API = 'https://api.mymemory.translated.net/get';
 const CACHE_KEY = 'arabic-vocabulary-cache';
 const CACHE_VERSION = 12; // Increment to invalidate old cache - v12 adds French translations
 const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours

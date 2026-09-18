@@ -175,7 +175,6 @@ export default function GroupDetailScreen() {
   const [actionSheetMsg, setActionSheetMsg] = useState<MappedMessage | null>(null);
   const [lightboxUri, setLightboxUri] = useState<string | null>(null);
   const [typingUsers, setTypingUsers] = useState<PresenceUser[]>([]);
-  const [onlineIds, setOnlineIds] = useState<Set<string>>(new Set());
   const [unreadCount, setUnreadCount] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [isLoadingOlder, setIsLoadingOlder] = useState(false);
@@ -507,7 +506,6 @@ export default function GroupDetailScreen() {
       id,
       { userId: user.id, name: displayName },
       (users) => {
-        setOnlineIds(new Set(users.map((u) => u.userId)));
         const now = Date.now();
         setTypingUsers(users.filter((u) => u.typing && u.userId !== user.id && (!u.typingAt || now - u.typingAt < 6000)));
       }

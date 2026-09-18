@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import ArabicKeyboard from './ArabicKeyboard';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';

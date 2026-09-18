@@ -13,7 +13,6 @@ import Animated, {
 import { verbExercises } from '../../src/data/arabic/exercises/verbExercises';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
-import { Exercise } from '../../src/types/arabic';
 import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 import { QuizOption, QuizOptionState } from '../../src/components/quiz/QuizOption';
 import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
@@ -25,7 +24,7 @@ export default function VerbsQuizPracticeScreen() {
   const quizExercises = verbExercises.filter(ex => ex.type !== 'writing');
 
   const { addXp, updateStreak, recordExerciseResult } = useProgressStore();
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak } = useArabicSpeech();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);

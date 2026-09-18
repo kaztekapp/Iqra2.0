@@ -12,7 +12,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { LinearGradient } from 'expo-linear-gradient';
-import { JUZ_INTRO_LESSONS, JuzIntroLesson } from '../../../../src/data/arabic/quran/lessons/juzLessons';
+import { JUZ_INTRO_LESSONS } from '../../../../src/data/arabic/quran/lessons/juzLessons';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 

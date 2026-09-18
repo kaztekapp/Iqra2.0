@@ -31,7 +31,6 @@ export function StoryAudioPlayer({
 }: StoryAudioPlayerProps) {
   const isPlaying = playbackState === 'playing';
   const isLoading = playbackState === 'loading';
-  const isIdle = playbackState === 'idle';
 
   const handleSpeedCycle = () => {
     const currentIndex = SPEED_OPTIONS.indexOf(playbackSpeed);

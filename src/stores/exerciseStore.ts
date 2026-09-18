@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Exercise, ExerciseType } from '../types/arabic';
+import { Exercise } from '../types/arabic';
 
 interface ExerciseAnswer {
   exerciseId: string;

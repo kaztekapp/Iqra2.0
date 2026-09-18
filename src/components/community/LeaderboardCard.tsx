@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { LeaderboardEntry, LeaderboardType } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
 

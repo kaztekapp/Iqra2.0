@@ -5,7 +5,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
-import { getRandomQuestions, getCategoryById, getQuestionsBySet, getTotalSets, getSetName } from '../../../src/data/arabic/quran/quizzes';
+import { getCategoryById, getQuestionsBySet, getTotalSets, getSetName } from '../../../src/data/arabic/quran/quizzes';
 import { QuizQuestion, QuizCategory, QuizAnswer } from '../../../src/types/quran';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { font, color, radius } from '../../../src/theme/tokens';
@@ -282,10 +282,6 @@ export default function QuizScreen() {
 
   const getOptionStyle = (option: string) => {
     return selectedAnswer === option ? styles.optionSelected : styles.option;
-  };
-
-  const getOptionTextStyle = (option: string) => {
-    return selectedAnswer === option ? styles.optionTextSelected : styles.optionText;
   };
 
   // Quiz Complete Screen

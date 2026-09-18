@@ -32,19 +32,11 @@ const GRADE_COLORS: Record<HadithGrade, string> = {
   mutawatir: color.accent,
 };
 
-const GRADE_LABELS: Record<HadithGrade, string> = {
-  sahih: 'Sahih (Authentic)',
-  hasan: 'Hasan (Good)',
-  daif: 'Da\'if (Weak)',
-  mutawatir: 'Mutawatir (Mass-transmitted)',
-};
-
 export function HadithSourceCard({ source }: HadithSourceCardProps) {
   const { lc } = useLocalizedContent();
   const { t } = useTranslation();
   const collectionName = COLLECTION_NAMES[source.collection];
   const gradeColor = source.grade ? GRADE_COLORS[source.grade] : color.textMuted;
-  const gradeLabel = source.grade ? GRADE_LABELS[source.grade] : null;
 
   return (
     <View style={styles.container}>

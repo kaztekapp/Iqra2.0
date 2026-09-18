@@ -284,13 +284,13 @@ export function normalizeArabicForSpeech(input: string): string {
 
 const HONORIFIC = /ﷺ|صلى الله عليه وسلم/g;
 
-const EN_EXPAND: Array<[RegExp, string]> = [
+const EN_EXPAND: [RegExp, string][] = [
   [/\(?\bPBUH\b\)?/gi, 'peace be upon him'],
   [/\(?\bSWT\b\)?/gi, 'glorified and exalted'],
   [/\bAS\b(?= *\))/g, 'peace be upon him'],
 ];
 
-const FR_EXPAND: Array<[RegExp, string]> = [
+const FR_EXPAND: [RegExp, string][] = [
   [/\(?\bPSL\b\)?/gi, 'paix et bénédictions sur lui'],
 ];
 

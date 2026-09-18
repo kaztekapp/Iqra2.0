@@ -52,7 +52,6 @@ export default function GrammarQuizScreen() {
     currentIndex,
     attempts,
     bestScore,
-    score,
     streak,
     maxStreak,
     isPlaying,

@@ -27,9 +27,7 @@ export default function DuaDetailScreen() {
   const { duaId } = useLocalSearchParams<{ duaId: string }>();
 
   const {
-    isFavorite,
     isMemorized,
-    toggleFavorite,
     toggleMemorized,
     setLastViewed,
   } = useDuasStore();
@@ -157,12 +155,6 @@ export default function DuaDetailScreen() {
     }
   }, [duaId, dua, setLastViewed]);
 
-  const handleToggleFavorite = useCallback(() => {
-    if (duaId) {
-      toggleFavorite(duaId);
-    }
-  }, [duaId, toggleFavorite]);
-
   const handleToggleMemorized = useCallback(() => {
     if (duaId) {
       toggleMemorized(duaId);
@@ -235,7 +227,6 @@ export default function DuaDetailScreen() {
     );
   }
 
-  const favorite = duaId ? isFavorite(duaId) : false;
   const memorized = duaId ? isMemorized(duaId) : false;
   const collectionName = HADITH_COLLECTION_NAMES[dua.source.collection];
 

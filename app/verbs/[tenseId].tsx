@@ -92,7 +92,7 @@ const tenseData: Record<TenseType, TenseInfo> = {
 export default function TenseDetailScreen() {
   const { t } = useTranslation();
   const { tenseId } = useLocalSearchParams<{ tenseId: string }>();
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak } = useArabicSpeech();
   const [selectedVerb, setSelectedVerb] = useState<string | null>(null);
 
   const tense = tenseData[tenseId as TenseType];

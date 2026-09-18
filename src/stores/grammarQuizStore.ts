@@ -3,7 +3,6 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   GrammarQuizQuestion,
-  GrammarQuizConfig,
   DEFAULT_GRAMMAR_QUIZ_CONFIG,
 } from '../types/grammarQuiz';
 import { GRAMMAR_QUIZ_VERSION } from '../lib/grammarQuizApi';

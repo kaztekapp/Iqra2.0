@@ -1,5 +1,5 @@
 // Hook for Prophet Story data fetching and audio control
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getProphetStory, hasProphetStory } from '../data/arabic/prophets';
 import { useProphetStoriesStore } from '../stores/prophetStoriesStore';
 import { Prophet, SubStory, StoryContentBlock } from '../types/prophetStories';
@@ -39,8 +39,6 @@ export function useProphetStory(prophetId: string | undefined): UseProphetStoryR
     markSubStoryCompleted,
     getStoryProgress,
     isStoryCompleted: checkStoryCompleted,
-    isSubStoryCompleted,
-    progress,
   } = useProphetStoriesStore();
 
   // Get prophet story data

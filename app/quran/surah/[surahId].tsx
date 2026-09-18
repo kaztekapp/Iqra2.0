@@ -33,8 +33,6 @@ export default function SurahDetailScreen() {
   const isPlayingAllRef = useRef(false);
   const currentPlayingIndexRef = useRef(0);
   const flatListRef = useRef<FlatList>(null);
-  const ayahPositions = useRef<{ [key: string]: number }>({});
-  const ayahsContainerOffset = useRef(0);
 
   // Show interstitial ad on entry (frequency-capped every 4th navigation)
   useEffect(() => {
@@ -54,7 +52,6 @@ export default function SurahDetailScreen() {
     getSurahProgress,
     isAyahLearned,
     isAyahMemorized,
-    startSurah,
     bookmarkAyah,
     unbookmarkAyah,
     progress,
@@ -188,7 +185,7 @@ export default function SurahDetailScreen() {
     router.push(`/quran/surah/${surahId}/write` as any);
   }, [surahId]);
 
-  const handleAyahPress = useCallback((ayahId: string) => {
+  const handleAyahPress = useCallback((_ayahId: string) => {
     // Could open ayah detail or start learning from this ayah
   }, []);
 
@@ -319,40 +316,6 @@ export default function SurahDetailScreen() {
     }
   }, [surah]);
 
-  // Early returns after all hooks
-  if (!surah) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>{t('common.notFound')}</Text>
-      </SafeAreaView>
-    );
-  }
-
-  if (isLoading && ayahs.length === 0) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={color.progress} />
-          <Text style={styles.loadingText}>{t('common.loading')}</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  if (error && ayahs.length === 0) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.errorContainer}>
-          <Ionicons name="cloud-offline" size={48} color={color.textFaint} />
-          <Text style={styles.errorText}>{error}</Text>
-          <Pressable style={styles.retryButton} onPress={refetch} accessibilityRole="button" accessibilityLabel="Retry loading surah">
-            <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   // Render item for FlatList
   const renderAyahItem = useCallback(({ item: ayah }: { item: typeof ayahs[0] }) => {
     // Override translation with language-specific version if available
@@ -391,7 +354,9 @@ export default function SurahDetailScreen() {
   }, [progress.settings, surahId, surah, surahProgress.bookmarkedAyahs, activeAyahId, audioState, isAyahLearned, isAyahMemorized, handlePlayAyah, handleBookmark, handleAyahPress, handleSpeedChange, langTranslations, lc]);
 
   // List header component
-  const ListHeader = useCallback(() => (
+  const ListHeader = useCallback(() => {
+    if (!surah) return null;
+    return (
     <>
       {/* Header */}
       <View style={styles.header}>
@@ -543,7 +508,8 @@ export default function SurahDetailScreen() {
         </Pressable>
       </View>
     </>
-  ), [surah, currentReciter, isPlayingAll, audioState, currentPlayingAyah, progress.settings, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, toggleTranslation, toggleTransliteration, t]);
+    );
+  }, [surah, currentReciter, isPlayingAll, audioState, currentPlayingAyah, progress.settings, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, toggleTranslation, toggleTransliteration, t]);
 
   // List footer component
   const ListFooter = useCallback(() => (
@@ -557,6 +523,40 @@ export default function SurahDetailScreen() {
       <Text style={styles.backToTopText}>{t('surahFeature.backToTop')}</Text>
     </Pressable>
   ), [t]);
+
+  // Early returns after all hooks
+  if (!surah) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (isLoading && ayahs.length === 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={color.progress} />
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (error && ayahs.length === 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Ionicons name="cloud-offline" size={48} color={color.textFaint} />
+          <Text style={styles.errorText}>{error}</Text>
+          <Pressable style={styles.retryButton} onPress={refetch} accessibilityRole="button" accessibilityLabel="Retry loading surah">
+            <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

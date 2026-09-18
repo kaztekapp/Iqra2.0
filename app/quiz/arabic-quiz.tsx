@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useArabicQuizStore } from '../../src/stores/arabicQuizStore';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useCommunityStore } from '../../src/stores/communityStore';
-import { generateArabicQuiz, DetailedExplanation } from '../../src/lib/arabicQuizApi';
+import { generateArabicQuiz } from '../../src/lib/arabicQuizApi';
 import { playArabicAudio } from '../../src/lib/arabicVocabularyApi';
 import { DEFAULT_QUIZ_CONFIG } from '../../src/types/arabicQuiz';
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
@@ -39,11 +39,9 @@ export default function ArabicQuizScreen() {
     currentIndex,
     attempts,
     bestScore,
-    score,
     streak,
     maxStreak,
     isPlaying,
-    isLoading,
     error,
     hasActiveQuiz,
     setQuestions,

@@ -15,10 +15,10 @@
 // a top-level import quietly restores the old cost. The paths have to be
 // literal strings for the same reason — Metro cannot resolve a computed one.
 
-export { PROPHETS, getProphetById, getProphetsByOrderRange, TOTAL_PROPHETS } from './prophets';
-
 import { Prophet, SubStory } from '../../../types/prophetStories';
 import { getProphetById } from './prophets';
+
+export { PROPHETS, getProphetById, getProphetsByOrderRange, TOTAL_PROPHETS } from './prophets';
 
 type ProphetStory = { prophet: Prophet; subStories: SubStory[] };
 
@@ -85,7 +85,7 @@ const STORY_LOADERS: Record<string, () => ProphetStory> = {
   },
   'dhul-kifl': () => {
     const m = require('./stories/dhulkifl');
-    return { prophet: m.dhulKiflStory, subStories: m.dhulKiflSubStories };
+    return { prophet: m.dhulkiflStory, subStories: m.dhulkiflSubStories };
   },
   dawud: () => {
     const m = require('./stories/dawud');

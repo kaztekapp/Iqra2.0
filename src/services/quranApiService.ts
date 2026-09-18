@@ -201,7 +201,7 @@ class QuranApiService {
       });
 
       const surahId = this.getSurahId(surahNumber);
-      const ayahs: Ayah[] = (versesData.verses || []).map((verse, index) => {
+      const ayahs: Ayah[] = (versesData.verses || []).map((verse) => {
         const words: QuranWord[] = (verse.words || [])
           .filter(w => w.text_uthmani && w.text_uthmani.trim()) // Filter out empty words
           .map((word, wordIndex) => ({
@@ -322,7 +322,7 @@ class QuranApiService {
       const response = await fetchWithTimeout(
         `${QURAN_API_BASE}/quran/verses/uthmani?chapter_number=${surahNumber}`
       );
-      const data = await response.json();
+      await response.json();
 
       const transliterations = new Map<number, string[]>();
       // Process transliteration data...

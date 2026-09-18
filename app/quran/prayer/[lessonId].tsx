@@ -12,9 +12,6 @@ import { ShareToGroupModal } from '../../../src/components/community/ShareToGrou
 import type { SharedContent } from '../../../src/data/community/socialData';
 import {
   PrayerContent,
-  PrayerStepData,
-  StepListItem,
-  PrayerTimesRow,
 } from '../../../src/types/prayer';
 import { font, color as tk, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';

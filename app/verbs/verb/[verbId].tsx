@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { arabicVerbs, getVerbById } from '../../../src/data/arabic/verbs/conjugations';
+import { getVerbById } from '../../../src/data/arabic/verbs/conjugations';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { useState } from 'react';
@@ -57,7 +57,7 @@ export default function VerbDetailScreen() {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const { verbId } = useLocalSearchParams<{ verbId: string }>();
-  const { speak, isSpeaking } = useArabicSpeech();
+  const { speak } = useArabicSpeech();
   const [activeTense, setActiveTense] = useState<TenseType>('present');
   const [shareContent, setShareContent] = useState<SharedContent | null>(null);
 

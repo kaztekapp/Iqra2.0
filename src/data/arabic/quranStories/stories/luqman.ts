@@ -2,7 +2,7 @@
 // Told from the Quran and the authentic Sunnah only.
 // Every verse of the passage is reported; conversations are given ayah by ayah, verbatim.
 
-import { QuranStory, StoryContentBlock, QuranReference, HadithReference } from '../../../../types/quranStories';
+import { QuranStory, QuranReference } from '../../../../types/quranStories';
 
 export const luqmanStory: QuranStory = {
   id: 'luqman',
