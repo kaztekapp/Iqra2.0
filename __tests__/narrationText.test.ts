@@ -8,16 +8,25 @@ import {
 
 const letters = (s: string) => s.replace(/[^ء-ي]/g, '');
 
+// The normaliser puts every shadda before its vowel, the order typed Arabic
+// uses and the voice reads correctly; source literals here are NFC.
+const typed = (s: string) => s.normalize('NFC').replace(/([\u064B-\u0650])\u0651/g, '\u0651$1');
+
 describe('normalizeArabicForSpeech', () => {
+  it('keeps the shadda before the vowel, the order the voice reads correctly (Maryam 19:57)', () => {
+    const out = normalizeArabicForSpeech('وَرَفَعْنَٰهُ مَكَانًا عَلِيًّا');
+    expect(out.endsWith('\u064A\u0651\u064B\u0627')).toBe(true); // ي + shadda + fathatan + ا
+    expect(out).not.toMatch(/[\u064B-\u0650]\u0651/);
+  });
   it('drops the idgham shadda that the mushaf puts on the first letter of a word', () => {
     // ṣiddīqan nabiyyā (19:56): the voice cannot begin a word with a geminate.
     const out = normalizeArabicForSpeech('صِدِّيقًا نَّبِيًّا');
-    expect(out).toBe('صِدِّيقًا نَبِيًّا');
+    expect(out).toBe(typed('صِدِّيقًا نَبِيًّا'));
   });
 
   it('keeps every shadda that is not on the first letter', () => {
     for (const w of ['إِنَّهُ', 'اللَّهِ', 'الرَّحِيمِ', 'الْمُتَّقِينَ']) {
-      expect(normalizeArabicForSpeech(w)).toBe(w);
+      expect(normalizeArabicForSpeech(w)).toBe(typed(w));
     }
   });
 

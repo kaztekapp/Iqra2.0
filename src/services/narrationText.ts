@@ -236,6 +236,18 @@ export function normalizeArabicForSpeech(input: string): string {
     // voices — expect the single characters آ ؤ ئ أ إ. NFC turns one into the
     // other, and leaves everything already composed alone.
     .normalize('NFC')
+    // The same vowel twice on one letter is one vowel: 7:196 writes waliyyiya
+    // with a kasra, a kashida (removed above), a shadda and the kasra again,
+    // and NFC then stacks both kasras before the shadda. Nothing the voice
+    // should hear twice.
+    .replace(/([\u064B-\u0650])\1+/g, '$1')
+    // NFC puts a shadda AFTER the vowel on the same letter (يًّ, vowel then
+    // shadda). Typed Arabic puts it first (يًّ), and that is what the voice
+    // learned from: given the canonical order at the end of a word it read
+    // ʿaliyyan as "aliyyanna" (Maryam 19:57). The mushaf itself writes the
+    // shadda first; this only undoes NFC's reordering, for every vowel and
+    // tanwin, so the reading matches the spelling the voice knows.
+    .replace(/([\u064B-\u0650])\u0651/g, '\u0651$1')
     // An alef carrying a madd sign before a hamza is an ordinary long ā, not
     // the letter alef-madda: yatasāʾalūn, jāʾa, yashāʾu, as-samāʾ,
     // al-malāʾikah, Isrāʾīl are written with it, and reading it as the letter
