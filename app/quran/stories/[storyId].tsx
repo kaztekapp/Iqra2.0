@@ -232,11 +232,12 @@ export default function QuranStoryDetailScreen() {
             blocksTop.current = e.nativeEvent.layout.y;
           }}
         >
-          {story.content.map((block) => (
+          {story.content.map((block, index) => (
             <View key={block.id} onLayout={onBlockLayout(block.id)}>
             <StoryContentBlock
               block={block}
               isHighlighted={narration.isActive && narration.currentBlockId === block.id}
+              onPress={() => narration.seekToBlock(index)}
               onPlayQuranAudio={
                 block.source?.type === 'quran'
                   ? () => handlePlayQuranAudio(block.source as QuranReference, block.id)

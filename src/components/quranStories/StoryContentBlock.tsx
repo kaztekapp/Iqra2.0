@@ -12,6 +12,8 @@ import { withAlpha } from '../ui/Primitives';
 interface StoryContentBlockProps {
   block: ContentBlock;
   isHighlighted?: boolean;
+  /** Tapping a paragraph reads the story from there. */
+  onPress?: () => void;
   onPlayQuranAudio?: (source: QuranReference) => void;
   isQuranPlaying?: boolean;
   isQuranLoading?: boolean;
@@ -116,38 +118,53 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
 export function StoryContentBlock({
   block,
   isHighlighted = false,
+  onPress,
   onPlayQuranAudio,
   isQuranPlaying = false,
   isQuranLoading = false,
 }: StoryContentBlockProps) {
   const { lc } = useLocalizedContent();
 
+  // Every block is a Pressable so a tap anywhere on it reads from there; the
+  // play button inside a verse card is its own Pressable and wins the tap.
   if (block.type === 'narrative') {
     return (
-      <View style={[styles.narrativeContainer, isHighlighted && styles.highlighted]}>
+      <Pressable
+        onPress={onPress}
+        disabled={!onPress}
+        style={({ pressed }) => [styles.narrativeContainer, isHighlighted && styles.highlighted, pressed && styles.pressed]}
+      >
         <StoryProse style={styles.narrativeText} text={lc(block.content, block.contentFr)} />
-      </View>
+      </Pressable>
     );
   }
 
   if (block.type === 'quran_source' && block.source?.type === 'quran') {
     return (
-      <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+      <Pressable
+        onPress={onPress}
+        disabled={!onPress}
+        style={({ pressed }) => [styles.sourceContainer, isHighlighted && styles.highlighted, pressed && styles.pressed]}
+      >
         <QuranSourceCard
           source={block.source as QuranReference}
           onPlayArabic={onPlayQuranAudio ? () => onPlayQuranAudio(block.source as QuranReference) : undefined}
           isPlaying={isQuranPlaying}
           isLoading={isQuranLoading}
         />
-      </View>
+      </Pressable>
     );
   }
 
   if (block.type === 'hadith_source' && block.source?.type === 'hadith') {
     return (
-      <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
+      <Pressable
+        onPress={onPress}
+        disabled={!onPress}
+        style={({ pressed }) => [styles.sourceContainer, isHighlighted && styles.highlighted, pressed && styles.pressed]}
+      >
         <HadithSourceCard source={block.source as HadithReference} />
-      </View>
+      </Pressable>
     );
   }
 
@@ -168,6 +185,10 @@ const styles = StyleSheet.create({
   },
   sourceContainer: {
     borderRadius: radius.sm,
+  },
+  pressed: {
+    backgroundColor: withAlpha(color.accent, 0.07),
+    borderRadius: radius.md,
   },
   highlighted: {
     backgroundColor: withAlpha(color.accent, 0.13),
