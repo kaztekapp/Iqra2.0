@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, Linking } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -7,6 +9,7 @@ import { LEGAL_CONSTANTS, LegalSection } from '../../data/legal';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 import i18n from 'i18next';
+import { quietly } from '../../lib/report';
 
 interface LegalScreenProps {
   title: string;
@@ -16,6 +19,25 @@ interface LegalScreenProps {
 export function LegalScreen({ title, sections }: LegalScreenProps) {
   const router = useRouter();
   const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+
+  // A phone with no mail app rejects the mailto: link (Apple's review device
+  // did, and the tap looked dead). Then the address goes to the clipboard
+  // and the button says so, instead of failing silently.
+  const contact = async () => {
+    try {
+      await Linking.openURL(`mailto:${LEGAL_CONSTANTS.email}`);
+    } catch (e) {
+      quietly(e, 'legal.contact');
+      try {
+        await Clipboard.setStringAsync(LEGAL_CONSTANTS.email);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } catch (err) {
+        quietly(err, 'legal.copy');
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,12 +78,9 @@ export function LegalScreen({ title, sections }: LegalScreenProps) {
         {/* Contact Footer */}
         <View style={styles.contactFooter}>
           <Text style={styles.contactLabel}>{t('legal.contactUs')}</Text>
-          <Pressable accessibilityRole="button"
-            onPress={() => Linking.openURL(`mailto:${LEGAL_CONSTANTS.email}`)}
-            style={styles.emailButton}
-          >
-            <Ionicons name="mail-outline" size={16} color={color.progress} />
-            <Text style={styles.emailText}>{LEGAL_CONSTANTS.email}</Text>
+          <Pressable accessibilityRole="button" onPress={contact} style={styles.emailButton}>
+            <Ionicons name={copied ? 'checkmark' : 'mail-outline'} size={16} color={color.progress} />
+            <Text style={styles.emailText}>{copied ? t('legal.emailCopied') : LEGAL_CONSTANTS.email}</Text>
           </Pressable>
         </View>
 

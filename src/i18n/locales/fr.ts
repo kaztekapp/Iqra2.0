@@ -1532,6 +1532,7 @@ export default {
     themeVerse: 'Verset',
   },
   legal: {
+    emailCopied: 'Adresse copi\u00e9e',
     privacyPolicy: 'Politique de Confidentialité',
     termsOfService: 'Conditions d\'Utilisation',
     effectiveDate: 'Date d\'entrée en vigueur',

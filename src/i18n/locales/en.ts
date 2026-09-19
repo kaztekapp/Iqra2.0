@@ -1532,6 +1532,7 @@ export default {
     themeVerse: 'Verse',
   },
   legal: {
+    emailCopied: 'Address copied',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
     effectiveDate: 'Effective Date',
