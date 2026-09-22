@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { notifyGroupMessage } from './push';
 import {
   DiscussionThread,
   DiscussionCategory,
@@ -707,6 +708,9 @@ export async function sendGroupMessage(
       .single();
 
     if (error) throw error;
+    // Everyone else in the group has a closed app to be woken; the message
+    // is saved either way, so this is fire and forget.
+    notifyGroupMessage(data?.id);
     return data || null;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] sendGroupMessage error:', e);
@@ -804,6 +808,9 @@ export async function sendImageMessage(
       .select()
       .single();
     if (error) throw error;
+    // Everyone else in the group has a closed app to be woken; the message
+    // is saved either way, so this is fire and forget.
+    notifyGroupMessage(data?.id);
     return data || null;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] sendImageMessage error:', e);
@@ -836,6 +843,9 @@ export async function sendSharedContentMessage(
       .select()
       .single();
     if (error) throw error;
+    // Everyone else in the group has a closed app to be woken; the message
+    // is saved either way, so this is fire and forget.
+    notifyGroupMessage(data?.id);
     return data || null;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] sendSharedContentMessage error:', e);
@@ -870,6 +880,9 @@ export async function sendClassContent(
       .select()
       .single();
     if (error) throw error;
+    // Everyone else in the group has a closed app to be woken; the message
+    // is saved either way, so this is fire and forget.
+    notifyGroupMessage(data?.id);
     return data || null;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] sendClassContent error:', e);
@@ -984,6 +997,43 @@ export async function markGroupRead(groupId: string, userId: string): Promise<vo
       );
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] markGroupRead error:', e);
+  }
+}
+
+/**
+ * Silence a group's notifications for this member only. The row already
+ * exists — joining created it — so this is an update, not an upsert.
+ */
+export async function setGroupMuted(groupId: string, userId: string, muted: boolean): Promise<boolean> {
+  try {
+    const client = getClient();
+    const { error } = await client
+      .from('study_group_members')
+      .update({ muted })
+      .eq('group_id', groupId)
+      .eq('user_id', userId);
+    if (error) throw error;
+    return true;
+  } catch (e) {
+    if (__DEV__) console.warn('[communitySocial] setGroupMuted error:', e);
+    return false;
+  }
+}
+
+export async function isGroupMuted(groupId: string, userId: string): Promise<boolean> {
+  try {
+    const client = getClient();
+    const { data, error } = await client
+      .from('study_group_members')
+      .select('muted')
+      .eq('group_id', groupId)
+      .eq('user_id', userId)
+      .maybeSingle();
+    if (error) throw error;
+    return !!data?.muted;
+  } catch (e) {
+    if (__DEV__) console.warn('[communitySocial] isGroupMuted error:', e);
+    return false;
   }
 }
 
@@ -1527,6 +1577,9 @@ export async function sendVoiceMessage(
       .single();
 
     if (error) throw error;
+    // Everyone else in the group has a closed app to be woken; the message
+    // is saved either way, so this is fire and forget.
+    notifyGroupMessage(data?.id);
     return data || null;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] sendVoiceMessage error:', e);

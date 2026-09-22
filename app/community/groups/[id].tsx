@@ -50,6 +50,8 @@ import {
   subscribeToGroupPresence,
   GroupMessageRow,
   PresenceUser,
+  setGroupMuted,
+  isGroupMuted,
 } from '../../../src/services/communitySocialService';
 import { getGroupSnapshot, setGroupSnapshot, persistGroupSnapshot, loadPersistedGroupSnapshot, type GroupSnapshot } from '../../../src/services/groupContentCache';
 import { StudySession, GroupChallenge, MessageReaction } from '../../../src/types/community';
@@ -166,6 +168,9 @@ export default function GroupDetailScreen() {
   const [members, setMembers] = useState<GroupMember[]>([]);
   const [isLoadingMembers, setIsLoadingMembers] = useState(true);
   const [memberSearch, setMemberSearch] = useState('');
+  // A member can silence a group without leaving it; the server checks this
+  // flag before pushing, so a muted group costs no notification at all.
+  const [muted, setMuted] = useState(false);
   // FIX #7: seenIds cleared on group change via useEffect cleanup
   const seenIds = useRef(new Set<string>());
   const reactionSubRef = useRef<{ unsubscribe: () => void; addMessageId: (id: string) => void } | null>(null);
@@ -644,6 +649,30 @@ export default function GroupDetailScreen() {
     );
   }, [id, t, deleteGroup]);
 
+  useEffect(() => {
+
+    if (!id || !user?.id || !isJoined) return;
+
+    isGroupMuted(id, user.id).then(setMuted).catch(() => {});
+
+  }, [id, user?.id, isJoined]);
+
+
+  const toggleMuted = useCallback(async () => {
+
+    if (!id || !user?.id) return;
+
+    const next = !muted;
+
+    setMuted(next); // answer the tap now; put it back if the server refuses
+
+    const ok = await setGroupMuted(id, user.id, next);
+
+    if (!ok) setMuted(!next);
+
+  }, [id, user?.id, muted]);
+
+
   const handleJoinLeave = useCallback(() => {
     if (!id) return;
     if (!isJoined) {
@@ -1099,6 +1128,21 @@ export default function GroupDetailScreen() {
             )}
           </View>
         </View>
+        {isJoined && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t(muted ? 'push.unmute' : 'push.muteGroup')}
+            accessibilityState={{ selected: muted }}
+            onPress={toggleMuted}
+            style={styles.headerMute}
+          >
+            <Ionicons
+              name={muted ? 'notifications-off-outline' : 'notifications-outline'}
+              size={20}
+              color={muted ? color.textFaint : group.color}
+            />
+          </Pressable>
+        )}
         <Pressable accessibilityRole="button"
           style={[styles.headerAction, isJoined ? styles.headerActionLeave : null]}
           onPress={handleJoinLeave}
@@ -1511,6 +1555,13 @@ const styles = StyleSheet.create({
   headerSub: { fontSize: 12, color: color.textMuted },
   headerActiveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: color.progress, marginLeft: 4 },
   headerActiveText: { fontSize: 12, color: color.progress, fontWeight: '500' },
+  headerMute: {
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 4,
+  },
   headerAction: { flexDirection: 'row', alignItems: 'center', backgroundColor: color.accent, paddingHorizontal: 12, paddingVertical: 7, borderRadius: radius.sm },
   headerActionLeave: { backgroundColor: withAlpha(color.danger, 0.13), borderWidth: 1, borderColor: color.danger },
   headerActionText: { fontSize: 13, fontWeight: '600', color: color.text },

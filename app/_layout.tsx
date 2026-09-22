@@ -24,6 +24,7 @@ import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 import { color } from '../src/theme/tokens';
 import { initReporting, wrapRoot , quietly , errorMessage } from '../src/lib/report';
 import { startReminders, handleColdStartTap, maybeAskOnce } from '../src/services/reminders';
+import { registerPushToken } from '../src/services/push';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -69,6 +70,15 @@ function RootLayout() {
     }, 5000);
     return () => clearTimeout(fallback);
   }, []);
+
+  // Group messages arrive from the server, so it needs to know this device.
+  // Re-registering is cheap and keeps the row's language current; it no-ops
+  // when nobody is signed in or notifications were refused.
+  const sessionUserId = useSettingsStore((s) => s.user?.id);
+  useEffect(() => {
+    const timer = setTimeout(() => void registerPushToken(), 3000);
+    return () => clearTimeout(timer);
+  }, [sessionUserId]);
 
   // Local reminders: OS setup, tap routing, and a re-plan on launch and on
   // every foreground/background change. A tap that cold-launched the app is

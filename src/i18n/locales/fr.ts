@@ -1624,4 +1624,10 @@ export default {
       body: 'Le Proph\u00e8te \u0635\u0644\u0649 \u0627\u0644\u0644\u0647 \u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645 a dit : celui qui lit la sourate al-Kahf le vendredi, une lumi\u00e8re brille pour lui jusqu\u2019au vendredi suivant. (al-Hakim ; Sahih al-Jami\u2018 6470)',
     },
   },
+  push: {
+    channel: 'Messages de groupe',
+    muteGroup: 'Mettre ce groupe en sourdine',
+    muted: 'En sourdine',
+    unmute: 'R\u00e9activer',
+  },
 } as const;

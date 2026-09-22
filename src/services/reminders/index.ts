@@ -291,9 +291,12 @@ export function startReminders(): () => void {
 
   configureReminders().catch((e) => quietly(e, 'reminders.configure'));
 
+  // Every notification this app sends - the local reminders tagged here and
+  // the group messages pushed from the server - says where it leads. One
+  // listener routes them all; anything else on the phone is ignored.
   const tap = N.addNotificationResponseReceivedListener((response) => {
     const data = response.notification.request.content.data as Partial<ReminderData> | undefined;
-    if (data?.app === TAG && data.route) open(data.route);
+    if (typeof data?.app === 'string' && data.app.startsWith('iqra-') && data.route) open(data.route);
   });
 
   // Not on the launch path: wait for the first screen before touching the
@@ -318,7 +321,7 @@ export async function handleColdStartTap(): Promise<void> {
   coldStartHandled = true;
   const last = await N.getLastNotificationResponseAsync();
   const data = last?.notification.request.content.data as Partial<ReminderData> | undefined;
-  if (data?.app === TAG && data.route) open(data.route);
+  if (typeof data?.app === 'string' && data.app.startsWith('iqra-') && data.route) open(data.route);
 }
 
 /**

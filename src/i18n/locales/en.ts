@@ -1624,4 +1624,10 @@ export default {
       body: 'The Prophet \u0635\u0644\u0649 \u0627\u0644\u0644\u0647 \u0639\u0644\u064a\u0647 \u0648\u0633\u0644\u0645 said: whoever reads Surah al-Kahf on Friday, a light shines for him until the next Friday. (al-Hakim; Sahih al-Jami\u2018 6470)',
     },
   },
+  push: {
+    channel: 'Group messages',
+    muteGroup: 'Mute this group',
+    muted: 'Muted',
+    unmute: 'Unmute',
+  },
 } as const;

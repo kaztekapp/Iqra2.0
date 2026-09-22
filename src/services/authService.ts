@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { unregisterPushToken } from './push';
 import { useSettingsStore } from '../stores/settingsStore';
 
 function getClient() {
@@ -112,6 +113,9 @@ export async function signInWithApple() {
 }
 
 export async function signOut() {
+  // Forget the device first, while the session can still prove it is ours -
+  // otherwise group messages for the person leaving keep arriving here.
+  await unregisterPushToken();
   const { error } = await getClient().auth.signOut();
   if (error) throw error;
   useSettingsStore.getState().setSession(null);
