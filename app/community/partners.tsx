@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../src/stores/communityStore';
+import { useBlockedMap } from '../../src/stores/moderationStore';
 import { StudyPartner } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -29,7 +30,10 @@ export default function StudyPartnersScreen() {
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
 
-  const partners = useCommunityStore((s) => s.partners);
+  const allPartners = useCommunityStore((s) => s.partners);
+  // People this person blocked are never suggested.
+  const blocked = useBlockedMap();
+  const partners = useMemo(() => allPartners.filter((p) => !blocked[p.id]), [allPartners, blocked]);
   const isLoadingPartners = useCommunityStore((s) => s.isLoadingPartners);
   const loadPartners = useCommunityStore((s) => s.loadPartners);
   const connectPartner = useCommunityStore((s) => s.connectPartner);

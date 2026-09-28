@@ -1,24 +1,25 @@
 {
   "expo": {
-    "name": "Iqra AI",
+    "name": "Iqra",
     "slug": "iqra2",
     "version": "1.1.0",
-    "description": "Iqra AI — Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, study Quran with audio recitations, and practice prayer.",
+    "description": "Iqra: Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, read the Quran with audio recitations, and learn the stories of the prophets.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "iqra2",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.iqra2.app",
       "buildNumber": "1",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
         ],
-        "NSSpeechRecognitionUsageDescription": "Iqra AI uses speech recognition to check your Arabic pronunciation during speaking practice.",
-        "NSMicrophoneUsageDescription": "Iqra AI uses the microphone to record your voice during pronunciation practice.",
-        "ITSAppUsesNonExemptEncryption": false
+        "NSSpeechRecognitionUsageDescription": "Iqra uses speech recognition to check your Arabic pronunciation during speaking practice.",
+        "NSMicrophoneUsageDescription": "Iqra uses the microphone to check your Arabic pronunciation and to record voice messages you send in study groups.",
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {
@@ -73,8 +74,19 @@
       "expo-status-bar",
       "expo-web-browser",
       "./plugins/withoutPushEntitlement.js",
-      ["expo-notifications", { "color": "#1F7A4D" }],
-      ["@sentry/react-native/expo", { "organization": "kaztek-llc", "project": "iqra2" }]
+      [
+        "expo-notifications",
+        {
+          "color": "#1F7A4D"
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "kaztek-llc",
+          "project": "iqra2"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
@@ -92,6 +104,10 @@
     "updates": {
       "url": "https://u.expo.dev/f639ca75-6743-41f7-a5f6-ea439df68672",
       "fallbackToCacheTimeout": 0
+    },
+    "locales": {
+      "en": "./locales/en.json",
+      "fr": "./locales/fr.json"
     }
   }
 }

@@ -18,6 +18,8 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { useCommunityStore } from '../../stores/communityStore';
+import { useBlockedMap } from '../../stores/moderationStore';
+import { useCommunityRules } from './useCommunityRules';
 import { DiscussionCategory, DiscussionThread } from '../../types/community';
 import { color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
@@ -121,6 +123,8 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
   const [selectedCategory, setSelectedCategory] = useState<DiscussionCategory | 'all'>('all');
   const [refreshing, setRefreshing] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
+  const rules = useCommunityRules();
+  const blocked = useBlockedMap();
   const [postTitle, setPostTitle] = useState('');
   const [postBody, setPostBody] = useState('');
   const [postCategory, setPostCategory] = useState<DiscussionCategory>('general');
@@ -162,12 +166,12 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
   // Sort: pinned first, then by recency
   const sorted = useMemo(
     () =>
-      [...discussions].sort((a, b) => {
+      discussions.filter((d) => !(d.authorId && blocked[d.authorId])).sort((a, b) => {
         if (a.isPinned && !b.isPinned) return -1;
         if (!a.isPinned && b.isPinned) return 1;
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }),
-    [discussions],
+    [discussions, blocked],
   );
 
   const renderThread = useCallback(
@@ -234,7 +238,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
       )}
 
       {/* FAB — New Post */}
-      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowPostModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => rules.gate(() => setShowPostModal(true))}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -303,6 +307,7 @@ export function DiscussionsTab({ active = true }: { active?: boolean }) {
         </KeyboardAvoidingView>
         )}
       </Modal>
+      {rules.element}
     </View>
   );
 }

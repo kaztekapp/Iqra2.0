@@ -16,6 +16,10 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { useCommunityStore } from '../../../src/stores/communityStore';
+import { useSettingsStore } from '../../../src/stores/settingsStore';
+import { useBlockedMap } from '../../../src/stores/moderationStore';
+import { useModeration } from '../../../src/components/community/useModeration';
+import { useCommunityRules } from '../../../src/components/community/useCommunityRules';
 import { color, radius } from '../../../src/theme/tokens';
 import i18n from 'i18next';
 
@@ -33,6 +37,11 @@ export default function ThreadDetailScreen() {
   const { lc } = useLocalizedContent();
   const scrollRef = useRef<ScrollView>(null);
 
+  const moderation = useModeration();
+  const rules = useCommunityRules();
+  const blocked = useBlockedMap();
+  const myId = useSettingsStore((s) => s.user?.id);
+
   const [replyText, setReplyText] = useState('');
   const [isSending, setIsSending] = useState(false);
 
@@ -44,6 +53,7 @@ export default function ThreadDetailScreen() {
   const postReply = useCommunityStore((s) => s.postReply);
   const toggleLikeThread = useCommunityStore((s) => s.toggleLikeThread);
   const toggleLikeReply = useCommunityStore((s) => s.toggleLikeReply);
+  const visibleReplies = replies.filter((r) => !blocked[r.userId]);
 
   useEffect(() => {
     if (id) {
@@ -51,6 +61,12 @@ export default function ThreadDetailScreen() {
       loadReplies(id);
     }
   }, [id]);
+
+  // Blocking the author (here or elsewhere) closes their thread.
+  const threadAuthorBlocked = !!currentThread?.authorId && !!blocked[currentThread.authorId];
+  useEffect(() => {
+    if (threadAuthorBlocked && router.canGoBack()) router.back();
+  }, [threadAuthorBlocked]);
 
   const handleReply = async () => {
     if (!replyText.trim() || !id) return;
@@ -88,6 +104,8 @@ export default function ThreadDetailScreen() {
       </SafeAreaView>
     );
   }
+
+  const threadIsMine = !!myId && currentThread.authorId === myId;
 
   const catColor = categoryColors[currentThread.category] || color.textMuted;
 
@@ -147,21 +165,38 @@ export default function ThreadDetailScreen() {
                 <Ionicons name="chatbubble-outline" size={18} color={color.progress} />
                 <Text style={styles.actionCount}>{currentThread.replyCount}</Text>
               </View>
+              {!threadIsMine && (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t('moderation.moreActions')}
+                  hitSlop={8}
+                  style={[styles.actionBtn, styles.moreBtn]}
+                  onPress={() => moderation.openMenu({
+                    contentType: 'discussion_thread',
+                    contentId: currentThread.id,
+                    authorId: currentThread.authorId,
+                    authorName: currentThread.authorName,
+                    snapshot: `${currentThread.title}\n\n${currentThread.body}`,
+                  })}
+                >
+                  <Ionicons name="ellipsis-horizontal" size={18} color={color.textMuted} />
+                </Pressable>
+              )}
             </View>
           </View>
 
           {/* Replies */}
           <View style={styles.repliesSection}>
             <Text style={styles.repliesHeader}>
-              {t('community.replies', { count: replies.length })}
+              {t('community.replies', { count: visibleReplies.length })}
             </Text>
 
             {isLoadingReplies ? (
               <ActivityIndicator color={color.progress} style={{ marginTop: 20 }} />
-            ) : replies.length === 0 ? (
+            ) : visibleReplies.length === 0 ? (
               <Text style={styles.emptyText}>{t('community.noRepliesYet')}</Text>
             ) : (
-              replies.map((reply) => (
+              visibleReplies.map((reply) => (
                 <View key={reply.id} style={styles.replyCard}>
                   <View style={styles.replyHeader}>
                     <View style={styles.replyAvatar}>
@@ -186,6 +221,23 @@ export default function ThreadDetailScreen() {
                         </Text>
                       )}
                     </Pressable>
+                    {reply.userId !== myId && (
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={t('moderation.moreActions')}
+                        hitSlop={8}
+                        style={styles.replyLikeBtn}
+                        onPress={() => moderation.openMenu({
+                          contentType: 'discussion_reply',
+                          contentId: reply.id,
+                          authorId: reply.userId,
+                          authorName: reply.authorName,
+                          snapshot: reply.body,
+                        })}
+                      >
+                        <Ionicons name="ellipsis-horizontal" size={16} color={color.textFaint} />
+                      </Pressable>
+                    )}
                   </View>
                   <Text style={styles.replyBody}>{reply.body}</Text>
                 </View>
@@ -207,7 +259,7 @@ export default function ThreadDetailScreen() {
           />
           <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.send')}
             style={[styles.sendBtn, (!replyText.trim() || isSending) && styles.sendBtnDisabled]}
-            onPress={handleReply}
+            onPress={() => rules.gate(handleReply)}
             disabled={!replyText.trim() || isSending}
           >
             {isSending ? (
@@ -218,6 +270,8 @@ export default function ThreadDetailScreen() {
           </Pressable>
         </View>
       </KeyboardAvoidingView>
+      {moderation.element}
+      {rules.element}
     </SafeAreaView>
   );
 }
@@ -336,6 +390,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+  },
+  moreBtn: {
+    marginLeft: 'auto',
   },
   actionCount: {
     fontSize: 14,

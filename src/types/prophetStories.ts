@@ -1,4 +1,4 @@
-// Prophet Stories Types for Iqra2.0 App
+// Prophet Stories Types for the Iqra app
 // Types for the Stories of the Prophets (قصص الأنبياء) feature
 
 // ============ Core Prophet Types ============

@@ -1,9 +1,10 @@
 export const LEGAL_CONSTANTS = {
-  appName: 'Iqra AI',
+  appName: 'Iqra: Learn Arabic & Quran',
+  shortName: 'Iqra',
   company: 'KazTek LLC',
   email: 'support@mkaztek.com',
   jurisdiction: 'Indiana, United States',
-  effectiveDate: '2026-02-16',
+  effectiveDate: '2026-09-28',
 };
 
 export interface LegalSection {
@@ -11,105 +12,136 @@ export interface LegalSection {
   content: string[];
 }
 
+const { appName, shortName, company, email, jurisdiction } = LEGAL_CONSTANTS;
+
 export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
   en: [
     {
       title: 'Introduction',
       content: [
-        `${LEGAL_CONSTANTS.company} ("we", "us", or "our") operates the ${LEGAL_CONSTANTS.appName} mobile application (the "App"). This Privacy Policy explains how we collect, use, and protect your information when you use our App.`,
-        'By using the App, you agree to the collection and use of information in accordance with this policy.',
+        `${company} ("we", "us", or "our") operates the ${appName} mobile application ("${shortName}" or the "App"). This Privacy Policy explains what information the App collects, why, who it is shared with, and the choices you have.`,
+        'The App contains no advertising, no in-app purchases, and no artificial-intelligence features. We do not sell your personal information.',
       ],
     },
     {
-      title: 'Data We Collect',
+      title: 'Using the App Without an Account',
       content: [
-        'Account Information: When you create an account, we collect your email address and display name through our authentication provider (Supabase).',
-        'We do not collect any other personal information beyond what is needed for account creation and authentication.',
+        'You can learn the alphabet, study vocabulary, read and listen to the Quran, and read the stories without creating an account. In that case your learning progress and preferences stay on your device, and we receive no account information about you.',
       ],
     },
     {
-      title: 'Data Stored Locally on Your Device',
+      title: 'Information You Give Us',
       content: [
-        'The following data is stored only on your device and is never transmitted to our servers:',
-        '- Learning progress (letters learned, vocabulary mastered, lessons completed)',
-        '- App preferences (language, vowel mark settings)',
-        '- Downloaded audio files for offline use',
-        '- Voice recordings made during pronunciation practice (processed on-device only and never uploaded)',
+        '• Account: your email address, a password (stored only as a secure hash by our authentication provider, Supabase), and the display name you choose.',
+        '• Learning progress: when you are signed in, your progress (letters, vocabulary, lessons), daily activity, experience points and streaks are saved to our servers so they can follow you to another device.',
+        '• Community content: messages, photos and voice messages you send in study groups, reactions, polls, discussion threads and replies, study groups you create or join, study-partner connections, challenges, and shared lessons or quizzes.',
+        '• Reports and blocks: if you report content, we store the report, the reason, any details you add, and a copy of the reported content. If you block someone, we store that you blocked them.',
       ],
     },
     {
-      title: 'Third-Party Services',
+      title: 'What Other Users Can See',
       content: [
-        'The App uses the following third-party services:',
-        '- Supabase: For user authentication and account management. See their privacy policy at supabase.com/privacy.',
-        '- Quran.com API: To fetch Quran text and translations. No personal data is sent.',
-        '- EveryAyah.com: To stream Quran audio recitations. No personal data is sent.',
-        '- Expo Updates: To deliver over-the-air app updates. Device metadata (platform, app version) may be collected.',
+        'Community features are social. Your display name, and content you post, are visible to other users:',
+        '• Messages, photos and voice messages in a study group are visible to members of that group.',
+        '• Discussion threads and replies are visible to everyone who uses the App.',
+        '• Your display name, experience points and streak may appear on the leaderboard, in group activity and in partner suggestions.',
+        'Photos and voice messages are stored in our cloud storage and are reachable by anyone who has their link. Do not share anything private in the community.',
+      ],
+    },
+    {
+      title: 'Information Collected Automatically',
+      content: [
+        '• Crash and error reports: we use Sentry to receive reports when the App crashes or an error occurs. A report contains technical details such as the device model, operating system, app version and what the App was doing. We have configured Sentry not to attach personal information such as your IP address or email.',
+        '• Notifications: if you allow notifications, we store your device\'s push token and app language so we can tell you about new messages in your groups. Learning reminders are scheduled on your device and do not go through our servers.',
+        '• App updates: Expo Updates checks for new versions of the App, which sends basic technical information such as platform and app version.',
       ],
     },
     {
       title: 'Microphone and Speech Recognition',
       content: [
-        'The App offers optional pronunciation practice features that use your device\'s microphone and speech recognition capabilities.',
-        'Voice data is processed entirely on your device using the operating system\'s built-in speech recognition. We do not record, store, or transmit any voice data to our servers.',
-        'You can use the App without granting microphone permissions. Pronunciation practice is entirely optional.',
+        'The microphone is used only when you choose to:',
+        '• Pronunciation practice: your speech is turned into text by your device\'s speech-recognition service (Apple on iOS, Google on Android). Depending on your device, this may happen on the device or on Apple\'s or Google\'s servers, under their privacy policies. We do not record or keep this audio.',
+        '• Voice messages: when you record a voice message in a study group, the recording is uploaded and shared with that group.',
+        'You can use the rest of the App without granting microphone access.',
       ],
     },
     {
-      title: 'How We Use Your Data',
+      title: 'Third-Party Services',
       content: [
-        'We use the limited data we collect to:',
-        '- Provide and maintain your account',
-        '- Enable you to sync your learning progress across devices (future feature)',
-        '- Send important service-related notifications',
-        'We do not sell, trade, or rent your personal information to third parties. We do not display advertisements in the App.',
+        'We rely on these providers to run the App:',
+        '• Supabase: accounts, database and file storage for synced progress and community content.',
+        '• Sentry: crash and error reports.',
+        '• Expo (EAS Update and Expo push service): app updates and delivering notifications.',
+        '• Microsoft (Edge text-to-speech) and Google (Translate text-to-speech): read Arabic, English and French text aloud. Only the text being read is sent, never your account information.',
+        '• Quran.com API, Islamic Network CDN and EveryAyah.com: Quran text, translations and recitation audio. No personal information is sent.',
+        '• Apple and Google: the app stores, notifications and, on your device, speech recognition.',
+      ],
+    },
+    {
+      title: 'How We Use Information',
+      content: [
+        '• To provide the App: your account, syncing your progress, and running the community.',
+        '• To keep the community safe: reviewing reports, removing content and suspending accounts that break our Terms.',
+        '• To send notifications you have turned on.',
+        '• To find and fix crashes and errors.',
+        'We do not use your information for advertising or profiling, and we do not sell, rent or trade it.',
+      ],
+    },
+    {
+      title: 'Community Safety',
+      content: [
+        'Offensive words are automatically masked in community content. You can report any message, thread, reply or user, and block users so you no longer see their content. We review reports within 24 hours and may remove content or suspend accounts that break our Terms of Service.',
       ],
     },
     {
       title: 'Data Security',
       content: [
-        'We take reasonable measures to protect your information. Account data is secured through Supabase\'s enterprise-grade security infrastructure, including encryption at rest and in transit.',
-        'However, no method of electronic storage is 100% secure, and we cannot guarantee absolute security.',
+        'Data is encrypted in transit, and access to your account data is restricted by database rules so that other users can only see what is described above. No method of storage or transmission is perfectly secure, so we cannot guarantee absolute security.',
       ],
     },
     {
-      title: 'Children\'s Privacy',
+      title: 'Children',
       content: [
-        'The App is rated 4+ and is suitable for all ages. We do not knowingly collect personal information from children under 13 without parental consent.',
-        'The App\'s educational content is designed to be family-friendly. If you are a parent or guardian and believe your child has provided personal information, please contact us.',
+        'The App is not directed at children under 13, and community features require an account. We do not knowingly collect personal information from children under 13 (or the minimum age in your country) without verifiable parental consent. If you believe a child has given us personal information, contact us and we will delete it.',
       ],
     },
     {
       title: 'Your Rights',
       content: [
-        'You have the right to:',
-        '- Access the personal data we hold about you',
-        '- Request deletion of your account and associated data',
-        '- Export your data',
-        '- Opt out of non-essential communications',
-        'To exercise these rights, contact us at the email provided below.',
+        'Depending on where you live (including under the GDPR in the European Union), you may have the right to:',
+        '• Access the personal information we hold about you and receive a copy of it',
+        '• Correct inaccurate information',
+        '• Delete your account and personal information',
+        '• Object to or restrict certain processing, and withdraw consent',
+        '• Lodge a complaint with your data-protection authority',
+        `You can delete your account at any time in the App under Profile. For any other request, email ${email}; we answer within 30 days.`,
       ],
     },
     {
       title: 'Data Retention',
       content: [
-        'We retain your account data for as long as your account is active. If you delete your account, we will remove your personal data within 30 days.',
-        'Locally stored data (learning progress, preferences) can be cleared at any time through the App\'s settings.',
+        'We keep your account data while your account exists. When you delete your account, your profile, progress and community data are deleted from our database, and remaining copies (such as uploaded files and backups) are removed within 30 days. Reports about abuse may be kept longer when needed to protect the community or meet legal obligations.',
+        'Data stored only on your device (offline audio, preferences, progress when signed out) is removed when you uninstall the App.',
+      ],
+    },
+    {
+      title: 'International Transfers',
+      content: [
+        `${company} is based in the United States, and our providers may process data in the United States and other countries. Where required, transfers rely on appropriate safeguards such as the European Commission's standard contractual clauses.`,
       ],
     },
     {
       title: 'Changes to This Policy',
       content: [
-        'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy within the App and updating the effective date.',
-        'Your continued use of the App after changes constitutes acceptance of the updated policy.',
+        'We may update this Privacy Policy. We will post the new version in the App and on our website and change the effective date above. For significant changes we will let you know in the App.',
       ],
     },
     {
       title: 'Contact Us',
       content: [
-        `If you have questions about this Privacy Policy, please contact us at:`,
-        `${LEGAL_CONSTANTS.company}`,
-        `Email: ${LEGAL_CONSTANTS.email}`,
+        'If you have questions about this Privacy Policy or your data, contact us:',
+        `${company}`,
+        `Email: ${email}`,
       ],
     },
   ],
@@ -117,100 +149,129 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
     {
       title: 'Introduction',
       content: [
-        `${LEGAL_CONSTANTS.company} ("nous" ou "notre") exploite l'application mobile ${LEGAL_CONSTANTS.appName} (l'"Application"). Cette Politique de Confidentialit\u00e9 explique comment nous collectons, utilisons et prot\u00e9geons vos informations lorsque vous utilisez notre Application.`,
-        'En utilisant l\'Application, vous acceptez la collecte et l\'utilisation des informations conform\u00e9ment \u00e0 cette politique.',
+        `${company} (« nous » ou « notre ») exploite l'application mobile ${appName} (« ${shortName} » ou l'« Application »). Cette Politique de confidentialité explique quelles informations l'Application collecte, pourquoi, avec qui elles sont partagées et quels choix vous avez.`,
+        'L\'Application ne contient ni publicité, ni achat intégré, ni fonctionnalité d\'intelligence artificielle. Nous ne vendons pas vos informations personnelles.',
       ],
     },
     {
-      title: 'Donn\u00e9es que nous collectons',
+      title: 'Utiliser l\'Application sans compte',
       content: [
-        'Informations de compte : Lorsque vous cr\u00e9ez un compte, nous collectons votre adresse e-mail et votre nom d\'affichage via notre fournisseur d\'authentification (Supabase).',
-        'Nous ne collectons aucune autre information personnelle au-del\u00e0 de ce qui est n\u00e9cessaire \u00e0 la cr\u00e9ation et l\'authentification du compte.',
+        'Vous pouvez apprendre l\'alphabet, étudier le vocabulaire, lire et écouter le Coran et lire les récits sans créer de compte. Dans ce cas, votre progression et vos préférences restent sur votre appareil et nous ne recevons aucune information de compte vous concernant.',
       ],
     },
     {
-      title: 'Donn\u00e9es stock\u00e9es localement sur votre appareil',
+      title: 'Informations que vous nous fournissez',
       content: [
-        'Les donn\u00e9es suivantes sont stock\u00e9es uniquement sur votre appareil et ne sont jamais transmises \u00e0 nos serveurs :',
-        '- Progression d\'apprentissage (lettres apprises, vocabulaire ma\u00eetris\u00e9, le\u00e7ons termin\u00e9es)',
-        '- Pr\u00e9f\u00e9rences de l\'application (langue, param\u00e8tres des voyelles)',
-        '- Fichiers audio t\u00e9l\u00e9charg\u00e9s pour une utilisation hors ligne',
-        '- Enregistrements vocaux r\u00e9alis\u00e9s lors de la pratique de prononciation (trait\u00e9s uniquement sur l\'appareil et jamais t\u00e9l\u00e9vers\u00e9s)',
+        '• Compte : votre adresse e-mail, un mot de passe (conservé uniquement sous forme de hachage sécurisé par notre fournisseur d\'authentification, Supabase) et le nom d\'affichage que vous choisissez.',
+        '• Progression : lorsque vous êtes connecté, votre progression (lettres, vocabulaire, leçons), votre activité quotidienne, vos points d\'expérience et vos séries sont enregistrés sur nos serveurs afin de vous suivre sur un autre appareil.',
+        '• Contenu communautaire : messages, photos et messages vocaux envoyés dans les groupes d\'étude, réactions, sondages, discussions et réponses, groupes d\'étude que vous créez ou rejoignez, partenaires d\'étude, défis, et leçons ou quiz partagés.',
+        '• Signalements et blocages : si vous signalez un contenu, nous conservons le signalement, le motif, les détails éventuels et une copie du contenu signalé. Si vous bloquez quelqu\'un, nous conservons ce blocage.',
       ],
     },
     {
-      title: 'Services tiers',
+      title: 'Ce que les autres utilisateurs peuvent voir',
       content: [
-        'L\'Application utilise les services tiers suivants :',
-        '- Supabase : Pour l\'authentification et la gestion des comptes. Voir leur politique de confidentialit\u00e9 sur supabase.com/privacy.',
-        '- API Quran.com : Pour r\u00e9cup\u00e9rer le texte et les traductions du Coran. Aucune donn\u00e9e personnelle n\'est envoy\u00e9e.',
-        '- EveryAyah.com : Pour diffuser les r\u00e9citations audio du Coran. Aucune donn\u00e9e personnelle n\'est envoy\u00e9e.',
-        '- Expo Updates : Pour livrer les mises \u00e0 jour de l\'application. Des m\u00e9tadonn\u00e9es de l\'appareil (plateforme, version) peuvent \u00eatre collect\u00e9es.',
+        'Les fonctionnalités communautaires sont sociales. Votre nom d\'affichage et le contenu que vous publiez sont visibles par d\'autres utilisateurs :',
+        '• Les messages, photos et messages vocaux d\'un groupe d\'étude sont visibles par les membres de ce groupe.',
+        '• Les discussions et réponses sont visibles par tous les utilisateurs de l\'Application.',
+        '• Votre nom d\'affichage, vos points d\'expérience et votre série peuvent apparaître dans le classement, l\'activité des groupes et les suggestions de partenaires.',
+        'Les photos et messages vocaux sont conservés dans notre stockage en ligne et accessibles à toute personne disposant de leur lien. Ne partagez rien de privé dans la communauté.',
+      ],
+    },
+    {
+      title: 'Informations collectées automatiquement',
+      content: [
+        '• Rapports de plantage et d\'erreur : nous utilisons Sentry pour recevoir un rapport lorsque l\'Application plante ou qu\'une erreur survient. Un rapport contient des détails techniques comme le modèle de l\'appareil, le système d\'exploitation, la version de l\'Application et ce qu\'elle faisait. Sentry est configuré pour ne pas joindre d\'informations personnelles comme votre adresse IP ou votre e-mail.',
+        '• Notifications : si vous les autorisez, nous conservons le jeton de notification de votre appareil et la langue de l\'Application afin de vous prévenir des nouveaux messages dans vos groupes. Les rappels d\'apprentissage sont programmés sur votre appareil et ne passent pas par nos serveurs.',
+        '• Mises à jour : Expo Updates vérifie les nouvelles versions de l\'Application, ce qui transmet des informations techniques de base comme la plateforme et la version.',
       ],
     },
     {
       title: 'Microphone et reconnaissance vocale',
       content: [
-        'L\'Application offre des fonctionnalit\u00e9s optionnelles de pratique de prononciation qui utilisent le microphone et les capacit\u00e9s de reconnaissance vocale de votre appareil.',
-        'Les donn\u00e9es vocales sont trait\u00e9es enti\u00e8rement sur votre appareil en utilisant la reconnaissance vocale int\u00e9gr\u00e9e du syst\u00e8me d\'exploitation. Nous n\'enregistrons, ne stockons ni ne transmettons aucune donn\u00e9e vocale \u00e0 nos serveurs.',
-        'Vous pouvez utiliser l\'Application sans accorder les autorisations du microphone. La pratique de prononciation est enti\u00e8rement facultative.',
+        'Le microphone n\'est utilisé que lorsque vous le choisissez :',
+        '• Entraînement à la prononciation : votre voix est transcrite par le service de reconnaissance vocale de votre appareil (Apple sur iOS, Google sur Android). Selon l\'appareil, cela peut se faire sur l\'appareil ou sur les serveurs d\'Apple ou de Google, selon leurs politiques de confidentialité. Nous n\'enregistrons ni ne conservons cet audio.',
+        '• Messages vocaux : lorsque vous enregistrez un message vocal dans un groupe d\'étude, l\'enregistrement est envoyé et partagé avec ce groupe.',
+        'Vous pouvez utiliser le reste de l\'Application sans autoriser l\'accès au microphone.',
       ],
     },
     {
-      title: 'Comment nous utilisons vos donn\u00e9es',
+      title: 'Services tiers',
       content: [
-        'Nous utilisons les donn\u00e9es limit\u00e9es que nous collectons pour :',
-        '- Fournir et maintenir votre compte',
-        '- Vous permettre de synchroniser votre progression d\'apprentissage entre appareils (fonctionnalit\u00e9 future)',
-        '- Envoyer des notifications importantes li\u00e9es au service',
-        'Nous ne vendons, n\'\u00e9changeons ni ne louons vos informations personnelles \u00e0 des tiers. Nous n\'affichons pas de publicit\u00e9s dans l\'Application.',
+        'Nous faisons appel à ces prestataires pour faire fonctionner l\'Application :',
+        '• Supabase : comptes, base de données et stockage de fichiers pour la progression synchronisée et le contenu communautaire.',
+        '• Sentry : rapports de plantage et d\'erreur.',
+        '• Expo (EAS Update et service de notifications Expo) : mises à jour et envoi des notifications.',
+        '• Microsoft (synthèse vocale Edge) et Google (synthèse vocale de Google Traduction) : lecture à voix haute de textes en arabe, anglais et français. Seul le texte lu est envoyé, jamais vos informations de compte.',
+        '• API Quran.com, CDN Islamic Network et EveryAyah.com : texte du Coran, traductions et récitations audio. Aucune information personnelle n\'est envoyée.',
+        '• Apple et Google : les boutiques d\'applications, les notifications et, sur votre appareil, la reconnaissance vocale.',
       ],
     },
     {
-      title: 'S\u00e9curit\u00e9 des donn\u00e9es',
+      title: 'Comment nous utilisons les informations',
       content: [
-        'Nous prenons des mesures raisonnables pour prot\u00e9ger vos informations. Les donn\u00e9es de compte sont s\u00e9curis\u00e9es par l\'infrastructure de s\u00e9curit\u00e9 de niveau entreprise de Supabase, incluant le chiffrement au repos et en transit.',
-        'Cependant, aucune m\u00e9thode de stockage \u00e9lectronique n\'est s\u00fbre \u00e0 100%, et nous ne pouvons garantir une s\u00e9curit\u00e9 absolue.',
+        '• Pour fournir l\'Application : votre compte, la synchronisation de votre progression et le fonctionnement de la communauté.',
+        '• Pour protéger la communauté : examiner les signalements, supprimer des contenus et suspendre les comptes qui enfreignent nos Conditions.',
+        '• Pour envoyer les notifications que vous avez activées.',
+        '• Pour détecter et corriger les plantages et les erreurs.',
+        'Nous n\'utilisons pas vos informations à des fins publicitaires ou de profilage, et nous ne les vendons, louons ni échangeons.',
       ],
     },
     {
-      title: 'Confidentialit\u00e9 des enfants',
+      title: 'Sécurité de la communauté',
       content: [
-        'L\'Application est class\u00e9e 4+ et convient \u00e0 tous les \u00e2ges. Nous ne collectons pas sciemment d\'informations personnelles d\'enfants de moins de 13 ans sans le consentement parental.',
-        'Le contenu \u00e9ducatif de l\'Application est con\u00e7u pour \u00eatre adapt\u00e9 aux familles. Si vous \u00eates parent ou tuteur et pensez que votre enfant a fourni des informations personnelles, veuillez nous contacter.',
+        'Les mots offensants sont automatiquement masqués dans le contenu communautaire. Vous pouvez signaler tout message, discussion, réponse ou utilisateur, et bloquer des utilisateurs pour ne plus voir leur contenu. Nous examinons les signalements sous 24 heures et pouvons supprimer des contenus ou suspendre des comptes qui enfreignent nos Conditions d\'utilisation.',
+      ],
+    },
+    {
+      title: 'Sécurité des données',
+      content: [
+        'Les données sont chiffrées pendant leur transmission, et l\'accès aux données de votre compte est limité par des règles de base de données afin que les autres utilisateurs ne voient que ce qui est décrit ci-dessus. Aucune méthode de stockage ou de transmission n\'étant parfaitement sûre, nous ne pouvons garantir une sécurité absolue.',
+      ],
+    },
+    {
+      title: 'Enfants',
+      content: [
+        'L\'Application ne s\'adresse pas aux enfants de moins de 13 ans, et les fonctionnalités communautaires nécessitent un compte. Nous ne collectons pas sciemment d\'informations personnelles auprès d\'enfants de moins de 13 ans (ou de l\'âge minimum applicable dans votre pays) sans consentement parental vérifiable. Si vous pensez qu\'un enfant nous a fourni des informations personnelles, contactez-nous et nous les supprimerons.',
       ],
     },
     {
       title: 'Vos droits',
       content: [
-        'Vous avez le droit de :',
-        '- Acc\u00e9der aux donn\u00e9es personnelles que nous d\u00e9tenons \u00e0 votre sujet',
-        '- Demander la suppression de votre compte et des donn\u00e9es associ\u00e9es',
-        '- Exporter vos donn\u00e9es',
-        '- Vous d\u00e9sinscrire des communications non essentielles',
-        'Pour exercer ces droits, contactez-nous \u00e0 l\'adresse e-mail fournie ci-dessous.',
+        'Selon votre lieu de résidence (notamment en vertu du RGPD dans l\'Union européenne), vous pouvez avoir le droit de :',
+        '• Accéder aux informations personnelles que nous détenons sur vous et en recevoir une copie',
+        '• Rectifier des informations inexactes',
+        '• Supprimer votre compte et vos informations personnelles',
+        '• Vous opposer à certains traitements ou les limiter, et retirer votre consentement',
+        '• Introduire une réclamation auprès de votre autorité de protection des données (en France, la CNIL)',
+        `Vous pouvez supprimer votre compte à tout moment dans l'Application, dans Profil. Pour toute autre demande, écrivez à ${email} ; nous répondons sous 30 jours.`,
       ],
     },
     {
-      title: 'Conservation des donn\u00e9es',
+      title: 'Conservation des données',
       content: [
-        'Nous conservons les donn\u00e9es de votre compte tant que celui-ci est actif. Si vous supprimez votre compte, nous supprimerons vos donn\u00e9es personnelles dans les 30 jours.',
-        'Les donn\u00e9es stock\u00e9es localement (progression, pr\u00e9f\u00e9rences) peuvent \u00eatre effac\u00e9es \u00e0 tout moment via les param\u00e8tres de l\'Application.',
+        'Nous conservons les données de votre compte tant qu\'il existe. Lorsque vous supprimez votre compte, votre profil, votre progression et vos données communautaires sont supprimés de notre base de données, et les copies restantes (comme les fichiers envoyés et les sauvegardes) sont supprimées sous 30 jours. Les signalements d\'abus peuvent être conservés plus longtemps lorsque c\'est nécessaire pour protéger la communauté ou respecter nos obligations légales.',
+        'Les données conservées uniquement sur votre appareil (audio hors ligne, préférences, progression hors connexion) sont supprimées lorsque vous désinstallez l\'Application.',
+      ],
+    },
+    {
+      title: 'Transferts internationaux',
+      content: [
+        `${company} est établie aux États-Unis, et nos prestataires peuvent traiter des données aux États-Unis et dans d'autres pays. Lorsque c'est requis, ces transferts reposent sur des garanties appropriées, comme les clauses contractuelles types de la Commission européenne.`,
       ],
     },
     {
       title: 'Modifications de cette politique',
       content: [
-        'Nous pouvons mettre \u00e0 jour cette Politique de Confidentialit\u00e9 de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique dans l\'Application et en mettant \u00e0 jour la date d\'entr\u00e9e en vigueur.',
-        'Votre utilisation continue de l\'Application apr\u00e8s les modifications constitue une acceptation de la politique mise \u00e0 jour.',
+        'Nous pouvons mettre à jour cette Politique de confidentialité. Nous publierons la nouvelle version dans l\'Application et sur notre site et modifierons la date d\'entrée en vigueur ci-dessus. En cas de changement important, nous vous en informerons dans l\'Application.',
       ],
     },
     {
       title: 'Nous contacter',
       content: [
-        'Si vous avez des questions concernant cette Politique de Confidentialit\u00e9, veuillez nous contacter \u00e0 :',
-        `${LEGAL_CONSTANTS.company}`,
-        `E-mail : ${LEGAL_CONSTANTS.email}`,
+        'Pour toute question sur cette Politique de confidentialité ou sur vos données, contactez-nous :',
+        `${company}`,
+        `E-mail : ${email}`,
       ],
     },
   ],
@@ -221,81 +282,110 @@ export const TERMS_OF_SERVICE_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
     {
       title: 'Acceptance of Terms',
       content: [
-        `By downloading, installing, or using the ${LEGAL_CONSTANTS.appName} application (the "App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App.`,
+        `By downloading, installing or using ${appName} (the "App"), operated by ${company}, you agree to these Terms of Service ("Terms") and to our Privacy Policy. If you do not agree, do not use the App.`,
       ],
     },
     {
       title: 'Description of Service',
       content: [
-        `${LEGAL_CONSTANTS.appName} is an educational mobile application designed to help users learn Arabic, study the Quran, and practice Islamic knowledge. The App provides lessons, quizzes, audio recitations, and interactive learning tools.`,
+        `${shortName} is an educational app for learning Arabic and studying the Quran. It offers the Arabic alphabet and writing styles, vocabulary, grammar, numbers, Quran reading with audio recitations, stories of the prophets and from the Quran, quizzes, reminders, and community features such as study groups and discussions.`,
+        'The App is free. It contains no advertising and no in-app purchases.',
       ],
     },
     {
       title: 'User Accounts',
       content: [
-        'You may create an account to access additional features. You are responsible for maintaining the confidentiality of your account credentials.',
-        'You agree to provide accurate information when creating your account and to update it as needed.',
-        'We reserve the right to suspend or terminate accounts that violate these Terms.',
+        'Some features, including syncing progress and all community features, require an account. You must be at least 13 years old (or the minimum age in your country) to create one.',
+        'You are responsible for keeping your login details secure and for everything done with your account. Choose a display name that is not offensive and does not impersonate anyone.',
+        'You can delete your account at any time in the App under Profile.',
+      ],
+    },
+    {
+      title: 'Community Guidelines',
+      content: [
+        'We have zero tolerance for objectionable content or abusive users. When you post messages, photos, voice messages, threads or replies, you must not:',
+        '• Harass, bully, threaten or intimidate anyone',
+        '• Post hateful content, or content that attacks people for their religion, school of thought, ethnicity, nationality, gender or any other characteristic',
+        '• Post sexual, violent or graphic content',
+        '• Post spam, scams, advertising or links to harmful sites',
+        '• Impersonate others or share other people\'s private information',
+        '• Post anything illegal or that infringes someone else\'s rights',
+        'Discussions about faith should be respectful. Disagreement is fine; insults are not.',
+      ],
+    },
+    {
+      title: 'Reporting, Blocking and Enforcement',
+      content: [
+        'You can report any message, thread, reply or user from within the App, and block users so you no longer see their content. Offensive words are masked automatically.',
+        'We review reports within 24 hours. We may remove any content that breaks these Terms and may warn, suspend or permanently ban the user who posted it, without notice. Serious cases may be reported to the authorities.',
+      ],
+    },
+    {
+      title: 'Your Content',
+      content: [
+        'You keep ownership of the content you post. By posting it, you give us a worldwide, non-exclusive, royalty-free licence to store, display and deliver it to the people you share it with, only for the purpose of running the App. This licence ends when your content is deleted, except for copies kept in reports as described in our Privacy Policy.',
+        'You are responsible for what you post and confirm that you have the right to share it.',
       ],
     },
     {
       title: 'Acceptable Use',
       content: [
-        'You agree to use the App only for lawful, personal, and educational purposes. You may not:',
-        '- Reverse engineer, decompile, or disassemble the App',
-        '- Use the App to distribute malware or harmful content',
-        '- Attempt to gain unauthorized access to our systems',
-        '- Use the App in any way that could damage or impair its functionality',
-        '- Reproduce or redistribute the App\'s content without permission',
+        'You agree not to:',
+        '• Use the App for any unlawful purpose',
+        '• Attempt to access other users\' accounts or data, or our systems, without authorisation',
+        '• Interfere with or disrupt the App or its servers, or send automated traffic',
+        '• Copy, modify, reverse-engineer or redistribute the App, except where the law allows it',
       ],
     },
     {
       title: 'Intellectual Property',
       content: [
-        `The App, including its design, code, graphics, and original educational content, is owned by ${LEGAL_CONSTANTS.company} and is protected by copyright and intellectual property laws.`,
-        'You are granted a limited, non-exclusive, non-transferable license to use the App for personal, non-commercial purposes.',
+        `The App's design, code, lessons and original content belong to ${company} and are protected by copyright and other laws. The Quran text, translations and recitations come from their respective sources and remain subject to their own terms.`,
       ],
     },
     {
-      title: 'Quran Content Disclaimer',
+      title: 'Religious Content Disclaimer',
       content: [
-        'Quran text, translations, and audio recitations are sourced from third-party providers (Quran.com API and EveryAyah.com). While we strive for accuracy, we recommend verifying Quranic content with a qualified scholar.',
-        `${LEGAL_CONSTANTS.company} is not responsible for any errors or inaccuracies in third-party Quran content.`,
-      ],
-    },
-    {
-      title: 'Future Subscriptions',
-      content: [
-        'The App is currently free to use. We may introduce premium features or subscription plans in the future. Any such changes will be clearly communicated, and core educational content will remain accessible.',
+        'We take great care over the Quran text, translations, hadith and stories in the App. Stories are drawn only from the Quran and authentic hadith. Translations and explanations are aids to understanding and do not replace the original Arabic text or guidance from qualified scholars.',
+        `If you find a mistake, please tell us at ${email} so we can correct it.`,
       ],
     },
     {
       title: 'Service Availability',
       content: [
-        'We strive to keep the App available at all times but do not guarantee uninterrupted access. The App may be temporarily unavailable due to maintenance, updates, or circumstances beyond our control.',
-        'Certain features require an internet connection. Offline functionality is limited to downloaded content.',
+        'We may change, suspend or discontinue any part of the App at any time. Some features require an internet connection. We do not guarantee that the App will always be available or free of errors.',
       ],
     },
     {
       title: 'Limitation of Liability',
       content: [
-        `To the fullest extent permitted by law, ${LEGAL_CONSTANTS.company} shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the App.`,
-        'The App is provided "as is" and "as available" without warranties of any kind, either express or implied.',
+        `The App is provided "as is" and "as available". To the fullest extent permitted by law, ${company} is not liable for any indirect, incidental, special or consequential damages, or for content posted by other users. Nothing in these Terms limits rights you have as a consumer under the law of your country.`,
+      ],
+    },
+    {
+      title: 'Termination',
+      content: [
+        'You can stop using the App and delete your account at any time. We may suspend or end your access if you break these Terms.',
+      ],
+    },
+    {
+      title: 'Changes to These Terms',
+      content: [
+        'We may update these Terms. We will post the new version in the App and change the effective date above. Continuing to use the App after a change means you accept the updated Terms.',
       ],
     },
     {
       title: 'Governing Law',
       content: [
-        `These Terms are governed by and construed in accordance with the laws of the State of Indiana, United States, without regard to its conflict of law provisions.`,
-        'Any disputes arising from these Terms shall be resolved in the courts of Indiana.',
+        `These Terms are governed by the laws of ${jurisdiction}, without regard to conflict-of-law rules, except where the law of your country of residence gives you mandatory protections.`,
       ],
     },
     {
       title: 'Contact Us',
       content: [
-        'If you have questions about these Terms, please contact us at:',
-        `${LEGAL_CONSTANTS.company}`,
-        `Email: ${LEGAL_CONSTANTS.email}`,
+        'If you have questions about these Terms, or want to report a problem, contact us:',
+        `${company}`,
+        `Email: ${email}`,
       ],
     },
   ],
@@ -303,81 +393,110 @@ export const TERMS_OF_SERVICE_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
     {
       title: 'Acceptation des conditions',
       content: [
-        `En t\u00e9l\u00e9chargeant, installant ou utilisant l'application ${LEGAL_CONSTANTS.appName} (l'"Application"), vous acceptez d'\u00eatre li\u00e9 par ces Conditions d'Utilisation ("Conditions"). Si vous n'acceptez pas ces Conditions, n'utilisez pas l'Application.`,
+        `En téléchargeant, installant ou utilisant ${appName} (l'« Application »), exploitée par ${company}, vous acceptez les présentes Conditions d'utilisation (les « Conditions ») et notre Politique de confidentialité. Si vous ne les acceptez pas, n'utilisez pas l'Application.`,
       ],
     },
     {
       title: 'Description du service',
       content: [
-        `${LEGAL_CONSTANTS.appName} est une application mobile \u00e9ducative con\u00e7ue pour aider les utilisateurs \u00e0 apprendre l'arabe, \u00e9tudier le Coran et pratiquer les connaissances islamiques. L'Application fournit des le\u00e7ons, des quiz, des r\u00e9citations audio et des outils d'apprentissage interactifs.`,
+        `${shortName} est une application éducative pour apprendre l'arabe et étudier le Coran. Elle propose l'alphabet arabe et ses styles d'écriture, le vocabulaire, la grammaire, les nombres, la lecture du Coran avec récitations audio, les récits des prophètes et du Coran, des quiz, des rappels, ainsi que des fonctionnalités communautaires comme les groupes d'étude et les discussions.`,
+        'L\'Application est gratuite. Elle ne contient ni publicité ni achat intégré.',
       ],
     },
     {
       title: 'Comptes utilisateurs',
       content: [
-        'Vous pouvez cr\u00e9er un compte pour acc\u00e9der \u00e0 des fonctionnalit\u00e9s suppl\u00e9mentaires. Vous \u00eates responsable du maintien de la confidentialit\u00e9 de vos identifiants de compte.',
-        'Vous acceptez de fournir des informations exactes lors de la cr\u00e9ation de votre compte et de les mettre \u00e0 jour si n\u00e9cessaire.',
-        'Nous nous r\u00e9servons le droit de suspendre ou de supprimer les comptes qui enfreignent ces Conditions.',
+        'Certaines fonctionnalités, dont la synchronisation de la progression et toutes les fonctionnalités communautaires, nécessitent un compte. Vous devez avoir au moins 13 ans (ou l\'âge minimum applicable dans votre pays) pour en créer un.',
+        'Vous êtes responsable de la sécurité de vos identifiants et de tout ce qui est fait avec votre compte. Choisissez un nom d\'affichage qui n\'est pas offensant et n\'usurpe l\'identité de personne.',
+        'Vous pouvez supprimer votre compte à tout moment dans l\'Application, dans Profil.',
+      ],
+    },
+    {
+      title: 'Règles de la communauté',
+      content: [
+        'Nous appliquons une tolérance zéro envers les contenus répréhensibles et les utilisateurs abusifs. Lorsque vous publiez des messages, photos, messages vocaux, discussions ou réponses, vous ne devez pas :',
+        '• Harceler, intimider ou menacer qui que ce soit',
+        '• Publier des contenus haineux, ou qui attaquent des personnes en raison de leur religion, de leur école de pensée, de leur origine, de leur nationalité, de leur sexe ou de toute autre caractéristique',
+        '• Publier des contenus sexuels, violents ou choquants',
+        '• Publier du spam, des arnaques, de la publicité ou des liens vers des sites malveillants',
+        '• Usurper l\'identité d\'autrui ou partager les informations privées d\'autres personnes',
+        '• Publier quoi que ce soit d\'illégal ou qui porte atteinte aux droits d\'autrui',
+        'Les échanges sur la foi doivent rester respectueux. Le désaccord est permis ; les insultes ne le sont pas.',
+      ],
+    },
+    {
+      title: 'Signalement, blocage et sanctions',
+      content: [
+        'Vous pouvez signaler tout message, discussion, réponse ou utilisateur depuis l\'Application, et bloquer des utilisateurs pour ne plus voir leur contenu. Les mots offensants sont masqués automatiquement.',
+        'Nous examinons les signalements sous 24 heures. Nous pouvons supprimer tout contenu qui enfreint ces Conditions et avertir, suspendre ou exclure définitivement l\'utilisateur qui l\'a publié, sans préavis. Les cas graves peuvent être signalés aux autorités.',
+      ],
+    },
+    {
+      title: 'Votre contenu',
+      content: [
+        'Vous restez propriétaire du contenu que vous publiez. En le publiant, vous nous accordez une licence mondiale, non exclusive et gratuite pour le conserver, l\'afficher et le transmettre aux personnes avec qui vous le partagez, uniquement pour faire fonctionner l\'Application. Cette licence prend fin à la suppression de votre contenu, sauf pour les copies conservées dans les signalements comme décrit dans notre Politique de confidentialité.',
+        'Vous êtes responsable de ce que vous publiez et confirmez avoir le droit de le partager.',
       ],
     },
     {
       title: 'Utilisation acceptable',
       content: [
-        'Vous acceptez d\'utiliser l\'Application uniquement \u00e0 des fins l\u00e9gales, personnelles et \u00e9ducatives. Vous ne pouvez pas :',
-        '- R\u00e9tro-concevoir, d\u00e9compiler ou d\u00e9sassembler l\'Application',
-        '- Utiliser l\'Application pour distribuer des logiciels malveillants',
-        '- Tenter d\'acc\u00e9der sans autorisation \u00e0 nos syst\u00e8mes',
-        '- Utiliser l\'Application d\'une mani\u00e8re qui pourrait endommager ou alt\u00e9rer son fonctionnement',
-        '- Reproduire ou redistribuer le contenu de l\'Application sans permission',
+        'Vous vous engagez à ne pas :',
+        '• Utiliser l\'Application à des fins illégales',
+        '• Tenter d\'accéder sans autorisation aux comptes ou données d\'autres utilisateurs, ou à nos systèmes',
+        '• Perturber l\'Application ou ses serveurs, ou envoyer du trafic automatisé',
+        '• Copier, modifier, décompiler ou redistribuer l\'Application, sauf dans la mesure permise par la loi',
       ],
     },
     {
-      title: 'Propri\u00e9t\u00e9 intellectuelle',
+      title: 'Propriété intellectuelle',
       content: [
-        `L'Application, y compris sa conception, son code, ses graphiques et son contenu \u00e9ducatif original, est la propri\u00e9t\u00e9 de ${LEGAL_CONSTANTS.company} et est prot\u00e9g\u00e9e par les lois sur le droit d'auteur et la propri\u00e9t\u00e9 intellectuelle.`,
-        'Vous b\u00e9n\u00e9ficiez d\'une licence limit\u00e9e, non exclusive et non transf\u00e9rable pour utiliser l\'Application \u00e0 des fins personnelles et non commerciales.',
+        `Le design, le code, les leçons et le contenu original de l'Application appartiennent à ${company} et sont protégés par le droit d'auteur et d'autres lois. Le texte du Coran, les traductions et les récitations proviennent de leurs sources respectives et restent soumis à leurs propres conditions.`,
       ],
     },
     {
-      title: 'Avertissement sur le contenu coranique',
+      title: 'Avertissement sur le contenu religieux',
       content: [
-        'Le texte du Coran, les traductions et les r\u00e9citations audio proviennent de fournisseurs tiers (API Quran.com et EveryAyah.com). Bien que nous nous efforcions d\'\u00eatre pr\u00e9cis, nous recommandons de v\u00e9rifier le contenu coranique aupr\u00e8s d\'un \u00e9rudit qualifi\u00e9.',
-        `${LEGAL_CONSTANTS.company} n'est pas responsable des erreurs ou inexactitudes dans le contenu coranique tiers.`,
+        'Nous apportons le plus grand soin au texte du Coran, aux traductions, aux hadiths et aux récits de l\'Application. Les récits sont tirés uniquement du Coran et de hadiths authentiques. Les traductions et explications sont des aides à la compréhension et ne remplacent ni le texte arabe original ni les conseils de savants qualifiés.',
+        `Si vous trouvez une erreur, écrivez-nous à ${email} afin que nous la corrigions.`,
       ],
     },
     {
-      title: 'Abonnements futurs',
+      title: 'Disponibilité du service',
       content: [
-        'L\'Application est actuellement gratuite. Nous pourrions introduire des fonctionnalit\u00e9s premium ou des plans d\'abonnement \u00e0 l\'avenir. Tout changement sera clairement communiqu\u00e9, et le contenu \u00e9ducatif de base restera accessible.',
+        'Nous pouvons modifier, suspendre ou arrêter toute partie de l\'Application à tout moment. Certaines fonctionnalités nécessitent une connexion internet. Nous ne garantissons pas que l\'Application sera toujours disponible ou exempte d\'erreurs.',
       ],
     },
     {
-      title: 'Disponibilit\u00e9 du service',
+      title: 'Limitation de responsabilité',
       content: [
-        'Nous nous effor\u00e7ons de maintenir l\'Application disponible en tout temps mais ne garantissons pas un acc\u00e8s ininterrompu. L\'Application peut \u00eatre temporairement indisponible en raison de maintenance, de mises \u00e0 jour ou de circonstances ind\u00e9pendantes de notre volont\u00e9.',
-        'Certaines fonctionnalit\u00e9s n\u00e9cessitent une connexion internet. La fonctionnalit\u00e9 hors ligne est limit\u00e9e au contenu t\u00e9l\u00e9charg\u00e9.',
+        `L'Application est fournie « en l'état » et « selon disponibilité ». Dans toute la mesure permise par la loi, ${company} n'est pas responsable des dommages indirects, accessoires, spéciaux ou consécutifs, ni du contenu publié par d'autres utilisateurs. Rien dans ces Conditions ne limite les droits dont vous disposez en tant que consommateur en vertu de la loi de votre pays.`,
       ],
     },
     {
-      title: 'Limitation de responsabilit\u00e9',
+      title: 'Résiliation',
       content: [
-        `Dans toute la mesure permise par la loi, ${LEGAL_CONSTANTS.company} ne sera pas responsable de tout dommage indirect, accessoire, sp\u00e9cial, cons\u00e9cutif ou punitif r\u00e9sultant de votre utilisation de l'Application.`,
-        'L\'Application est fournie "en l\'\u00e9tat" et "selon disponibilit\u00e9" sans garantie d\'aucune sorte, expresse ou implicite.',
+        'Vous pouvez cesser d\'utiliser l\'Application et supprimer votre compte à tout moment. Nous pouvons suspendre ou mettre fin à votre accès si vous enfreignez ces Conditions.',
+      ],
+    },
+    {
+      title: 'Modifications de ces conditions',
+      content: [
+        'Nous pouvons mettre à jour ces Conditions. Nous publierons la nouvelle version dans l\'Application et modifierons la date d\'entrée en vigueur ci-dessus. Continuer à utiliser l\'Application après une modification vaut acceptation des Conditions mises à jour.',
       ],
     },
     {
       title: 'Loi applicable',
       content: [
-        'Ces Conditions sont r\u00e9gies et interpr\u00e9t\u00e9es conform\u00e9ment aux lois de l\'\u00c9tat de l\'Indiana, \u00c9tats-Unis, sans \u00e9gard \u00e0 ses dispositions en mati\u00e8re de conflit de lois.',
-        'Tout litige d\u00e9coulant de ces Conditions sera r\u00e9solu devant les tribunaux de l\'Indiana.',
+        `Ces Conditions sont régies par les lois de l'État de l'Indiana (États-Unis), sans égard aux règles de conflit de lois, sauf lorsque la loi de votre pays de résidence vous accorde des protections impératives.`,
       ],
     },
     {
       title: 'Nous contacter',
       content: [
-        'Si vous avez des questions concernant ces Conditions, veuillez nous contacter \u00e0 :',
-        `${LEGAL_CONSTANTS.company}`,
-        `E-mail : ${LEGAL_CONSTANTS.email}`,
+        'Pour toute question sur ces Conditions, ou pour signaler un problème, contactez-nous :',
+        `${company}`,
+        `E-mail : ${email}`,
       ],
     },
   ],

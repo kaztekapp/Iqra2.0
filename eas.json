@@ -37,6 +37,11 @@
         "ascAppId": "6801198221",
         "companyName": "KAZTEK LLC",
         "language": "en-US"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./credentials/play-service-account.json",
+        "track": "internal",
+        "releaseStatus": "draft"
       }
     }
   }

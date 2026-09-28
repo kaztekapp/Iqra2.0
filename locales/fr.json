@@ -1,0 +1,5 @@
+{
+  "CFBundleDisplayName": "Iqra",
+  "NSMicrophoneUsageDescription": "Iqra utilise le microphone pour vérifier votre prononciation de l'arabe et pour enregistrer les messages vocaux que vous envoyez dans vos groupes d'étude.",
+  "NSSpeechRecognitionUsageDescription": "Iqra utilise la reconnaissance vocale pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale."
+}

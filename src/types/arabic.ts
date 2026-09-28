@@ -1,4 +1,4 @@
-// Core Arabic Types for Iqra2.0 App
+// Core Arabic Types for the Iqra app
 
 export type ArabicLevel = 'beginner' | 'intermediate' | 'advanced';
 

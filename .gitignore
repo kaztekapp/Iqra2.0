@@ -52,3 +52,6 @@ scripts/react-native-whisper-example.tsx
 
 # Supabase CLI local cache
 supabase/.temp/
+
+# Store submission keys
+credentials/*.json

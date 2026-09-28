@@ -17,6 +17,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useCommunityStore } from '../../src/stores/communityStore';
+import { useBlockedMap } from '../../src/stores/moderationStore';
+import { useCommunityRules } from '../../src/components/community/useCommunityRules';
 import { DiscussionCategory } from '../../src/types/community';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -37,6 +39,8 @@ export default function DiscussionsScreen() {
   const [selectedCategory, setSelectedCategory] = useState<DiscussionCategory | 'all'>('all');
   const [refreshing, setRefreshing] = useState(false);
   const [showPostModal, setShowPostModal] = useState(false);
+  const rules = useCommunityRules();
+  const blocked = useBlockedMap();
   const [postTitle, setPostTitle] = useState('');
   const [postBody, setPostBody] = useState('');
   const [postCategory, setPostCategory] = useState<DiscussionCategory>('general');
@@ -70,7 +74,7 @@ export default function DiscussionsScreen() {
   };
 
   // Sort: pinned first, then by recency
-  const sorted = [...discussions].sort((a, b) => {
+  const sorted = discussions.filter((d) => !(d.authorId && blocked[d.authorId])).sort((a, b) => {
     if (a.isPinned && !b.isPinned) return -1;
     if (!a.isPinned && b.isPinned) return 1;
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
@@ -209,7 +213,7 @@ export default function DiscussionsScreen() {
       )}
 
       {/* FAB — New Post */}
-      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => setShowPostModal(true)}>
+      <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.add')} style={styles.fab} onPress={() => rules.gate(() => setShowPostModal(true))}>
         <Ionicons name="add" size={24} color={color.text} />
       </Pressable>
 
@@ -276,6 +280,7 @@ export default function DiscussionsScreen() {
           </View>
         </KeyboardAvoidingView>
       </Modal>
+      {rules.element}
     </SafeAreaView>
   );
 }

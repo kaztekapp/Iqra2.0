@@ -15,6 +15,12 @@ export interface MessageActions {
   isPinned: boolean;
   canEdit: boolean;
   canDelete: boolean;
+  /** Someone else's message: offer Report. */
+  canReport?: boolean;
+  /** Someone else's message with a real author: offer Block. */
+  canBlock?: boolean;
+  /** Shown in "Block {{name}}". */
+  authorName?: string;
 }
 
 interface Props {
@@ -28,11 +34,13 @@ interface Props {
   onPinToggle: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  onReport?: () => void;
+  onBlock?: () => void;
   onClose: () => void;
 }
 
 export function MessageActionSheet({
-  visible, actions, onReact, onReply, onCopy, onBoard, onPinToggle, onEdit, onDelete, onClose,
+  visible, actions, onReact, onReply, onCopy, onBoard, onPinToggle, onEdit, onDelete, onReport, onBlock, onClose,
 }: Props) {
   const { t } = useTranslation();
   const item = (icon: string, label: string, onPress: () => void, danger = false) => (
@@ -64,6 +72,8 @@ export function MessageActionSheet({
           {actions.canPin && item(actions.isPinned ? 'remove-circle-outline' : 'pin', actions.isPinned ? 'Unpin' : 'Pin', onPinToggle)}
           {actions.canEdit && item('create-outline', 'Edit', onEdit)}
           {actions.canDelete && item('trash-outline', 'Delete', onDelete, true)}
+          {actions.canReport && onReport && item('flag-outline', t('moderation.reportMessage'), onReport, true)}
+          {actions.canBlock && onBlock && item('ban-outline', t('moderation.blockUser', { name: actions.authorName || t('moderation.unknownPerson') }), onBlock, true)}
           <Pressable accessibilityRole="button" style={styles.cancel} onPress={onClose}>
             <Text style={styles.cancelText}>{t('common.cancel')}</Text>
           </Pressable>

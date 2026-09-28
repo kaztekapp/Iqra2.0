@@ -1,4 +1,4 @@
-// Community/Social Feature Types for Iqra2.0 App
+// Community/Social Feature Types for the Iqra app
 
 export interface LeaderboardEntry {
   id: string;
@@ -72,6 +72,8 @@ export interface DiscussionThread {
   body: string;
   bodyFr?: string;
   authorName: string;
+  /** The author's user id; absent on sample threads. */
+  authorId?: string;
   authorAvatar?: string;
   category: DiscussionCategory;
   replyCount: number;

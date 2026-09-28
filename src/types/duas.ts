@@ -1,4 +1,4 @@
-// Duas (Prayers) Types for Iqra2.0 App
+// Duas (Prayers) Types for the Iqra app
 // Types for the Prophetic Duas (الأدعية النبوية) feature
 
 // ============ Dua Category Types ============

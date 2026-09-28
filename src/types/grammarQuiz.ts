@@ -1,4 +1,4 @@
-// Grammar Quiz Types for Iqra2.0 App
+// Grammar Quiz Types for the Iqra app
 
 export type GrammarQuizDifficulty = 'beginner' | 'intermediate' | 'advanced' | 'mixed';
 

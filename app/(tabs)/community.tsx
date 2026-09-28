@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import * as communityService from '../../src/services/communityService';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { useSettingsStore } from '../../src/stores/settingsStore';
+import { useModerationStore } from '../../src/stores/moderationStore';
 import { GroupsTab } from '../../src/components/community/GroupsTab';
 import { DiscussionsTab } from '../../src/components/community/DiscussionsTab';
 import { ChallengesTab } from '../../src/components/community/ChallengesTab';
@@ -39,6 +40,11 @@ export default function CommunityScreen() {
     if (userId && progress.totalXp > 0) {
       communityService.syncProgress(userId, progress.totalXp, progress.currentStreak, progress.longestStreak);
     }
+  }, [userId]);
+
+  // Blocks made on another device hide their content here too.
+  useEffect(() => {
+    if (userId) void useModerationStore.getState().sync();
   }, [userId]);
 
   return (

@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { notifyGroupMessage } from './push';
+import { maskProfanity } from '../lib/profanityFilter';
 import {
   DiscussionThread,
   DiscussionCategory,
@@ -104,8 +105,8 @@ export async function fetchReplies(threadId: string, userId?: string): Promise<D
       id: r.id,
       threadId: r.thread_id,
       userId: r.user_id,
-      authorName: r.author_name,
-      body: r.body,
+      authorName: maskProfanity(r.author_name),
+      body: maskProfanity(r.body),
       likeCount: r.like_count || 0,
       isLiked: likedReplyIds.has(r.id),
       createdAt: r.created_at,
@@ -127,7 +128,7 @@ export async function createThread(
     const client = getClient();
     const { data, error } = await client
       .from('discussion_threads')
-      .insert({ user_id: userId, author_name: authorName, title, body, category })
+      .insert({ user_id: userId, author_name: authorName, title: maskProfanity(title), body: maskProfanity(body), category })
       .select()
       .single();
 
@@ -149,7 +150,7 @@ export async function createReply(
     const client = getClient();
     const { data, error } = await client
       .from('discussion_replies')
-      .insert({ thread_id: threadId, user_id: userId, author_name: authorName, body })
+      .insert({ thread_id: threadId, user_id: userId, author_name: authorName, body: maskProfanity(body) })
       .select()
       .single();
 
@@ -699,7 +700,7 @@ export async function sendGroupMessage(
         user_id: userId,
         author_name: authorName,
         avatar,
-        body,
+        body: maskProfanity(body),
         type: 'chat',
         reply_to_id: opts.replyToId || null,
         mentions: opts.mentions && opts.mentions.length ? opts.mentions : [],
@@ -725,7 +726,7 @@ export async function editGroupMessage(messageId: string, newBody: string): Prom
     const client = getClient();
     const { error } = await client
       .from('group_messages')
-      .update({ body: newBody, edited_at: new Date().toISOString() })
+      .update({ body: maskProfanity(newBody), edited_at: new Date().toISOString() })
       .eq('id', messageId);
     if (error) throw error;
     return true;
@@ -1624,9 +1625,10 @@ function mapThread(row: any): DiscussionThread {
   const hoursSinceCreated = (Date.now() - new Date(createdAt).getTime()) / 3600000;
   return {
     id: row.id,
-    title: row.title,
-    body: row.body,
-    authorName: row.author_name,
+    title: maskProfanity(row.title),
+    body: maskProfanity(row.body),
+    authorName: maskProfanity(row.author_name),
+    authorId: row.user_id || undefined,
     category: row.category,
     replyCount: row.reply_count || 0,
     likeCount: row.like_count || 0,

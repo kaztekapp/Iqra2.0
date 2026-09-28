@@ -42,6 +42,11 @@ interface SettingsState {
   remindersAsked: boolean;
   setRemindersAsked: () => void;
 
+  // Community rules (zero tolerance for objectionable content), accepted
+  // once before the first post. Store review requires it for user content.
+  communityRulesAccepted: boolean;
+  acceptCommunityRules: () => void;
+
   // Auth (NOT persisted - Supabase manages its own session)
   session: Session | null;
   user: User | null;
@@ -81,6 +86,9 @@ export const useSettingsStore = create<SettingsState>()(
       remindersAsked: false,
       setRemindersAsked: () => set({ remindersAsked: true }),
 
+      communityRulesAccepted: false,
+      acceptCommunityRules: () => set({ communityRulesAccepted: true }),
+
       // Auth
       session: null,
       user: null,
@@ -110,6 +118,7 @@ export const useSettingsStore = create<SettingsState>()(
         arabicDeviceVoiceId: state.arabicDeviceVoiceId,
         reminders: state.reminders,
         remindersAsked: state.remindersAsked,
+        communityRulesAccepted: state.communityRulesAccepted,
         // session, user, isAuthenticated are NOT persisted
       }),
     }

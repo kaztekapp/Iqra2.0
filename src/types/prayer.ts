@@ -1,4 +1,4 @@
-// Prayer Practice Types for Iqra2.0 App
+// Prayer Practice Types for the Iqra app
 // Types for the Prayer Guide & Sujud as-Sahw features
 
 // ============ Prayer Category Types ============

@@ -108,8 +108,16 @@ Deno.serve(async (req) => {
       .select('user_id, muted')
       .eq('group_id', message.group_id);
 
+    // Someone who blocked the author never sees their messages in the app, so
+    // a notification would leak exactly what the block is meant to hide.
+    const { data: blockers } = await supa
+      .from('blocked_users')
+      .select('blocker_id')
+      .eq('blocked_id', message.user_id);
+    const blockedBy = new Set((blockers ?? []).map((b) => b.blocker_id as string));
+
     const recipients = (members ?? [])
-      .filter((m) => m.user_id !== message.user_id && !m.muted)
+      .filter((m) => m.user_id !== message.user_id && !m.muted && !blockedBy.has(m.user_id))
       .map((m) => m.user_id);
     if (recipients.length === 0) return json({ sent: 0, reason: 'nobody to tell' });
 

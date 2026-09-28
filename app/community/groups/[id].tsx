@@ -63,6 +63,10 @@ import { ReactionPicker } from '../../../src/components/community/ReactionPicker
 import { GroupLeaderboard } from '../../../src/components/community/GroupLeaderboard';
 import { VoiceRecorder } from '../../../src/components/community/VoiceRecorder';
 import { MessageActionSheet } from '../../../src/components/community/MessageActionSheet';
+import { useModeration, afterSheetCloses } from '../../../src/components/community/useModeration';
+import { useCommunityRules } from '../../../src/components/community/useCommunityRules';
+import { useBlockedMap } from '../../../src/stores/moderationStore';
+import { maskProfanity } from '../../../src/lib/profanityFilter';
 import { ReplyPreviewBar } from '../../../src/components/community/ReplyPreviewBar';
 import { MentionAutocomplete } from '../../../src/components/community/MentionAutocomplete';
 import { TypingIndicator } from '../../../src/components/community/TypingIndicator';
@@ -109,9 +113,9 @@ function rowToMessage(row: GroupMessageRow): MappedMessage {
   return {
     id: row.id,
     userId: row.user_id,
-    authorName: row.author_name,
+    authorName: maskProfanity(row.author_name),
     avatar: row.avatar || row.author_name.charAt(0).toUpperCase(),
-    body: row.body,
+    body: maskProfanity(row.body),
     type: row.type as GroupMessage['type'],
     createdAt: row.created_at,
     audioUrl: row.audio_url,
@@ -159,6 +163,10 @@ export default function GroupDetailScreen() {
   const joinGroup = useCommunityStore((s) => s.joinGroup);
   const leaveGroup = useCommunityStore((s) => s.leaveGroup);
   const deleteGroup = useCommunityStore((s) => s.deleteGroup);
+
+  const moderation = useModeration();
+  const rules = useCommunityRules();
+  const blocked = useBlockedMap();
 
   const [activeTab, setActiveTab] = useState<Tab>('chat');
   const [messageText, setMessageText] = useState('');
@@ -224,15 +232,16 @@ export default function GroupDetailScreen() {
   const canManage = isAdmin || isModerator;
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'You';
 
-  // FIX #4: Memoized deduplication
+  // FIX #4: Memoized deduplication. Messages from people this person has
+  // blocked are dropped here, so they vanish the moment the block is made.
   const dedupedMessages = useMemo(() => {
     const seen = new Set<string>();
     return messages.filter((m) => {
       if (seen.has(m.id)) return false;
       seen.add(m.id);
-      return true;
+      return !(m.userId && blocked[m.userId]);
     });
-  }, [messages]);
+  }, [messages, blocked]);
 
   // Lookup for resolving reply previews.
   const messagesById = useMemo(() => {
@@ -576,7 +585,7 @@ export default function GroupDetailScreen() {
       const target = editingMessage;
       setEditingMessage(null);
       setMessageText('');
-      setMessages((prev) => prev.map((m) => (m.id === target.id ? { ...m, body: text, editedAt: new Date().toISOString() } : m)));
+      setMessages((prev) => prev.map((m) => (m.id === target.id ? { ...m, body: maskProfanity(text), editedAt: new Date().toISOString() } : m)));
       await editGroupMessage(target.id, text);
       return;
     }
@@ -597,7 +606,7 @@ export default function GroupDetailScreen() {
         userId: user.id,
         authorName: displayName,
         avatar: displayName.charAt(0).toUpperCase(),
-        body: text,
+        body: maskProfanity(text),
         type: 'message',
         createdAt: new Date().toISOString(),
         replyToId: replyId,
@@ -1306,15 +1315,15 @@ export default function GroupDetailScreen() {
                 isJoined={isJoined}
                 messageText={messageText}
                 onChangeText={handleChangeText}
-                onSend={handleSend}
+                onSend={() => rules.gate(handleSend)}
                 isSending={isSending}
                 placeholder={t('community.messagePlaceholder')}
                 joinLabel={t('community.joinGroup')}
-                onMicPress={() => setIsRecording(true)}
+                onMicPress={() => rules.gate(() => setIsRecording(true))}
                 isRecording={isRecording}
                 editing={!!editingMessage}
                 onCancelEdit={() => { setEditingMessage(null); setMessageText(''); }}
-                onCreate={() => setShowCreateSheet(true)}
+                onCreate={() => rules.gate(() => setShowCreateSheet(true))}
                 groupColor={group.color}
               />
             )}
@@ -1417,8 +1426,8 @@ export default function GroupDetailScreen() {
               inviteCode={inviteCode}
               onGenerateInvite={handleGenerateInvite}
               onRsvpSession={handleRsvp}
-              onCreateSession={() => setShowSessionModal(true)}
-              onCreateChallenge={() => setShowChallengeModal(true)}
+              onCreateSession={() => rules.gate(() => setShowSessionModal(true))}
+              onCreateChallenge={() => rules.gate(() => setShowChallengeModal(true))}
             />
           </ScrollView>
         )}
@@ -1449,6 +1458,9 @@ export default function GroupDetailScreen() {
         const m = actionSheetMsg;
         const isMine = m.userId === user?.id || m.authorName === displayName;
         const isText = m.type === 'chat' || m.type === 'message';
+        const isSystem = m.type === 'system' || m.type === 'milestone';
+        const canReport = !isMine && !isSystem && !m.id.startsWith('local-');
+        const snapshot = m.body || m.imageUrl || m.audioUrl || m.type;
         return (
           <MessageActionSheet
             visible={!!actionSheetMsg}
@@ -1462,6 +1474,9 @@ export default function GroupDetailScreen() {
               isPinned: false,
               canEdit: isMine && isText,
               canDelete: isMine || canManage,
+              canReport,
+              canBlock: canReport && !!m.userId,
+              authorName: m.authorName,
             }}
             onReact={(emoji) => handleToggleReaction(m.id, emoji)}
             onReply={() => handleStartReply(m)}
@@ -1470,10 +1485,24 @@ export default function GroupDetailScreen() {
             onPinToggle={() => {}}
             onEdit={() => handleStartEdit(m)}
             onDelete={() => handleDeleteMessage(m)}
+            onReport={() => afterSheetCloses(() => moderation.openReport({
+              contentType: 'group_message',
+              contentId: m.id,
+              authorId: m.userId,
+              authorName: m.authorName,
+              snapshot,
+            }))}
+            onBlock={() => {
+              const authorId = m.userId;
+              if (authorId) afterSheetCloses(() => moderation.confirmBlock(authorId, m.authorName));
+            }}
             onClose={() => setActionSheetMsg(null)}
           />
         );
       })()}
+
+      {moderation.element}
+      {rules.element}
 
       <ImageLightbox uri={lightboxUri} onClose={() => setLightboxUri(null)} />
 

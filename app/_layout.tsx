@@ -302,6 +302,7 @@ function RootLayout() {
           <Stack.Screen name="community/thread/[id]" />
           <Stack.Screen name="community/groups/[id]" />
           <Stack.Screen name="community/groups/invite/[code]" />
+          <Stack.Screen name="community/blocked" />
           <Stack.Screen name="reset-password" />
           <Stack.Screen name="privacy-policy" />
           <Stack.Screen name="terms-of-service" />

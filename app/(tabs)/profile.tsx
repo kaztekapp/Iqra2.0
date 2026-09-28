@@ -590,6 +590,23 @@ export default function ProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
             </Pressable>
+            {isAuthenticated && (
+              <>
+                <View style={styles.settingDivider} />
+                <Pressable
+                  style={styles.legalRow}
+                  onPress={() => router.push('/community/blocked' as Href)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('moderation.blockedUsers')}
+                >
+                  <View style={styles.settingLeft}>
+                    <Ionicons name="ban-outline" size={22} color={color.textMuted} />
+                    <Text style={styles.settingTitle}>{t('moderation.blockedUsers')}</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
+                </Pressable>
+              </>
+            )}
           </View>
         </View>
 

@@ -1,5 +1,5 @@
 /**
- * Iqra AI design tokens — "Light garden"
+ * Iqra design tokens — "Light garden"
  *
  * The visual language borrows from two objects: the pale green of a prayer rug
  * and the cream page of a Mushaf. The ground is mint paper, cards are white
