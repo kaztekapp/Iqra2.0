@@ -172,8 +172,8 @@ export const PROPHETS: Prophet[] = [
     title: 'The Sacrificed One',
     titleFr: 'Le Sacrifié',
     titleArabic: 'الذبيح',
-    summary: 'Son of Ibrahim, he willingly submitted to Allah\'s command to be sacrificed. He helped build the Kaaba and is an ancestor of Prophet Muhammad (PBUH).',
-    summaryFr: 'Fils d\'Ibrahim, il s\'est volontairement soumis à l\'ordre d\'Allah d\'être sacrifié. Il a aidé à construire la Kaaba et est un ancêtre du Prophète Muhammad (PSL).',
+    summary: 'Son of Ibrahim, he willingly submitted to Allah\'s command to be sacrificed. He helped build the Kaaba and is an ancestor of Prophet Muhammad (peace be upon him).',
+    summaryFr: 'Fils d\'Ibrahim, il s\'est volontairement soumis à l\'ordre d\'Allah d\'être sacrifié. Il a aidé à construire la Kaaba et est un ancêtre du Prophète Muhammad (paix et bénédictions sur lui).',
     hasSubStories: true,
     lessons: [
       'Submission to Allah\'s will',

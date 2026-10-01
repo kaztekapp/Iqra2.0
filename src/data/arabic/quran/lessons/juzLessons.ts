@@ -1792,13 +1792,13 @@ export const JUZ_LESSONS: JuzLesson[] = [
     keyThemes: [
       'Jinn listening to Quran',
       'Victory and conquest',
-      'Muhammad (PBUH) praised',
+      'Muhammad ﷺ praised',
       'Winning and losing',
     ],
     keyThemesFr: [
       'Les Djinns écoutent le Coran',
       'Victoire et conquête',
-      'Muhammad (PSL) loué',
+      'Muhammad ﷺ loué',
       'Victoire et défaite',
     ],
     highlights: [

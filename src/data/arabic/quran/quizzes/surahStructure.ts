@@ -1922,7 +1922,7 @@ const SET_14_QUESTIONS: QuizQuestion[] = [
     options: ['صَحِيحٌ - True', 'خَطَأٌ - False'],
     optionsFr: ['صَحِيحٌ - Vrai', 'خَطَأٌ - Faux'],
     correctAnswer: 'صَحِيحٌ - True',
-    explanation: 'قَالَ النَّبِيُّ ﷺ إِنَّ سُورَةَ الإِخْلَاصِ تَعْدِلُ ثُلُثَ القُرْآنِ.\nThe Prophet (PBUH) said Al-Ikhlas equals one-third of the Quran.',
+    explanation: 'قَالَ النَّبِيُّ ﷺ إِنَّ سُورَةَ الإِخْلَاصِ تَعْدِلُ ثُلُثَ القُرْآنِ.\nThe Prophet (peace be upon him) said Al-Ikhlas equals one-third of the Quran.',
     explanationFr: 'Le Prophète (paix sur lui) a dit qu\'Al-Ikhlas équivaut au tiers du Coran.',
   },
   {
@@ -1979,7 +1979,7 @@ const SET_15_QUESTIONS: QuizQuestion[] = [
     questionArabic: 'مَا السُّورَةُ الَّتِي تُسَمَّى "قَلْبَ القُرْآنِ"؟',
     options: ['الفَاتِحَةِ - Al-Fatiha', 'البَقَرَةِ - Al-Baqarah', 'يٰسٓ - Yasin', 'الرَّحْمٰنِ - Ar-Rahman'],
     correctAnswer: 'يٰسٓ - Yasin',
-    explanation: 'سَمَّاهَا النَّبِيُّ ﷺ قَلْبَ القُرْآنِ.\nProphet Muhammad (PBUH) called Yasin the heart of the Quran.',
+    explanation: 'سَمَّاهَا النَّبِيُّ ﷺ قَلْبَ القُرْآنِ.\nProphet Muhammad (peace be upon him) called Yasin the heart of the Quran.',
     explanationFr: 'Le Prophète (paix sur lui) a appelé Yasin le coeur du Coran.',
   },
   {
