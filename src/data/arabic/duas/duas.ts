@@ -1757,7 +1757,7 @@ export const DUAS: Dua[] = [
     source: {
       collection: 'abu_dawud',
       hadithNumber: '4982',
-      narrator: 'Abu al-Malih, from a man who rode behind the Prophet',
+      narrator: 'Abu al-Malih, from a man who rode behind the Prophet ﷺ',
     },
     occasion: 'When your animal stumbles, your car skids, or anything goes wrong on the road. Do not curse the devil; say Bismillah',
     occasionFr: 'Quand votre monture trébuche, que la voiture dérape, ou que quelque chose tourne mal sur la route. Ne maudissez pas le diable ; dites Bismillah',
@@ -2068,8 +2068,8 @@ export const DUAS: Dua[] = [
   },
   {
     id: 'prophets-muhammad-increase-knowledge',
-    titleEnglish: 'Dua Taught to the Prophet: Increase Me in Knowledge',
-    titleFrench: 'Invocation enseignée au Prophète : accrois ma science',
+    titleEnglish: 'Dua Taught to the Prophet ﷺ: Increase Me in Knowledge',
+    titleFrench: 'Invocation enseignée au Prophète ﷺ : accrois ma science',
     titleArabic: 'رَّبِّ زِدْنِي عِلْمًا',
     category: 'prophets',
     arabicText: 'رَّبِّ زِدْنِي عِلْمًا',
