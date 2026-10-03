@@ -2089,6 +2089,29 @@ export const DUAS: Dua[] = [
     storyFr: '« Que soit exalté Allah, le Vrai Souverain ! Ne te hâte pas de réciter le Coran avant que ne te soit achevée sa révélation, et dis : Seigneur, accrois mes connaissances. » (sourate Ta-Ha 20:114)',
     order: 102,
   },
+  {
+    id: 'ism-al-azam',
+    titleEnglish: 'Dua with Allah\'s Greatest Name (al-Ism al-A\'zam)',
+    titleFrench: 'Invocation par le Nom le plus Grandiose d\'Allah (al-Ism al-A\'zam)',
+    titleArabic: 'الدُّعَاءُ بِاسْمِ اللَّهِ الْأَعْظَمِ',
+    category: 'distress',
+    arabicText: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنَّ لَكَ الْحَمْدَ، لَا إِلَٰهَ إِلَّا أَنْتَ، الْمَنَّانُ، بَدِيعُ السَّمَاوَاتِ وَالْأَرْضِ، يَا ذَا الْجَلَالِ وَالْإِكْرَامِ، يَا حَيُّ يَا قَيُّومُ',
+    transliteration: 'Allahumma inni as\'aluka bi-anna lakal-hamd, la ilaha illa Anta, al-Mannan, Badi\'us-samawati wal-ard, ya Dhal-Jalali wal-Ikram, ya Hayyu ya Qayyum',
+    translation: 'O Allah, I ask You, for to You belongs all praise. There is no god but You, the Bestower of favours, Originator of the heavens and the earth. O Possessor of Majesty and Honour, O Ever-Living, O Sustainer of all.',
+    translationFr: 'Ô Allah, je Te demande, car à Toi appartient toute louange. Il n\'y a de divinité que Toi, le Bienfaiteur, Créateur des cieux et de la terre. Ô Détenteur de la Majesté et de la Générosité, ô Vivant, ô Celui qui subsiste par Lui-même.',
+    source: {
+      collection: 'abu_dawud',
+      hadithNumber: '1495',
+      narrator: 'Anas ibn Malik',
+    },
+    occasion: 'Before asking Allah for what you need: after the prayer, and at the times when duas are most accepted (the last third of the night, between the adhan and the iqamah, in prostration, and the last hour of Friday afternoon)',
+    occasionFr: 'Avant de demander à Allah ce dont tu as besoin : après la prière, et aux moments où les invocations sont le plus exaucées (le dernier tiers de la nuit, entre l\'adhan et l\'iqama, en prosternation, et la dernière heure du vendredi après-midi)',
+    virtues: 'The Prophet (peace be upon him) said: "He has called upon Allah by His Greatest Name, which, when He is called upon by it, He answers, and when He is asked by it, He gives." He also taught that every dua is answered in one of three ways: it is granted soon, saved for the Hereafter, or an equal harm is turned away (Musnad Ahmad 11133).',
+    virtuesFr: 'Le Prophète (paix et bénédictions sur lui) a dit : « Il a invoqué Allah par Son Nom le plus Grandiose, par lequel, lorsqu\'Il est invoqué, Il répond, et lorsqu\'on Lui demande, Il donne. » Il a aussi enseigné que toute invocation est exaucée de l\'une de trois façons : elle est accordée bientôt, gardée pour l\'au-delà, ou un mal équivalent est écarté (Musnad Ahmad 11133).',
+    story: 'Anas ibn Malik was sitting with the Messenger of Allah (peace be upon him) while a man was praying. When the man finished, he made dua with these words. The Prophet (peace be upon him) said that he had called upon Allah by His Greatest Name, by which He answers whoever calls and gives to whoever asks.',
+    storyFr: 'Anas ibn Malik était assis avec le Messager d\'Allah (paix et bénédictions sur lui) pendant qu\'un homme priait. Lorsque l\'homme termina, il fit une invocation avec ces paroles. Le Prophète (paix et bénédictions sur lui) dit qu\'il avait invoqué Allah par Son Nom le plus Grandiose, par lequel Il répond à celui qui L\'invoque et donne à celui qui Lui demande.',
+    order: 103,
+  },
 ];
 
 // Get all duas
