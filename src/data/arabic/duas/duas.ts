@@ -1315,7 +1315,7 @@ export const DUAS: Dua[] = [
     occasion: 'Recite when seeking contentment and blessings in provision',
     virtues: 'This dua seeks the true wealth - contentment (qana\'ah). The Prophet (peace be upon him) said: "Richness is not having many possessions, but richness is contentment of the soul."',
     story: 'This supplication teaches us to seek contentment with what Allah has given us, to ask for barakah (blessings) in our provision, and to trust that whatever we lose, Allah will replace it with something better. This reflects the prophetic teaching that true richness lies in being satisfied with what one has.',
-    order: 67,
+    order: 66,
   },
   {
     id: 'dua-good-ending',
@@ -1333,7 +1333,7 @@ export const DUAS: Dua[] = [
     occasion: 'Recite regularly, especially in old age or times of reflection',
     virtues: 'This dua asks Allah for what matters most - to end life on the best note, with the best deeds, looking forward to meeting Allah.',
     story: 'The Prophet (peace be upon him) taught his companions the importance of seeking a good ending (husn al-khatimah). A person\'s final moments and deeds carry immense weight, and this dua expresses the hope that our best days are yet to come - culminating in the day we meet our Lord.',
-    order: 68,
+    order: 67,
   },
   {
     id: 'dua-morning-evening-protection',
@@ -1351,7 +1351,7 @@ export const DUAS: Dua[] = [
     occasion: 'Recite in the morning (change "Asbahna" to "Amsayna" in the evening)',
     virtues: 'This comprehensive morning dhikr acknowledges Allah\'s sovereignty, expresses gratitude, and affirms tawheed (monotheism).',
     story: 'The Prophet (peace be upon him) would begin his day with this beautiful supplication, acknowledging that the new day and all dominion belongs to Allah alone. In the evening, the words are adjusted to "Amsayna wa amsal-mulku lillah" (We have entered the evening...). This establishes the believer\'s mindset of complete reliance on Allah.',
-    order: 69,
+    order: 68,
   },
   {
     id: 'peace-allah-is-salam',
@@ -1374,7 +1374,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'As-Salam est l\'un des noms d\'Allah (sourate Al-Hashr 59:23). Le Prophète (paix et bénédictions sur lui) ne quittait jamais une prière sans ces mots ; ils placent la source de toute paix en Allah seul.',
     story: 'Thawban reported: "When the Messenger of Allah (peace be upon him) finished his prayer, he would ask forgiveness three times and say: O Allah, You are Peace and from You comes peace. Blessed are You, O Possessor of majesty and honour." (Sahih Muslim 591)',
     storyFr: 'Thawban a rapporté : « Lorsque le Messager d\'Allah (paix et bénédictions sur lui) terminait sa prière, il demandait pardon trois fois puis disait : Ô Allah, Tu es la Paix et de Toi vient la paix. Béni sois-Tu, ô Détenteur de la majesté et de la générosité. » (Sahih Muslim 591)',
-    order: 71,
+    order: 69,
   },
   {
     id: 'peace-expand-my-chest',
@@ -1397,7 +1397,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Allah répondit aussitôt : « Ta demande est exaucée, ô Musa. » (sourate Ta-Ha 20:36). Une poitrine ouverte est le calme d\'où viennent les paroles claires.',
     story: 'In Surah Ta-Ha (20:24) Allah commanded Musa: "Go to Pharaoh. Indeed, he has transgressed." Musa answered with this dua, asking first for his own heart to be widened, then for ease, then for clear speech (20:25-28). Allah granted it (20:36).',
     storyFr: 'Dans la sourate Ta-Ha (20:24), Allah ordonna à Musa : « Va vers Pharaon, car il a outrepassé les limites. » Musa répondit par cette invocation, demandant d\'abord que son propre cœur soit ouvert, puis la facilité, puis une parole claire (20:25-28). Allah la lui accorda (20:36).',
-    order: 72,
+    order: 70,
   },
   {
     id: 'peace-pour-patience',
@@ -1420,7 +1420,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le Coran rapporte la réponse au verset suivant : « Ils les mirent en déroute, par la grâce d\'Allah, et Dawud tua Jalut. » (sourate Al-Baqarah 2:251)',
     story: 'When Talut crossed the river with the few who stayed with him, and they saw Jalut and his army, those who were certain of meeting Allah said: "How many a small company has overcome a large company by permission of Allah." Then they said this dua (Surah Al-Baqarah 2:249-250).',
     storyFr: 'Lorsque Talut traversa la rivière avec le petit nombre resté avec lui, et qu\'ils virent Jalut et son armée, ceux qui étaient certains de rencontrer Allah dirent : « Combien de fois une troupe peu nombreuse a vaincu une troupe nombreuse par la grâce d\'Allah. » Puis ils dirent cette invocation (sourate Al-Baqarah 2:249-250).',
-    order: 73,
+    order: 71,
   },
   {
     id: 'peace-no-rancour',
@@ -1443,7 +1443,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La paix entre croyants commence dans la poitrine. Allah Lui-même a enseigné ces mots comme la prière des générations venues après les Compagnons.',
     story: 'In Surah Al-Hashr, after describing the Muhajirun (59:8) and the Ansar who loved those who emigrated to them (59:9), Allah describes those who came after them: they say this dua for those who preceded them in faith (59:10).',
     storyFr: 'Dans la sourate Al-Hashr, après avoir décrit les Muhajirun (59:8) et les Ansar qui aimaient ceux qui avaient émigré vers eux (59:9), Allah décrit ceux qui vinrent après eux : ils disent cette invocation pour ceux qui les ont précédés dans la foi (59:10).',
-    order: 74,
+    order: 72,
   },
   {
     id: 'peace-secure-land',
@@ -1466,7 +1466,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Ibrahim demanda deux choses ensemble : une terre sûre et une famille préservée du shirk. Allah fit de La Mecque un sanctuaire, « cette cité sûre » (sourate At-Tin 95:3).',
     story: 'Ibrahim settled part of his family in a valley without crops beside the Sacred House (Surah Ibrahim 14:37). He asked Allah to make that land secure and to keep him and his sons from idols (14:35). Earlier he had asked the same when raising the House: "My Lord, make this a secure city." (Surah Al-Baqarah 2:126)',
     storyFr: 'Ibrahim installa une partie de sa famille dans une vallée sans culture près de la Maison sacrée (sourate Ibrahim 14:37). Il demanda à Allah de rendre cette terre sûre et de l\'éloigner, lui et ses fils, des idoles (14:35). Il avait déjà demandé la même chose en élevant la Maison : « Seigneur, fais de cette cité un lieu sûr. » (sourate Al-Baqarah 2:126)',
-    order: 75,
+    order: 73,
   },
   {
     id: 'peace-in-need-of-good',
@@ -1489,7 +1489,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Une prière de contentement : aucune exigence, seulement l\'aveu du besoin. Le Coran montre le secours arriver dès le verset suivant (28:25).',
     story: 'Musa fled Egypt alone and reached the water of Madyan. He watered the flock of two women who were holding back, then turned to the shade and said this dua (Surah Al-Qasas 28:23-24). Then one of the two came walking shyly and said: "My father invites you to reward you for having watered for us." (28:25)',
     storyFr: 'Musa fuit l\'Égypte seul et parvint au point d\'eau de Madyan. Il abreuva le troupeau de deux femmes qui se tenaient à l\'écart, puis se retira à l\'ombre et dit cette invocation (sourate Al-Qasas 28:23-24). Alors l\'une des deux vint à lui, marchant avec pudeur, et dit : « Mon père t\'appelle pour te récompenser d\'avoir abreuvé pour nous. » (28:25)',
-    order: 76,
+    order: 74,
   },
   {
     id: 'peace-save-from-wrongdoers',
@@ -1512,7 +1512,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Musa quitta la ville « craintif et sur ses gardes » (28:21), et pourtant avec ces mots sa peur se changea en espoir : « Peut-être mon Seigneur me guidera-t-Il vers le droit chemin. » (sourate Al-Qasas 28:22)',
     story: 'A man came running from the far side of the city and warned Musa that the chiefs were deliberating to kill him (Surah Al-Qasas 28:20). Musa left fearful and watchful and said this dua (28:21). He then set out toward Madyan (28:22).',
     storyFr: 'Un homme accourut de l\'autre bout de la ville et avertit Musa que les notables délibéraient pour le tuer (sourate Al-Qasas 28:20). Musa sortit craintif et sur ses gardes, et dit cette invocation (28:21). Il se dirigea ensuite vers Madyan (28:22).',
-    order: 77,
+    order: 75,
   },
   {
     id: 'peace-not-a-trial',
@@ -1535,7 +1535,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Ce sont les mots des croyants des Bani Israil sous Pharaon, dits juste après que Musa leur eut dit : « Si vous croyez en Allah, placez votre confiance en Lui. » (sourate Yunus 10:84)',
     story: 'Musa said: "O my people, if you have believed in Allah, then rely upon Him, if you are Muslims." They answered: "Upon Allah do we rely," and said this dua (Surah Yunus 10:84-86). Allah then revealed to Musa and his brother to settle their people in houses in Egypt and to give good tidings to the believers (10:87).',
     storyFr: 'Musa dit : « Ô mon peuple, si vous croyez en Allah, placez votre confiance en Lui, si vous êtes soumis. » Ils répondirent : « En Allah nous plaçons notre confiance », et dirent cette invocation (sourate Yunus 10:84-86). Allah révéla ensuite à Musa et à son frère d\'installer leur peuple dans des maisons en Égypte et d\'annoncer la bonne nouvelle aux croyants (10:87).',
-    order: 78,
+    order: 76,
   },
   {
     id: 'peace-set-right-my-affairs',
@@ -1558,7 +1558,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Rien n\'est oublié : la religion, ce monde, l\'autre, la vie et la mort. Celui qui la dit a demandé la paix dans toutes les directions que sa vie peut prendre.',
     story: 'Abu Hurairah reported that the Messenger of Allah (peace be upon him) used to say this dua. (Sahih Muslim 2720)',
     storyFr: 'Abu Hurairah a rapporté que le Messager d\'Allah (paix et bénédictions sur lui) disait cette invocation. (Sahih Muslim 2720)',
-    order: 79,
+    order: 77,
   },
   {
     id: 'peace-guidance-sufficiency',
@@ -1581,7 +1581,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Quatre mots qui couvrent la paix de l\'âme : être guidé, craindre Allah, être préservé de l\'illicite, et n\'avoir besoin de personne d\'autre que Lui.',
     story: 'Abdullah ibn Mas\'ud reported that the Prophet (peace be upon him) used to say: "O Allah, I ask You for guidance, piety, chastity and sufficiency." (Sahih Muslim 2721)',
     storyFr: 'Abdullah ibn Mas\'ud a rapporté que le Prophète (paix et bénédictions sur lui) disait : « Ô Allah, je Te demande la guidée, la piété, la chasteté et la suffisance. » (Sahih Muslim 2721)',
-    order: 80,
+    order: 78,
   },
   {
     id: 'peace-light-in-heart',
@@ -1604,7 +1604,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La lumière est demandée d\'abord pour le cœur, puis pour chaque côté du corps : une personne enveloppée de lumière de tous côtés n\'a plus rien à craindre.',
     story: 'Ibn Abbas spent a night at the house of his aunt Maymunah, the wife of the Prophet (peace be upon him). He reported that the Prophet rose in the night, prayed, and said this dua. (Sahih al-Bukhari 6316; also Sahih Muslim 763)',
     storyFr: 'Ibn Abbas passa une nuit chez sa tante Maymunah, l\'épouse du Prophète (paix et bénédictions sur lui). Il rapporta que le Prophète se leva dans la nuit, pria, et dit cette invocation. (Sahih al-Bukhari 6316 ; aussi Sahih Muslim 763)',
-    order: 81,
+    order: 79,
   },
   {
     id: 'peace-refuge-loss-of-blessing',
@@ -1627,7 +1627,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La paix n\'est pas seulement le soulagement après l\'épreuve ; c\'est la sécurité de ce que l\'on possède déjà. Cette invocation protège un bienfait contre sa perte.',
     story: 'Abdullah ibn Umar reported: "Among the supplications of the Messenger of Allah (peace be upon him) was: O Allah, I seek refuge in You from the removal of Your blessing, the change of the well-being You have given, the suddenness of Your punishment, and all that displeases You." (Sahih Muslim 2739)',
     storyFr: 'Abdullah ibn Umar a rapporté : « Parmi les invocations du Messager d\'Allah (paix et bénédictions sur lui), il y avait : Ô Allah, je cherche refuge auprès de Toi contre la disparition de Tes bienfaits, le changement de la santé que Tu accordes, la soudaineté de Ton châtiment, et tout ce qui provoque Ton courroux. » (Sahih Muslim 2739)',
-    order: 82,
+    order: 80,
   },
   {
     id: 'peace-send-down-sakinah',
@@ -1650,7 +1650,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La « sakinah » est le calme qu\'Allah fait descendre dans le cœur. Le Coran dit de Hudaybiyah : « C\'est Lui qui a fait descendre la sérénité dans les cœurs des croyants. » (sourate Al-Fath 48:4)',
     story: 'Al-Bara ibn Azib reported that on the day of the Trench he saw the Messenger of Allah (peace be upon him) carrying earth with them until dust covered the skin of his belly, and he was saying these words (Sahih al-Bukhari 4106). They are verses of Abdullah ibn Rawahah, and the Prophet raised his voice with their last words.',
     storyFr: 'Al-Bara ibn Azib a rapporté que le jour du Fossé, il vit le Messager d\'Allah (paix et bénédictions sur lui) transporter la terre avec eux jusqu\'à ce que la poussière couvre la peau de son ventre, en disant ces mots (Sahih al-Bukhari 4106). Ce sont des vers d\'Abdullah ibn Rawahah, et le Prophète élevait la voix sur leurs derniers mots.',
-    order: 83,
+    order: 81,
   },
   {
     id: 'peace-your-mercy-i-hope',
@@ -1673,7 +1673,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le Prophète (paix et bénédictions sur lui) a appelé ces mots « les invocations de l\'affligé ». Hadith jugé hasan (bon).',
     story: 'Abu Bakrah reported that the Messenger of Allah (peace be upon him) said: "The supplications of the distressed are: O Allah, Your mercy I hope for, so do not leave me to myself even for the blink of an eye, and set right for me all my affairs. There is no god but You." (Sunan Abu Dawud 5090)',
     storyFr: 'Abu Bakrah a rapporté que le Messager d\'Allah (paix et bénédictions sur lui) a dit : « Les invocations de l\'affligé sont : Ô Allah, c\'est Ta miséricorde que j\'espère ; ne me laisse pas à moi-même, ne serait-ce que le temps d\'un clin d\'œil, et arrange toutes mes affaires. Il n\'y a de divinité que Toi. » (Sunan Abu Dawud 5090)',
-    order: 84,
+    order: 82,
   },
   {
     id: 'journey-ship',
@@ -1696,7 +1696,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La plus ancienne invocation de voyage du Coran. Nuh plaça le départ et l\'arrivée tous deux au nom d\'Allah, et l\'arche se posa sur le mont Judi (sourate Hud 11:44).',
     story: 'When the water gushed forth, Allah commanded Nuh to load the ark with a pair of every kind, his family except those already condemned, and those who believed; and only a few believed with him. Nuh said: "Embark in it. In the name of Allah is its course and its anchorage. Indeed, my Lord is Forgiving and Merciful." And it sailed with them through waves like mountains. (Surah Hud 11:40-42)',
     storyFr: 'Lorsque l\'eau jaillit, Allah ordonna à Nuh de charger dans l\'arche un couple de chaque espèce, sa famille sauf ceux déjà condamnés, et ceux qui avaient cru ; et bien peu avaient cru avec lui. Nuh dit : « Montez dedans. Qu\'au nom d\'Allah soient sa course et son mouillage. Mon Seigneur est certes Pardonneur et Miséricordieux. » Et elle vogua avec eux au milieu de vagues comme des montagnes. (sourate Hud 11:40-42)',
-    order: 85,
+    order: 83,
   },
   {
     id: 'journey-stopping-place',
@@ -1719,7 +1719,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le Prophète (paix et bénédictions sur lui) a promis : « Rien ne lui nuira jusqu\'à ce qu\'il quitte cet endroit. » (Sahih Muslim 2708)',
     story: 'Khawlah bint Hakim reported that she heard the Messenger of Allah (peace be upon him) say: "Whoever stops at a place and says: I seek refuge in the perfect words of Allah from the evil of what He has created, nothing will harm him until he departs from that place." (Sahih Muslim 2708)',
     storyFr: 'Khawlah bint Hakim a rapporté avoir entendu le Messager d\'Allah (paix et bénédictions sur lui) dire : « Quiconque fait halte en un lieu et dit : Je cherche refuge dans les paroles parfaites d\'Allah contre le mal de ce qu\'Il a créé, rien ne lui nuira jusqu\'à ce qu\'il quitte cet endroit. » (Sahih Muslim 2708)',
-    order: 86,
+    order: 84,
   },
   {
     id: 'journey-ascending-descending',
@@ -1742,7 +1742,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Les Compagnons firent de la forme même de la route un rappel : Allah est le plus Grand quand le sol s\'élève, gloire à Lui quand il s\'abaisse.',
     story: 'Jabir ibn Abdullah reported: "When we climbed, we said Allahu Akbar, and when we descended, we said Subhan Allah." (Sahih al-Bukhari 2993)',
     storyFr: 'Jabir ibn Abdullah a rapporté : « Quand nous montions, nous disions Allahu Akbar, et quand nous descendions, nous disions Subhan Allah. » (Sahih al-Bukhari 2993)',
-    order: 87,
+    order: 85,
   },
   {
     id: 'journey-mount-stumbles',
@@ -1765,7 +1765,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le Prophète (paix et bénédictions sur lui) expliqua : maudire le diable le fait enfler jusqu\'à être gros comme une maison et dire « par ma puissance » ; dire Bismillah le fait rapetisser jusqu\'à être comme une mouche. (Sunan Abu Dawud 4982)',
     story: 'A man who was riding behind the Prophet (peace be upon him) reported that the mount stumbled and he said: "May the devil perish!" The Prophet said: "Do not say may the devil perish, for when you say that he swells up until he is like a house and says: by my power. Rather say: Bismillah, for when you say that he shrinks until he is like a fly." (Sunan Abu Dawud 4982)',
     storyFr: 'Un homme qui montait derrière le Prophète (paix et bénédictions sur lui) a rapporté que la monture trébucha et qu\'il dit : « Que le diable périsse ! » Le Prophète dit : « Ne dis pas que le diable périsse, car lorsque tu dis cela il enfle jusqu\'à être comme une maison et dit : par ma puissance. Dis plutôt : Bismillah, car lorsque tu dis cela il rapetisse jusqu\'à être comme une mouche. » (Sunan Abu Dawud 4982)',
-    order: 88,
+    order: 86,
   },
   {
     id: 'journey-farewell-to-traveler',
@@ -1788,7 +1788,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Trois choses sont remises à la garde d\'Allah : la foi du voyageur, ce qu\'il porte et ce qu\'il doit, et la fin où ses œuvres le mèneront. Rien n\'est laissé à la route.',
     story: 'Ibn Umar used to say to a man who intended to travel: "Come close so I may bid you farewell as the Messenger of Allah (peace be upon him) used to bid us farewell." Then he would say: "I entrust to Allah your religion, your trust, and the final outcome of your deeds." (Sunan Abu Dawud 2600)',
     storyFr: 'Ibn Umar disait à un homme qui voulait voyager : « Approche, que je te fasse mes adieux comme le Messager d\'Allah (paix et bénédictions sur lui) nous faisait ses adieux. » Puis il disait : « Je confie à Allah ta religion, ce qui t\'a été confié, et l\'issue de tes œuvres. » (Sunan Abu Dawud 2600)',
-    order: 89,
+    order: 87,
   },
   {
     id: 'journey-farewell-from-traveler',
@@ -1811,7 +1811,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le voyageur laisse ses proches en dépôt auprès d\'Allah, et Allah ne perd pas ce qui Lui est confié.',
     story: 'Abu Hurairah reported that the Messenger of Allah (peace be upon him) said: "Whoever wishes to travel, let him say to those he leaves behind: I entrust you to Allah, whose trusts are never lost." (Sunan Ibn Majah 2825)',
     storyFr: 'Abu Hurairah a rapporté que le Messager d\'Allah (paix et bénédictions sur lui) a dit : « Que celui qui veut voyager dise à ceux qu\'il laisse : Je vous confie à Allah, auprès de qui les dépôts ne se perdent jamais. » (Sunan Ibn Majah 2825)',
-    order: 90,
+    order: 88,
   },
   {
     id: 'journey-fear-of-people',
@@ -1834,7 +1834,7 @@ export const DUAS: Dua[] = [
     virtuesFr: '« Dans leurs gorges » est l\'image arabe : Allah est placé droit devant la menace, pour qu\'elle Le rencontre avant de vous atteindre.',
     story: 'Abu Musa reported that when the Messenger of Allah (peace be upon him) feared a people, he would say: "O Allah, we place You before them, and we seek refuge in You from their evil." (Sunan Abu Dawud 1537)',
     storyFr: 'Abu Musa a rapporté que lorsque le Messager d\'Allah (paix et bénédictions sur lui) craignait un peuple, il disait : « Ô Allah, nous Te plaçons face à eux, et nous cherchons refuge auprès de Toi contre leur mal. » (Sunan Abu Dawud 1537)',
-    order: 91,
+    order: 89,
   },
   {
     id: 'journey-rooster-donkey',
@@ -1857,7 +1857,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le hadith donne l\'instruction, « demandez à Allah de Sa grâce » et « cherchez refuge auprès d\'Allah contre le diable » ; les mots ci-dessus sont ces instructions dites simplement. Le coq a vu un ange, l\'âne un diable.',
     story: 'Abu Hurairah reported that the Prophet (peace be upon him) said: "When you hear the crowing of roosters, ask Allah of His bounty, for they have seen an angel. And when you hear the braying of a donkey, seek refuge in Allah from the devil, for it has seen a devil." (Sahih al-Bukhari 3303)',
     storyFr: 'Abu Hurairah a rapporté que le Prophète (paix et bénédictions sur lui) a dit : « Quand vous entendez le chant des coqs, demandez à Allah de Sa grâce, car ils ont vu un ange. Et quand vous entendez le braiment d\'un âne, cherchez refuge auprès d\'Allah contre le diable, car il a vu un diable. » (Sahih al-Bukhari 3303)',
-    order: 92,
+    order: 90,
   },
   {
     id: 'prophets-nuh-forgive-household',
@@ -1880,7 +1880,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Les dernières paroles de Nuh rapportées dans le Coran. Après neuf cent cinquante ans d\'appel à son peuple (sourate Al-Ankabut 29:14), sa dernière prière est le pardon pour tous ceux qui ont cru.',
     story: 'Surah Nuh ends with his prayer. He first asked that the wrongdoers not be left on the earth (71:26-27), then turned to those he loved: "My Lord, forgive me and my parents and whoever enters my house as a believer, and the believing men and believing women." (71:28)',
     storyFr: 'La sourate Nuh se termine par sa prière. Il demanda d\'abord que les injustes ne soient pas laissés sur la terre (71:26-27), puis se tourna vers ceux qu\'il aimait : « Seigneur, pardonne-moi, et à mes père et mère, et à celui qui entre dans ma demeure croyant, ainsi qu\'aux croyants et aux croyantes. » (71:28)',
-    order: 93,
+    order: 91,
   },
   {
     id: 'prophets-ibrahim-ismail-kaaba',
@@ -1903,7 +1903,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Ils n\'ont pas demandé de récompense pour avoir élevé la Maison d\'Allah ; ils ont demandé qu\'elle soit acceptée. L\'acceptation est ce qu\'il faut demander après chaque œuvre.',
     story: '"And when Ibrahim was raising the foundations of the House, and Ismail with him: Our Lord, accept this from us..." (Surah Al-Baqarah 2:127-128). In the next verse they asked for a messenger from their own descendants to recite the verses and teach the Book (2:129).',
     storyFr: '« Et quand Ibrahim et Ismail élevaient les assises de la Maison : Ô notre Seigneur, accepte ceci de notre part... » (sourate Al-Baqarah 2:127-128). Au verset suivant, ils demandèrent un messager issu de leur descendance pour réciter les versets et enseigner le Livre (2:129).',
-    order: 94,
+    order: 92,
   },
   {
     id: 'prophets-ibrahim-wisdom',
@@ -1926,7 +1926,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Allah exauça pleinement la demande du milieu : « Et Nous avons laissé pour lui une bonne renommée parmi les générations futures : Paix sur Ibrahim. » (sourate As-Saffat 37:108-109)',
     story: 'Ibrahim described his Lord to his people, the One who created him, guides him, feeds him, cures him, and will resurrect him (Surah Ash-Shu\'ara 26:78-82), then turned to Him with this dua (26:83-85).',
     storyFr: 'Ibrahim décrivit son Seigneur à son peuple, Celui qui l\'a créé, le guide, le nourrit, le guérit et le ressuscitera (sourate Ash-Shu\'ara 26:78-82), puis se tourna vers Lui avec cette invocation (26:83-85).',
-    order: 95,
+    order: 93,
   },
   {
     id: 'prophets-lut-save-family',
@@ -1949,7 +1949,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Allah répondit : « Nous le sauvâmes donc, lui et toute sa famille, sauf une vieille femme parmi ceux qui restèrent en arrière. » (sourate Ash-Shu\'ara 26:170-171)',
     story: 'Lut warned his people against their sin and they answered: "If you do not stop, O Lut, you will surely be of those driven out." He said: "Indeed, I am of those who hate your deed. My Lord, save me and my family from what they do." (Surah Ash-Shu\'ara 26:167-169)',
     storyFr: 'Lut mit son peuple en garde contre son péché et ils répondirent : « Si tu ne cesses pas, Lut, tu seras certainement du nombre des expulsés. » Il dit : « Je déteste vraiment ce que vous faites. Seigneur, sauve-moi ainsi que ma famille de ce qu\'ils font. » (sourate Ash-Shu\'ara 26:167-169)',
-    order: 96,
+    order: 94,
   },
   {
     id: 'prophets-yusuf-die-muslim',
@@ -1972,7 +1972,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Au moment où ses parents et ses frères se prosternèrent devant lui et où son rêve se réalisa, Yusuf ne demanda rien de ce monde, seulement de mourir soumis. L\'homme le plus puissant d\'Égypte demanda une bonne fin.',
     story: 'Yusuf raised his parents to the throne and they fell down before him in prostration. He said: "O my father, this is the explanation of my dream of before." Then he turned to his Lord with this dua. (Surah Yusuf 12:100-101)',
     storyFr: 'Yusuf fit monter ses parents sur le trône et ils tombèrent devant lui prosternés. Il dit : « Ô mon père, voilà l\'interprétation de mon rêve de jadis. » Puis il se tourna vers son Seigneur avec cette invocation. (sourate Yusuf 12:100-101)',
-    order: 97,
+    order: 95,
   },
   {
     id: 'prophets-shuayb-judge-between-us',
@@ -1995,7 +1995,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Shuayb avait déjà été menacé d\'expulsion. Au lieu de répondre à la menace par la menace, il remit l\'affaire au meilleur des juges.',
     story: 'The arrogant chiefs of Shuayb\'s people said: "We will surely drive you out, O Shuayb, and those who believe with you from our city, or you must return to our religion." He answered that they would never return to it after Allah had saved them, and said: "Upon Allah we have relied. Our Lord, decide between us and our people in truth, and You are the best of those who decide." (Surah Al-A\'raf 7:88-89)',
     storyFr: 'Les notables arrogants du peuple de Shuayb dirent : « Nous t\'expulserons certainement de notre cité, ô Shuayb, ainsi que ceux qui ont cru avec toi, à moins que vous ne reveniez à notre religion. » Il répondit qu\'ils n\'y reviendraient jamais après qu\'Allah les en eut sauvés, et dit : « C\'est en Allah que nous plaçons notre confiance. Ô notre Seigneur, tranche par la vérité entre nous et notre peuple, car Tu es le meilleur des juges. » (sourate Al-A\'raf 7:88-89)',
-    order: 98,
+    order: 96,
   },
   {
     id: 'prophets-ayyub-harm',
@@ -2018,7 +2018,7 @@ export const DUAS: Dua[] = [
     virtuesFr: '« Nous l\'exauçâmes, enlevâmes le mal qu\'il avait, lui rendîmes les siens et autant qu\'eux avec eux. » (sourate Al-Anbiya 21:84)',
     story: '"And Ayyub, when he called to his Lord: Indeed, adversity has touched me, and You are the Most Merciful of the merciful." (Surah Al-Anbiya 21:83). Ayyub did not name what he wanted; he described his state and Allah\'s mercy, and Allah did the rest.',
     storyFr: '« Et Ayyub, quand il implora son Seigneur : Le mal m\'a touché, et Tu es le plus Miséricordieux des miséricordieux. » (sourate Al-Anbiya 21:83). Ayyub ne nomma pas ce qu\'il voulait ; il décrivit son état et la miséricorde d\'Allah, et Allah fit le reste.',
-    order: 99,
+    order: 97,
   },
   {
     id: 'prophets-sulayman-gratitude',
@@ -2041,7 +2041,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Sulayman avait la royauté, le vent, les djinns et le langage des oiseaux ; sa réponse à un bienfait fut de demander la capacité d\'en être reconnaissant.',
     story: 'An ant said: "O ants, enter your dwellings so that you are not crushed by Sulayman and his soldiers while they perceive not." Sulayman smiled, amused at her speech, and said this dua. (Surah An-Naml 27:18-19)',
     storyFr: 'Une fourmi dit : « Ô fourmis, entrez dans vos demeures, de peur que Sulayman et ses armées ne vous écrasent sans s\'en rendre compte. » Sulayman sourit, amusé par ses paroles, et dit cette invocation. (sourate An-Naml 27:18-19)',
-    order: 100,
+    order: 98,
   },
   {
     id: 'prophets-zakariyya-offspring',
@@ -2064,7 +2064,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Zakariyya était âgé et sa femme stérile (sourate Maryam 19:8), et pourtant les anges l\'appelèrent alors qu\'il priait debout : « Allah t\'annonce la bonne nouvelle de Yahya. » (sourate Al Imran 3:39)',
     story: 'Whenever Zakariyya entered upon Maryam in her prayer chamber he found provision with her, and she said it was from Allah. "At that, Zakariyya called upon his Lord: My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication." (Surah Al Imran 3:37-38). In Surah Al-Anbiya he also said: "My Lord, do not leave me alone, and You are the best of inheritors." (21:89)',
     storyFr: 'Chaque fois que Zakariyya entrait auprès de Maryam dans son sanctuaire, il trouvait chez elle de la nourriture, et elle disait que cela venait d\'Allah. « Alors Zakariyya invoqua son Seigneur : Ô mon Seigneur, donne-moi, venant de Toi, une excellente descendance. Car Tu es Celui qui entend bien la prière. » (sourate Al Imran 3:37-38). Dans la sourate Al-Anbiya, il dit aussi : « Seigneur, ne me laisse pas seul, et Tu es le meilleur des héritiers. » (21:89)',
-    order: 101,
+    order: 99,
   },
   {
     id: 'prophets-muhammad-increase-knowledge',
@@ -2087,7 +2087,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'La seule chose qu\'Allah ordonna à Son Messager (paix et bénédictions sur lui) de demander en plus est la science. Trois mots, et la plus courte invocation de ce recueil.',
     story: '"So exalted is Allah, the Sovereign, the Truth. And do not hasten with the Quran before its revelation is completed to you, and say: My Lord, increase me in knowledge." (Surah Ta-Ha 20:114)',
     storyFr: '« Que soit exalté Allah, le Vrai Souverain ! Ne te hâte pas de réciter le Coran avant que ne te soit achevée sa révélation, et dis : Seigneur, accrois mes connaissances. » (sourate Ta-Ha 20:114)',
-    order: 102,
+    order: 100,
   },
   {
     id: 'ism-al-azam',
@@ -2110,7 +2110,7 @@ export const DUAS: Dua[] = [
     virtuesFr: 'Le Prophète (paix et bénédictions sur lui) a dit : « Il a invoqué Allah par Son Nom le plus Grandiose, par lequel, lorsqu\'Il est invoqué, Il répond, et lorsqu\'on Lui demande, Il donne. » Il a aussi enseigné que toute invocation est exaucée de l\'une de trois façons : elle est accordée bientôt, gardée pour l\'au-delà, ou un mal équivalent est écarté (Musnad Ahmad 11133).',
     story: 'Anas ibn Malik was sitting with the Messenger of Allah (peace be upon him) while a man was praying. When the man finished, he made dua with these words. The Prophet (peace be upon him) said that he had called upon Allah by His Greatest Name, by which He answers whoever calls and gives to whoever asks.',
     storyFr: 'Anas ibn Malik était assis avec le Messager d\'Allah (paix et bénédictions sur lui) pendant qu\'un homme priait. Lorsque l\'homme termina, il fit une invocation avec ces paroles. Le Prophète (paix et bénédictions sur lui) dit qu\'il avait invoqué Allah par Son Nom le plus Grandiose, par lequel Il répond à celui qui L\'invoque et donne à celui qui Lui demande.',
-    order: 103,
+    order: 101,
   },
 ];
 
