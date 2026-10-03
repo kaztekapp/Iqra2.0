@@ -68,7 +68,7 @@ The fr-FR App Store description, with "La lecture continue en arrière-plan, éc
 ## Data safety form
 
 **Is data encrypted in transit?** Yes (HTTPS to Supabase, Sentry, Expo).
-**Can users request that data be deleted?** Yes, in the app (Profile → Delete Profile), or by email to support@mkaztek.com.
+**Can users request that data be deleted?** Yes, in the app (Profile → Delete Account), or by email to support@mkaztek.com.
 
 | Data type | Collected | Shared | Optional? | Purpose |
 |---|---|---|---|---|
@@ -111,7 +111,7 @@ The app lets users post content. Declare:
 
 ## Account deletion (App content → Data deletion)
 
-- In-app path: Profile → Delete Profile
+- In-app path: Profile → Delete Account
 - Web path, required by Play: a page on the legal site that explains the in-app steps and gives the email support@mkaztek.com. Suggested URL: `https://kaztekapp.github.io/iqra-legal/delete-account.html`. The page is `docs/delete-account.html` in this repo; copy it to the legal site.
 
 ## Release notes 1.1.0

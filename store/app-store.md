@@ -78,7 +78,7 @@ Iqra means "Read", the first word revealed of the Quran. Begin with the first le
 tajweed,hadith,dua,surah,juz,reading,writing,vocabulary,grammar,salah,islam,muslim,koran,tajwid,quiz
 ```
 
-**Support URL:** `https://kaztekapp.github.io/iqra-legal/` *(placeholder: it must be a working page with a contact email, support@mkaztek.com)*
+**Support URL:** `https://kaztekapp.github.io/iqra-legal/` (the support page is `docs/index.html`, EN+FR, with support@mkaztek.com)
 **Marketing URL** (optional): leave empty for now
 **Privacy Policy URL:** `https://kaztekapp.github.io/iqra-legal/privacy-policy.html`. **Confirm with the user** that this page is live and has been updated to match the new policy before you submit.
 
