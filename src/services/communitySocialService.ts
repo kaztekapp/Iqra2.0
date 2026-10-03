@@ -736,20 +736,43 @@ export async function editGroupMessage(messageId: string, newBody: string): Prom
   }
 }
 
-/** Soft-delete: keeps the row so replies pointing at it stay valid. */
+/**
+ * Soft-delete: keeps the row so replies pointing at it stay valid. The voice
+ * note or image behind it is removed from storage afterwards; if that part
+ * fails the message is still gone and the file goes when the account does.
+ */
 export async function deleteGroupMessage(messageId: string): Promise<boolean> {
   try {
     const client = getClient();
+    const { data: before } = await client
+      .from('group_messages')
+      .select('audio_url, image_url')
+      .eq('id', messageId)
+      .maybeSingle();
     const { error } = await client
       .from('group_messages')
       .update({ is_deleted: true, body: '', audio_url: null, image_url: null, shared_content: null })
       .eq('id', messageId);
     if (error) throw error;
+    for (const url of [before?.audio_url, before?.image_url]) {
+      const file = storagePathFromPublicUrl(url);
+      if (!file) continue;
+      const { error: removeError } = await client.storage.from(file.bucket).remove([file.path]);
+      if (removeError && __DEV__) console.warn('[communitySocial] remove file error:', removeError);
+    }
     return true;
   } catch (e) {
     if (__DEV__) console.warn('[communitySocial] deleteGroupMessage error:', e);
     return false;
   }
+}
+
+/** Reads bucket and object path back out of a Supabase public URL. */
+function storagePathFromPublicUrl(url: string | null | undefined): { bucket: string; path: string } | null {
+  if (!url) return null;
+  const match = /\/storage\/v1\/object\/public\/([^/]+)\/(.+?)(?:\?.*)?$/.exec(url);
+  if (!match) return null;
+  return { bucket: match[1], path: decodeURIComponent(match[2]) };
 }
 
 // ── Image messages ──────────────────────────────────────────────

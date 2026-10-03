@@ -139,11 +139,41 @@ export async function updatePassword(newPassword: string) {
   if (error) throw error;
 }
 
+/**
+ * Removes the person's uploads (voice notes, chat images) and then the account.
+ * The files go first: once the account is gone nothing can list them, and the
+ * privacy policy promises they are removed with it. Any failure throws, so
+ * the button shows an error and the person can try again.
+ */
 export async function deleteAccount() {
   const client = getClient();
+  await deleteOwnStorageObjects();
   const { error } = await client.rpc('delete_own_account');
   if (error) throw error;
   useSettingsStore.getState().setSession(null);
+}
+
+/** Storage removes at most this many paths per call. */
+const STORAGE_REMOVE_BATCH = 100;
+
+async function deleteOwnStorageObjects() {
+  const client = getClient();
+  const { data, error } = await client.rpc('list_own_storage_objects');
+  if (error) throw error;
+  const byBucket = new Map<string, string[]>();
+  for (const row of (data ?? []) as { bucket_id: string; name: string }[]) {
+    const names = byBucket.get(row.bucket_id) ?? [];
+    names.push(row.name);
+    byBucket.set(row.bucket_id, names);
+  }
+  for (const [bucket, names] of byBucket) {
+    for (let i = 0; i < names.length; i += STORAGE_REMOVE_BATCH) {
+      const { error: removeError } = await client.storage
+        .from(bucket)
+        .remove(names.slice(i, i + STORAGE_REMOVE_BATCH));
+      if (removeError) throw removeError;
+    }
+  }
 }
 
 export async function getSession() {

@@ -31,3 +31,5 @@ Every caption is 30 characters or fewer (see `check-lengths.cjs`).
 ## Feature graphic (Play)
 
 The app icon on the left. "Iqra" in large emerald text, and "Learn Arabic & Quran" beneath it, on a mint background with a soft gold arabesque at the edge. Make a French version with "Arabe & Coran".
+
+**Ready to upload** in `store/assets/`: `feature-graphic-en.png`, `feature-graphic-fr.png` (1024 × 500, opaque) and `play-icon-512.png`. Regenerate the graphics with `scripts/make-feature-graphic.sh` (see its header); the icon is `sips -z 512 512 assets/images/icon.png --out store/assets/play-icon-512.png`.
