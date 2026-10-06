@@ -105,6 +105,14 @@ started is playing.
 
 Not applicable in 1.1.0: Community is hidden, so users cannot post anything others can see. Declare **No** user-generated content.
 
+## App access (App content → App access)
+
+All functionality is behind sign-in. Choose **"All or some functionality is restricted"** and add:
+- Name: `Reviewer account`
+- Username: `playreview@mkaztek.com`
+- Password: type it in Play Console yourself (it is not kept in this repo)
+- Instructions: `Sign in with the email and password above after the first onboarding screens. No other step is needed.`
+
 ## Account deletion (App content → Data deletion)
 
 - In-app path: Profile → Delete Account

@@ -217,7 +217,7 @@ Iqra is a free app for learning Arabic and the Quran. No purchases, no ads, no A
 SIGN-IN
 An account (email + password) is required after the short onboarding. It saves
 learning progress, XP and streaks so they follow the user to another device.
-Demo account: appreview@mkaztek.com (password in the Sign-In fields above).
+Demo account: applereview@mkaztek.com (password in the Sign-In fields above).
 Account deletion: Profile → Delete Account.
 
 BACKGROUND AUDIO (UIBackgroundModes: audio)
