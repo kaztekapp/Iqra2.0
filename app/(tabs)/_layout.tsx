@@ -4,6 +4,7 @@ import { Platform, StyleSheet, ColorValue } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { color, type, weight } from '../../src/theme/tokens';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 
 /**
  * Icons swap between outline and filled on selection, which is the platform
@@ -55,7 +56,11 @@ export default function TabLayout() {
     >
       <Tabs.Screen name="index" options={{ title: t('tabs.home'), tabBarIcon: tabIcon('index') }} />
       <Tabs.Screen name="learn" options={{ title: t('tabs.learn'), tabBarIcon: tabIcon('learn') }} />
-      <Tabs.Screen name="community" options={{ title: t('tabs.community'), tabBarIcon: tabIcon('community') }} />
+      {/* href: null takes the tab out of the bar until Community is released. */}
+      <Tabs.Screen
+        name="community"
+        options={{ title: t('tabs.community'), tabBarIcon: tabIcon('community'), href: COMMUNITY_ENABLED ? undefined : null }}
+      />
       <Tabs.Screen name="quran" options={{ title: t('tabs.quran'), tabBarIcon: tabIcon('quran') }} />
       <Tabs.Screen name="profile" options={{ title: t('tabs.profile'), tabBarIcon: tabIcon('profile') }} />
     </Tabs>
