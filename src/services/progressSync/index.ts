@@ -186,6 +186,15 @@ async function runSync(userId: string): Promise<void> {
   await loadMeta();
   await waitForHydration();
 
+  // Progress made before sync existed belongs to whoever is signed in the
+  // first time sync runs. Claim it before going to the network, so that
+  // signing out mid-sync and in as someone else switches accounts instead of
+  // handing them this progress.
+  if (!meta.owner) {
+    meta.owner = userId;
+    await saveMeta();
+  }
+
   const remote = await pull(userId);
   if (remote === 'failed') return; // never upload over a copy we could not read
 
