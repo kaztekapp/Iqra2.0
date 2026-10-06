@@ -4,7 +4,7 @@ export const LEGAL_CONSTANTS = {
   company: 'KazTek LLC',
   email: 'support@mkaztek.com',
   jurisdiction: 'Indiana, United States',
-  effectiveDate: '2026-09-28',
+  effectiveDate: '2026-10-06',
 };
 
 export interface LegalSection {
@@ -51,7 +51,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
     {
       title: 'Information Collected Automatically',
       content: [
-        '• Crash and error reports: we use Sentry to receive reports when the App crashes or an error occurs. A report contains technical details such as the device model, operating system, app version and what the App was doing. We have configured Sentry not to attach personal information such as your IP address or email.',
+        '• Crash and error reports: we use Sentry to receive reports when the App crashes or an error occurs. A report contains technical details such as the device model, operating system, app version and what the App was doing. If you are signed in, the report carries your account ID so we can tell repeated crashes apart; we have configured Sentry not to attach other personal information such as your IP address or email.',
         '• Notifications: if you allow notifications, we store your device\'s push token and app language so we can tell you about new messages in your groups. Learning reminders are scheduled on your device and do not go through our servers.',
         '• App updates: Expo Updates checks for new versions of the App, which sends basic technical information such as platform and app version.',
       ],
@@ -181,7 +181,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
     {
       title: 'Informations collectées automatiquement',
       content: [
-        '• Rapports de plantage et d\'erreur : nous utilisons Sentry pour recevoir un rapport lorsque l\'Application plante ou qu\'une erreur survient. Un rapport contient des détails techniques comme le modèle de l\'appareil, le système d\'exploitation, la version de l\'Application et ce qu\'elle faisait. Sentry est configuré pour ne pas joindre d\'informations personnelles comme votre adresse IP ou votre e-mail.',
+        '• Rapports de plantage et d\'erreur : nous utilisons Sentry pour recevoir un rapport lorsque l\'Application plante ou qu\'une erreur survient. Un rapport contient des détails techniques comme le modèle de l\'appareil, le système d\'exploitation, la version de l\'Application et ce qu\'elle faisait. Si vous êtes connecté, le rapport contient l\'identifiant de votre compte, pour distinguer les plantages répétés ; Sentry est configuré pour ne joindre aucune autre information personnelle, comme votre adresse IP ou votre e-mail.',
         '• Notifications : si vous les autorisez, nous conservons le jeton de notification de votre appareil et la langue de l\'Application afin de vous prévenir des nouveaux messages dans vos groupes. Les rappels d\'apprentissage sont programmés sur votre appareil et ne passent pas par nos serveurs.',
         '• Mises à jour : Expo Updates vérifie les nouvelles versions de l\'Application, ce qui transmet des informations techniques de base comme la plateforme et la version.',
       ],

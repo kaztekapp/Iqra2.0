@@ -8,14 +8,17 @@ const js = ts.transpileModule(src, { compilerOptions: { module: ts.ModuleKind.Co
 const m = { exports: {} }; new Function('module', 'exports', js)(m, m.exports);
 const { LEGAL_CONSTANTS: C, PRIVACY_POLICY_SECTIONS: P, TERMS_OF_SERVICE_SECTIONS: T } = m.exports;
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// The base style is read back from the last output, so drop the rules this
+// script adds before adding them again; otherwise every run duplicates them.
 const style = fs.readFileSync('docs/privacy-policy.html', 'utf8').match(/<style>[\s\S]*?<\/style>/)[0]
+  .replace(/^\s*(\.lang \{|\.lang a \{|ul \{|li \{|hr \{).*\n/gm, '')
   .replace('</style>', `    .lang { font-size: 14px; margin-bottom: 24px; }
     .lang a { margin-right: 12px; }
     ul { margin: 0 0 12px 20px; color: #334155; }
     li { margin-bottom: 6px; }
     hr { border: none; border-top: 1px solid #e2e8f0; margin: 48px 0 32px; }
   </style>`);
-const date = { en: 'September 28, 2026', fr: '28 septembre 2026' };
+const date = { en: 'October 6, 2026', fr: '6 octobre 2026' };
 function body(sections) {
   return sections.map((s) => {
     let out = '', list = [];
