@@ -24,16 +24,16 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       ],
     },
     {
-      title: 'Using the App Without an Account',
+      title: 'Your Account',
       content: [
-        'You can learn the alphabet, study vocabulary, read and listen to the Quran, and read the stories without creating an account. In that case your learning progress and preferences stay on your device, and we receive no account information about you.',
+        'You need an account to use the App. It saves your learning progress, experience points and streaks, so they follow you to another device and are not lost if you change or reset your phone. Your preferences and the recitations you have played are kept on your device.',
       ],
     },
     {
       title: 'Information You Give Us',
       content: [
         '• Account: your email address, a password (stored only as a secure hash by our authentication provider, Supabase), and the display name you choose.',
-        '• Learning progress: when you are signed in, your progress (letters, vocabulary, lessons), daily activity, experience points and streaks are saved to our servers so they can follow you to another device.',
+        '• Learning progress: your progress (letters, vocabulary, lessons), daily activity, experience points and streaks are saved to our servers so they can follow you to another device.',
         '• Community content: messages, photos and voice messages you send in study groups, reactions, polls, discussion threads and replies, study groups you create or join, study-partner connections, challenges, and shared lessons or quizzes.',
         '• Reports and blocks: if you report content, we store the report, the reason, any details you add, and a copy of the reported content. If you block someone, we store that you blocked them.',
       ],
@@ -121,7 +121,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       title: 'Data Retention',
       content: [
         'We keep your account data while your account exists. When you delete your account, your profile, progress and community data are deleted from our database, and remaining copies (such as uploaded files and backups) are removed within 30 days. Reports about abuse may be kept longer when needed to protect the community or meet legal obligations.',
-        'Data stored only on your device (offline audio, preferences, progress when signed out) is removed when you uninstall the App.',
+        'Data stored only on your device (offline audio and preferences) is removed when you uninstall the App.',
       ],
     },
     {
@@ -154,16 +154,16 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       ],
     },
     {
-      title: 'Utiliser l\'Application sans compte',
+      title: 'Votre compte',
       content: [
-        'Vous pouvez apprendre l\'alphabet, étudier le vocabulaire, lire et écouter le Coran et lire les récits sans créer de compte. Dans ce cas, votre progression et vos préférences restent sur votre appareil et nous ne recevons aucune information de compte vous concernant.',
+        'Un compte est nécessaire pour utiliser l\'Application. Il enregistre votre progression, vos points d\'expérience et vos séries, pour qu\'ils vous suivent sur un autre appareil et ne soient pas perdus si vous changez ou réinitialisez votre téléphone. Vos préférences et les récitations que vous avez écoutées sont conservées sur votre appareil.',
       ],
     },
     {
       title: 'Informations que vous nous fournissez',
       content: [
         '• Compte : votre adresse e-mail, un mot de passe (conservé uniquement sous forme de hachage sécurisé par notre fournisseur d\'authentification, Supabase) et le nom d\'affichage que vous choisissez.',
-        '• Progression : lorsque vous êtes connecté, votre progression (lettres, vocabulaire, leçons), votre activité quotidienne, vos points d\'expérience et vos séries sont enregistrés sur nos serveurs afin de vous suivre sur un autre appareil.',
+        '• Progression : votre progression (lettres, vocabulaire, leçons), votre activité quotidienne, vos points d\'expérience et vos séries sont enregistrés sur nos serveurs afin de vous suivre sur un autre appareil.',
         '• Contenu communautaire : messages, photos et messages vocaux envoyés dans les groupes d\'étude, réactions, sondages, discussions et réponses, groupes d\'étude que vous créez ou rejoignez, partenaires d\'étude, défis, et leçons ou quiz partagés.',
         '• Signalements et blocages : si vous signalez un contenu, nous conservons le signalement, le motif, les détails éventuels et une copie du contenu signalé. Si vous bloquez quelqu\'un, nous conservons ce blocage.',
       ],
@@ -251,7 +251,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       title: 'Conservation des données',
       content: [
         'Nous conservons les données de votre compte tant qu\'il existe. Lorsque vous supprimez votre compte, votre profil, votre progression et vos données communautaires sont supprimés de notre base de données, et les copies restantes (comme les fichiers envoyés et les sauvegardes) sont supprimées sous 30 jours. Les signalements d\'abus peuvent être conservés plus longtemps lorsque c\'est nécessaire pour protéger la communauté ou respecter nos obligations légales.',
-        'Les données conservées uniquement sur votre appareil (audio hors ligne, préférences, progression hors connexion) sont supprimées lorsque vous désinstallez l\'Application.',
+        'Les données conservées uniquement sur votre appareil (audio hors ligne et préférences) sont supprimées lorsque vous désinstallez l\'Application.',
       ],
     },
     {
