@@ -3,6 +3,8 @@
 Package `com.iqra2.app`, version 1.1.0. Character counts are at the bottom and were checked with `store/check-lengths.cjs`.
 The app has **no AI, no ads and no in-app purchases**. In Play Console: *Contains ads: No*, *In-app purchases: No*.
 
+**Community is not in 1.1.0** (hidden by `COMMUNITY_ENABLED`), so the answers below leave out chat, voice messages and posts. Restore them from git history (commit d4f9604) when Community ships.
+
 ---
 
 ## en-US (default)
@@ -56,13 +58,13 @@ The fr-FR App Store description, with "La lecture continue en arrière-plan, éc
 - Category: **Reference, News, or Educational**
 - Violence: the stories mention killing and drowning as scripture, with nothing shown. Answer **No** to graphic violence and describe it as non-graphic references if asked.
 - Sexuality, language, controlled substances, gambling: **No**
-- **Users can interact or exchange content: Yes** (group chat, voice messages, discussions)
+- Users can interact or exchange content: **No** (Community is hidden in 1.1.0)
 - Shares the user's location: No. Digital purchases: No.
-- Expect roughly **Teen / PEGI 12 / USK 12**, because users can talk to each other.
+- With no user interaction, expect a lower rating than Teen; the scripture stories' non-graphic violence is the only content item.
 
 ## Target audience and content
 
-- Target age groups: **13–15, 16–17, 18+**. Do **not** tick under-13. That would put the app under the Families policy, which the chat doesn't meet.
+- Target age groups: **13–15, 16–17, 18+**. Do **not** tick under-13: that puts the app under the Families policy, and Community (planned) would not meet it.
 - Appeals to children: No.
 
 ## Data safety form
@@ -72,12 +74,10 @@ The fr-FR App Store description, with "La lecture continue en arrière-plan, éc
 
 | Data type | Collected | Shared | Optional? | Purpose |
 |---|---|---|---|---|
-| Personal info → Email address | Yes | No | Required for an account; the app works without one | Account management, App functionality |
+| Personal info → Email address | Yes | No | Required (an account is required) | Account management, App functionality |
 | Personal info → Name (display name) | Yes | No | Same as email | Account management, App functionality |
 | Personal info → User IDs | Yes | No | Same as email | Account management, App functionality, Analytics |
-| Messages → Other in-app messages | Yes (group chat, discussions, reports) | No | Optional | App functionality |
-| Audio → Voice or sound recordings | Yes (voice messages) | No | Optional | App functionality |
-| App activity → Other actions (learning progress, XP, streaks) | Yes | No | Only when signed in | App functionality |
+| App activity → Other actions (learning progress, XP, streaks) | Yes | No | Required | App functionality |
 | App info and performance → Crash logs | Yes (Sentry) | No | Required | Analytics |
 | App info and performance → Diagnostics | Yes (Sentry performance, 20 % sample) | No | Required | Analytics |
 | Device or other IDs | Yes (push token, stored with the account) | No | Optional | App functionality |
@@ -99,15 +99,11 @@ started is playing.
 ```
 - **Video to record** (under 60 s; upload unlisted to YouTube and paste the link): open the Quran tab, open a surah, tap **Play All** and let it play. Press the power button and show the audio still playing. Wake the phone and pull down the notification shade to show the media notification. Tap pause.
 
-**`RECORD_AUDIO`**: used for voice messages in study groups and for pronunciation practice. It is requested only when the user taps the mic.
+**`RECORD_AUDIO`**: used for pronunciation practice. It is requested only when the user taps the mic.
 
 ## User-generated content (App content → UGC)
 
-The app lets users post content. Declare:
-- Users must accept terms that prohibit objectionable content: **Yes** (the community-rules prompt before the first post, linked to the Terms)
-- In-app reporting of users and content: **Yes** (long-press a message; "•••" on threads and replies)
-- In-app blocking: **Yes** (Profile → Blocked people to undo)
-- Moderation: reports are reviewed within 24 hours (**only true once the report-alert email is deployed**)
+Not applicable in 1.1.0: Community is hidden, so users cannot post anything others can see. Declare **No** user-generated content.
 
 ## Account deletion (App content → Data deletion)
 
@@ -123,7 +119,6 @@ EN
 • Arabic letters in Naskh, Ruqʿah and Nastaʿliq
 • New Islamic calendar course
 • Study reminders and a streak warning
-• Report and block in the community
 • Recitations stay on your phone for offline listening
 ```
 FR
@@ -133,6 +128,5 @@ FR
 • Les lettres arabes en Naskh, Ruqʿah et Nastaʿliq
 • Nouveau cours sur le calendrier islamique
 • Rappels d'étude et alerte de série
-• Signaler et bloquer dans la communauté
 • Les récitations restent sur votre téléphone pour l'écoute hors ligne
 ```

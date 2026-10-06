@@ -4,6 +4,8 @@ Version 1.1.0, **iPhone only** (`supportsTablet: false`). Paste each field into 
 
 Every feature claim was checked against the code on 2026-09-28. The app has **no AI, no ads and no in-app purchases**. Don't add any of those words back.
 
+**Community is not in 1.1.0** (hidden by `COMMUNITY_ENABLED` since 2026-10-06), so nothing below mentions groups, chat, discussions or challenges. When Community ships, restore the community lines from git history (commit d4f9604) in a build submitted for review, not by turning the flag on over the air.
+
 ---
 
 ## en-US (primary)
@@ -60,12 +62,6 @@ DUAS AND PRAYER
 PRACTICE YOUR PRONUNCIATION
 • Say a word in Arabic and see whether it was understood (optional, uses the microphone)
 
-LEARN TOGETHER
-• Study groups with chat and voice messages, shared lessons and quizzes
-• Discussions to ask questions and share tips
-• Challenges and a weekly leaderboard
-• Report or block anyone, any time
-
 STAY ON TRACK
 • Daily streaks, XP and achievements
 • Gentle reminders at your study time, a warning before a streak ends, and Surah al-Kahf every Friday
@@ -89,7 +85,6 @@ tajweed,hadith,dua,surah,juz,reading,writing,vocabulary,grammar,salah,islam,musl
 • See the Arabic letters in Naskh, Ruq’ah and Nasta’liq
 • New Islamic calendar course
 • Study reminders and a streak warning
-• Report and block in the community
 • Recitations stay on your phone for offline listening
 ```
 
@@ -149,12 +144,6 @@ INVOCATIONS ET PRIÈRE
 TRAVAILLER LA PRONONCIATION
 • Prononcez un mot en arabe et voyez s'il a été compris (facultatif, utilise le micro)
 
-APPRENDRE ENSEMBLE
-• Groupes d'étude avec discussion, messages vocaux, leçons et quiz partagés
-• Forum pour poser des questions et partager des conseils
-• Défis et classement de la semaine
-• Signalez ou bloquez n'importe qui, à tout moment
-
 GARDER LE RYTHME
 • Séries quotidiennes, XP et succès
 • Des rappels à votre heure d'étude, une alerte avant la fin d'une série, et la sourate al-Kahf chaque vendredi
@@ -174,7 +163,6 @@ tajwid,sourate,hadith,invocation,doua,priere,lecture,ecriture,vocabulaire,gramma
 • Les lettres arabes en Naskh, Ruq’ah et Nasta’liq
 • Nouveau cours sur le calendrier islamique
 • Rappels d'étude et alerte de série
-• Signaler et bloquer dans la communauté
 • Les récitations restent sur votre téléphone pour l'écoute hors ligne
 ```
 
@@ -194,16 +182,16 @@ tajwid,sourate,hadith,invocation,doua,priere,lecture,ecriture,vocabulaire,gramma
 | Realistic violence | **Infrequent/Mild**. The stories of the prophets tell events like Cain killing Abel, or Pharaoh's army drowning, as scripture and without graphic detail. Answering Mild is the safe choice. |
 | Medical or treatment information | No |
 | Unrestricted web access | No. The in-app browser only opens our own pages. |
-| **User-generated content** | **Yes**: group chat, voice messages and discussions |
-| **Messaging and chat** | **Yes** |
+| User-generated content | No (Community is hidden in 1.1.0) |
+| Messaging and chat | No (Community is hidden in 1.1.0) |
 | Advertising | No |
 | Parental controls / age assurance | No |
 
-Messaging and user content will probably put the rating at **13+**. Don't try to get 4+: the app doesn't target children, and the updated privacy policy must say the same thing.
+With Community hidden, mild realistic violence is the only content item, so expect a lower rating than the 13+ that chat would bring. Answer the questions truthfully and let Apple compute it. When Community ships, user content and messaging go back to Yes.
 
 ## App Privacy (the "nutrition label")
 
-Derived from the code: Supabase tables, the `voice-notes` storage bucket, `push_tokens`, and `Sentry.setUser({ id })` in `src/lib/report.ts`.
+Derived from the code: Supabase tables, `push_tokens`, and `Sentry.setUser({ id })` in `src/lib/report.ts`. With Community hidden, voice messages and posts are not collected, so Audio Data and Other User Content are left off.
 
 **Tracking:** **No.** There's no advertising SDK, no IDFA, and no data broker.
 
@@ -211,10 +199,8 @@ Derived from the code: Supabase tables, the `voice-notes` storage bucket, `push_
 |---|---|---|---|---|
 | Contact Info → **Email Address** | Yes (account) | Yes | No | App Functionality |
 | Contact Info → **Name** | Yes (display name) | Yes | No | App Functionality |
-| User Content → **Audio Data** | Yes (voice messages in groups) | Yes | No | App Functionality |
-| User Content → **Other User Content** | Yes (chat messages, discussion posts, replies, reports) | Yes | No | App Functionality |
 | Identifiers → **User ID** | Yes (Supabase ID, also attached to crash reports) | Yes | No | App Functionality, Analytics (crash reports) |
-| Usage Data → **Product Interaction** | Yes (learning progress, XP, streaks, leaderboard, activity feed synced to the account) | Yes | No | App Functionality |
+| Usage Data → **Product Interaction** | Yes (learning progress, XP and streaks synced to the account) | Yes | No | App Functionality |
 | Diagnostics → **Crash Data** | Yes (Sentry) | Yes (user ID) | No | App Functionality |
 | Diagnostics → **Performance Data** | Yes (Sentry traces, 20 % sample) | Yes (user ID) | No | App Functionality |
 | Identifiers → **Device ID** | Declare **Yes** to be safe: the push token is stored with the user ID | Yes | No | App Functionality |
@@ -229,31 +215,18 @@ Derived from the code: Supabase tables, the `voice-notes` storage bucket, `push_
 Iqra is a free app for learning Arabic and the Quran. No purchases, no ads, no AI.
 
 SIGN-IN
-Learning, the Quran reader, stories and duas all work without an account.
-An account (email + password) is only needed for the Community tab
-(study groups, group chat, discussions, leaderboard).
-Demo account: <DEMO EMAIL> / <DEMO PASSWORD>
-It is already a member of a study group with messages, so chat can be reviewed.
-
-USER-GENERATED CONTENT (Guideline 1.2)
-• Before posting for the first time, users must accept community rules that have
-  zero tolerance for objectionable content or abusive users (with a link to the Terms).
-• Long-press any message from someone else in a group chat → Report / Block.
-  Discussion threads and replies have a "•••" menu with Report / Block.
-• Blocking hides that person's content right away. Profile → Blocked people lets you unblock.
-• Objectionable words are filtered out of posted text.
-• Every report emails our team, and we act on it within 24 hours.
-• Account deletion: Profile → Delete Account.
+An account (email + password) is required after the short onboarding. It saves
+learning progress, XP and streaks so they follow the user to another device.
+Demo account: appreview@mkaztek.com (password in the Sign-In fields above).
+Account deletion: Profile → Delete Account.
 
 BACKGROUND AUDIO (UIBackgroundModes: audio)
 Quran recitation (Surah → Play All) and the read-aloud stories keep playing
 when the screen is locked, like any audio player. Stop from the lock screen or in the app.
 
 MICROPHONE / SPEECH RECOGNITION
-• Vocabulary → Speaking practice: the user says a word in Arabic, and iOS speech recognition
-  checks it.
-• Community → group chat: hold the mic button to record a voice message.
-Both are optional and only start when the user taps them.
+Vocabulary → Speaking practice: the user says a word in Arabic, and iOS speech
+recognition checks it. It is optional and only starts when the user taps the mic.
 ```
 
-> **Before you submit:** create the demo account and put it in a group that has a few messages. Fill in the `<DEMO …>` placeholders. The "emails our team" line is only true once the report-alert function is deployed; change the wording if it isn't.
+> **Before you submit:** type the demo account's password in App Review → Sign-In Information (it is kept in TestFlight → Test Information).

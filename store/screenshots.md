@@ -21,7 +21,7 @@ Use the app's light green "garden" palette for the caption band: a mint backgrou
 | 4 | Alphabet → Scripts: one letter in Naskh, Ruqʿah and Nastaʿliq | Three ways to write Arabic | Trois styles d'écriture |
 | 5 | Vocabulary flashcard (Arabic side, with the theme visible) | Build your vocabulary | Enrichissez votre vocabulaire |
 | 6 | Surah Learn mode: verse range, speed and repeat controls | Memorize at your own pace | Mémorisez à votre rythme |
-| 7 | Study group chat with a voice message and a shared quiz (use the demo account and friendly sample content) | Learn together | Apprendre ensemble |
+| 7 | A dua: Arabic, transliteration and meaning, with the audio playing | Duas for every day | Invocations du quotidien |
 | 8 | Home: streak, XP, daily goal | Keep your streak going | Gardez le rythme |
 
 Every caption is 30 characters or fewer (see `check-lengths.cjs`).
