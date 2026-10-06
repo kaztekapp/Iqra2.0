@@ -33,7 +33,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       title: 'Information You Give Us',
       content: [
         '• Account: your email address, a password (stored only as a secure hash by our authentication provider, Supabase), and the display name you choose.',
-        '• Learning progress: your progress (letters, vocabulary, lessons), daily activity, experience points and streaks are saved to our servers so they can follow you to another device.',
+        '• Learning progress: your progress (letters, vocabulary, lessons, Quran reading and memorization, stories, duas and quiz results), daily activity, experience points and streaks are saved to our servers so they can follow you to another device.',
         '• Community content: messages, photos and voice messages you send in study groups, reactions, polls, discussion threads and replies, study groups you create or join, study-partner connections, challenges, and shared lessons or quizzes.',
         '• Reports and blocks: if you report content, we store the report, the reason, any details you add, and a copy of the reported content. If you block someone, we store that you blocked them.',
       ],
@@ -163,7 +163,7 @@ export const PRIVACY_POLICY_SECTIONS: Record<'en' | 'fr', LegalSection[]> = {
       title: 'Informations que vous nous fournissez',
       content: [
         '• Compte : votre adresse e-mail, un mot de passe (conservé uniquement sous forme de hachage sécurisé par notre fournisseur d\'authentification, Supabase) et le nom d\'affichage que vous choisissez.',
-        '• Progression : votre progression (lettres, vocabulaire, leçons), votre activité quotidienne, vos points d\'expérience et vos séries sont enregistrés sur nos serveurs afin de vous suivre sur un autre appareil.',
+        '• Progression : votre progression (lettres, vocabulaire, leçons, lecture et mémorisation du Coran, histoires, invocations et résultats aux quiz), votre activité quotidienne, vos points d\'expérience et vos séries sont enregistrés sur nos serveurs afin de vous suivre sur un autre appareil.',
         '• Contenu communautaire : messages, photos et messages vocaux envoyés dans les groupes d\'étude, réactions, sondages, discussions et réponses, groupes d\'étude que vous créez ou rejoignez, partenaires d\'étude, défis, et leçons ou quiz partagés.',
         '• Signalements et blocages : si vous signalez un contenu, nous conservons le signalement, le motif, les détails éventuels et une copie du contenu signalé. Si vous bloquez quelqu\'un, nous conservons ce blocage.',
       ],

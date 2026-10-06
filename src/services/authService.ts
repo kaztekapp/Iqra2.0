@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { unregisterPushToken } from './push';
+import { flushProgress, stopProgressSync, forgetProgressOwner } from './progressSync';
 import { useSettingsStore } from '../stores/settingsStore';
 
 function getClient() {
@@ -113,6 +114,10 @@ export async function signInWithApple() {
 }
 
 export async function signOut() {
+  // Upload the last few seconds of progress while the session still works,
+  // but never let a slow network hold up signing out.
+  await withTimeout(flushProgress(), 4_000).catch(() => {});
+  stopProgressSync();
   // Forget the device first, while the session can still prove it is ours -
   // otherwise group messages for the person leaving keep arriving here.
   await unregisterPushToken();
@@ -148,9 +153,20 @@ export async function updatePassword(newPassword: string) {
 export async function deleteAccount() {
   const client = getClient();
   await deleteOwnStorageObjects();
+  await deleteOwnProgressCopy();
   const { error } = await client.rpc('delete_own_account');
   if (error) throw error;
+  await forgetProgressOwner();
   useSettingsStore.getState().setSession(null);
+}
+
+/** The synced copy of the person's progress (see services/progressSync). */
+async function deleteOwnProgressCopy() {
+  const userId = useSettingsStore.getState().user?.id;
+  if (!userId) return;
+  const { error } = await getClient().from('user_progress_sync').delete().eq('user_id', userId);
+  // A database without the table yet has nothing to delete.
+  if (error && error.code !== '42P01' && error.code !== 'PGRST205') throw error;
 }
 
 /** Storage removes at most this many paths per call. */

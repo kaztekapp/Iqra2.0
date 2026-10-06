@@ -3,7 +3,7 @@ import '../src/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, View } from 'react-native';
+import { AppState, Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -25,6 +25,7 @@ import { color } from '../src/theme/tokens';
 import { initReporting, wrapRoot , quietly , errorMessage } from '../src/lib/report';
 import { startReminders, handleColdStartTap, maybeAskOnce } from '../src/services/reminders';
 import { registerPushToken } from '../src/services/push';
+import { syncProgress, syncOnForeground, stopProgressSync, watchProgressChanges } from '../src/services/progressSync';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -79,6 +80,20 @@ function RootLayout() {
     const timer = setTimeout(() => void registerPushToken(), 3000);
     return () => clearTimeout(timer);
   }, [sessionUserId]);
+
+  // Progress follows the account: sync on sign-in and on every return to the
+  // foreground, upload a few seconds after each change.
+  useEffect(() => watchProgressChanges(), []);
+  useEffect(() => {
+    if (sessionUserId) void syncProgress(sessionUserId);
+    else stopProgressSync();
+  }, [sessionUserId]);
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (next) => {
+      if (next === 'active') syncOnForeground();
+    });
+    return () => sub.remove();
+  }, []);
 
   // Local reminders: OS setup, tap routing, and a re-plan on launch and on
   // every foreground/background change. A tap that cold-launched the app is

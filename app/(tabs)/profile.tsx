@@ -14,6 +14,7 @@ import { useAdStore } from '../../src/stores/adStore';
 import { iapService } from '../../src/services/iapService';
 import { ENABLE_ADS } from '../../src/services/adService';
 import { COMMUNITY_ENABLED } from '../../src/config/features';
+import { markProgressReset } from '../../src/services/progressSync';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import * as communityService from '../../src/services/communityService';
 import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src/components/ui/Primitives';
@@ -726,7 +727,7 @@ export default function ProfileScreen() {
                 t('profile.resetConfirmMessage'),
                 [
                   { text: t('common.cancel'), style: 'cancel' },
-                  { text: t('profile.resetAllProgress'), style: 'destructive', onPress: resetProgress },
+                  { text: t('profile.resetAllProgress'), style: 'destructive', onPress: () => { resetProgress(); markProgressReset(); } },
                 ]
               );
             }}
