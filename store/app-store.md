@@ -30,7 +30,7 @@ Iqra is a complete path from the Arabic alphabet to reading the Quran, in Englis
 LEARN ARABIC, STEP BY STEP
 • The 28 letters: every form (isolated, initial, middle, final), how they connect, sun and moon letters
 • Writing practice: draw each letter with your finger and learn the real joining rules
-• Three scripts: see every letter in Naskh, Ruqʿah and Nastaʿliq
+• Three scripts: see every letter in Naskh, Ruq’ah and Nasta’liq
 • Vocabulary in themes (family, food, places, time, colors and more), with flashcards and spaced-repetition review
 • Grammar lessons: articles, pronouns, sentence structure
 • Verb conjugation in every tense, with quizzes and writing practice
@@ -86,7 +86,7 @@ tajweed,hadith,dua,surah,juz,reading,writing,vocabulary,grammar,salah,islam,musl
 ```
 • Stories of the prophets, retold only from the Quran and authentic hadith, read aloud
 • Tap any paragraph of a story to listen from there
-• See the Arabic letters in Naskh, Ruqʿah and Nastaʿliq
+• See the Arabic letters in Naskh, Ruq’ah and Nasta’liq
 • New Islamic calendar course
 • Study reminders and a streak warning
 • Report and block in the community
@@ -119,7 +119,7 @@ Iqra vous mène de l'alphabet arabe jusqu'à la lecture du Coran, en français o
 APPRENDRE L'ARABE, PAS À PAS
 • Les 28 lettres : toutes leurs formes (isolée, initiale, médiane, finale), leurs liaisons, les lettres solaires et lunaires
 • Écriture : dessinez chaque lettre du doigt et apprenez les vraies règles de liaison
-• Trois styles d'écriture : chaque lettre en Naskh, Ruqʿah et Nastaʿliq
+• Trois styles d'écriture : chaque lettre en Naskh, Ruq’ah et Nasta’liq
 • Vocabulaire par thèmes (famille, nourriture, lieux, temps, couleurs…), avec cartes mémoire et révisions espacées
 • Grammaire : articles, pronoms, structure de la phrase
 • Conjugaison des verbes à tous les temps, avec quiz et exercices d'écriture
@@ -171,7 +171,7 @@ tajwid,sourate,hadith,invocation,doua,priere,lecture,ecriture,vocabulaire,gramma
 ```
 • Les histoires des prophètes, tirées uniquement du Coran et des hadiths authentiques, lues à voix haute
 • Touchez un paragraphe d'une histoire pour l'écouter à partir de là
-• Les lettres arabes en Naskh, Ruqʿah et Nastaʿliq
+• Les lettres arabes en Naskh, Ruq’ah et Nasta’liq
 • Nouveau cours sur le calendrier islamique
 • Rappels d'étude et alerte de série
 • Signaler et bloquer dans la communauté
@@ -243,7 +243,7 @@ USER-GENERATED CONTENT (Guideline 1.2)
 • Blocking hides that person's content right away. Profile → Blocked people lets you unblock.
 • Objectionable words are filtered out of posted text.
 • Every report emails our team, and we act on it within 24 hours.
-• Account deletion: Profile → Delete Profile.
+• Account deletion: Profile → Delete Account.
 
 BACKGROUND AUDIO (UIBackgroundModes: audio)
 Quran recitation (Surah → Play All) and the read-aloud stories keep playing
