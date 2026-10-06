@@ -11,6 +11,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { useEffect, useState, useCallback } from 'react';
 import { VocabularyWord } from '../../src/types/arabic';
 import { ShareToGroupModal } from '../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -452,14 +453,16 @@ export default function ThemeDetailScreen() {
                           <Text style={styles.masteredText}>{t('vocabulary.masteredBadge')}</Text>
                         </View>
                       )}
-                      <Pressable accessibilityRole="button"
-                        style={styles.shareButton}
-                        onPress={() => shareWord(word)}
-                        accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-                      >
-                        <Ionicons name="paper-plane-outline" size={18} color={color.accent} />
-                        <Text style={styles.shareButtonText}>{t('community.shareToGroup', { defaultValue: 'Share to group' })}</Text>
-                      </Pressable>
+                      {COMMUNITY_ENABLED && (
+                        <Pressable accessibilityRole="button"
+                          style={styles.shareButton}
+                          onPress={() => shareWord(word)}
+                          accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+                        >
+                          <Ionicons name="paper-plane-outline" size={18} color={color.accent} />
+                          <Text style={styles.shareButtonText}>{t('community.shareToGroup', { defaultValue: 'Share to group' })}</Text>
+                        </Pressable>
+                      )}
                     </View>
                   </View>
                 )}

@@ -9,6 +9,7 @@ import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../../src/config/features';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
@@ -104,26 +105,28 @@ export default function VerbDetailScreen() {
             </Pressable>
             <Text style={styles.verbMeaning}>{lc(verb.meaning, verb.meaningFr)}</Text>
           </View>
-          <Pressable
-            style={styles.shareHeaderButton}
-            onPress={() => {
-              const pastExample = verb.examples?.find((ex) => ex.tense === 'past');
-              setShareContent({
-                kind: 'word',
-                arabic: verb.pastTense,
-                translit: pastExample?.transliteration,
-                translation: lc(verb.meaning, verb.meaningFr),
-                example: pastExample?.arabic,
-                exampleTranslation: pastExample ? lc(pastExample.english, pastExample.french) : undefined,
-                audioText: verb.pastTense,
-                ref: `${t('verbs.title', { defaultValue: 'Verb' })} · ${verb.root}`,
-                route: `/verbs/verb/${verb.id}`,
-              });
-            }}
-            accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-          >
-            <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
-          </Pressable>
+          {COMMUNITY_ENABLED && (
+            <Pressable
+              style={styles.shareHeaderButton}
+              onPress={() => {
+                const pastExample = verb.examples?.find((ex) => ex.tense === 'past');
+                setShareContent({
+                  kind: 'word',
+                  arabic: verb.pastTense,
+                  translit: pastExample?.transliteration,
+                  translation: lc(verb.meaning, verb.meaningFr),
+                  example: pastExample?.arabic,
+                  exampleTranslation: pastExample ? lc(pastExample.english, pastExample.french) : undefined,
+                  audioText: verb.pastTense,
+                  ref: `${t('verbs.title', { defaultValue: 'Verb' })} · ${verb.root}`,
+                  route: `/verbs/verb/${verb.id}`,
+                });
+              }}
+              accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+            >
+              <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
+            </Pressable>
+          )}
         </View>
 
         {/* Verb Info Card */}

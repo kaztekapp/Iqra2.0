@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { getTajweedRuleById } from '../../../src/data/arabic/quran/tajweed/rules';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../../src/config/features';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { TajweedRuleId, TajweedExample } from '../../../src/types/quran';
@@ -162,26 +163,28 @@ export default function TajweedRuleDetailScreen() {
             {isLearned && !isMastered && (
               <Ionicons name="checkmark-circle" size={24} color={color.progress} />
             )}
-            <Pressable
-              onPress={() => {
-                const ex = rule.examples?.[0];
-                setShareContent({
-                  kind: 'tajweed',
-                  arabic: ex?.text || rule.nameArabic,
-                  translit: ex?.transliteration,
-                  translation: lc(rule.description, rule.descriptionFr),
-                  example: ex?.fullAyahText,
-                  exampleTranslation: rule.letters && rule.letters.length ? `${t('tajweedFeature.lettersInvolved', { defaultValue: 'Letters' })}: ${rule.letters.join(' ')}` : undefined,
-                  audioText: ex?.text || rule.nameArabic,
-                  ref: rule.nameArabic,
-                  route: `/quran/tajweed/${rule.id}`,
-                });
-              }}
-              accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-              hitSlop={8}
-            >
-              <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
-            </Pressable>
+            {COMMUNITY_ENABLED && (
+              <Pressable
+                onPress={() => {
+                  const ex = rule.examples?.[0];
+                  setShareContent({
+                    kind: 'tajweed',
+                    arabic: ex?.text || rule.nameArabic,
+                    translit: ex?.transliteration,
+                    translation: lc(rule.description, rule.descriptionFr),
+                    example: ex?.fullAyahText,
+                    exampleTranslation: rule.letters && rule.letters.length ? `${t('tajweedFeature.lettersInvolved', { defaultValue: 'Letters' })}: ${rule.letters.join(' ')}` : undefined,
+                    audioText: ex?.text || rule.nameArabic,
+                    ref: rule.nameArabic,
+                    route: `/quran/tajweed/${rule.id}`,
+                  });
+                }}
+                accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+                hitSlop={8}
+              >
+                <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
+              </Pressable>
+            )}
           </View>
         </View>
 

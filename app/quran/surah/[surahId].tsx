@@ -10,6 +10,7 @@ import { useQuranSurah } from '../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../src/stores/quranStore';
 import { AyahCard } from '../../../src/components/quran/AyahCard';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../../src/config/features';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../src/services/quranAudioService';
 import { useAudioPlayerStore, advanceToNextSurah } from '../../../src/stores/audioPlayerStore';
@@ -335,7 +336,7 @@ export default function SurahDetailScreen() {
         onPlay={() => handlePlayAyah(ayah.id, ayah.ayahNumber)}
         onBookmark={() => handleBookmark(ayah.id)}
         onPress={() => handleAyahPress(ayah.id)}
-        onShare={() => setShareContent({
+        onShare={COMMUNITY_ENABLED ? () => setShareContent({
           kind: 'verse',
           arabic: ayah.textUthmani,
           translit: ayah.transliteration,
@@ -343,7 +344,7 @@ export default function SurahDetailScreen() {
           audioText: ayah.textUthmani,
           ref: surah ? `${surah.nameEnglish} · ${ayah.ayahNumber}` : `Ayah ${ayah.ayahNumber}`,
           route: `/quran/surah/${surahId}`,
-        })}
+        }) : undefined}
         onSpeedChange={handleSpeedChange}
       />
     );

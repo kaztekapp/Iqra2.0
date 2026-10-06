@@ -10,6 +10,8 @@ import { useModerationStore } from '../../src/stores/moderationStore';
 import { GroupsTab } from '../../src/components/community/GroupsTab';
 import { DiscussionsTab } from '../../src/components/community/DiscussionsTab';
 import { ChallengesTab } from '../../src/components/community/ChallengesTab';
+import { CommunityComingSoon } from '../../src/components/community/CommunityComingSoon';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 import { Txt, Arabic, MastheadWash } from '../../src/components/ui/Primitives';
 import { color, space, radius, gutter } from '../../src/theme/tokens';
 
@@ -21,7 +23,13 @@ const TABS: { key: CommunityTab; icon: keyof typeof Ionicons.glyphMap; labelKey:
   { key: 'challenges', icon: 'flag', labelKey: 'community.tabChallenges' },
 ];
 
-export default function CommunityScreen() {
+// Until Community is released the tab is a "coming soon" page. The live
+// screen is left as it is, and nothing in it runs while it is hidden.
+export default function CommunityRoute() {
+  return COMMUNITY_ENABLED ? <CommunityScreen /> : <CommunityComingSoon />;
+}
+
+function CommunityScreen() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<CommunityTab>('groups');
 

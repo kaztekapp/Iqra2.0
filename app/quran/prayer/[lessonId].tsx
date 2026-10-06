@@ -9,6 +9,7 @@ import { getPrayerLessonById, getAllPrayerLessons } from '../../../src/data/arab
 import { usePrayerStore } from '../../../src/stores/prayerStore';
 import { useArabicSpeech } from '../../../src/hooks/useArabicSpeech';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../../src/config/features';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import {
   PrayerContent,
@@ -438,20 +439,22 @@ export default function PrayerLessonScreen() {
           </Text>
           <Text style={styles.headerTitleArabic}>{lesson.titleArabic}</Text>
         </View>
-        <Pressable
-          style={styles.backButton}
-          onPress={() => setShareContent({
-            kind: 'prayer',
-            arabic: lesson.titleArabic,
-            translation: lc(lesson.description, lesson.descriptionFr),
-            audioText: lesson.titleArabic,
-            ref: lc(lesson.title, lesson.titleFr),
-            route: `/quran/prayer/${lesson.id}`,
-          })}
-          accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-        >
-          <Ionicons name="paper-plane-outline" size={22} color={tk.accent} />
-        </Pressable>
+        {COMMUNITY_ENABLED && (
+          <Pressable
+            style={styles.backButton}
+            onPress={() => setShareContent({
+              kind: 'prayer',
+              arabic: lesson.titleArabic,
+              translation: lc(lesson.description, lesson.descriptionFr),
+              audioText: lesson.titleArabic,
+              ref: lc(lesson.title, lesson.titleFr),
+              route: `/quran/prayer/${lesson.id}`,
+            })}
+            accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+          >
+            <Ionicons name="paper-plane-outline" size={22} color={tk.accent} />
+          </Pressable>
+        )}
         <View style={styles.headerNav}>
           <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.previous')}
             style={[styles.navButton, !hasPrevious && styles.navButtonDisabled]}

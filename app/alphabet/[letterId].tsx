@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { ARABIC_SCRIPT_FONTS, SCRIPT_META, scriptFontFamily, ArabicScript } from '../../src/data/arabic/alphabet/scriptFonts';
 import { ShareToGroupModal } from '../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -94,21 +95,23 @@ export default function LetterDetailScreen() {
             <Text style={styles.title}>{lc(letter.name, letter.nameFr)}</Text>
             <Text style={styles.titleArabic}>{letter.nameArabic}</Text>
           </View>
-          <Pressable
-            style={styles.shareHeaderButton}
-            onPress={() => setShareContent({
-              kind: 'letter',
-              arabic: letter.letter,
-              translit: letter.transliteration,
-              translation: lc(letter.name, letter.nameFr),
-              audioText: letter.nameArabic,
-              ref: letter.nameArabic,
-              route: `/alphabet/${letter.id}`,
-            })}
-            accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-          >
-            <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
-          </Pressable>
+          {COMMUNITY_ENABLED && (
+            <Pressable
+              style={styles.shareHeaderButton}
+              onPress={() => setShareContent({
+                kind: 'letter',
+                arabic: letter.letter,
+                translit: letter.transliteration,
+                translation: lc(letter.name, letter.nameFr),
+                audioText: letter.nameArabic,
+                ref: letter.nameArabic,
+                route: `/alphabet/${letter.id}`,
+              })}
+              accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+            >
+              <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
+            </Pressable>
+          )}
           <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
             onPress={() => {

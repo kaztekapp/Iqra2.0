@@ -9,6 +9,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import SpeechSpeedControl from '../../src/components/SpeechSpeedControl';
 import { ShareToGroupModal } from '../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
@@ -454,22 +455,24 @@ export default function ReadingDetailScreen() {
             <Text style={styles.titleArabic}>{text.titleArabic}</Text>
             <Text style={styles.title}>{lc(text.title, text.titleFr)}</Text>
           </View>
-          <Pressable
-            style={styles.shareHeaderButton}
-            onPress={() => setShareContent({
-              kind: 'lesson',
-              arabic: text.titleArabic,
-              translation: lc(text.title, text.titleFr),
-              example: text.paragraphs[0]?.arabic,
-              exampleTranslation: text.paragraphs[0] ? lc(text.paragraphs[0].english, text.paragraphs[0].french) : undefined,
-              audioText: text.titleArabic,
-              ref: text.level,
-              route: `/reading/${textId}`,
-            })}
-            accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-          >
-            <Ionicons name="paper-plane-outline" size={22} color={tk.accent} />
-          </Pressable>
+          {COMMUNITY_ENABLED && (
+            <Pressable
+              style={styles.shareHeaderButton}
+              onPress={() => setShareContent({
+                kind: 'lesson',
+                arabic: text.titleArabic,
+                translation: lc(text.title, text.titleFr),
+                example: text.paragraphs[0]?.arabic,
+                exampleTranslation: text.paragraphs[0] ? lc(text.paragraphs[0].english, text.paragraphs[0].french) : undefined,
+                audioText: text.titleArabic,
+                ref: text.level,
+                route: `/reading/${textId}`,
+              })}
+              accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+            >
+              <Ionicons name="paper-plane-outline" size={22} color={tk.accent} />
+            </Pressable>
+          )}
           <View style={styles.headerIcon}>
             <Text style={styles.iconText}>{text.icon}</Text>
           </View>

@@ -13,6 +13,7 @@ import { useRouter, Href } from 'expo-router';
 import { useAdStore } from '../../src/stores/adStore';
 import { iapService } from '../../src/services/iapService';
 import { ENABLE_ADS } from '../../src/services/adService';
+import { COMMUNITY_ENABLED } from '../../src/config/features';
 import { useCommunityStore } from '../../src/stores/communityStore';
 import * as communityService from '../../src/services/communityService';
 import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src/components/ui/Primitives';
@@ -396,28 +397,30 @@ export default function ProfileScreen() {
         </View>
 
         {/* Challenges */}
-        <Pressable
-          style={styles.challengeCard}
-          onPress={() => router.push('/community/challenges' as Href)}
-          accessibilityRole="button"
-          accessibilityLabel={t('community.challenges')}
-        >
-          <View style={styles.challengeIcon}>
-            <Ionicons name="flag" size={22} color={color.accent} />
-          </View>
-          <View style={styles.challengeText}>
-            <Text style={styles.challengeTitle}>{t('community.challenges')}</Text>
-            <Text style={styles.challengeArabic}>التحديات</Text>
-          </View>
-          {dailyChallenge && (
-            <View style={styles.challengeProgressPill}>
-              <Text style={styles.challengeProgressText}>
-                {dailyChallenge.currentValue}/{dailyChallenge.targetValue}
-              </Text>
+        {COMMUNITY_ENABLED && (
+          <Pressable
+            style={styles.challengeCard}
+            onPress={() => router.push('/community/challenges' as Href)}
+            accessibilityRole="button"
+            accessibilityLabel={t('community.challenges')}
+          >
+            <View style={styles.challengeIcon}>
+              <Ionicons name="flag" size={22} color={color.accent} />
             </View>
-          )}
-          <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
-        </Pressable>
+            <View style={styles.challengeText}>
+              <Text style={styles.challengeTitle}>{t('community.challenges')}</Text>
+              <Text style={styles.challengeArabic}>التحديات</Text>
+            </View>
+            {dailyChallenge && (
+              <View style={styles.challengeProgressPill}>
+                <Text style={styles.challengeProgressText}>
+                  {dailyChallenge.currentValue}/{dailyChallenge.targetValue}
+                </Text>
+              </View>
+            )}
+            <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
+          </Pressable>
+        )}
 
 
         {/* Achievements */}
@@ -590,7 +593,7 @@ export default function ProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
             </Pressable>
-            {isAuthenticated && (
+            {COMMUNITY_ENABLED && isAuthenticated && (
               <>
                 <View style={styles.settingDivider} />
                 <Pressable

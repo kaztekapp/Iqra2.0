@@ -13,6 +13,7 @@ import { useStoryNarration, type NarratableBlock } from '../../../src/hooks/useS
 import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import type { ArabicDeviceVoice } from '../../../src/services/speech/arabicTTS';
 import { ShareToGroupModal } from '../../../src/components/community/ShareToGroupModal';
+import { COMMUNITY_ENABLED } from '../../../src/config/features';
 import type { SharedContent } from '../../../src/data/community/socialData';
 import {
   DUA_CATEGORY_LABELS,
@@ -242,21 +243,23 @@ export default function DuaDetailScreen() {
           <Text style={styles.duaNameArabic}>{dua.titleArabic}</Text>
           <Text style={styles.duaNameEnglish}>{lc(dua.titleEnglish, dua.titleFrench)}</Text>
         </View>
-        <Pressable
-          style={styles.backButton}
-          onPress={() => setShareContent({
-            kind: 'dua',
-            arabic: dua.arabicText,
-            translit: dua.transliteration,
-            translation: lc(dua.translation, dua.translationFr),
-            audioText: dua.arabicText,
-            ref: dua.titleArabic,
-            route: `/quran/duas/${dua.id}`,
-          })}
-          accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
-        >
-          <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
-        </Pressable>
+        {COMMUNITY_ENABLED && (
+          <Pressable
+            style={styles.backButton}
+            onPress={() => setShareContent({
+              kind: 'dua',
+              arabic: dua.arabicText,
+              translit: dua.transliteration,
+              translation: lc(dua.translation, dua.translationFr),
+              audioText: dua.arabicText,
+              ref: dua.titleArabic,
+              route: `/quran/duas/${dua.id}`,
+            })}
+            accessibilityLabel={t('community.shareToGroup', { defaultValue: 'Share to group' })}
+          >
+            <Ionicons name="paper-plane-outline" size={22} color={color.accent} />
+          </Pressable>
+        )}
       </View>
 
       {/* Category Badge + Navigation */}
