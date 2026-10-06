@@ -17,9 +17,10 @@
           "audio"
         ],
         "NSSpeechRecognitionUsageDescription": "Iqra uses speech recognition to check your Arabic pronunciation during speaking practice.",
-        "NSMicrophoneUsageDescription": "Iqra uses the microphone to check your Arabic pronunciation and to record voice messages you send in study groups.",
+        "NSMicrophoneUsageDescription": "Iqra uses the microphone to check your Arabic pronunciation during speaking practice.",
         "ITSAppUsesNonExemptEncryption": false,
-        "CFBundleAllowMixedLocalizations": true
+        "CFBundleAllowMixedLocalizations": true,
+        "NSPhotoLibraryUsageDescription": "Iqra does not use your photo library and never asks to see your photos."
       }
     },
     "android": {
