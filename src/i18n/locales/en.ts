@@ -56,7 +56,7 @@ export default {
   },
   tabs: {
     home: 'Home',
-    learn: 'Learn',
+    learn: 'Arabic',
     community: 'Community',
     quran: 'Quran',
     profile: 'Profile',
