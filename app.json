@@ -75,6 +75,7 @@
       "expo-status-bar",
       "expo-web-browser",
       "./plugins/withoutPushEntitlement.js",
+      "./plugins/withAndroidLintExtraTranslation.js",
       [
         "expo-notifications",
         {
