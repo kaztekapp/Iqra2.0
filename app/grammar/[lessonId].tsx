@@ -1134,7 +1134,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   lettersGrid: {
-    flexDirection: 'row',
+    // Arabic reads right to left: ا starts at the top-right and each row fills
+    // leftward, so the grid mirrors how the alphabet is actually read.
+    flexDirection: 'row-reverse',
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 10,
