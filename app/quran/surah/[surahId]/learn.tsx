@@ -63,6 +63,8 @@ export default function LearnModeScreen() {
   // someone working through the words, who can switch to a reciter in a tap.
   const [useLearningVoice, setUseLearningVoice] = useState(true);
   const learningVoiceRef = useRef(true);
+  // The learning voice could not be made and the reciter is reading instead.
+  const [voiceFellBack, setVoiceFellBack] = useState(false);
 
   const currentAyah = ayahs[currentAyahIndex];
 
@@ -99,6 +101,25 @@ export default function LearnModeScreen() {
       quranAudioService.setSpokenVoice(false, null);
     };
   }, []);
+
+  // When the learning voice is unavailable the service hands the verse to the
+  // reciter. Say so here, and keep the mini player naming the voice that is
+  // actually reading.
+  useEffect(
+    () =>
+      quranAudioService.onSpokenVoiceFallback((usingReciter) => {
+        setVoiceFellBack(usingReciter);
+        const playing = useAudioPlayerStore.getState().currentlyPlaying;
+        if (playing?.source === 'learn' && learningVoiceRef.current) {
+          setCurrentlyPlaying({
+            ...playing,
+            reciterName: usingReciter ? currentReciter.nameEnglish : t('surahLearnMode.voiceLearning'),
+            reciterNameArabic: usingReciter ? currentReciter.nameArabic : LEARNING_VOICE_ARABIC,
+          });
+        }
+      }),
+    [currentReciter, setCurrentlyPlaying, t]
+  );
 
   // The verse on screen, made ready before it is asked for. Opening Learn mode
   // and pressing play should not begin with a wait, and the clip is kept, so
@@ -695,6 +716,14 @@ export default function LearnModeScreen() {
             <Text style={styles.voiceNote}>
               {useLearningVoice ? t('surahLearnMode.voiceLearningNote') : t('surahLearnMode.voiceReciterNote')}
             </Text>
+            {useLearningVoice && voiceFellBack && (
+              <View style={styles.voiceFallback} accessibilityLiveRegion="polite">
+                <Ionicons name="information-circle" size={16} color={color.warning} />
+                <Text style={styles.voiceFallbackText}>
+                  {t('surahLearnMode.voiceLearningUnavailable', { reciter: currentReciter.nameEnglish })}
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Speed Control */}
@@ -1102,6 +1131,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 18,
     color: color.textMuted,
+  },
+  voiceFallback: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginTop: 10,
+    padding: 10,
+    borderRadius: radius.md,
+    backgroundColor: withAlpha(color.warning, 0.1),
+  },
+  voiceFallbackText: {
+    flex: 1,
+    marginLeft: 8,
+    fontSize: 12,
+    lineHeight: 18,
+    color: color.text,
   },
   controlButton: {
     paddingHorizontal: 14,

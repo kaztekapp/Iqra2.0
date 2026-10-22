@@ -1267,6 +1267,7 @@ export default {
     voiceLearning: 'Voix d\'apprentissage',
     voiceReciterNote: 'La récitation, en tajwid, par le récitateur que vous avez choisi.',
     voiceLearningNote: 'L\'app lit le verset simplement, mot à mot. Pour suivre les mots, non pour écouter le Coran.',
+    voiceLearningUnavailable: 'La voix d\'apprentissage n\'est pas disponible pour le moment, c\'est donc {{reciter}} qui lit. Elle sera réessayée dans quelques minutes.',
     surahNotFound: 'Sourate introuvable',
     loadingVerses: 'Chargement des versets...',
     learnMode: 'Mode Apprentissage',

@@ -6,8 +6,14 @@ import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBu
 import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
-import { synthesizeAyahToFile } from './speech/arabicTTS';
-import { quietly } from '../lib/report';
+import { synthesizeAyahToFile, hasArabicClip } from './speech/arabicTTS';
+import { quietly, reportError } from '../lib/report';
+
+/**
+ * After the learning voice fails, the reciter reads for this long before the
+ * voice is tried again, so a dead service does not cost every verse a wait.
+ */
+const SPOKEN_RETRY_AFTER_MS = 2 * 60 * 1000;
 
 // Available reciters with their audio base URLs from EveryAyah.com
 // Format: https://everyayah.com/data/{reciter_folder}/{surah_number}{ayah_number}.mp3
@@ -120,6 +126,11 @@ class QuranAudioService {
    * `ayahText` is how the service finds the words: it does not hold the mushaf.
    */
   private spokenVoice = false;
+  /** Until when the learning voice is resting after a failure. */
+  private spokenUnavailableUntil = 0;
+  /** Sentry hears about the first fallback of a session, not every verse. */
+  private spokenFailureReported = false;
+  private spokenFallbackListeners = new Set<(usingReciter: boolean) => void>();
   private ayahText: ((surahNumber: number, ayahNumber: number) => string | undefined) | null = null;
 
   // Track current ayah for toggle play/pause
@@ -314,6 +325,47 @@ class QuranAudioService {
   }
 
   /**
+   * Hear when the learning voice could not be made and a reciter read the
+   * verse instead (true), and when the voice is reading again (false).
+   */
+  onSpokenVoiceFallback(listener: (usingReciter: boolean) => void): () => void {
+    this.spokenFallbackListeners.add(listener);
+    return () => {
+      this.spokenFallbackListeners.delete(listener);
+    };
+  }
+
+  private notifySpokenFallback(usingReciter: boolean): void {
+    this.spokenFallbackListeners.forEach((listener) => {
+      try {
+        listener(usingReciter);
+      } catch (e) {
+        quietly(e, 'services/quranAudioService:fallbackListener');
+      }
+    });
+  }
+
+  /** The reciter's file for an ayah: the saved copy if there is one. */
+  private async resolveReciterUrl(
+    surahNumber: number,
+    ayahNumber: number,
+    reciterId: ReciterId,
+    requestedReciterId?: ReciterId
+  ): Promise<string> {
+    const remoteUrl = this.getAyahAudioUrl(surahNumber, ayahNumber, requestedReciterId);
+    let url: string;
+    try {
+      url = await audioCacheService.getAudioUrl(remoteUrl, surahNumber, ayahNumber, reciterId);
+    } catch {
+      url = remoteUrl;
+    }
+    if (url === remoteUrl) {
+      this.autoCache(remoteUrl, surahNumber, ayahNumber, reciterId);
+    }
+    return url;
+  }
+
+  /**
    * Make the next ayah's clip while this one plays.
    *
    * Only for the learning voice. Synthesis is a round trip, and without this
@@ -324,6 +376,9 @@ class QuranAudioService {
   prewarmSpokenAyah(text?: string): void {
     const body = text?.trim();
     if (!body) return;
+    // Resting after a failure: the reciter is reading, so there is nothing to
+    // get ready, and another failed round trip would only cost data.
+    if (Date.now() < this.spokenUnavailableUntil) return;
     synthesizeAyahToFile(body).catch(() => {});
   }
 
@@ -386,16 +441,20 @@ class QuranAudioService {
       // voice the reader chose.
       const wantSpoken = options?.neural ?? this.spokenVoice;
       const spokenText = options?.text ?? this.ayahText?.(surahNumber, ayahNumber);
-      const speakIt = wantSpoken && !!spokenText?.trim();
-      const remoteUrl = speakIt
-        ? ''
-        : this.getAyahAudioUrl(surahNumber, ayahNumber, options?.reciterId);
+      let speakIt = wantSpoken && !!spokenText?.trim();
       const reciterId = options?.reciterId || this.currentReciter;
+
+      // While the voice rests after a failure, only a verse already kept on the
+      // phone can still be read in it; the rest go to the reciter at once.
+      if (speakIt && Date.now() < this.spokenUnavailableUntil && !hasArabicClip(spokenText!)) {
+        speakIt = false;
+        this.notifySpokenFallback(true);
+      }
 
       // Prefer a locally cached copy so playback works fully offline. If the
       // ayah hasn't been saved yet, fall back to the remote stream AND kick off
       // a silent background save so the next listen needs no network.
-      let url = remoteUrl;
+      let url: string;
       if (speakIt) {
         // Stop the ayah that is playing BEFORE synthesizing the next one.
         //
@@ -411,16 +470,27 @@ class QuranAudioService {
         previousSub = null;
         // Nothing to cache here: the recitation cache is per reciter and a
         // synthesized clip does not belong in it. The voice keeps its own.
-        url = await synthesizeAyahToFile(spokenText!);
-      } else {
         try {
-          url = await audioCacheService.getAudioUrl(remoteUrl, surahNumber, ayahNumber, reciterId);
-        } catch {
-          url = remoteUrl;
+          url = await synthesizeAyahToFile(spokenText!);
+          this.spokenUnavailableUntil = 0;
+          this.notifySpokenFallback(false);
+        } catch (e) {
+          // The voice is a network service someone else runs, and it has gone
+          // away before without warning (a changed signature, a 403 for every
+          // request). Silence is the worst answer: the reciter reads this verse,
+          // the screen says why, and the voice is tried again in a while.
+          this.spokenUnavailableUntil = Date.now() + SPOKEN_RETRY_AFTER_MS;
+          if (!this.spokenFailureReported) {
+            this.spokenFailureReported = true;
+            reportError(e, { where: 'quranAudioService.learningVoice', surahNumber, ayahNumber });
+          } else {
+            quietly(e, 'services/quranAudioService:learningVoice');
+          }
+          this.notifySpokenFallback(true);
+          url = await this.resolveReciterUrl(surahNumber, ayahNumber, reciterId, options?.reciterId);
         }
-        if (url === remoteUrl) {
-          this.autoCache(remoteUrl, surahNumber, ayahNumber, reciterId);
-        }
+      } else {
+        url = await this.resolveReciterUrl(surahNumber, ayahNumber, reciterId, options?.reciterId);
       }
 
       const rate = options?.rate || this.playbackRate;
