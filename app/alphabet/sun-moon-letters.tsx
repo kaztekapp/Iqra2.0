@@ -191,12 +191,16 @@ export default function SunMoonLettersScreen() {
             <Ionicons name="bulb" size={24} color={color.sacred} />
             <Text style={styles.mnemonicTitle}>{t('alphabet.memoryTip')}</Text>
           </View>
-          <Text style={styles.mnemonicText}>
-            {t('alphabet.memoryTipIntro')}{'\n'}
-            <Text style={styles.mnemonicArabic}>طِبْ ثُمَّ صِلْ رَحِمًا تَفُزْ ضِفْ ذَا نِعَمْ دَعْ سُوءَ ظَنٍّ زُرْ شَرِيفًا لِلْكَرَمْ</Text>
-            {'\n\n'}
-            {t('alphabet.memoryTipConclusion')}
-          </Text>
+          <Text style={styles.mnemonicText}>{t('alphabet.memoryTipIntro')}</Text>
+          {/* Its own right-to-left paragraph: nested inside the English text it was
+              reordered and wrapped with the English line height, and the lines
+              overlapped. One half of the verse per line. */}
+          <View style={styles.mnemonicPhraseBox}>
+            <Text style={styles.mnemonicArabic}>
+              {'طِبْ ثُمَّ صِلْ رَحِمًا تَفُزْ ضِفْ ذَا نِعَمْ\nدَعْ سُوءَ ظَنٍّ زُرْ شَرِيفًا لِلْكَرَمْ'}
+            </Text>
+          </View>
+          <Text style={styles.mnemonicText}>{t('alphabet.memoryTipConclusion')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -458,10 +462,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
   },
+  mnemonicPhraseBox: {
+    backgroundColor: withAlpha(color.sacred, 0.06),
+    borderRadius: radius.md,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    marginVertical: 12,
+  },
   mnemonicArabic: {
     fontFamily: font.arabic,
     color: color.sacred,
     fontSize: 20,
-    lineHeight: 36,
+    lineHeight: 40,
+    textAlign: 'center',
+    writingDirection: 'rtl',
   },
 });
