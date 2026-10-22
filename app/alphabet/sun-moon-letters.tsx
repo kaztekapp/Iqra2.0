@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -46,9 +47,38 @@ const moonLetters = [
   { letter: 'ي', name: 'Ya', transliteration: 'y', example: 'الْيَد', exampleTrans: 'al-yad', meaning: 'the hand' },
 ];
 
+// The two halves of the verse whose word-initial letters are the 14 Sun letters.
+const SUN_VERSE = [
+  'طِبْ ثُمَّ صِلْ رَحِمًا تَفُزْ ضِفْ ذَا نِعَمْ',
+  'دَعْ سُوءَ ظَنٍّ زُرْ شَرِيفًا لِلْكَرَمْ',
+];
+
 export default function SunMoonLettersScreen() {
   const { t } = useTranslation();
-  const { speak } = useArabicSpeech();
+  const { speak, stop, isSpeaking } = useArabicSpeech();
+
+  // isSpeaking covers every clip on this screen, so remember whether the
+  // current one is the verse; a letter card's clip must not show "Stop" here.
+  const [verseStarted, setVerseStarted] = useState(false);
+  const versePlaying = verseStarted && isSpeaking;
+  useEffect(() => {
+    if (!isSpeaking) setVerseStarted(false);
+  }, [isSpeaking]);
+
+  const speakWord = (text: string) => {
+    setVerseStarted(false);
+    speak(text);
+  };
+
+  const toggleVerse = () => {
+    if (versePlaying) {
+      stop();
+      return;
+    }
+    setVerseStarted(true);
+    // The Arabic comma gives the voice a breath between the two halves.
+    speak(SUN_VERSE.join('، '));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -115,13 +145,13 @@ export default function SunMoonLettersScreen() {
               <Pressable accessibilityRole="button"
                 key={index}
                 style={[styles.letterCard, styles.sunCard]}
-                onPress={() => speak(item.example)}
+                onPress={() => speakWord(item.example)}
               >
                 <View style={styles.letterMain}>
                   <Text style={styles.letterArabic}>{item.letter}</Text>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.sunAudioBtn]}
-                    onPress={() => speak(item.example)}
+                    onPress={() => speakWord(item.example)}
                   >
                     <Ionicons name="volume-medium" size={14} color={color.warning} />
                   </Pressable>
@@ -163,13 +193,13 @@ export default function SunMoonLettersScreen() {
               <Pressable accessibilityRole="button"
                 key={index}
                 style={[styles.letterCard, styles.moonCard]}
-                onPress={() => speak(item.example)}
+                onPress={() => speakWord(item.example)}
               >
                 <View style={styles.letterMain}>
                   <Text style={styles.letterArabic}>{item.letter}</Text>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.moonAudioBtn]}
-                    onPress={() => speak(item.example)}
+                    onPress={() => speakWord(item.example)}
                   >
                     <Ionicons name="volume-medium" size={14} color={color.accent} />
                   </Pressable>
@@ -196,9 +226,19 @@ export default function SunMoonLettersScreen() {
               reordered and wrapped with the English line height, and the lines
               overlapped. One half of the verse per line. */}
           <View style={styles.mnemonicPhraseBox}>
-            <Text style={styles.mnemonicArabic}>
-              {'طِبْ ثُمَّ صِلْ رَحِمًا تَفُزْ ضِفْ ذَا نِعَمْ\nدَعْ سُوءَ ظَنٍّ زُرْ شَرِيفًا لِلْكَرَمْ'}
-            </Text>
+            <Text style={styles.mnemonicArabic}>{SUN_VERSE.join('\n')}</Text>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={versePlaying ? t('listen.stop') : t('listen.listen')}
+              style={({ pressed }) => [styles.verseListenBtn, pressed && { opacity: 0.7 }]}
+              onPress={toggleVerse}
+              hitSlop={8}
+            >
+              <Ionicons name={versePlaying ? 'stop' : 'volume-medium'} size={16} color={color.sacred} />
+              <Text style={styles.verseListenText}>
+                {versePlaying ? t('listen.stop') : t('listen.listen')}
+              </Text>
+            </Pressable>
           </View>
           <Text style={styles.mnemonicText}>{t('alphabet.memoryTipConclusion')}</Text>
         </View>
@@ -476,5 +516,21 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     textAlign: 'center',
     writingDirection: 'rtl',
+  },
+  verseListenBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 14,
+    borderRadius: radius.full,
+    backgroundColor: withAlpha(color.sacred, 0.13),
+  },
+  verseListenText: {
+    color: color.sacred,
+    fontSize: 13,
+    fontWeight: '600',
+    marginLeft: 6,
   },
 });
