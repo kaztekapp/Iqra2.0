@@ -356,16 +356,19 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   letterGrid: {
-    flexDirection: 'row',
+    // Two per row, reading right to left. The cards are 48.5% wide and the row
+    // uses space-between, so the gutter sits in the middle instead of pushing a
+    // second card past 100% and forcing one per row.
+    flexDirection: 'row-reverse',
     flexWrap: 'wrap',
-    marginHorizontal: -6,
+    justifyContent: 'space-between',
   },
   letterCard: {
     width: '48.5%',
     backgroundColor: color.surface,
     borderRadius: radius.lg,
     padding: 14,
-    margin: 6,
+    marginBottom: 12,
     borderWidth: 2,
   },
   sunCard: {
@@ -382,7 +385,7 @@ const styles = StyleSheet.create({
   },
   letterArabic: {
     fontFamily: font.arabic,
-    lineHeight: 82,
+    lineHeight: 58,
     fontSize: 48,
     color: color.text,
   },

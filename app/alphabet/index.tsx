@@ -20,6 +20,14 @@ export default function AlphabetScreen() {
   const learnedLetters = progress.alphabetProgress.lettersLearned;
   const masteredLetters = progress.alphabetProgress.masteredLetters;
 
+  // The grid chip fits one short line. "Ta (emphatic)" / "Dha (emphatic)" would
+  // wrap onto a second line that runs under the audio button, so the grid shows
+  // their transliteration-style labels instead — one line, and distinct from
+  // plain "Ta" and "Dhal". The full names still appear on the letter page.
+  const GRID_LABEL: Record<string, string> = { ta_emphatic: 'Ṭa', dha_emphatic: 'Ẓa' };
+  const gridName = (letter: (typeof arabicLetters)[number]) =>
+    GRID_LABEL[letter.id] ?? lc(letter.name, letter.nameFr);
+
   const getLetterStatus = (letterId: string) => {
     if (masteredLetters.includes(letterId)) return 'mastered';
     if (learnedLetters.includes(letterId)) return 'learned';
@@ -116,7 +124,7 @@ export default function AlphabetScreen() {
                   onPress={() => router.push(`/alphabet/${letter.id}`)}
                 >
                   <Text style={styles.letterArabic}>{letter.letter}</Text>
-                  <Text style={styles.letterName}>{lc(letter.name, letter.nameFr)}</Text>
+                  <Text style={styles.letterName}>{gridName(letter)}</Text>
                   <Text style={styles.letterTranslit}>{letter.transliteration}</Text>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={styles.letterAudioBtn}
