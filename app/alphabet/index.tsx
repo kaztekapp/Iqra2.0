@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -11,8 +11,22 @@ import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
 
+// Four letters per row inside the section's 20pt gutters.
+const GRID_COLUMNS = 4;
+const GRID_GAP = 8;
+const SECTION_GUTTER = 20;
+const CARD_RATIO = 0.85; // width / height
+
 export default function AlphabetScreen() {
   const { t } = useTranslation();
+  // Each card gets an exact size. A percentage width with aspectRatio and
+  // percentage margins in a wrapping grid let Yoga measure the grid shorter
+  // than its rows, and the Sun & Moon card below sat on top of the last row.
+  const { width: screenWidth } = useWindowDimensions();
+  const cardWidth = Math.floor(
+    (screenWidth - SECTION_GUTTER * 2 - GRID_GAP * (GRID_COLUMNS - 1)) / GRID_COLUMNS,
+  );
+  const cardSize = { width: cardWidth, height: Math.round(cardWidth / CARD_RATIO) };
   const { lc } = useLocalizedContent();
   const progress = useProgressStore((s) => s.progress);
   const getAlphabetCompletionPercent = useProgressStore((s) => s.getAlphabetCompletionPercent);
@@ -120,7 +134,7 @@ export default function AlphabetScreen() {
               return (
                 <Pressable accessibilityRole="button"
                   key={letter.id}
-                  style={[styles.letterCard, { borderColor: statusColor }]}
+                  style={[styles.letterCard, cardSize, { borderColor: statusColor }]}
                   onPress={() => router.push(`/alphabet/${letter.id}`)}
                 >
                   <Text style={styles.letterArabic}>{letter.letter}</Text>
@@ -329,15 +343,14 @@ const styles = StyleSheet.create({
   letterGrid: {
     flexDirection: 'row-reverse',
     flexWrap: 'wrap',
-    marginHorizontal: -6,
+    justifyContent: 'space-between',
+    rowGap: GRID_GAP,
+    columnGap: GRID_GAP,
   },
   letterCard: {
-    width: '23%',
-    aspectRatio: 0.85,
     backgroundColor: color.surface,
     borderRadius: radius.md,
     padding: 8,
-    margin: '1%',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
