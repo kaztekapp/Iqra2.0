@@ -26,6 +26,8 @@ Use the app's light green "garden" palette for the caption band: a mint backgrou
 
 Every caption is 30 characters or fewer (see `check-lengths.cjs`).
 
+**Making the store images:** put the raw phone screenshots in `store/raw/en/1.png` … `8.png` and `store/raw/fr/1.png` … `8.png` (the number is the shot number above; .jpg works too), then run `node scripts/make-store-screenshots.cjs`. It frames each one under its caption from the table above and writes `store/screenshots/app-store/{en,fr}/N.png` (1320 × 2868) and `store/screenshots/play/{en,fr}/N.png` (1080 × 2340), opaque, ready to upload. Both folders are git-ignored.
+
 **Before capturing:** use a clean account with a realistic streak. Turn vowel marks on. Make sure no real users' names or messages appear; group-chat content must be your own sample content. Don't show the word "AI" or any purchase screen.
 
 ## Feature graphic (Play)

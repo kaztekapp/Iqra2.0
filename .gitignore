@@ -55,3 +55,7 @@ supabase/.temp/
 
 # Store submission keys
 credentials/*.json
+
+# Store screenshots: raw phone captures can show personal data; outputs are regenerated
+store/raw/
+store/screenshots/
