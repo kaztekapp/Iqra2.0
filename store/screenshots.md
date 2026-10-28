@@ -22,7 +22,7 @@ Use the app's light green "garden" palette for the caption band: a mint backgrou
 | 5 | Vocabulary flashcard (Arabic side, with the theme visible) | Build your vocabulary | Enrichissez votre vocabulaire |
 | 6 | Surah Learn mode: verse range, speed and repeat controls | Memorize at your own pace | Mémorisez à votre rythme |
 | 7 | A dua: Arabic, transliteration and meaning, with the audio playing | Duas for every day | Invocations du quotidien |
-| 8 | Home: streak, XP, daily goal | Keep your streak going | Gardez le rythme |
+| 8 | Grammar lesson: Masculine & Feminine Nouns, with its Arabic example cards | Grammar, one rule at a time | La grammaire, règle par règle |
 
 Every caption is 30 characters or fewer (see `check-lengths.cjs`).
 

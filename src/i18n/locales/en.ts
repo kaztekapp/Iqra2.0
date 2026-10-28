@@ -711,6 +711,8 @@ export default {
     seeResults: 'See Results',
   },
   grammar: {
+    ruleHeading: 'Rule',
+    tipHeading: 'Tip',
     title: 'Grammar',
     lessonsCount: '{{completed}}/{{total}} lessons',
     comingSoonLesson: 'This lesson is currently being developed. Check back soon!',

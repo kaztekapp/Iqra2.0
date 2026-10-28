@@ -711,6 +711,8 @@ export default {
     seeResults: 'Voir les R\u00e9sultats',
   },
   grammar: {
+    ruleHeading: 'Règle',
+    tipHeading: 'Astuce',
     title: 'Grammaire',
     lessonsCount: '{{completed}}/{{total}} le\u00e7ons',
     comingSoonLesson: 'Cette le\u00e7on est en cours de d\u00e9veloppement. Revenez bient\u00f4t !',

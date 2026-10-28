@@ -127,7 +127,7 @@ export default function GrammarLessonScreen() {
     sections: dataLesson.content.reduce((acc: LessonSection[], item: GrammarContent) => {
       if (item.type === 'text' || item.type === 'rule' || item.type === 'note') {
         acc.push({
-          title: item.type === 'rule' ? '📌 Rule' : item.type === 'note' ? '💡 Tip' : '',
+          title: item.type === 'rule' ? `📌 ${t('grammar.ruleHeading')}` : item.type === 'note' ? `💡 ${t('grammar.tipHeading')}` : '',
           content: item.content,
           contentFr: item.contentFr,
           arabicDescription: item.arabicDescription,
