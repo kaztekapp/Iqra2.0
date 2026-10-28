@@ -17,7 +17,7 @@ Use the app's light green "garden" palette for the caption band: a mint backgrou
 |---|---|---|---|
 | 1 | Alphabet: one letter screen showing its four forms | Learn Arabic from letter one | L'arabe dès la première lettre |
 | 2 | Surah Learn mode: verse range, speed and repeat controls | Memorize at your own pace | Mémorisez à votre rythme |
-| 3 | Surah reader with tajweed colors and translation on, reciter shown | Read the Quran with tajweed | Lisez le Coran avec le tajwid |
+| 3 | Surah reader with translation on, reciter shown | Seven reciters of the Quran | Sept récitateurs du Coran |
 | 4 | A prophet story mid-read, with a verse card in Arabic and translation, the narration playing | Stories of the prophets | Les histoires des prophètes |
 | 5 | Alphabet → Scripts: one letter in Naskh, Ruqʿah and Nastaʿliq | Three ways to write Arabic | Trois styles d'écriture |
 | 6 | Vocabulary flashcard (Arabic side, with the theme visible) | Build your vocabulary | Enrichissez votre vocabulaire |

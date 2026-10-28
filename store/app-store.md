@@ -22,7 +22,7 @@ Alphabet, Stories of Prophets
 
 **Promotional text** (170 max; you can change it any time without a review)
 ```
-Learn to read and write Arabic from the first letter, then open the Quran with four reciters, tajweed colors, and the stories of the prophets told from the Quran itself.
+Learn to read and write Arabic from the first letter, then open the Quran with seven reciters, tajweed lessons and the stories of the prophets told from the Quran itself.
 ```
 
 **Description** (4000 max)
@@ -42,8 +42,8 @@ LEARN ARABIC, STEP BY STEP
 
 READ AND LEARN THE QURAN
 • All 114 surahs, by surah or by juz, with translation and transliteration
-• Four reciters: Mishary Alafasy, Abdul Basit, Al-Husary and Al-Minshawi
-• Tajweed colors on the text, plus lessons on each tajweed rule
+• Seven reciters: Mishary Alafasy, Abdul Basit, Al-Husary, Al-Minshawi, As-Sudais, Al-Ghamdi and Ar-Rifai
+• A lesson on each tajweed rule
 • Learn mode: choose a range of verses, set the speed, repeat and advance on your own
 • Write and test modes to check what you have memorized
 • Recitations you play are saved on your phone, so you can listen again offline
@@ -104,7 +104,7 @@ Apprendre l'alphabet arabe
 
 **Texte promotionnel**
 ```
-Apprenez à lire et écrire l'arabe dès la première lettre, puis ouvrez le Coran avec quatre récitateurs, le tajwid en couleurs et les histoires des prophètes du Coran.
+Apprenez à lire et écrire l'arabe dès la première lettre, puis ouvrez le Coran avec sept récitateurs, des leçons de tajwid et les histoires des prophètes du Coran.
 ```
 
 **Description**
@@ -124,8 +124,8 @@ APPRENDRE L'ARABE, PAS À PAS
 
 LIRE ET APPRENDRE LE CORAN
 • Les 114 sourates, par sourate ou par juz, avec traduction et translittération
-• Quatre récitateurs : Mishary Alafasy, Abdul Basit, Al-Husary et Al-Minshawi
-• Le tajwid en couleurs sur le texte, et une leçon pour chaque règle
+• Sept récitateurs : Mishary Alafasy, Abdul Basit, Al-Husary, Al-Minshawi, As-Sudais, Al-Ghamdi et Ar-Rifai
+• Une leçon pour chaque règle de tajwid
 • Mode apprentissage : choisissez les versets, la vitesse, la répétition et l'enchaînement
 • Modes écriture et test pour vérifier ce que vous avez mémorisé
 • Les récitations écoutées restent sur votre téléphone pour les réécouter hors ligne
