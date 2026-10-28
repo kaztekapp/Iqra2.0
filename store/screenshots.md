@@ -19,14 +19,13 @@ Use the app's light green "garden" palette for the caption band: a mint backgrou
 | 2 | Surah Learn mode: verse range, speed and repeat controls | Memorize at your own pace | Mémorisez à votre rythme |
 | 3 | Surah reader with translation on, reciter shown | Seven reciters of the Quran | Sept récitateurs du Coran |
 | 4 | A prophet story mid-read, with a verse card in Arabic and translation, the narration playing | Stories of the prophets | Les histoires des prophètes |
-| 5 | Alphabet → Scripts: one letter in Naskh, Ruqʿah and Nastaʿliq | Three ways to write Arabic | Trois styles d'écriture |
-| 6 | Vocabulary flashcard (Arabic side, with the theme visible) | Build your vocabulary | Enrichissez votre vocabulaire |
-| 7 | A dua: Arabic, transliteration and meaning, with the audio playing | Duas for every day | Invocations du quotidien |
-| 8 | Grammar lesson: Masculine & Feminine Nouns, with its Arabic example cards | Grammar, one rule at a time | La grammaire, règle par règle |
+| 5 | Vocabulary flashcard (Arabic side, with the theme visible) | Build your vocabulary | Enrichissez votre vocabulaire |
+| 6 | A dua: Arabic, transliteration and meaning, with the audio playing | Duas for every day | Invocations du quotidien |
+| 7 | Grammar lesson: Masculine & Feminine Nouns, with its Arabic example cards | Grammar, one rule at a time | La grammaire, règle par règle |
 
 Every caption is 30 characters or fewer (see `check-lengths.cjs`).
 
-**Making the store images:** put the raw phone screenshots in `store/raw/en/1.png` … `8.png` and `store/raw/fr/1.png` … `8.png` (the number is the shot number above; .jpg works too), then run `node scripts/make-store-screenshots.cjs`. It frames each one under its caption from the table above and writes `store/screenshots/app-store/{en,fr}/N.png` (1320 × 2868) and `store/screenshots/play/{en,fr}/N.png` (1080 × 2340), opaque, ready to upload. Both folders are git-ignored.
+**Making the store images:** put the raw phone screenshots in `store/raw/en/1.png` … `7.png` and `store/raw/fr/1.png` … `7.png` (the number is the shot number above; .jpg works too), then run `node scripts/make-store-screenshots.cjs`. It frames each one under its caption from the table above and writes `store/screenshots/app-store/{en,fr}/N.png` (1320 × 2868) and `store/screenshots/play/{en,fr}/N.png` (1080 × 2340), opaque, ready to upload. Both folders are git-ignored. `node scripts/upload-asc-screenshots.cjs` then replaces the 6.9" iPhone screenshots of the newest App Store version with them (API key in `credentials/`). The raw shots for 1.1.0 were taken on an iPhone 17 Pro Max simulator (iOS 26), which captures at exactly 1320 × 2868.
 
 **Before capturing:** use a clean account with a realistic streak. Turn vowel marks on. Make sure no real users' names or messages appear; group-chat content must be your own sample content. Don't show the word "AI" or any purchase screen.
 

@@ -4,7 +4,7 @@
 //   1. Take the shots on the phone (see store/screenshots.md for the list and
 //      what each must show), English shots with the app in English, French
 //      shots with the app in French.
-//   2. Put them in store/raw/en/1.png … 8.png and store/raw/fr/1.png … 8.png
+//   2. Put them in store/raw/en/1.png … 7.png and store/raw/fr/1.png … 7.png
 //      (.png, .jpg or .jpeg; the number is the shot number in the table).
 //   3. node scripts/make-store-screenshots.cjs
 //
@@ -83,12 +83,23 @@ function page({ caption, imagePath, width, height }) {
     font-size: 92px; line-height: 1.1; font-weight: 700; letter-spacing: -1.5px;
     text-wrap: balance;
   }
-  .phone {
-    position: absolute; left: 50%; top: 520px; transform: translateX(-50%);
-    width: 1000px; padding: 14px; border-radius: 86px; background: ${C.ink900};
-    box-shadow: 0 40px 90px rgba(20, 38, 28, .22), 0 6px 18px rgba(20, 38, 28, .12);
+  /* iPhone frame: titanium body, side buttons and a light glare, after the
+     device in the offcut studio's listing shots. The screen runs off the
+     bottom edge so the set reads as one strip while swiping. The simulator's
+     capture already carries the Dynamic Island, so none is drawn here. */
+  .phone { position: absolute; left: 50%; top: 540px; width: 1096px; transform: translateX(-50%); }
+  .body {
+    position: absolute; inset: 0; border-radius: 152px;
+    background: linear-gradient(145deg, #3a3d42 0%, #1c1e22 40%, #26282c 100%);
+    box-shadow: 0 60px 140px rgba(28, 30, 34, .40), inset 0 0 0 3px rgba(0, 0, 0, .40);
   }
-  .phone img { display: block; width: 100%; border-radius: 72px; }
+  .btn { position: absolute; width: 8px; border-radius: 5px; background: #2a2c30; }
+  .screen { position: relative; margin: 18px; border-radius: 134px; overflow: hidden; background: #000; }
+  .screen img { display: block; width: 100%; }
+  .glare {
+    position: absolute; inset: 18px; border-radius: 134px; pointer-events: none;
+    background: linear-gradient(125deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 22%);
+  }
 </style></head><body><div class="canvas">
   <svg class="star" viewBox="0 0 120 120" aria-hidden="true">
     <g fill="none" stroke="${C.gold500}" stroke-width="1.2">
@@ -98,7 +109,15 @@ function page({ caption, imagePath, width, height }) {
     </g>
   </svg>
   <h1>${escapeHtml(caption)}</h1>
-  <div class="phone"><img src="data:${mime};base64,${data}"></div>
+  <div class="phone">
+    <div class="body"></div>
+    <div class="btn" style="left:-7px; top:430px; height:100px"></div>
+    <div class="btn" style="left:-7px; top:580px; height:190px"></div>
+    <div class="btn" style="left:-7px; top:810px; height:190px"></div>
+    <div class="btn" style="right:-7px; top:640px; height:260px"></div>
+    <div class="screen"><img src="data:${mime};base64,${data}"></div>
+    <div class="glare"></div>
+  </div>
 </div></body></html>`;
 }
 
