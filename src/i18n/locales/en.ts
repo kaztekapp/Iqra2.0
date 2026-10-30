@@ -535,6 +535,9 @@ export default {
     goalStories: 'Islamic Stories',
   },
   auth: {
+    switchAccountTitle: 'Switch account?',
+    switchAccountBody: 'This link signs in to a different account than the one on this phone. Continue only if you asked for it.',
+    switchAccountConfirm: 'Switch',
     signIn: 'Sign In',
     signUp: 'Sign Up',
     email: 'Email',

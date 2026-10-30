@@ -88,6 +88,7 @@ import type { IoniconName } from '../../../src/theme/icons';
 import type { AlertButton, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../../src/components/community/withCommunityGate';
 type Tab = 'chat' | 'members' | 'info';
 
 type MappedMessage = GroupMessage & {
@@ -152,7 +153,7 @@ function classContentLabel(content: ClassContent): string {
   return 'Class content';
 }
 
-export default function GroupDetailScreen() {
+function GroupDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
   const { lc, language } = useLocalizedContent();
@@ -1642,3 +1643,5 @@ const styles = StyleSheet.create({
   previewJoinText: { fontSize: 16, fontWeight: '700', color: color.text },
   previewHint: { fontSize: 13, color: color.textFaint, textAlign: 'center', marginTop: 12 },
 });
+
+export default withCommunityGate(GroupDetailScreen);

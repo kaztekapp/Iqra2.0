@@ -20,13 +20,14 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 import type { TFunction } from 'i18next';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 const LEVEL_COLORS: Record<string, string> = {
   beginner: color.progress,
   intermediate: color.warning,
   advanced: color.warning,
 };
 
-export default function StudyPartnersScreen() {
+function StudyPartnersScreen() {
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
 
@@ -406,3 +407,5 @@ const styles = StyleSheet.create({
     color: color.progress,
   },
 });
+
+export default withCommunityGate(StudyPartnersScreen);

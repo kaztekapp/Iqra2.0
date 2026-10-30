@@ -23,6 +23,7 @@ import { useCommunityRules } from '../../../src/components/community/useCommunit
 import { color, radius } from '../../../src/theme/tokens';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../../src/components/community/withCommunityGate';
 const categoryColors: Record<string, string> = {
   general: color.textFaint,
   quran: color.progress,
@@ -31,7 +32,7 @@ const categoryColors: Record<string, string> = {
   tips: color.warning,
 };
 
-export default function ThreadDetailScreen() {
+function ThreadDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
@@ -500,3 +501,5 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
 });
+
+export default withCommunityGate(ThreadDetailScreen);

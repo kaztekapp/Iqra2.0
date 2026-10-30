@@ -25,6 +25,7 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string }[] = [
   { key: 'all', icon: 'apps', color: color.textMuted },
   { key: 'general', icon: 'globe', color: color.textFaint },
@@ -34,7 +35,7 @@ const CATEGORIES: { key: DiscussionCategory | 'all'; icon: string; color: string
   { key: 'tips', icon: 'bulb', color: color.warning },
 ];
 
-export default function DiscussionsScreen() {
+function DiscussionsScreen() {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<DiscussionCategory | 'all'>('all');
   const [refreshing, setRefreshing] = useState(false);
@@ -550,3 +551,5 @@ const styles = StyleSheet.create({
     borderColor: color.border,
   },
 });
+
+export default withCommunityGate(DiscussionsScreen);

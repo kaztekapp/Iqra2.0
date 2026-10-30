@@ -3,7 +3,7 @@ import '../src/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { AppState, Platform, View } from 'react-native';
+import { Alert, AppState, Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -36,6 +36,18 @@ export const unstable_settings = {
 initReporting();
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+
+/** The user id (sub) inside a Supabase access token, or null if it cannot be read. */
+function tokenSubject(token: string): string | null {
+  try {
+    const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const padded = part + '='.repeat((4 - (part.length % 4)) % 4);
+    const claims = JSON.parse(globalThis.atob(padded));
+    return typeof claims.sub === 'string' ? claims.sub : null;
+  } catch {
+    return null;
+  }
+}
 
 function RootLayout() {
   const { i18n } = useTranslation();
@@ -199,9 +211,36 @@ function RootLayout() {
         const accessToken = params.get('access_token');
         const refreshToken = params.get('refresh_token');
 
-        if (accessToken && refreshToken) {
-          await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        if (!accessToken || !refreshToken) return;
+
+        // Only Supabase's own callbacks may sign someone in from a link: a
+        // password reset or an email sign-up confirmation. Any other link that
+        // carries tokens could be someone else's session, crafted to sign this
+        // phone into their account so its progress syncs to them.
+        const kind = params.get('type');
+        if (kind !== 'recovery' && kind !== 'signup') return;
+
+        // A different account is already signed in here: switching needs a yes.
+        const incoming = tokenSubject(accessToken);
+        const { data: current } = await supabase.auth.getSession();
+        const currentId = current.session?.user?.id;
+        if (currentId && incoming !== currentId) {
+          const t = i18n.t.bind(i18n);
+          const proceed = await new Promise<boolean>((resolve) =>
+            Alert.alert(
+              t('auth.switchAccountTitle'),
+              t('auth.switchAccountBody'),
+              [
+                { text: t('common.cancel'), style: 'cancel', onPress: () => resolve(false) },
+                { text: t('auth.switchAccountConfirm'), onPress: () => resolve(true) },
+              ],
+              { cancelable: true, onDismiss: () => resolve(false) },
+            ),
+          );
+          if (!proceed) return;
         }
+
+        await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
       } catch (e) {
         // Stale/expired tokens — silently ignore, user can request a new reset
         console.warn('[DeepLink] Auth token error:', errorMessage(e));

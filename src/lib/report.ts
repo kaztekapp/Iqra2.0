@@ -38,6 +38,16 @@ export function initReporting(): void {
     release: `${Constants.expoConfig?.slug ?? 'iqra'}@${Constants.expoConfig?.version ?? '0'}`,
     dist: Updates.updateId ?? undefined,
     sendDefaultPii: false,
+    // Request breadcrumbs keep the address but not its query: Google TTS URLs
+    // carry the text being read (including Arabic the user typed) and Supabase
+    // URLs carry user ids.
+    beforeBreadcrumb(breadcrumb) {
+      const url = breadcrumb.data?.url;
+      if (typeof url === 'string' && url.includes('?')) {
+        breadcrumb.data = { ...breadcrumb.data, url: url.split('?')[0] };
+      }
+      return breadcrumb;
+    },
   });
   Sentry.setTag('update.channel', Updates.channel ?? 'none');
   Sentry.setTag('update.id', Updates.updateId ?? 'embedded');

@@ -13,6 +13,7 @@ import { medal, font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
   { type: 'streaks', labelKey: 'community.streaks', icon: 'flame' },
@@ -107,7 +108,7 @@ const LeaderboardSkeleton = () => (
   </View>
 );
 
-export default function LeaderboardScreen() {
+function LeaderboardScreen() {
   const { t } = useTranslation();
   const [currentType, setCurrentType] = useState<LeaderboardType>('weekly');
   const fetchLeaderboard = useCommunityStore((s) => s.fetchLeaderboard);
@@ -496,3 +497,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+
+export default withCommunityGate(LeaderboardScreen);

@@ -12,7 +12,8 @@ import { color, radius } from '../../../../src/theme/tokens';
 import type { IoniconName } from '../../../../src/theme/icons';
 import i18n from 'i18next';
 
-export default function InviteLandingScreen() {
+import { withCommunityGate } from '../../../../src/components/community/withCommunityGate';
+function InviteLandingScreen() {
   const { code } = useLocalSearchParams<{ code: string }>();
   const { t } = useTranslation();
   const user = useSettingsStore((s) => s.user);
@@ -175,3 +176,5 @@ const styles = StyleSheet.create({
   joinBtnText: { fontSize: 16, fontWeight: '700', color: color.text },
   inviteHint: { fontSize: 12, color: color.textFaint, marginTop: 12 },
 });
+
+export default withCommunityGate(InviteLandingScreen);

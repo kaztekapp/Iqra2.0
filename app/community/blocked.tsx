@@ -8,8 +8,9 @@ import { useModerationStore, useBlockedMap } from '../../src/stores/moderationSt
 import { color, radius, space, type, weight, gutter, elevation } from '../../src/theme/tokens';
 import { reportError } from '../../src/lib/report';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 /** Everyone this person has blocked, with a way to unblock each. */
-export default function BlockedUsersScreen() {
+function BlockedUsersScreen() {
   const { t, i18n } = useTranslation();
   const blocked = useBlockedMap();
   const sync = useModerationStore((s) => s.sync);
@@ -148,3 +149,5 @@ const styles = StyleSheet.create({
   },
   unblockText: { ...type.caption, fontWeight: weight.semibold, color: color.accent },
 });
+
+export default withCommunityGate(BlockedUsersScreen);

@@ -23,10 +23,11 @@ import { color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 const GROUP_ICONS = ['book', 'school', 'mic', 'language', 'moon', 'star', 'people', 'flag'];
 const GROUP_COLORS = [color.progress, color.warning, color.warning, color.accent, color.accent, color.warning, color.danger, color.progress];
 
-export default function StudyGroupsScreen() {
+function StudyGroupsScreen() {
   const { t } = useTranslation();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -629,3 +630,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default withCommunityGate(StudyGroupsScreen);

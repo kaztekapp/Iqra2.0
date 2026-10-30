@@ -12,6 +12,7 @@ import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
+import { withCommunityGate } from '../../src/components/community/withCommunityGate';
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
@@ -120,7 +121,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   );
 };
 
-export default function ChallengesScreen() {
+function ChallengesScreen() {
   const { t } = useTranslation();
   const dailyChallenge = useCommunityStore((s) => s.dailyChallenge);
   const weeklyChallenge = useCommunityStore((s) => s.weeklyChallenge);
@@ -372,3 +373,5 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
 });
+
+export default withCommunityGate(ChallengesScreen);
