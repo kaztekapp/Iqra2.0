@@ -29,7 +29,7 @@ const BROWSER =
 
 const TARGETS = [
   { name: 'app-store', width: 1320, height: 2868 },
-  { name: 'play', width: 1080, height: 2340 },
+  { name: 'play', width: 1080, height: 1920 },
 ];
 // Everything is laid out on a 1320-wide canvas and scaled to each target.
 const BASE_WIDTH = 1320;
@@ -63,7 +63,7 @@ function findRaw(locale, n) {
 
 const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-function page({ caption, imagePath, width, height }) {
+function page({ caption, imagePath, width, height, generic = false }) {
   const scale = width / BASE_WIDTH;
   const baseHeight = Math.round(height / scale);
   const mime = /\.png$/i.test(imagePath) ? 'image/png' : 'image/jpeg';
@@ -100,7 +100,14 @@ function page({ caption, imagePath, width, height }) {
     position: absolute; inset: 18px; border-radius: 134px; pointer-events: none;
     background: linear-gradient(125deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 22%);
   }
-</style></head><body><div class="canvas">
+  /* Play: no iPhone (Google asks that screenshots show the app, not another
+     platform). A plain phone with no iPhone buttons, and the iOS status bar
+     and Dynamic Island cropped off the top of the capture. */
+  .generic .body { border-radius: 90px; }
+  .generic .btn { display: none; }
+  .generic .screen, .generic .glare { border-radius: 72px; }
+  .generic .screen img { margin-top: -132px; }
+</style></head><body><div class="canvas${generic ? ' generic' : ''}">
   <svg class="star" viewBox="0 0 120 120" aria-hidden="true">
     <g fill="none" stroke="${C.gold500}" stroke-width="1.2">
       <path d="M60 10 L75 45 L110 60 L75 75 L60 110 L45 75 L10 60 L45 45 Z"/>
@@ -153,7 +160,7 @@ function main() {
         const dir = path.join(ROOT, 'store/screenshots', t.name, locale);
         fs.mkdirSync(dir, { recursive: true });
         const out = path.join(dir, `${n}.png`);
-        render(page({ caption: caps[n][locale], imagePath: raw, width: t.width, height: t.height }), out, t.width, t.height);
+        render(page({ caption: caps[n][locale], imagePath: raw, width: t.width, height: t.height, generic: t.name === 'play' }), out, t.width, t.height);
         made += 1;
       }
       console.log(`${locale} ${n}: ${caps[n][locale]}`);
