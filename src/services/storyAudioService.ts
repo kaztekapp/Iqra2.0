@@ -59,7 +59,6 @@ import {
   keepClip,
   pruneClips,
 } from './speech/arabicVoiceCache';
-import { chunkForUrl } from './narrationText';
 import { quietly } from '../lib/report';
 
 export type SpeakResult = 'done' | 'stopped' | 'error';
@@ -71,7 +70,7 @@ export type VoiceGender = 'female' | 'male';
  * apart from the device because only they can be unreachable, and only the
  * first of them has a male voice.
  */
-export type FetchedEngine = 'edge' | 'google';
+export type FetchedEngine = 'edge';
 export type NarrationEngine = FetchedEngine | 'device';
 /**
  * The neural voice, then the phone's own. Google's voice used to sit between
@@ -125,9 +124,6 @@ const DEVICE_RATE: Record<number, number> = {
 
 /** Roughly how fast any path gets through words, for time-remaining. */
 const WORDS_PER_MINUTE = 155;
-
-/** Google's endpoint refuses long strings; this is a safe clip length. */
-const URL_CHUNK = 180;
 
 /** How long to stop fetching after a failure, so taps do not stall. */
 const NETWORK_BACKOFF_MS = 30_000;
@@ -219,8 +215,8 @@ class StoryAudioService {
    * the phone is plainly online. One shared counter would have retired both
    * on the first refusal.
    */
-  private unavailableUntil: Record<FetchedEngine, number> = { edge: 0, google: 0 };
-  private failures: Record<FetchedEngine, number> = { edge: 0, google: 0 };
+  private unavailableUntil: Record<FetchedEngine, number> = { edge: 0 };
+  private failures: Record<FetchedEngine, number> = { edge: 0 };
   private onlineCheckedAt = 0;
   private onlineCached = true;
 
@@ -344,8 +340,8 @@ class StoryAudioService {
 
   /** Clear every back-off, so the next sentence starts at the top rung. */
   private forgiveEngines(): void {
-    this.unavailableUntil = { edge: 0, google: 0 };
-    this.failures = { edge: 0, google: 0 };
+    this.unavailableUntil = { edge: 0 };
+    this.failures = { edge: 0 };
   }
 
   /** Which engine this session settled on, once it has spoken. */
@@ -533,7 +529,6 @@ class StoryAudioService {
     generation: number
   ): Promise<SpeakResult> {
     if (engine === 'edge') return this.speakEdge(body, speed, lang, generation);
-    if (engine === 'google') return this.speakGoogle(body, speed, lang, generation);
     return this.speakOnDevice(body, speed, lang, generation);
   }
 
@@ -663,44 +658,6 @@ class StoryAudioService {
     } catch {
       if (generation !== this.generation) return 'stopped';
       return this.demote('edge', body, speed, lang, generation);
-    }
-  }
-
-  /**
-   * Google's voice — female only, and the one this app narrated with before
-   * Edge. It is still a good voice, so it comes before the phone's own.
-   * Streamed straight from the URL a clip at a time; there is no file to
-   * clean up afterwards.
-   */
-  private async speakGoogle(
-    body: string,
-    speed: number,
-    lang: NarrationLang,
-    generation: number
-  ): Promise<SpeakResult> {
-    const chunks = chunkForUrl(body, URL_CHUNK);
-    let spoken = 0;
-
-    try {
-      for (const chunk of chunks) {
-        if (generation !== this.generation) return 'stopped';
-        const url =
-          `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}` +
-          `&client=tw-ob&ttsspeed=1&q=${encodeURIComponent(chunk)}`;
-        await this.playClip(url, speed, estimateSeconds(chunk, speed), generation, false);
-        spoken += 1;
-      }
-      return generation === this.generation ? 'done' : 'stopped';
-    } catch {
-      if (generation !== this.generation) return 'stopped';
-      // Unlike a failed fetch, some of this sentence has already been heard.
-      // Hand the device only what is left, or the listener gets the start of
-      // it twice.
-      this.retire('google');
-      this.sessionEngine = 'device';
-      const remaining = chunks.slice(spoken).join(' ');
-      if (!remaining) return 'done';
-      return this.speakOnDevice(remaining, speed, lang, generation);
     }
   }
 
