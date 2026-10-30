@@ -2,6 +2,8 @@ import { supabase } from '../lib/supabase';
 import { unregisterPushToken } from './push';
 import { flushProgress, stopProgressSync, forgetProgressOwner } from './progressSync';
 import { useSettingsStore } from '../stores/settingsStore';
+import { clearCommunityCache } from './communityCache';
+import { clearAllGroupSnapshots } from './groupContentCache';
 
 function getClient() {
   if (!supabase) throw new Error('Supabase is not configured. Add your credentials to .env');
@@ -123,7 +125,14 @@ export async function signOut() {
   await unregisterPushToken();
   const { error } = await getClient().auth.signOut();
   if (error) throw error;
+  await forgetCommunityOnDevice();
   useSettingsStore.getState().setSession(null);
+}
+
+/** Group lists and the last messages of each group, cached for speed: not for the next person. */
+async function forgetCommunityOnDevice() {
+  clearCommunityCache();
+  await clearAllGroupSnapshots();
 }
 
 export async function resetPassword(email: string) {
@@ -157,6 +166,9 @@ export async function deleteAccount() {
   const { error } = await client.rpc('delete_own_account');
   if (error) throw error;
   await forgetProgressOwner();
+  await forgetCommunityOnDevice();
+  // The account no longer exists; drop its tokens from this phone too.
+  await client.auth.signOut({ scope: 'local' }).catch(() => {});
   useSettingsStore.getState().setSession(null);
 }
 

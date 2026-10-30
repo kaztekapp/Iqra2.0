@@ -20,6 +20,8 @@ const EXPO_PUSH = 'https://exp.host/--/api/v2/push/send';
 const PUSH_BATCH = 100;
 /** A message older than this is history, not news. */
 const MAX_AGE_MINUTES = 5;
+/** At most this many pushed messages per sender per minute: a lively chat is fine, a script is not. */
+const MAX_PUSHES_PER_SENDER_PER_MINUTE = 10;
 
 type MessageRow = {
   id: string;
@@ -93,6 +95,36 @@ Deno.serve(async (req) => {
     const ageMinutes = (Date.now() - Date.parse(message.created_at)) / 60000;
     if (!(ageMinutes < MAX_AGE_MINUTES)) return json({ sent: 0, reason: 'too old' });
 
+    // Only a member may make a group's phones ring. The database checks this on
+    // insert too; checking here as well means a row that got past it some other
+    // way still cannot reach the group.
+    const { data: membership } = await supa
+      .from('study_group_members')
+      .select('user_id')
+      .eq('group_id', message.group_id)
+      .eq('user_id', caller.id)
+      .maybeSingle();
+    if (!membership) return json({ error: 'not a member' }, 403);
+
+    const minuteAgo = new Date(Date.now() - 60 * 1000).toISOString();
+    const { count: recentPushes } = await supa
+      .from('group_messages')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', caller.id)
+      .gte('notified_at', minuteAgo);
+    if ((recentPushes ?? 0) >= MAX_PUSHES_PER_SENDER_PER_MINUTE) {
+      return json({ sent: 0, reason: 'rate limited' });
+    }
+
+    // The name on the notification is the author's profile name, not whatever
+    // the message row says, so nobody can push as "Iqra Team".
+    const { data: profile } = await supa
+      .from('user_profiles')
+      .select('display_name')
+      .eq('user_id', caller.id)
+      .maybeSingle<{ display_name: string | null }>();
+    const authorName = profile?.display_name?.trim() || message.author_name;
+
     // Claim it before sending: a second call while this one is in flight gets
     // "already notified" instead of sending everything twice.
     const { data: claimed } = await supa
@@ -142,7 +174,7 @@ Deno.serve(async (req) => {
         // The group is the headline; who spoke belongs with what they said,
         // the way every chat app writes it.
         title: group?.name ?? (lang === 'fr' ? 'Groupe' : 'Group'),
-        body: `${message.author_name}: ${preview(message, lang)}`,
+        body: `${authorName}: ${preview(message, lang)}`,
         channelId: 'messages',
         // Collapse to the newest message per group rather than stacking a
         // wall of notifications when a conversation is lively.
@@ -175,7 +207,8 @@ Deno.serve(async (req) => {
 
     return json({ sent, devices: messages.length, dropped: stale.length });
   } catch (e) {
-    return json({ error: String((e as Error)?.message ?? e) }, 500);
+    console.error('notify-group-message failed', e);
+    return json({ error: 'internal error' }, 500);
   }
 });
 

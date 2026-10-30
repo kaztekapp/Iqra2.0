@@ -22,7 +22,7 @@ import StopSpeechOnNavigate from '../src/components/StopSpeechOnNavigate';
 import { prewarmArabicVoice } from '../src/services/speech/arabicTTS';
 import { AppErrorBoundary } from '../src/components/AppErrorBoundary';
 import { color } from '../src/theme/tokens';
-import { initReporting, wrapRoot , quietly , errorMessage } from '../src/lib/report';
+import { initReporting, wrapRoot, quietly, errorMessage, identifyUser } from '../src/lib/report';
 import { startReminders, handleColdStartTap, maybeAskOnce } from '../src/services/reminders';
 import { registerPushToken } from '../src/services/push';
 import { syncProgress, syncOnForeground, stopProgressSync, watchProgressChanges } from '../src/services/progressSync';
@@ -171,6 +171,9 @@ function RootLayout() {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
+      // Crash reports carry the account id (never the email), as the privacy
+      // policy says, so a report can be matched to the person who wrote in.
+      identifyUser(session?.user?.id ?? null);
       if (event === 'PASSWORD_RECOVERY') {
         router.replace('/reset-password');
       }

@@ -22,6 +22,12 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 
 /** A report older than this was already seen in the dashboard, or never will be by email. */
 const MAX_AGE_MINUTES = 10;
+/**
+ * At most this many alert emails per reporter per hour. Every report is still
+ * stored for review; past the cap only the email is skipped, so one account
+ * cannot flood the inbox (and bury real reports) or use up the Resend quota.
+ */
+const MAX_ALERTS_PER_REPORTER_PER_HOUR = 5;
 
 type ReportRow = {
   id: string;
@@ -69,6 +75,16 @@ Deno.serve(async (req) => {
     const ageMinutes = (Date.now() - Date.parse(report.created_at)) / 60000;
     if (!(ageMinutes < MAX_AGE_MINUTES)) return json({ sent: false, reason: 'too old' });
 
+    const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count: recentAlerts } = await supa
+      .from('content_reports')
+      .select('id', { count: 'exact', head: true })
+      .eq('reporter_id', caller.id)
+      .gte('alerted_at', hourAgo);
+    if ((recentAlerts ?? 0) >= MAX_ALERTS_PER_REPORTER_PER_HOUR) {
+      return json({ sent: false, reason: 'rate limited' });
+    }
+
     const { data: claimed } = await supa
       .from('content_reports')
       .update({ alerted_at: new Date().toISOString() })
@@ -77,18 +93,23 @@ Deno.serve(async (req) => {
       .select('id');
     if (!claimed || claimed.length === 0) return json({ sent: false, reason: 'already alerted' });
 
-    // How often this person has been reported helps decide how fast to act.
-    const { count: priorReports } = report.reported_user_id
-      ? await supa
-          .from('content_reports')
-          .select('id', { count: 'exact', head: true })
-          .eq('reported_user_id', report.reported_user_id)
-      : { count: null };
+    // How many different people have reported this user helps decide how fast
+    // to act. Distinct reporters, so one account filing many reports against
+    // someone cannot make them look like a repeat offender.
+    let priorReports: number | null = null;
+    if (report.reported_user_id) {
+      const { data: reporters } = await supa
+        .from('content_reports')
+        .select('reporter_id')
+        .eq('reported_user_id', report.reported_user_id)
+        .limit(1000);
+      priorReports = new Set((reporters ?? []).map((r) => r.reporter_id)).size;
+    }
 
     const lines = [
       `Reason: ${report.reason}`,
       `Content: ${report.content_type} ${report.content_id}`,
-      `Reported user: ${report.reported_user_id ?? 'unknown'}${priorReports ? ` (${priorReports} report(s) in total)` : ''}`,
+      `Reported user: ${report.reported_user_id ?? 'unknown'}${priorReports ? ` (reported by ${priorReports} different user(s))` : ''}`,
       `Reporter: ${report.reporter_id}`,
       `Details: ${report.details ?? '(none)'}`,
       '',
@@ -113,11 +134,14 @@ Deno.serve(async (req) => {
     if (!res.ok) {
       // Release the claim so a later call (or a person) can still alert.
       await supa.from('content_reports').update({ alerted_at: null }).eq('id', report.id);
-      return json({ error: 'email failed', status: res.status, body: await res.text() }, 502);
+      // Resend's reply stays in the function log; the app only needs to know it failed.
+      console.error('notify-report: Resend refused', res.status, await res.text());
+      return json({ error: 'email failed' }, 502);
     }
     return json({ sent: true });
   } catch (e) {
-    return json({ error: String(e) }, 500);
+    console.error('notify-report failed', e);
+    return json({ error: 'internal error' }, 500);
   }
 });
 

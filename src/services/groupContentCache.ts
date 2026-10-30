@@ -55,6 +55,17 @@ export function clearGroupSnapshot(groupId: string): void {
   AsyncStorage.removeItem(DISK_KEY + groupId).catch(() => {});
 }
 
+/** Every group's saved messages, in memory and on disk: for sign-out and account deletion. */
+export async function clearAllGroupSnapshots(): Promise<void> {
+  snapshots.clear();
+  try {
+    const keys = (await AsyncStorage.getAllKeys()).filter((k) => k.startsWith(DISK_KEY));
+    if (keys.length) await AsyncStorage.multiRemove(keys);
+  } catch {
+    // Storage that cannot be listed holds nothing we can reach either.
+  }
+}
+
 // ---- disk ------------------------------------------------------------------
 
 const DISK_KEY = 'group-snapshot:';

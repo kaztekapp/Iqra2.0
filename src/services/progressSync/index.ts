@@ -275,9 +275,14 @@ export function stopProgressSync(): void {
   if (pushTimer) { clearTimeout(pushTimer); pushTimer = null; }
 }
 
-/** Account deleted: its saved copy is gone, and the phone no longer belongs to it. */
+/**
+ * Account deleted: its saved copy is gone, and the phone no longer belongs to
+ * it. Its progress goes too: left in place with no owner, the next account to
+ * sign in would claim it and upload a deleted person's data as its own.
+ */
 export async function forgetProgressOwner(): Promise<void> {
   stopProgressSync();
+  applySnapshot(null, true);
   meta = { owner: null, epoch: 0, changedAt: '', lastPushed: null };
   await saveMeta();
 }
