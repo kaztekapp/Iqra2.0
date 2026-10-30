@@ -535,9 +535,6 @@ export default {
     goalStories: 'Histoires Islamiques',
   },
   auth: {
-    switchAccountTitle: 'Changer de compte ?',
-    switchAccountBody: 'Ce lien connecte un autre compte que celui de ce téléphone. Continuez seulement si vous l\'avez demandé.',
-    switchAccountConfirm: 'Changer',
     signIn: 'Se Connecter',
     signUp: 'S\'inscrire',
     email: 'E-mail',

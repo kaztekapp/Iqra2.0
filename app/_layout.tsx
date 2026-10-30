@@ -3,7 +3,7 @@ import '../src/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Alert, AppState, Platform, View } from 'react-native';
+import { AppState, Platform, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -36,18 +36,6 @@ export const unstable_settings = {
 initReporting();
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
-
-/** The user id (sub) inside a Supabase access token, or null if it cannot be read. */
-function tokenSubject(token: string): string | null {
-  try {
-    const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-    const padded = part + '='.repeat((4 - (part.length % 4)) % 4);
-    const claims = JSON.parse(globalThis.atob(padded));
-    return typeof claims.sub === 'string' ? claims.sub : null;
-  } catch {
-    return null;
-  }
-}
 
 function RootLayout() {
   const { i18n } = useTranslation();
@@ -198,52 +186,19 @@ function RootLayout() {
       lastHandledUrl = url;
 
       try {
-        // PKCE flow: Supabase sends ?code=... as a query parameter
+        // PKCE flow: Supabase sends ?code=... as a query parameter. The code is
+        // only good with the verifier this phone stored when it asked, so a
+        // code from anywhere else just fails.
         const codeMatch = url.match(/[?&]code=([^&#]+)/);
         if (codeMatch) {
           await supabase.auth.exchangeCodeForSession(codeMatch[1]);
           return;
         }
 
-        // Implicit flow: tokens in hash fragment #access_token=...&refresh_token=...
-        const hashIndex = url.indexOf('#');
-        if (hashIndex === -1) return;
-
-        const fragment = url.substring(hashIndex + 1);
-        const params = new URLSearchParams(fragment);
-        const accessToken = params.get('access_token');
-        const refreshToken = params.get('refresh_token');
-
-        if (!accessToken || !refreshToken) return;
-
-        // Only Supabase's own callbacks may sign someone in from a link: a
-        // password reset or an email sign-up confirmation. Any other link that
-        // carries tokens could be someone else's session, crafted to sign this
-        // phone into their account so its progress syncs to them.
-        const kind = params.get('type');
-        if (kind !== 'recovery' && kind !== 'signup') return;
-
-        // A different account is already signed in here: switching needs a yes.
-        const incoming = tokenSubject(accessToken);
-        const { data: current } = await supabase.auth.getSession();
-        const currentId = current.session?.user?.id;
-        if (currentId && incoming !== currentId) {
-          const t = i18n.t.bind(i18n);
-          const proceed = await new Promise<boolean>((resolve) =>
-            Alert.alert(
-              t('auth.switchAccountTitle'),
-              t('auth.switchAccountBody'),
-              [
-                { text: t('common.cancel'), style: 'cancel', onPress: () => resolve(false) },
-                { text: t('auth.switchAccountConfirm'), onPress: () => resolve(true) },
-              ],
-              { cancelable: true, onDismiss: () => resolve(false) },
-            ),
-          );
-          if (!proceed) return;
-        }
-
-        await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+        // Links carrying a session in the fragment (#access_token=...) are not
+        // followed. Since the client switched to PKCE, Supabase never sends
+        // them, so any such link was made by someone else: following it would
+        // sign this phone into their account and sync its progress to them.
       } catch (e) {
         // Stale/expired tokens — silently ignore, user can request a new reset
         console.warn('[DeepLink] Auth token error:', errorMessage(e));

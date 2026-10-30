@@ -98,6 +98,12 @@ function getSupabase(): SupabaseClient | null {
         autoRefreshToken: false,
         persistSession: true,
         detectSessionInUrl: false,
+        // Password-reset links carry a one-time code, not a session. The code
+        // only turns into a session together with the verifier this phone
+        // saved when it asked for the reset, so another app that catches the
+        // iqra2:// link (Android lets any app claim a custom scheme) gets
+        // nothing it can use.
+        flowType: 'pkce',
       },
     });
 
