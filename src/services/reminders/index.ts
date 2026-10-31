@@ -12,6 +12,7 @@ import { getSurahMetadataById } from '../staticQuranService';
 import { quietly } from '../../lib/report';
 import { planReminders, PlannedReminder, ReminderInputs, ResumeTarget } from './plan';
 
+import { notificationsModule } from '../notificationsModule';
 /**
  * Local reminders: "continue the story of Musa", "your 12-day streak ends at
  * midnight", "8 verses are due", "it's Friday — Surah al-Kahf". Scheduled on
@@ -29,16 +30,8 @@ import { planReminders, PlannedReminder, ReminderInputs, ResumeTarget } from './
 
 type Notifications = typeof import('expo-notifications');
 
-let nativeModule: Notifications | null | undefined;
 function native(): Notifications | null {
-  if (nativeModule === undefined) {
-    try {
-      nativeModule = require('expo-notifications') as Notifications;
-    } catch {
-      nativeModule = null;
-    }
-  }
-  return nativeModule;
+  return notificationsModule();
 }
 
 /** False on builds that predate expo-notifications, and on web. */

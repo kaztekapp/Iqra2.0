@@ -5,6 +5,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useSettingsStore } from '../stores/settingsStore';
 import { quietly } from '../lib/report';
 
+import { notificationsModule } from './notificationsModule';
 /**
  * Group messages that arrive while the app is closed.
  *
@@ -21,16 +22,8 @@ import { quietly } from '../lib/report';
 
 type Notifications = typeof import('expo-notifications');
 
-let nativeModule: Notifications | null | undefined;
 function native(): Notifications | null {
-  if (nativeModule === undefined) {
-    try {
-      nativeModule = require('expo-notifications') as Notifications;
-    } catch {
-      nativeModule = null;
-    }
-  }
-  return nativeModule;
+  return notificationsModule();
 }
 
 export type PushResult = { ok: boolean; reason: string };
