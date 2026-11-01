@@ -33,7 +33,8 @@ import {
   clipPath,
   edgeRate,
   spokenArabic,
-  toSsml,
+  spokenNarration,
+  buildSsml,
   voiceFor,
 } from '../../src/services/speech/voicePlan';
 import { getProphetsWithStories, getProphetStory } from '../../src/data/arabic/prophets';
@@ -56,8 +57,8 @@ const value = (name: string) => {
 // The plan: every (text, voice, rate) the app can ask for in stories and duas.
 // ---------------------------------------------------------------------------
 
-/** Arabic is spoken at two rates: normal (-25%) and the slow pace (-40%). */
-const ARABIC_RATES = [edgeRate(1), edgeRate(0.6)];
+/** Both Arabic voices, each recorded at its own normal and slow rates (edgeRate). */
+const ARABIC_VOICES = [voiceFor('ar', 'male'), voiceFor('ar', 'female')];
 
 function duaBlocks(d: (typeof DUAS)[number], lang: 'en' | 'fr'): NarratableBlock[] {
   // Mirrors app/quran/duas/[duaId].tsx, with its section labels.
@@ -78,14 +79,18 @@ export function buildPlan(): Item[] {
     for (const chunk of chunkLine(line)) {
       const text = spokenArabic(chunk);
       if (!text.trim()) continue;
-      for (const rate of ARABIC_RATES) {
-        const path = clipPath(text, ARABIC_VOICE, rate);
-        items.set(path, { path, text, voice: ARABIC_VOICE, rate, locale: 'ar-SA' });
+      // Both Arabic voices: the ayahs follow the narrator's gender.
+      for (const voice of ARABIC_VOICES) {
+        for (const rate of [edgeRate(1, voice), edgeRate(0.6, voice)]) {
+          const path = clipPath(text, voice, rate);
+          items.set(path, { path, text, voice, rate, locale: 'ar-SA' });
+        }
       }
     }
   };
   const addNarration = (text: string, lang: 'en' | 'fr') => {
-    const body = text.trim();
+    // Surah names marked for the Arabic voice, exactly as the app sends them.
+    const body = spokenNarration(text.trim());
     if (!body) return;
     for (const gender of ['female', 'male'] as const) {
       const voice = voiceFor(lang, gender);
@@ -126,10 +131,7 @@ function azureKey(): string {
 
 async function synthesize(key: string, item: Pick<Item, 'text' | 'voice' | 'rate' | 'locale'>): Promise<Buffer> {
   // Same request as supabase/functions/tts, so a recorded clip sounds like a live one.
-  const ssml =
-    `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${item.locale}'>` +
-    `<voice name='${item.voice}'><prosody pitch='+0Hz' rate='${item.rate}' volume='+0%'>${toSsml(item.text)}</prosody>` +
-    `</voice></speak>`;
+  const ssml = buildSsml(item.text, item.voice, item.rate, item.locale);
   for (let attempt = 1; ; attempt++) {
     const res = await fetch('https://eastus.tts.speech.microsoft.com/cognitiveservices/v1', {
       method: 'POST',
@@ -208,8 +210,9 @@ async function listExisting(cfg: R2): Promise<Set<string>> {
 async function main() {
   if (value('--try')) {
     const text = spokenArabic(value('--try')!);
-    const rate = value('--rate') ?? edgeRate(1);
-    const audio = await synthesize(azureKey(), { text, voice: ARABIC_VOICE, rate, locale: 'ar-SA' });
+    const voice = value('--voice') === 'female' ? voiceFor('ar', 'female') : ARABIC_VOICE;
+    const rate = value('--rate') ?? edgeRate(1, voice);
+    const audio = await synthesize(azureKey(), { text, voice, rate, locale: 'ar-SA' });
     const file = join(mkdtempSync(join(tmpdir(), 'iqra-try-')), 'try.mp3');
     writeFileSync(file, audio);
     console.log(`spoken as: ${text}  (${rate})`);
@@ -269,7 +272,10 @@ async function main() {
   if (failed) process.exitCode = 1;
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Importable (for audits of the plan) without recording anything.
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

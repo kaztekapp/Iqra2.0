@@ -8,9 +8,10 @@
 
 import { normalizeArabicForSpeech } from '../narrationText';
 import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
+import { SURAH_NAMES } from './surahNames';
 import { VOICE_REVISIONS } from './voiceRevisions';
 
-/** Hamed reads full tashkeel cleanly; every line of Arabic is his. */
+/** Hamed reads full tashkeel cleanly; Zariyah takes the Arabic when the narrator is female. */
 export const ARABIC_VOICE = 'ar-SA-HamedNeural';
 
 /** The rate the English and French narrators read at. */
@@ -54,7 +55,13 @@ export function voiceFor(lang: EdgeLang, gender: EdgeGender): string {
  * -25% is the unhurried reading pace; the two below it are for a learner
  * taking a line apart.
  */
-export function edgeRate(speed: number): string {
+export function edgeRate(speed: number, voice: string = ARABIC_VOICE): string {
+  // Zariyah recites slower by nature: -10% matches Hamed's -25% (by ear).
+  if (voice === VOICES.ar.female) {
+    if (speed >= 0.9) return '-10%';
+    if (speed >= 0.45) return '-25%';
+    return '-40%';
+  }
   if (speed >= 0.9) return '-25%';  // normal: recited, not narrated
   if (speed >= 0.45) return '-40%'; // slow
   return '-55%';                    // slowest, for picking a word apart
@@ -124,7 +131,7 @@ const PREFIXES = ['', 'و', 'ف', 'ب', 'ل', 'ك', 'وَ', 'فَ', 'بِ', 'ل�
 /**
  * The Arabic exactly as it is spoken and recorded: mushaf marks normalized,
  * then the pronunciation fixes applied word by word. A word with a phoneme
- * fix comes out as ⟦ipa|word⟧; the recorder (toSsml) and the tts function
+ * fix comes out as ⟦ipa|word⟧; the recorder (buildSsml) and the tts function
  * turn that into a phoneme tag, and the phone's own voice takes plainSpoken().
  */
 export function spokenArabic(text: string): string {
@@ -147,16 +154,73 @@ export function spokenArabic(text: string): string {
 }
 
 const PHONEME_MARK = /⟦([^|⟧]+)\|([^⟧]+)⟧/g;
+/** ⟪arabic|plain⟫: a name the Arabic voice says inside a narrated sentence. */
+const ARABIC_NAME_MARK = /⟪([^|⟫]+)\|([^⟫]+)⟫/g;
 
-/** The spoken line with its phoneme marks taken back out to the plain word. */
+/** The spoken line with its marks taken back out to the plain words. */
 export function plainSpoken(text: string): string {
-  return text.replace(PHONEME_MARK, '$2');
+  return text.replace(PHONEME_MARK, '$2').replace(ARABIC_NAME_MARK, '$2');
+}
+
+/** How fast the Arabic voice says a name inside a narrated sentence (chosen by ear). */
+export function arabicNameRate(arabicVoice: string): string {
+  return arabicVoice === VOICES.ar.female ? '+0%' : '-10%';
+}
+
+/** The Arabic voice of the narrator's gender: Aria and Denise get Zariyah. */
+export function arabicVoiceForNarrator(voice: string): string {
+  const female = voice === VOICES.en.female || voice === VOICES.fr.female;
+  return female ? VOICES.ar.female : VOICES.ar.male;
+}
+
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const SURAH_NAME_RE = new RegExp(
+  `(\\b(?:Surah|Surat|Sura|[Ss]ourate)\\s+)(${Object.keys(SURAH_NAMES)
+    .sort((a, b) => b.length - a.length)
+    .map(escapeRegExp)
+    .join('|')})(?![\\p{L}'’])`,
+  'gu'
+);
+
+/**
+ * An English or French narration line exactly as it is spoken and recorded:
+ * each surah name after "Surah" / "sourate" marked for the Arabic voice.
+ */
+export function spokenNarration(text: string): string {
+  return text.replace(SURAH_NAME_RE, (_, lead: string, name: string) => `${lead}⟪${SURAH_NAMES[name]}|${name}⟫`);
 }
 
 const escapeXml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
-/** The line as SSML body text, each phoneme mark as a <phoneme> tag. */
-export function toSsml(text: string): string {
-  return escapeXml(text).replace(PHONEME_MARK, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
+const withPhonemes = (escaped: string) =>
+  escaped.replace(PHONEME_MARK, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
+
+/**
+ * The whole SSML request for one line. Phoneme marks become <phoneme> tags;
+ * an Arabic-name mark closes the narrator's voice, lets the Arabic voice say
+ * the name, and reopens the narrator, with the silence Azure puts around a
+ * voice change taken out so the sentence still runs as one.
+ * Mirrored in supabase/functions/tts, which builds the same request.
+ */
+export function buildSsml(text: string, voice: string, rate: string, locale: string): string {
+  const segments: { voice: string; rate: string; text: string }[] = [];
+  let last = 0;
+  for (const m of text.matchAll(ARABIC_NAME_MARK)) {
+    segments.push({ voice, rate, text: text.slice(last, m.index) });
+    const nameVoice = arabicVoiceForNarrator(voice);
+    segments.push({ voice: nameVoice, rate: arabicNameRate(nameVoice), text: m[1] });
+    last = m.index! + m[0].length;
+  }
+  segments.push({ voice, rate, text: text.slice(last) });
+  const spoken = segments.filter((s) => s.text.trim());
+  const body = spoken
+    .map((s, i) => {
+      const silence =
+        (i > 0 ? "<mstts:silence type='Leading-exact' value='0ms'/>" : '') +
+        (i < spoken.length - 1 ? "<mstts:silence type='Tailing-exact' value='0ms'/>" : '');
+      return `<voice name='${s.voice}'>${silence}<prosody pitch='+0Hz' rate='${s.rate}' volume='+0%'>${withPhonemes(escapeXml(s.text))}</prosody></voice>`;
+    })
+    .join('');
+  return `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='${locale}'>${body}</speak>`;
 }

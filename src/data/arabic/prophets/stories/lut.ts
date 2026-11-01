@@ -666,7 +666,7 @@ export const lutStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 55,
     content: "Surah Sad: Thamud and the people of Lut.",
-    contentFr: "La sourate Surah Sad : les Thamoud et le peuple de Lout.",
+    contentFr: "La sourate Sad : les Thamoud et le peuple de Lout.",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -691,7 +691,7 @@ export const lutStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 57,
     content: "Surah Qaf: Aad and Pharaoh and the brothers of Lut.",
-    contentFr: "La sourate Surah Qaf : les Aad, Pharaon et les frères de Lout.",
+    contentFr: "La sourate Qaf : les Aad, Pharaon et les frères de Lout.",
     source: {
       type: "quran",
       surahNumber: 50,
@@ -741,7 +741,7 @@ export const lutStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 61,
     content: "Surah An-Najm: the overturned towns.",
-    contentFr: "La sourate Surah An-Najm : les cités renversées.",
+    contentFr: "La sourate An-Najm : les cités renversées.",
     source: {
       type: "quran",
       surahNumber: 53,

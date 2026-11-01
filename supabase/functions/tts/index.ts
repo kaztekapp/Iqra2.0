@@ -75,10 +75,7 @@ Deno.serve(async (req) => {
     const region = Deno.env.get('AZURE_SPEECH_REGION');
     if (!key || !region) return json({ error: 'voice not configured' }, 503);
 
-    const ssml =
-      `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${locale}'>` +
-      `<voice name='${voice}'><prosody pitch='+0Hz' rate='${prosodyRate}' volume='+0%'>${withPhonemes(escapeXml(text))}</prosody>` +
-      `</voice></speak>`;
+    const ssml = buildSsml(text, voice, prosodyRate, locale);
     const res = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
       method: 'POST',
       headers: {
@@ -124,13 +121,43 @@ function escapeXml(text: string): string {
     .replace(/'/g, '&apos;');
 }
 
+const PHONEME_MARK = /⟦([^|⟧]+)\|([^⟧]+)⟧/g;
+const ARABIC_NAME_MARK = /⟪([^|⟫]+)\|([^⟫]+)⟫/g;
+/** Zariyah reads names at her own pace, Hamed a little slower (chosen by ear). */
+const arabicNameRate = (voice: string) => (voice === 'ar-SA-ZariyahNeural' ? '+0%' : '-10%');
+
+/** Aria and Denise get Zariyah for a name; the male narrators get Hamed. */
+function arabicVoiceForNarrator(voice: string): string {
+  return voice === 'en-US-AriaNeural' || voice === 'fr-FR-DeniseNeural' ? 'ar-SA-ZariyahNeural' : 'ar-SA-HamedNeural';
+}
+
 /**
- * A word the app marks as ⟦ipa|word⟧ (src/services/speech/pronunciations.ts)
- * is one the Arabic voice only says right from its phonemes. Runs on escaped
- * text, so nothing in the mark can break out of the attribute.
+ * The same request scripts/voice records with (src/services/speech/voicePlan.ts
+ * buildSsml): ⟦ipa|word⟧ becomes a phoneme tag, and ⟪arabic|plain⟫ hands a
+ * surah name to the Arabic voice inside a narrated sentence. Marks are read
+ * from escaped text, so nothing in one can break out of the markup.
  */
-function withPhonemes(escaped: string): string {
-  return escaped.replace(/⟦([^|⟧]+)\|([^⟧]+)⟧/g, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
+function buildSsml(text: string, voice: string, rate: string, locale: string): string {
+  const segments: { voice: string; rate: string; text: string }[] = [];
+  let last = 0;
+  for (const m of text.matchAll(ARABIC_NAME_MARK)) {
+    segments.push({ voice, rate, text: text.slice(last, m.index) });
+    const nameVoice = arabicVoiceForNarrator(voice);
+    segments.push({ voice: nameVoice, rate: arabicNameRate(nameVoice), text: m[1] });
+    last = m.index! + m[0].length;
+  }
+  segments.push({ voice, rate, text: text.slice(last) });
+  const spoken = segments.filter((s) => s.text.trim());
+  const body = spoken
+    .map((s, i) => {
+      const silence =
+        (i > 0 ? "<mstts:silence type='Leading-exact' value='0ms'/>" : '') +
+        (i < spoken.length - 1 ? "<mstts:silence type='Tailing-exact' value='0ms'/>" : '');
+      const inner = escapeXml(s.text).replace(PHONEME_MARK, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
+      return `<voice name='${s.voice}'>${silence}<prosody pitch='+0Hz' rate='${s.rate}' volume='+0%'>${inner}</prosody></voice>`;
+    })
+    .join('');
+  return `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='${locale}'>${body}</speak>`;
 }
 
 function audio(bytes: Uint8Array): Response {

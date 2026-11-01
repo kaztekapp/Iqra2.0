@@ -2130,7 +2130,7 @@ export const muhammadStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 202,
     content: "Surah An-Nasr: when the victory and the conquest came, and the people entered in multitudes.",
-    contentFr: "La sourate Surah An-Nasr : quand vinrent le secours et la victoire, et que les gens entrèrent en foule.",
+    contentFr: "La sourate An-Nasr : quand vinrent le secours et la victoire, et que les gens entrèrent en foule.",
   },
   {
     id: 'muhammad-203',

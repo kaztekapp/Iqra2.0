@@ -557,7 +557,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 47,
     content: "Surah Al-Anbiya: he called, and was answered and saved.",
-    contentFr: "La sourate Surah Al-Anbiya : il appela, et fut exaucé et sauvé.",
+    contentFr: "La sourate Al-Anbiya : il appela, et fut exaucé et sauvé.",
     source: {
       type: "quran",
       surahNumber: 21,
@@ -639,7 +639,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 54,
     content: "Surah Adh-Dhariyat: a people defiantly disobedient.",
-    contentFr: "La sourate Surah Adh-Dhariyat : un peuple pervers.",
+    contentFr: "La sourate Adh-Dhariyat : un peuple pervers.",
     source: {
       type: "quran",
       surahNumber: 51,
@@ -664,7 +664,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 56,
     content: "Surah An-Najm: more unjust and more oppressing.",
-    contentFr: "La sourate Surah An-Najm : plus injustes et plus rebelles.",
+    contentFr: "La sourate An-Najm : plus injustes et plus rebelles.",
     source: {
       type: "quran",
       surahNumber: 53,
@@ -989,7 +989,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 83,
     content: "Surah Sad: the people of Nuh denied before them.",
-    contentFr: "La sourate Surah Sad : le peuple de Nouh a nié avant eux.",
+    contentFr: "La sourate Sad : le peuple de Nouh a nié avant eux.",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -1064,7 +1064,7 @@ export const nuhStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 89,
     content: "Surah Qaf: the people of Nuh denied before them.",
-    contentFr: "La sourate Surah Qaf : le peuple de Nouh a nié avant eux.",
+    contentFr: "La sourate Qaf : le peuple de Nouh a nié avant eux.",
     source: {
       type: "quran",
       surahNumber: 50,

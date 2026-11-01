@@ -252,7 +252,7 @@ export const shuaybStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 19,
     content: "Surah Sad: Thamud, the people of Lut, and the companions of the thicket.",
-    contentFr: "La sourate Surah Sad : les Thamoud, le peuple de Lout, et les gens d'al-Aïka.",
+    contentFr: "La sourate Sad : les Thamoud, le peuple de Lout, et les gens d'al-Aïka.",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -277,7 +277,7 @@ export const shuaybStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 21,
     content: "Surah Qaf: the companions of the thicket and the people of Tubba.",
-    contentFr: "La sourate Surah Qaf : les gens d'al-Aïka et le peuple de Tubba.",
+    contentFr: "La sourate Qaf : les gens d'al-Aïka et le peuple de Tubba.",
     source: {
       type: "quran",
       surahNumber: 50,

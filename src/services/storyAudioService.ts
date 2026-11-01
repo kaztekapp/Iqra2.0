@@ -52,7 +52,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import { File, Paths } from 'expo-file-system';
 import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
-import { NARRATION_RATE } from './speech/voicePlan';
+import { NARRATION_RATE, spokenNarration } from './speech/voicePlan';
 import {
   clipName,
   findClip,
@@ -600,12 +600,14 @@ class StoryAudioService {
    */
   private async edgeClip(body: string, lang: NarrationLang): Promise<string> {
     const voice = voiceFor(lang, this.gender);
-    const kept = findClip(body, voice, EDGE_RATE);
+    // Kept under the line as spoken, so a pronunciation fix replaces a saved clip.
+    const spoken = spokenNarration(body);
+    const kept = findClip(spoken, voice, EDGE_RATE);
     if (kept) return kept;
     const bytes = await edgeSynthesize(body, voice, lang, EDGE_RATE);
     if (!bytes.length) throw new Error('edge-tts-empty');
     try {
-      const saved = await keepClip(clipName(body, voice, EDGE_RATE), bytes);
+      const saved = await keepClip(clipName(spoken, voice, EDGE_RATE), bytes);
       pruneClips();
       return saved;
     } catch {
@@ -617,7 +619,7 @@ class StoryAudioService {
   hasClip(body: string, lang: NarrationLang): boolean {
     const text = body?.trim();
     if (!text) return true;
-    return findClip(text, voiceFor(lang, this.gender), EDGE_RATE) !== null;
+    return findClip(spokenNarration(text), voiceFor(lang, this.gender), EDGE_RATE) !== null;
   }
 
   /**
@@ -628,11 +630,11 @@ class StoryAudioService {
     const text = body?.trim();
     if (!text) return;
     const voice = voiceFor(lang, this.gender);
-    if (findClip(text, voice, EDGE_RATE)) return;
+    if (findClip(spokenNarration(text), voice, EDGE_RATE)) return;
     const queued = this.saveChain.catch(() => {}).then(async () => {
       const bytes = await edgeSynthesize(text, voice, lang, EDGE_RATE);
       if (!bytes.length) throw new Error('edge-tts-empty');
-      await keepClip(clipName(text, voice, EDGE_RATE), bytes);
+      await keepClip(clipName(spokenNarration(text), voice, EDGE_RATE), bytes);
       pruneClips();
     });
     this.saveChain = queued.catch(() => {});

@@ -502,7 +502,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 42,
     content: "Surah An-Naml: the call at the fire, and the nine signs.",
-    contentFr: "La sourate Surah An-Naml : l'appel auprès du feu, et les neuf signes.",
+    contentFr: "La sourate An-Naml : l'appel auprès du feu, et les neuf signes.",
     source: {
       type: "quran",
       surahNumber: 27,
@@ -664,7 +664,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 57,
     content: "Surah Al-A'raf: Musa declares himself and shows the signs.",
-    contentFr: "La sourate Surah Al-A'raf : Moussa se déclare et montre les signes.",
+    contentFr: "La sourate Al-A'raf : Moussa se déclare et montre les signes.",
     source: {
       type: "quran",
       surahNumber: 7,
@@ -920,7 +920,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 81,
     content: "Surah Adh-Dhariyat: 'a magician or a madman.'",
-    contentFr: "La sourate Surah Adh-Dhariyat : « un magicien ou un fou. »",
+    contentFr: "La sourate Adh-Dhariyat : « un magicien ou un fou. »",
     source: {
       type: "quran",
       surahNumber: 51,
@@ -1082,7 +1082,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 96,
     content: "Surah Al-A'raf: the magicians' answer to Pharaoh, and their prayer.",
-    contentFr: "La sourate Surah Al-A'raf : la réponse des magiciens à Pharaon, et leur prière.",
+    contentFr: "La sourate Al-A'raf : la réponse des magiciens à Pharaon, et leur prière.",
     source: {
       type: "quran",
       surahNumber: 7,
@@ -1114,7 +1114,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 99,
     content: "Surah Ta-Ha: the appointment, Musa's fear, and the magicians' stand.",
-    contentFr: "La sourate Surah Ta-Ha : le rendez-vous, la crainte de Moussa, et la fermeté des magiciens.",
+    contentFr: "La sourate Ta-Ha : le rendez-vous, la crainte de Moussa, et la fermeté des magiciens.",
     source: {
       type: "quran",
       surahNumber: 20,
@@ -1470,7 +1470,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 132,
     content: "Surah Ta-Ha: a dry path through the sea.",
-    contentFr: "La sourate Surah Ta-Ha : un chemin sec à travers la mer.",
+    contentFr: "La sourate Ta-Ha : un chemin sec à travers la mer.",
     source: {
       type: "quran",
       surahNumber: 20,
@@ -1566,7 +1566,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 141,
     content: "Surah Al-A'raf: they were drowned, and the oppressed inherited the land.",
-    contentFr: "La sourate Surah Al-A'raf : ils furent noyés, et les opprimés héritèrent de la terre.",
+    contentFr: "La sourate Al-A'raf : ils furent noyés, et les opprimés héritèrent de la terre.",
     source: {
       type: "quran",
       surahNumber: 7,
@@ -1630,7 +1630,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 147,
     content: "Surah Al-Qasas: leaders inviting to the Fire.",
-    contentFr: "La sourate Surah Al-Qasas : des chefs appelant au Feu.",
+    contentFr: "La sourate Al-Qasas : des chefs appelant au Feu.",
     source: {
       type: "quran",
       surahNumber: 28,
@@ -1694,7 +1694,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 153,
     content: "Surah Al-Isra: 'dwell in the land.'",
-    contentFr: "La sourate Surah Al-Isra : « habitez la terre. »",
+    contentFr: "La sourate Al-Isra : « habitez la terre. »",
     source: {
       type: "quran",
       surahNumber: 17,
@@ -1719,14 +1719,14 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 155,
     content: "Surah Adh-Dhariyat: Allah took him and his soldiers and cast them into the sea, and he was blameworthy.",
-    contentFr: "La sourate Surah Adh-Dhariyat : Allah le saisit, lui et ses soldats, et les jeta dans la mer, et il était blâmable.",
+    contentFr: "La sourate Adh-Dhariyat : Allah le saisit, lui et ses soldats, et les jeta dans la mer, et il était blâmable.",
   },
   {
     id: 'musa-156',
     type: 'quran_source',
     order: 156,
     content: "Surah Adh-Dhariyat: cast into the sea.",
-    contentFr: "La sourate Surah Adh-Dhariyat : jetés dans la mer.",
+    contentFr: "La sourate Adh-Dhariyat : jetés dans la mer.",
     source: {
       type: "quran",
       surahNumber: 51,
@@ -1783,14 +1783,14 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'narrative',
     order: 161,
     content: "Surah Al-Qamar: the warning came to the people of Pharaoh, and they denied all the signs - so Allah seized them with the seizure of One exalted in might and perfect in ability.",
-    contentFr: "La sourate Surah Al-Qamar : l'avertissement vint aux gens de Pharaon, et ils démentirent tous les signes - alors Allah les saisit de la prise d'un Puissant, Omnipotent.",
+    contentFr: "La sourate Al-Qamar : l'avertissement vint aux gens de Pharaon, et ils démentirent tous les signes - alors Allah les saisit de la prise d'un Puissant, Omnipotent.",
   },
   {
     id: 'musa-162',
     type: 'quran_source',
     order: 162,
     content: "Surah Al-Qamar: they denied all the signs.",
-    contentFr: "La sourate Surah Al-Qamar : ils démentirent tous les signes.",
+    contentFr: "La sourate Al-Qamar : ils démentirent tous les signes.",
     source: {
       type: "quran",
       surahNumber: 54,
@@ -2333,7 +2333,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 212,
     content: "Surah Al-An'am: a detailed explanation of all things.",
-    contentFr: "La sourate Surah Al-An'am : un exposé détaillé de toute chose.",
+    contentFr: "La sourate Al-An'am : un exposé détaillé de toute chose.",
     source: {
       type: "quran",
       surahNumber: 6,
@@ -2383,7 +2383,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 216,
     content: "Surah Al-Isra: a guidance for the Children of Israel.",
-    contentFr: "La sourate Surah Al-Isra : un guide pour les enfants d'Israël.",
+    contentFr: "La sourate Al-Isra : un guide pour les enfants d'Israël.",
     source: {
       type: "quran",
       surahNumber: 17,
@@ -2408,7 +2408,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 218,
     content: "Surah As-Sajdah: leaders were made from among them when they were patient.",
-    contentFr: "La sourate Surah As-Sajdah : des chefs furent établis parmi eux lorsqu'ils furent patients.",
+    contentFr: "La sourate As-Sajdah : des chefs furent établis parmi eux lorsqu'ils furent patients.",
     source: {
       type: "quran",
       surahNumber: 32,
@@ -2433,7 +2433,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 220,
     content: "Surah Ghafir: they inherited the Scripture.",
-    contentFr: "La sourate Surah Ghafir : ils héritèrent du Livre.",
+    contentFr: "La sourate Ghafir : ils héritèrent du Livre.",
     source: {
       type: "quran",
       surahNumber: 40,
@@ -2483,7 +2483,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 224,
     content: "Surah Al-Anbiya: the criterion, a light and a reminder.",
-    contentFr: "La sourate Surah Al-Anbiya : le discernement, une lumière et un rappel.",
+    contentFr: "La sourate Al-Anbiya : le discernement, une lumière et un rappel.",
     source: {
       type: "quran",
       surahNumber: 21,
@@ -2608,7 +2608,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 234,
     content: "Surah Al-Ahqaf: before the Quran was the scripture of Musa.",
-    contentFr: "La sourate Surah Al-Ahqaf : avant le Coran il y eut le Livre de Moussa.",
+    contentFr: "La sourate Al-Ahqaf : avant le Coran il y eut le Livre de Moussa.",
     source: {
       type: "quran",
       surahNumber: 46,
@@ -2733,7 +2733,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 244,
     content: "Surah An-Naml: this Quran relates to them most of what they disagree over.",
-    contentFr: "La sourate Surah An-Naml : ce Coran leur raconte la plupart de ce sur quoi ils divergent.",
+    contentFr: "La sourate An-Naml : ce Coran leur raconte la plupart de ce sur quoi ils divergent.",
     source: {
       type: "quran",
       surahNumber: 27,
@@ -2783,7 +2783,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 248,
     content: "Surah An-Najm: what is in the scriptures of Musa.",
-    contentFr: "La sourate Surah An-Najm : ce qui est dans les feuilles de Moussa.",
+    contentFr: "La sourate An-Najm : ce qui est dans les feuilles de Moussa.",
     source: {
       type: "quran",
       surahNumber: 53,
@@ -3058,7 +3058,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 270,
     content: "Surah As-Saffat: 'Peace upon Musa and Harun.'",
-    contentFr: "La sourate Surah As-Saffat : « Paix sur Moussa et Haroun. »",
+    contentFr: "La sourate As-Saffat : « Paix sur Moussa et Haroun. »",
     source: {
       type: "quran",
       surahNumber: 37,
@@ -3288,7 +3288,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 291,
     content: "Surah Al-A'raf: 'enter the gate bowing humbly.'",
-    contentFr: "La sourate Surah Al-A'raf : « entrez par la porte en vous prosternant. »",
+    contentFr: "La sourate Al-A'raf : « entrez par la porte en vous prosternant. »",
     source: {
       type: "quran",
       surahNumber: 7,
@@ -4057,7 +4057,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 372,
     content: "Surah Ghafir: what they say to one another in the Fire, and to its keepers.",
-    contentFr: "La sourate Surah Ghafir : ce qu'ils se disent dans le Feu, et à ses gardiens.",
+    contentFr: "La sourate Ghafir : ce qu'ils se disent dans le Feu, et à ses gardiens.",
     source: {
       type: "quran",
       surahNumber: 40,
@@ -4132,7 +4132,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 378,
     content: "Surah Al-Anfal: seized for their sins, and drowned.",
-    contentFr: "La sourate Surah Al-Anfal : saisis pour leurs péchés, et noyés.",
+    contentFr: "La sourate Al-Anfal : saisis pour leurs péchés, et noyés.",
     source: {
       type: "quran",
       surahNumber: 8,
@@ -4232,7 +4232,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 386,
     content: "Surah Al-Fajr: Pharaoh, owner of the stakes.",
-    contentFr: "La sourate Surah Al-Fajr : Pharaon, celui aux pieux.",
+    contentFr: "La sourate Al-Fajr : Pharaon, celui aux pieux.",
     source: {
       type: "quran",
       surahNumber: 89,
@@ -4282,7 +4282,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 390,
     content: "Surah Qaf: all of them denied the messengers.",
-    contentFr: "La sourate Surah Qaf : tous démentirent les messagers.",
+    contentFr: "La sourate Qaf : tous démentirent les messagers.",
     source: {
       type: "quran",
       surahNumber: 50,
@@ -4307,7 +4307,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 392,
     content: "Surah Al-Hajj: Musa was denied, and respite was given.",
-    contentFr: "La sourate Surah Al-Hajj : Moussa fut démenti, et un répit fut accordé.",
+    contentFr: "La sourate Al-Hajj : Moussa fut démenti, et un répit fut accordé.",
     source: {
       type: "quran",
       surahNumber: 22,
@@ -4332,7 +4332,7 @@ const musaStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 394,
     content: "Surah Al-Isra: what was conveyed to the Children of Israel in the Scripture.",
-    contentFr: "La sourate Surah Al-Isra : ce qui fut annoncé aux enfants d'Israël dans le Livre.",
+    contentFr: "La sourate Al-Isra : ce qui fut annoncé aux enfants d'Israël dans le Livre.",
     source: {
       type: "quran",
       surahNumber: 17,

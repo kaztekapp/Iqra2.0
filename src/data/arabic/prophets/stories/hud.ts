@@ -259,7 +259,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 20,
     content: "Surah Al-Qamar: a screaming wind on a day of continuous misfortune.",
-    contentFr: "La sourate Surah Al-Qamar : un vent hurlant en un jour de malheur continu.",
+    contentFr: "La sourate Al-Qamar : un vent hurlant en un jour de malheur continu.",
     source: {
       type: "quran",
       surahNumber: 54,
@@ -284,7 +284,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 22,
     content: "Surah Adh-Dhariyat: the barren wind left nothing it came upon.",
-    contentFr: "La sourate Surah Adh-Dhariyat : le vent stérile ne laissa rien de ce qu'il toucha.",
+    contentFr: "La sourate Adh-Dhariyat : le vent stérile ne laissa rien de ce qu'il toucha.",
     source: {
       type: "quran",
       surahNumber: 51,
@@ -341,7 +341,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 27,
     content: "Surah An-Najm: He destroyed the first Aad.",
-    contentFr: "La sourate Surah An-Najm : Il a fait périr les premiers Aad.",
+    contentFr: "La sourate An-Najm : Il a fait périr les premiers Aad.",
     source: {
       type: "quran",
       surahNumber: 53,
@@ -500,7 +500,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 40,
     content: "Surah Sad: the people of Nuh, Aad and Pharaoh.",
-    contentFr: "La sourate Surah Sad : le peuple de Nouh, les Aad et Pharaon.",
+    contentFr: "La sourate Sad : le peuple de Nouh, les Aad et Pharaon.",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -550,7 +550,7 @@ export const hudStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 44,
     content: "Surah Qaf: Aad and Pharaoh and the brothers of Lut.",
-    contentFr: "La sourate Surah Qaf : les Aad, Pharaon et les frères de Lout.",
+    contentFr: "La sourate Qaf : les Aad, Pharaon et les frères de Lout.",
     source: {
       type: "quran",
       surahNumber: 50,

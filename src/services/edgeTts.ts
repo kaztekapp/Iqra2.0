@@ -24,14 +24,17 @@ const CDN_TIMEOUT_MS = 15_000;
 export type { EdgeGender, EdgeLang } from './speech/voicePlan';
 export { voiceFor } from './speech/voicePlan';
 import type { EdgeLang, EdgeGender } from './speech/voicePlan';
-import { voiceFor, clipPath, VOICE_CDN_URL } from './speech/voicePlan';
+import { voiceFor, clipPath, spokenNarration, VOICE_CDN_URL } from './speech/voicePlan';
 
 /**
  * Speak one piece of text, resolving with the MP3 bytes. Rejects when there is
  * no signed-in session, no network, or the service refuses; every caller
  * already falls back (kept clip, then the phone's own voice).
  */
-export async function synthesize(text: string, voice: string, _lang: EdgeLang, rate = '-4%'): Promise<Uint8Array> {
+export async function synthesize(rawText: string, voice: string, lang: EdgeLang, rate = '-4%'): Promise<Uint8Array> {
+  // Narration says surah names with the Arabic voice; Arabic lines come
+  // already spoken (spokenArabic).
+  const text = lang === 'ar' ? rawText : spokenNarration(rawText);
   // Recorded once for everyone: a plain download, no voice-service call.
   const recorded = await fromVoiceCdn(text, voice, rate);
   if (recorded) return recorded;
@@ -49,7 +52,7 @@ export async function synthesize(text: string, voice: string, _lang: EdgeLang, r
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json',
       },
-      // Phoneme marks go as they are: the function turns them into SSML.
+      // Marks go as they are: the function turns them into SSML.
       body: JSON.stringify({ text, voice, rate }),
       signal: controller.signal,
     });

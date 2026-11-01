@@ -15,7 +15,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { File, Paths } from 'expo-file-system';
-import { ARABIC_VOICE, chunkLine, edgeRate, plainSpoken, spokenArabic } from './voicePlan';
+import { chunkLine, edgeRate, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -150,9 +150,9 @@ const ayahInFlight = new Map<string, Promise<string>>();
 export async function synthesizeAyahToFile(text: string, speed = 1): Promise<string> {
   const spoken = spokenArabic(text);
   if (!spoken) throw new Error('tts_empty');
-  const rate = edgeRate(speed);
-  const name = clipName(spoken, ARABIC_VOICE, rate);
-  const kept = findClip(spoken, ARABIC_VOICE, rate);
+  const rate = edgeRate(speed, arabicVoice());
+  const name = clipName(spoken, arabicVoice(), rate);
+  const kept = findClip(spoken, arabicVoice(), rate);
   if (kept) return kept;
 
   // Someone is already making this one. Learn mode starts the next verse while
@@ -164,7 +164,7 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   if (running) return running;
 
   const work = (async () => {
-    const bytes = await withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), 45000);
+    const bytes = await withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate), 45000);
     if (!bytes.length) throw new Error('tts_empty');
     try {
       const saved = await keepClip(name, bytes);
@@ -191,7 +191,7 @@ export function hasArabicClip(text: string, speed = 1): boolean {
   // saved line is ever recognised again.
   return chunkLine(line).every((chunk) => {
     const spoken = spokenArabic(chunk);
-    return !spoken || findClip(spoken, ARABIC_VOICE, edgeRate(speed)) !== null;
+    return !spoken || findClip(spoken, arabicVoice(), edgeRate(speed, arabicVoice())) !== null;
   });
 }
 
@@ -207,16 +207,16 @@ export async function saveArabicClip(text: string, speed = 1): Promise<void> {
   for (const chunk of chunkLine(line)) {
     const spoken = spokenArabic(chunk);
     if (!spoken) continue;
-    const rate = edgeRate(speed);
-    if (findClip(spoken, ARABIC_VOICE, rate)) continue;
+    const rate = edgeRate(speed, arabicVoice());
+    if (findClip(spoken, arabicVoice(), rate)) continue;
     // Queued, not fired off: a save is a background wish, and the reader
     // listening right now must not queue behind it or race it. This is the
     // burst that used to wedge the reader.
     const bytes = await enqueueEdge(() =>
-      withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', rate), EDGE_BUDGET_MS)
+      withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate), EDGE_BUDGET_MS)
     );
     if (!bytes.length) throw new Error('tts_empty');
-    await keepClip(clipName(spoken, ARABIC_VOICE, rate), bytes);
+    await keepClip(clipName(spoken, arabicVoice(), rate), bytes);
     pruneClips();
   }
 }
@@ -251,7 +251,7 @@ async function fetchChunkFromEdge(
   now: boolean
 ): Promise<string> {
   const attempt = () =>
-    withBudget(edgeSynthesize(spoken, ARABIC_VOICE, 'ar', edgeRate(speed)), EDGE_BUDGET_MS);
+    withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', edgeRate(speed, arabicVoice())), EDGE_BUDGET_MS);
   // The line being read goes first. Queueing it behind the prefetch of the
   // NEXT line - which is started before it - meant every verse waited for a
   // verse nobody was listening to yet, and then ran out of budget.
@@ -292,7 +292,7 @@ async function fetchChunkToFile(
   // A line said before is already on the phone. This look-up comes before
   // everything else - before the rest, before any thought of a network - so a
   // dua heard once reads back with no signal at all.
-  const kept = findClip(spoken, ARABIC_VOICE, edgeRate(speed));
+  const kept = findClip(spoken, arabicVoice(), edgeRate(speed, arabicVoice()));
   if (kept) return kept;
 
   // `force` is the second try at a line that is about to be lost. Resting the
@@ -445,7 +445,7 @@ function playFile(uri: string): Promise<void> {
  */
 const prepared = new Map<string, Promise<string>>();
 const PREPARED_LIMIT = 6;
-const preparedKey = (chunk: string, speed: number) => `${speed}|${chunk}`;
+const preparedKey = (chunk: string, speed: number) => `${arabicVoice()}|${speed}|${chunk}`;
 
 export function prepareArabic(text: string, speed = 1.0): void {
   if (preference.source === 'device') return;
@@ -564,6 +564,14 @@ const MALE = ['maged', 'majed', 'tarik', 'omar', 'khaled', 'ahmed', 'hassan', 'm
 
 let voicePromise: Promise<string | undefined> | null = null;
 let preferredGender: 'female' | 'male' = 'female';
+
+/**
+ * The neural Arabic voice: Zariyah with a female narrator, Hamed with a male
+ * one, so the ayahs are read in the same gender as the story around them.
+ */
+function arabicVoice(): string {
+  return voiceFor('ar', preferredGender);
+}
 
 export type ArabicVoiceSource = 'online' | 'device';
 

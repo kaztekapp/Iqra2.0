@@ -400,7 +400,7 @@ export const harunStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 31,
     content: "Surah Ta-Ha: \"We have believed in the Lord of Harun and Musa.\"",
-    contentFr: "La sourate Surah Ta-Ha : « Nous croyons au Seigneur de Haroun et de Moussa. »",
+    contentFr: "La sourate Ta-Ha : « Nous croyons au Seigneur de Haroun et de Moussa. »",
     source: {
       type: "quran",
       surahNumber: 20,

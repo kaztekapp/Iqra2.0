@@ -415,7 +415,7 @@ export const salihStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 32,
     content: "Surah Al-Fajr: Aad, Thamud who carved the rocks in the valley, and Pharaoh.",
-    contentFr: "La sourate Surah Al-Fajr : les Aad, les Thamoud qui taillaient les rochers dans la vallée, et Pharaon.",
+    contentFr: "La sourate Al-Fajr : les Aad, les Thamoud qui taillaient les rochers dans la vallée, et Pharaon.",
     source: {
       type: "quran",
       surahNumber: 89,
@@ -465,7 +465,7 @@ export const salihStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 36,
     content: "Surah An-Najm: and Thamud, He did not spare.",
-    contentFr: "La sourate Surah An-Najm : et les Thamoud, Il ne les a pas épargnés.",
+    contentFr: "La sourate An-Najm : et les Thamoud, Il ne les a pas épargnés.",
     source: {
       type: "quran",
       surahNumber: 53,
@@ -624,7 +624,7 @@ export const salihStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 49,
     content: "Surah Sad: Thamud and the people of Lut and the companions of the thicket.",
-    contentFr: "La sourate Surah Sad : les Thamoud, le peuple de Lout et les gens d'al-Aïka.",
+    contentFr: "La sourate Sad : les Thamoud, le peuple de Lout et les gens d'al-Aïka.",
     source: {
       type: "quran",
       surahNumber: 38,
@@ -674,7 +674,7 @@ export const salihStoryContent: StoryContentBlock[] = [
     type: 'quran_source',
     order: 53,
     content: "Surah Qaf: the companions of the well and Thamud.",
-    contentFr: "La sourate Surah Qaf : les gens du Puits et les Thamoud.",
+    contentFr: "La sourate Qaf : les gens du Puits et les Thamoud.",
     source: {
       type: "quran",
       surahNumber: 50,
