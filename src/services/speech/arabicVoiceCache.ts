@@ -36,10 +36,27 @@ let dirReady = false;
 function storeUri(): string | null {
   if (dirUri) return dirUri;
   try {
-    dirUri = `${Paths.document.uri}arabic-voice/`;
+    // v2: clips made by the official Azure voices (since 2026-10-30). The
+    // first folder held clips from Edge's read-aloud service, which say some
+    // words wrongly (ءَايَـٰتِنَا as "ayayatina"); a clip's name only records
+    // the text, voice and rate, so those would have been replayed for ever.
+    dirUri = `${Paths.document.uri}arabic-voice-v2/`;
     return dirUri;
   } catch {
     return null;
+  }
+}
+
+/** The Edge-era folder, removed once so its clips are neither played nor kept. */
+let legacyCleared = false;
+function clearLegacyStore(): void {
+  if (legacyCleared) return;
+  legacyCleared = true;
+  try {
+    const old = `${Paths.document.uri}arabic-voice/`;
+    LegacyFileSystem.deleteAsync(old, { idempotent: true }).catch(() => {});
+  } catch {
+    // No document directory here: nothing was ever kept.
   }
 }
 
@@ -47,6 +64,7 @@ function storeUri(): string | null {
 async function ensureStore(): Promise<string | null> {
   const uri = storeUri();
   if (!uri) return null;
+  clearLegacyStore();
   if (dirReady) return uri;
   try {
     const info = await LegacyFileSystem.getInfoAsync(uri);
