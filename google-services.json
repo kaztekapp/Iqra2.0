@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "900088144443",
+    "project_id": "iqra-a9176",
+    "storage_bucket": "iqra-a9176.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900088144443:android:894086c753847dfee4721e",
+        "android_client_info": {
+          "package_name": "com.iqra2.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLkI8qoty3hvoSD2bBCC2taLPSMdwLl6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
