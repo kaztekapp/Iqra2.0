@@ -8,6 +8,7 @@ import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
 import { synthesizeAyahToFile, hasArabicClip } from './speech/arabicTTS';
 import { quietly, reportError } from '../lib/report';
+import { NOW_PLAYING_ARTWORK } from './speech/voicePlan';
 
 /**
  * After the learning voice fails, the reciter reads for this long before the
@@ -725,6 +726,7 @@ class QuranAudioService {
       title,
       artist: reciter.nameEnglish,
       albumTitle: 'Quran',
+      artworkUrl: NOW_PLAYING_ARTWORK,
     };
   }
 

@@ -15,7 +15,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { File, Paths } from 'expo-file-system';
-import { chunkLine, edgeRate, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
+import { chunkLine, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -354,7 +354,7 @@ function playFile(uri: string): Promise<void> {
     if (lockScreen) {
       try {
         // Play/pause only, to match the story's own controls.
-        player.setActiveForLockScreen(true, lockScreen, {
+        player.setActiveForLockScreen(true, { artworkUrl: NOW_PLAYING_ARTWORK, ...lockScreen }, {
           showSeekForward: false,
           showSeekBackward: false,
         });

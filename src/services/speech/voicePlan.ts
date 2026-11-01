@@ -27,6 +27,13 @@ export const MAX_CHUNK_LEN = 180;
  */
 export const VOICE_CDN_URL = 'https://voice.mkaztek.com';
 
+/**
+ * The app's logo for the lock screen, Control Center and the Dynamic Island
+ * while audio plays. expo-audio downloads it from a URL, so it lives on the
+ * voice CDN; the name is versioned because the file is cached for a year.
+ */
+export const NOW_PLAYING_ARTWORK = `${VOICE_CDN_URL}/artwork/logo-v1.jpg`;
+
 export type EdgeGender = 'female' | 'male';
 export type EdgeLang = 'en' | 'fr' | 'ar';
 

@@ -52,7 +52,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import { File, Paths } from 'expo-file-system';
 import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
-import { NARRATION_RATE, spokenNarration } from './speech/voicePlan';
+import { NARRATION_RATE, NOW_PLAYING_ARTWORK, spokenNarration } from './speech/voicePlan';
 import {
   clipName,
   findClip,
@@ -1033,7 +1033,7 @@ class StoryAudioService {
   private applyLockScreen(): void {
     if (!this.player || !this.nowPlaying) return;
     try {
-      this.player.setActiveForLockScreen(true, this.nowPlaying, {
+      this.player.setActiveForLockScreen(true, { artworkUrl: NOW_PLAYING_ARTWORK, ...this.nowPlaying }, {
         // No seek buttons. A story is played as one-sentence clips, so the
         // only thing they could scrub is the sentence being spoken - three
         // seconds of it. Skipping by paragraph is in the player in the app,
