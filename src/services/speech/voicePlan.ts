@@ -24,7 +24,7 @@ export const MAX_CHUNK_LEN = 180;
  * costs no voice-service call. Empty means "not set up": the app goes
  * straight to the tts function.
  */
-export const VOICE_CDN_URL = '';
+export const VOICE_CDN_URL = 'https://voice.mkaztek.com';
 
 export type EdgeGender = 'female' | 'male';
 export type EdgeLang = 'en' | 'fr' | 'ar';
