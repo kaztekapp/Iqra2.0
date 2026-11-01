@@ -189,12 +189,26 @@ const SURAH_NAME_RE = new RegExp(
   'gu'
 );
 
+const VERSE_WORDS = {
+  en: { one: 'verse', many: 'verses', to: 'to' },
+  fr: { one: 'verset', many: 'versets', to: 'à' },
+} as const;
+/** "43:13-14" right after a surah name; the voice read it out as "43 colon 13 dash 14". */
+const VERSE_REF_RE = /⟫\s*(\d+)\s*:\s*(\d+)(?:\s*[-–]\s*(\d+))?/g;
+
 /**
  * An English or French narration line exactly as it is spoken and recorded:
- * each surah name after "Surah" / "sourate" marked for the Arabic voice.
+ * each surah name after "Surah" / "sourate" marked for the Arabic voice, and
+ * the verse reference after it said in words ("verses 13 to 14"; the name
+ * already says which surah). The text on screen keeps its numbers.
  */
-export function spokenNarration(text: string): string {
-  return text.replace(SURAH_NAME_RE, (_, lead: string, name: string) => `${lead}⟪${SURAH_NAMES[name]}|${name}⟫`);
+export function spokenNarration(text: string, lang: 'en' | 'fr'): string {
+  const w = VERSE_WORDS[lang];
+  return text
+    .replace(SURAH_NAME_RE, (_, lead: string, name: string) => `${lead}⟪${SURAH_NAMES[name]}|${name}⟫`)
+    .replace(VERSE_REF_RE, (_, _surah: string, from: string, to?: string) =>
+      to ? `⟫, ${w.many} ${from} ${w.to} ${to}` : `⟫, ${w.one} ${from}`
+    );
 }
 
 const escapeXml = (s: string) =>

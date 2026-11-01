@@ -34,7 +34,7 @@ import { voiceFor, clipPath, spokenNarration, VOICE_CDN_URL } from './speech/voi
 export async function synthesize(rawText: string, voice: string, lang: EdgeLang, rate = '-4%'): Promise<Uint8Array> {
   // Narration says surah names with the Arabic voice; Arabic lines come
   // already spoken (spokenArabic).
-  const text = lang === 'ar' ? rawText : spokenNarration(rawText);
+  const text = lang === 'ar' ? rawText : spokenNarration(rawText, lang);
   // Recorded once for everyone: a plain download, no voice-service call.
   const recorded = await fromVoiceCdn(text, voice, rate);
   if (recorded) return recorded;

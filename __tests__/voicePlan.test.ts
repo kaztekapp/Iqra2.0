@@ -28,27 +28,33 @@ describe('phoneme fixes', () => {
 
 describe('surah names in narration', () => {
   it('marks the name after Surah or sourate, longest spelling first', () => {
-    expect(spokenNarration('Surah Ar Rahman: Clay like that of pottery.')).toBe('Surah ⟪الرَّحْمَٰن|Ar Rahman⟫: Clay like that of pottery.');
-    expect(spokenNarration("La sourate Ali 'Imran raconte")).toBe("La sourate ⟪آلِ عِمْرَان|Ali 'Imran⟫ raconte");
-    expect(spokenNarration('Surah Al Baqarah 2:30')).toContain('⟪الْبَقَرَة|Al Baqarah⟫ 2:30');
+    expect(spokenNarration('Surah Ar Rahman: Clay like that of pottery.', 'en')).toBe('Surah ⟪الرَّحْمَٰن|Ar Rahman⟫: Clay like that of pottery.');
+    expect(spokenNarration("La sourate Ali 'Imran raconte", 'fr')).toBe("La sourate ⟪آلِ عِمْرَان|Ali 'Imran⟫ raconte");
+    expect(spokenNarration('Surah Al Baqarah 2:30', 'en')).toBe('Surah ⟪الْبَقَرَة|Al Baqarah⟫, verse 30');
   });
 
   it('leaves names elsewhere in the sentence to the narrator', () => {
-    expect(spokenNarration('Maryam and Yusuf were patient.')).toBe('Maryam and Yusuf were patient.');
-    expect(spokenNarration('Surah Sadness')).toBe('Surah Sadness');
+    expect(spokenNarration('Maryam and Yusuf were patient.', 'en')).toBe('Maryam and Yusuf were patient.');
+    expect(spokenNarration('Surah Sadness', 'en')).toBe('Surah Sadness');
+  });
+
+  it('says the verse reference in words', () => {
+    expect(spokenNarration("Surah Ash Shu'ara 26:170-171", 'en')).toBe("Surah ⟪الشُّعَرَاء|Ash Shu'ara⟫, verses 170 to 171");
+    expect(spokenNarration('la sourate Ta Ha 20:36.', 'fr')).toBe('la sourate ⟪طَاهَا|Ta Ha⟫, verset 36.');
+    expect(spokenNarration('At 10:30 they left.', 'en')).toBe('At 10:30 they left.');
   });
 
   it('is unchanged by a second pass, and plain again for the phone voice', () => {
-    const once = spokenNarration('Surah Ta Ha Allah commands');
-    expect(spokenNarration(once)).toBe(once);
+    const once = spokenNarration('Surah Ta Ha Allah commands', 'en');
+    expect(spokenNarration(once, 'en')).toBe(once);
     expect(plainSpoken(once)).toBe('Surah Ta Ha Allah commands');
   });
 
   it('hands the name to the Arabic voice of the narrator\'s gender, without the gap', () => {
-    const female = buildSsml(spokenNarration('Surah Ar Rahman: Clay.'), 'en-US-AriaNeural', '-4%', 'en-US');
+    const female = buildSsml(spokenNarration('Surah Ar Rahman: Clay.', 'en'), 'en-US-AriaNeural', '-4%', 'en-US');
     expect(female).toContain("<voice name='ar-SA-ZariyahNeural'><mstts:silence type='Leading-exact' value='0ms'/><mstts:silence type='Tailing-exact' value='0ms'/><prosody pitch='+0Hz' rate='+0%' volume='+0%'>الرَّحْمَٰن</prosody></voice>");
     expect(female).toContain("<voice name='en-US-AriaNeural'><mstts:silence type='Tailing-exact' value='0ms'/><prosody pitch='+0Hz' rate='-4%' volume='+0%'>Surah </prosody></voice>");
-    expect(buildSsml(spokenNarration('La sourate Ar Rahman.'), 'fr-FR-HenriNeural', '-4%', 'fr-FR')).toContain("rate='-10%' volume='+0%'>الرَّحْمَٰن");
+    expect(buildSsml(spokenNarration('La sourate Ar Rahman.', 'fr'), 'fr-FR-HenriNeural', '-4%', 'fr-FR')).toContain("rate='-10%' volume='+0%'>الرَّحْمَٰن");
   });
 });
 

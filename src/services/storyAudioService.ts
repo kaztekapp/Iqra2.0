@@ -601,7 +601,7 @@ class StoryAudioService {
   private async edgeClip(body: string, lang: NarrationLang): Promise<string> {
     const voice = voiceFor(lang, this.gender);
     // Kept under the line as spoken, so a pronunciation fix replaces a saved clip.
-    const spoken = spokenNarration(body);
+    const spoken = spokenNarration(body, lang);
     const kept = findClip(spoken, voice, EDGE_RATE);
     if (kept) return kept;
     const bytes = await edgeSynthesize(body, voice, lang, EDGE_RATE);
@@ -619,7 +619,7 @@ class StoryAudioService {
   hasClip(body: string, lang: NarrationLang): boolean {
     const text = body?.trim();
     if (!text) return true;
-    return findClip(spokenNarration(text), voiceFor(lang, this.gender), EDGE_RATE) !== null;
+    return findClip(spokenNarration(text, lang), voiceFor(lang, this.gender), EDGE_RATE) !== null;
   }
 
   /**
@@ -630,11 +630,11 @@ class StoryAudioService {
     const text = body?.trim();
     if (!text) return;
     const voice = voiceFor(lang, this.gender);
-    if (findClip(spokenNarration(text), voice, EDGE_RATE)) return;
+    if (findClip(spokenNarration(text, lang), voice, EDGE_RATE)) return;
     const queued = this.saveChain.catch(() => {}).then(async () => {
       const bytes = await edgeSynthesize(text, voice, lang, EDGE_RATE);
       if (!bytes.length) throw new Error('edge-tts-empty');
-      await keepClip(clipName(spokenNarration(text), voice, EDGE_RATE), bytes);
+      await keepClip(clipName(spokenNarration(text, lang), voice, EDGE_RATE), bytes);
       pruneClips();
     });
     this.saveChain = queued.catch(() => {});

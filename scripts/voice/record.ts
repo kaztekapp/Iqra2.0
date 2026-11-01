@@ -90,7 +90,7 @@ export function buildPlan(): Item[] {
   };
   const addNarration = (text: string, lang: 'en' | 'fr') => {
     // Surah names marked for the Arabic voice, exactly as the app sends them.
-    const body = spokenNarration(text.trim());
+    const body = spokenNarration(text.trim(), lang);
     if (!body) return;
     for (const gender of ['female', 'male'] as const) {
       const voice = voiceFor(lang, gender);
