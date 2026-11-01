@@ -40,7 +40,7 @@ export function GroupInfoTab({
     }
     try {
       await Share.share({
-        message: `Join my study group "${group.name}" on Iqra! Use invite code: ${code}\n\niqra2://group/invite/${code}`,
+        message: `Join my study group "${group.name}" on Mudarris! Use invite code: ${code}\n\niqra2://group/invite/${code}`,
       });
     } catch (e) { quietly(e, 'components/community/GroupInfoTab'); }
   };

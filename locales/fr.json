@@ -1,6 +1,6 @@
 {
-  "CFBundleDisplayName": "Iqra",
-  "NSMicrophoneUsageDescription": "Iqra utilise le microphone pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
-  "NSSpeechRecognitionUsageDescription": "Iqra utilise la reconnaissance vocale pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
-  "NSPhotoLibraryUsageDescription": "Iqra n'utilise pas votre photothèque et ne demande jamais à voir vos photos."
+  "CFBundleDisplayName": "Mudarris",
+  "NSMicrophoneUsageDescription": "Mudarris utilise le microphone pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
+  "NSSpeechRecognitionUsageDescription": "Mudarris utilise la reconnaissance vocale pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
+  "NSPhotoLibraryUsageDescription": "Mudarris n'utilise pas votre photothèque et ne demande jamais à voir vos photos."
 }

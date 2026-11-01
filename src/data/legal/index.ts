@@ -1,6 +1,6 @@
 export const LEGAL_CONSTANTS = {
-  appName: 'Iqra: Learn Arabic & Quran',
-  shortName: 'Iqra',
+  appName: 'Mudarris: Learn Arabic & Quran',
+  shortName: 'Mudarris',
   company: 'KazTek LLC',
   email: 'support@mkaztek.com',
   jurisdiction: 'Indiana, United States',

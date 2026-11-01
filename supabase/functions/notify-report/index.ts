@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
     const apiKey = Deno.env.get('RESEND_API_KEY');
     const to = Deno.env.get('REPORT_ALERT_TO');
     if (!apiKey || !to) return json({ error: 'alerts not configured' }, 503);
-    const from = Deno.env.get('REPORT_ALERT_FROM') ?? 'Iqra reports <onboarding@resend.dev>';
+    const from = Deno.env.get('REPORT_ALERT_FROM') ?? 'Mudarris reports <onboarding@resend.dev>';
 
     const url = Deno.env.get('SUPABASE_URL')!;
     const asCaller = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, {
@@ -127,7 +127,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         from,
         to: [to],
-        subject: `[Iqra] New ${report.reason} report (${report.content_type})`,
+        subject: `[Mudarris] New ${report.reason} report (${report.content_type})`,
         text: lines.join('\n'),
       }),
     });

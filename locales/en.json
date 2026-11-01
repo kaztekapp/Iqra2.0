@@ -1,6 +1,6 @@
 {
-  "CFBundleDisplayName": "Iqra",
-  "NSMicrophoneUsageDescription": "Iqra uses the microphone to check your Arabic pronunciation during speaking practice.",
-  "NSSpeechRecognitionUsageDescription": "Iqra uses speech recognition to check your Arabic pronunciation during speaking practice.",
-  "NSPhotoLibraryUsageDescription": "Iqra does not use your photo library and never asks to see your photos."
+  "CFBundleDisplayName": "Mudarris",
+  "NSMicrophoneUsageDescription": "Mudarris uses the microphone to check your Arabic pronunciation during speaking practice.",
+  "NSSpeechRecognitionUsageDescription": "Mudarris uses speech recognition to check your Arabic pronunciation during speaking practice.",
+  "NSPhotoLibraryUsageDescription": "Mudarris does not use your photo library and never asks to see your photos."
 }
