@@ -21,6 +21,9 @@
 import * as LegacyFileSystem from 'expo-file-system/legacy';
 import { Directory, File, Paths } from 'expo-file-system';
 import { quietly } from '../../lib/report';
+import { clipName } from './voicePlan';
+
+export { clipName };
 
 /** Roughly forty minutes of speech. All 100 duas come to about 7 MB. */
 const MAX_BYTES = 30 * 1024 * 1024;
@@ -78,26 +81,6 @@ async function ensureStore(): Promise<string | null> {
   }
 }
 
-/**
- * A name for a clip, from everything that decides how it sounds.
- *
- * A collision here would play the wrong line - the wrong verse of the Quran,
- * in a voice that sounds certain - so the name carries two independent hashes
- * over the text, the voice and the tempo, plus the length. djb2 multiplies by
- * 33 and sdbm by 65599, so a pair of texts that collide in one will not
- * collide in the other; 64 bits and a length is not a risk this app runs.
- */
-export function clipName(spoken: string, voice: string, rate: string): string {
-  const seed = `${voice}|${rate}|${spoken}`;
-  let a = 5381;
-  let b = 0;
-  for (let i = 0; i < seed.length; i++) {
-    const c = seed.charCodeAt(i);
-    a = ((a << 5) + a + c) >>> 0;
-    b = (c + (b << 6) + (b << 16) - b) >>> 0;
-  }
-  return `${a.toString(36)}-${b.toString(36)}-${seed.length.toString(36)}.mp3`;
-}
 
 /**
  * The stored clip for this line, or null if it has never been spoken.

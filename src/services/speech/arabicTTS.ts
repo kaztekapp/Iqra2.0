@@ -15,7 +15,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { File, Paths } from 'expo-file-system';
-import { normalizeArabicForSpeech } from '../narrationText';
+import { ARABIC_VOICE, chunkLine, edgeRate, spokenArabic } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -30,7 +30,6 @@ let generation = 0;
 let currentPlayer: AudioPlayer | null = null;
 let interruptCurrent: (() => void) | null = null;
 
-const MAX_CHUNK_LEN = 180;
 
 export interface ArabicPlayOptions {
   /** Playback rate. 1.0 = natural. Lower = slower (pitch-corrected). */
@@ -50,37 +49,6 @@ async function ensureAudioInit() {
   await ensureAudioSession('speech');
 }
 
-function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
-  const trimmed = text.trim();
-  if (trimmed.length <= maxLen) return [trimmed];
-
-  const chunks: string[] = [];
-  let remaining = trimmed;
-  while (remaining.length > 0) {
-    if (remaining.length <= maxLen) {
-      chunks.push(remaining);
-      break;
-    }
-    // Each chunk is a separate clip, so the seam between them is audible. Break
-    // on a sentence or clause mark where possible — including the Arabic full
-    // stop, comma, semicolon and question mark — then on a space.
-    let splitAt = -1;
-    for (const mark of ['۔ ', '. ', '؟ ', '? ', '! ', '؛ ', '; ', '، ', ', ']) {
-      const at = remaining.lastIndexOf(mark, maxLen);
-      if (at > splitAt) splitAt = at + mark.length - 1;
-    }
-    if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
-    if (splitAt <= 0) {
-      // No break point at all before the limit: run on to the next space rather
-      // than cutting a word in half, which Google reads as gibberish.
-      const next = remaining.indexOf(' ', maxLen);
-      splitAt = next === -1 ? remaining.length : next;
-    }
-    chunks.push(remaining.substring(0, splitAt).trim());
-    remaining = remaining.substring(splitAt).trim();
-  }
-  return chunks;
-}
 
 function deleteQuietly(uri: string) {
   // A kept clip is the whole point of the store: it outlives the line that
@@ -108,23 +76,6 @@ function teardownCurrent() {
 }
 
 
-/**
- * Map a requested speed onto an Edge prosody rate.
- *
- * Edge takes a real percentage, so the learner's three tempos map to three
- * distinct rates instead of Google's byte-identical clips above 0.5.
- *
- * Arabic is set slower than the prose at every step. The narrator is telling
- * a story and can move; a quoted ayah, a dua or the words of a hadith are
- * being recited, and at the narrator's pace the vowel endings run together.
- * -25% is the unhurried reading pace; the two below it are for a learner
- * taking a line apart.
- */
-function edgeRate(speed: number): string {
-  if (speed >= 0.9) return '-25%';  // normal: recited, not narrated
-  if (speed >= 0.45) return '-40%'; // slow
-  return '-55%';                    // slowest, for picking a word apart
-}
 
 /**
  * When the Edge voice last failed, it is left alone for this long so that a
@@ -197,7 +148,7 @@ const ayahInFlight = new Map<string, Promise<string>>();
  * a line of a story gets.
  */
 export async function synthesizeAyahToFile(text: string, speed = 1): Promise<string> {
-  const spoken = normalizeArabicForSpeech(text);
+  const spoken = spokenArabic(text);
   if (!spoken) throw new Error('tts_empty');
   const rate = edgeRate(speed);
   const name = clipName(spoken, ARABIC_VOICE, rate);
@@ -239,7 +190,7 @@ export function hasArabicClip(text: string, speed = 1): boolean {
   // other way round splits at different places, names different clips, and no
   // saved line is ever recognised again.
   return chunkLine(line).every((chunk) => {
-    const spoken = normalizeArabicForSpeech(chunk);
+    const spoken = spokenArabic(chunk);
     return !spoken || findClip(spoken, ARABIC_VOICE, edgeRate(speed)) !== null;
   });
 }
@@ -254,7 +205,7 @@ export async function saveArabicClip(text: string, speed = 1): Promise<void> {
   const line = text?.trim();
   if (!line) return;
   for (const chunk of chunkLine(line)) {
-    const spoken = normalizeArabicForSpeech(chunk);
+    const spoken = spokenArabic(chunk);
     if (!spoken) continue;
     const rate = edgeRate(speed);
     if (findClip(spoken, ARABIC_VOICE, rate)) continue;
@@ -293,7 +244,6 @@ function writeChunk(bytes: Uint8Array): string {
  * full tashkeel best, so the same words never sound different from one screen
  * to the next.
  */
-const ARABIC_VOICE = 'ar-SA-HamedNeural';
 
 async function fetchChunkFromEdge(
   spoken: string,
@@ -337,7 +287,7 @@ async function fetchChunkToFile(
   force = false
 ): Promise<string> {
   // The mushaf marks make some voices spell the word out; send plain Arabic.
-  const spoken = normalizeArabicForSpeech(text);
+  const spoken = spokenArabic(text);
 
   // A line said before is already on the phone. This look-up comes before
   // everything else - before the rest, before any thought of a network - so a
@@ -744,7 +694,7 @@ function speakOnDevice(text: string, speed: number, myGen: number, gen: () => nu
       if (myGen !== gen()) return finish();
       // The device voice is the one that spells the mushaf out; give it the
       // same plain Arabic the network voice gets.
-      const spoken = normalizeArabicForSpeech(text) || text;
+      const spoken = spokenArabic(text) || text;
       try { Speech.stop(); } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         Speech.speak(spoken, {

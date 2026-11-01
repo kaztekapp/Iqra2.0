@@ -18,22 +18,13 @@ const FUNCTION_URL = `${process.env.EXPO_PUBLIC_SUPABASE_URL ?? ''}/functions/v1
 const ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '';
 /** A long paragraph made fresh still answers well inside this. */
 const SYNTH_TIMEOUT_MS = 60_000;
+/** A recorded clip is a small file on a CDN; give up quickly and synthesize instead. */
+const CDN_TIMEOUT_MS = 15_000;
 
-export type EdgeGender = 'female' | 'male';
-export type EdgeLang = 'en' | 'fr' | 'ar';
-
-/** Warm, unhurried voices. Christopher is the one opus-report narrates with. */
-const VOICES: Record<EdgeLang, Record<EdgeGender, string>> = {
-  en: { female: 'en-US-AriaNeural', male: 'en-US-ChristopherNeural' },
-  fr: { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural' },
-  // The Saudi pair reads full tashkeel cleanly; chosen over the Egyptian pair
-  // for duas and hadith, where every vowel mark matters.
-  ar: { female: 'ar-SA-ZariyahNeural', male: 'ar-SA-HamedNeural' },
-};
-
-export function voiceFor(lang: EdgeLang, gender: EdgeGender): string {
-  return VOICES[lang][gender];
-}
+export type { EdgeGender, EdgeLang } from './speech/voicePlan';
+export { voiceFor } from './speech/voicePlan';
+import type { EdgeLang, EdgeGender } from './speech/voicePlan';
+import { voiceFor, clipPath, VOICE_CDN_URL } from './speech/voicePlan';
 
 /**
  * Speak one piece of text, resolving with the MP3 bytes. Rejects when there is
@@ -41,6 +32,10 @@ export function voiceFor(lang: EdgeLang, gender: EdgeGender): string {
  * already falls back (kept clip, then the phone's own voice).
  */
 export async function synthesize(text: string, voice: string, _lang: EdgeLang, rate = '-4%'): Promise<Uint8Array> {
+  // Recorded once for everyone: a plain download, no voice-service call.
+  const recorded = await fromVoiceCdn(text, voice, rate);
+  if (recorded) return recorded;
+
   const session = await safeGetSession();
   if (!session?.access_token) throw new Error('tts-signed-out');
 
@@ -64,6 +59,23 @@ export async function synthesize(text: string, voice: string, _lang: EdgeLang, r
   } catch (e) {
     if (controller.signal.aborted) throw new Error('tts-timeout');
     throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** The pre-recorded clip for this exact line, or null if it was never recorded. */
+async function fromVoiceCdn(text: string, voice: string, rate: string): Promise<Uint8Array | null> {
+  if (!VOICE_CDN_URL) return null;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CDN_TIMEOUT_MS);
+  try {
+    const res = await fetch(`${VOICE_CDN_URL}/${clipPath(text, voice, rate)}`, { signal: controller.signal });
+    if (!res.ok) return null;
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    return bytes.length ? bytes : null;
+  } catch {
+    return null;
   } finally {
     clearTimeout(timer);
   }

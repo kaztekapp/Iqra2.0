@@ -52,6 +52,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBus';
 import { File, Paths } from 'expo-file-system';
 import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
+import { NARRATION_RATE } from './speech/voicePlan';
 import {
   clipName,
   findClip,
@@ -137,7 +138,7 @@ const NETWORK_BACKOFF_MS = 30_000;
 const SESSION_BACKOFF_MS = 5 * 60 * 1000;
 
 /** The rate the neural narrators read at, and part of a kept clip's name. */
-const EDGE_RATE = '-4%';
+const EDGE_RATE = NARRATION_RATE;
 
 export function estimateSeconds(text: string, speed: number): number {
   const words = text.trim().split(/\s+/).filter(Boolean).length;
