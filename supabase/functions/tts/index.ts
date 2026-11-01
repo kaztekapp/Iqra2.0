@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
 
     const ssml =
       `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${locale}'>` +
-      `<voice name='${voice}'><prosody pitch='+0Hz' rate='${prosodyRate}' volume='+0%'>${escapeXml(text)}</prosody>` +
+      `<voice name='${voice}'><prosody pitch='+0Hz' rate='${prosodyRate}' volume='+0%'>${withPhonemes(escapeXml(text))}</prosody>` +
       `</voice></speak>`;
     const res = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`, {
       method: 'POST',
@@ -122,6 +122,15 @@ function escapeXml(text: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+}
+
+/**
+ * A word the app marks as ⟦ipa|word⟧ (src/services/speech/pronunciations.ts)
+ * is one the Arabic voice only says right from its phonemes. Runs on escaped
+ * text, so nothing in the mark can break out of the attribute.
+ */
+function withPhonemes(escaped: string): string {
+  return escaped.replace(/⟦([^|⟧]+)\|([^⟧]+)⟧/g, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
 }
 
 function audio(bytes: Uint8Array): Response {

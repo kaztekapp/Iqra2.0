@@ -33,6 +33,7 @@ import {
   clipPath,
   edgeRate,
   spokenArabic,
+  toSsml,
   voiceFor,
 } from '../../src/services/speech/voicePlan';
 import { getProphetsWithStories, getProphetStory } from '../../src/data/arabic/prophets';
@@ -123,14 +124,11 @@ function azureKey(): string {
   return execFileSync('az', ['cognitiveservices', 'account', 'keys', 'list', '-n', 'iqra-speech-rec', '-g', 'iqra', '--query', 'key1', '-o', 'tsv'], { encoding: 'utf8' }).trim();
 }
 
-const escapeXml = (s: string) =>
-  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-
 async function synthesize(key: string, item: Pick<Item, 'text' | 'voice' | 'rate' | 'locale'>): Promise<Buffer> {
   // Same request as supabase/functions/tts, so a recorded clip sounds like a live one.
   const ssml =
     `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${item.locale}'>` +
-    `<voice name='${item.voice}'><prosody pitch='+0Hz' rate='${item.rate}' volume='+0%'>${escapeXml(item.text)}</prosody>` +
+    `<voice name='${item.voice}'><prosody pitch='+0Hz' rate='${item.rate}' volume='+0%'>${toSsml(item.text)}</prosody>` +
     `</voice></speak>`;
   for (let attempt = 1; ; attempt++) {
     const res = await fetch('https://eastus.tts.speech.microsoft.com/cognitiveservices/v1', {

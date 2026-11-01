@@ -15,7 +15,7 @@ import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { File, Paths } from 'expo-file-system';
-import { ARABIC_VOICE, chunkLine, edgeRate, spokenArabic } from './voicePlan';
+import { ARABIC_VOICE, chunkLine, edgeRate, plainSpoken, spokenArabic } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -694,7 +694,7 @@ function speakOnDevice(text: string, speed: number, myGen: number, gen: () => nu
       if (myGen !== gen()) return finish();
       // The device voice is the one that spells the mushaf out; give it the
       // same plain Arabic the network voice gets.
-      const spoken = spokenArabic(text) || text;
+      const spoken = plainSpoken(spokenArabic(text)) || text;
       try { Speech.stop(); } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         Speech.speak(spoken, {

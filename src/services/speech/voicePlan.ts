@@ -7,7 +7,7 @@
  */
 
 import { normalizeArabicForSpeech } from '../narrationText';
-import { ARABIC_PRONUNCIATIONS } from './pronunciations';
+import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
 import { VOICE_REVISIONS } from './voiceRevisions';
 
 /** Hamed reads full tashkeel cleanly; every line of Arabic is his. */
@@ -123,14 +123,19 @@ const PREFIXES = ['', 'و', 'ف', 'ب', 'ل', 'ك', 'وَ', 'فَ', 'بِ', 'ل�
 
 /**
  * The Arabic exactly as it is spoken and recorded: mushaf marks normalized,
- * then the pronunciation fixes applied word by word.
+ * then the pronunciation fixes applied word by word. A word with a phoneme
+ * fix comes out as ⟦ipa|word⟧; the recorder (toSsml) and the tts function
+ * turn that into a phoneme tag, and the phone's own voice takes plainSpoken().
  */
 export function spokenArabic(text: string): string {
   const normalized = normalizeArabicForSpeech(text);
-  if (!ARABIC_PRONUNCIATIONS.length || !normalized) return normalized;
+  if ((!ARABIC_PRONUNCIATIONS.length && !ARABIC_PHONEMES.length) || !normalized) return normalized;
   return normalized
     .split(' ')
     .map((word) => {
+      for (const [from, ipa] of ARABIC_PHONEMES) {
+        if (word === from) return `⟦${ipa}|${word}⟧`;
+      }
       for (const [from, to] of ARABIC_PRONUNCIATIONS) {
         for (const p of PREFIXES) {
           if (word === p + from) return p + to;
@@ -139,4 +144,19 @@ export function spokenArabic(text: string): string {
       return word;
     })
     .join(' ');
+}
+
+const PHONEME_MARK = /⟦([^|⟧]+)\|([^⟧]+)⟧/g;
+
+/** The spoken line with its phoneme marks taken back out to the plain word. */
+export function plainSpoken(text: string): string {
+  return text.replace(PHONEME_MARK, '$2');
+}
+
+const escapeXml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+/** The line as SSML body text, each phoneme mark as a <phoneme> tag. */
+export function toSsml(text: string): string {
+  return escapeXml(text).replace(PHONEME_MARK, "<phoneme alphabet='ipa' ph='$1'>$2</phoneme>");
 }

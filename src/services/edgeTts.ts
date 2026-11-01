@@ -49,6 +49,7 @@ export async function synthesize(text: string, voice: string, _lang: EdgeLang, r
         Authorization: `Bearer ${session.access_token}`,
         'Content-Type': 'application/json',
       },
+      // Phoneme marks go as they are: the function turns them into SSML.
       body: JSON.stringify({ text, voice, rate }),
       signal: controller.signal,
     });
