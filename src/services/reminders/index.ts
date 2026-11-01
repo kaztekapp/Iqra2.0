@@ -288,8 +288,7 @@ export function startReminders(): () => void {
   // the group messages pushed from the server - says where it leads. One
   // listener routes them all; anything else on the phone is ignored.
   const tap = N.addNotificationResponseReceivedListener((response) => {
-    const data = response.notification.request.content.data as Partial<ReminderData> | undefined;
-    if (typeof data?.app === 'string' && data.app.startsWith('iqra-') && data.route) open(data.route);
+    followTap(response.notification.request.content.data);
   });
 
   // Not on the launch path: wait for the first screen before touching the
@@ -313,8 +312,24 @@ export async function handleColdStartTap(): Promise<void> {
   if (!N || coldStartHandled) return;
   coldStartHandled = true;
   const last = await N.getLastNotificationResponseAsync();
-  const data = last?.notification.request.content.data as Partial<ReminderData> | undefined;
-  if (typeof data?.app === 'string' && data.app.startsWith('iqra-') && data.route) open(data.route);
+  followTap(last?.notification.request.content.data);
+}
+
+/** Store pages a "new version" push may open; nothing else leaves the app. */
+const STORE_LINK = /^https:\/\/(apps\.apple\.com|play\.google\.com)\//;
+
+/**
+ * Where a tapped notification of ours leads: a screen in the app, or for the
+ * "new version" push (scripts/release/announce.ts), the store page.
+ */
+function followTap(raw: unknown): void {
+  const data = raw as (Partial<ReminderData> & { url?: unknown }) | undefined;
+  if (typeof data?.app !== 'string' || !data.app.startsWith('iqra-')) return;
+  if (typeof data.url === 'string' && STORE_LINK.test(data.url)) {
+    Linking.openURL(data.url).catch((e) => quietly(e, 'reminders.storeLink'));
+    return;
+  }
+  if (data.route) open(data.route);
 }
 
 /**

@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Modal, View, Text, Pressable, StyleSheet, Animated, Easing, AppState } from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet, Animated, Easing, AppState, Linking, Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import * as Updates from 'expo-updates';
 import { color, radius } from '../theme/tokens';
+import { newerStoreRelease, type StoreRelease } from '../services/storeVersion';
+import { quietly } from '../lib/report';
+
+/** The store version the user last answered "Later" to; a newer one asks again. */
+const STORE_DISMISSED_KEY = 'iqra.storeUpdateDismissed';
 
 /**
  * Self-contained EAS Update (OTA) prompt. On launch, each time the app is
@@ -20,6 +26,12 @@ import { color, radius } from '../theme/tokens';
  * not the "available" flag: once one update had been found the flag stayed
  * true, so a second update published later was neither fetched nor shown
  * until the next launch.
+ *
+ * It also tells people on an old binary that a new version is in the App
+ * Store or Google Play (services/storeVersion), which an over-the-air update
+ * cannot deliver. That prompt comes first: the store version carries the
+ * newest code anyway, and after installing it the app picks up any later
+ * update the same way as here.
  */
 const CHECK_EVERY_MS = 5 * 60 * 1000;
 export function UpdateModal() {
@@ -29,11 +41,20 @@ export function UpdateModal() {
   // The id of the update the user last dismissed; a newer one is shown again.
   const [dismissedId, setDismissedId] = useState<string | null>(null);
   const [reloading, setReloading] = useState(false);
+  const [storeRelease, setStoreRelease] = useState<StoreRelease | null>(null);
+  const [storeDismissed, setStoreDismissed] = useState<string | null>(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem(STORE_DISMISSED_KEY)
+      .then((v) => setStoreDismissed(v))
+      .catch(() => {});
+  }, []);
 
   const scale = useRef(new Animated.Value(0.96)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   const check = useCallback(() => {
+    newerStoreRelease().then(setStoreRelease).catch(() => {});
     if (!Updates.isEnabled) return;
     Updates.checkForUpdateAsync().catch(() => {});
   }, []);
@@ -63,7 +84,9 @@ export function UpdateModal() {
     if (availableId) Updates.fetchUpdateAsync().catch(() => {});
   }, [availableId]);
 
-  const visible = isUpdatePending && dismissedId !== availableId;
+  const showStore = !!storeRelease && storeDismissed !== storeRelease.version;
+  const showOta = isUpdatePending && dismissedId !== availableId;
+  const visible = showStore || showOta;
 
   useEffect(() => {
     if (visible) {
@@ -82,6 +105,20 @@ export function UpdateModal() {
     }
   }, [visible, opacity, scale]);
 
+  const later = () => {
+    if (showStore && storeRelease) {
+      setStoreDismissed(storeRelease.version);
+      AsyncStorage.setItem(STORE_DISMISSED_KEY, storeRelease.version).catch(() => {});
+    } else {
+      setDismissedId(availableId);
+    }
+  };
+
+  const openStore = () => {
+    if (!storeRelease) return;
+    Linking.openURL(storeRelease.url).catch((e) => quietly(e, 'components/UpdateModal'));
+  };
+
   const apply = async () => {
     setReloading(true);
     try {
@@ -94,36 +131,55 @@ export function UpdateModal() {
   if (!visible) return null;
 
   return (
-    <Modal visible transparent animationType="fade" onRequestClose={() => setDismissedId(availableId)}>
+    <Modal visible transparent animationType="fade" onRequestClose={later}>
       <View style={styles.overlay}>
         <Animated.View style={[styles.card, { opacity, transform: [{ scale }] }]}>
           <View style={styles.iconWrap}>
-            <Ionicons name="rocket" size={28} color={color.progress} />
+            <Ionicons name={showStore ? 'arrow-down-circle' : 'rocket'} size={28} color={color.progress} />
           </View>
 
-          <Text style={styles.title}>{t('profile.updateReadyTitle')}</Text>
-          <Text style={styles.message}>{t('profile.updateReadyMessage')}</Text>
+          <Text style={styles.title}>{t(showStore ? 'profile.storeUpdateTitle' : 'profile.updateReadyTitle')}</Text>
+          <Text style={styles.message}>
+            {showStore && storeRelease
+              ? t('profile.storeUpdateMessage', {
+                  version: storeRelease.version,
+                  store: t(Platform.OS === 'ios' ? 'profile.storeNameIos' : 'profile.storeNameAndroid'),
+                })
+              : t('profile.updateReadyMessage')}
+          </Text>
 
           <View style={styles.actions}>
             <Pressable
               style={styles.secondaryButton}
-              onPress={() => setDismissedId(availableId)}
+              onPress={later}
               disabled={reloading}
               accessibilityRole="button"
               accessibilityLabel={t('profile.later')}
             >
               <Text style={styles.secondaryText}>{t('profile.later')}</Text>
             </Pressable>
-            <Pressable
-              style={[styles.primaryButton, reloading && styles.primaryButtonDisabled]}
-              onPress={apply}
-              disabled={reloading}
-              accessibilityRole="button"
-              accessibilityLabel={t('profile.updateNow')}
-            >
-              <Ionicons name="refresh" size={18} color={color.textOnAccent} />
-              <Text style={styles.primaryText}>{t('profile.updateNow')}</Text>
-            </Pressable>
+            {showStore ? (
+              <Pressable
+                style={styles.primaryButton}
+                onPress={openStore}
+                accessibilityRole="button"
+                accessibilityLabel={t('profile.openStore')}
+              >
+                <Ionicons name="open-outline" size={18} color={color.textOnAccent} />
+                <Text style={styles.primaryText}>{t('profile.openStore')}</Text>
+              </Pressable>
+            ) : (
+              <Pressable
+                style={[styles.primaryButton, reloading && styles.primaryButtonDisabled]}
+                onPress={apply}
+                disabled={reloading}
+                accessibilityRole="button"
+                accessibilityLabel={t('profile.updateNow')}
+              >
+                <Ionicons name="refresh" size={18} color={color.textOnAccent} />
+                <Text style={styles.primaryText}>{t('profile.updateNow')}</Text>
+              </Pressable>
+            )}
           </View>
         </Animated.View>
       </View>

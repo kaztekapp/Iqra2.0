@@ -156,7 +156,7 @@ async function synthesize(key: string, item: Pick<Item, 'text' | 'voice' | 'rate
 
 type R2 = { accountId: string; accessKeyId: string; secretAccessKey: string; bucket: string };
 
-function r2Config(): R2 {
+export function r2Config(): R2 {
   return JSON.parse(readFileSync(join(ROOT, 'credentials', 'r2.json'), 'utf8'));
 }
 
@@ -164,7 +164,7 @@ const sha256 = (d: string | Buffer) => createHash('sha256').update(d).digest('he
 const hmac = (k: Buffer | string, d: string) => createHmac('sha256', k).update(d).digest();
 
 /** Minimal AWS SigV4 for R2 (region "auto", service "s3"). */
-async function r2(cfg: R2, method: 'GET' | 'PUT', key: string, query = '', body?: Buffer, extra: Record<string, string> = {}) {
+export async function r2(cfg: R2, method: 'GET' | 'PUT', key: string, query = '', body?: Buffer, extra: Record<string, string> = {}) {
   const host = `${cfg.accountId}.r2.cloudflarestorage.com`;
   const path = `/${cfg.bucket}/${key.split('/').map(encodeURIComponent).join('/')}`.replace(/\/$/, key ? '' : '/');
   const now = new Date();
