@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
+import { sourceLeadHidden, type NarratableBlock } from '../../../src/services/narrationPlan';
 import { getProphetStory, hasProphetStory } from '../../../src/data/arabic/prophets';
 import { SubStoryNav, StoryContentBlock } from '../../../src/components/prophetStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
@@ -197,6 +198,7 @@ export default function ProphetStoryScreen() {
           block={item}
           isOpening={index === 0 && item.type === 'narrative'}
           isHighlighted={highlightedBlockId === item.id}
+          hideLead={sourceLeadHidden(currentContent as NarratableBlock[], index, lc)}
           onPress={() => seekToBlock(index)}
           onPlayQuranAudio={
             item.source?.type === 'quran'
@@ -208,7 +210,7 @@ export default function ProphetStoryScreen() {
         />
       </View>
     ),
-    [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio, seekToBlock]
+    [highlightedBlockId, playingSourceId, audioState, handlePlayQuranAudio, seekToBlock, currentContent, lc]
   );
 
   if (!prophet) {

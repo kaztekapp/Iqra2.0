@@ -13,6 +13,8 @@ interface StoryContentBlockProps {
   /** The paragraph that opens a story, set apart from the telling itself. */
   isOpening?: boolean;
   isHighlighted?: boolean;
+  /** The source card's title line repeats the paragraph before it: leave it out (narrationPlan.sourceLeadHidden). */
+  hideLead?: boolean;
   /**
    * Listen from here. A story this long is not listened to from the top
    * every time, so a paragraph - or the sentence that hands the reader into
@@ -33,6 +35,7 @@ function StoryContentBlockBase({
   block,
   isOpening = false,
   isHighlighted = false,
+  hideLead = false,
   onPress,
   onPlayQuranAudio,
   isQuranPlaying = false,
@@ -64,7 +67,7 @@ function StoryContentBlockBase({
     const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
-        {!!lead.trim() && (
+        {!!lead.trim() && !hideLead && (
           <Pressable onPress={onPress} disabled={!onPress} style={({ pressed }) => pressed && styles.pressed}>
             <StoryProse style={styles.leadText} text={lead} />
           </Pressable>
@@ -83,7 +86,7 @@ function StoryContentBlockBase({
     const lead = lc(block.content, block.contentFr);
     return (
       <View style={[styles.sourceContainer, isHighlighted && styles.highlighted]}>
-        {!!lead.trim() && (
+        {!!lead.trim() && !hideLead && (
           <Pressable onPress={onPress} disabled={!onPress} style={({ pressed }) => pressed && styles.pressed}>
             <StoryProse style={styles.leadText} text={lead} />
           </Pressable>

@@ -38,6 +38,43 @@ export interface Utterance {
 
 type Localize = (en: string, fr?: string) => string;
 
+/** Words that carry meaning: four letters or more, lower case, punctuation gone. */
+function meaningWords(text: string): Set<string> {
+  return new Set(
+    text
+      .toLowerCase()
+      .split(/[\s.,;:!?"'’‘«»()\[\]\-–—]+/)
+      .filter((w) => w.length > 3),
+  );
+}
+
+/**
+ * Does a source card's title line only say again what the paragraph before
+ * it just said? Stories introduce an ayah in their own words - "Surah
+ * Ar-Rahman says it again: clay like that of pottery" - and the card's title
+ * then repeated it - "Surah Ar-Rahman: Clay like that of pottery". Such a
+ * line is neither shown nor read; the card's badge still names the surah.
+ * Compares the title (after "Surah X:") with the last paragraph before it.
+ */
+export function restatesBefore(caption: string, before: string | undefined): boolean {
+  if (!before) return false;
+  const body = caption.includes(':') ? caption.slice(caption.indexOf(':') + 1) : caption;
+  const said = meaningWords(body);
+  if (said.size < 2) return false;
+  const last = before.split('\n').filter((l) => l.trim()).pop() ?? '';
+  const prior = meaningWords(last);
+  const shared = [...said].filter((w) => prior.has(w)).length;
+  return shared / said.size >= 0.6;
+}
+
+/** The title line of block `index` is hidden (and not read) when it restates the paragraph before. */
+export function sourceLeadHidden(blocks: NarratableBlock[], index: number, lc: Localize): boolean {
+  const block = blocks[index];
+  const prev = blocks[index - 1];
+  if (!block || block.type === 'narrative' || !prev || prev.type !== 'narrative') return false;
+  return restatesBefore(lc(block.content, block.contentFr), lc(prev.content, prev.contentFr));
+}
+
 /**
  * Flatten a story.
  *
@@ -58,7 +95,8 @@ type Localize = (en: string, fr?: string) => string;
  * the stories are being reshaped.
  *
  * A caption that merely restates the line before it is dropped rather than
- * said twice.
+ * said twice - including a card title that repeats the paragraph introducing
+ * it (sourceLeadHidden), which the screen hides the same way.
  */
 export function buildUtterances(blocks: NarratableBlock[], lang: NarrationLang, lc: Localize): Utterance[] {
   const out: Utterance[] = [];
@@ -93,10 +131,16 @@ export function buildUtterances(blocks: NarratableBlock[], lang: NarrationLang, 
       push(caption, block.id, blockIndex);
       return;
     }
-    push(caption, block.id, blockIndex);
+    if (!sourceLeadHidden(blocks, blockIndex, lc)) push(caption, block.id, blockIndex);
 
     const isHadith = block.source?.type === 'hadith';
-    if (isHadith && block.source) {
+    // The paragraph before already named this hadith ("... Sahih al-Bukhari
+    // 3364"): its reference is not read a second time.
+    const number = block.source?.hadithNumber != null ? String(block.source.hadithNumber) : '';
+    const prior = blocks[blockIndex - 1];
+    const citedBefore =
+      !!number && prior?.type === 'narrative' && new RegExp(`\\b${number}\\b`).test(lc(prior.content, prior.contentFr));
+    if (isHadith && block.source && !citedBefore) {
       push(
         hadithReferenceLine(
           {
