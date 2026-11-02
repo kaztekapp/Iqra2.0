@@ -14,6 +14,7 @@ import { createAudioPlayer } from 'expo-audio';
 import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
+import { clipTaken, forgetClip, preloadClip } from './clipPreload';
 import { File, Paths } from 'expo-file-system';
 import { chunkLine, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
@@ -340,6 +341,7 @@ function playFile(uri: string): Promise<void> {
       // Keep the session alive across the line (expo-audio 57 would otherwise
       // deactivate it when this clip ends, mid-story, with the screen locked).
       player = createAudioPlayer(uri, { keepAudioSessionActive: true });
+      clipTaken(uri);
     } catch (e) {
       deleteQuietly(uri);
       reject(e);
@@ -456,10 +458,16 @@ export function prepareArabic(text: string, speed = 1.0): void {
     if (prepared.has(key) || prepared.size >= PREPARED_LIMIT) continue;
     prepared.set(
       key,
-      fetchChunkToFile(chunk, speed, false).catch((e) => {
-        prepared.delete(key);
-        throw e;
-      })
+      fetchChunkToFile(chunk, speed, false).then(
+        (uri) => {
+          preloadClip(uri);
+          return uri;
+        },
+        (e) => {
+          prepared.delete(key);
+          throw e;
+        }
+      )
     );
   }
 }
@@ -472,7 +480,7 @@ export function prepareArabic(text: string, speed = 1.0): void {
  * sentence, and would throw the prefetched Arabic line away every time.
  */
 export function discardPreparedArabic(): void {
-  for (const p of prepared.values()) p.then(deleteQuietly).catch(() => {});
+  for (const p of prepared.values()) p.then((uri) => { forgetClip(uri); deleteQuietly(uri); }).catch(() => {});
   prepared.clear();
 }
 

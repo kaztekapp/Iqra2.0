@@ -53,6 +53,7 @@ import { registerAudioProducer, claimAudio, ensureAudioSession } from './audioBu
 import { File, Paths } from 'expo-file-system';
 import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
 import { NARRATION_RATE, NOW_PLAYING_ARTWORK, spokenNarration } from './speech/voicePlan';
+import { clipTaken, forgetClip, preloadClip } from './speech/clipPreload';
 import {
   clipName,
   findClip,
@@ -498,10 +499,16 @@ class StoryAudioService {
     if (this.prepared.has(key) || this.prepared.size >= 3) return;
     this.prepared.set(
       key,
-      this.edgeClip(body, lang).catch((e) => {
-        this.prepared.delete(key);
-        throw e;
-      })
+      this.edgeClip(body, lang).then(
+        (uri) => {
+          preloadClip(uri);
+          return uri;
+        },
+        (e) => {
+          this.prepared.delete(key);
+          throw e;
+        }
+      )
     );
   }
 
@@ -517,7 +524,7 @@ class StoryAudioService {
    * threw away every prefetch the moment it was made.
    */
   discardPrepared(): void {
-    for (const p of this.prepared.values()) p.then(deleteQuietly).catch(() => {});
+    for (const p of this.prepared.values()) p.then((uri) => { forgetClip(uri); deleteQuietly(uri); }).catch(() => {});
     this.prepared.clear();
   }
 
@@ -687,6 +694,7 @@ class StoryAudioService {
 
       let player: AudioPlayer;
       try {
+        clipTaken(uri);
         if (this.player) {
           this.player.replace({ uri });
         } else {
