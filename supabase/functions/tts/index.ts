@@ -98,6 +98,9 @@ Deno.serve(async (req) => {
     await Promise.allSettled([
       supa.storage.from(BUCKET).upload(path, bytes, { contentType: 'audio/mpeg', upsert: true }),
       supa.from('tts_usage').insert({ user_id: caller.id, chars: text.length }),
+      // And on the voice CDN, under the name the app looks for first, so the
+      // next listener anywhere is served the recording without this function.
+      toVoiceCdn(`v1/${voice}/${clipName(text, voice, prosodyRate)}`, bytes),
     ]);
     return audio(bytes);
   } catch (e) {
@@ -109,6 +112,64 @@ Deno.serve(async (req) => {
 async function sha256(input: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
   return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * The app's clip name (src/services/speech/voicePlan.ts clipName), copied
+ * exactly: the app looks for `v1/<voice>/<this>` on the voice CDN before it
+ * calls here. Lines with a voice revision get a different name in the app,
+ * so a copy saved here under the plain name is simply never asked for.
+ */
+function clipName(spoken: string, voice: string, rate: string): string {
+  const seed = `${voice}|${rate}|${spoken}`;
+  let a = 5381;
+  let b = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const c = seed.charCodeAt(i);
+    a = ((a << 5) + a + c) >>> 0;
+    b = (c + (b << 6) + (b << 16) - b) >>> 0;
+  }
+  return `${a.toString(36)}-${b.toString(36)}-${seed.length.toString(36)}.mp3`;
+}
+
+const enc = new TextEncoder();
+const hex = (buf: ArrayBuffer) => [...new Uint8Array(buf)].map((x) => x.toString(16).padStart(2, '0')).join('');
+const sha256Hex = async (data: Uint8Array | string) =>
+  hex(await crypto.subtle.digest('SHA-256', (typeof data === 'string' ? enc.encode(data) : data) as BufferSource));
+async function hmac(key: Uint8Array | ArrayBuffer, data: string): Promise<ArrayBuffer> {
+  const k = await crypto.subtle.importKey('raw', key as BufferSource, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return crypto.subtle.sign('HMAC', k, enc.encode(data));
+}
+
+/** Put a clip on the voice CDN (Cloudflare R2, S3 API, SigV4). Silent when not configured. */
+async function toVoiceCdn(key: string, body: Uint8Array): Promise<void> {
+  const account = Deno.env.get('R2_ACCOUNT_ID');
+  const id = Deno.env.get('R2_ACCESS_KEY_ID');
+  const secret = Deno.env.get('R2_SECRET_ACCESS_KEY');
+  const bucket = Deno.env.get('R2_BUCKET') ?? 'iqra-voice';
+  if (!account || !id || !secret) return;
+  const host = `${account}.r2.cloudflarestorage.com`;
+  const path = `/${bucket}/${key.split('/').map(encodeURIComponent).join('/')}`;
+  const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+  const day = amzDate.slice(0, 8);
+  const payloadHash = await sha256Hex(body);
+  const headers: Record<string, string> = {
+    'cache-control': 'public, max-age=31536000, immutable',
+    'content-type': 'audio/mpeg',
+    host,
+    'x-amz-content-sha256': payloadHash,
+    'x-amz-date': amzDate,
+  };
+  const signed = Object.keys(headers).sort();
+  const canonical = ['PUT', path, '', ...signed.map((h) => `${h}:${headers[h]}`), '', signed.join(';'), payloadHash].join('\n');
+  const scope = `${day}/auto/s3/aws4_request`;
+  const toSign = ['AWS4-HMAC-SHA256', amzDate, scope, await sha256Hex(canonical)].join('\n');
+  let k = await hmac(enc.encode(`AWS4${secret}`), day);
+  for (const part of ['auto', 's3', 'aws4_request']) k = await hmac(k, part);
+  const signature = hex(await hmac(k, toSign));
+  headers.authorization = `AWS4-HMAC-SHA256 Credential=${id}/${scope}, SignedHeaders=${signed.join(';')}, Signature=${signature}`;
+  const res = await fetch(`https://${host}${path}`, { method: 'PUT', headers, body: body as BodyInit });
+  if (!res.ok) console.error('tts: voice CDN put failed', res.status, await res.text());
 }
 
 /** SSML is XML; unescaped prose would break the request. */

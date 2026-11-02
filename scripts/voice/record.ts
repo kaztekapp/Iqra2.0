@@ -22,7 +22,7 @@
  */
 import { createHash, createHmac } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync, readdirSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildUtterances, type NarratableBlock } from '../../src/services/narrationPlan';
@@ -73,6 +73,37 @@ function duaBlocks(d: (typeof DUAS)[number], lang: 'en' | 'fr'): NarratableBlock
   return blocks;
 }
 
+/** Data the learning screens speak from: everything but the Quran text, stories and duas. */
+const LEARNING_SKIP = [/\/quran\/surahs\//, /\/prophets\//, /\/quranStories\//, /\/duas\//, /\/legal\//, /\/community\//];
+
+function walk(dir: string): string[] {
+  return readdirSync(dir).flatMap((n) => {
+    const p = join(dir, n);
+    return statSync(p).isDirectory() ? walk(p) : p.endsWith('.ts') ? [p] : [];
+  });
+}
+
+/**
+ * Every Arabic string literal in the learning data. A string counts when most
+ * of its letters are Arabic, so an English sentence quoting one Arabic word
+ * is left out; lines a screen builds itself are recorded by the tts function
+ * the first time anyone hears them.
+ */
+export function learningArabic(): string[] {
+  const out = new Set<string>();
+  const literal = /(['"`])((?:\\.|(?!\1).)*?)\1/g;
+  for (const file of walk(join(ROOT, 'src', 'data'))) {
+    if (LEARNING_SKIP.some((re) => re.test(file))) continue;
+    for (const m of readFileSync(file, 'utf8').matchAll(literal)) {
+      const s = m[2].replace(/\\n/g, ' ').trim();
+      const arabic = (s.match(/[\u0621-\u064A]/g) ?? []).length;
+      const latin = (s.match(/[A-Za-z]/g) ?? []).length;
+      if (arabic >= 1 && arabic >= latin * 2) out.add(s);
+    }
+  }
+  return [...out];
+}
+
 export function buildPlan(): Item[] {
   const items = new Map<string, Item>();
   const addArabic = (line: string) => {
@@ -117,6 +148,10 @@ export function buildPlan(): Item[] {
   }
   // The dua's own Arabic player reads the whole dua text.
   for (const d of DUAS) addArabic(d.arabicText);
+  // The learning screens (alphabet, vocabulary, verbs, grammar, numbers,
+  // prayer, tajweed, quizzes, reading, calendar) speak fields of the data
+  // as they are, so every Arabic string in it is recorded.
+  for (const line of learningArabic()) addArabic(line);
   return [...items.values()];
 }
 
