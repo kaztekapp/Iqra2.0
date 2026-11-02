@@ -52,7 +52,8 @@ export const SURAH_NAMES: Readonly<Record<string, string>> = {
   Saba: 'سَبَأ',
   'Ya Sin': 'يَاسِين',
   'As Saffat': 'الصَّافَّات',
-  Sad: 'صَاد',
+  // Letter names end in sukun, or Hamed reads them as a word (chosen by ear).
+  Sad: 'صَادْ',
   'Az Zumar': 'الزُّمَر',
   Ghafir: 'غَافِر',
   Fussilat: 'فُصِّلَت',
@@ -66,7 +67,7 @@ export const SURAH_NAMES: Readonly<Record<string, string>> = {
   Muhammad: 'مُحَمَّد',
   'Al Fath': 'الْفَتْح',
   'Al Hujurat': 'الْحُجُرَات',
-  Qaf: 'قَاف',
+  Qaf: 'قَافْ',
   'Adh Dhariyat': 'الذَّارِيَات',
   'An Najm': 'النَّجْم',
   'Al Qamar': 'الْقَمَر',

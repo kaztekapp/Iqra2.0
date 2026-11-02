@@ -189,6 +189,15 @@ const SURAH_NAME_RE = new RegExp(
   'gu'
 );
 
+/** A second surah named in the same breath: "Surah Sad and Al Hijr", "sourate Sad et Al Hijr". */
+const NEXT_NAME_RE = new RegExp(
+  `(⟫(?:,|\\s+and|\\s+et|\\s+or|\\s+ou)\\s+)(${Object.keys(SURAH_NAMES)
+    .sort((a, b) => b.length - a.length)
+    .map(escapeRegExp)
+    .join('|')})(?![\\p{L}'’])`,
+  'gu'
+);
+
 const VERSE_WORDS = {
   en: { one: 'verse', many: 'verses', to: 'to' },
   fr: { one: 'verset', many: 'versets', to: 'à' },
@@ -206,6 +215,7 @@ export function spokenNarration(text: string, lang: 'en' | 'fr'): string {
   const w = VERSE_WORDS[lang];
   return text
     .replace(SURAH_NAME_RE, (_, lead: string, name: string) => `${lead}⟪${SURAH_NAMES[name]}|${name}⟫`)
+    .replace(NEXT_NAME_RE, (_, lead: string, name: string) => `${lead}⟪${SURAH_NAMES[name]}|${name}⟫`)
     .replace(VERSE_REF_RE, (_, _surah: string, from: string, to?: string) =>
       to ? `⟫, ${w.many} ${from} ${w.to} ${to}` : `⟫, ${w.one} ${from}`
     );

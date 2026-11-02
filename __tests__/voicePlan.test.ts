@@ -33,6 +33,11 @@ describe('surah names in narration', () => {
     expect(spokenNarration('Surah Al Baqarah 2:30', 'en')).toBe('Surah ⟪الْبَقَرَة|Al Baqarah⟫, verse 30');
   });
 
+  it('also gives the Arabic voice a second surah named in the same breath', () => {
+    expect(spokenNarration('Surah Sad and Al Hijr record it.', 'en')).toBe('Surah ⟪صَادْ|Sad⟫ and ⟪الْحِجْر|Al Hijr⟫ record it.');
+    expect(spokenNarration('La sourate Sad et Al Hijr le disent.', 'fr')).toBe('La sourate ⟪صَادْ|Sad⟫ et ⟪الْحِجْر|Al Hijr⟫ le disent.');
+  });
+
   it('leaves names elsewhere in the sentence to the narrator', () => {
     expect(spokenNarration('Maryam and Yusuf were patient.', 'en')).toBe('Maryam and Yusuf were patient.');
     expect(spokenNarration('Surah Sadness', 'en')).toBe('Surah Sadness');
