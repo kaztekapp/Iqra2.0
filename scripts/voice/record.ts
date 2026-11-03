@@ -104,6 +104,15 @@ export function learningArabic(): string[] {
   return [...out];
 }
 
+/** Every ayah of the Quran as the app holds it (textUthmani). */
+export function quranAyahs(): string[] {
+  const out: string[] = [];
+  for (const file of walk(join(ROOT, 'src', 'data', 'arabic', 'quran', 'surahs'))) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/"?textUthmani"?:\s*(['"`])((?:\\.|(?!\1).)*)\1/g)) out.push(m[2]);
+  }
+  return out;
+}
+
 export function buildPlan(): Item[] {
   const items = new Map<string, Item>();
   const addArabic = (line: string) => {
@@ -152,6 +161,17 @@ export function buildPlan(): Item[] {
   // prayer, tajweed, quizzes, reading, calendar) speak fields of the data
   // as they are, so every Arabic string in it is recorded.
   for (const line of learningArabic()) addArabic(line);
+  // Learn Mode's learning voice reads each ayah whole (synthesizeAyahToFile:
+  // no chunking), in the narrator's Arabic voice, at the normal pace only.
+  for (const ayah of quranAyahs()) {
+    const text = spokenArabic(ayah);
+    if (!text.trim()) continue;
+    for (const voice of ARABIC_VOICES) {
+      const rate = edgeRate(1, voice);
+      const path = clipPath(text, voice, rate);
+      items.set(path, { path, text, voice, rate, locale: 'ar-SA' });
+    }
+  }
   return [...items.values()];
 }
 

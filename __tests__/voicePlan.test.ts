@@ -57,9 +57,9 @@ describe('surah names in narration', () => {
 
   it('hands the name to the Arabic voice of the narrator\'s gender, without the gap', () => {
     const female = buildSsml(spokenNarration('Surah Ar Rahman: Clay.', 'en'), 'en-US-AriaNeural', '-4%', 'en-US');
-    expect(female).toContain("<voice name='ar-SA-ZariyahNeural'><mstts:silence type='Leading-exact' value='0ms'/><mstts:silence type='Tailing-exact' value='0ms'/><prosody pitch='+0Hz' rate='+0%' volume='+0%'>الرَّحْمَٰن</prosody></voice>");
-    expect(female).toContain("<voice name='en-US-AriaNeural'><mstts:silence type='Tailing-exact' value='0ms'/><prosody pitch='+0Hz' rate='-4%' volume='+0%'>Surah </prosody></voice>");
-    expect(buildSsml(spokenNarration('La sourate Ar Rahman.', 'fr'), 'fr-FR-HenriNeural', '-4%', 'fr-FR')).toContain("rate='-10%' volume='+0%'>الرَّحْمَٰن");
+    expect(female).toContain("<voice name='ar-SA-ZariyahNeural'><mstts:silence type='Leading-exact' value='0ms'/><mstts:silence type='Tailing-exact' value='0ms'/><prosody rate='+0%'>الرَّحْمَٰن</prosody></voice>");
+    expect(female).toContain("<voice name='en-US-AriaNeural'><mstts:silence type='Tailing-exact' value='0ms'/><prosody rate='-4%'>Surah </prosody></voice>");
+    expect(buildSsml(spokenNarration('La sourate Ar Rahman.', 'fr'), 'fr-FR-HenriNeural', '-4%', 'fr-FR')).toContain("rate='-10%'>الرَّحْمَٰن");
   });
 });
 

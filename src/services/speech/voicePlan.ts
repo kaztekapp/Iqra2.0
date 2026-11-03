@@ -250,7 +250,7 @@ export function buildSsml(text: string, voice: string, rate: string, locale: str
       const silence =
         (i > 0 ? "<mstts:silence type='Leading-exact' value='0ms'/>" : '') +
         (i < spoken.length - 1 ? "<mstts:silence type='Tailing-exact' value='0ms'/>" : '');
-      return `<voice name='${s.voice}'>${silence}<prosody pitch='+0Hz' rate='${s.rate}' volume='+0%'>${withPhonemes(escapeXml(s.text))}</prosody></voice>`;
+      return `<voice name='${s.voice}'>${silence}<prosody rate='${s.rate}'>${withPhonemes(escapeXml(s.text))}</prosody></voice>`;
     })
     .join('');
   return `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='${locale}'>${body}</speak>`;
