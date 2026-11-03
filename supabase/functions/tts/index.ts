@@ -64,9 +64,10 @@ Deno.serve(async (req) => {
     // Live synthesis is off: every line the app plays is pre-recorded on the
     // voice CDN (scripts/voice/record.ts), and nothing a user does may spend
     // on Azure. A line that was never recorded falls back to the phone's own
-    // voice in the app. Set TTS_LIVE=on to allow it again - for recited
-    // Quran lines only, while the reading rules are still being settled.
-    if (Deno.env.get('TTS_LIVE') !== 'on' || quran !== true) return json({ error: 'not recorded' }, 404);
+    // voice in the app. The one exception, while the Quran reading rules are
+    // being settled (2026-11): a recited Quran line is made live, within the
+    // per-account budget below. Set the secret TTS_LIVE=off to stop that too.
+    if (Deno.env.get('TTS_LIVE') === 'off' || quran !== true) return json({ error: 'not recorded' }, 404);
 
     // Fresh synthesis costs money, so it is budgeted per account.
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
