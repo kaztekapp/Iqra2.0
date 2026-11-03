@@ -4,7 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useProgressStore, ModuleType } from '../../src/stores/progressStore';
+import { useProgressStore } from '../../src/stores/progressStore';
+import { MODULES } from '../../src/components/home/ContinueLearningCard';
+import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
+import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
+import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
+import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
 import { useLearnModeStore } from '../../src/stores/learnModeStore';
 import { getSurahById } from '../../src/data/arabic/quran';
 import {
@@ -19,30 +24,6 @@ import {
 } from '../../src/components/ui/Primitives';
 import { color, type, weight, space, radius, gutter, font } from '../../src/theme/tokens';
 
-/**
- * Module colour is semantic, not decorative: gold marks sacred content, indigo
- * marks language study. The old per-module rainbow (pink verbs, teal practice,
- * amber reading) encoded nothing — here the large Arabic glyph on each card
- * carries the individuality instead.
- */
-const MODULES: Record<ModuleType, {
-  titleKey: string;
-  titleArabic: string;
-  icon: keyof typeof Ionicons.glyphMap;
-  color: string;
-  route: string;
-  arabicChar: string;
-}> = {
-  alphabet: { titleKey: 'home.alphabet', titleArabic: 'الْحُرُوف', icon: 'text', color: color.accent, route: '/alphabet', arabicChar: 'أ' },
-  vocabulary: { titleKey: 'home.vocabulary', titleArabic: 'الْمُفْرَدَات', icon: 'library', color: color.accent, route: '/vocabulary', arabicChar: 'ك' },
-  numbers: { titleKey: 'learn.numbers', titleArabic: 'الْأَرْقَام', icon: 'keypad', color: color.accent, route: '/numbers', arabicChar: '٥' },
-  calendar: { titleKey: 'learn.calendar', titleArabic: 'التَّقْوِيمُ الْهِجْرِيّ', icon: 'moon', color: color.accent, route: '/calendar', arabicChar: 'هـ' },
-  grammar: { titleKey: 'learn.grammar', titleArabic: 'الْقَوَاعِد', icon: 'git-branch', color: color.accent, route: '/grammar', arabicChar: 'ق' },
-  verbs: { titleKey: 'learn.verbConjugations', titleArabic: 'تَصْرِيفُ الْأَفْعَال', icon: 'swap-horizontal', color: color.accent, route: '/verbs', arabicChar: 'ف' },
-  reading: { titleKey: 'learn.reading', titleArabic: 'الْقِرَاءَة', icon: 'document-text', color: color.accent, route: '/reading', arabicChar: 'ر' },
-  writing: { titleKey: 'learn.writing', titleArabic: 'الْكِتَابَة', icon: 'create', color: color.accent, route: '/writing', arabicChar: 'خ' },
-  practice: { titleKey: 'home.practice', titleArabic: 'التَّدْرِيب', icon: 'pencil', color: color.progress, route: '/practice', arabicChar: 'د' },
-};
 
 type ExploreCard = { titleKey: string; titleArabic: string; icon: keyof typeof Ionicons.glyphMap; color: string; route: string; arabicChar: string };
 const EXPLORE: ExploreCard[] = [
@@ -56,7 +37,6 @@ const TIPS_COUNT = 5;
 export default function HomeScreen() {
   const { t } = useTranslation();
   const progress = useProgressStore((s) => s.progress);
-  const lastAccessed = useProgressStore((s) => s.lastAccessed);
   // Learn mode opens on the surah last learned there, Al-Fatihah the first time.
   const learnSurah = getSurahById(useLearnModeStore((s) => s.lastSurahId) ?? 'al-fatihah') ?? getSurahById('al-fatihah');
 
@@ -66,22 +46,12 @@ export default function HomeScreen() {
     return dayOfYear % TIPS_COUNT;
   }, []);
 
-  const currentModule = MODULES[lastAccessed?.module || 'alphabet'];
-
-  const getModuleName = () => lastAccessed?.moduleName || t(currentModule.titleKey);
-  const hasLesson = lastAccessed?.lessonTitle && lastAccessed?.lessonTitleArabic;
-
-  const getDisplaySubtitle = () => {
-    switch (lastAccessed?.module) {
-      case 'alphabet': return t('home.lettersLearned', { count: progress.alphabetProgress.lettersLearned.length });
-      case 'vocabulary': return t('home.themesCompleted', { count: progress.vocabularyProgress.themesCompleted.length });
-      case 'grammar': return t('home.lessonsCompletedCount', { count: progress.grammarProgress.lessonsCompleted.length });
-      case 'verbs': return t('home.verbsLearned', { count: progress.verbProgress.verbsLearned.length });
-      case 'reading': return t('home.textsCompleted', { count: progress.readingProgress.textsCompleted.length });
-      case 'practice': return t('home.continuePracticing');
-      default: return t('home.lettersLearned', { count: progress.alphabetProgress.lettersLearned.length });
-    }
-  };
+  // Stories progress, for the Quran Stories card.
+  // Selected as numbers, so the count follows a story being finished.
+  const prophetStoriesCompleted = useProphetStoriesStore((st) => st.getTotalStoriesCompleted());
+  const quranStoriesCompleted = useQuranStoriesStore((st) => st.getTotalStoriesCompleted());
+  const storiesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
+  const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -135,27 +105,23 @@ export default function HomeScreen() {
           </Section>
         ) : null}
 
-        {/* Continue */}
-        <Section title={t('home.continueLearning')}>
+        {/* Quran stories: after memorizing, the other way into the Quran. */}
+        <Section>
           <Card
-            onPress={() => router.push(currentModule.route as Href)}
-            accent={currentModule.color}
-            accessibilityLabel={`${t('home.continueLearning')}: ${getModuleName()}`}
+            onPress={() => router.push('/quran/stories' as Href)}
+            accent={color.sacred}
+            accessibilityLabel={`${t('storiesFeature.title')}: ${t('quran.prophetsAndMore')}, ${storiesCompleted}/${totalStories}`}
             style={styles.continueCard}
           >
-            <IconTile name={currentModule.icon} tint={currentModule.color} />
+            <IconTile name="library" tint={color.sacred} />
             <View style={styles.continueText}>
-              <Txt variant="body" weight="semibold" numberOfLines={1}>
-                {hasLesson && lastAccessed.lessonTitle !== getModuleName() ? lastAccessed.lessonTitle : getModuleName()}
-              </Txt>
-              <Arabic size="inline" align="left" numberOfLines={1} style={styles.continueArabic}>
-                {hasLesson && lastAccessed.lessonTitle !== getModuleName() ? lastAccessed.lessonTitleArabic : currentModule.titleArabic}
-              </Arabic>
-              <Txt variant="caption" tone="faint" numberOfLines={1}>{getDisplaySubtitle()}</Txt>
+              <Txt variant="body" weight="semibold" numberOfLines={1}>{t('storiesFeature.title')}</Txt>
+              <Arabic size="inline" align="left" numberOfLines={1} style={styles.continueArabic}>قَصَصُ الْقُرْآن</Arabic>
+              <Txt variant="caption" tone="faint" numberOfLines={1}>{t('quran.prophetsAndMore')}</Txt>
             </View>
+            <Text style={styles.storiesCount}>{storiesCompleted}/{totalStories}</Text>
             <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
           </Card>
-
         </Section>
 
         {/* Explore */}
@@ -260,6 +226,12 @@ const styles = StyleSheet.create({
   },
   continueText: {
     flex: 1,
+  },
+  storiesCount: {
+    ...type.caption,
+    color: color.sacred,
+    fontWeight: weight.semibold,
+    fontVariant: ['tabular-nums'],
   },
   continueArabic: {
     marginTop: 1,
