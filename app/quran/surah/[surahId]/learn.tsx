@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, TextInput } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, PanResponder } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,12 +10,12 @@ import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
 import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
-import { color, radius } from '../../../../src/theme/tokens';
+import { color, radius, type, weight, space, gutter } from '../../../../src/theme/tokens';
+import { LearnSettingsSheet, type LearnSheetKind } from '../../../../src/components/quran/LearnSettingsSheet';
 import { SurahPickerSheet } from '../../../../src/components/quran/SurahPickerSheet';
 import { useLearnModeStore } from '../../../../src/stores/learnModeStore';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
-import type { IoniconName } from '../../../../src/theme/icons';
 
 /** What the player calls the app's own voice, in Arabic. */
 const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
@@ -46,14 +46,27 @@ export default function LearnModeScreen() {
   // Verse range selection (1-indexed verse numbers)
   const [startVerse, setStartVerse] = useState(1);
   const [endVerse, setEndVerse] = useState(ayahs.length || 1);
-  const [startVerseInput, setStartVerseInput] = useState('1');
-  const [endVerseInput, setEndVerseInput] = useState(String(ayahs.length || 1));
-  const [showRangeSelector, setShowRangeSelector] = useState(false);
+  // Which settings sheet is open, if any.
+  const [sheet, setSheet] = useState<LearnSheetKind | null>(null);
   const [showSurahPicker, setShowSurahPicker] = useState(false);
   // Tracked by hand: NativeWind drops Pressable's style function on device.
   const [switchPressed, setSwitchPressed] = useState(false);
   const { lc } = useLocalizedContent();
   const setLastSurah = useLearnModeStore((s) => s.setLastSurah);
+  const toggleTajweedColors = useQuranStore((s) => s.toggleTajweedColors);
+
+  // A swipe on the verse moves to the one before or after. The handlers are
+  // made once, so they reach the current screen through a ref.
+  const stepRef = useRef<(delta: number) => void>(() => {});
+  const swipe = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dx) > 18 && Math.abs(g.dx) > Math.abs(g.dy) * 1.5,
+      onPanResponderRelease: (_, g) => {
+        if (g.dx < -60) stepRef.current(1);
+        else if (g.dx > 60) stepRef.current(-1);
+      },
+    })
+  ).current;
 
   // Remembered for the Learn mode shortcut on Home.
   useEffect(() => {
@@ -84,7 +97,6 @@ export default function LearnModeScreen() {
   useEffect(() => {
     if (ayahs.length > 0 && endVerse === 1) {
       setEndVerse(ayahs.length);
-      setEndVerseInput(String(ayahs.length));
       endVerseRef.current = ayahs.length;
     }
   }, [ayahs.length]);
@@ -173,9 +185,6 @@ export default function LearnModeScreen() {
     );
   }
 
-  const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5];
-  const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
-
   // Play a specific ayah and chain immediately on complete (same pattern as surah screen)
   const playLearnAyah = (ayahNumber: number) => {
     if (!isPlayingRef.current) return;
@@ -256,18 +265,10 @@ export default function LearnModeScreen() {
               playLearnAyah(nextAyah.ayahNumber);
             }
           } else {
-            // No auto-advance — continue through surah but stop at the end
-            if (ayahNumber < surah.ayahCount) {
-              const nextIdx = currentAyahIndexRef.current + 1;
-              currentAyahIndexRef.current = nextIdx;
-              setCurrentAyahIndex(nextIdx);
-              playLearnAyah(ayahNumber + 1);
-            } else {
-              // Surah finished — stop
-              isPlayingRef.current = false;
-              setAudioState('idle');
-              clearPlayer();
-            }
+            // "Stay on this verse": stop, so the reader can say it themselves.
+            isPlayingRef.current = false;
+            setAudioState('idle');
+            clearPlayer();
           }
         }
       },
@@ -306,11 +307,6 @@ export default function LearnModeScreen() {
     playLearnAyah(currentAyah.ayahNumber);
   };
 
-  // Helper to get the play button icon
-  const getPlayIcon = () => {
-    if (audioState === 'playing') return 'pause';
-    return 'play';
-  };
 
   const handleVoiceChange = (learning: boolean) => {
     if (learning === learningVoiceRef.current) return;
@@ -343,411 +339,242 @@ export default function LearnModeScreen() {
     currentRepeatRef.current = 0;
   };
 
-  const toggleAutoAdvance = () => {
-    const newValue = !autoAdvance;
-    setAutoAdvance(newValue);
-    autoAdvanceRef.current = newValue;
+
+  // Choose the verses to learn. The verse on screen moves inside them.
+  const handleVerses = (start: number, end: number) => {
+    setStartVerse(start);
+    setEndVerse(end);
+    startVerseRef.current = start;
+    endVerseRef.current = end;
+    const idx = currentAyahIndexRef.current;
+    if (idx < start - 1 || idx > end - 1) goToVerse(start - 1);
   };
 
-  const handleStartVerseChange = (verse: number) => {
-    const validVerse = Math.max(1, Math.min(verse, endVerse));
-    setStartVerse(validVerse);
-    setStartVerseInput(String(validVerse));
-    startVerseRef.current = validVerse;
-    // Jump to start verse if current is before it
-    if (currentAyahIndex < validVerse - 1) {
-      const newIndex = validVerse - 1;
-      currentAyahIndexRef.current = newIndex;
-      setCurrentAyahIndex(newIndex);
+  // Move to another verse. While playing, that verse starts at once, from its
+  // first repeat; otherwise it is only shown (and made ready to play).
+  const goToVerse = (index: number) => {
+    if (index < 0 || index >= ayahs.length || index === currentAyahIndexRef.current) return;
+    currentAyahIndexRef.current = index;
+    setCurrentAyahIndex(index);
+    currentRepeatRef.current = 0;
+    setCurrentRepeat(0);
+    if (isPlayingRef.current && audioState !== 'paused') {
+      playLearnAyah(ayahs[index].ayahNumber);
+    } else {
+      if (audioState === 'paused') {
+        isPlayingRef.current = false;
+        quranAudioService.stop();
+        setAudioState('idle');
+        clearPlayer();
+      }
+      if (learningVoiceRef.current) quranAudioService.prewarmSpokenAyah(ayahs[index].textUthmani);
     }
   };
+  stepRef.current = (delta) => goToVerse(currentAyahIndexRef.current + delta);
 
-  const handleEndVerseChange = (verse: number) => {
-    const validVerse = Math.max(startVerse, Math.min(verse, ayahs.length));
-    setEndVerse(validVerse);
-    setEndVerseInput(String(validVerse));
-    endVerseRef.current = validVerse;
-    // Jump to end verse if current is after it
-    if (currentAyahIndex > validVerse - 1) {
-      const newIndex = validVerse - 1;
-      currentAyahIndexRef.current = newIndex;
-      setCurrentAyahIndex(newIndex);
-    }
-  };
+  // What pressing play will do, in words: the settings, read back.
+  const verseNumber = currentAyah.ayahNumber;
+  const playPart = t('surahLearnMode.sayPlay', { count: repeatCount, verse: verseNumber });
+  const thenPart = !autoAdvance
+    ? t('surahLearnMode.sayThenStop')
+    : verseNumber >= endVerse
+      ? startVerse === endVerse
+        ? t('surahLearnMode.sayThenAgain')
+        : t('surahLearnMode.sayThenLoop', { verse: startVerse })
+      : t('surahLearnMode.sayThenNext', { verse: verseNumber + 1 });
+  const wholeSurah = startVerse === 1 && endVerse === ayahs.length;
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
+      {/* Header: close, and the surah being learned (tap to learn another) */}
       <View style={styles.header}>
-        <Pressable style={styles.closeButton} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Close learn mode">
-          <Ionicons name="close" size={24} color={color.text} />
+        <Pressable style={styles.closeButton} onPress={() => router.back()} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('listen.close')}>
+          <Ionicons name="close" size={24} color={color.textMuted} />
         </Pressable>
-        <View style={styles.headerCenter}>
-          <Text style={styles.surahName}>{surah.nameArabic}</Text>
-          <Text style={styles.subtitle}>{t('surahLearnMode.learnMode')}</Text>
-        </View>
-        <View style={styles.headerStats}>
-          <Text style={styles.statsText}>
-            {currentAyahIndex + 1}/{ayahs.length}
-          </Text>
-          {(startVerse !== 1 || endVerse !== ayahs.length) && (
-            <Text style={styles.rangeIndicator}>
-              ({startVerse}-{endVerse})
-            </Text>
-          )}
-        </View>
-      </View>
-
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* The surah being learned; tap to learn another */}
         <Pressable
           style={[styles.surahSwitch, switchPressed && styles.surahSwitchPressed]}
+          onPress={() => setShowSurahPicker(true)}
           onPressIn={() => setSwitchPressed(true)}
           onPressOut={() => setSwitchPressed(false)}
-          onPress={() => setShowSurahPicker(true)}
           accessibilityRole="button"
           accessibilityLabel={`${t('surahLearnMode.changeSurah')}: ${surah.nameEnglish}`}
         >
-          <View style={styles.surahSwitchNumber}>
-            <Text style={styles.surahSwitchNumberText}>{surah.surahNumber}</Text>
+          <View style={styles.surahNumber}>
+            <Text style={styles.surahNumberText}>{surah.surahNumber}</Text>
           </View>
-          <View style={styles.surahSwitchText}>
-            <Text style={styles.surahSwitchTitle} numberOfLines={1}>{surah.nameEnglish}</Text>
-            <Text style={styles.surahSwitchSub} numberOfLines={1}>
+          <View style={styles.surahText}>
+            <Text style={styles.surahTitle} numberOfLines={1}>{surah.nameEnglish}</Text>
+            <Text style={styles.surahSub} numberOfLines={1}>
               {lc(surah.meaning, surah.meaningFr)}, {t('surahLearnMode.ayahCount', { count: surah.ayahCount })}
             </Text>
           </View>
-          <View style={styles.surahSwitchAction}>
-            <Text style={styles.surahSwitchActionText}>{t('surahLearnMode.changeSurah')}</Text>
-            <Ionicons name="chevron-down" size={16} color={color.accentStrong} />
-          </View>
+          <Text style={styles.surahChange}>{t('surahLearnMode.changeSurah')}</Text>
+          <Ionicons name="chevron-down" size={15} color={color.accentStrong} />
         </Pressable>
+      </View>
 
-        {/* Ayah Card */}
-        <View style={styles.ayahCard}>
-          <View style={styles.ayahHeader}>
-            <View style={styles.ayahNumber}>
-              <Text style={styles.ayahNumberText}>{currentAyah.ayahNumber}</Text>
-            </View>
+      {/* Where the reader is in the surah. A segment per verse while they fit. */}
+      <View style={styles.track} accessible accessibilityLabel={t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}>
+        {ayahs.length <= 40 ? (
+          <View style={styles.segments}>
+            {ayahs.map((a, i) => (
+              <View
+                key={a.ayahNumber}
+                style={[
+                  styles.segment,
+                  (a.ayahNumber < startVerse || a.ayahNumber > endVerse) && styles.segmentOutside,
+                  i < currentAyahIndex && styles.segmentDone,
+                  i === currentAyahIndex && styles.segmentNow,
+                ]}
+              />
+            ))}
+          </View>
+        ) : (
+          <View style={styles.bar}>
+            <View style={[styles.barFill, { width: `${((currentAyahIndex + 1) / ayahs.length) * 100}%` }]} />
+          </View>
+        )}
+        <Text style={styles.trackText}>
+          {t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}
+        </Text>
+      </View>
+
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {/* The verse. Swipe it to move to the next or previous one. */}
+        <View style={styles.verseCard} {...swipe.panHandlers}>
+          <TajweedText
+            text={currentAyah.textUthmani}
+            tajweedRules={currentAyah.tajweedRules}
+            showTajweed={progress.settings.showTajweedColors}
+            fontSize={30}
+          />
+          <View style={styles.toggles}>
             <Pressable
-              style={[
-                styles.ayahPlayButton,
-                audioState === 'playing' && styles.ayahPlayButtonActive,
-                audioState === 'paused' && styles.ayahPlayButtonPaused,
-              ]}
-              onPress={toggleAyahAudio}
-              disabled={audioState === 'loading'}
-              accessibilityRole="button"
-              accessibilityLabel={audioState === 'playing' ? 'Pause ayah audio' : audioState === 'paused' ? 'Resume ayah audio' : 'Play ayah audio'}
+              style={[styles.toggleChip, progress.settings.showTajweedColors && styles.toggleChipOn]}
+              onPress={toggleTajweedColors}
+              accessibilityRole="switch"
+              accessibilityState={{ checked: progress.settings.showTajweedColors }}
+              accessibilityLabel={t('surahLearnMode.showTajweed')}
             >
-              {audioState === 'loading' ? (
-                <ActivityIndicator color={color.progress} size="small" />
-              ) : (
-                <Ionicons
-                  name={getPlayIcon() as IoniconName}
-                  size={18}
-                  color={audioState === 'playing' ? color.surface : audioState === 'paused' ? color.warning : color.progress}
-                />
-              )}
+              <Text style={[styles.toggleChipText, progress.settings.showTajweedColors && styles.toggleChipTextOn]}>
+                {t('surahLearnMode.showTajweed')}
+              </Text>
             </Pressable>
           </View>
-
-          {/* Arabic Text */}
-          <View style={styles.arabicContainer}>
-            <TajweedText
-              text={currentAyah.textUthmani}
-              tajweedRules={currentAyah.tajweedRules}
-              showTajweed={progress.settings.showTajweedColors}
-              fontSize={30}
-            />
-          </View>
-
         </View>
 
-        {/* Audio Controls */}
-        <View style={styles.controlsCard}>
-          {/* Verse Range Selector */}
+        {/* The settings, each showing its current choice; a tap opens it. */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+          <Pressable style={styles.chip} onPress={() => setSheet('voice')} accessibilityRole="button">
+            <Ionicons name={useLearningVoice ? 'headset-outline' : 'mic-outline'} size={15} color={color.accentStrong} />
+            <Text style={styles.chipValue} numberOfLines={1}>
+              {useLearningVoice ? t('surahLearnMode.voiceLearning') : currentReciter.nameEnglish}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
+            <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
+            <Text style={styles.chipValue}>{repeatCount}×</Text>
+          </Pressable>
+          <Pressable style={styles.chip} onPress={() => setSheet('speed')} accessibilityRole="button">
+            <Text style={styles.chipLabel}>{t('surahLearnMode.speed')}</Text>
+            <Text style={styles.chipValue}>{playbackSpeed}×</Text>
+          </Pressable>
+          <Pressable style={styles.chip} onPress={() => setSheet('verses')} accessibilityRole="button">
+            <Text style={styles.chipLabel}>{t('surahLearnMode.verses')}</Text>
+            <Text style={styles.chipValue}>{wholeSurah ? t('surahLearnMode.all') : `${startVerse}–${endVerse}`}</Text>
+          </Pressable>
+        </ScrollView>
+      </ScrollView>
+
+      {/* The dock: what play will do, and the three buttons, within thumb reach */}
+      <View style={styles.dock}>
+        {useLearningVoice && voiceFellBack ? (
+          <View style={styles.voiceFallback} accessibilityLiveRegion="polite">
+            <Ionicons name="information-circle" size={16} color={color.warning} />
+            <Text style={styles.voiceFallbackText}>
+              {t('surahLearnMode.voiceLearningUnavailable', { reciter: currentReciter.nameEnglish })}
+            </Text>
+          </View>
+        ) : (
+          <Text style={styles.say} accessibilityLiveRegion="polite">{playPart}, {thenPart}</Text>
+        )}
+
+        <View style={styles.transport}>
           <Pressable
-            style={styles.rangeSelectorHeader}
-            onPress={() => setShowRangeSelector(!showRangeSelector)}
+            style={[styles.side, currentAyahIndex === 0 && styles.sideDisabled]}
+            onPress={() => goToVerse(currentAyahIndex - 1)}
+            disabled={currentAyahIndex === 0}
             accessibilityRole="button"
-            accessibilityLabel={showRangeSelector ? `${t('surahLearnMode.verseRange')}, collapse` : `${t('surahLearnMode.verseRange')}, expand`}
+            accessibilityLabel={t('surahLearnMode.previous')}
           >
-            <View style={styles.rangeSelectorInfo}>
-              <Ionicons name="options" size={18} color={color.progress} />
-              <Text style={styles.rangeSelectorTitle}>
-                {t('surahLearnMode.verseRange')} {startVerse} - {endVerse}
-              </Text>
+            <View style={styles.sideIcon}>
+              <Ionicons name="play-skip-back" size={20} color={color.text} />
             </View>
-            <Ionicons
-              name={showRangeSelector ? "chevron-up" : "chevron-down"}
-              size={18}
-              color={color.textMuted}
-            />
+            <Text style={styles.sideText}>{t('surahLearnMode.previous')}</Text>
           </Pressable>
 
-          {showRangeSelector && (
-            <View style={styles.rangeControls}>
-              {/* Start Verse */}
-              <View style={styles.rangeRow}>
-                <Text style={styles.rangeLabel}>{t('surahLearnMode.start')}</Text>
-                <View style={styles.rangeInputContainer}>
-                  <Pressable
-                    style={[styles.rangeButton, startVerse <= 1 && styles.rangeButtonDisabled]}
-                    onPress={() => handleStartVerseChange(startVerse - 1)}
-                    disabled={startVerse <= 1}
-                    accessibilityRole="button"
-                    accessibilityLabel="Decrease start verse"
-                  >
-                    <Ionicons name="remove" size={16} color={startVerse <= 1 ? color.borderStrong : color.text} />
-                  </Pressable>
-                  <TextInput
-                    style={styles.rangeInput}
-                    value={startVerseInput}
-                    onChangeText={(text) => {
-                      // Allow empty and numeric input while typing
-                      if (text === '' || /^\d+$/.test(text)) {
-                        setStartVerseInput(text);
-                      }
-                    }}
-                    onBlur={() => {
-                      // Validate on blur
-                      const num = parseInt(startVerseInput, 10);
-                      if (!isNaN(num) && num >= 1) {
-                        handleStartVerseChange(num);
-                      } else {
-                        // Reset to current valid value
-                        setStartVerseInput(String(startVerse));
-                      }
-                    }}
-                    keyboardType="number-pad"
-                    selectTextOnFocus
-                    maxLength={3}
-                    accessibilityLabel="Start verse number"
-                  />
-                  <Pressable
-                    style={[styles.rangeButton, startVerse >= endVerse && styles.rangeButtonDisabled]}
-                    onPress={() => handleStartVerseChange(startVerse + 1)}
-                    disabled={startVerse >= endVerse}
-                    accessibilityRole="button"
-                    accessibilityLabel="Increase start verse"
-                  >
-                    <Ionicons name="add" size={16} color={startVerse >= endVerse ? color.borderStrong : color.text} />
-                  </Pressable>
-                </View>
-              </View>
-
-              {/* End Verse */}
-              <View style={styles.rangeRow}>
-                <Text style={styles.rangeLabel}>{t('surahLearnMode.end')}</Text>
-                <View style={styles.rangeInputContainer}>
-                  <Pressable
-                    style={[styles.rangeButton, endVerse <= startVerse && styles.rangeButtonDisabled]}
-                    onPress={() => handleEndVerseChange(endVerse - 1)}
-                    disabled={endVerse <= startVerse}
-                    accessibilityRole="button"
-                    accessibilityLabel="Decrease end verse"
-                  >
-                    <Ionicons name="remove" size={16} color={endVerse <= startVerse ? color.borderStrong : color.text} />
-                  </Pressable>
-                  <TextInput
-                    style={styles.rangeInput}
-                    value={endVerseInput}
-                    onChangeText={(text) => {
-                      // Allow empty and numeric input while typing
-                      if (text === '' || /^\d+$/.test(text)) {
-                        setEndVerseInput(text);
-                      }
-                    }}
-                    onBlur={() => {
-                      // Validate on blur
-                      const num = parseInt(endVerseInput, 10);
-                      if (!isNaN(num) && num >= 1) {
-                        handleEndVerseChange(num);
-                      } else {
-                        // Reset to current valid value
-                        setEndVerseInput(String(endVerse));
-                      }
-                    }}
-                    keyboardType="number-pad"
-                    selectTextOnFocus
-                    maxLength={3}
-                    accessibilityLabel="End verse number"
-                  />
-                  <Pressable
-                    style={[styles.rangeButton, endVerse >= ayahs.length && styles.rangeButtonDisabled]}
-                    onPress={() => handleEndVerseChange(endVerse + 1)}
-                    disabled={endVerse >= ayahs.length}
-                    accessibilityRole="button"
-                    accessibilityLabel="Increase end verse"
-                  >
-                    <Ionicons name="add" size={16} color={endVerse >= ayahs.length ? color.borderStrong : color.text} />
-                  </Pressable>
-                </View>
-              </View>
-
-              {/* Quick Select Buttons */}
-              <View style={styles.quickSelectRow}>
-                <Pressable
-                  style={styles.quickSelectButton}
-                  onPress={() => {
-                    const start = currentAyahIndex + 1;
-                    const end = Math.min(start + 4, ayahs.length);
-                    setStartVerse(start);
-                    setEndVerse(end);
-                    setStartVerseInput(String(start));
-                    setEndVerseInput(String(end));
-                    startVerseRef.current = start;
-                    endVerseRef.current = end;
-                  }}
-                  accessibilityRole="button"
-                  accessibilityLabel={t('surahLearnMode.next5')}
-                >
-                  <Text style={styles.quickSelectText}>{t('surahLearnMode.next5')}</Text>
-                </Pressable>
-                <Pressable
-                  style={styles.quickSelectButton}
-                  onPress={() => {
-                    setStartVerse(1);
-                    setEndVerse(ayahs.length);
-                    setStartVerseInput('1');
-                    setEndVerseInput(String(ayahs.length));
-                    startVerseRef.current = 1;
-                    endVerseRef.current = ayahs.length;
-                  }}
-                  accessibilityRole="button"
-                  accessibilityLabel={t('surahLearnMode.reset')}
-                >
-                  <Text style={styles.quickSelectText}>{t('surahLearnMode.reset')}</Text>
-                </Pressable>
-              </View>
-            </View>
-          )}
-
-          {/* Voice: a reciter, or the app reading the words */}
-          <View style={[styles.controlSection, { marginTop: showRangeSelector ? 20 : 0 }]}>
-            <Text style={styles.controlLabel}>{t('surahLearnMode.voice')}</Text>
-            <View style={styles.controlButtons}>
-              {/* The learning voice first: it is what this screen opens in, and
-                  the selected option should not be the second one. */}
-              {[true, false].map((learning) => (
-                <Pressable
-                  key={String(learning)}
-                  style={[
-                    styles.voiceButton,
-                    useLearningVoice === learning && styles.controlButtonActive,
-                  ]}
-                  onPress={() => handleVoiceChange(learning)}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected: useLearningVoice === learning }}
-                >
-                  <Text
-                    style={[
-                      styles.controlButtonText,
-                      useLearningVoice === learning && styles.controlButtonTextActive,
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {learning ? t('surahLearnMode.voiceLearning') : t('surahLearnMode.voiceReciter')}
-                  </Text>
-                </Pressable>
-              ))}
-            </View>
-            <Text style={styles.voiceNote}>
-              {useLearningVoice ? t('surahLearnMode.voiceLearningNote') : t('surahLearnMode.voiceReciterNote')}
-            </Text>
-            {useLearningVoice && voiceFellBack && (
-              <View style={styles.voiceFallback} accessibilityLiveRegion="polite">
-                <Ionicons name="information-circle" size={16} color={color.warning} />
-                <Text style={styles.voiceFallbackText}>
-                  {t('surahLearnMode.voiceLearningUnavailable', { reciter: currentReciter.nameEnglish })}
-                </Text>
-              </View>
+          <Pressable
+            style={styles.play}
+            onPress={toggleAyahAudio}
+            accessibilityRole="button"
+            accessibilityLabel={audioState === 'playing' ? t('surahLearnMode.pause') : t('surahLearnMode.play')}
+          >
+            {audioState === 'loading' ? (
+              <ActivityIndicator color={color.textOnAccent} />
+            ) : (
+              <Ionicons
+                name={audioState === 'playing' ? 'pause' : 'play'}
+                size={34}
+                color={color.textOnAccent}
+                style={audioState === 'playing' ? undefined : styles.playGlyph}
+              />
             )}
-          </View>
+          </Pressable>
 
-          {/* Speed Control */}
-          <View style={styles.controlSection}>
-            <Text style={styles.controlLabel}>{t('surahLearnMode.speed')}</Text>
-            <View style={styles.controlButtons}>
-              {SPEED_OPTIONS.map((speed) => (
-                <Pressable
-                  key={speed}
-                  style={[
-                    styles.controlButton,
-                    playbackSpeed === speed && styles.controlButtonActive,
-                  ]}
-                  onPress={() => handleSpeedChange(speed)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Playback speed ${speed}x`}
-                >
-                  <Text
-                    style={[
-                      styles.controlButtonText,
-                      playbackSpeed === speed && styles.controlButtonTextActive,
-                    ]}
-                  >
-                    {speed}x
-                  </Text>
-                </Pressable>
-              ))}
+          <Pressable
+            style={[styles.side, currentAyahIndex >= ayahs.length - 1 && styles.sideDisabled]}
+            onPress={() => goToVerse(currentAyahIndex + 1)}
+            disabled={currentAyahIndex >= ayahs.length - 1}
+            accessibilityRole="button"
+            accessibilityLabel={t('surahLearnMode.next')}
+          >
+            <View style={styles.sideIcon}>
+              <Ionicons name="play-skip-forward" size={20} color={color.text} />
             </View>
-          </View>
-
-          {/* Repeat Control */}
-          <View style={styles.controlSection}>
-            <Text style={styles.controlLabel}>{t('surahLearnMode.repeat')}</Text>
-            <View style={styles.controlButtons}>
-              {REPEAT_OPTIONS.map((count) => (
-                <Pressable
-                  key={count}
-                  style={[
-                    styles.controlButton,
-                    repeatCount === count && styles.controlButtonActive,
-                  ]}
-                  onPress={() => handleRepeatChange(count)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Repeat ${count} times`}
-                >
-                  <Text
-                    style={[
-                      styles.controlButtonText,
-                      repeatCount === count && styles.controlButtonTextActive,
-                    ]}
-                  >
-                    {count}×
-                  </Text>
-                </Pressable>
-              ))}
-            </View>
-          </View>
-
-          {/* Current Repeat Progress */}
-          {audioState !== 'idle' && repeatCount > 1 && (
-            <View style={styles.repeatProgress}>
-              <Ionicons name="repeat" size={16} color={color.progress} />
-              <Text style={styles.repeatProgressText}>
-                {currentRepeat + 1} / {repeatCount}
-              </Text>
-            </View>
-          )}
+            <Text style={styles.sideText}>{t('surahLearnMode.next')}</Text>
+          </Pressable>
         </View>
 
-        {/* Auto-Advance Toggle */}
-        <Pressable
-          style={styles.bottomAutoAdvance}
-          onPress={toggleAutoAdvance}
-          accessibilityRole="button"
-          accessibilityLabel={`${t('surahLearnMode.autoAdvance')}, ${autoAdvance ? 'on' : 'off'}`}
-        >
-          <Text style={[styles.autoAdvanceLabel, autoAdvance && styles.autoAdvanceLabelActive]}>
-            {t('surahLearnMode.autoAdvance')}
-          </Text>
-          <View style={[styles.toggle, autoAdvance && styles.toggleActive]}>
-            <View style={[styles.toggleThumb, autoAdvance && styles.toggleThumbActive]} />
-          </View>
-        </Pressable>
-      </ScrollView>
+        {/* Which repeat is playing: a gold dot for each one heard. */}
+        <View style={styles.repeatDots} accessible={repeatCount > 1} accessibilityLabel={repeatCount > 1 ? t('surahLearnMode.repeatOf', { current: currentRepeat + 1, total: repeatCount }) : undefined}>
+          {repeatCount > 1 &&
+            Array.from({ length: repeatCount }, (_, i) => (
+              <View key={i} style={[styles.repeatDot, audioState !== 'idle' && i <= currentRepeat && styles.repeatDotOn]} />
+            ))}
+        </View>
+      </View>
+
+      <LearnSettingsSheet
+        kind={sheet}
+        onClose={() => setSheet(null)}
+        useLearningVoice={useLearningVoice}
+        reciterName={currentReciter.nameEnglish}
+        onVoice={handleVoiceChange}
+        repeatCount={repeatCount}
+        autoAdvance={autoAdvance}
+        onRepeat={handleRepeatChange}
+        onAutoAdvance={(on) => {
+          setAutoAdvance(on);
+          autoAdvanceRef.current = on;
+        }}
+        speed={playbackSpeed}
+        onSpeed={handleSpeedChange}
+        verseCount={ayahs.length}
+        currentVerse={verseNumber}
+        startVerse={startVerse}
+        endVerse={endVerse}
+        onVerses={handleVerses}
+      />
 
       <SurahPickerSheet
         visible={showSurahPicker}
@@ -788,378 +615,271 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 16,
   },
+
+  // Header
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: color.borderSubtle,
+    gap: space.sm,
+    paddingHorizontal: space.md,
+    paddingTop: space.xs,
+    paddingBottom: space.md,
   },
   closeButton: {
-    padding: 8,
-  },
-  headerCenter: {
-    flex: 1,
+    width: 40,
+    height: 40,
     alignItems: 'center',
-  },
-  surahName: {
-    color: color.text,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  subtitle: {
-    color: color.progress,
-    fontSize: 12,
-    marginTop: 2,
-  },
-  headerStats: {
-    padding: 8,
-  },
-  statsText: {
-    color: color.textFaint,
-    fontSize: 14,
-  },
-  rangeIndicator: {
-    color: color.progress,
-    fontSize: 11,
-    marginTop: 2,
-  },
-  scrollView: {
-    flex: 1,
-    paddingHorizontal: 20,
+    justifyContent: 'center',
   },
   surahSwitch: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: space.sm,
     backgroundColor: color.surface,
     borderRadius: radius.md,
     borderWidth: 1,
-    borderColor: withAlpha(color.sacred, 0.25),
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    marginTop: 12,
+    borderColor: withAlpha(color.sacred, 0.28),
+    paddingVertical: space.sm,
+    paddingHorizontal: space.md,
   },
   surahSwitchPressed: {
     backgroundColor: color.sacredSoft,
   },
   // Gold marks Quran content across the app.
-  surahSwitchNumber: {
-    width: 36,
-    height: 36,
+  surahNumber: {
+    width: 32,
+    height: 32,
     borderRadius: radius.full,
     backgroundColor: color.sacred,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  surahSwitchNumberText: {
+  surahNumberText: {
+    ...type.caption,
+    fontWeight: weight.semibold,
     color: color.textOnAccent,
-    fontSize: 13,
-    fontWeight: '600',
     fontVariant: ['tabular-nums'],
   },
-  surahSwitchText: {
+  surahText: {
     flex: 1,
   },
-  surahSwitchTitle: {
+  surahTitle: {
+    ...type.body,
+    fontWeight: weight.semibold,
     color: color.text,
-    fontSize: 15,
-    fontWeight: '600',
   },
-  surahSwitchSub: {
+  surahSub: {
+    ...type.micro,
     color: color.textMuted,
-    fontSize: 13,
-    marginTop: 1,
   },
-  surahSwitchAction: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-  },
-  surahSwitchActionText: {
+  surahChange: {
+    ...type.caption,
+    fontWeight: weight.semibold,
     color: color.accentStrong,
-    fontSize: 13,
-    fontWeight: '600',
   },
-  ayahCard: {
+
+  // Track
+  track: {
+    paddingHorizontal: gutter,
+    paddingBottom: space.md,
+    gap: 6,
+  },
+  segments: {
+    flexDirection: 'row',
+    gap: 4,
+  },
+  segment: {
+    flex: 1,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: color.border,
+  },
+  segmentOutside: {
+    opacity: 0.4,
+  },
+  segmentDone: {
+    backgroundColor: withAlpha(color.accent, 0.45),
+  },
+  segmentNow: {
+    backgroundColor: color.accent,
+    opacity: 1,
+  },
+  bar: {
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: color.border,
+    overflow: 'hidden',
+  },
+  barFill: {
+    height: '100%',
+    backgroundColor: color.accent,
+  },
+  trackText: {
+    ...type.caption,
+    color: color.textMuted,
+    fontVariant: ['tabular-nums'],
+  },
+
+  // Verse
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: space.lg,
+  },
+  verseCard: {
+    marginHorizontal: space.md,
     backgroundColor: color.surface,
     borderRadius: radius.xl,
-    padding: 20,
-    marginTop: 12,
+    paddingHorizontal: space.lg,
+    paddingTop: space.xl,
+    paddingBottom: space.lg,
+    gap: space.md,
   },
-  ayahHeader: {
+  toggles: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  ayahNumber: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.lg,
-    backgroundColor: withAlpha(color.progress, 0.13),
-    alignItems: 'center',
+    flexWrap: 'wrap',
     justifyContent: 'center',
+    gap: space.sm,
+    marginTop: space.xs,
   },
-  ayahNumberText: {
-    color: color.progress,
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  arabicContainer: {
-    marginBottom: 20,
-  },
-  hintButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderTopColor: color.border,
-  },
-  hintButtonText: {
-    color: color.warning,
-    fontSize: 14,
-  },
-  hintContent: {
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: color.border,
-  },
-  transliteration: {
-    color: color.textMuted,
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginBottom: 8,
-  },
-  translation: {
-    color: color.textMuted,
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  controlsCard: {
-    backgroundColor: color.surface,
-    borderRadius: radius.lg,
-    padding: 20,
-    marginTop: 12,
-  },
-  rangeSelectorHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: color.surfaceRaised,
-    borderRadius: radius.md,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    marginBottom: 16,
-  },
-  rangeSelectorInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  rangeSelectorTitle: {
-    color: color.text,
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  rangeControls: {
-    backgroundColor: color.surfaceRaised,
-    borderRadius: radius.md,
-    padding: 16,
-    marginBottom: 20,
-  },
-  rangeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  rangeLabel: {
-    color: color.textMuted,
-    fontSize: 14,
-    width: 50,
-  },
-  rangeInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  rangeButton: {
-    width: 32,
-    height: 32,
-    borderRadius: radius.sm,
-    backgroundColor: color.borderStrong,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rangeButtonDisabled: {
-    backgroundColor: color.surfaceRaised,
-  },
-  rangeInput: {
-    width: 60,
-    height: 36,
-    backgroundColor: color.surface,
-    borderRadius: radius.sm,
-    color: color.text,
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: color.borderStrong,
-    paddingVertical: 0,
-    paddingHorizontal: 4,
-  },
-  quickSelectRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 8,
-    marginTop: 8,
-  },
-  quickSelectButton: {
-    flex: 1,
-    backgroundColor: color.borderStrong,
-    borderRadius: radius.sm,
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  quickSelectText: {
-    color: color.text,
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  controlSection: {
-    marginBottom: 20,
-  },
-  controlLabel: {
-    color: color.textMuted,
-    fontSize: 14,
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  controlButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  // Two words, not a number: the voice buttons carry a label, so they share
-  // the row rather than sitting in the same narrow pill as "1.5x".
-  voiceButton: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+  toggleChip: {
+    paddingHorizontal: space.md,
+    paddingVertical: 6,
     borderRadius: radius.full,
-    backgroundColor: color.surfaceSunken,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: color.border,
+    backgroundColor: color.surface,
   },
-  voiceNote: {
-    marginTop: 8,
-    fontSize: 12,
-    lineHeight: 18,
+  toggleChipOn: {
+    backgroundColor: color.accentSoft,
+    borderColor: 'transparent',
+  },
+  toggleChipText: {
+    ...type.caption,
     color: color.textMuted,
+  },
+  toggleChipTextOn: {
+    color: color.accentStrong,
+    fontWeight: weight.semibold,
+  },
+
+  // Settings chips
+  chips: {
+    flexDirection: 'row',
+    gap: space.sm,
+    paddingHorizontal: space.md,
+    paddingTop: space.md,
+  },
+  chip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: space.md,
+    paddingVertical: 10,
+    borderRadius: radius.md,
+    backgroundColor: color.surface,
+    borderWidth: 1,
+    borderColor: color.border,
+    maxWidth: 220,
+  },
+  chipLabel: {
+    ...type.caption,
+    color: color.textMuted,
+  },
+  chipValue: {
+    ...type.caption,
+    fontWeight: weight.semibold,
+    color: color.text,
+    fontVariant: ['tabular-nums'],
+    flexShrink: 1,
+  },
+
+  // Dock
+  dock: {
+    paddingHorizontal: gutter,
+    paddingTop: space.md,
+    paddingBottom: space.sm,
+    gap: space.md,
+    borderTopWidth: 1,
+    borderTopColor: color.borderSubtle,
+    backgroundColor: color.bg,
+  },
+  say: {
+    ...type.caption,
+    color: color.textMuted,
+    textAlign: 'center',
+    minHeight: 36,
   },
   voiceFallback: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginTop: 10,
-    padding: 10,
-    borderRadius: radius.md,
-    backgroundColor: withAlpha(color.warning, 0.1),
+    gap: space.sm,
+    minHeight: 36,
   },
   voiceFallbackText: {
+    ...type.caption,
+    color: color.warning,
     flex: 1,
-    marginLeft: 8,
-    fontSize: 12,
-    lineHeight: 18,
-    color: color.text,
   },
-  controlButton: {
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: radius.sm,
-    backgroundColor: color.surfaceRaised,
-    minWidth: 50,
-    alignItems: 'center',
-  },
-  controlButtonActive: {
-    backgroundColor: color.progress,
-  },
-  controlButtonText: {
-    color: color.textMuted,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  controlButtonTextActive: {
-    color: color.text,
-  },
-  bottomAutoAdvance: {
+  transport: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    paddingVertical: 14,
-    marginTop: 12,
-    marginBottom: 80,
+    justifyContent: 'space-between',
+  },
+  side: {
+    width: 88,
+    alignItems: 'center',
+    gap: 4,
+  },
+  sideDisabled: {
+    opacity: 0.35,
+  },
+  sideIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.full,
     backgroundColor: color.surface,
-    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: color.border,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  autoAdvanceLabel: {
+  sideText: {
+    ...type.micro,
     color: color.textMuted,
-    fontSize: 14,
   },
-  autoAdvanceLabelActive: {
-    color: color.progress,
+  play: {
+    width: 76,
+    height: 76,
+    borderRadius: radius.full,
+    backgroundColor: color.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: color.accent,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
   },
-  toggle: {
-    width: 44,
-    height: 24,
-    borderRadius: radius.md,
-    backgroundColor: color.surfaceRaised,
-    padding: 2,
+  // The triangle's visual centre sits right of its box.
+  playGlyph: {
+    marginLeft: 4,
   },
-  toggleActive: {
-    backgroundColor: color.progress,
-  },
-  toggleThumb: {
-    width: 20,
-    height: 20,
-    borderRadius: radius.sm,
-    backgroundColor: color.textFaint,
-  },
-  toggleThumbActive: {
-    backgroundColor: color.text,
-    marginLeft: 20,
-  },
-  repeatProgress: {
+  repeatDots: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
-    paddingTop: 16,
-    marginTop: 12,
+    gap: 6,
+    height: 8,
   },
-  repeatProgressText: {
-    color: color.progress,
-    fontSize: 14,
-    fontWeight: '600',
+  repeatDot: {
+    width: 7,
+    height: 7,
+    borderRadius: radius.full,
+    backgroundColor: color.border,
   },
-  ayahPlayButton: {
-    width: 36,
-    height: 36,
-    borderRadius: radius.lg,
-    backgroundColor: withAlpha(color.progress, 0.13),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ayahPlayButtonActive: {
-    backgroundColor: color.progress,
-  },
-  ayahPlayButtonPaused: {
-    backgroundColor: withAlpha(color.warning, 0.13),
+  repeatDotOn: {
+    backgroundColor: color.sacred,
   },
 });
