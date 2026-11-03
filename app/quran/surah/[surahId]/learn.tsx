@@ -1,8 +1,8 @@
 import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, PanResponder } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLocalSearchParams, router } from 'expo-router';
+import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
 import { useQuranStore } from '../../../../src/stores/quranStore';
@@ -63,6 +63,8 @@ export default function LearnModeScreen() {
   const [endVerse, setEndVerse] = useState(ayahs.length || 1);
   // Which settings sheet is open, if any.
   const [sheet, setSheet] = useState<LearnSheetKind | null>(null);
+  // Counts each time the screen is shown, so the voice is set again on return.
+  const [focusCount, setFocusCount] = useState(0);
   const [showSurahPicker, setShowSurahPicker] = useState(false);
   // Tracked by hand: NativeWind drops Pressable's style function on device.
   const [switchPressed, setSwitchPressed] = useState(false);
@@ -138,20 +140,26 @@ export default function LearnModeScreen() {
           ? ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani
           : undefined
     );
-  }, [useLearningVoice, ayahs, surah?.surahNumber]);
+  }, [useLearningVoice, ayahs, surah?.surahNumber, focusCount]);
 
-  useEffect(() => {
-    return () => {
-      quranAudioService.setSpokenVoice(false, null);
-      // Leaving Learn mode ends its playback: it has no mini player to be
-      // stopped from elsewhere.
-      if (useAudioPlayerStore.getState().currentlyPlaying?.source === 'learn') {
-        isPlayingRef.current = false;
-        quranAudioService.stop();
-        useAudioPlayerStore.getState().clearPlayer();
-      }
-    };
-  }, []);
+  // Leaving Learn mode ends its playback, period: closing it, changing surah,
+  // or another screen opening over it. It has no mini player to be stopped
+  // from elsewhere. Locking the phone or switching apps is not leaving: the
+  // screen stays focused and the verse plays on in the background.
+  useFocusEffect(
+    useCallback(() => {
+      setFocusCount((n) => n + 1);
+      return () => {
+        quranAudioService.setSpokenVoice(false, null);
+        if (useAudioPlayerStore.getState().currentlyPlaying?.source === 'learn') {
+          isPlayingRef.current = false;
+          quranAudioService.stop();
+          useAudioPlayerStore.getState().clearPlayer();
+          setAudioState('idle');
+        }
+      };
+    }, [])
+  );
 
   // When the learning voice is unavailable the service hands the verse to the
   // reciter. Say so here, and keep the mini player naming the voice that is
