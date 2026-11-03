@@ -76,7 +76,19 @@ export function edgeRate(speed: number, voice: string = ARABIC_VOICE): string {
 
 export function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
   // A recited line stays recited in every chunk.
-  if (text.startsWith(RECITE)) return chunkLine(text.slice(RECITE.length), maxLen).map((c) => RECITE + c);
+  // A recited line stays recited in every chunk, and is split where the
+  // mushaf marks a pause (ۚ ۖ ۗ ...), since each chunk ends on a stop.
+  const recited = text.startsWith(RECITE);
+  if (recited) text = text.slice(RECITE.length);
+  // Recited lines are pre-recorded, so they can run longer and stop less often.
+  const chunks = splitLine(text, recited ? Math.max(maxLen, RECITED_CHUNK_LEN) : maxLen, recited);
+  return recited ? chunks.map((c) => RECITE + c) : chunks;
+}
+
+const RECITED_CHUNK_LEN = 400;
+const PAUSE_MARKS = [' \u06D6 ', ' \u06D7 ', ' \u06D8 ', ' \u06D9 ', ' \u06DA ', ' \u06DB ', ' \u06DC '];
+
+function splitLine(text: string, maxLen: number, recited: boolean): string[] {
   const trimmed = text.trim();
   if (trimmed.length <= maxLen) return [trimmed];
 
@@ -95,7 +107,13 @@ export function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
       const at = remaining.lastIndexOf(mark, maxLen);
       if (at > splitAt) splitAt = at + mark.length - 1;
     }
-    if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
+    if (recited) {
+      for (const mark of PAUSE_MARKS) {
+        const at = remaining.lastIndexOf(mark, maxLen);
+        if (at >= maxLen / 4 && at + mark.length - 1 > splitAt) splitAt = at + mark.length - 1;
+      }
+    }
+    if (splitAt < maxLen / (recited ? 4 : 2)) splitAt = remaining.lastIndexOf(' ', maxLen);
     if (splitAt <= 0) {
       // No break point at all before the limit: run on to the next space rather
       // than cutting a word in half, which Google reads as gibberish.
@@ -148,47 +166,97 @@ export const asRecitation = (text: string): string => (text.startsWith(RECITE) ?
 /** Whole phrases a recitation says right only from phonemes (chosen by ear). */
 const RECITATION_PHONEMES: readonly (readonly [string, string])[] = [
   // Al-Fatiha 1:7, the stop: walaḍ-ḍāāāllīn (approved 2026-11-03, take 6).
-  ['وَلَاضَّالِّينْ', 'waladˤdˤaːaːaːlliːn'],
+  ['وَلَضَّالِّينْ', 'waladˤdˤaːaːaːlliːn'],
 ];
 
 /** The normaliser seats shadda before its vowel; a key typed the other way round still matches. */
 const shaddaFirst = (s: string) => s.replace(/([\u064B-\u0650])\u0651/g, '\u0651$1');
 
-const ENDS_IN_VOWEL = /[\u064B-\u0650]$|[اىوي]$/;
+/**
+ * The opening letters of 29 surahs are said by their names, each one held:
+ * alif lām mīm, ṭā hā, yā sīn. Read as a word they came out "alm", "ṭah".
+ */
+const OPENING_LETTERS = new Set(['الم', 'المص', 'الر', 'المر', 'كهيعص', 'طه', 'طسم', 'طس', 'يس', 'ص', 'حم', 'عسق', 'ق', 'ن']);
+const LETTER_NAMES: Record<string, string> = {
+  ا: 'أَلِفْ', ل: 'لَامْ', م: 'مِيمْ', ر: 'رَا', ص: 'صَادْ', ك: 'كَافْ', ه: 'هَا',
+  ي: 'يَا', ع: 'عَيْنْ', ط: 'طَا', س: 'سِينْ', ح: 'حَا', ق: 'قَافْ', ن: 'نُونْ',
+};
+
+/**
+ * The words that follow a phoneme-spelled āyāt joined in wasl (61 places):
+ * āyātu-llāh, āyātul-kitāb. Each is said from its phonemes so the pair can
+ * be one phoneme run.
+ */
+const WASL_PHONEMES = new Map(Object.entries({
+  'اللَّهِ': 'llaːhi', 'اللَّهُ': 'llaːhu', 'اللَّهَ': 'llaːha',
+  'الْكِتَابِ': 'lkitaːbi', 'الرَّحْمَانِ': 'rraħmaːni', 'الْقُرْآنِ': 'lqurʔaːni',
+  'الْكُبْرَا': 'lkubraː', 'الَّذِينَ': 'llaðiːna', 'الَّيْلُ': 'llajlu', 'الْجَوَارِ': 'ldʒawaːri',
+  'الْمُبِينِ': 'lmubiːni', 'الْحَكِيمِ': 'lħakiːmi',
+}).map(([word, ipa]) => [shaddaFirst(word), ipa]));
+
+const PHONEME_WORD = /^⟦([^|⟧]+)\|([^⟧]+)⟧$/;
+
+/** The line's last word, stopped on: dīni → dīn, kabīran → kabīrā, raḥmatun → raḥmah. */
+function stopOn(word: string): string {
+  const marked = word.match(PHONEME_WORD);
+  if (marked) {
+    // In phonemes: drop a tanween's n and any short vowel after the last consonant.
+    const ipa = marked[1].replace(/([^ː])[aiu]n?$/, '$1');
+    return `⟦${ipa}|${stopOn(marked[2])}⟧`;
+  }
+  const last = word
+    .replace(/ة[ً-ِ]*$/, 'هْ')
+    .replace(/ً(ا|ى)?$/, 'َا')
+    .replace(/[ٌٍَُِ]+$/, '');
+  return /[ّْ]$/.test(last) || /[اىوي]$/.test(last) ? last : last + 'ْ';
+}
 
 /**
  * The two rules a reciter follows that plain reading does not (approved by
  * ear on Al-Fatiha, 2026-11-03):
  * - wasl: a word that opens with the silent alif (ٱ) joins the word before
  *   it, and before a sun letter the l of "al" goes too: yawmi + ٱلدِّين →
- *   yawmid-dīn, rabbi + ٱلْعَالَمِين → rabbil-ʿālamīn;
+ *   yawmid-dīn, rabbi + ٱلْعَالَمِين → rabbil-ʿālamīn. A long vowel before
+ *   the join is said short (fī + ٱلْأَرْض → fil-arḍ, qālū + ٱلْآن → qālul-ān),
+ *   and a tanween becomes its vowel and a nūn with kasra (khayran +
+ *   ٱلْوَصِيَّة → khayranil-waṣiyyah);
  * - waqf: the line stops on its last letter: dīni → dīn, a tanween fath
  *   becomes ā, ة becomes h.
  */
 function recite(raw: string): string {
   const words = raw.split(/\s+/).filter(Boolean);
+  const first = words[0]?.replace(/ٓ/g, '');
+  if (first && OPENING_LETTERS.has(first) && !/[ً-ْ]/.test(words[0])) {
+    words.splice(0, 1, ...[...first].map((c) => LETTER_NAMES[c]));
+  }
   const out: string[] = [];
   for (const w of words) {
     const spoken = spokenArabic(w);
     if (!spoken) continue;
     const prev = out[out.length - 1];
-    const wasl = w.startsWith('\u0671') && /^ا/.test(spoken);
-    if (prev && wasl && ENDS_IN_VOWEL.test(prev) && !prev.includes('⟧') && !spoken.includes('⟦')) {
-      const sun = /^ال.[\u064B-\u0650]?\u0651/.test(spoken);
-      out[out.length - 1] = prev + (sun ? spoken.slice(2) : spoken.slice(1));
-      continue;
+    const wasl = w.startsWith('ٱ') && /^ا/.test(spoken) && !spoken.includes('⟦');
+    if (prev && wasl) {
+      const sun = /^ال.[ً-ِ]?ّ/.test(spoken);
+      const rest = sun ? spoken.slice(2) : spoken.slice(1);
+      const marked = prev.match(PHONEME_WORD);
+      const ipa = WASL_PHONEMES.get(spoken);
+      if (marked && ipa) {
+        out[out.length - 1] = `⟦${marked[1].replace(/([aiu])ː$/, '$1')}${ipa}|${marked[2]} ${spoken}⟧`;
+        continue;
+      }
+      if (!marked && /[ً-ٍ][اى]?$/.test(prev)) {
+        const vowel = { 'ً': 'َ', 'ٌ': 'ُ', 'ٍ': 'ِ' }[prev.match(/([ً-ٍ])[اى]?$/)![1]];
+        out[out.length - 1] = prev.replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + rest;
+        continue;
+      }
+      if (!marked && /[َ-ِ]$|[اىوي]$/.test(prev)) {
+        out[out.length - 1] = prev.replace(/وا$|[اىوي]$/, '') + rest;
+        continue;
+      }
     }
     out.push(spoken);
   }
-  const i = out.length - 1;
-  if (i >= 0 && !out[i].includes('⟧')) {
-    let last = out[i]
-      .replace(/ة[\u064B-\u0650]*$/, 'هْ')
-      .replace(/\u064B(ا|ى)?$/, '\u064Eا')
-      .replace(/[\u064C\u064D\u064E\u064F\u0650]+$/, '');
-    if (!/[\u0651\u0652]$/.test(last) && !/[اىوي]$/.test(last)) last += '\u0652';
-    out[i] = last;
-  }
+  if (out.length) out[out.length - 1] = stopOn(out[out.length - 1]);
   return out
     .map((w) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);

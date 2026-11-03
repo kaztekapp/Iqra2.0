@@ -88,8 +88,31 @@ describe('recitation (Quran only)', () => {
     expect(recite('غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ')).toContain('⟦waladˤdˤaːaːaːlliːn|');
   });
 
+  it('says a long vowel short before a join, and a tanween as its vowel plus nun', () => {
+    expect(recite('لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟')).toContain('فِلْأَرْضِ');
+    expect(recite('لَقُوا۟ ٱلَّذِينَ ءَامَنُوا۟')).toContain(seated('لَقُلَّذِينَ'));
+    expect(recite('عُزَيْرٌ ٱبْنُ ٱللَّهِ وَقَالَتِ')).toContain(seated('عُزَيْرُنِبْنُلَّهِ'));
+  });
+
+  it('names the opening letters of a surah', () => {
+    expect(recite('الٓمٓ')).toBe('أَلِفْ لَامْ مِيمْ');
+    expect(recite('طه')).toBe('طَا هَا');
+    expect(recite('نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ')).toBe('نُونْ وَالْقَلَمِ وَمَا يَسْطُرُونْ');
+  });
+
+  it('joins a phoneme-spelled word to the al- word after it, and stops in phonemes too', () => {
+    expect(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ')).toBe('تِلْكَ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
+  });
+
+  it('splits a long recited line where the mushaf marks a pause', () => {
+    const line = asRecitation(`${'وَقُلْنَا يَـٰٓـَٔادَمُ ٱسْكُنْ أَنتَ وَزَوْجُكَ '.repeat(6)}ۚ ${'وَلَا تَقْرَبَا هَـٰذِهِ '.repeat(6)}`);
+    const chunks = chunkLine(line);
+    expect(chunks.length).toBe(2);
+    expect(chunks[0].endsWith('ۚ')).toBe(true);
+  });
+
   it('keeps the mark on every chunk, and leaves other Arabic as it was', () => {
-    const long = asRecitation('ٱلْحَمْدُ لِلَّهِ '.repeat(20).trim());
+    const long = asRecitation('ٱلْحَمْدُ لِلَّهِ '.repeat(40).trim());
     expect(chunkLine(long).length).toBeGreaterThan(1);
     expect(chunkLine(long).every((c) => c.startsWith(RECITE))).toBe(true);
     expect(spokenArabic('يَوْمِ ٱلدِّينِ')).not.toContain(seated('يَوْمِدِّينْ'));
