@@ -2,7 +2,8 @@
  * Choose the surah to learn, from inside Learn mode.
  *
  * Follows the listen and voice sheets: same scrim, sheet, handle and row
- * rhythm. Row styles are plain arrays: NativeWind drops Pressable's style
+ * rhythm. Surahs are listed in memorization order (Al-Fatihah, then An-Nas
+ * down to Al-Baqarah). Row styles are plain arrays: NativeWind drops Pressable's style
  * function on device (see Card in Primitives). All 114 rows have one fixed height, so the list opens already
  * scrolled to the surah being learned rather than at Al-Fatihah.
  */
@@ -27,6 +28,15 @@ interface Props {
 
 const ROW_HEIGHT = 64;
 
+/**
+ * The order people memorize in: Al-Fatihah, then from An-Nas back towards
+ * Al-Baqarah, the short surahs first.
+ */
+const MEMORIZATION_ORDER: Surah[] = [
+  ...SURAHS.filter((s) => s.surahNumber === 1),
+  ...SURAHS.filter((s) => s.surahNumber !== 1).sort((a, b) => b.surahNumber - a.surahNumber),
+];
+
 /** Arabic without its marks, and Latin without case or accents, for search. */
 const fold = (s: string) =>
   s
@@ -42,14 +52,14 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose }: P
 
   const results = useMemo(() => {
     const q = fold(query.trim());
-    if (!q) return SURAHS;
-    if (/^\d+$/.test(q)) return SURAHS.filter((s) => String(s.surahNumber).startsWith(q));
-    return SURAHS.filter((s) =>
+    if (!q) return MEMORIZATION_ORDER;
+    if (/^\d+$/.test(q)) return MEMORIZATION_ORDER.filter((s) => String(s.surahNumber).startsWith(q));
+    return MEMORIZATION_ORDER.filter((s) =>
       [s.nameEnglish, s.nameTransliteration, s.nameArabic, s.meaning, s.meaningFr].some((f) => f && fold(f).includes(q))
     );
   }, [query]);
 
-  const currentIndex = SURAHS.findIndex((s) => s.id === currentSurahId);
+  const currentIndex = MEMORIZATION_ORDER.findIndex((s) => s.id === currentSurahId);
 
   const close = () => {
     setQuery('');
