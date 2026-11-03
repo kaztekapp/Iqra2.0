@@ -16,6 +16,7 @@ import {
   MastheadWash,
 } from '../../src/components/ui/Primitives';
 import { color, space, radius, gutter } from '../../src/theme/tokens';
+import { ContinueLearningCard } from '../../src/components/home/ContinueLearningCard';
 
 interface ModuleCardProps {
   moduleId: ModuleType;
@@ -202,6 +203,9 @@ export default function LearnScreen() {
           <Txt variant="body" tone="muted" style={styles.subtitle}>{t('learn.subtitle')}</Txt>
           <IlluminatedRule style={styles.rule} />
         </View>
+
+        {/* Continue Learning: back into the module last opened. */}
+        <ContinueLearningCard />
 
         <Section title={t('learn.learningModules')}>
           <View style={styles.moduleList}>
