@@ -92,7 +92,7 @@ export default function HomeScreen() {
             >
               <IconTile name="headset" tint={color.sacred} size="lg" />
               <View style={styles.continueText}>
-                <Txt variant="bodyLarge" weight="bold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Txt variant="bodyLarge" weight="bold" numberOfLines={2}>{t('home.learnMode')}</Txt>
                 <Text style={styles.learnArabic} allowFontScaling={false} numberOfLines={1}>{learnSurah.nameArabic}</Text>
                 <Txt variant="caption" tone="faint" numberOfLines={1}>
                   {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
