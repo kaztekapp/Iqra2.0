@@ -434,7 +434,12 @@ export default function LearnModeScreen() {
       </View>
 
       {/* Where the reader is in the surah. A segment per verse while they fit. */}
-      <View style={styles.track} accessible accessibilityLabel={t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}>
+      <Pressable
+        style={styles.track}
+        onPress={() => setSheet('verses')}
+        accessibilityRole="button"
+        accessibilityLabel={`${t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}, ${t('surahLearnMode.sheetVerses')}`}
+      >
         {ayahs.length <= 40 ? (
           <View style={styles.segments}>
             {ayahs.map((a, i) => (
@@ -454,10 +459,13 @@ export default function LearnModeScreen() {
             <View style={[styles.barFill, { width: `${((currentAyahIndex + 1) / ayahs.length) * 100}%` }]} />
           </View>
         )}
-        <Text style={styles.trackText}>
-          {t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}
-        </Text>
-      </View>
+        <View style={styles.trackRow}>
+          <Text style={styles.trackText}>
+            {t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}
+          </Text>
+          <Ionicons name="chevron-down" size={13} color={color.textMuted} />
+        </View>
+      </Pressable>
 
       {/* The verse fills the space between the header and the dock, centred;
           a long one scrolls inside it. Swipe it to move to the next or previous. */}
@@ -748,6 +756,11 @@ const styles = StyleSheet.create({
   barFill: {
     height: '100%',
     backgroundColor: color.accent,
+  },
+  trackRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
   },
   trackText: {
     ...type.caption,

@@ -1318,7 +1318,6 @@ export default {
     stayNote: 'S\'arrête, pour que vous le disiez vous-même avant de continuer.',
     speedHint: 'Plus lent aide à entendre chaque lettre. 1× est le rythme normal.',
     wholeSurah: 'Toute la sourate',
-    next10: '10 suivants',
     tapStart: 'Touchez le verset de départ',
     tapEnd: 'Touchez maintenant le verset de fin',
     verseN: 'Verset {{verse}}',
@@ -1328,6 +1327,8 @@ export default {
     customRepeat: 'Ou choisissez un nombre',
     repeatMore: 'Une fois de plus',
     repeatLess: 'Une fois de moins',
+    thisVerse: 'Ce verset',
+    versesFromTo: 'Versets {{start}} à {{end}}',
   },
   verbQuiz: {
     title: 'Quiz des Verbes',

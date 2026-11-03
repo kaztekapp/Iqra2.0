@@ -7,7 +7,7 @@
  * same scrim, sheet, handle and row rhythm. Styles are plain arrays: NativeWind
  * drops Pressable's style function on device (see Card in Primitives).
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable, StyleSheet, Modal, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,6 +20,10 @@ export const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5];
 export const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
 /** Any count can be chosen with - and +, up to this. */
 export const MAX_REPEAT = 99;
+
+/** Verse grid cell size and gap; scrolling to a verse counts rows in these. */
+const CELL = 46;
+const CELL_GAP = 8;
 
 interface Props {
   kind: LearnSheetKind | null;
@@ -112,6 +116,21 @@ export function LearnSettingsSheet(props: Props) {
       setAwaitingEnd(false);
     }
   };
+
+  // Long surahs: the grid opens at the verse on screen, and jumps by fifty.
+  const gridRef = useRef<ScrollView>(null);
+  const [gridWidth, setGridWidth] = useState(0);
+  const columns = Math.max(1, Math.floor((gridWidth + CELL_GAP) / (CELL + CELL_GAP)));
+  const rowOffset = (verse: number) => Math.floor((verse - 1) / columns) * (CELL + CELL_GAP);
+  const scrollToVerse = (verse: number, animated = true) =>
+    gridRef.current?.scrollTo({ y: Math.max(0, rowOffset(verse) - (CELL + CELL_GAP)), animated });
+  useEffect(() => {
+    if (kind === 'verses' && gridWidth > 0) scrollToVerse(props.startVerse, false);
+  }, [kind, gridWidth]);
+  const blocks =
+    props.verseCount > 60
+      ? Array.from({ length: Math.ceil(props.verseCount / 50) }, (_, i) => [i * 50 + 1, Math.min((i + 1) * 50, props.verseCount)])
+      : [];
 
   const quick = (start: number, end: number) => {
     setPickStart(start);
@@ -227,20 +246,48 @@ export function LearnSettingsSheet(props: Props) {
             {kind === 'verses' && (
               <View style={[styles.body, styles.versesBody]}>
                 <View style={styles.quickRow}>
-                  <Pressable style={styles.quick} onPress={() => quick(1, props.verseCount)} accessibilityRole="button">
-                    <Text style={styles.quickText}>{t('surahLearnMode.wholeSurah')}</Text>
+                  <Pressable
+                    style={styles.quick}
+                    onPress={() => {
+                      quick(props.currentVerse, props.currentVerse);
+                      scrollToVerse(props.currentVerse);
+                    }}
+                    accessibilityRole="button"
+                  >
+                    <Text style={styles.quickText}>{t('surahLearnMode.thisVerse')}</Text>
                   </Pressable>
                   <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse + 4)} accessibilityRole="button">
                     <Text style={styles.quickText}>{t('surahLearnMode.next5')}</Text>
                   </Pressable>
-                  <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse + 9)} accessibilityRole="button">
-                    <Text style={styles.quickText}>{t('surahLearnMode.next10')}</Text>
+                  <Pressable style={styles.quick} onPress={() => quick(1, props.verseCount)} accessibilityRole="button">
+                    <Text style={styles.quickText}>{t('surahLearnMode.wholeSurah')}</Text>
                   </Pressable>
                 </View>
+                {blocks.length > 0 && (
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.blocksScroll} contentContainerStyle={styles.blocks}>
+                    {blocks.map(([from, to]) => (
+                      <Pressable
+                        key={from}
+                        style={styles.block}
+                        onPress={() => scrollToVerse(from)}
+                        accessibilityRole="button"
+                        accessibilityLabel={t('surahLearnMode.versesFromTo', { start: from, end: to })}
+                      >
+                        <Text style={styles.blockText}>{from}–{to}</Text>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                )}
                 <Text style={styles.label}>
                   {awaitingEnd ? t('surahLearnMode.tapEnd') : t('surahLearnMode.tapStart')}
                 </Text>
-                <ScrollView style={styles.gridScroll} contentContainerStyle={styles.grid} showsVerticalScrollIndicator={false}>
+                <ScrollView
+                  ref={gridRef}
+                  style={styles.gridScroll}
+                  contentContainerStyle={styles.grid}
+                  onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
+                  showsVerticalScrollIndicator={props.verseCount > 60}
+                >
                   {Array.from({ length: props.verseCount }, (_, i) => i + 1).map((n) => {
                     const edge = n === pickStart || n === pickEnd;
                     const inside = n > pickStart && n < pickEnd;
@@ -446,6 +493,27 @@ const styles = StyleSheet.create({
     gap: space.sm,
     marginBottom: space.xs,
   },
+  blocksScroll: {
+    flexGrow: 0,
+    marginHorizontal: -gutter,
+  },
+  blocks: {
+    flexDirection: 'row',
+    gap: space.sm,
+    paddingHorizontal: gutter,
+  },
+  block: {
+    paddingHorizontal: space.md,
+    paddingVertical: 6,
+    borderRadius: radius.full,
+    backgroundColor: color.surfaceSunken,
+  },
+  blockText: {
+    ...type.caption,
+    fontWeight: weight.semibold,
+    color: color.text,
+    fontVariant: ['tabular-nums'],
+  },
   quick: {
     flex: 1,
     alignItems: 'center',
@@ -466,12 +534,11 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: space.sm,
-    paddingVertical: space.xs,
+    gap: CELL_GAP,
   },
   cell: {
-    width: 46,
-    height: 46,
+    width: CELL,
+    height: CELL,
     borderRadius: radius.md,
     backgroundColor: color.surfaceSunken,
     alignItems: 'center',

@@ -1318,7 +1318,6 @@ export default {
     stayNote: 'Stops, so you can say it yourself before moving on.',
     speedHint: 'Slower helps you hear every letter. 1× is the normal pace.',
     wholeSurah: 'Whole surah',
-    next10: 'Next 10',
     tapStart: 'Tap where to start',
     tapEnd: 'Now tap where to stop',
     verseN: 'Verse {{verse}}',
@@ -1328,6 +1327,8 @@ export default {
     customRepeat: 'Or choose a number',
     repeatMore: 'One more time',
     repeatLess: 'One time fewer',
+    thisVerse: 'This verse',
+    versesFromTo: 'Verses {{start}} to {{end}}',
   },
   verbQuiz: {
     title: 'Verb Quiz',
