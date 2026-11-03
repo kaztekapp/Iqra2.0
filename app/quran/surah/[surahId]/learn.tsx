@@ -535,14 +535,6 @@ export default function LearnModeScreen() {
 
         {/* The settings, each showing its current choice; a tap opens it. */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsScroll} contentContainerStyle={styles.chips}>
-          <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
-            <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
-            <Text style={styles.chipValue}>{repeatCount}×</Text>
-          </Pressable>
-          <Pressable style={styles.chip} onPress={() => setSheet('speed')} accessibilityRole="button">
-            <Text style={styles.chipLabel}>{t('surahLearnMode.speed')}</Text>
-            <Text style={styles.chipValue}>{playbackSpeed}×</Text>
-          </Pressable>
           <Pressable style={styles.chip} onPress={() => setSheet('verses')} accessibilityRole="button">
             {wholeSurah ? (
               <Text style={styles.chipValue}>{t('surahLearnMode.selectVerses')}</Text>
@@ -552,6 +544,14 @@ export default function LearnModeScreen() {
                 <Text style={styles.chipValue}>{startVerse === endVerse ? String(startVerse) : `${startVerse}–${endVerse}`}</Text>
               </>
             )}
+          </Pressable>
+          <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
+            <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
+            <Text style={styles.chipValue}>{repeatCount}×</Text>
+          </Pressable>
+          <Pressable style={styles.chip} onPress={() => setSheet('speed')} accessibilityRole="button">
+            <Text style={styles.chipLabel}>{t('surahLearnMode.speed')}</Text>
+            <Text style={styles.chipValue}>{playbackSpeed}×</Text>
           </Pressable>
         </ScrollView>
         {useLearningVoice && voiceFellBack ? (
