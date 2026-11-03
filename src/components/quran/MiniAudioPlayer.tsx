@@ -138,7 +138,12 @@ export function MiniAudioPlayer() {
     }
   };
 
-  if (!currentlyPlaying || storyReading) return null;
+  // Learn mode has its own play, previous and next in its dock: a second set
+  // of controls over it only gets in the way. The player comes back when the
+  // reader leaves with the verse still playing.
+  const onLearnScreen = segments[0] === 'quran' && (segments as string[])[segments.length - 1] === 'learn';
+
+  if (!currentlyPlaying || storyReading || onLearnScreen) return null;
 
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 1],
