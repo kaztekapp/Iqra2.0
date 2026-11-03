@@ -575,10 +575,16 @@ export default function LearnModeScreen() {
 
         {/* Which repeat is playing: a gold dot for each one heard. */}
         <View style={styles.repeatDots} accessible={repeatCount > 1} accessibilityLabel={repeatCount > 1 ? t('surahLearnMode.repeatOf', { current: currentRepeat + 1, total: repeatCount }) : undefined}>
-          {repeatCount > 1 &&
+          {repeatCount > 1 && repeatCount <= 10 &&
             Array.from({ length: repeatCount }, (_, i) => (
               <View key={i} style={[styles.repeatDot, audioState !== 'idle' && i <= currentRepeat && styles.repeatDotOn]} />
             ))}
+          {/* Past ten, dots stop being countable at a glance: say it instead. */}
+          {repeatCount > 10 && audioState !== 'idle' && (
+            <Text style={styles.repeatCountText}>
+              {t('surahLearnMode.repeatOf', { current: currentRepeat + 1, total: repeatCount })}
+            </Text>
+          )}
         </View>
       </View>
 
@@ -908,8 +914,15 @@ const styles = StyleSheet.create({
   repeatDots: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     gap: 6,
-    height: 8,
+    minHeight: 8,
+  },
+  repeatCountText: {
+    ...type.micro,
+    color: color.sacred,
+    fontWeight: weight.semibold,
+    fontVariant: ['tabular-nums'],
   },
   repeatDot: {
     width: 7,

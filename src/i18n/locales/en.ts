@@ -1325,6 +1325,9 @@ export default {
     learnVerse: 'Learn verse {{verse}}',
     learnVerses: 'Learn verses {{start}} to {{end}}',
     done: 'Done',
+    customRepeat: 'Or choose a number',
+    repeatMore: 'One more time',
+    repeatLess: 'One time fewer',
   },
   verbQuiz: {
     title: 'Verb Quiz',

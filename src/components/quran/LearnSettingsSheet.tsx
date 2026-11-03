@@ -8,7 +8,7 @@
  * drops Pressable's style function on device (see Card in Primitives).
  */
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, StyleSheet, Modal, ScrollView } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Modal, ScrollView, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,8 @@ export type LearnSheetKind = 'voice' | 'repeat' | 'speed' | 'verses';
 
 export const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5];
 export const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
+/** Any count can be typed in, up to this. */
+export const MAX_REPEAT = 99;
 
 interface Props {
   kind: LearnSheetKind | null;
@@ -97,6 +99,17 @@ export function LearnSettingsSheet(props: Props) {
     }
   }, [kind]);
 
+  // The typed repeat count, kept as text while it is being edited.
+  const [repeatText, setRepeatText] = useState(String(props.repeatCount));
+  useEffect(() => {
+    setRepeatText(String(props.repeatCount));
+  }, [props.repeatCount, kind]);
+  const commitRepeat = (n: number) => {
+    const clamped = Math.max(1, Math.min(MAX_REPEAT, Number.isFinite(n) ? Math.round(n) : props.repeatCount));
+    setRepeatText(String(clamped));
+    if (clamped !== props.repeatCount) props.onRepeat(clamped);
+  };
+
   const tapVerse = (n: number) => {
     if (!awaitingEnd) {
       setPickStart(n);
@@ -123,7 +136,7 @@ export function LearnSettingsSheet(props: Props) {
 
   return (
     <Modal visible={kind !== null} animationType="slide" transparent onRequestClose={onClose}>
-      <View style={styles.scrim}>
+      <KeyboardAvoidingView style={styles.scrim} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityRole="button" accessibilityLabel={t('listen.close')} />
         <View style={styles.sheet}>
           <SafeAreaView edges={['bottom']} style={styles.safe}>
@@ -164,6 +177,41 @@ export function LearnSettingsSheet(props: Props) {
                   a11y={(v) => t('surahLearnMode.repeatTimes', { count: v })}
                   onPick={props.onRepeat}
                 />
+                <View style={styles.customRow}>
+                  <Text style={styles.customLabel}>{t('surahLearnMode.customRepeat')}</Text>
+                  <Pressable
+                    style={[styles.stepper, props.repeatCount <= 1 && styles.stepperDisabled]}
+                    onPress={() => commitRepeat(props.repeatCount - 1)}
+                    disabled={props.repeatCount <= 1}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('surahLearnMode.repeatLess')}
+                  >
+                    <Ionicons name="remove" size={18} color={color.text} />
+                  </Pressable>
+                  <TextInput
+                    style={[styles.customInput, !REPEAT_OPTIONS.includes(props.repeatCount) && styles.customInputOn]}
+                    value={repeatText}
+                    onChangeText={(text) => {
+                      if (text === '' || /^\d{1,2}$/.test(text)) setRepeatText(text);
+                    }}
+                    onEndEditing={() => commitRepeat(parseInt(repeatText, 10))}
+                    onSubmitEditing={() => commitRepeat(parseInt(repeatText, 10))}
+                    keyboardType="number-pad"
+                    returnKeyType="done"
+                    selectTextOnFocus
+                    maxLength={2}
+                    accessibilityLabel={t('surahLearnMode.customRepeat')}
+                  />
+                  <Pressable
+                    style={[styles.stepper, props.repeatCount >= MAX_REPEAT && styles.stepperDisabled]}
+                    onPress={() => commitRepeat(props.repeatCount + 1)}
+                    disabled={props.repeatCount >= MAX_REPEAT}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('surahLearnMode.repeatMore')}
+                  >
+                    <Ionicons name="add" size={18} color={color.text} />
+                  </Pressable>
+                </View>
                 <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.afterLastTime')}</Text>
                 <Option
                   selected={props.autoAdvance}
@@ -251,7 +299,7 @@ export function LearnSettingsSheet(props: Props) {
             )}
           </SafeAreaView>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -375,6 +423,44 @@ const styles = StyleSheet.create({
   },
   segmentTextOn: {
     color: color.textOnAccent,
+  },
+  customRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    marginTop: space.xs,
+  },
+  customLabel: {
+    flex: 1,
+    ...type.caption,
+    color: color.textMuted,
+  },
+  stepper: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    backgroundColor: color.surfaceSunken,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepperDisabled: {
+    opacity: 0.35,
+  },
+  customInput: {
+    width: 64,
+    height: 44,
+    borderRadius: radius.md,
+    borderWidth: 1.5,
+    borderColor: color.border,
+    textAlign: 'center',
+    ...type.bodyLarge,
+    fontWeight: weight.semibold,
+    color: color.text,
+    paddingVertical: 0,
+  },
+  // A typed count that is not one of the buttons above is the chosen one.
+  customInputOn: {
+    borderColor: color.accentStrong,
   },
   quickRow: {
     flexDirection: 'row',

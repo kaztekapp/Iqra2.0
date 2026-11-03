@@ -1325,6 +1325,9 @@ export default {
     learnVerse: 'Apprendre le verset {{verse}}',
     learnVerses: 'Apprendre les versets {{start}} à {{end}}',
     done: 'Terminé',
+    customRepeat: 'Ou choisissez un nombre',
+    repeatMore: 'Une fois de plus',
+    repeatLess: 'Une fois de moins',
   },
   verbQuiz: {
     title: 'Quiz des Verbes',
