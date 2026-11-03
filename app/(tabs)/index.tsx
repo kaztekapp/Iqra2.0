@@ -92,14 +92,14 @@ export default function HomeScreen() {
             >
               <IconTile name="headset" tint={color.sacred} size="lg" />
               <View style={styles.continueText}>
-                <Txt variant="title" weight="bold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Txt variant="bodyLarge" weight="bold" numberOfLines={1}>{t('home.learnMode')}</Txt>
                 <Text style={styles.learnArabic} allowFontScaling={false} numberOfLines={1}>{learnSurah.nameArabic}</Text>
                 <Txt variant="caption" tone="faint" numberOfLines={1}>
                   {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
                 </Txt>
               </View>
               <View style={[styles.learnPlay, { backgroundColor: color.sacred }]}>
-                <Ionicons name="play" size={22} color={color.textOnAccent} />
+                <Ionicons name="play" size={18} color={color.textOnAccent} />
               </View>
             </Card>
           </Section>
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   learnPlay: {
-    width: 52,
-    height: 52,
+    width: 44,
+    height: 44,
     borderRadius: radius.full,
     alignItems: 'center',
     justifyContent: 'center',
