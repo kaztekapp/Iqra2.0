@@ -1298,6 +1298,7 @@ export default {
     ayahCount_other: '{{count}} versets',
     verses: 'Versets',
     all: 'Tous',
+    selectVerses: 'Choisir les versets',
     play: 'Lecture',
     pause: 'Pause',
     verseOf: 'Verset {{verse}} sur {{total}}',
