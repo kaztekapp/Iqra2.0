@@ -36,6 +36,9 @@ export function UpdateModal() {
   const { availableUpdate, isUpdatePending } = Updates.useUpdates();
   const availableId = availableUpdate?.updateId ?? null;
   const [reloading, setReloading] = useState(false);
+  // A fix that cannot be applied must not hold the app hostage: if the
+  // restart fails, this prompt stands down until the next update.
+  const [otaFailed, setOtaFailed] = useState<string | null>(null);
   const [storeRelease, setStoreRelease] = useState<StoreRelease | null>(null);
 
   const scale = useRef(new Animated.Value(0.96)).current;
@@ -75,7 +78,7 @@ export function UpdateModal() {
   // Both are required: there is no "Later". A newer store version must be
   // installed, and a downloaded fix must be applied, before the app is used.
   const showStore = !!storeRelease;
-  const showOta = isUpdatePending;
+  const showOta = isUpdatePending && otaFailed !== (availableId ?? 'unknown');
   const visible = showStore || showOta;
 
   useEffect(() => {
@@ -104,8 +107,10 @@ export function UpdateModal() {
     setReloading(true);
     try {
       await Updates.reloadAsync();
-    } catch {
+    } catch (e) {
+      quietly(e, 'components/UpdateModal.reload');
       setReloading(false);
+      setOtaFailed(availableId ?? 'unknown');
     }
   };
 

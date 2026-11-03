@@ -4,6 +4,12 @@
  *   npx tsx scripts/release/announce.ts --platform ios --version 1.1.1            show what would change
  *   npx tsx scripts/release/announce.ts --platform ios --version 1.1.1 --publish  update app/latest.json
  *   npx tsx scripts/release/announce.ts --platform ios --version 1.1.1 --push     ...and push every device
+ *   npx tsx scripts/release/announce.ts --platform ios --off --publish            stop asking anyone (off switch)
+ *
+ * The prompt in the app cannot be dismissed, so a version is only written
+ * once the store really has it: for iOS the script checks Apple's own store
+ * listing and refuses otherwise; for Android (Google offers no public check)
+ * it needs --live-on-play, which means "I have seen it on Google Play".
  *
  * app/latest.json on the voice CDN is what the app's update prompt reads
  * (src/services/storeVersion.ts): anyone on an older binary is asked to
@@ -51,12 +57,29 @@ function serviceKey(): string {
   return key;
 }
 
-async function publishLatest(platform: Platform, version: string, write: boolean) {
+/** Version Apple's US store shows for the app, or null. */
+async function appStoreVersion(): Promise<string | null> {
+  const r = await fetch('https://itunes.apple.com/lookup?id=6801198221&country=us');
+  return ((await r.json()) as { results?: { version?: string }[] }).results?.[0]?.version ?? null;
+}
+
+async function publishLatest(platform: Platform, version: string | null, write: boolean) {
   const cfg = r2Config();
   const res = await r2(cfg, 'GET', 'app/latest.json');
   const latest = res.ok ? JSON.parse(await res.text()) : {};
   console.log('now:', JSON.stringify(latest));
-  latest[platform] = { version, url: STORE_URL[platform] };
+  if (version === null) {
+    // The off switch: keep the version, ask nobody.
+    latest[platform] = { ...(latest[platform] ?? { version: '0.0.0', url: STORE_URL[platform] }), force: false };
+  } else {
+    if (platform === 'ios') {
+      const live = await appStoreVersion();
+      if (live !== version) throw new Error(`The App Store shows ${live ?? 'nothing'}, not ${version}: refusing, the prompt would block people.`);
+    } else if (!args.includes('--live-on-play')) {
+      throw new Error('Google offers no public check: confirm the version is live on Google Play, then add --live-on-play.');
+    }
+    latest[platform] = { version, url: STORE_URL[platform], force: true };
+  }
   console.log('new:', JSON.stringify(latest));
   if (!write) return;
   const body = Buffer.from(JSON.stringify(latest, null, 2));
@@ -108,12 +131,13 @@ async function pushAll(platform: Platform) {
 
 async function main() {
   const platform = value('--platform') as Platform;
-  const version = value('--version');
-  if (!(platform in STORE_URL) || !version || !/^\d+\.\d+\.\d+$/.test(version)) {
-    throw new Error('usage: --platform ios|android --version 1.2.3 [--publish] [--push]');
+  const off = args.includes('--off');
+  const version = value('--version') ?? null;
+  if (!(platform in STORE_URL) || (!off && (!version || !/^\d+\.\d+\.\d+$/.test(version)))) {
+    throw new Error('usage: --platform ios|android (--version 1.2.3 | --off) [--publish] [--push]');
   }
-  const push = args.includes('--push');
-  await publishLatest(platform, version, push || args.includes('--publish'));
+  const push = args.includes('--push') && !off;
+  await publishLatest(platform, off ? null : version, push || args.includes('--publish'));
   if (push) await pushAll(platform);
 }
 
