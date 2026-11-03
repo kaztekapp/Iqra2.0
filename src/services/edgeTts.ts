@@ -30,14 +30,19 @@ import { voiceFor, clipPath, spokenNarration, VOICE_CDN_URL } from './speech/voi
  * Speak one piece of text, resolving with the MP3 bytes. Rejects when there is
  * no signed-in session, no network, or the service refuses; every caller
  * already falls back (kept clip, then the phone's own voice).
+ *
+ * Only a recited Quran line (`quran`) may be made live by the voice service;
+ * everything else is pre-recorded, and a line missing from the CDN goes to the
+ * phone's own voice.
  */
-export async function synthesize(rawText: string, voice: string, lang: EdgeLang, rate = '-4%'): Promise<Uint8Array> {
+export async function synthesize(rawText: string, voice: string, lang: EdgeLang, rate = '-4%', quran = false): Promise<Uint8Array> {
   // Narration says surah names with the Arabic voice; Arabic lines come
   // already spoken (spokenArabic).
   const text = lang === 'ar' ? rawText : spokenNarration(rawText, lang);
   // Recorded once for everyone: a plain download, no voice-service call.
   const recorded = await fromVoiceCdn(text, voice, rate);
   if (recorded) return recorded;
+  if (!quran) throw new Error('tts-not-recorded');
 
   const session = await safeGetSession();
   if (!session?.access_token) throw new Error('tts-signed-out');
@@ -53,7 +58,7 @@ export async function synthesize(rawText: string, voice: string, lang: EdgeLang,
         'Content-Type': 'application/json',
       },
       // Marks go as they are: the function turns them into SSML.
-      body: JSON.stringify({ text, voice, rate }),
+      body: JSON.stringify({ text, voice, rate, quran: true }),
       signal: controller.signal,
     });
     if (!res.ok) throw new Error(`tts-${res.status}`);

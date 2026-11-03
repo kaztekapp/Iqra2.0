@@ -1,5 +1,5 @@
 // A line is first looked up among the pre-recorded clips on the voice CDN;
-// only a line that was never recorded goes to the tts Edge Function (official
+// only a recited Quran line that was never recorded goes to the tts Edge Function (official
 // Azure Speech). This pins what the app sends and how it fails, since every
 // caller relies on a rejection to fall back.
 jest.mock('expo-file-system', () => ({ File: jest.fn(), Paths: {} }));
@@ -35,27 +35,33 @@ describe('tts client', () => {
       .toEqual([`${VOICE_CDN_URL}/${clipPath('hello', 'en-US-AriaNeural', '-4%')}`]);
   });
 
-  it('asks the tts function as the signed-in user, with the voice and rate', async () => {
-    const bytes = await synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%');
+  it('asks the tts function for a Quran line, as the signed-in user, with the voice and rate', async () => {
+    const bytes = await synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true);
     expect(Array.from(bytes)).toEqual([1, 2, 3]);
     const [url, init] = functionCalls()[0];
     expect(url).toBe('https://example.supabase.co/functions/v1/tts');
     expect(init.headers.Authorization).toBe('Bearer user-jwt');
     expect(init.headers.apikey).toBe('anon-key');
-    expect(JSON.parse(init.body)).toEqual({ text: 'بِسْمِ اللَّهِ', voice: 'ar-SA-HamedNeural', rate: '-4%' });
+    expect(JSON.parse(init.body)).toEqual({ text: 'بِسْمِ اللَّهِ', voice: 'ar-SA-HamedNeural', rate: '-4%', quran: true });
+  });
+
+  it('never asks the function for a line that is not Quran', async () => {
+    await expect(synthesize('hello', voiceFor('en', 'female'), 'en')).rejects.toThrow('tts-not-recorded');
+    await expect(synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%')).rejects.toThrow('tts-not-recorded');
+    expect(functionCalls()).toHaveLength(0);
   });
 
   it('rejects an unrecorded line without a session, without calling the function', async () => {
     mockSession.mockResolvedValue(null);
-    await expect(synthesize('hello', voiceFor('en', 'female'), 'en')).rejects.toThrow('tts-signed-out');
+    await expect(synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true)).rejects.toThrow('tts-signed-out');
     expect(functionCalls()).toHaveLength(0);
   });
 
   it('rejects on a refused or empty answer so callers fall back', async () => {
     (global.fetch as jest.Mock).mockImplementation((url: string) => (isCdn(url) ? notRecorded() : Promise.resolve({ ok: false, status: 429 })));
-    await expect(synthesize('hello', voiceFor('en', 'male'), 'en')).rejects.toThrow('tts-429');
+    await expect(synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true)).rejects.toThrow('tts-429');
     (global.fetch as jest.Mock).mockImplementation((url: string) => (isCdn(url) ? notRecorded() : ok([])));
-    await expect(synthesize('hello', voiceFor('en', 'male'), 'en')).rejects.toThrow('tts-empty');
+    await expect(synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true)).rejects.toThrow('tts-empty');
   });
 
   it('uses the six voices the function allows', () => {

@@ -16,7 +16,7 @@ import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { clipTaken, forgetClip, preloadClip } from './clipPreload';
 import { File, Paths } from 'expo-file-system';
-import { asRecitation, chunkLine, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
+import { asRecitation, chunkLine, RECITE, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -166,7 +166,7 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   if (running) return running;
 
   const work = (async () => {
-    const bytes = await withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate), 45000);
+    const bytes = await withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate, true), 45000);
     if (!bytes.length) throw new Error('tts_empty');
     try {
       const saved = await keepClip(name, bytes);
@@ -215,7 +215,7 @@ export async function saveArabicClip(text: string, speed = 1): Promise<void> {
     // listening right now must not queue behind it or race it. This is the
     // burst that used to wedge the reader.
     const bytes = await enqueueEdge(() =>
-      withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate), EDGE_BUDGET_MS)
+      withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate, chunk.startsWith(RECITE)), EDGE_BUDGET_MS)
     );
     if (!bytes.length) throw new Error('tts_empty');
     await keepClip(clipName(spoken, arabicVoice(), rate), bytes);
@@ -250,10 +250,11 @@ function writeChunk(bytes: Uint8Array): string {
 async function fetchChunkFromEdge(
   spoken: string,
   speed: number,
-  now: boolean
+  now: boolean,
+  quran: boolean
 ): Promise<string> {
   const attempt = () =>
-    withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', edgeRate(speed, arabicVoice())), EDGE_BUDGET_MS);
+    withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', edgeRate(speed, arabicVoice()), quran), EDGE_BUDGET_MS);
   // The line being read goes first. Queueing it behind the prefetch of the
   // NEXT line - which is started before it - meant every verse waited for a
   // verse nobody was listening to yet, and then ran out of budget.
@@ -302,7 +303,7 @@ async function fetchChunkToFile(
   // is not worth dropping the ayah in front of the reader for.
   if (!force && Date.now() < edgeUnavailableUntil) throw new Error('tts_resting');
   try {
-    const uri = await fetchChunkFromEdge(spoken, speed, now);
+    const uri = await fetchChunkFromEdge(spoken, speed, now, text.startsWith(RECITE));
     edgeStrikes = 0;
     return uri;
   } catch (e) {
