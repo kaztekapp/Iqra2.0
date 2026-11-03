@@ -122,12 +122,15 @@ export default function HomeScreen() {
             >
               <IconTile name="headset" tint={color.sacred} size="lg" />
               <View style={styles.continueText}>
-                <Txt variant="bodyLarge" weight="semibold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Txt variant="title" weight="bold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Text style={styles.learnArabic} allowFontScaling={false} numberOfLines={1}>{learnSurah.nameArabic}</Text>
                 <Txt variant="caption" tone="faint" numberOfLines={1}>
                   {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
                 </Txt>
               </View>
-              <Text style={styles.learnArabic} allowFontScaling={false}>{learnSurah.nameArabic}</Text>
+              <View style={[styles.learnPlay, { backgroundColor: color.sacred }]}>
+                <Ionicons name="play" size={22} color={color.textOnAccent} />
+              </View>
             </Card>
           </Section>
         ) : null}
@@ -137,13 +140,12 @@ export default function HomeScreen() {
           <Card
             onPress={() => router.push(currentModule.route as Href)}
             accent={currentModule.color}
-            raised
             accessibilityLabel={`${t('home.continueLearning')}: ${getModuleName()}`}
             style={styles.continueCard}
           >
-            <IconTile name={currentModule.icon} tint={currentModule.color} size="lg" />
+            <IconTile name={currentModule.icon} tint={currentModule.color} />
             <View style={styles.continueText}>
-              <Txt variant="bodyLarge" weight="semibold" numberOfLines={1}>
+              <Txt variant="body" weight="semibold" numberOfLines={1}>
                 {hasLesson && lastAccessed.lessonTitle !== getModuleName() ? lastAccessed.lessonTitle : getModuleName()}
               </Txt>
               <Arabic size="inline" align="left" numberOfLines={1} style={styles.continueArabic}>
@@ -151,9 +153,7 @@ export default function HomeScreen() {
               </Arabic>
               <Txt variant="caption" tone="faint" numberOfLines={1}>{getDisplaySubtitle()}</Txt>
             </View>
-            <View style={[styles.playButton, { backgroundColor: currentModule.color }]}>
-              <Ionicons name="play" size={17} color={color.textOnAccent} />
-            </View>
+            <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
           </Card>
 
         </Section>
@@ -271,16 +271,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.lg,
     paddingLeft: space.xl,
+    paddingVertical: space.xl,
   },
+  // The surah's own name in the Quran face, under the title.
   learnArabic: {
     fontFamily: font.quran,
     fontSize: 22,
-    lineHeight: 40,
+    lineHeight: 38,
     color: color.sacred,
+    textAlign: 'left',
   },
-  playButton: {
-    width: 42,
-    height: 42,
+  learnPlay: {
+    width: 52,
+    height: 52,
     borderRadius: radius.full,
     alignItems: 'center',
     justifyContent: 'center',
