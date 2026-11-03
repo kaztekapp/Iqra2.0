@@ -37,7 +37,7 @@ function page(file, titles, sections) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${titles.en} - Iqra</title>
+  <title>${titles.en} - ${C.shortName}</title>
   ${style}
 </head>
 <body>
