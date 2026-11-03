@@ -163,6 +163,12 @@ const PREFIXES = ['', 'و', 'ف', 'ب', 'ل', 'ك', 'وَ', 'فَ', 'بِ', 'ل�
 export const RECITE = '\u2063';
 export const asRecitation = (text: string): string => (text.startsWith(RECITE) ? text : RECITE + text);
 
+/** Whole recited lines said right only from phonemes (chosen by ear). */
+const RECITATION_LINES: readonly (readonly [string, string])[] = [
+  // An-Nas 114:4: the joined word lost the kh of al-khannās (approved 2026-11-03, take 5).
+  ['مِن شَرِّلْوَسْوَاسِلْخَنَّاسْ', 'min ʃarrilwaswaːsilxannaːs'],
+];
+
 /** Whole phrases a recitation says right only from phonemes (chosen by ear). */
 const RECITATION_PHONEMES: readonly (readonly [string, string])[] = [
   // Al-Fatiha 1:7, the stop: walaḍ-ḍāāāllīn (approved 2026-11-03, take 6).
@@ -257,6 +263,9 @@ function recite(raw: string): string {
     out.push(spoken);
   }
   if (out.length) out[out.length - 1] = stopOn(out[out.length - 1]);
+  const line = out.join(' ');
+  const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
+  if (whole) return `⟦${whole[1]}|${line}⟧`;
   return out
     .map((w) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);

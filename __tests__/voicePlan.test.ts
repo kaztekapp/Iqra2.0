@@ -94,6 +94,10 @@ describe('recitation (Quran only)', () => {
     expect(recite('عُزَيْرٌ ٱبْنُ ٱللَّهِ وَقَالَتِ')).toContain(seated('عُزَيْرُنِبْنُلَّهِ'));
   });
 
+  it('says An-Nas 4 from the approved phonemes', () => {
+    expect(recite('مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ')).toMatch(/^⟦min ʃarrilwaswaːsilxannaːs\|/);
+  });
+
   it('names the opening letters of a surah', () => {
     expect(recite('الٓمٓ')).toBe('أَلِفْ لَامْ مِيمْ');
     expect(recite('طه')).toBe('طَا هَا');
