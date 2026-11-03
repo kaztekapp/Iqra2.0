@@ -1,13 +1,21 @@
 name: OTA Update
 
+# A push to main only runs the checks. An over-the-air update is published
+# only when someone presses "Run workflow" (Actions → OTA Update), because
+# every update counts its downloaders toward Expo's monthly-user bill.
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      message:
+        description: What this update changes (shown in Expo)
+        required: false
+        default: Manual OTA update
 
 jobs:
   update:
-    name: Publish OTA Update
+    name: Checks, and the update when run by hand
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +40,7 @@ jobs:
         run: npx jest --ci
 
       - name: Setup EAS
+        if: github.event_name == 'workflow_dispatch'
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
@@ -42,15 +51,17 @@ jobs:
       # has no .env (gitignored) so those inline as empty and the published OTA
       # ships with Supabase unconfigured, breaking sign-in.
       - name: Publish update (production)
+        if: github.event_name == 'workflow_dispatch'
         run: eas update --branch production --environment production --message "${MESSAGE:-Manual OTA update}" --non-interactive
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-          MESSAGE: ${{ github.event.head_commit.message }}
+          MESSAGE: ${{ inputs.message }}
 
       # Also publish to the preview branch so internal preview builds
       # (channel: preview) receive the same OTA and can be tested.
       - name: Publish update (preview)
+        if: github.event_name == 'workflow_dispatch'
         run: eas update --branch preview --environment preview --message "${MESSAGE:-Manual OTA update}" --non-interactive
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-          MESSAGE: ${{ github.event.head_commit.message }}
+          MESSAGE: ${{ inputs.message }}
