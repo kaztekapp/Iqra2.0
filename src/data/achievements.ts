@@ -15,6 +15,17 @@ export interface Achievement {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
+  // Listed first, so it is the first card the profile shows (Next up).
+  {
+    id: 'xp_100',
+    title: 'Rising Star',
+    titleArabic: 'نجم صاعد',
+    description: 'Earn 100 XP',
+    icon: 'star-outline',
+    xpReward: 10,
+    category: 'mastery',
+    condition: { type: 'total_xp', value: 100 },
+  },
   // Learning Achievements
   {
     id: 'first_letter',
@@ -274,16 +285,6 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
 
   // XP Milestones
-  {
-    id: 'xp_100',
-    title: 'Rising Star',
-    titleArabic: 'نجم صاعد',
-    description: 'Earn 100 XP',
-    icon: 'star-outline',
-    xpReward: 10,
-    category: 'mastery',
-    condition: { type: 'total_xp', value: 100 },
-  },
   {
     id: 'xp_500',
     title: 'Dedicated Learner',
