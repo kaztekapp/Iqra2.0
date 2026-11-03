@@ -5,6 +5,7 @@
  */
 import { prepareForSpeech, splitSentences, speechKey, splitQuranRuns, hasHadithRun } from './narrationText';
 import { hadithReferenceLine } from './hadithReference';
+import { asRecitation } from './speech/voicePlan';
 import type { NarrationLang } from './storyAudioService';
 
 export interface NarratableBlock {
@@ -112,7 +113,9 @@ export function buildUtterances(blocks: NarratableBlock[], lang: NarrationLang, 
         const key = speechKey(segment.text);
         if (!key || key === lastKey) continue;
         lastKey = key;
-        out.push({ text: segment.text, lang: 'ar', blockId, blockIndex });
+        // The Quran is recited (wasl, waqf); a hadith is read.
+        const text = segment.kind === 'quran' ? asRecitation(segment.text) : segment.text;
+        out.push({ text, lang: 'ar', blockId, blockIndex });
         continue;
       }
       const prepared = prepareForSpeech(segment.text, lang);

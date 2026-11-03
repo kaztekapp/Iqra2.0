@@ -1,6 +1,6 @@
 // A word Hamed only says right from its phonemes is recorded with them, while
 // every voice that cannot read the mark gets the plain word back.
-import { buildSsml, edgeRate, plainSpoken, spokenArabic, spokenNarration } from '../src/services/speech/voicePlan';
+import { asRecitation, buildSsml, chunkLine, edgeRate, plainSpoken, RECITE, spokenArabic, spokenNarration } from '../src/services/speech/voicePlan';
 
 describe('phoneme fixes', () => {
   const line = 'فَلَمَّا جَآءَهُم بِـَٔايَـٰتِنَا إِذَا هُم مِّنْهَا يَضْحَكُونَ';
@@ -67,5 +67,31 @@ describe('Arabic recitation pace', () => {
   it('keeps each voice at the pace chosen by ear', () => {
     expect([edgeRate(1), edgeRate(0.6)]).toEqual(['-25%', '-40%']);
     expect([edgeRate(1, 'ar-SA-ZariyahNeural'), edgeRate(0.6, 'ar-SA-ZariyahNeural')]).toEqual(['-10%', '-25%']);
+  });
+});
+
+describe('recitation (Quran only)', () => {
+  const recite = (t: string) => spokenArabic(asRecitation(t));
+  // Expectations are typed vowel-then-shadda; the normaliser seats shadda first.
+  const seated = (s: string) => s.replace(/([\u064B-\u0650])\u0651/g, '\u0651$1');
+
+  it('joins a silent alif to the word before: sun letter drops the l, moon letter keeps it', () => {
+    expect(recite('مَٰلِكِ يَوْمِ ٱلدِّينِ')).toBe(seated('مَالِكِ يَوْمِدِّينْ'));
+    expect(recite('ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ')).toBe(seated('الْحَمْدُ لِلَّهِ رَبِّلْعَالَمِينْ'));
+  });
+
+  it('stops on the last letter of the line', () => {
+    expect(recite('إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ')).toBe(seated('إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينْ'));
+  });
+
+  it('says the end of Al-Fatiha from the approved phonemes', () => {
+    expect(recite('غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ')).toContain('⟦waladˤdˤaːaːaːlliːn|');
+  });
+
+  it('keeps the mark on every chunk, and leaves other Arabic as it was', () => {
+    const long = asRecitation('ٱلْحَمْدُ لِلَّهِ '.repeat(20).trim());
+    expect(chunkLine(long).length).toBeGreaterThan(1);
+    expect(chunkLine(long).every((c) => c.startsWith(RECITE))).toBe(true);
+    expect(spokenArabic('يَوْمِ ٱلدِّينِ')).not.toContain(seated('يَوْمِدِّينْ'));
   });
 });

@@ -7,6 +7,7 @@ import type { AudioPlayer } from 'expo-audio';
 import { getSurahByNumber } from '../data/arabic/quran/surahs';
 import { audioCacheService } from './audioCacheService';
 import { synthesizeAyahToFile, hasArabicClip } from './speech/arabicTTS';
+import { asRecitation } from './speech/voicePlan';
 import { quietly, reportError } from '../lib/report';
 import { NOW_PLAYING_ARTWORK } from './speech/voicePlan';
 
@@ -447,7 +448,7 @@ class QuranAudioService {
 
       // While the voice rests after a failure, only a verse already kept on the
       // phone can still be read in it; the rest go to the reciter at once.
-      if (speakIt && Date.now() < this.spokenUnavailableUntil && !hasArabicClip(spokenText!)) {
+      if (speakIt && Date.now() < this.spokenUnavailableUntil && !hasArabicClip(asRecitation(spokenText!))) {
         speakIt = false;
         this.notifySpokenFallback(true);
       }

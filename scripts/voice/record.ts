@@ -33,6 +33,7 @@ import {
   clipPath,
   edgeRate,
   spokenArabic,
+  asRecitation,
   spokenNarration,
   buildSsml,
   voiceFor,
@@ -164,7 +165,7 @@ export function buildPlan(): Item[] {
   // Learn Mode's learning voice reads each ayah whole (synthesizeAyahToFile:
   // no chunking), in the narrator's Arabic voice, at the normal pace only.
   for (const ayah of quranAyahs()) {
-    const text = spokenArabic(ayah);
+    const text = spokenArabic(asRecitation(ayah));
     if (!text.trim()) continue;
     for (const voice of ARABIC_VOICES) {
       const rate = edgeRate(1, voice);

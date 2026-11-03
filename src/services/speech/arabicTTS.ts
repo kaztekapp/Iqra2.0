@@ -16,7 +16,7 @@ import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { clipTaken, forgetClip, preloadClip } from './clipPreload';
 import { File, Paths } from 'expo-file-system';
-import { chunkLine, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
+import { asRecitation, chunkLine, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
 import {
   clipName,
@@ -149,7 +149,8 @@ const ayahInFlight = new Map<string, Promise<string>>();
  * a line of a story gets.
  */
 export async function synthesizeAyahToFile(text: string, speed = 1): Promise<string> {
-  const spoken = spokenArabic(text);
+  // An ayah is recited: joined across silent alifs, stopped on its last letter.
+  const spoken = spokenArabic(asRecitation(text));
   if (!spoken) throw new Error('tts_empty');
   const rate = edgeRate(speed, arabicVoice());
   const name = clipName(spoken, arabicVoice(), rate);

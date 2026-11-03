@@ -75,6 +75,8 @@ export function edgeRate(speed: number, voice: string = ARABIC_VOICE): string {
 }
 
 export function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
+  // A recited line stays recited in every chunk.
+  if (text.startsWith(RECITE)) return chunkLine(text.slice(RECITE.length), maxLen).map((c) => RECITE + c);
   const trimmed = text.trim();
   if (trimmed.length <= maxLen) return [trimmed];
 
@@ -136,12 +138,73 @@ export function clipPath(text: string, voice: string, rate: string): string {
 const PREFIXES = ['', 'و', 'ف', 'ب', 'ل', 'ك', 'وَ', 'فَ', 'بِ', 'لِ', 'كَ'];
 
 /**
+ * Quran text is recited, not read: an invisible mark in front of a line
+ * (asRecitation) makes spokenArabic apply the reading rules below. Lines
+ * without it - duas, hadith, the learning screens - are spoken as before.
+ */
+export const RECITE = '\u2063';
+export const asRecitation = (text: string): string => (text.startsWith(RECITE) ? text : RECITE + text);
+
+/** Whole phrases a recitation says right only from phonemes (chosen by ear). */
+const RECITATION_PHONEMES: readonly (readonly [string, string])[] = [
+  // Al-Fatiha 1:7, the stop: walaḍ-ḍāāāllīn (approved 2026-11-03, take 6).
+  ['وَلَاضَّالِّينْ', 'waladˤdˤaːaːaːlliːn'],
+];
+
+/** The normaliser seats shadda before its vowel; a key typed the other way round still matches. */
+const shaddaFirst = (s: string) => s.replace(/([\u064B-\u0650])\u0651/g, '\u0651$1');
+
+const ENDS_IN_VOWEL = /[\u064B-\u0650]$|[اىوي]$/;
+
+/**
+ * The two rules a reciter follows that plain reading does not (approved by
+ * ear on Al-Fatiha, 2026-11-03):
+ * - wasl: a word that opens with the silent alif (ٱ) joins the word before
+ *   it, and before a sun letter the l of "al" goes too: yawmi + ٱلدِّين →
+ *   yawmid-dīn, rabbi + ٱلْعَالَمِين → rabbil-ʿālamīn;
+ * - waqf: the line stops on its last letter: dīni → dīn, a tanween fath
+ *   becomes ā, ة becomes h.
+ */
+function recite(raw: string): string {
+  const words = raw.split(/\s+/).filter(Boolean);
+  const out: string[] = [];
+  for (const w of words) {
+    const spoken = spokenArabic(w);
+    if (!spoken) continue;
+    const prev = out[out.length - 1];
+    const wasl = w.startsWith('\u0671') && /^ا/.test(spoken);
+    if (prev && wasl && ENDS_IN_VOWEL.test(prev) && !prev.includes('⟧') && !spoken.includes('⟦')) {
+      const sun = /^ال.[\u064B-\u0650]?\u0651/.test(spoken);
+      out[out.length - 1] = prev + (sun ? spoken.slice(2) : spoken.slice(1));
+      continue;
+    }
+    out.push(spoken);
+  }
+  const i = out.length - 1;
+  if (i >= 0 && !out[i].includes('⟧')) {
+    let last = out[i]
+      .replace(/ة[\u064B-\u0650]*$/, 'هْ')
+      .replace(/\u064B(ا|ى)?$/, '\u064Eا')
+      .replace(/[\u064C\u064D\u064E\u064F\u0650]+$/, '');
+    if (!/[\u0651\u0652]$/.test(last) && !/[اىوي]$/.test(last)) last += '\u0652';
+    out[i] = last;
+  }
+  return out
+    .map((w) => {
+      const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
+      return fix ? `⟦${fix[1]}|${w}⟧` : w;
+    })
+    .join(' ');
+}
+
+/**
  * The Arabic exactly as it is spoken and recorded: mushaf marks normalized,
  * then the pronunciation fixes applied word by word. A word with a phoneme
  * fix comes out as ⟦ipa|word⟧; the recorder (buildSsml) and the tts function
  * turn that into a phoneme tag, and the phone's own voice takes plainSpoken().
  */
 export function spokenArabic(text: string): string {
+  if (text.startsWith(RECITE)) return recite(text.slice(RECITE.length));
   const normalized = normalizeArabicForSpeech(text);
   if ((!ARABIC_PRONUNCIATIONS.length && !ARABIC_PHONEMES.length) || !normalized) return normalized;
   return normalized
