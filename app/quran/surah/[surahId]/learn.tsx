@@ -17,6 +17,21 @@ import { useLearnModeStore } from '../../../../src/stores/learnModeStore';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 
+/**
+ * The verse's text size, from its length. Verses run from 2 characters
+ * (Ṭā Hā) to 1,208 (al-Baqarah 282), half of them under 93: a short verse is
+ * set large in the middle of the card, a long one smaller so less of it
+ * needs scrolling.
+ */
+function verseFontSize(text: string): number {
+  const n = text.trim().length;
+  if (n <= 35) return 40;
+  if (n <= 100) return 34;
+  if (n <= 220) return 30;
+  if (n <= 450) return 27;
+  return 24;
+}
+
 /** What the player calls the app's own voice, in Arabic. */
 const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 
@@ -58,6 +73,11 @@ export default function LearnModeScreen() {
   // A swipe on the verse moves to the one before or after. The handlers are
   // made once, so they reach the current screen through a ref.
   const stepRef = useRef<(delta: number) => void>(() => {});
+  // A long verse scrolls inside its card; the next one starts at its top.
+  const verseScrollRef = useRef<ScrollView>(null);
+  useEffect(() => {
+    verseScrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [currentAyahIndex]);
   const swipe = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dx) > 18 && Math.abs(g.dx) > Math.abs(g.dy) * 1.5,
@@ -439,15 +459,23 @@ export default function LearnModeScreen() {
         </Text>
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* The verse. Swipe it to move to the next or previous one. */}
+      {/* The verse fills the space between the header and the dock, centred;
+          a long one scrolls inside it. Swipe it to move to the next or previous. */}
+      <ScrollView
+        ref={verseScrollRef}
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={currentAyah.textUthmani.length > 220}
+      >
         <View style={styles.verseCard} {...swipe.panHandlers}>
-          <TajweedText
-            text={currentAyah.textUthmani}
-            tajweedRules={currentAyah.tajweedRules}
-            showTajweed={progress.settings.showTajweedColors}
-            fontSize={30}
-          />
+          <View style={styles.verseText}>
+            <TajweedText
+              text={currentAyah.textUthmani}
+              tajweedRules={currentAyah.tajweedRules}
+              showTajweed={progress.settings.showTajweedColors}
+              fontSize={verseFontSize(currentAyah.textUthmani)}
+            />
+          </View>
           <View style={styles.toggles}>
             <Pressable
               style={[styles.toggleChip, progress.settings.showTajweedColors && styles.toggleChipOn]}
@@ -463,8 +491,12 @@ export default function LearnModeScreen() {
           </View>
         </View>
 
+      </ScrollView>
+
+      {/* The dock: what play will do, and the three buttons, within thumb reach */}
+      <View style={styles.dock}>
         {/* The settings, each showing its current choice; a tap opens it. */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsScroll} contentContainerStyle={styles.chips}>
           <Pressable style={styles.chip} onPress={() => setSheet('voice')} accessibilityRole="button">
             <Ionicons name={useLearningVoice ? 'headset-outline' : 'mic-outline'} size={15} color={color.accentStrong} />
             <Text style={styles.chipValue} numberOfLines={1}>
@@ -484,10 +516,6 @@ export default function LearnModeScreen() {
             <Text style={styles.chipValue}>{wholeSurah ? t('surahLearnMode.all') : `${startVerse}–${endVerse}`}</Text>
           </Pressable>
         </ScrollView>
-      </ScrollView>
-
-      {/* The dock: what play will do, and the three buttons, within thumb reach */}
-      <View style={styles.dock}>
         {useLearningVoice && voiceFellBack ? (
           <View style={styles.voiceFallback} accessibilityLiveRegion="polite">
             <Ionicons name="information-circle" size={16} color={color.warning} />
@@ -726,16 +754,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: space.lg,
+    flexGrow: 1,
+    paddingHorizontal: space.md,
+    paddingBottom: space.md,
   },
   verseCard: {
-    marginHorizontal: space.md,
+    flexGrow: 1,
     backgroundColor: color.surface,
     borderRadius: radius.xl,
     paddingHorizontal: space.lg,
     paddingTop: space.xl,
     paddingBottom: space.lg,
     gap: space.md,
+  },
+  // Takes the card's spare height, so a short verse sits in the middle.
+  verseText: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   toggles: {
     flexDirection: 'row',
@@ -766,11 +801,14 @@ const styles = StyleSheet.create({
   },
 
   // Settings chips
+  chipsScroll: {
+    flexGrow: 0,
+    marginHorizontal: -gutter,
+  },
   chips: {
     flexDirection: 'row',
     gap: space.sm,
-    paddingHorizontal: space.md,
-    paddingTop: space.md,
+    paddingHorizontal: gutter,
   },
   chip: {
     flexDirection: 'row',
