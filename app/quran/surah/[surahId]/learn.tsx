@@ -244,7 +244,11 @@ export default function LearnModeScreen() {
       );
     }
 
-    quranAudioService.playAyah(surah.surahNumber, ayahNumber, {
+    // Verse 1 opens with the Bismillah, once: not again on each repeat.
+    const play = currentRepeatRef.current === 0
+      ? quranAudioService.playAyahWithBasmala.bind(quranAudioService)
+      : quranAudioService.playAyah.bind(quranAudioService);
+    play(surah.surahNumber, ayahNumber, {
       rate: playbackSpeedRef.current,
       neural: learningVoiceRef.current,
       text: ayahs.find((a) => a.ayahNumber === ayahNumber)?.textUthmani,
