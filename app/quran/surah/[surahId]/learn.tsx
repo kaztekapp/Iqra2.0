@@ -503,14 +503,31 @@ export default function LearnModeScreen() {
 
       {/* The dock: what play will do, and the three buttons, within thumb reach */}
       <View style={styles.dock}>
+        {/* Who reads: on the screen, one tap, because it changes what the
+            reader hears more than any setting. */}
+        <View style={styles.voiceSwitch} accessibilityRole="radiogroup">
+          {[true, false].map((learning) => {
+            const on = useLearningVoice === learning;
+            return (
+              <Pressable
+                key={String(learning)}
+                style={[styles.voiceOption, on && styles.voiceOptionOn]}
+                onPress={() => handleVoiceChange(learning)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: on }}
+                accessibilityHint={learning ? t('surahLearnMode.voiceLearningNote') : t('surahLearnMode.voiceReciterNote')}
+              >
+                <Ionicons name={learning ? 'school-outline' : 'mic-outline'} size={15} color={on ? color.textOnAccent : color.textMuted} />
+                <Text style={[styles.voiceOptionText, on && styles.voiceOptionTextOn]} numberOfLines={1}>
+                  {learning ? t('surahLearnMode.voiceLearning') : currentReciter.nameEnglish}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
         {/* The settings, each showing its current choice; a tap opens it. */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsScroll} contentContainerStyle={styles.chips}>
-          <Pressable style={styles.chip} onPress={() => setSheet('voice')} accessibilityRole="button">
-            <Ionicons name={useLearningVoice ? 'headset-outline' : 'mic-outline'} size={15} color={color.accentStrong} />
-            <Text style={styles.chipValue} numberOfLines={1}>
-              {useLearningVoice ? t('surahLearnMode.voiceLearning') : currentReciter.nameEnglish}
-            </Text>
-          </Pressable>
           <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
             <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
             <Text style={styles.chipValue}>{repeatCount}×</Text>
@@ -820,6 +837,34 @@ const styles = StyleSheet.create({
   },
 
   // Settings chips
+  voiceSwitch: {
+    flexDirection: 'row',
+    padding: 3,
+    borderRadius: radius.md,
+    backgroundColor: color.surfaceSunken,
+  },
+  voiceOption: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: 9,
+    paddingHorizontal: space.sm,
+    borderRadius: radius.sm,
+  },
+  voiceOptionOn: {
+    backgroundColor: color.accent,
+  },
+  voiceOptionText: {
+    ...type.caption,
+    fontWeight: weight.semibold,
+    color: color.textMuted,
+    flexShrink: 1,
+  },
+  voiceOptionTextOn: {
+    color: color.textOnAccent,
+  },
   chipsScroll: {
     flexGrow: 0,
     marginHorizontal: -gutter,
