@@ -174,7 +174,13 @@ export default function SurahDetailScreen() {
     : { bookmarkedAyahs: [] as string[], ayahsLearned: [] as string[], ayahsMemorized: [] as string[], completionPercent: 0 };
 
   // Handler functions
-  const handleLearn = useCallback(() => {
+  // Memorize: straight into Learn mode on this surah.
+  const handleMemorize = useCallback(() => {
+    router.push(`/quran/surah/${surahId}/learn`);
+  }, [surahId]);
+
+  // The other memorization methods (recall, chunking, shadowing ...).
+  const handleMethods = useCallback(() => {
     router.push(`/quran/surah/${surahId}/methods`);
   }, [surahId]);
 
@@ -434,14 +440,20 @@ export default function SurahDetailScreen() {
 
       {/* Action Buttons */}
       <View style={styles.actionButtons}>
-        <Pressable style={styles.primaryButton} onPress={handleLearn} accessibilityRole="button" accessibilityLabel={t('surahFeature.learn')}>
-          <Ionicons name="school" size={20} color={color.textOnAccent} />
-          <Text style={styles.primaryButtonText}>{t('surahFeature.learn')}</Text>
+        <Pressable style={styles.primaryButton} onPress={handleMemorize} accessibilityRole="button" accessibilityLabel={t('surahFeature.memorizeSurah')}>
+          <Ionicons name="headset" size={20} color={color.textOnAccent} />
+          <Text style={styles.primaryButtonText}>{t('surahFeature.memorizeSurah')}</Text>
         </Pressable>
-        <Pressable style={styles.secondaryButton} onPress={handleWrite} accessibilityRole="button" accessibilityLabel={t('surahFeature.write')}>
-          <Ionicons name="pencil" size={20} color={color.textOnAccent} />
-          <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
-        </Pressable>
+        <View style={styles.actionRow}>
+          <Pressable style={styles.secondaryButton} onPress={handleWrite} accessibilityRole="button" accessibilityLabel={t('surahFeature.write')}>
+            <Ionicons name="pencil" size={18} color={color.sacred} />
+            <Text style={styles.secondaryButtonText}>{t('surahFeature.write')}</Text>
+          </Pressable>
+          <Pressable style={styles.secondaryButton} onPress={handleMethods} accessibilityRole="button" accessibilityLabel={t('surahFeature.otherMethods')}>
+            <Ionicons name="list" size={18} color={color.sacred} />
+            <Text style={styles.secondaryButtonText} numberOfLines={1}>{t('surahFeature.otherMethods')}</Text>
+          </Pressable>
+        </View>
       </View>
 
       {/* View Toggle */}
@@ -506,7 +518,7 @@ export default function SurahDetailScreen() {
       </View>
     </>
     );
-  }, [surah, currentReciter, isPlayingAll, audioState, currentPlayingAyah, progress.settings, handlePreviousSurah, handleNextSurah, handleLearn, handleWrite, handlePlayAllToggle, toggleTranslation, toggleTransliteration, t]);
+  }, [surah, currentReciter, isPlayingAll, audioState, currentPlayingAyah, progress.settings, handlePreviousSurah, handleNextSurah, handleMemorize, handleMethods, handleWrite, handlePlayAllToggle, toggleTranslation, toggleTransliteration, t]);
 
   // List footer component
   const ListFooter = useCallback(() => (
@@ -893,7 +905,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   actionButtons: {
-    flexDirection: 'row',
     gap: 10,
     marginBottom: 12,
     backgroundColor: color.surface,
@@ -901,7 +912,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   primaryButton: {
-    flex: 1,
     backgroundColor: color.sacred,
     borderRadius: radius.md,
     paddingVertical: 14,
@@ -915,20 +925,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  actionRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  // Outlined in gold: the same family as Memorize, a step quieter.
   secondaryButton: {
     flex: 1,
-    backgroundColor: color.sacred,
+    backgroundColor: color.surface,
+    borderWidth: 1.5,
+    borderColor: withAlpha(color.sacred, 0.45),
     borderRadius: radius.md,
-    paddingVertical: 14,
+    paddingVertical: 11,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
   },
   secondaryButtonText: {
-    color: color.textOnAccent,
-    fontSize: 16,
-    fontWeight: '700',
+    color: color.sacred,
+    fontSize: 15,
+    fontWeight: '600',
+    flexShrink: 1,
   },
   playAllButton: {
     flexDirection: 'row',

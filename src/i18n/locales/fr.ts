@@ -1071,6 +1071,8 @@ export default {
     tajweed: 'Tajweed',
     translationOn: 'Traduire',
     translationOff: 'Traduire',
+    memorizeSurah: 'Mémoriser cette sourate',
+    otherMethods: 'Autres méthodes',
   },
   surahTest: {
     testMode: 'Mode Test',
