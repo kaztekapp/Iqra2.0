@@ -521,7 +521,7 @@ export default function LearnModeScreen() {
           </Pressable>
           <Pressable style={styles.chip} onPress={() => setSheet('verses')} accessibilityRole="button">
             <Text style={styles.chipLabel}>{t('surahLearnMode.verses')}</Text>
-            <Text style={styles.chipValue}>{wholeSurah ? t('surahLearnMode.all') : `${startVerse}–${endVerse}`}</Text>
+            <Text style={styles.chipValue}>{wholeSurah ? t('surahLearnMode.all') : startVerse === endVerse ? String(startVerse) : `${startVerse}–${endVerse}`}</Text>
           </Pressable>
         </ScrollView>
         {useLearningVoice && voiceFellBack ? (

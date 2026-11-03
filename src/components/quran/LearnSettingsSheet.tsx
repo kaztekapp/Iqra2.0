@@ -2,13 +2,16 @@
  * The four Learn mode settings, one sheet each: the voice, how many times a
  * verse repeats (and what happens after), the speed, and which verses.
  *
+ * Verses are chosen with a Start and an End row: - and + (hold to run),
+ * or tap the number to type it.
+ *
  * Each opens from a chip that already shows its current choice, so the main
  * screen stays one verse and one button. Follows the listen and voice sheets:
  * same scrim, sheet, handle and row rhythm. Styles are plain arrays: NativeWind
  * drops Pressable's style function on device (see Card in Primitives).
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Pressable, StyleSheet, Modal, ScrollView } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Modal, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -21,9 +24,6 @@ export const REPEAT_OPTIONS = [1, 2, 3, 5, 10];
 /** Any count can be chosen with - and +, up to this. */
 export const MAX_REPEAT = 99;
 
-/** Verse grid cell size and gap; scrolling to a verse counts rows in these. */
-const CELL = 46;
-const CELL_GAP = 8;
 
 interface Props {
   kind: LearnSheetKind | null;
@@ -86,56 +86,115 @@ function Segments<T extends number>({ values, value, label, onPick, a11y }: { va
   );
 }
 
+/**
+ * A verse number with - and + either side. A tap moves one verse; holding
+ * keeps going, faster after a moment, so verse 250 is a short hold away. The
+ * number itself can be tapped and typed.
+ */
+function VerseStepper({ label, value, min, max, onChange }: { label: string; value: number; min: number; max: number; onChange: (n: number) => void }) {
+  const { t } = useTranslation();
+  const [text, setText] = useState(String(value));
+  useEffect(() => setText(String(value)), [value]);
+
+  // Holding a button: one step at once, then repeats that speed up.
+  const valueRef = useRef(value);
+  valueRef.current = value;
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stop = () => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = null;
+  };
+  useEffect(() => stop, []);
+  const start = (delta: number) => {
+    stop();
+    let steps = 0;
+    const tick = () => {
+      const next = Math.max(min, Math.min(max, valueRef.current + delta));
+      if (next === valueRef.current) return stop();
+      valueRef.current = next;
+      onChange(next);
+      steps += 1;
+      timer.current = setTimeout(tick, steps === 1 ? 400 : steps < 10 ? 110 : 40);
+    };
+    tick();
+  };
+
+  const commit = () => {
+    const n = parseInt(text, 10);
+    if (Number.isFinite(n)) onChange(Math.max(min, Math.min(max, n)));
+    else setText(String(value));
+  };
+
+  return (
+    <View style={styles.stepRow}>
+      <Text style={styles.stepLabel}>{label}</Text>
+      <Pressable
+        style={[styles.stepButton, value <= min && styles.stepperDisabled]}
+        onPressIn={() => start(-1)}
+        onPressOut={stop}
+        disabled={value <= min}
+        accessibilityRole="button"
+        accessibilityLabel={`${label}, ${t('surahLearnMode.verseBefore')}`}
+      >
+        <Ionicons name="remove" size={22} color={color.text} />
+      </Pressable>
+      <TextInput
+        style={styles.stepInput}
+        value={text}
+        onChangeText={(v) => {
+          if (v === '' || /^\d{1,3}$/.test(v)) setText(v);
+        }}
+        onEndEditing={commit}
+        onSubmitEditing={commit}
+        keyboardType="number-pad"
+        returnKeyType="done"
+        selectTextOnFocus
+        maxLength={3}
+        accessibilityLabel={label}
+      />
+      <Pressable
+        style={[styles.stepButton, value >= max && styles.stepperDisabled]}
+        onPressIn={() => start(1)}
+        onPressOut={stop}
+        disabled={value >= max}
+        accessibilityRole="button"
+        accessibilityLabel={`${label}, ${t('surahLearnMode.verseAfter')}`}
+      >
+        <Ionicons name="add" size={22} color={color.text} />
+      </Pressable>
+    </View>
+  );
+}
+
 export function LearnSettingsSheet(props: Props) {
   const { t } = useTranslation();
   const { kind, onClose } = props;
 
-  // Choosing verses is two taps on the grid - where to start, then where to
-  // stop - and only applies when the reader confirms.
+  // The verses being chosen; they apply only when the reader confirms.
   const [pickStart, setPickStart] = useState(props.startVerse);
   const [pickEnd, setPickEnd] = useState(props.endVerse);
-  const [awaitingEnd, setAwaitingEnd] = useState(false);
   useEffect(() => {
     if (kind === 'verses') {
       setPickStart(props.startVerse);
       setPickEnd(props.endVerse);
-      setAwaitingEnd(false);
     }
   }, [kind]);
 
   const stepRepeat = (n: number) => props.onRepeat(Math.max(1, Math.min(MAX_REPEAT, n)));
 
-  const tapVerse = (n: number) => {
-    if (!awaitingEnd) {
-      setPickStart(n);
-      setPickEnd(n);
-      setAwaitingEnd(true);
-    } else {
-      setPickStart(Math.min(pickStart, n));
-      setPickEnd(Math.max(pickStart, n));
-      setAwaitingEnd(false);
-    }
+  // Start and End never cross: moving one past the other carries it along.
+  const changeStart = (n: number) => {
+    setPickStart(n);
+    if (n > pickEnd) setPickEnd(n);
   };
-
-  // Long surahs: the grid opens at the verse on screen, and jumps by fifty.
-  const gridRef = useRef<ScrollView>(null);
-  const [gridWidth, setGridWidth] = useState(0);
-  const columns = Math.max(1, Math.floor((gridWidth + CELL_GAP) / (CELL + CELL_GAP)));
-  const rowOffset = (verse: number) => Math.floor((verse - 1) / columns) * (CELL + CELL_GAP);
-  const scrollToVerse = (verse: number, animated = true) =>
-    gridRef.current?.scrollTo({ y: Math.max(0, rowOffset(verse) - (CELL + CELL_GAP)), animated });
-  useEffect(() => {
-    if (kind === 'verses' && gridWidth > 0) scrollToVerse(props.startVerse, false);
-  }, [kind, gridWidth]);
-  const blocks =
-    props.verseCount > 60
-      ? Array.from({ length: Math.ceil(props.verseCount / 50) }, (_, i) => [i * 50 + 1, Math.min((i + 1) * 50, props.verseCount)])
-      : [];
+  const changeEnd = (n: number) => {
+    setPickEnd(n);
+    if (n < pickStart) setPickStart(n);
+  };
 
   const quick = (start: number, end: number) => {
     setPickStart(start);
     setPickEnd(Math.min(end, props.verseCount));
-    setAwaitingEnd(false);
   };
 
   const title =
@@ -146,7 +205,7 @@ export function LearnSettingsSheet(props: Props) {
 
   return (
     <Modal visible={kind !== null} animationType="slide" transparent onRequestClose={onClose}>
-      <View style={styles.scrim}>
+      <KeyboardAvoidingView style={styles.scrim} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityRole="button" accessibilityLabel={t('listen.close')} />
         <View style={styles.sheet}>
           <SafeAreaView edges={['bottom']} style={styles.safe}>
@@ -244,16 +303,9 @@ export function LearnSettingsSheet(props: Props) {
             )}
 
             {kind === 'verses' && (
-              <View style={[styles.body, styles.versesBody]}>
+              <View style={styles.body}>
                 <View style={styles.quickRow}>
-                  <Pressable
-                    style={styles.quick}
-                    onPress={() => {
-                      quick(props.currentVerse, props.currentVerse);
-                      scrollToVerse(props.currentVerse);
-                    }}
-                    accessibilityRole="button"
-                  >
+                  <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse)} accessibilityRole="button">
                     <Text style={styles.quickText}>{t('surahLearnMode.thisVerse')}</Text>
                   </Pressable>
                   <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse + 4)} accessibilityRole="button">
@@ -263,48 +315,9 @@ export function LearnSettingsSheet(props: Props) {
                     <Text style={styles.quickText}>{t('surahLearnMode.wholeSurah')}</Text>
                   </Pressable>
                 </View>
-                {blocks.length > 0 && (
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.blocksScroll} contentContainerStyle={styles.blocks}>
-                    {blocks.map(([from, to]) => (
-                      <Pressable
-                        key={from}
-                        style={styles.block}
-                        onPress={() => scrollToVerse(from)}
-                        accessibilityRole="button"
-                        accessibilityLabel={t('surahLearnMode.versesFromTo', { start: from, end: to })}
-                      >
-                        <Text style={styles.blockText}>{from}–{to}</Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                )}
-                <Text style={styles.label}>
-                  {awaitingEnd ? t('surahLearnMode.tapEnd') : t('surahLearnMode.tapStart')}
-                </Text>
-                <ScrollView
-                  ref={gridRef}
-                  style={styles.gridScroll}
-                  contentContainerStyle={styles.grid}
-                  onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
-                  showsVerticalScrollIndicator={props.verseCount > 60}
-                >
-                  {Array.from({ length: props.verseCount }, (_, i) => i + 1).map((n) => {
-                    const edge = n === pickStart || n === pickEnd;
-                    const inside = n > pickStart && n < pickEnd;
-                    return (
-                      <Pressable
-                        key={n}
-                        style={[styles.cell, inside && styles.cellInside, edge && styles.cellEdge]}
-                        onPress={() => tapVerse(n)}
-                        accessibilityRole="button"
-                        accessibilityState={{ selected: edge || inside }}
-                        accessibilityLabel={t('surahLearnMode.verseN', { verse: n })}
-                      >
-                        <Text style={[styles.cellText, inside && styles.cellTextInside, edge && styles.cellTextEdge]}>{n}</Text>
-                      </Pressable>
-                    );
-                  })}
-                </ScrollView>
+                <VerseStepper label={t('surahLearnMode.fromVerse')} value={pickStart} min={1} max={props.verseCount} onChange={changeStart} />
+                <VerseStepper label={t('surahLearnMode.toVerse')} value={pickEnd} min={1} max={props.verseCount} onChange={changeEnd} />
+                <Text style={styles.hint}>{t('surahLearnMode.holdHint', { total: props.verseCount })}</Text>
                 <Pressable
                   style={styles.done}
                   onPress={() => {
@@ -329,7 +342,7 @@ export function LearnSettingsSheet(props: Props) {
             )}
           </SafeAreaView>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -376,9 +389,6 @@ const styles = StyleSheet.create({
   body: {
     gap: space.sm,
     paddingTop: space.xs,
-  },
-  versesBody: {
-    flexShrink: 1,
   },
   label: {
     ...type.caption,
@@ -488,31 +498,43 @@ const styles = StyleSheet.create({
   customValueOn: {
     color: color.accentStrong,
   },
+  stepRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    marginTop: space.sm,
+  },
+  stepLabel: {
+    flex: 1,
+    ...type.body,
+    fontWeight: weight.semibold,
+    color: color.text,
+  },
+  stepButton: {
+    width: 52,
+    height: 52,
+    borderRadius: radius.md,
+    backgroundColor: color.surfaceSunken,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepInput: {
+    width: 72,
+    height: 52,
+    borderRadius: radius.md,
+    borderWidth: 1.5,
+    borderColor: color.border,
+    textAlign: 'center',
+    ...type.bodyLarge,
+    fontWeight: weight.semibold,
+    color: color.text,
+    fontVariant: ['tabular-nums'],
+    paddingVertical: 0,
+  },
   quickRow: {
     flexDirection: 'row',
     gap: space.sm,
     marginBottom: space.xs,
-  },
-  blocksScroll: {
-    flexGrow: 0,
-    marginHorizontal: -gutter,
-  },
-  blocks: {
-    flexDirection: 'row',
-    gap: space.sm,
-    paddingHorizontal: gutter,
-  },
-  block: {
-    paddingHorizontal: space.md,
-    paddingVertical: 6,
-    borderRadius: radius.full,
-    backgroundColor: color.surfaceSunken,
-  },
-  blockText: {
-    ...type.caption,
-    fontWeight: weight.semibold,
-    color: color.text,
-    fontVariant: ['tabular-nums'],
   },
   quick: {
     flex: 1,
@@ -526,41 +548,6 @@ const styles = StyleSheet.create({
     ...type.caption,
     fontWeight: weight.semibold,
     color: color.accentStrong,
-  },
-  gridScroll: {
-    flexGrow: 0,
-    maxHeight: 300,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: CELL_GAP,
-  },
-  cell: {
-    width: CELL,
-    height: CELL,
-    borderRadius: radius.md,
-    backgroundColor: color.surfaceSunken,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cellInside: {
-    backgroundColor: color.accentSoft,
-  },
-  cellEdge: {
-    backgroundColor: color.accent,
-  },
-  cellText: {
-    ...type.body,
-    fontWeight: weight.semibold,
-    color: color.text,
-    fontVariant: ['tabular-nums'],
-  },
-  cellTextInside: {
-    color: color.accentStrong,
-  },
-  cellTextEdge: {
-    color: color.textOnAccent,
   },
   done: {
     marginTop: space.lg,
