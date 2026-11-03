@@ -129,21 +129,12 @@ export function MiniAudioPlayer() {
   };
 
   const handleNavigateToSurah = () => {
-    if (currentlyPlaying) {
-      if (currentlyPlaying.source === 'learn') {
-        router.push(`/quran/surah/${currentlyPlaying.surahId}/learn`);
-      } else {
-        router.push(`/quran/surah/${currentlyPlaying.surahId}`);
-      }
-    }
+    if (currentlyPlaying) router.push(`/quran/surah/${currentlyPlaying.surahId}`);
   };
 
-  // Learn mode has its own play, previous and next in its dock: a second set
-  // of controls over it only gets in the way. The player comes back when the
-  // reader leaves with the verse still playing.
-  const onLearnScreen = segments[0] === 'quran' && (segments as string[])[segments.length - 1] === 'learn';
-
-  if (!currentlyPlaying || storyReading || onLearnScreen) return null;
+  // Learn mode has its own play, previous and next, and stops when the reader
+  // leaves it: its verses never get this player.
+  if (!currentlyPlaying || storyReading || currentlyPlaying.source === 'learn') return null;
 
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 1],
@@ -191,17 +182,15 @@ export function MiniAudioPlayer() {
 
         {/* Controls */}
         <View style={styles.controls}>
-          {currentlyPlaying.source !== 'learn' && (
-            <Pressable
-              style={[styles.skipButton, currentlyPlaying.surahNumber <= 1 && styles.disabledButton]}
-              disabled={currentlyPlaying.surahNumber <= 1}
-              onPress={(e) => { e.stopPropagation(); handlePreviousSurah(); }}
-              accessibilityRole="button"
-              accessibilityLabel="Previous surah"
-            >
-              <Ionicons name="play-skip-back" size={14} color={currentlyPlaying.surahNumber > 1 ? color.textMuted : color.borderStrong} />
-            </Pressable>
-          )}
+          <Pressable
+            style={[styles.skipButton, currentlyPlaying.surahNumber <= 1 && styles.disabledButton]}
+            disabled={currentlyPlaying.surahNumber <= 1}
+            onPress={(e) => { e.stopPropagation(); handlePreviousSurah(); }}
+            accessibilityRole="button"
+            accessibilityLabel="Previous surah"
+          >
+            <Ionicons name="play-skip-back" size={14} color={currentlyPlaying.surahNumber > 1 ? color.textMuted : color.borderStrong} />
+          </Pressable>
           <Pressable
             style={[styles.controlButton, currentlyPlaying.ayahNumber <= 1 && styles.disabledButton]}
             disabled={currentlyPlaying.ayahNumber <= 1}
@@ -236,17 +225,15 @@ export function MiniAudioPlayer() {
           >
             <Ionicons name="chevron-forward" size={18} color={currentlyPlaying.ayahNumber < currentlyPlaying.totalAyahs ? color.text : color.borderStrong} />
           </Pressable>
-          {currentlyPlaying.source !== 'learn' && (
-            <Pressable
-              style={[styles.skipButton, currentlyPlaying.surahNumber >= 114 && styles.disabledButton]}
-              disabled={currentlyPlaying.surahNumber >= 114}
-              onPress={(e) => { e.stopPropagation(); handleNextSurah(); }}
-              accessibilityRole="button"
-              accessibilityLabel="Next surah"
-            >
-              <Ionicons name="play-skip-forward" size={14} color={currentlyPlaying.surahNumber < 114 ? color.textMuted : color.borderStrong} />
-            </Pressable>
-          )}
+          <Pressable
+            style={[styles.skipButton, currentlyPlaying.surahNumber >= 114 && styles.disabledButton]}
+            disabled={currentlyPlaying.surahNumber >= 114}
+            onPress={(e) => { e.stopPropagation(); handleNextSurah(); }}
+            accessibilityRole="button"
+            accessibilityLabel="Next surah"
+          >
+            <Ionicons name="play-skip-forward" size={14} color={currentlyPlaying.surahNumber < 114 ? color.textMuted : color.borderStrong} />
+          </Pressable>
           <Pressable
             style={styles.closeButton}
             onPress={(e) => { e.stopPropagation(); handleClose(); }}

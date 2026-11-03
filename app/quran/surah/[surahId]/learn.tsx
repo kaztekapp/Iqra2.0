@@ -143,6 +143,13 @@ export default function LearnModeScreen() {
   useEffect(() => {
     return () => {
       quranAudioService.setSpokenVoice(false, null);
+      // Leaving Learn mode ends its playback: it has no mini player to be
+      // stopped from elsewhere.
+      if (useAudioPlayerStore.getState().currentlyPlaying?.source === 'learn') {
+        isPlayingRef.current = false;
+        quranAudioService.stop();
+        useAudioPlayerStore.getState().clearPlayer();
+      }
     };
   }, []);
 
