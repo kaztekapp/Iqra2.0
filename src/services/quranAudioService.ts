@@ -114,6 +114,8 @@ class QuranAudioService {
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
   private stoppedByUser = false; // Track if playback was stopped by user
+  /** Counts a verse as finished if it stopped at its end but the end notice never came. */
+  private endFallback: ReturnType<typeof setTimeout> | null = null;
   private isAudioConfigured = false; // Track if audio session is configured
   private configurationInProgress = false; // Prevent concurrent configuration
   private playCount = 0; // Track number of plays for periodic reset
@@ -542,11 +544,49 @@ class QuranAudioService {
         // Update playing/paused state
         if (status.isLoaded) {
           if (status.playing && this.audioState !== 'playing') {
+            // Playing again: our own resume, or Play on the lock screen.
+            const wasPaused = this.audioState === 'paused';
             this.audioState = 'playing';
+            if (wasPaused) options?.onStateChange?.('playing');
           } else if (!status.playing && this.audioState === 'playing') {
-            // Check if finished or just paused (duration must be valid to avoid false positives during rate changes)
-            const isFinished = status.duration > 0 && status.currentTime > 0 && status.currentTime >= status.duration - 0.1;
+            // Finished, or paused from outside the app (lock screen, headphones,
+            // Control Centre). The player says when it reached the end; the old
+            // test - position within 0.1 s of the duration - also matched a
+            // pause late in a short verse, because the duration it reports is
+            // an estimate. That pause was taken for the end and the next verse
+            // started: "it keeps playing even when I stopped it".
+            const nearEnd = status.duration > 0 && status.currentTime > 0 && status.currentTime >= status.duration - 0.1;
+            const pausedOutside = status.timeControlStatus === 'paused' && !status.isBuffering;
+            const isFinished = status.didJustFinish || (nearEnd && !pausedOutside);
+            if (!isFinished && pausedOutside && !nearEnd) {
+              // The lock screen paused the player itself, mid-verse: say so, so
+              // nothing chains on and every screen shows Play.
+              this.audioState = 'paused';
+              options?.onStateChange?.('paused');
+            } else if (!isFinished && nearEnd && !this.endFallback) {
+              // Stopped at the very end: the end notice normally follows at
+              // once. Should it never come, count the verse as finished anyway,
+              // so a surah cannot stall between two verses.
+              const atEnd = player;
+              this.endFallback = setTimeout(() => {
+                this.endFallback = null;
+                if (this.player === atEnd && this.audioState === 'playing' && !atEnd.playing) {
+                  this.statusSubscription?.remove();
+                  this.statusSubscription = null;
+                  this.audioState = 'idle';
+                  this.currentSurah = null;
+                  this.currentAyah = null;
+                  options?.onStateChange?.('idle');
+                  const done = this.onCompleteCallback;
+                  done?.();
+                }
+              }, 1500);
+            }
             if (isFinished) {
+              if (this.endFallback) {
+                clearTimeout(this.endFallback);
+                this.endFallback = null;
+              }
               // Store callback before cleanup
               const completeCallback = this.onCompleteCallback;
               const finishedPlayer = this.player;
