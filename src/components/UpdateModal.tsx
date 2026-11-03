@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal, View, Text, Pressable, StyleSheet, Animated, Easing, AppState, Linking, Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import * as Updates from 'expo-updates';
@@ -8,8 +7,6 @@ import { color, radius } from '../theme/tokens';
 import { newerStoreRelease, type StoreRelease } from '../services/storeVersion';
 import { quietly } from '../lib/report';
 
-/** The store version the user last answered "Later" to; a newer one asks again. */
-const STORE_DISMISSED_KEY = 'iqra.storeUpdateDismissed';
 
 /**
  * Self-contained EAS Update (OTA) prompt. On launch, each time the app is
@@ -38,17 +35,8 @@ export function UpdateModal() {
   const { t } = useTranslation();
   const { availableUpdate, isUpdatePending } = Updates.useUpdates();
   const availableId = availableUpdate?.updateId ?? null;
-  // The id of the update the user last dismissed; a newer one is shown again.
-  const [dismissedId, setDismissedId] = useState<string | null>(null);
   const [reloading, setReloading] = useState(false);
   const [storeRelease, setStoreRelease] = useState<StoreRelease | null>(null);
-  const [storeDismissed, setStoreDismissed] = useState<string | null>(null);
-
-  useEffect(() => {
-    AsyncStorage.getItem(STORE_DISMISSED_KEY)
-      .then((v) => setStoreDismissed(v))
-      .catch(() => {});
-  }, []);
 
   const scale = useRef(new Animated.Value(0.96)).current;
   const opacity = useRef(new Animated.Value(0)).current;
@@ -84,8 +72,10 @@ export function UpdateModal() {
     if (availableId) Updates.fetchUpdateAsync().catch(() => {});
   }, [availableId]);
 
-  const showStore = !!storeRelease && storeDismissed !== storeRelease.version;
-  const showOta = isUpdatePending && dismissedId !== availableId;
+  // Both are required: there is no "Later". A newer store version must be
+  // installed, and a downloaded fix must be applied, before the app is used.
+  const showStore = !!storeRelease;
+  const showOta = isUpdatePending;
   const visible = showStore || showOta;
 
   useEffect(() => {
@@ -105,15 +95,6 @@ export function UpdateModal() {
     }
   }, [visible, opacity, scale]);
 
-  const later = () => {
-    if (showStore && storeRelease) {
-      setStoreDismissed(storeRelease.version);
-      AsyncStorage.setItem(STORE_DISMISSED_KEY, storeRelease.version).catch(() => {});
-    } else {
-      setDismissedId(availableId);
-    }
-  };
-
   const openStore = () => {
     if (!storeRelease) return;
     Linking.openURL(storeRelease.url).catch((e) => quietly(e, 'components/UpdateModal'));
@@ -131,7 +112,7 @@ export function UpdateModal() {
   if (!visible) return null;
 
   return (
-    <Modal visible transparent animationType="fade" onRequestClose={later}>
+    <Modal visible transparent animationType="fade" onRequestClose={() => { /* required: the back button does not close it */ }}>
       <View style={styles.overlay}>
         <Animated.View style={[styles.card, { opacity, transform: [{ scale }] }]}>
           <View style={styles.iconWrap}>
@@ -149,15 +130,6 @@ export function UpdateModal() {
           </Text>
 
           <View style={styles.actions}>
-            <Pressable
-              style={styles.secondaryButton}
-              onPress={later}
-              disabled={reloading}
-              accessibilityRole="button"
-              accessibilityLabel={t('profile.later')}
-            >
-              <Text style={styles.secondaryText}>{t('profile.later')}</Text>
-            </Pressable>
             {showStore ? (
               <Pressable
                 style={styles.primaryButton}
@@ -232,21 +204,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     width: '100%',
-  },
-  secondaryButton: {
-    flex: 1,
-    paddingVertical: 13,
-    borderRadius: radius.md,
-    backgroundColor: color.bg,
-    borderWidth: 1,
-    borderColor: color.border,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  secondaryText: {
-    color: color.text,
-    fontSize: 15,
-    fontWeight: '600',
   },
   primaryButton: {
     flex: 1,
