@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mudarris",
     "slug": "iqra2",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Mudarris: Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, read the Quran with audio recitations, and learn the stories of the prophets.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
