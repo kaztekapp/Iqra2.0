@@ -240,8 +240,7 @@ export default function SurahDetailScreen() {
     // Auto-scroll to the current ayah
     scrollToAyah(ayah.id);
 
-    // A surah played from its first verse opens with the Bismillah.
-    await quranAudioService.playAyahWithBasmala(surah.surahNumber, ayah.ayahNumber, {
+    await quranAudioService.playAyah(surah.surahNumber, ayah.ayahNumber, {
       rate: playbackSpeedRef.current,
       onStateChange: (state) => {
         setAudioState(state);

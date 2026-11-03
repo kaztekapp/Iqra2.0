@@ -69,8 +69,7 @@ export function startContinuousPlay(surahNumber: number, ayahNumber: number, tot
     isPaused: false,
   });
 
-  // The next surah, reached by playing on, opens with the Bismillah.
-  quranAudioService.playAyahWithBasmala(surahNumber, ayahNumber, {
+  quranAudioService.playAyah(surahNumber, ayahNumber, {
     onStateChange: (state) => {
       if (state === 'playing') useAudioPlayerStore.setState({ isPlaying: true, isLoading: false, isPaused: false });
       else if (state === 'paused') useAudioPlayerStore.setState({ isPaused: true, isLoading: false, isPlaying: false });

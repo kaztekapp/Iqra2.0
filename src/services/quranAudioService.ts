@@ -21,8 +21,6 @@ const SPOKEN_RETRY_AFTER_MS = 2 * 60 * 1000;
 // Format: https://everyayah.com/data/{reciter_folder}/{surah_number}{ayah_number}.mp3
 // Surah and ayah are zero-padded to 3 digits each (e.g., 001001.mp3 for Al-Fatiha:1)
 
-import { BASMALA, opensWithBasmala } from './basmala';
-
 export const QURAN_RECITERS = {
   'mishary-alafasy': {
     id: 'mishary-alafasy',
@@ -384,35 +382,6 @@ class QuranAudioService {
     // get ready, and another failed round trip would only cost data.
     if (Date.now() < this.spokenUnavailableUntil) return;
     synthesizeAyahToFile(body).catch(() => {});
-  }
-
-  /**
-   * Play an ayah, and when it opens a surah, the Bismillah before it.
-   *
-   * Every surah is recited from "bismi-llāhi r-raḥmāni r-raḥīm", except
-   * Al-Fatihah, where it is the first verse itself, and At-Tawbah, which has
-   * none. The recitation files hold verses only, so the Bismillah is Al-Fatihah
-   * 1:1, from the same reciter, or in the learning voice the same words (and
-   * the same kept clip) as that verse.
-   */
-  async playAyahWithBasmala(
-    surahNumber: number,
-    ayahNumber: number,
-    options: Parameters<QuranAudioService['playAyah']>[2] = {}
-  ): Promise<void> {
-    if (!opensWithBasmala(surahNumber, ayahNumber)) return this.playAyah(surahNumber, ayahNumber, options);
-    return this.playAyah(1, 1, {
-      ...options,
-      text: options.neural ? BASMALA : undefined,
-      // Then the verse itself; the caller hears only its completion.
-      onComplete: () => {
-        if (!this.stoppedByUser) void this.playAyah(surahNumber, ayahNumber, options);
-      },
-      // A Bismillah that will not play must not cost the verse.
-      onError: () => {
-        if (!this.stoppedByUser) void this.playAyah(surahNumber, ayahNumber, options);
-      },
-    });
   }
 
   /**
