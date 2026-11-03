@@ -14,9 +14,11 @@ on:
         default: Manual OTA update
 
 # One publish at a time, in order: two overlapping runs once let an older
-# update finish after a newer one and become the live version.
+# update finish after a newer one and become the live version. Only the
+# publishes queue together: GitHub keeps one waiting run per group, so a push
+# in the same group used to cancel a publish that was waiting its turn.
 concurrency:
-  group: ota-update
+  group: ${{ github.event_name == 'workflow_dispatch' && 'ota-publish' || format('ota-checks-{0}', github.sha) }}
   cancel-in-progress: false
 
 jobs:
