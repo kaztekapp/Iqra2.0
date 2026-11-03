@@ -11,6 +11,9 @@ import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../
 import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 import { color, radius } from '../../../../src/theme/tokens';
+import { SurahPickerSheet } from '../../../../src/components/quran/SurahPickerSheet';
+import { useLearnModeStore } from '../../../../src/stores/learnModeStore';
+import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../../src/theme/icons';
 
@@ -46,7 +49,16 @@ export default function LearnModeScreen() {
   const [startVerseInput, setStartVerseInput] = useState('1');
   const [endVerseInput, setEndVerseInput] = useState(String(ayahs.length || 1));
   const [showRangeSelector, setShowRangeSelector] = useState(false);
-  const [showGuide, setShowGuide] = useState(false);
+  const [showSurahPicker, setShowSurahPicker] = useState(false);
+  // Tracked by hand: NativeWind drops Pressable's style function on device.
+  const [switchPressed, setSwitchPressed] = useState(false);
+  const { lc } = useLocalizedContent();
+  const setLastSurah = useLearnModeStore((s) => s.setLastSurah);
+
+  // Remembered for the Learn mode shortcut on Home.
+  useEffect(() => {
+    if (surah) setLastSurah(surah.id);
+  }, [surah?.id]);
 
   // Use ref to track values in callbacks (avoids stale closure)
   const currentRepeatRef = useRef(0);
@@ -387,101 +399,29 @@ export default function LearnModeScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* How to Use Guide */}
+        {/* The surah being learned; tap to learn another */}
         <Pressable
-          style={styles.guideHeader}
-          onPress={() => setShowGuide(!showGuide)}
+          style={[styles.surahSwitch, switchPressed && styles.surahSwitchPressed]}
+          onPressIn={() => setSwitchPressed(true)}
+          onPressOut={() => setSwitchPressed(false)}
+          onPress={() => setShowSurahPicker(true)}
           accessibilityRole="button"
-          accessibilityLabel={showGuide ? `${t('surahLearnMode.howToUse')}, collapse` : `${t('surahLearnMode.howToUse')}, expand`}
+          accessibilityLabel={`${t('surahLearnMode.changeSurah')}: ${surah.nameEnglish}`}
         >
-          <View style={styles.guideHeaderLeft}>
-            <View style={styles.guideIconBg}>
-              <Ionicons name="book-outline" size={16} color={color.progress} />
-            </View>
-            <Text style={styles.guideHeaderText}>{t('surahLearnMode.howToUse')}</Text>
+          <View style={styles.surahSwitchNumber}>
+            <Text style={styles.surahSwitchNumberText}>{surah.surahNumber}</Text>
           </View>
-          <Ionicons
-            name={showGuide ? 'chevron-up' : 'chevron-down'}
-            size={18}
-            color={color.textFaint}
-          />
+          <View style={styles.surahSwitchText}>
+            <Text style={styles.surahSwitchTitle} numberOfLines={1}>{surah.nameEnglish}</Text>
+            <Text style={styles.surahSwitchSub} numberOfLines={1}>
+              {lc(surah.meaning, surah.meaningFr)}, {t('surahLearnMode.ayahCount', { count: surah.ayahCount })}
+            </Text>
+          </View>
+          <View style={styles.surahSwitchAction}>
+            <Text style={styles.surahSwitchActionText}>{t('surahLearnMode.changeSurah')}</Text>
+            <Ionicons name="chevron-down" size={16} color={color.accentStrong} />
+          </View>
         </Pressable>
-
-        {showGuide && (
-          <View style={styles.guideContent}>
-            {/* Play/Pause */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="play" size={14} color={color.progress} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guidePlayPauseTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guidePlayPauseDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Speed */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="speedometer-outline" size={14} color={color.warning} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideSpeedTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideSpeedDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Repeat */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="repeat" size={14} color={color.progress} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideRepeatTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideRepeatDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Auto-Advance */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="arrow-forward" size={14} color={color.warning} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideAutoAdvanceTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideAutoAdvanceDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Verse Range */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="options-outline" size={14} color={color.progress} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideVerseRangeTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideVerseRangeDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Background Playback */}
-            <View style={styles.guideItem}>
-              <View style={styles.guideItemIcon}>
-                <Ionicons name="musical-notes-outline" size={14} color={color.progress} />
-              </View>
-              <View style={styles.guideItemText}>
-                <Text style={styles.guideItemTitle}>{t('surahLearnMode.guideBackgroundTitle')}</Text>
-                <Text style={styles.guideItemDesc}>{t('surahLearnMode.guideBackgroundDesc')}</Text>
-              </View>
-            </View>
-
-            {/* Tip */}
-            <View style={styles.guideTip}>
-              <Ionicons name="bulb-outline" size={16} color={color.sacredBright} />
-              <Text style={styles.guideTipText}>{t('surahLearnMode.guideTip')}</Text>
-            </View>
-          </View>
-        )}
 
         {/* Ayah Card */}
         <View style={styles.ayahCard}>
@@ -808,6 +748,21 @@ export default function LearnModeScreen() {
           </View>
         </Pressable>
       </ScrollView>
+
+      <SurahPickerSheet
+        visible={showSurahPicker}
+        currentSurahId={surah.id}
+        onClose={() => setShowSurahPicker(false)}
+        onPick={(picked) => {
+          setShowSurahPicker(false);
+          if (picked.id === surah.id) return;
+          // A new surah starts from its first verse: the one playing stops.
+          isPlayingRef.current = false;
+          quranAudioService.stop();
+          clearPlayer();
+          router.replace(`/quran/surah/${picked.id}/learn`);
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -874,82 +829,58 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  guideHeader: {
+  surahSwitch: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 12,
     backgroundColor: color.surface,
     borderRadius: radius.md,
-    padding: 14,
+    borderWidth: 1,
+    borderColor: withAlpha(color.sacred, 0.25),
+    paddingVertical: 12,
+    paddingHorizontal: 14,
     marginTop: 12,
   },
-  guideHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+  surahSwitchPressed: {
+    backgroundColor: color.sacredSoft,
   },
-  guideIconBg: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.sm,
-    backgroundColor: withAlpha(color.progress, 0.08),
+  // Gold marks Quran content across the app.
+  surahSwitchNumber: {
+    width: 36,
+    height: 36,
+    borderRadius: radius.full,
+    backgroundColor: color.sacred,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  guideHeaderText: {
+  surahSwitchNumberText: {
+    color: color.textOnAccent,
+    fontSize: 13,
+    fontWeight: '600',
+    fontVariant: ['tabular-nums'],
+  },
+  surahSwitchText: {
+    flex: 1,
+  },
+  surahSwitchTitle: {
     color: color.text,
     fontSize: 15,
     fontWeight: '600',
   },
-  guideContent: {
-    backgroundColor: color.surface,
-    borderRadius: radius.md,
-    padding: 16,
-    marginTop: 8,
-    gap: 16,
-  },
-  guideItem: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  guideItemIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: radius.sm,
-    backgroundColor: color.surfaceSunken,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 1,
-  },
-  guideItemText: {
-    flex: 1,
-    gap: 3,
-  },
-  guideItemTitle: {
-    color: color.text,
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  guideItemDesc: {
+  surahSwitchSub: {
     color: color.textMuted,
     fontSize: 13,
-    lineHeight: 19,
+    marginTop: 1,
   },
-  guideTip: {
+  surahSwitchAction: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    backgroundColor: withAlpha(color.sacredBright, 0.06),
-    borderRadius: radius.sm,
-    padding: 12,
-    marginTop: 4,
+    alignItems: 'center',
+    gap: 2,
   },
-  guideTipText: {
-    color: color.sacredBright,
+  surahSwitchActionText: {
+    color: color.accentStrong,
     fontSize: 13,
-    lineHeight: 19,
-    flex: 1,
-    fontStyle: 'italic',
+    fontWeight: '600',
   },
   ayahCard: {
     backgroundColor: color.surface,

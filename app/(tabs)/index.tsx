@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { router, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore, ModuleType } from '../../src/stores/progressStore';
+import { useLearnModeStore } from '../../src/stores/learnModeStore';
+import { getSurahById } from '../../src/data/arabic/quran';
 import {
   Txt,
   Arabic,
@@ -15,7 +17,7 @@ import {
   MastheadWash,
   withAlpha,
 } from '../../src/components/ui/Primitives';
-import { color, type, weight, space, radius, gutter } from '../../src/theme/tokens';
+import { color, type, weight, space, radius, gutter, font } from '../../src/theme/tokens';
 
 /**
  * Module colour is semantic, not decorative: gold marks sacred content, indigo
@@ -55,6 +57,8 @@ export default function HomeScreen() {
   const { t } = useTranslation();
   const progress = useProgressStore((s) => s.progress);
   const lastAccessed = useProgressStore((s) => s.lastAccessed);
+  // Learn mode opens on the surah last learned there, Al-Fatihah the first time.
+  const learnSurah = getSurahById(useLearnModeStore((s) => s.lastSurahId) ?? 'al-fatihah') ?? getSurahById('al-fatihah');
 
   const tipIndex = useMemo(() => {
     const now = new Date();
@@ -129,6 +133,24 @@ export default function HomeScreen() {
               <Ionicons name="play" size={17} color={color.textOnAccent} />
             </View>
           </Card>
+
+          {learnSurah ? (
+            <Card
+              onPress={() => router.push(`/quran/surah/${learnSurah.id}/learn` as Href)}
+              accent={color.sacred}
+              accessibilityLabel={`${t('home.learnMode')}: ${t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}`}
+              style={styles.learnCard}
+            >
+              <IconTile name="headset" tint={color.sacred} />
+              <View style={styles.continueText}>
+                <Txt variant="body" weight="semibold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Txt variant="caption" tone="faint" numberOfLines={1}>
+                  {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
+                </Txt>
+              </View>
+              <Text style={styles.learnArabic} allowFontScaling={false}>{learnSurah.nameArabic}</Text>
+            </Card>
+          ) : null}
         </Section>
 
         {/* Explore */}
@@ -236,6 +258,21 @@ const styles = StyleSheet.create({
   },
   continueArabic: {
     marginTop: 1,
+  },
+  // Learn mode: gold, the colour of Quran content; the surah's own name in the
+  // Quran face is what sets it apart from the language modules.
+  learnCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.lg,
+    paddingLeft: space.xl,
+    marginTop: space.md,
+  },
+  learnArabic: {
+    fontFamily: font.quran,
+    fontSize: 22,
+    lineHeight: 40,
+    color: color.sacred,
   },
   playButton: {
     width: 42,
