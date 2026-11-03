@@ -61,6 +61,12 @@ Deno.serve(async (req) => {
     const cached = await supa.storage.from(BUCKET).download(path);
     if (cached.data) return audio(new Uint8Array(await cached.data.arrayBuffer()));
 
+    // Live synthesis is off: every line the app plays is pre-recorded on the
+    // voice CDN (scripts/voice/record.ts), and nothing a user does may spend
+    // on Azure. A line that was never recorded falls back to the phone's own
+    // voice in the app. Set TTS_LIVE=on to allow it again.
+    if (Deno.env.get('TTS_LIVE') !== 'on') return json({ error: 'not recorded' }, 404);
+
     // Fresh synthesis costs money, so it is budgeted per account.
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const { data: usage } = await supa
