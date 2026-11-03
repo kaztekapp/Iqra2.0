@@ -71,7 +71,7 @@ export default {
     quran: 'Quran',
     accuracy: 'Accuracy',
     continueLearning: 'Continue Learning',
-    learnMode: 'Learn Mode',
+    learnMode: 'Memorize a Surah',
     learnModeDesc: '{{surah}}, verse by verse',
     quickActions: 'Quick Actions',
     practice: 'Practice',

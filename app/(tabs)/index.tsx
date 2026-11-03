@@ -110,6 +110,28 @@ export default function HomeScreen() {
           <IlluminatedRule style={styles.rule} />
         </View>
 
+        {/* Memorize a surah: first on the page, the way into Learn mode. */}
+        {learnSurah ? (
+          <Section>
+            <Card
+              onPress={() => router.push(`/quran/surah/${learnSurah.id}/learn` as Href)}
+              accent={color.sacred}
+              raised
+              accessibilityLabel={`${t('home.learnMode')}: ${t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}`}
+              style={styles.learnCard}
+            >
+              <IconTile name="headset" tint={color.sacred} size="lg" />
+              <View style={styles.continueText}>
+                <Txt variant="bodyLarge" weight="semibold" numberOfLines={1}>{t('home.learnMode')}</Txt>
+                <Txt variant="caption" tone="faint" numberOfLines={1}>
+                  {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
+                </Txt>
+              </View>
+              <Text style={styles.learnArabic} allowFontScaling={false}>{learnSurah.nameArabic}</Text>
+            </Card>
+          </Section>
+        ) : null}
+
         {/* Continue */}
         <Section title={t('home.continueLearning')}>
           <Card
@@ -134,23 +156,6 @@ export default function HomeScreen() {
             </View>
           </Card>
 
-          {learnSurah ? (
-            <Card
-              onPress={() => router.push(`/quran/surah/${learnSurah.id}/learn` as Href)}
-              accent={color.sacred}
-              accessibilityLabel={`${t('home.learnMode')}: ${t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}`}
-              style={styles.learnCard}
-            >
-              <IconTile name="headset" tint={color.sacred} />
-              <View style={styles.continueText}>
-                <Txt variant="body" weight="semibold" numberOfLines={1}>{t('home.learnMode')}</Txt>
-                <Txt variant="caption" tone="faint" numberOfLines={1}>
-                  {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
-                </Txt>
-              </View>
-              <Text style={styles.learnArabic} allowFontScaling={false}>{learnSurah.nameArabic}</Text>
-            </Card>
-          ) : null}
         </Section>
 
         {/* Explore */}
@@ -266,7 +271,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.lg,
     paddingLeft: space.xl,
-    marginTop: space.md,
   },
   learnArabic: {
     fontFamily: font.quran,

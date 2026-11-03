@@ -71,7 +71,7 @@ export default {
     quran: 'Coran',
     accuracy: 'Pr\u00e9cision',
     continueLearning: 'Continuer \u00e0 Apprendre',
-    learnMode: 'Mode Apprentissage',
+    learnMode: 'Mémoriser une sourate',
     learnModeDesc: '{{surah}}, verset par verset',
     quickActions: 'Actions Rapides',
     practice: 'Pratique',
