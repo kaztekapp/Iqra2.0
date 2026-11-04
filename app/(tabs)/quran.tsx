@@ -11,6 +11,7 @@ import { useDuasStore } from '../../src/stores/duasStore';
 import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
 import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
 import { TOTAL_DUAS } from '../../src/types/duas';
+import { TAJWEED_RULES } from '../../src/data/arabic/quran';
 import { TOTAL_PRAYER_LESSONS } from '../../src/types/prayer';
 import {
   Txt,
@@ -51,6 +52,7 @@ export default function QuranScreen() {
   const prophetStoriesCompleted = useMemo(() => getProphetStoriesCompleted(), [getProphetStoriesCompleted]);
   const quranStoriesCompleted = useMemo(() => getQuranStoriesCompleted(), [getQuranStoriesCompleted]);
   const totalStoriesCompleted = prophetStoriesCompleted + quranStoriesCompleted;
+  const tajweedLearned = progress.tajweedProgress.rulesLearned.length;
   const totalStories = TOTAL_PROPHETS + TOTAL_QURAN_STORIES;
 
   const actions = [
@@ -71,6 +73,15 @@ export default function QuranScreen() {
       desc: t('quran.propheticPrayers'),
       badge: `${duasMemorized}/${TOTAL_DUAS}`,
       onPress: () => router.push('/quran/duas'),
+    },
+    {
+      key: 'tajweed',
+      icon: 'volume-high' as const,
+      tint: color.sacred,
+      title: t('quran.tajweed'),
+      desc: t('quran.tajweedDesc'),
+      badge: `${tajweedLearned}/${TAJWEED_RULES.length}`,
+      onPress: () => router.push('/quran/tajweed-learn'),
     },
     {
       key: 'quiz',
@@ -130,7 +141,7 @@ export default function QuranScreen() {
         {/* Quick actions */}
         <Section>
           <View style={styles.grid}>
-            {actions.filter((a) => a.key !== 'quiz').map((a) => (
+            {actions.map((a) => (
               <Card
                 key={a.key}
                 onPress={a.onPress}
@@ -150,21 +161,6 @@ export default function QuranScreen() {
               </Card>
             ))}
           </View>
-          {actions.filter((a) => a.key === 'quiz').map((a) => (
-            <Card
-              key={a.key}
-              onPress={a.onPress}
-              accessibilityLabel={a.title}
-              style={[styles.practiceCard, styles.quizCard]}
-            >
-              <IconTile name={a.icon} tint={a.tint} />
-              <View style={styles.practiceContent}>
-                <Txt variant="body" weight="semibold">{a.title}</Txt>
-                <Txt variant="caption" tone="faint">{a.desc}</Txt>
-              </View>
-              <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
-            </Card>
-          ))}
         </Section>
 
         {/* Islamic practice */}
@@ -277,10 +273,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.lg,
     paddingLeft: space.xl,
-  },
-  // Quizzes, the third action, runs the full width under the pair.
-  quizCard: {
-    marginTop: space.md,
   },
   practiceContent: {
     flex: 1,
