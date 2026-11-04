@@ -165,14 +165,17 @@ export const asRecitation = (text: string): string => (text.startsWith(RECITE) ?
 
 /** Whole recited lines said right only from phonemes (chosen by ear). */
 const RECITATION_LINES: readonly (readonly [string, string])[] = [
-  // Al-Fatihah 1:1: the Bismillah joined into one word was read stretched (approved 2026-11-04, take 3).
-  ['بِسْمِلَّهِرَّحْمَانِرَّحِيمْ', 'bismillaːhirraħmaːnirraħiːm'],
   // An-Nas 114:4: the joined word lost the kh of al-khannās (approved 2026-11-03, take 5).
   ['مِن شَرِّلْوَسْوَاسِلْخَنَّاسْ', 'min ʃarrilwaswaːsilxannaːs'],
 ];
 
 /** Whole phrases a recitation says right only from phonemes (chosen by ear). */
 const RECITATION_PHONEMES: readonly (readonly [string, string])[] = [
+  // The Bismillah, wherever it is recited (Al-Fatihah 1, An-Naml 30, the
+  // stories): joined into one word it was read stretched (approved
+  // 2026-11-04, take 3 on Al-Fatihah 1). Matched as a word, so every place gets it.
+  ['بِسْمِلَّهِرَّحْمَانِرَّحِيمْ', 'bismillaːhirraħmaːnirraħiːm'],
+  ['بِسْمِلَّهِرَّحْمَانِرَّحِيمِ', 'bismillaːhirraħmaːnirraħiːmi'],
   // Al-Fatiha 1:7, the stop: walaḍ-ḍāāāllīn (approved 2026-11-03, take 6).
   ['وَلَضَّالِّينْ', 'waladˤdˤaːaːaːlliːn'],
 ];
