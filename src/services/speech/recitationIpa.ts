@@ -102,3 +102,15 @@ export function recitationIpa(word: string): string {
   }
   return out;
 }
+
+/**
+ * The name of God as it is recited: its ā held long (Allāāh), and its l heavy
+ * after a or u (qālalˤlˤāāh), light after i (bismillāāh). Chosen by ear,
+ * 2026-11-04 (take F). Runs over every phoneme spelling a recitation uses,
+ * so the rule is the same in every verse.
+ */
+export function soundOfAllah(ipa: string): string {
+  return ipa.replace(/(aː|uː|iː|a|u|i)?llaːh/g, (_m, before: string | undefined) =>
+    before && before.startsWith('i') ? `${before}llaːaːh` : `${before ?? ''}${before ? 'lˤlˤ' : 'll'}aːaːh`
+  );
+}

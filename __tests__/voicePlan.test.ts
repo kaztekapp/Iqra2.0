@@ -95,7 +95,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('says the Bismillah (Al-Fatihah 1) from the approved phonemes', () => {
-    expect(recite('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')).toMatch(/^⟦bismillaːhirraħmaːnirraħiːm\|/);
+    expect(recite('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')).toMatch(/^⟦bismillaːaːhirraħmaːnirraħiːm\|/);
   });
 
   it('says An-Nas 4 from the approved phonemes', () => {

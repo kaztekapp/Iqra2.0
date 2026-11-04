@@ -10,7 +10,7 @@ import { normalizeArabicForSpeech } from '../narrationText';
 import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
 import { SURAH_NAMES } from './surahNames';
 import { VOICE_REVISIONS } from './voiceRevisions';
-import { recitationIpa } from './recitationIpa';
+import { recitationIpa, soundOfAllah } from './recitationIpa';
 
 /** Hamed reads full tashkeel cleanly; Zariyah takes the Arabic when the narrator is female. */
 export const ARABIC_VOICE = 'ar-SA-HamedNeural';
@@ -280,12 +280,15 @@ function recite(raw: string): string {
   if (out.length) out[out.length - 1] = stopOn(out[out.length - 1]);
   const line = out.join(' ');
   const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
-  if (whole) return `⟦${whole[1]}|${line}⟧`;
+  if (whole) return `⟦${soundOfAllah(whole[1])}|${line}⟧`;
   return out
     .map((w, i) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
-      if (fix) return `⟦${fix[1]}|${w}⟧`;
-      if (joined[i] >= MAX_JOINED_WORDS + 1 && !w.includes('⟦')) return `⟦${recitationIpa(w)}|${w}⟧`;
+      if (fix) return `⟦${soundOfAllah(fix[1])}|${w}⟧`;
+      if (joined[i] >= MAX_JOINED_WORDS + 1 && !w.includes('⟦')) return `⟦${soundOfAllah(recitationIpa(w))}|${w}⟧`;
+      // A phoneme word joined in wasl (āyātullāh) gets the same reading of the name.
+      const marked = w.match(PHONEME_WORD);
+      if (marked) return `⟦${soundOfAllah(marked[1])}|${marked[2]}⟧`;
       return w;
     })
     .join(' ');
