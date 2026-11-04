@@ -94,8 +94,16 @@ function queueSessionWork(fn: () => Promise<void>): Promise<void> {
  */
 export function ensureAudioSession(wanted: 'speech' | 'longform'): Promise<void> {
   if (sessionLevel === wanted || sessionLevel === 'longform') return sessionWork;
+  const wasOff = sessionLevel === 'off';
   sessionLevel = wanted;
   return queueSessionWork(async () => {
+    // Releasing the session switches audio off (setIsAudioActiveAsync(false)),
+    // and on Android that is a switch, not a hint: every player is refused
+    // ("Audio has been disabled. Re-enable to start playing") until it is
+    // turned back on. Setting the mode alone never did, so after the first
+    // release - the app going to the background with nothing playing -
+    // every verse on Android loaded and stayed silent.
+    if (wasOff) await setIsAudioActiveAsync(true);
     await setAudioModeAsync(SESSION_MODES[wanted]);
     await new Promise((r) => setTimeout(r, 50));
   });
