@@ -94,6 +94,10 @@ describe('recitation (Quran only)', () => {
     expect(recite('عُزَيْرٌ ٱبْنُ ٱللَّهِ وَقَالَتِ')).toContain(seated('عُزَيْرُنِبْنُلَّهِ'));
   });
 
+  it('says the Bismillah (Al-Fatihah 1) from the approved phonemes', () => {
+    expect(recite('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')).toMatch(/^⟦bismillaːhirraħmaːnirraħiːm\|/);
+  });
+
   it('says An-Nas 4 from the approved phonemes', () => {
     expect(recite('مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ')).toMatch(/^⟦min ʃarrilwaswaːsilxannaːs\|/);
   });
