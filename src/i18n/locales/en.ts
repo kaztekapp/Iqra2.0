@@ -445,6 +445,7 @@ export default {
     prophetsAndMore: 'Prophets & More',
     tajweed: 'Tajweed',
     tajweedDesc: 'Rules of recitation',
+    readQuran: 'Read the Quran',
     duas: 'Duas',
     propheticPrayers: 'Prophetic prayers',
     quizzes: 'Quizzes',
