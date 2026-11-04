@@ -16,7 +16,7 @@ import {
   StyleProp,
   PressableProps,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { color, palette, type, arabicType, font, weight, space, radius, gutter, elevation, pressedOpacity } from '../../theme/tokens';
 
@@ -203,11 +203,14 @@ export function Card({
 /** Tinted square that holds an icon. Tint is always the icon colour at low alpha. */
 export function IconTile({
   name,
+  faName,
   tint,
   size = 'md',
   style,
 }: {
-  name: keyof typeof Ionicons.glyphMap;
+  name?: keyof typeof Ionicons.glyphMap;
+  /** A FontAwesome 6 glyph, for what Ionicons does not draw (a person praying). */
+  faName?: keyof typeof FontAwesome6.glyphMap;
   tint: string;
   size?: 'sm' | 'md' | 'lg';
   style?: StyleProp<ViewStyle>;
@@ -229,7 +232,11 @@ export function IconTile({
         style,
       ]}
     >
-      <Ionicons name={name} size={glyph[size]} color={tint} />
+      {faName ? (
+        <FontAwesome6 name={faName} size={glyph[size] - 2} color={tint} solid />
+      ) : (
+        <Ionicons name={name ?? 'ellipse'} size={glyph[size]} color={tint} />
+      )}
     </View>
   );
 }
