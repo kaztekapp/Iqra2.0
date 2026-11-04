@@ -209,6 +209,28 @@ const WASL_PHONEMES = new Map(Object.entries({
 
 const PHONEME_WORD = /^⟦([^|⟧]+)\|([^⟧]+)⟧$/;
 
+/** A long vowel the mushaf marks with madda (ٓ), then a doubled consonant: madd lāzim. */
+const MADD_LAZIM = /[اوىي]\u0653[\u0628-\u064A][\u064B-\u0650]?\u0651/;
+
+/**
+ * A raw word, cleaned as `spoken` is, with the marks the phoneme spelling
+ * needs (see recite): § before an inner silent alif, ¤ after a held vowel.
+ * Falls back to the plain cleaned word whenever the marks cannot be placed
+ * exactly, so a word is never spelled from a guess.
+ */
+function markForPhonemes(raw: string, spoken: string): string {
+  let marked = spoken;
+  const inner = raw.indexOf('\u0671', 1);
+  if (inner > 0) {
+    const split = spokenArabic(raw.slice(0, inner)) + '§' + spokenArabic(raw.slice(inner));
+    if (split.replace('§', '') === spoken) marked = split;
+  }
+  if (MADD_LAZIM.test(raw)) {
+    marked = marked.replace(/(\u064E[اى]|\u0650ي|\u064Fو)(?=[\u0628-\u064A]\u0651)/g, '$1¤');
+  }
+  return marked;
+}
+
 /** Words joined by wasl past this many are said from phonemes (recitationIpa). */
 const MAX_JOINED_WORDS = 2;
 
@@ -249,9 +271,18 @@ function recite(raw: string): string {
   // How many words each spoken word was joined from: past two joins the voice
   // no longer reads it (see recitationIpa), so it is said from phonemes.
   const joined: number[] = [];
+  // Words the mushaf marks with madd lāzim (a madda before a doubled letter):
+  // the vowel is held, which only the phoneme spelling does (ḍāāāllīn).
+  const held: boolean[] = [];
+  // The same words for the phoneme spelling, keeping what the cleaned text
+  // loses: § before a silent wasl alif inside a word (fa-ttaqū), ¤ after a
+  // long vowel the mushaf marks with madda (dāāābbah). Without them the two
+  // look alike, and fattaqū came out fāāāttaqū.
+  const src: string[] = [];
   for (const w of words) {
     const spoken = spokenArabic(w);
     if (!spoken) continue;
+    const srcWord = markForPhonemes(w, spoken);
     const prev = out[out.length - 1];
     const wasl = w.startsWith('ٱ') && /^ا/.test(spoken) && !spoken.includes('⟦');
     if (prev && wasl) {
@@ -266,19 +297,28 @@ function recite(raw: string): string {
       if (!marked && /[ً-ٍ][اى]?$/.test(prev)) {
         const vowel = { 'ً': 'َ', 'ٌ': 'ُ', 'ٍ': 'ِ' }[prev.match(/([ً-ٍ])[اى]?$/)![1]];
         out[out.length - 1] = prev.replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + rest;
+        src[src.length - 1] = src[src.length - 1].replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + (sun ? srcWord.slice(2) : srcWord.slice(1));
         joined[joined.length - 1] += 1;
+        if (MADD_LAZIM.test(w)) held[held.length - 1] = true;
         continue;
       }
       if (!marked && /[َ-ِ]$|[اىوي]$/.test(prev)) {
         out[out.length - 1] = prev.replace(/وا$|[اىوي]$/, '') + rest;
+        src[src.length - 1] = src[src.length - 1].replace(/وا$|[اىوي]$/, '') + (sun ? srcWord.slice(2) : srcWord.slice(1));
         joined[joined.length - 1] += 1;
+        if (MADD_LAZIM.test(w)) held[held.length - 1] = true;
         continue;
       }
     }
     out.push(spoken);
+    src.push(srcWord);
     joined.push(1);
+    held.push(MADD_LAZIM.test(w));
   }
-  if (out.length) out[out.length - 1] = stopOn(out[out.length - 1]);
+  if (out.length) {
+    out[out.length - 1] = stopOn(out[out.length - 1]);
+    src[src.length - 1] = stopOn(src[src.length - 1]);
+  }
   const line = out.join(' ');
   const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
   if (whole) return `⟦${soundOfAllah(whole[1])}|${line}⟧`;
@@ -286,7 +326,7 @@ function recite(raw: string): string {
     .map((w, i) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
       if (fix) return `⟦${soundOfAllah(fix[1])}|${w}⟧`;
-      if (joined[i] >= MAX_JOINED_WORDS + 1 && !w.includes('⟦')) return `⟦${soundOfAllah(recitationIpa(w))}|${w}⟧`;
+      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i]) && !w.includes('⟦')) return `⟦${soundOfAllah(recitationIpa(src[i]))}|${w}⟧`;
       // A phoneme word joined in wasl (āyātullāh) gets the same reading of the name.
       const marked = w.match(PHONEME_WORD);
       if (marked) return `⟦${soundOfAllah(marked[1])}|${marked[2]}⟧`;

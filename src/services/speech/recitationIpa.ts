@@ -36,19 +36,21 @@ export function recitationIpa(word: string): string {
   const ch = [...word];
   let out = '';
   // Each letter with the marks that follow it.
-  type Unit = { letter: string; marks: string };
+  // § (from recite) says the next alif is the silent alif of wasl; ¤ says the
+  // long vowel before it is held (madd lāzim, marked with madda in the mushaf).
+  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean };
   const units: Unit[] = [];
+  let silentNext = false;
   for (const c of ch) {
+    if (c === '§') { silentNext = true; continue; }
+    if (c === '¤') { if (units.length) units[units.length - 1].held = true; continue; }
     if (MARK.test(c) && units.length) units[units.length - 1].marks += c;
-    else units.push({ letter: c, marks: '' });
+    else { units.push({ letter: c, marks: '', silent: silentNext }); silentNext = false; }
   }
 
   const vowelOf = (u: Unit) => u.marks.replace(SHADDA, '').replace(SUKUN, '');
-  // A long vowel held before a doubled consonant (madd lāzim): ḍāāāllīn.
-  const heldBefore = (i: number) => {
-    const next = units[i + 1];
-    return !!next && next.marks.includes(SHADDA);
-  };
+  // A long vowel held (madd lāzim): ḍāāāllīn. Only where the mushaf marks it.
+  const heldBefore = (i: number) => !!units[i].held;
 
   for (let i = 0; i < units.length; i++) {
     const u = units[i];
@@ -61,6 +63,8 @@ export function recitationIpa(word: string): string {
       continue;
     }
     // Long vowels: the letter carries no mark of its own and follows its short vowel.
+    // The silent alif of wasl inside a word: nothing is said (fa-ttaqū).
+    if (u.silent) continue;
     if (u.letter === 'ا' || u.letter === 'ى' || u.letter === 'ٰ') {
       // The silent alif after a tanween fath, or after a plural waw.
       if (prev && (prev.marks.includes(FATHATAN) || (prev.letter === 'و' && !vowelOf(prev)))) continue;
@@ -79,6 +83,10 @@ export function recitationIpa(word: string): string {
       }
     }
 
+    // The l of al- before a sun letter is not said (wash-shahādah): the mushaf
+    // leaves it bare, where a said l carries a sukun.
+    if (u.letter === 'ل' && !u.marks && units[i + 1]?.marks.includes(SHADDA)) continue;
+
     const c = CONSONANTS[u.letter];
     if (!c) continue;
     // The name of God: the mushaf writes no alif for its long ā (-llāh-).
@@ -92,7 +100,7 @@ export function recitationIpa(word: string): string {
     // vowel the next letter writes (ka + ا = kaː).
     const next = units[i + 1];
     const intoLong =
-      !!next && !vowelOf(next) && !next.marks.includes(SHADDA) &&
+      !!next && !next.silent && !vowelOf(next) && !next.marks.includes(SHADDA) &&
       ((v === FATHA && (next.letter === 'ا' || next.letter === 'ى' || next.letter === 'ٰ')) ||
         (v === KASRA && next.letter === 'ي') ||
         (v === DAMMA && next.letter === 'و'));

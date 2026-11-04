@@ -11,7 +11,16 @@ describe('recitation phonemes', () => {
     expect(recitationIpa(seated('شَرِّلْوَسْوَاسِلْخَنَّاسْ'))).toBe('ʃarrilwaswaːsilxannaːs');
   });
   it('reproduces the approved walad-daaaalliin (Al-Fatihah 7, take 6)', () => {
-    expect(recitationIpa(seated('وَلَضَّالِّينْ'))).toBe('waladˤdˤaːaːaːlliːn');
+    expect(recitationIpa(seated('وَلَضَّا¤لِّينْ'))).toBe('waladˤdˤaːaːaːlliːn');
+  });
+  it('keeps the wasl alif silent and the vowel before it short (fattaqū)', () => {
+    expect(recitationIpa(seated('فَ§اتَّقُوا'))).toBe('fattaquː');
+    expect(recitationIpa(seated('وَ§الَّذِينَ'))).toBe('wallaðiːna');
+    expect(recitationIpa(seated('وَ§الشَّهَادَةِ'))).toBe('waʃʃahaːdati');
+  });
+  it('holds a long vowel only where the mushaf marks it', () => {
+    expect(recitationIpa(seated('دَا¤بَّةٍ'))).toBe('daːaːaːbbatin');
+    expect(recitationIpa(seated('كَافَّةً'))).toBe('kaːffatan');
   });
   it('says lillāhi with the long ā the mushaf does not write', () => {
     expect(recitationIpa(seated('لِلَّهِ'))).toBe('lillaːhi');
