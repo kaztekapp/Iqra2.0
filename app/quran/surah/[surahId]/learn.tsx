@@ -69,6 +69,9 @@ export default function LearnModeScreen() {
   const { lc } = useLocalizedContent();
   const setLastSurah = useLearnModeStore((s) => s.setLastSurah);
   const toggleTajweedColors = useQuranStore((s) => s.toggleTajweedColors);
+  const completeSurah = useQuranStore((s) => s.completeSurah);
+  const uncompleteSurah = useQuranStore((s) => s.uncompleteSurah);
+  const surahMemorized = useQuranStore((s) => (surah ? s.progress.surahProgress[surah.id]?.status === 'completed' : false));
 
   // A swipe on the verse moves to the one before or after. The handlers are
   // made once, so they reach the current screen through a ref.
@@ -471,6 +474,26 @@ export default function LearnModeScreen() {
             {t('surahLearnMode.verseOf', { verse: verseNumber, total: ayahs.length })}
           </Text>
           <Ionicons name="chevron-down" size={13} color={color.textMuted} />
+          <View style={styles.trackSpacer} />
+          {/* The reader says when a surah is memorized: it counts in Quran
+              progress (surahs, juz, hizb). A second tap takes it back. */}
+          <Pressable
+            style={[styles.memorizedButton, surahMemorized && styles.memorizedButtonOn]}
+            onPress={() => (surahMemorized ? uncompleteSurah(surah.id) : completeSurah(surah.id))}
+            hitSlop={8}
+            accessibilityRole="checkbox"
+            accessibilityState={{ checked: surahMemorized }}
+            accessibilityLabel={t('surahLearnMode.markMemorized')}
+          >
+            <Ionicons
+              name={surahMemorized ? 'checkmark-circle' : 'checkmark-circle-outline'}
+              size={16}
+              color={surahMemorized ? color.textOnAccent : color.accentStrong}
+            />
+            <Text style={[styles.memorizedText, surahMemorized && styles.memorizedTextOn]}>
+              {surahMemorized ? t('surahLearnMode.memorized') : t('surahLearnMode.markMemorized')}
+            </Text>
+          </Pressable>
         </View>
       </Pressable>
 
@@ -785,6 +808,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
+  },
+  trackSpacer: {
+    flex: 1,
+  },
+  memorizedButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: space.sm,
+    paddingVertical: 4,
+    borderRadius: radius.full,
+    borderWidth: 1,
+    borderColor: color.border,
+    backgroundColor: color.surface,
+  },
+  memorizedButtonOn: {
+    backgroundColor: color.accent,
+    borderColor: color.accent,
+  },
+  memorizedText: {
+    ...type.micro,
+    fontWeight: weight.semibold,
+    color: color.accentStrong,
+  },
+  memorizedTextOn: {
+    color: color.textOnAccent,
   },
   trackText: {
     ...type.caption,
