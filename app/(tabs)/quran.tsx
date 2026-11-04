@@ -67,7 +67,9 @@ export default function QuranScreen() {
     },
     {
       key: 'duas',
+      // Ionicons has no one at prayer; the card draws FontAwesome's instead.
       icon: 'hand-left' as const,
+      faIcon: 'person-praying' as const,
       tint: color.sacred,
       title: t('quran.duas'),
       desc: t('quran.propheticPrayers'),
@@ -154,7 +156,7 @@ export default function QuranScreen() {
                 style={styles.actionCard}
               >
                 <View style={styles.actionTop}>
-                  <IconTile name={a.icon} tint={a.tint} />
+                  <IconTile name={a.icon} faName={'faIcon' in a ? a.faIcon : undefined} tint={a.tint} />
                   {a.badge ? (
                     <View style={[styles.badge, { backgroundColor: withAlpha(a.tint, 0.16) }]}>
                       <Txt variant="micro" weight="semibold" style={{ color: a.tint }}>{a.badge}</Txt>
