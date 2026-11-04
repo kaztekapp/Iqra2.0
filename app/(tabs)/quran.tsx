@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
   // Masthead
   header: {
     paddingHorizontal: gutter,
-    paddingTop: space.md,
-    paddingBottom: space['2xl'],
+    paddingTop: space.sm,
+    paddingBottom: space.lg,
     alignItems: 'center',
   },
   titleArabic: {
@@ -218,10 +218,10 @@ const styles = StyleSheet.create({
   },
   rule: {
     alignSelf: 'stretch',
-    marginTop: space.xl,
+    marginTop: space.lg,
   },
   firstSection: {
-    marginBottom: space['3xl'],
+    marginBottom: space['2xl'],
   },
 
   // Progress
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    marginBottom: space.md,
+    marginBottom: space.sm,
   },
   quranTitle: {
     flex: 1,
@@ -239,8 +239,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: space.sm,
-    marginTop: space.lg,
-    paddingVertical: space.md,
+    marginTop: space.md,
+    paddingVertical: 10,
     borderRadius: radius.md,
     backgroundColor: color.sacred,
   },
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     color: color.textOnAccent,
   },
   progressBar: {
-    marginBottom: space.xl,
+    marginBottom: space.md,
   },
   statsRow: {
     flexDirection: 'row',
