@@ -28,7 +28,8 @@ import { color, type, weight, space, radius, gutter, font } from '../../src/them
 type ExploreCard = { titleKey: string; titleArabic: string; icon: keyof typeof Ionicons.glyphMap; color: string; route: string; arabicChar: string };
 const EXPLORE: ExploreCard[] = [
   MODULES.alphabet,
-  { titleKey: 'home.quran', titleArabic: 'الْقُرْآن', icon: 'book', color: color.sacred, route: '/quran', arabicChar: '۞' },
+  // The Quran has its own tab and the two cards above; Explore is for Arabic.
+  MODULES.vocabulary,
   MODULES.grammar,
   MODULES.verbs,
 ];
