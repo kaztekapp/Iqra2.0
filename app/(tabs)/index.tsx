@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, type Href } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
 import { MODULES } from '../../src/components/home/ContinueLearningCard';
@@ -99,8 +100,17 @@ export default function HomeScreen() {
                   {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
                 </Txt>
               </View>
-              <View style={[styles.learnPlay, { backgroundColor: color.sacred }]}>
-                <Ionicons name="play" size={18} color={color.textOnAccent} />
+              {/* A gold disc in a soft halo: light gold to deep gold, lit from
+                  the top left, with a warm shadow under it. */}
+              <View style={styles.learnPlayHalo}>
+                <LinearGradient
+                  colors={[color.sacredBright, color.sacred]}
+                  start={{ x: 0.15, y: 0 }}
+                  end={{ x: 0.85, y: 1 }}
+                  style={styles.learnPlay}
+                >
+                  <Ionicons name="play" size={17} color={color.textOnAccent} style={styles.learnPlayGlyph} />
+                </LinearGradient>
               </View>
             </Card>
           </Section>
@@ -254,14 +264,31 @@ const styles = StyleSheet.create({
     color: color.sacred,
     textAlign: 'left',
   },
+  learnPlayHalo: {
+    width: 52,
+    height: 52,
+    borderRadius: radius.full,
+    backgroundColor: color.sacredSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: color.sacred,
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
   learnPlay: {
-    width: 44,
-    height: 44,
+    width: 40,
+    height: 40,
     borderRadius: radius.full,
     alignItems: 'center',
     justifyContent: 'center',
-    // Nudge the glyph off-centre so the triangle reads as centred.
-    paddingLeft: 3,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.35)',
+  },
+  // The triangle's visual centre sits right of its box.
+  learnPlayGlyph: {
+    marginLeft: 2,
   },
 
   // Explore grid
