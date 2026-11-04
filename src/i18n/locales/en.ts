@@ -1336,6 +1336,8 @@ export default {
     verseBefore: 'one verse back',
     verseAfter: 'one verse on',
     holdHint: 'Hold − or + to move quickly, or tap the number to type it (1 to {{total}}).',
+    markMemorized: 'Mark as memorized',
+    memorized: 'Memorized',
   },
   verbQuiz: {
     title: 'Verb Quiz',

@@ -31,6 +31,8 @@ interface QuranState {
   // Surah Progress Actions
   startSurah: (surahId: string) => void;
   completeSurah: (surahId: string) => void;
+  /** Undo completeSurah: back to its verse-by-verse progress. */
+  uncompleteSurah: (surahId: string) => void;
   markAyahLearned: (surahId: string, ayahId: string) => void;
   markAyahMemorized: (surahId: string, ayahId: string) => void;
   bookmarkAyah: (surahId: string, ayahId: string) => void;
@@ -195,8 +197,17 @@ export const useQuranStore = create<QuranState>()(
 
       completeSurah: (surahId: string) =>
         set((state) => {
-          const surahProgress = state.progress.surahProgress[surahId];
-          if (!surahProgress) return state;
+          // A surah can be marked memorized before any verse was studied here.
+          const surahProgress = state.progress.surahProgress[surahId] || {
+            surahId,
+            status: 'in_progress' as LearningStatus,
+            ayahsLearned: [],
+            ayahsMemorized: [],
+            completionPercent: 0,
+            lastStudiedAt: new Date().toISOString(),
+            timeSpent: 0,
+            bookmarkedAyahs: [],
+          };
 
           return {
             progress: {
@@ -209,6 +220,23 @@ export const useQuranStore = create<QuranState>()(
                   completionPercent: 100,
                   lastStudiedAt: new Date().toISOString(),
                 },
+              },
+            },
+          };
+        }),
+
+      uncompleteSurah: (surahId: string) =>
+        set((state) => {
+          const surahProgress = state.progress.surahProgress[surahId];
+          if (!surahProgress) return state;
+          const totalAyahs = SURAHS.find((s) => s.id === surahId)?.ayahCount || 1;
+          const completionPercent = Math.min(99, Math.round((surahProgress.ayahsLearned.length / totalAyahs) * 100));
+          return {
+            progress: {
+              ...state.progress,
+              surahProgress: {
+                ...state.progress.surahProgress,
+                [surahId]: { ...surahProgress, status: 'in_progress' as LearningStatus, completionPercent },
               },
             },
           };

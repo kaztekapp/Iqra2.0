@@ -1336,6 +1336,8 @@ export default {
     verseBefore: 'un verset en arrière',
     verseAfter: 'un verset en avant',
     holdHint: 'Maintenez − ou + pour aller vite, ou touchez le nombre pour le taper (1 à {{total}}).',
+    markMemorized: 'Marquer comme mémorisée',
+    memorized: 'Mémorisée',
   },
   verbQuiz: {
     title: 'Quiz des Verbes',
