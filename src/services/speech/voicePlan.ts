@@ -10,6 +10,7 @@ import { normalizeArabicForSpeech } from '../narrationText';
 import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
 import { SURAH_NAMES } from './surahNames';
 import { VOICE_REVISIONS } from './voiceRevisions';
+import { recitationIpa } from './recitationIpa';
 
 /** Hamed reads full tashkeel cleanly; Zariyah takes the Arabic when the narrator is female. */
 export const ARABIC_VOICE = 'ar-SA-HamedNeural';
@@ -208,6 +209,9 @@ const WASL_PHONEMES = new Map(Object.entries({
 
 const PHONEME_WORD = /^⟦([^|⟧]+)\|([^⟧]+)⟧$/;
 
+/** Words joined by wasl past this many are said from phonemes (recitationIpa). */
+const MAX_JOINED_WORDS = 2;
+
 /** The line's last word, stopped on: dīni → dīn, kabīran → kabīrā, raḥmatun → raḥmah. */
 function stopOn(word: string): string {
   const marked = word.match(PHONEME_WORD);
@@ -242,6 +246,9 @@ function recite(raw: string): string {
     words.splice(0, 1, ...[...first].map((c) => LETTER_NAMES[c]));
   }
   const out: string[] = [];
+  // How many words each spoken word was joined from: past two joins the voice
+  // no longer reads it (see recitationIpa), so it is said from phonemes.
+  const joined: number[] = [];
   for (const w of words) {
     const spoken = spokenArabic(w);
     if (!spoken) continue;
@@ -259,23 +266,28 @@ function recite(raw: string): string {
       if (!marked && /[ً-ٍ][اى]?$/.test(prev)) {
         const vowel = { 'ً': 'َ', 'ٌ': 'ُ', 'ٍ': 'ِ' }[prev.match(/([ً-ٍ])[اى]?$/)![1]];
         out[out.length - 1] = prev.replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + rest;
+        joined[joined.length - 1] += 1;
         continue;
       }
       if (!marked && /[َ-ِ]$|[اىوي]$/.test(prev)) {
         out[out.length - 1] = prev.replace(/وا$|[اىوي]$/, '') + rest;
+        joined[joined.length - 1] += 1;
         continue;
       }
     }
     out.push(spoken);
+    joined.push(1);
   }
   if (out.length) out[out.length - 1] = stopOn(out[out.length - 1]);
   const line = out.join(' ');
   const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
   if (whole) return `⟦${whole[1]}|${line}⟧`;
   return out
-    .map((w) => {
+    .map((w, i) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
-      return fix ? `⟦${fix[1]}|${w}⟧` : w;
+      if (fix) return `⟦${fix[1]}|${w}⟧`;
+      if (joined[i] >= MAX_JOINED_WORDS + 1 && !w.includes('⟦')) return `⟦${recitationIpa(w)}|${w}⟧`;
+      return w;
     })
     .join(' ');
 }
