@@ -55,14 +55,6 @@ export default function QuranScreen() {
 
   const actions = [
     {
-      key: 'quran',
-      icon: 'book' as const,
-      tint: color.sacred,
-      title: t('quran.quranTitle'),
-      desc: t('quran.allSurahs'),
-      onPress: () => router.push('/quran/all-surahs'),
-    },
-    {
       key: 'stories',
       icon: 'library' as const,
       tint: color.accent,
@@ -106,12 +98,23 @@ export default function QuranScreen() {
           <IlluminatedRule style={styles.rule} />
         </View>
 
-        {/* Progress */}
+        {/* The Quran and the reader's progress through it, one card: a tap
+            opens all 114 surahs. */}
         <Section style={styles.firstSection}>
-          <Card>
+          <Card
+            onPress={() => router.push('/quran/all-surahs')}
+            accent={color.sacred}
+            raised
+            accessibilityLabel={`${t('quran.quranTitle')}, ${t('quran.allSurahs')}. ${t('quran.yourProgress')} ${overallProgress}%`}
+          >
             <View style={styles.progressHead}>
-              <Txt variant="caption" tone="muted">{t('quran.yourProgress')}</Txt>
+              <IconTile name="book" tint={color.sacred} />
+              <View style={styles.quranTitle}>
+                <Txt variant="bodyLarge" weight="semibold">{t('quran.quranTitle')}</Txt>
+                <Txt variant="caption" tone="faint">{t('quran.allSurahs')}</Txt>
+              </View>
               <Txt variant="bodyLarge" weight="bold" tone="progress">{overallProgress}%</Txt>
+              <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
             </View>
             <ProgressBar value={overallProgress} style={styles.progressBar} />
             <View style={styles.statsRow}>
@@ -127,7 +130,7 @@ export default function QuranScreen() {
         {/* Quick actions */}
         <Section>
           <View style={styles.grid}>
-            {actions.map((a) => (
+            {actions.filter((a) => a.key !== 'quiz').map((a) => (
               <Card
                 key={a.key}
                 onPress={a.onPress}
@@ -147,6 +150,21 @@ export default function QuranScreen() {
               </Card>
             ))}
           </View>
+          {actions.filter((a) => a.key === 'quiz').map((a) => (
+            <Card
+              key={a.key}
+              onPress={a.onPress}
+              accessibilityLabel={a.title}
+              style={[styles.practiceCard, styles.quizCard]}
+            >
+              <IconTile name={a.icon} tint={a.tint} />
+              <View style={styles.practiceContent}>
+                <Txt variant="body" weight="semibold">{a.title}</Txt>
+                <Txt variant="caption" tone="faint">{a.desc}</Txt>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color={color.textFaint} />
+            </Card>
+          ))}
         </Section>
 
         {/* Islamic practice */}
@@ -209,8 +227,11 @@ const styles = StyleSheet.create({
   progressHead: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: space.md,
     marginBottom: space.md,
+  },
+  quranTitle: {
+    flex: 1,
   },
   progressBar: {
     marginBottom: space.xl,
@@ -256,6 +277,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: space.lg,
     paddingLeft: space.xl,
+  },
+  // Quizzes, the third action, runs the full width under the pair.
+  quizCard: {
+    marginTop: space.md,
   },
   practiceContent: {
     flex: 1,
