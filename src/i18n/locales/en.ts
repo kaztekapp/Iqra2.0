@@ -443,6 +443,8 @@ export default {
     allSurahs: 'All 114 Surahs',
     stories: 'Stories',
     prophetsAndMore: 'Prophets & More',
+    tajweed: 'Tajweed',
+    tajweedDesc: 'Rules of recitation',
     duas: 'Duas',
     propheticPrayers: 'Prophetic prayers',
     quizzes: 'Quizzes',
