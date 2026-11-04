@@ -135,6 +135,11 @@ export default function QuranScreen() {
               <View style={styles.statDivider} />
               <Stat value={hizbCompleted} label={t('quran.hizb')} tint={color.progress} />
             </View>
+            {/* Says what the card does: a stats card did not look like it opened. */}
+            <View style={styles.readButton}>
+              <Ionicons name="book-outline" size={18} color={color.textOnAccent} />
+              <Txt variant="body" weight="semibold" style={styles.readButtonText}>{t('quran.readQuran')}</Txt>
+            </View>
           </Card>
         </Section>
 
@@ -228,6 +233,19 @@ const styles = StyleSheet.create({
   },
   quranTitle: {
     flex: 1,
+  },
+  readButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.sm,
+    marginTop: space.lg,
+    paddingVertical: space.md,
+    borderRadius: radius.md,
+    backgroundColor: color.sacred,
+  },
+  readButtonText: {
+    color: color.textOnAccent,
   },
   progressBar: {
     marginBottom: space.xl,
