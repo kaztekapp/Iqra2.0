@@ -16,9 +16,11 @@ on:
 # One publish at a time, in order: two overlapping runs once let an older
 # update finish after a newer one and become the live version. Only the
 # publishes queue together: GitHub keeps one waiting run per group, so a push
-# in the same group used to cancel a publish that was waiting its turn.
+# in the same group used to cancel a publish that was waiting its turn. Each
+# branch publishes to its own runtime (main: 1.1.2, ota-1.1.1: 1.1.1), so each
+# has its own queue: publishing both at once must not cancel either.
 concurrency:
-  group: ${{ github.event_name == 'workflow_dispatch' && 'ota-publish' || format('ota-checks-{0}', github.sha) }}
+  group: ${{ github.event_name == 'workflow_dispatch' && format('ota-publish-{0}', github.ref_name) || format('ota-checks-{0}', github.sha) }}
   cancel-in-progress: false
 
 jobs:
