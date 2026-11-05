@@ -38,12 +38,13 @@ export function recitationIpa(word: string): string {
   // Each letter with the marks that follow it.
   // § (from recite) says the next alif is the silent alif of wasl; ¤ says the
   // long vowel before it is held (madd lāzim, marked with madda in the mushaf).
-  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean };
+  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean; stretched?: boolean };
   const units: Unit[] = [];
   let silentNext = false;
   for (const c of ch) {
     if (c === '§') { silentNext = true; continue; }
     if (c === '¤') { if (units.length) units[units.length - 1].held = true; continue; }
+    if (c === '¦') { if (units.length) units[units.length - 1].stretched = true; continue; }
     if (MARK.test(c) && units.length) units[units.length - 1].marks += c;
     else { units.push({ letter: c, marks: '', silent: silentNext }); silentNext = false; }
   }
@@ -51,6 +52,8 @@ export function recitationIpa(word: string): string {
   const vowelOf = (u: Unit) => u.marks.replace(SHADDA, '').replace(SUKUN, '');
   // A long vowel held (madd lāzim): ḍāāāllīn. Only where the mushaf marks it.
   const heldBefore = (i: number) => !!units[i].held;
+  // How long a long vowel is: held ×3 (madd lāzim), stretched ×2 before a hamza.
+  const long = (i: number, v: string) => (units[i].held ? v + v + v : units[i].stretched ? v + v : v);
 
   for (let i = 0; i < units.length; i++) {
     const u = units[i];
@@ -68,7 +71,7 @@ export function recitationIpa(word: string): string {
     if (u.letter === 'ا' || u.letter === 'ى' || u.letter === 'ٰ') {
       // The silent alif after a tanween fath, or after a plural waw.
       if (prev && (prev.marks.includes(FATHATAN) || (prev.letter === 'و' && !vowelOf(prev)))) continue;
-      out += heldBefore(i) ? 'aːaːaː' : 'aː';
+      out += long(i, 'aː');
       continue;
     }
     if (u.letter === 'آ') {
@@ -77,8 +80,7 @@ export function recitationIpa(word: string): string {
     }
     if ((u.letter === 'ي' && prevVowel === KASRA) || (u.letter === 'و' && prevVowel === DAMMA)) {
       if (!vowelOf(u) && !u.marks.includes(SHADDA)) {
-        const long = u.letter === 'ي' ? 'iː' : 'uː';
-        out += heldBefore(i) ? long + long + long : long;
+        out += long(i, u.letter === 'ي' ? 'iː' : 'uː');
         continue;
       }
     }
@@ -129,7 +131,8 @@ export function soundOfAllah(ipa: string): string {
  * is said firmly, a touch longer than the voice makes nn or bb (rabbaka,
  * kallā, take C on 2026-11-05). The name of God keeps its own approved form.
  */
-const DOUBLED = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[btθħxdðrzsʃʕɣfqklhwjnm])\1(?!\1)(?!aːaːh)/g;
+// w and y are glides, said doubled but not held (awwāb, take 2D).
+const DOUBLED = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[btθħxdðrzsʃʕɣfqklhnm])\1(?!\1)(?!aːaːh)/g;
 
 export function holdDoubled(ipa: string): string {
   return ipa.replace(DOUBLED, '$1$1$1');
