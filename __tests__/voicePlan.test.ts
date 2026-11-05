@@ -108,7 +108,29 @@ describe('recitation (Quran only)', () => {
   it('names the opening letters of a surah', () => {
     expect(recite('الٓمٓ')).toBe('أَلِفْ لَامْ مِيمْ');
     expect(recite('طه')).toBe('طَا هَا');
-    expect(recite('نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ')).toBe('نُونْ وَالْقَلَمِ وَمَا يَسْطُرُونْ');
+    expect(recite('نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ')).toBe('نُونْ. وَالْقَلَمِ وَمَا يَسْطُرُونْ');
+  });
+
+  it('stops at a pause mark as at a verse end (Sad 38:30, take 4)', () => {
+    const line = recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ');
+    expect(line).toContain('ʕabd|');
+    expect(line).not.toMatch(/ʕabdu/);
+    expect(line).toMatch(/⟧\. /);
+  });
+
+  it('splits a doubled throat letter instead of holding it (Al-Maun 107:2, take C)', () => {
+    expect(recite('فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ')).toContain('jaduʕ.ʕuljatiːm');
+  });
+
+  it('joins al- before a moon letter by stress or by moving the syllable over (2026-11-05)', () => {
+    expect(recite('ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ')).toContain('rabbbˈilʕaːlamiːn');
+    expect(recite('قِيلَ ٱدْخُلِ ٱلْجَنَّةَ ۖ').split(' ')[0]).toBe('قِيلَدْخُ');
+    expect(recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ')).toMatch(/^⟦niʕmalʕabd\|/);
+    expect(recite('ذَٰلِكَ ٱلْكِتَـٰبُ لَا رَيْبَ')).toBe('ذَالِ كَلْكِتَابُ لَا رَيْبْ');
+  });
+
+  it('reads a word with a hamza inside it from phonemes (take 4B)', () => {
+    expect(recite('يُبْدِئُ وَيُعِيدُ')).toMatch(/^⟦jubdiʔu\|/);
   });
 
   it('joins a phoneme-spelled word to the al- word after it, and stops in phonemes too', () => {
