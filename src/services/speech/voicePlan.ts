@@ -231,11 +231,23 @@ function markForPhonemes(raw: string, spoken: string): string {
   if (MADD_LAZIM.test(raw)) {
     marked = marked.replace(/(\u064E[اى]|\u0650ي|\u064Fو)(?=[\u0628-\u064A]\u0651)/g, '$1¤');
   }
+  // A madda before a hamza, in the word (jāāʾa) or the next one (innahūū
+  // awwāb): the vowel is stretched, ¦ (madd muttaṣil and munfaṣil, take 2D).
+  if (MADDA.test(raw)) {
+    marked = marked.replace(/(\u064E[اى]|\u0650ي|\u064Fو)(?=[ءأإؤئ]|$)/g, '$1¦');
+  }
   return marked;
 }
 
-/** Words joined by wasl past this many are said from phonemes (recitationIpa). */
-const MAX_JOINED_WORDS = 2;
+/**
+ * Words joined by wasl past this many are said from phonemes (recitationIpa).
+ * One: every joined word is (niʿmal-ʿabdu, take 1B, 2026-11-05).
+ */
+const MAX_JOINED_WORDS = 1;
+
+/** A long vowel the mushaf marks with madda: held (lāzim) or stretched before a hamza. */
+// Written either as a letter + madda or, composed, as آ after another letter.
+const MADDA = /[اوىي]\u0653|.\u0622/;
 
 /** The line's last word, stopped on: dīni → dīn, kabīran → kabīrā, raḥmatun → raḥmah. */
 function stopOn(word: string): string {
@@ -303,21 +315,21 @@ function recite(raw: string): string {
         out[out.length - 1] = prev.replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + rest;
         src[src.length - 1] = src[src.length - 1].replace(/[ً-ٍ][اى]?$/, vowel + 'نِ') + (sun ? srcWord.slice(2) : srcWord.slice(1));
         joined[joined.length - 1] += 1;
-        if (MADD_LAZIM.test(w)) held[held.length - 1] = true;
+        if (MADD_LAZIM.test(w) || MADDA.test(w)) held[held.length - 1] = true;
         continue;
       }
       if (!marked && /[َ-ِ]$|[اىوي]$/.test(prev)) {
         out[out.length - 1] = prev.replace(/وا$|[اىوي]$/, '') + rest;
         src[src.length - 1] = src[src.length - 1].replace(/وا$|[اىوي]$/, '') + (sun ? srcWord.slice(2) : srcWord.slice(1));
         joined[joined.length - 1] += 1;
-        if (MADD_LAZIM.test(w)) held[held.length - 1] = true;
+        if (MADD_LAZIM.test(w) || MADDA.test(w)) held[held.length - 1] = true;
         continue;
       }
     }
     out.push(spoken);
     src.push(srcWord);
     joined.push(1);
-    held.push(MADD_LAZIM.test(w));
+    held.push(MADD_LAZIM.test(w) || MADDA.test(w));
   }
   if (out.length) {
     out[out.length - 1] = stopOn(out[out.length - 1]);

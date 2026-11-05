@@ -42,4 +42,12 @@ describe('recitation phonemes', () => {
     expect(recitedIpa('bismillaːhi')).toBe('bismillaːaːhi');
     expect(recitedIpa('fataʕaːlallaːhu')).toBe('fataʕaːlalˤlˤaːaːhu');
   });
+  it('stretches a long vowel marked with madda before a hamza (take 2D)', () => {
+    expect(recitationIpa(seated('جَا¦ءَ'))).toBe('dʒaːaːʔa');
+    expect(recitationIpa(seated('إِنَّهُو¦'))).toBe('ʔinnahuːuː');
+  });
+  it('doubles w and y without holding them (take 2D)', () => {
+    expect(holdDoubled('ʔawwaːb')).toBe('ʔawwaːb');
+    expect(holdDoubled('ʔijjaːka')).toBe('ʔijjaːka');
+  });
 });
