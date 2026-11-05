@@ -282,6 +282,24 @@ function recite(raw: string): string {
   if (first && OPENING_LETTERS.has(first) && !/[ً-ْ]/.test(words[0])) {
     words.splice(0, 1, ...[...first].map((c) => LETTER_NAMES[c]));
   }
+  // The mushaf's pause marks: the reciter stops there as at a verse end
+  // (niʿmal-ʿabd ‖ innahū awwāb, Sad 38:30, take 4 on 2026-11-05). Each run
+  // between them is recited on its own and stopped on its last letter.
+  const runs: string[][] = [[]];
+  for (const w of words) {
+    if (PAUSE_MARK.test(w)) runs.push([]);
+    else runs[runs.length - 1].push(w);
+  }
+  return runs.filter((r) => r.length).map(reciteRun).filter(Boolean).join('. ');
+}
+
+/** The pause marks a reciter stops at: ṣalā (ۖ), qilā (ۗ), jāʾiz (ۚ), lāzim (ۘ). Not lā (ۙ) or the paired dots (ۛ). */
+const PAUSE_MARK = /^[\u06D6\u06D7\u06DA\u06D8]$/;
+
+/** A hamza inside a word (yatasāʾalūn, yubdiʾu): said right only from phonemes (take 4B, 2026-11-05). */
+const INNER_HAMZA = /[^\s⟦][\u0621\u0623\u0625\u0624\u0626]/;
+
+function reciteRun(words: string[]): string {
   const out: string[] = [];
   // How many words each spoken word was joined from: past two joins the voice
   // no longer reads it (see recitationIpa), so it is said from phonemes.
@@ -289,6 +307,9 @@ function recite(raw: string): string {
   // Words the mushaf marks with madd lāzim (a madda before a doubled letter):
   // the vowel is held, which only the phoneme spelling does (ḍāāāllīn).
   const held: boolean[] = [];
+  // Words the voice reads from their letters, never from phonemes (see the
+  // moon-letter join below).
+  const plain: boolean[] = [];
   // The same words for the phoneme spelling, keeping what the cleaned text
   // loses: § before a silent wasl alif inside a word (fa-ttaqū), ¤ after a
   // long vowel the mushaf marks with madda (dāāābbah). Without them the two
@@ -319,8 +340,39 @@ function recite(raw: string): string {
         continue;
       }
       if (!marked && /[َ-ِ]$|[اىوي]$/.test(prev)) {
-        out[out.length - 1] = prev.replace(/وا$|[اىوي]$/, '') + rest;
-        src[src.length - 1] = src[src.length - 1].replace(/وا$|[اىوي]$/, '') + (sun ? srcWord.slice(2) : srcWord.slice(1));
+        const head = prev.replace(/وا$|[اىوي]$/, '');
+        const srcHead = src[src.length - 1].replace(/وا$|[اىوي]$/, '');
+        // The l of al- before a moon letter, joined to the word before: the
+        // voice ran over it (qīladkhulil-jannah came out without its l).
+        // After a doubled letter the l's syllable is stressed (rabbil-ʿālamīn,
+        // fa-innal-jannah); otherwise the last syllable moves over to it, as
+        // two words the voice reads itself (qīladkhu lil-jannah, dhāli
+        // kal-kitāb). Chosen by ear on four verses, 2026-11-05. A doubled throat
+        // letter is split already (yaduʿ·ʿul-yatīm) and is left as it was.
+        if (!sun && /^الْ/.test(spoken) && !/[ءأإؤئعحهخغ]\u0651[\u064E-\u0650]$/.test(head)) {
+          if (/\u0651[\u064E-\u0650]$/.test(head)) {
+            out[out.length - 1] = head + rest;
+            src[src.length - 1] = srcHead + '¨' + srcWord.slice(1);
+            joined[joined.length - 1] += 1;
+            if (MADD_LAZIM.test(w) || MADDA.test(w)) held[held.length - 1] = true;
+            continue;
+          }
+          const tail = head.match(/[\u0621-\u064A][\u064B-\u0652]*$/);
+          const before = tail ? head.slice(0, -tail[0].length) : '';
+          // Only when what is left ends on a vowel: niʿ-mal-ʿabd stays joined (Sad 38:30).
+          if (tail && before && !/\u0652$/.test(before)) {
+            out[out.length - 1] = before;
+            plain[plain.length - 1] = true;
+            out.push(tail[0] + rest);
+            src.push(tail[0] + srcWord.slice(1));
+            joined.push(1);
+            held.push(MADD_LAZIM.test(w) || MADDA.test(w));
+            plain.push(true);
+            continue;
+          }
+        }
+        out[out.length - 1] = head + rest;
+        src[src.length - 1] = srcHead + (sun ? srcWord.slice(2) : srcWord.slice(1));
         joined[joined.length - 1] += 1;
         if (MADD_LAZIM.test(w) || MADDA.test(w)) held[held.length - 1] = true;
         continue;
@@ -328,6 +380,7 @@ function recite(raw: string): string {
     }
     out.push(spoken);
     src.push(srcWord);
+    plain.push(false);
     joined.push(1);
     held.push(MADD_LAZIM.test(w) || MADDA.test(w));
   }
@@ -336,7 +389,8 @@ function recite(raw: string): string {
     src[src.length - 1] = stopOn(src[src.length - 1]);
   }
   const line = out.join(' ');
-  const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
+  // Compared without spaces: the moon-letter join may have split a word.
+  const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from).replace(/ /g, '') === line.replace(/ /g, ''));
   if (whole) return `⟦${recitedIpa(whole[1])}|${line}⟧`;
   return out
     .map((w, i) => {
@@ -345,7 +399,8 @@ function recite(raw: string): string {
       // Said from phonemes: long joins, held vowels, and any doubled letter,
       // whose hold (ghunna, shadda) only the phoneme spelling can give.
       const doubled = /[\u0628-\u064A]\u0651/.test(w);
-      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || doubled) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
+      if (plain[i]) return w;
+      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || doubled || INNER_HAMZA.test(w)) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
       // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
       const marked = w.match(PHONEME_WORD);
       if (marked) return `⟦${recitedIpa(marked[1])}|${marked[2]}⟧`;

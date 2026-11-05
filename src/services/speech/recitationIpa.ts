@@ -38,13 +38,15 @@ export function recitationIpa(word: string): string {
   // Each letter with the marks that follow it.
   // § (from recite) says the next alif is the silent alif of wasl; ¤ says the
   // long vowel before it is held (madd lāzim, marked with madda in the mushaf).
-  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean; stretched?: boolean };
+  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean; stretched?: boolean; stressed?: boolean };
   const units: Unit[] = [];
   let silentNext = false;
   for (const c of ch) {
     if (c === '§') { silentNext = true; continue; }
     if (c === '¤') { if (units.length) units[units.length - 1].held = true; continue; }
     if (c === '¦') { if (units.length) units[units.length - 1].stretched = true; continue; }
+    // ¨ (from recite): the vowel before it is stressed, the l of a moon-letter al- after a doubled letter.
+    if (c === '¨') { if (units.length) units[units.length - 1].stressed = true; continue; }
     if (MARK.test(c) && units.length) units[units.length - 1].marks += c;
     else { units.push({ letter: c, marks: '', silent: silentNext }); silentNext = false; }
   }
@@ -108,7 +110,7 @@ export function recitationIpa(word: string): string {
         (v === DAMMA && next.letter === 'و'));
     if (isAllah) out += 'aː';
     else if (TANWEEN[v]) out += TANWEEN[v];
-    else if (SHORT[v] && !intoLong) out += SHORT[v];
+    else if (SHORT[v] && !intoLong) out += (u.stressed ? 'ˈ' : '') + SHORT[v];
   }
   return out;
 }
@@ -134,8 +136,13 @@ export function soundOfAllah(ipa: string): string {
 // w and y are glides, said doubled but not held (awwāb, take 2D).
 const DOUBLED = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[btθħxdðrzsʃʕɣfqklhnm])\1(?!\1)(?!aːaːh)/g;
 
+// A held throat letter (ʿayn, ḥā, hā, khā, ghayn, hamza) loses its vowel in
+// the voice: yaduʿʿul-yatīm came out yadaʿa. Split into two clean ones it is
+// right (yaduʿ·ʿul, take C on 2026-11-05).
+const THROAT = new Set(['ʕ', 'ħ', 'h', 'x', 'ɣ', 'ʔ']);
+
 export function holdDoubled(ipa: string): string {
-  return ipa.replace(DOUBLED, '$1$1$1');
+  return ipa.replace(DOUBLED, (_m, c: string) => (THROAT.has(c) ? `${c}.${c}` : c + c + c));
 }
 
 /** Every phoneme spelling a recitation uses, with the held sounds applied. */
