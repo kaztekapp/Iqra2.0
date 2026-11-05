@@ -313,10 +313,10 @@ function recite(raw: string): string {
     .map((w, i) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
       if (fix) return `⟦${recitedIpa(fix[1])}|${w}⟧`;
-      // Said from phonemes: long joins, held vowels, and a doubled n or m,
-      // whose ghunna only the phoneme spelling can hold.
-      const ghunna = /[نم]\u0651/.test(w);
-      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || ghunna) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
+      // Said from phonemes: long joins, held vowels, and any doubled letter,
+      // whose hold (ghunna, shadda) only the phoneme spelling can give.
+      const doubled = /[\u0628-\u064A]\u0651/.test(w);
+      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || doubled) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
       // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
       const marked = w.match(PHONEME_WORD);
       if (marked) return `⟦${recitedIpa(marked[1])}|${marked[2]}⟧`;

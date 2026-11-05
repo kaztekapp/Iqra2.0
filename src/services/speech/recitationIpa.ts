@@ -124,15 +124,18 @@ export function soundOfAllah(ipa: string): string {
 }
 
 /**
- * Ghunna: a doubled n or m is held, with its nasal sound, for two counts
- * (ʿamma, innā, thumma). The voice says nn and mm too briefly; a third n or
- * m holds them (take C, chosen by ear on three verses, 2026-11-05).
+ * Doubled letters, held: a doubled n or m keeps its nasal for two counts
+ * (ghunna: ʿamma, innā, take C on 2026-11-05), and every other doubled letter
+ * is said firmly, a touch longer than the voice makes nn or bb (rabbaka,
+ * kallā, take C on 2026-11-05). The name of God keeps its own approved form.
  */
-export function holdGhunna(ipa: string): string {
-  return ipa.replace(/nn(?!n)/g, 'nnn').replace(/mm(?!m)/g, 'mmm');
+const DOUBLED = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[btθħxdðrzsʃʕɣfqklhwjnm])\1(?!\1)(?!aːaːh)/g;
+
+export function holdDoubled(ipa: string): string {
+  return ipa.replace(DOUBLED, '$1$1$1');
 }
 
 /** Every phoneme spelling a recitation uses, with the held sounds applied. */
 export function recitedIpa(ipa: string): string {
-  return holdGhunna(soundOfAllah(ipa));
+  return holdDoubled(soundOfAllah(ipa));
 }

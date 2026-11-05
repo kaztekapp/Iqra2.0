@@ -1,5 +1,5 @@
 // The phonemes for long wasl chains must say what the user approved by ear.
-import { recitationIpa, soundOfAllah, holdGhunna } from '../src/services/speech/recitationIpa';
+import { recitationIpa, soundOfAllah, holdDoubled, recitedIpa } from '../src/services/speech/recitationIpa';
 
 const seated = (s: string) => s.replace(/([ً-ِ])ّ/g, 'ّ$1');
 
@@ -31,9 +31,15 @@ describe('recitation phonemes', () => {
     expect(soundOfAllah('bismillaːhi')).toBe('bismillaːaːhi');
     expect(soundOfAllah('ʕalallaːhi')).toBe('ʕalalˤlˤaːaːhi');
   });
-  it('holds the ghunna of a doubled n or m (take C)', () => {
-    expect(holdGhunna('θumma')).toBe('θummma');
-    expect(holdGhunna('ʔinnaː')).toBe('ʔinnnaː');
-    expect(holdGhunna('raħmaːn')).toBe('raħmaːn');
+  it('holds every doubled letter, ghunna included (take C)', () => {
+    expect(holdDoubled('θumma')).toBe('θummma');
+    expect(holdDoubled('ʔinnaː')).toBe('ʔinnnaː');
+    expect(holdDoubled('warabbaka')).toBe('warabbbaka');
+    expect(holdDoubled('ʔiðaʃʃamsu')).toBe('ʔiðaʃʃʃamsu');
+    expect(holdDoubled('raħmaːn')).toBe('raħmaːn');
+  });
+  it('leaves the approved name of God as it is', () => {
+    expect(recitedIpa('bismillaːhi')).toBe('bismillaːaːhi');
+    expect(recitedIpa('fataʕaːlallaːhu')).toBe('fataʕaːlalˤlˤaːaːhu');
   });
 });
