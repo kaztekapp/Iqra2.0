@@ -156,5 +156,53 @@ export function stretchBeforeH(ipa: string): string {
 
 /** Every phoneme spelling a recitation uses, with the held sounds applied. */
 export function recitedIpa(ipa: string): string {
-  return stretchBeforeH(holdDoubled(soundOfAllah(ipa)));
+  // thumma keeps a plain double m: held, it was heard sumūm (80:20, 87:13, 102:7-8).
+  return stretchBeforeH(holdDoubled(soundOfAllah(ipa))).replace(/^θummm/, 'θumm');
+}
+
+/**
+ * Word stress by the rules of Classical Arabic, so the voice does not guess
+ * it. Given phonemes alone the voice placed stress where no reciter does,
+ * and words blurred into others (alam najʿal heard as an-najʿal, laʾin as la).
+ * - a final superheavy syllable (CVːC, CVCC) takes the stress;
+ * - else the second-last, if it is heavy (CVː, CVC);
+ * - else the third-last (or the first, in a short word).
+ * A word already stressed (stretchBeforeH) is left as it is.
+ */
+// A stretched vowel (aːaː, aːaːaː) is one segment, so one syllable.
+const SEGMENT = /dʒ|sˤ|dˤ|tˤ|ðˤ|lˤ|(?:[aiu]ː*)+|[^aiuː.ˈ]/g;
+
+export function stressWord(ipa: string): string {
+  if (ipa.includes('ˈ') || ipa.includes(' ')) return ipa;
+  const segs = ipa.replace(/\./g, '').match(SEGMENT) ?? [];
+  const isV = (s: string) => /^[aiu]/.test(s);
+  // Syllables: an onset (if any) and a vowel, then the codas up to the next onset.
+  const syl: { start: number; long: boolean; codas: number }[] = [];
+  segs.forEach((s, i) => {
+    if (!isV(s)) return;
+    const start = i > 0 && !isV(segs[i - 1]) ? i - 1 : i;
+    syl.push({ start, long: s.includes('ː'), codas: 0 });
+  });
+  // A one-syllable word is stressed too (in kadhdhaba: the in was lost, 96:13).
+  if (syl.length < 2) return syl.length ? 'ˈ' + ipa : ipa;
+  syl.forEach((sy, k) => {
+    const end = k + 1 < syl.length ? syl[k + 1].start : segs.length;
+    const vowelAt = segs.findIndex((s, i) => i >= sy.start && isV(s));
+    sy.codas = end - vowelAt - 1;
+  });
+  const last = syl[syl.length - 1];
+  const heavy = (sy: { long: boolean; codas: number }) => sy.long || sy.codas >= 1;
+  let k: number;
+  if ((last.long && last.codas >= 1) || last.codas >= 2) k = syl.length - 1;
+  else if (heavy(syl[syl.length - 2])) k = syl.length - 2;
+  else k = Math.max(0, syl.length - 3);
+  const at = segs.slice(0, syl[k].start).join('').length;
+  const flat = segs.join('');
+  // Put the mark back into the original spelling (which may carry . splits).
+  let seen = 0;
+  for (let i = 0; i < ipa.length; i++) {
+    if (seen === at) return ipa.slice(0, i) + 'ˈ' + ipa.slice(i);
+    if (ipa[i] !== '.') seen++;
+  }
+  return flat;
 }

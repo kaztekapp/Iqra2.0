@@ -72,6 +72,7 @@ describe('Arabic recitation pace', () => {
 
 describe('recitation (Quran only)', () => {
   const recite = (t: string) => spokenArabic(asRecitation(t));
+  const unstressed = (t: string) => t.replace(/ˈ/g, '');
   // The words as written, for the rules on joins and stops (most recited
   // words are now also spelled in phonemes; see recitationIpa).
   const reciteText = (t: string) => plainSpoken(recite(t));
@@ -92,7 +93,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('says a long vowel short before a join, and a tanween as its vowel plus nun', () => {
-    expect(recite('لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟')).toContain('⟦fil|فِلْ⟧ ⟦ʔardˤi|');
+    expect(unstressed(recite('لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟'))).toContain('⟦fil|فِلْ⟧ ⟦ʔardˤi|');
     expect(recite('لَقُوا۟ ٱلَّذِينَ ءَامَنُوا۟')).toContain(seated('لَقُلَّذِينَ'));
     expect(recite('عُزَيْرٌ ٱبْنُ ٱللَّهِ وَقَالَتِ')).toContain(seated('عُزَيْرُنِبْنُلَّهِ'));
   });
@@ -119,13 +120,13 @@ describe('recitation (Quran only)', () => {
   });
 
   it('splits a doubled throat letter instead of holding it (Al-Maun 107:2, take C)', () => {
-    expect(recite('فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ')).toContain('jaduʕ.ʕuljatiːm');
+    expect(unstressed(recite('فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ'))).toContain('jaduʕ.ʕuljatiːm');
   });
 
   it('keeps the l of a moon-letter al- on the word before (take C, 2026-11-05)', () => {
-    expect(recite('قِيلَ ٱدْخُلِ ٱلْجَنَّةَ ۖ')).toMatch(/^⟦qiːladxulil\|[^⟧]+⟧ ⟦dʒannnah\|/);
-    expect(recite('وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ')).toMatch(/^⟦wahuwal\|[^⟧]+⟧ ⟦ʕaziːzul\|[^⟧]+⟧ ⟦ħakiːm\|/);
-    expect(recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ')).toMatch(/^⟦niʕmalʕabd\|/);
+    expect(unstressed(recite('قِيلَ ٱدْخُلِ ٱلْجَنَّةَ ۖ'))).toMatch(/^⟦qiːladxulil\|[^⟧]+⟧ ⟦dʒannnah\|/);
+    expect(unstressed(recite('وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ'))).toMatch(/^⟦wahuwal\|[^⟧]+⟧ ⟦ʕaziːzul\|[^⟧]+⟧ ⟦ħakiːm\|/);
+    expect(unstressed(recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ'))).toMatch(/^⟦niʕmalʕabd\|/);
   });
 
   it('stretches and stresses a long ā before h (sāhūn, take E)', () => {
@@ -134,12 +135,19 @@ describe('recitation (Quran only)', () => {
     expect(recite('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')).not.toContain('ˈ');
   });
 
+  it('applies the rules found by speech recognition over Juz Amma (2026-11-05)', () => {
+    expect(recite('أَلَمْ نَجْعَل لَّهُۥ عَيْنَيْنِ')).toMatch(/^⟦ʔaˈlamm\|/);
+    expect(recite('ثُمَّ لَا يَمُوتُ فِيهَا وَلَا يَحْيَىٰ')).toMatch(/^⟦ˈθumma\|/);
+    expect(recite('قُتِلَ ٱلْإِنسَـٰنُ مَآ أَكْفَرَهُۥ')).toMatch(/rahh\|[^⟧]+⟧$/);
+    expect(recite('أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ')).toContain('⟦ˈʔin|');
+  });
+
   it('reads a word with a hamza inside it from phonemes (take 4B)', () => {
-    expect(recite('يُبْدِئُ وَيُعِيدُ')).toMatch(/^⟦jubdiʔu\|/);
+    expect(unstressed(recite('يُبْدِئُ وَيُعِيدُ'))).toMatch(/^⟦jubdiʔu\|/);
   });
 
   it('joins a phoneme-spelled word to the al- word after it, and stops in phonemes too', () => {
-    expect(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ')).toBe('⟦tilka|تِلْكَ⟧ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
+    expect(unstressed(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ'))).toBe('⟦tilka|تِلْكَ⟧ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
   });
 
   it('reads a recited verse whole, however long, as Learn mode does', () => {

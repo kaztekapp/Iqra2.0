@@ -10,7 +10,7 @@ import { normalizeArabicForSpeech } from '../narrationText';
 import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
 import { SURAH_NAMES } from './surahNames';
 import { VOICE_REVISIONS } from './voiceRevisions';
-import { recitationIpa, recitedIpa } from './recitationIpa';
+import { recitationIpa, recitedIpa, stressWord } from './recitationIpa';
 
 /** Hamed reads full tashkeel cleanly; Zariyah takes the Arabic when the narrator is female. */
 export const ARABIC_VOICE = 'ar-SA-HamedNeural';
@@ -382,20 +382,34 @@ function reciteRun(words: string[]): string {
   // Compared without spaces: the moon-letter join may have split a word.
   const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from).replace(/ /g, '') === line.replace(/ /g, ''));
   if (whole) return `⟦${recitedIpa(whole[1])}|${line}⟧`;
-  return out
-    .map((w, i) => {
-      const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
-      if (fix) return `⟦${recitedIpa(fix[1])}|${w}⟧`;
-      // Said from phonemes: long joins, held vowels, and any doubled letter,
-      // whose hold (ghunna, shadda) only the phoneme spelling can give.
-      // Every word is said from phonemes: as plain text the voice shortened
-      // long vowels (sāhūn came out sahūn, Al-Maʿun 107:5; take B on three
-      // verses, 2026-11-05).
-      if (!w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
-      // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
-      const marked = w.match(PHONEME_WORD);
-      if (marked) return `⟦${recitedIpa(marked[1])}|${marked[2]}⟧`;
-      return w;
+  // The run's last word is a pronoun h when its letters end in ه (not ة,
+  // which the stop also says h).
+  const lastIsPronounH = /ه[\u064B-\u0652\u06E5\u06E6]*$/.test(words[words.length - 1] ?? '');
+  const ipas = out.map((w, i) => {
+    const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
+    if (fix) return { ipa: recitedIpa(fix[1]), w, approved: true };
+    // Every word is said from phonemes: as plain text the voice shortened
+    // long vowels (sāhūn came out sahūn, Al-Maʿun 107:5; take B, 2026-11-05).
+    if (!w.includes('⟦')) return { ipa: recitedIpa(recitationIpa(src[i])), w, approved: false };
+    // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
+    const marked = w.match(PHONEME_WORD);
+    if (marked) return { ipa: recitedIpa(marked[1]), w: marked[2], approved: false };
+    return null;
+  });
+  return ipas
+    .map((x, i) => {
+      if (!x) return out[i];
+      if (x.approved) return `⟦${x.ipa}|${x.w}⟧`;
+      let ipa = x.ipa;
+      // Found by speech recognition over Juz ʿAmma (2026-11-05):
+      // a final m with sukun before a word that does not open on m or b is
+      // held, or the voice swallowed it (alam najʿal heard an-najʿal, lam
+      // yalid heard lān-yalid);
+      const next = ipas[i + 1]?.ipa ?? '';
+      if (/[aiuː]m$/.test(ipa) && next && !/^ˈ?[mb]/.test(next)) ipa += 'm';
+      // a pronoun h at the stop after a vowel is held (mā akfarah, heard akfar).
+      if (i === ipas.length - 1 && lastIsPronounH && /[aiu]h$/.test(ipa)) ipa += 'h';
+      return `⟦${stressWord(ipa)}|${x.w}⟧`;
     })
     .join(' ');
 }
