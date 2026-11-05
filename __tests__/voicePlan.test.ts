@@ -106,9 +106,9 @@ describe('recitation (Quran only)', () => {
   });
 
   it('names the opening letters of a surah', () => {
-    expect(recite('الٓمٓ')).toBe('أَلِفْ لَامْ مِيمْ');
-    expect(recite('طه')).toBe('طَا هَا');
-    expect(recite('نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ')).toBe('نُونْ. وَالْقَلَمِ وَمَا يَسْطُرُونْ');
+    expect(plainSpoken(recite('الٓمٓ'))).toBe('أَلِفْ لَامْ مِيمْ');
+    expect(plainSpoken(recite('طه'))).toBe('طَا هَا');
+    expect(plainSpoken(recite('نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ'))).toBe('نُونْ. وَالْقَلَمِ وَمَا يَسْطُرُونْ');
   });
 
   it('stops at a pause mark as at a verse end (Sad 38:30, take 4)', () => {
@@ -133,7 +133,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('joins a phoneme-spelled word to the al- word after it, and stops in phonemes too', () => {
-    expect(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ')).toBe('تِلْكَ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
+    expect(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ')).toBe('⟦tilka|تِلْكَ⟧ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
   });
 
   it('reads a recited verse whole, however long, as Learn mode does', () => {

@@ -224,6 +224,11 @@ function sayWrittenSmall(raw: string, last: boolean): string {
  */
 function markForPhonemes(raw: string, spoken: string): string {
   let marked = spoken;
+  // A madda over the long alif of a fatha (walāā antum) is a stretch, not a
+  // hamza; the cleaned text writes both as آ, and walā came out wala-ʾā.
+  if (/\u064E(?:\u0627\u0653|\u0622)/.test(raw) && !/[ءأ]\u064E\u0627/.test(raw)) {
+    marked = marked.replace(/\u064E\u0622/g, '\u064E\u0627');
+  }
   const inner = raw.indexOf('\u0671', 1);
   if (inner > 0) {
     const split = spokenArabic(raw.slice(0, inner)) + '§' + spokenArabic(raw.slice(inner));
@@ -239,12 +244,6 @@ function markForPhonemes(raw: string, spoken: string): string {
   }
   return marked;
 }
-
-/**
- * Words joined by wasl past this many are said from phonemes (recitationIpa).
- * One: every joined word is (niʿmal-ʿabdu, take 1B, 2026-11-05).
- */
-const MAX_JOINED_WORDS = 1;
 
 /** A long vowel the mushaf marks with madda: held (lāzim) or stretched before a hamza. */
 // Written either as a letter + madda or, composed, as آ after another letter.
@@ -296,9 +295,6 @@ function recite(raw: string): string {
 
 /** The pause marks a reciter stops at: ṣalā (ۖ), qilā (ۗ), jāʾiz (ۚ), lāzim (ۘ). Not lā (ۙ) or the paired dots (ۛ). */
 const PAUSE_MARK = /^[\u06D6\u06D7\u06DA\u06D8]$/;
-
-/** A hamza inside a word (yatasāʾalūn, yubdiʾu): said right only from phonemes (take 4B, 2026-11-05). */
-const INNER_HAMZA = /[^\s⟦][\u0621\u0623\u0625\u0624\u0626]/;
 
 function reciteRun(words: string[]): string {
   const out: string[] = [];
@@ -392,8 +388,10 @@ function reciteRun(words: string[]): string {
       if (fix) return `⟦${recitedIpa(fix[1])}|${w}⟧`;
       // Said from phonemes: long joins, held vowels, and any doubled letter,
       // whose hold (ghunna, shadda) only the phoneme spelling can give.
-      const doubled = /[\u0628-\u064A]\u0651/.test(w);
-      if ((forced[i] || joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || doubled || INNER_HAMZA.test(w)) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
+      // Every word is said from phonemes: as plain text the voice shortened
+      // long vowels (sāhūn came out sahūn, Al-Maʿun 107:5; take B on three
+      // verses, 2026-11-05).
+      if (!w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
       // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
       const marked = w.match(PHONEME_WORD);
       if (marked) return `⟦${recitedIpa(marked[1])}|${marked[2]}⟧`;
