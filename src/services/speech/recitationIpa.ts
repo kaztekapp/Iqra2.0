@@ -38,15 +38,13 @@ export function recitationIpa(word: string): string {
   // Each letter with the marks that follow it.
   // § (from recite) says the next alif is the silent alif of wasl; ¤ says the
   // long vowel before it is held (madd lāzim, marked with madda in the mushaf).
-  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean; stretched?: boolean; stressed?: boolean };
+  type Unit = { letter: string; marks: string; silent?: boolean; held?: boolean; stretched?: boolean };
   const units: Unit[] = [];
   let silentNext = false;
   for (const c of ch) {
     if (c === '§') { silentNext = true; continue; }
     if (c === '¤') { if (units.length) units[units.length - 1].held = true; continue; }
     if (c === '¦') { if (units.length) units[units.length - 1].stretched = true; continue; }
-    // ¨ (from recite): the vowel before it is stressed, the l of a moon-letter al- after a doubled letter.
-    if (c === '¨') { if (units.length) units[units.length - 1].stressed = true; continue; }
     if (MARK.test(c) && units.length) units[units.length - 1].marks += c;
     else { units.push({ letter: c, marks: '', silent: silentNext }); silentNext = false; }
   }
@@ -110,7 +108,7 @@ export function recitationIpa(word: string): string {
         (v === DAMMA && next.letter === 'و'));
     if (isAllah) out += 'aː';
     else if (TANWEEN[v]) out += TANWEEN[v];
-    else if (SHORT[v] && !intoLong) out += (u.stressed ? 'ˈ' : '') + SHORT[v];
+    else if (SHORT[v] && !intoLong) out += SHORT[v];
   }
   return out;
 }
