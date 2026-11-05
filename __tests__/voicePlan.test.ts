@@ -99,7 +99,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('says An-Nas 4 from the approved phonemes', () => {
-    expect(recite('مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ')).toMatch(/^⟦min ʃarrilwaswaːsilxannaːs\|/);
+    expect(recite('مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ')).toMatch(/^⟦min ʃarrilwaswaːsilxannnaːs\|/);
   });
 
   it('names the opening letters of a surah', () => {
