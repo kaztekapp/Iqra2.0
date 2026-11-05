@@ -151,7 +151,9 @@ export function holdDoubled(ipa: string): string {
 const LONG_A_BEFORE_H = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[^aiuːˈ.])aː(h)(?!aː)/;
 
 export function stretchBeforeH(ipa: string): string {
-  return ipa.replace(LONG_A_BEFORE_H, 'ˈ$1aːaː$2');
+  return ipa.replace(LONG_A_BEFORE_H, (m, c: string, h: string, at: number) =>
+    // Not inside a doubled letter (iyyāhu): the ā is stretched, the stress left to stressWord.
+    (ipa.slice(Math.max(0, at - c.length), at) === c ? '' : 'ˈ') + c + 'aːaː' + h);
 }
 
 /** Every phoneme spelling a recitation uses, with the held sounds applied. */
@@ -196,7 +198,13 @@ export function stressWord(ipa: string): string {
   if ((last.long && last.codas >= 1) || last.codas >= 2) k = syl.length - 1;
   else if (heavy(syl[syl.length - 2])) k = syl.length - 2;
   else k = Math.max(0, syl.length - 3);
-  const at = segs.slice(0, syl[k].start).join('').length;
+  // A doubled letter is one sound to the voice, and a mark inside it is a
+  // break (huwal·ˈlāhu came out huwa … llāhu, Al-Ikhlas 112:1). The stress
+  // moves to the syllable the doubled letter closes: huˈwal-lāhu (take C,
+  // heard right in 112:1, 1:2 and 1:4, 2026-11-05).
+  let start = syl[k].start;
+  for (let kk = k; start > 0 && segs[start - 1] === segs[start]; ) start = --kk >= 0 ? syl[kk].start : 0;
+  const at = segs.slice(0, start).join('').length;
   const flat = segs.join('');
   // Put the mark back into the original spelling (which may carry . splits).
   let seen = 0;

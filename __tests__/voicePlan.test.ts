@@ -142,6 +142,11 @@ describe('recitation (Quran only)', () => {
     expect(recite('أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ')).toContain('⟦ˈʔin|');
   });
 
+  it('never puts a stress mark inside a doubled letter (huwal-lāhu, Al-Ikhlas 112:1)', () => {
+    expect(recite('قُلْ هُوَ ٱللَّهُ أَحَدٌ')).toContain('⟦huˈwalˤlˤaːaːhu|');
+    expect(recite('إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ')).not.toMatch(/(lˤ|[a-zʃθðħʕɣʔ])ˈ\1/);
+  });
+
   it('reads a word with a hamza inside it from phonemes (take 4B)', () => {
     expect(unstressed(recite('يُبْدِئُ وَيُعِيدُ'))).toMatch(/^⟦jubdiʔu\|/);
   });
