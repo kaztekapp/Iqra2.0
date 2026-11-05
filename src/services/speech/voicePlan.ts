@@ -77,20 +77,14 @@ export function edgeRate(speed: number, voice: string = ARABIC_VOICE): string {
 }
 
 export function chunkLine(text: string, maxLen = MAX_CHUNK_LEN): string[] {
-  // A recited line stays recited in every chunk.
-  // A recited line stays recited in every chunk, and is split where the
-  // mushaf marks a pause (ۚ ۖ ۗ ...), since each chunk ends on a stop.
-  const recited = text.startsWith(RECITE);
-  if (recited) text = text.slice(RECITE.length);
-  // Recited lines are pre-recorded, so they can run longer and stop less often.
-  const chunks = splitLine(text, recited ? Math.max(maxLen, RECITED_CHUNK_LEN) : maxLen, recited);
-  return recited ? chunks.map((c) => RECITE + c) : chunks;
+  // A recited verse is read whole, as Learn mode reads it: a cut mid-verse is
+  // a stop the reciter would not make, and whole it is the same recording
+  // Learn mode already has.
+  if (text.startsWith(RECITE)) return [RECITE + text.slice(RECITE.length).trim()];
+  return splitLine(text, maxLen);
 }
 
-const RECITED_CHUNK_LEN = 400;
-const PAUSE_MARKS = [' \u06D6 ', ' \u06D7 ', ' \u06D8 ', ' \u06D9 ', ' \u06DA ', ' \u06DB ', ' \u06DC '];
-
-function splitLine(text: string, maxLen: number, recited: boolean): string[] {
+function splitLine(text: string, maxLen: number): string[] {
   const trimmed = text.trim();
   if (trimmed.length <= maxLen) return [trimmed];
 
@@ -109,13 +103,7 @@ function splitLine(text: string, maxLen: number, recited: boolean): string[] {
       const at = remaining.lastIndexOf(mark, maxLen);
       if (at > splitAt) splitAt = at + mark.length - 1;
     }
-    if (recited) {
-      for (const mark of PAUSE_MARKS) {
-        const at = remaining.lastIndexOf(mark, maxLen);
-        if (at >= maxLen / 4 && at + mark.length - 1 > splitAt) splitAt = at + mark.length - 1;
-      }
-    }
-    if (splitAt < maxLen / (recited ? 4 : 2)) splitAt = remaining.lastIndexOf(' ', maxLen);
+    if (splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(' ', maxLen);
     if (splitAt <= 0) {
       // No break point at all before the limit: run on to the next space rather
       // than cutting a word in half, which Google reads as gibberish.
