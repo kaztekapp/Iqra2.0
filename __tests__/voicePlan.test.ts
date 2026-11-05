@@ -112,16 +112,13 @@ describe('recitation (Quran only)', () => {
     expect(recite('تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ٱلْمُبِينِ')).toBe('تِلْكَ ⟦ʔaːjaːtulkitaːbilmubiːn|آيَاتُ الْكِتَابِ الْمُبِينْ⟧');
   });
 
-  it('splits a long recited line where the mushaf marks a pause', () => {
+  it('reads a recited verse whole, however long, as Learn mode does', () => {
     const line = asRecitation(`${'وَقُلْنَا يَـٰٓـَٔادَمُ ٱسْكُنْ أَنتَ وَزَوْجُكَ '.repeat(6)}ۚ ${'وَلَا تَقْرَبَا هَـٰذِهِ '.repeat(6)}`);
-    const chunks = chunkLine(line);
-    expect(chunks.length).toBe(2);
-    expect(chunks[0].endsWith('ۚ')).toBe(true);
+    expect(chunkLine(line)).toEqual([line.trim()]);
   });
 
   it('keeps the mark on every chunk, and leaves other Arabic as it was', () => {
     const long = asRecitation('ٱلْحَمْدُ لِلَّهِ '.repeat(40).trim());
-    expect(chunkLine(long).length).toBeGreaterThan(1);
     expect(chunkLine(long).every((c) => c.startsWith(RECITE))).toBe(true);
     expect(spokenArabic('يَوْمِ ٱلدِّينِ')).not.toContain(seated('يَوْمِدِّينْ'));
   });
