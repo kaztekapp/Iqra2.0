@@ -143,7 +143,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('stresses the pronoun -hā after a kasra in a longer word (jīdihā, Al-Masad 111:5)', () => {
-    expect(recite('فِى جِيدِهَا حَبْلٌ مِّن مَّسَدٍۭ')).toContain('⟦dʒiːdiˈhaː|');
+    expect(recite('فِى جِيدِهَا حَبْلٌ مِّن مَّسَدٍۭ')).toContain('⟦dʒiːiːdiˈhaː|');
     expect(recite('وَلَآ أَنتُمْ عَـٰبِدُونَ مَآ أَعْبُدُ')).not.toContain('ihaː');
   });
 

@@ -202,7 +202,16 @@ export function stressWord(ipa: string): string {
   // early, the voice rounded the i to u (jīdihā came out jīduhā, Al-Masad
   // 111:5; also mithlihā, amthālihā, manākibihā). Measured by the second
   // formant, 2026-11-05.
-  if (syl.length >= 3 && /[^aiuː]ihaː+$/.test(segs.join(''))) k = syl.length - 1;
+  // Its earlier long vowels are written double so the stress on hā does not
+  // shorten them (jīdihā came out jidihā; 2026-11-05).
+  if (syl.length >= 3 && /[^aiuː]ihaː+$/.test(segs.join(''))) {
+    k = syl.length - 1;
+    for (const sy of syl.slice(0, -2)) {
+      const at = segs.findIndex((s, i) => i >= sy.start && /^[aiu]/.test(s));
+      if (/^[aiu]ː$/.test(segs[at])) segs[at] = segs[at] + segs[at];
+    }
+    ipa = segs.join('');
+  }
   // A doubled letter is one sound to the voice, and a mark inside it is a
   // break (huwal·ˈlāhu came out huwa … llāhu, Al-Ikhlas 112:1). The stress
   // moves to the syllable the doubled letter closes: huˈwal-lāhu (take C,
