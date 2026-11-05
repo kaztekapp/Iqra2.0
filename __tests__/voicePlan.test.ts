@@ -142,6 +142,11 @@ describe('recitation (Quran only)', () => {
     expect(recite('أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ')).toContain('⟦ˈʔin|');
   });
 
+  it('stresses the pronoun -hā after a kasra in a longer word (jīdihā, Al-Masad 111:5)', () => {
+    expect(recite('فِى جِيدِهَا حَبْلٌ مِّن مَّسَدٍۭ')).toContain('⟦dʒiːdiˈhaː|');
+    expect(recite('وَلَآ أَنتُمْ عَـٰبِدُونَ مَآ أَعْبُدُ')).not.toContain('ihaː');
+  });
+
   it('never puts a stress mark inside a doubled letter (huwal-lāhu, Al-Ikhlas 112:1)', () => {
     expect(recite('قُلْ هُوَ ٱللَّهُ أَحَدٌ')).toContain('⟦huˈwalˤlˤaːaːhu|');
     expect(recite('إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ')).not.toMatch(/(lˤ|[a-zʃθðħʕɣʔ])ˈ\1/);

@@ -198,6 +198,11 @@ export function stressWord(ipa: string): string {
   if ((last.long && last.codas >= 1) || last.codas >= 2) k = syl.length - 1;
   else if (heavy(syl[syl.length - 2])) k = syl.length - 2;
   else k = Math.max(0, syl.length - 3);
+  // The pronoun -hā after a kasra takes the stress in a longer word: stressed
+  // early, the voice rounded the i to u (jīdihā came out jīduhā, Al-Masad
+  // 111:5; also mithlihā, amthālihā, manākibihā). Measured by the second
+  // formant, 2026-11-05.
+  if (syl.length >= 3 && /[^aiuː]ihaː+$/.test(segs.join(''))) k = syl.length - 1;
   // A doubled letter is one sound to the voice, and a mark inside it is a
   // break (huwal·ˈlāhu came out huwa … llāhu, Al-Ikhlas 112:1). The stress
   // moves to the syllable the doubled letter closes: huˈwal-lāhu (take C,
