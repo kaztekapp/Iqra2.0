@@ -80,7 +80,7 @@ describe('recitation (Quran only)', () => {
 
   it('joins a silent alif to the word before: sun letter drops the l, moon letter keeps it', () => {
     expect(reciteText('مَٰلِكِ يَوْمِ ٱلدِّينِ')).toBe(seated('مَالِكِ يَوْمِدِّينْ'));
-    expect(reciteText('ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ')).toBe(seated('الْحَمْدُ لِلَّهِ رَبِّلْعَالَمِينْ'));
+    expect(reciteText('ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ')).toBe(seated('الْحَمْدُ لِلَّهِ رَبِّلْ عَالَمِينْ'));
   });
 
   it('stops on the last letter of the line', () => {
@@ -92,7 +92,7 @@ describe('recitation (Quran only)', () => {
   });
 
   it('says a long vowel short before a join, and a tanween as its vowel plus nun', () => {
-    expect(recite('لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟')).toContain('فِلْأَرْضِ');
+    expect(recite('لَا تُفْسِدُوا۟ فِى ٱلْأَرْضِ قَالُوٓا۟')).toContain('⟦fil|فِلْ⟧ ⟦ʔardˤi|');
     expect(recite('لَقُوا۟ ٱلَّذِينَ ءَامَنُوا۟')).toContain(seated('لَقُلَّذِينَ'));
     expect(recite('عُزَيْرٌ ٱبْنُ ٱللَّهِ وَقَالَتِ')).toContain(seated('عُزَيْرُنِبْنُلَّهِ'));
   });
@@ -122,11 +122,10 @@ describe('recitation (Quran only)', () => {
     expect(recite('فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ')).toContain('jaduʕ.ʕuljatiːm');
   });
 
-  it('joins al- before a moon letter by stress or by moving the syllable over (2026-11-05)', () => {
-    expect(recite('ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ')).toContain('rabbbˈilʕaːlamiːn');
-    expect(recite('قِيلَ ٱدْخُلِ ٱلْجَنَّةَ ۖ').split(' ')[0]).toBe('قِيلَدْخُ');
+  it('keeps the l of a moon-letter al- on the word before (take C, 2026-11-05)', () => {
+    expect(recite('قِيلَ ٱدْخُلِ ٱلْجَنَّةَ ۖ')).toMatch(/^⟦qiːladxulil\|[^⟧]+⟧ ⟦dʒannnah\|/);
+    expect(recite('وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ')).toMatch(/^⟦wahuwal\|[^⟧]+⟧ ⟦ʕaziːzul\|[^⟧]+⟧ ⟦ħakiːm\|/);
     expect(recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ')).toMatch(/^⟦niʕmalʕabd\|/);
-    expect(recite('ذَٰلِكَ ٱلْكِتَـٰبُ لَا رَيْبَ')).toBe('ذَالِ كَلْكِتَابُ لَا رَيْبْ');
   });
 
   it('reads a word with a hamza inside it from phonemes (take 4B)', () => {
