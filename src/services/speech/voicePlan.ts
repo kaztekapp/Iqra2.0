@@ -200,6 +200,22 @@ const PHONEME_WORD = /^⟦([^|⟧]+)\|([^⟧]+)⟧$/;
 const MADD_LAZIM = /[اوىي]\u0653[\u0628-\u064A][\u064B-\u0650]?\u0651/;
 
 /**
+ * The long vowels the mushaf writes small, said as long vowels in recitation.
+ *
+ * A small waw (ۥ) or yā (ۦ) is a long ū or ī: Dāwūd, yastawūn, al-mawʾūdah,
+ * and the pronoun lengthened between two vowels (ṣilah: innahū kāna, bihī).
+ * The cleaned text dropped them, so all of these came out short. The
+ * pronoun's length belongs to the flow of the verse, so a stop on it (the
+ * last word) is short again: bih.
+ */
+function sayWrittenSmall(raw: string, last: boolean): string {
+  return raw.replace(/([\u0621-\u064A])(\u064F|\u0650)\u0640?(\u06E5|\u06E6)/g, (m, letter: string, vowel: string, small: string) => {
+    if (last && letter === 'ه') return letter + vowel;
+    return letter + vowel + (small === '\u06E5' ? 'و' : 'ي');
+  });
+}
+
+/**
  * A raw word, cleaned as `spoken` is, with the marks the phoneme spelling
  * needs (see recite): § before an inner silent alif, ¤ after a held vowel.
  * Falls back to the plain cleaned word whenever the marks cannot be placed
@@ -266,7 +282,8 @@ function recite(raw: string): string {
   // long vowel the mushaf marks with madda (dāāābbah). Without them the two
   // look alike, and fattaqū came out fāāāttaqū.
   const src: string[] = [];
-  for (const w of words) {
+  for (const [wi, raw] of words.entries()) {
+    const w = sayWrittenSmall(raw, wi === words.length - 1);
     const spoken = spokenArabic(w);
     if (!spoken) continue;
     const srcWord = markForPhonemes(w, spoken);
