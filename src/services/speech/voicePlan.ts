@@ -10,7 +10,7 @@ import { normalizeArabicForSpeech } from '../narrationText';
 import { ARABIC_PHONEMES, ARABIC_PRONUNCIATIONS } from './pronunciations';
 import { SURAH_NAMES } from './surahNames';
 import { VOICE_REVISIONS } from './voiceRevisions';
-import { recitationIpa, soundOfAllah } from './recitationIpa';
+import { recitationIpa, recitedIpa } from './recitationIpa';
 
 /** Hamed reads full tashkeel cleanly; Zariyah takes the Arabic when the narrator is female. */
 export const ARABIC_VOICE = 'ar-SA-HamedNeural';
@@ -308,15 +308,18 @@ function recite(raw: string): string {
   }
   const line = out.join(' ');
   const whole = RECITATION_LINES.find(([from]) => shaddaFirst(from) === line);
-  if (whole) return `⟦${soundOfAllah(whole[1])}|${line}⟧`;
+  if (whole) return `⟦${recitedIpa(whole[1])}|${line}⟧`;
   return out
     .map((w, i) => {
       const fix = RECITATION_PHONEMES.find(([from]) => shaddaFirst(from) === w);
-      if (fix) return `⟦${soundOfAllah(fix[1])}|${w}⟧`;
-      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i]) && !w.includes('⟦')) return `⟦${soundOfAllah(recitationIpa(src[i]))}|${w}⟧`;
-      // A phoneme word joined in wasl (āyātullāh) gets the same reading of the name.
+      if (fix) return `⟦${recitedIpa(fix[1])}|${w}⟧`;
+      // Said from phonemes: long joins, held vowels, and a doubled n or m,
+      // whose ghunna only the phoneme spelling can hold.
+      const ghunna = /[نم]\u0651/.test(w);
+      if ((joined[i] >= MAX_JOINED_WORDS + 1 || held[i] || ghunna) && !w.includes('⟦')) return `⟦${recitedIpa(recitationIpa(src[i]))}|${w}⟧`;
+      // A phoneme word joined in wasl (āyātullāh) gets the same held sounds.
       const marked = w.match(PHONEME_WORD);
-      if (marked) return `⟦${soundOfAllah(marked[1])}|${marked[2]}⟧`;
+      if (marked) return `⟦${recitedIpa(marked[1])}|${marked[2]}⟧`;
       return w;
     })
     .join(' ');
