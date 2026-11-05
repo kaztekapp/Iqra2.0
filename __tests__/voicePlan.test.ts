@@ -128,6 +128,12 @@ describe('recitation (Quran only)', () => {
     expect(recite('نِعْمَ ٱلْعَبْدُ ۖ إِنَّهُۥٓ أَوَّابٌ')).toMatch(/^⟦niʕmalʕabd\|/);
   });
 
+  it('stretches and stresses a long ā before h (sāhūn, take E)', () => {
+    expect(recite('ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ')).toContain('⟦ˈsaːaːhuːn|');
+    expect(recite('صُحُفِ إِبْرَٰهِيمَ وَمُوسَىٰ')).toContain('⟦ʔibˈraːaːhiːma|');
+    expect(recite('بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ')).not.toContain('ˈ');
+  });
+
   it('reads a word with a hamza inside it from phonemes (take 4B)', () => {
     expect(recite('يُبْدِئُ وَيُعِيدُ')).toMatch(/^⟦jubdiʔu\|/);
   });

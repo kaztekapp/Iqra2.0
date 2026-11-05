@@ -143,7 +143,18 @@ export function holdDoubled(ipa: string): string {
   return ipa.replace(DOUBLED, (_m, c: string) => (THROAT.has(c) ? `${c}.${c}` : c + c + c));
 }
 
+/**
+ * A long ā before h, stretched and stressed: the voice cut it short (sāhūn
+ * came out sahūn). Chosen by ear on sāhūn, anzalnāhu, Ibrāhīm and jāhilīn
+ * (take E, 2026-11-05); about 870 words. The name of God has its own form.
+ */
+const LONG_A_BEFORE_H = /(dʒ|sˤ|dˤ|tˤ|ðˤ|[^aiuːˈ.])aː(h)(?!aː)/;
+
+export function stretchBeforeH(ipa: string): string {
+  return ipa.replace(LONG_A_BEFORE_H, 'ˈ$1aːaː$2');
+}
+
 /** Every phoneme spelling a recitation uses, with the held sounds applied. */
 export function recitedIpa(ipa: string): string {
-  return holdDoubled(soundOfAllah(ipa));
+  return stretchBeforeH(holdDoubled(soundOfAllah(ipa)));
 }
