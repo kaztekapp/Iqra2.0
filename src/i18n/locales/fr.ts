@@ -1584,6 +1584,7 @@ export default {
     themeVerse: 'Verset',
   },
   legal: {
+    acknowledgements: 'Remerciements',
     emailCopied: 'Adresse copi\u00e9e',
     privacyPolicy: 'Politique de Confidentialité',
     termsOfService: 'Conditions d\'Utilisation',

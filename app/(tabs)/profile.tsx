@@ -584,6 +584,19 @@ export default function ProfileScreen() {
             <View style={styles.settingDivider} />
             <Pressable
               style={styles.legalRow}
+              onPress={() => router.push('/acknowledgements' as Href)}
+              accessibilityRole="link"
+              accessibilityLabel={t('legal.acknowledgements')}
+            >
+              <View style={styles.settingLeft}>
+                <Ionicons name="heart-outline" size={22} color={color.textMuted} />
+                <Text style={styles.settingTitle}>{t('legal.acknowledgements')}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
+            </Pressable>
+            <View style={styles.settingDivider} />
+            <Pressable
+              style={styles.legalRow}
               onPress={() => router.push('/terms-of-service' as Href)}
               accessibilityRole="link"
               accessibilityLabel={t('legal.termsOfService')}
