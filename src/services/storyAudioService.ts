@@ -654,19 +654,37 @@ class StoryAudioService {
     lang: NarrationLang,
     generation: number
   ): Promise<SpeakResult> {
+    let fetched = false;
     try {
       const key = this.preparedKey(body, lang);
       const ahead = this.prepared.get(key);
       this.prepared.delete(key);
       const uri = ahead ? await ahead : await this.edgeClip(body, lang);
+      fetched = true;
       if (generation !== this.generation) {
         deleteQuietly(uri);
         return 'stopped';
       }
       await this.playClip(uri, speed, estimateSeconds(body, speed), generation, true);
       return generation === this.generation ? 'done' : 'stopped';
-    } catch {
+    } catch (e) {
       if (generation !== this.generation) return 'stopped';
+      // The clip was there but never started: a fresh player and a fresh copy
+      // of the clip, once, before the phone's voice takes the story. A stuck
+      // player (or a preloaded source it would not start) was handing every
+      // sentence after the first to the phone's voice.
+      if (fetched) {
+        quietly(e, 'services/storyAudioService');
+        try {
+          this.releasePlayer();
+          const again = await this.edgeClip(body, lang);
+          if (generation !== this.generation) return 'stopped';
+          await this.playClip(again, speed, estimateSeconds(body, speed), generation, true);
+          return generation === this.generation ? 'done' : 'stopped';
+        } catch {
+          if (generation !== this.generation) return 'stopped';
+        }
+      }
       return this.demote('edge', body, speed, lang, generation);
     }
   }
