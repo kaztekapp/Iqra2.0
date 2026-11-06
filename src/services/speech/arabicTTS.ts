@@ -152,9 +152,9 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   // An ayah is recited: joined across silent alifs, stopped on its last letter.
   const spoken = spokenArabic(asRecitation(text));
   if (!spoken) throw new Error('tts_empty');
-  const rate = edgeRate(speed, arabicVoice());
-  const name = clipName(spoken, arabicVoice(), rate);
-  const kept = findClip(spoken, arabicVoice(), rate);
+  const rate = edgeRate(speed, arabicVoice(true));
+  const name = clipName(spoken, arabicVoice(true), rate);
+  const kept = findClip(spoken, arabicVoice(true), rate);
   if (kept) return kept;
 
   // Someone is already making this one. Learn mode starts the next verse while
@@ -166,7 +166,7 @@ export async function synthesizeAyahToFile(text: string, speed = 1): Promise<str
   if (running) return running;
 
   const work = (async () => {
-    const bytes = await withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate, true), 45000);
+    const bytes = await withBudget(edgeSynthesize(spoken, arabicVoice(true), 'ar', rate, true), 45000);
     if (!bytes.length) throw new Error('tts_empty');
     try {
       const saved = await keepClip(name, bytes);
@@ -193,7 +193,8 @@ export function hasArabicClip(text: string, speed = 1): boolean {
   // saved line is ever recognised again.
   return chunkLine(line).every((chunk) => {
     const spoken = spokenArabic(chunk);
-    return !spoken || findClip(spoken, arabicVoice(), edgeRate(speed, arabicVoice())) !== null;
+    const voice = arabicVoice(chunk.startsWith(RECITE));
+    return !spoken || findClip(spoken, voice, edgeRate(speed, voice)) !== null;
   });
 }
 
@@ -209,16 +210,17 @@ export async function saveArabicClip(text: string, speed = 1): Promise<void> {
   for (const chunk of chunkLine(line)) {
     const spoken = spokenArabic(chunk);
     if (!spoken) continue;
-    const rate = edgeRate(speed, arabicVoice());
-    if (findClip(spoken, arabicVoice(), rate)) continue;
+    const voice = arabicVoice(chunk.startsWith(RECITE));
+    const rate = edgeRate(speed, voice);
+    if (findClip(spoken, voice, rate)) continue;
     // Queued, not fired off: a save is a background wish, and the reader
     // listening right now must not queue behind it or race it. This is the
     // burst that used to wedge the reader.
     const bytes = await enqueueEdge(() =>
-      withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', rate, chunk.startsWith(RECITE)), EDGE_BUDGET_MS)
+      withBudget(edgeSynthesize(spoken, voice, 'ar', rate, chunk.startsWith(RECITE)), EDGE_BUDGET_MS)
     );
     if (!bytes.length) throw new Error('tts_empty');
-    await keepClip(clipName(spoken, arabicVoice(), rate), bytes);
+    await keepClip(clipName(spoken, voice, rate), bytes);
     pruneClips();
   }
 }
@@ -254,7 +256,7 @@ async function fetchChunkFromEdge(
   quran: boolean
 ): Promise<string> {
   const attempt = () =>
-    withBudget(edgeSynthesize(spoken, arabicVoice(), 'ar', edgeRate(speed, arabicVoice()), quran), EDGE_BUDGET_MS);
+    withBudget(edgeSynthesize(spoken, arabicVoice(quran), 'ar', edgeRate(speed, arabicVoice(quran)), quran), EDGE_BUDGET_MS);
   // The line being read goes first. Queueing it behind the prefetch of the
   // NEXT line - which is started before it - meant every verse waited for a
   // verse nobody was listening to yet, and then ran out of budget.
@@ -295,7 +297,8 @@ async function fetchChunkToFile(
   // A line said before is already on the phone. This look-up comes before
   // everything else - before the rest, before any thought of a network - so a
   // dua heard once reads back with no signal at all.
-  const kept = findClip(spoken, arabicVoice(), edgeRate(speed, arabicVoice()));
+  const recited = text.startsWith(RECITE);
+  const kept = findClip(spoken, arabicVoice(recited), edgeRate(speed, arabicVoice(recited)));
   if (kept) return kept;
 
   // `force` is the second try at a line that is about to be lost. Resting the
@@ -449,7 +452,7 @@ function playFile(uri: string): Promise<void> {
  */
 const prepared = new Map<string, Promise<string>>();
 const PREPARED_LIMIT = 6;
-const preparedKey = (chunk: string, speed: number) => `${arabicVoice()}|${speed}|${chunk}`;
+const preparedKey = (chunk: string, speed: number) => `${arabicVoice(chunk.startsWith(RECITE))}|${speed}|${chunk}`;
 
 export function prepareArabic(text: string, speed = 1.0): void {
   if (preference.source === 'device') return;
@@ -576,11 +579,12 @@ let voicePromise: Promise<string | undefined> | null = null;
 let preferredGender: 'female' | 'male' = 'female';
 
 /**
- * The neural Arabic voice: Zariyah with a female narrator, Hamed with a male
- * one, so the ayahs are read in the same gender as the story around them.
+ * The neural Arabic voice. The Quran is always recited by Hamed, whoever
+ * narrates (the user's choice, 2026-11-06); the rest of the Arabic (duas,
+ * hadith, lessons) follows the narrator: Zariyah with a female one.
  */
-function arabicVoice(): string {
-  return voiceFor('ar', preferredGender);
+function arabicVoice(recited = false): string {
+  return recited ? voiceFor('ar', 'male') : voiceFor('ar', preferredGender);
 }
 
 export type ArabicVoiceSource = 'online' | 'device';
