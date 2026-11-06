@@ -126,7 +126,7 @@ export default function HomeScreen() {
           >
             <IconTile name="library" tint={color.sacred} />
             <View style={styles.continueText}>
-              <Txt variant="body" weight="semibold" numberOfLines={1}>{t('storiesFeature.title')}</Txt>
+              <Txt variant="body" weight="semibold" numberOfLines={2}>{t('storiesFeature.title')}</Txt>
               <Arabic size="inline" align="left" numberOfLines={1} style={styles.continueArabic}>قَصَصُ الْقُرْآن</Arabic>
               <Txt variant="caption" tone="faint" numberOfLines={1}>{t('quran.prophetsAndMore')}</Txt>
             </View>
