@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Pressable, StyleSheet } from 'react-native';
+import { Text, View, Pressable, StyleSheet, Platform } from 'react-native';
 import { TajweedOccurrence, TajweedRuleId } from '../../types/quran';
 import { TAJWEED_COLORS } from '../../data/arabic/quran/tajweed/colors';
 import { color, font, radius, space } from '../../theme/tokens';
@@ -95,7 +95,16 @@ export function TajweedText({
   return (
     // Nested segments inherit fontFamily from this parent, which keeps the
     // script shaping consistent across tajweed colour boundaries.
-    <Text style={[styles.container, { fontSize, lineHeight: fontSize * QURAN_LINE_HEIGHT }]}>
+    <Text
+      style={[
+        styles.container,
+        { fontSize, lineHeight: fontSize * QURAN_LINE_HEIGHT },
+        // Android clips what is drawn below the last line's box, and the
+        // kasras of the bottom line hang below it (bismi, ar-raḥīm). Room for
+        // them; iOS draws past the box and needs none.
+        Platform.OS === 'android' && { paddingBottom: fontSize * 0.45 },
+      ]}
+    >
       {segments.map((segment, index) => {
         if (segment.ruleId && showTajweed) {
           return (
