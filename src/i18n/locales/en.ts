@@ -1584,6 +1584,7 @@ export default {
     themeVerse: 'Verse',
   },
   legal: {
+    acknowledgements: 'Acknowledgements',
     emailCopied: 'Address copied',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
