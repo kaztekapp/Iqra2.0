@@ -34,6 +34,7 @@ import {
   edgeRate,
   spokenArabic,
   asRecitation,
+  RECITE,
   spokenNarration,
   buildSsml,
   voiceFor,
@@ -120,8 +121,9 @@ export function buildPlan(): Item[] {
     for (const chunk of chunkLine(line)) {
       const text = spokenArabic(chunk);
       if (!text.trim()) continue;
-      // Both Arabic voices: the ayahs follow the narrator's gender.
-      for (const voice of ARABIC_VOICES) {
+      // The Quran is recited by Hamed alone; other Arabic follows the
+      // narrator's gender, so it is recorded in both voices.
+      for (const voice of chunk.startsWith(RECITE) ? [voiceFor('ar', 'male')] : ARABIC_VOICES) {
         for (const rate of [edgeRate(1, voice), edgeRate(0.6, voice)]) {
           const path = clipPath(text, voice, rate);
           items.set(path, { path, text, voice, rate, locale: 'ar-SA' });
@@ -163,11 +165,11 @@ export function buildPlan(): Item[] {
   // as they are, so every Arabic string in it is recorded.
   for (const line of learningArabic()) addArabic(line);
   // Learn Mode's learning voice reads each ayah whole (synthesizeAyahToFile:
-  // no chunking), in the narrator's Arabic voice, at the normal pace only.
+  // no chunking), in Hamed's voice, at the normal pace only.
   for (const ayah of quranAyahs()) {
     const text = spokenArabic(asRecitation(ayah));
     if (!text.trim()) continue;
-    for (const voice of ARABIC_VOICES) {
+    for (const voice of [voiceFor('ar', 'male')]) {
       const rate = edgeRate(1, voice);
       const path = clipPath(text, voice, rate);
       items.set(path, { path, text, voice, rate, locale: 'ar-SA' });
