@@ -147,6 +147,11 @@ describe('recitation (Quran only)', () => {
     expect(recite('وَلَآ أَنتُمْ عَـٰبِدُونَ مَآ أَعْبُدُ')).not.toContain('ihaː');
   });
 
+  it('holds a th at the stop (fa-ḥaddith, Ad-Duha 93:11)', () => {
+    expect(recite('وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ')).toMatch(/diθθ\|[^⟧]+⟧$/);
+    expect(recite('مِنْ خَوْفٍۭ')).toMatch(/xawf\|/);
+  });
+
   it('never puts a stress mark inside a doubled letter (huwal-lāhu, Al-Ikhlas 112:1)', () => {
     expect(recite('قُلْ هُوَ ٱللَّهُ أَحَدٌ')).toContain('⟦huˈwalˤlˤaːaːhu|');
     expect(recite('إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ')).not.toMatch(/(lˤ|[a-zʃθðħʕɣʔ])ˈ\1/);
