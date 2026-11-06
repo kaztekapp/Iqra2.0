@@ -45,12 +45,6 @@ export const ACKNOWLEDGEMENTS: Record<'en' | 'fr', { intro: string; groups: Cred
         ],
       },
       {
-        title: 'Voices',
-        credits: [
-          { name: 'Microsoft Azure AI Speech', detail: 'The learning voices that read the Arabic, the stories and the lessons.', url: 'https://azure.microsoft.com/products/ai-services/text-to-speech', link: 'azure.microsoft.com' },
-        ],
-      },
-      {
         title: 'Fonts',
         credits: [
           { name: 'Amiri and Amiri Quran', detail: 'By Khaled Hosny. SIL Open Font License 1.1.', url: 'https://github.com/aliftype/amiri', link: 'github.com/aliftype/amiri' },
@@ -91,12 +85,6 @@ export const ACKNOWLEDGEMENTS: Record<'en' | 'fr', { intro: string; groups: Cred
         credits: [
           { name: 'EveryAyah', detail: `Récitations verset par verset de ${RECITERS}.`, url: 'https://everyayah.com', link: 'everyayah.com' },
           { name: 'Islamic Network', detail: 'Récitations pour la lecture et la mémorisation.', url: 'https://alquran.cloud', link: 'alquran.cloud' },
-        ],
-      },
-      {
-        title: 'Voix',
-        credits: [
-          { name: 'Microsoft Azure AI Speech', detail: 'Les voix d’apprentissage qui lisent l’arabe, les histoires et les leçons.', url: 'https://azure.microsoft.com/products/ai-services/text-to-speech', link: 'azure.microsoft.com' },
         ],
       },
       {
