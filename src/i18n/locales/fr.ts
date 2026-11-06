@@ -966,11 +966,11 @@ export default {
     sectionCompleted: 'Section Terminée',
   },
   storiesFeature: {
-    title: 'Histoires du Coran',
+    title: 'Les histoires dans le Coran',
     prophets: 'Prophètes',
     otherStories: 'Autres Histoires',
     prophetStories: 'Histoires des Prophètes',
-    quranStories: 'Histoires du Coran',
+    quranStories: 'Les histoires dans le Coran',
     learnAboutProphets: 'Découvrez les prophètes mentionnés dans le Coran',
     discoverStories: 'Découvrez d\'autres histoires remarquables du Coran',
     searchProphets: 'Rechercher des prophètes...',
