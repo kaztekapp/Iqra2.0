@@ -408,6 +408,10 @@ function reciteRun(words: string[]): string {
       if (/[aiuː]m$/.test(ipa) && next && !/^ˈ?[mb]/.test(next)) ipa += 'm';
       // a pronoun h at the stop after a vowel is held (mā akfarah, heard akfar).
       if (i === ipas.length - 1 && lastIsPronounH && /[aiu]h$/.test(ipa)) ipa += 'h';
+      // a th at the stop is held: the voice dropped it with its vowel
+      // (fa-ḥaddith heard fa-ḥadd, Ad-Duha 93:11). Other soft endings
+      // (khawf, an-nās, tanaffas) were heard right and are left alone.
+      if (i === ipas.length - 1 && /θ$/.test(ipa)) ipa += 'θ';
       return `⟦${stressWord(ipa)}|${x.w}⟧`;
     })
     .join(' ');
