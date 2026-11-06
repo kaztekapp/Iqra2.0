@@ -30,7 +30,9 @@ function tabIcon(name: keyof typeof ICONS) {
 export default function TabLayout() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const bottomPadding = Platform.OS === 'ios' ? 28 : Math.max(insets.bottom, 24);
+  // Android: the labels sat on the very edge of the system bar (three-button
+  // or gesture), with no room between them; a little space above it.
+  const bottomPadding = Platform.OS === 'ios' ? 28 : Math.max(insets.bottom + 8, 24);
 
   return (
     <Tabs
