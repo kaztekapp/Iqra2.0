@@ -15,10 +15,14 @@
  *                             out). Not sent; kept as a breadcrumb so that if
  *                             a real error follows, the trail leading to it
  *                             is in the report.
+ *
+ * A dropped connection is never an error (see networkFailure.ts): reportError
+ * sends it through quietly, and beforeSend drops one that nothing caught.
  */
 import * as Sentry from '@sentry/react-native';
 import Constants from 'expo-constants';
 import * as Updates from 'expo-updates';
+import { isNetworkFailure } from './networkFailure';
 
 const DSN = process.env.EXPO_PUBLIC_SENTRY_DSN || '';
 
@@ -41,6 +45,12 @@ export function initReporting(): void {
     // Request breadcrumbs keep the address but not its query: Google TTS URLs
     // carry the text being read (including Arabic the user typed) and Supabase
     // URLs carry user ids.
+    // The phone's connection dropping is not a bug, even when no code caught
+    // it (IQRA2-B reached Sentry as an unhandled rejection with no stack).
+    beforeSend(event, hint) {
+      const thrown = hint?.originalException ?? event.exception?.values?.[0]?.value;
+      return isNetworkFailure(thrown) ? null : event;
+    },
     beforeBreadcrumb(breadcrumb) {
       const url = breadcrumb.data?.url;
       if (typeof url === 'string' && url.includes('?')) {
@@ -63,6 +73,10 @@ export function wrapRoot<P extends object>(component: React.ComponentType<P>): R
 
 /** A failure that matters. */
 export function reportError(error: unknown, context?: Record<string, unknown>): void {
+  if (isNetworkFailure(error)) {
+    quietly(error, typeof context?.where === 'string' ? context.where : 'network');
+    return;
+  }
   if (__DEV__) console.error('[report]', error, context ?? '');
   if (!reportingEnabled) return;
   Sentry.withScope((scope) => {
