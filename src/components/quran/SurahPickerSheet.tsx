@@ -26,7 +26,8 @@ interface Props {
   onClose: () => void;
   /** The heading, when choosing for something other than this screen. */
   title?: string;
-  /** Only this surah and those after it (memorization order): where a run of surahs can stop. */
+  /** Only this surah and those after it can be chosen (memorization order):
+   * a run of surahs always plays forward. The ones before stay listed, greyed. */
   fromSurahId?: string;
 }
 
@@ -68,10 +69,8 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, tit
   const { lc } = useLocalizedContent();
   const [query, setQuery] = useState('');
 
-  const order = useMemo(() => {
-    const from = fromSurahId ? MEMORIZATION_ORDER.findIndex((s) => s.id === fromSurahId) : 0;
-    return from > 0 ? MEMORIZATION_ORDER.slice(from) : MEMORIZATION_ORDER;
-  }, [fromSurahId]);
+  const order = MEMORIZATION_ORDER;
+  const fromIndex = fromSurahId ? Math.max(0, MEMORIZATION_ORDER.findIndex((s) => s.id === fromSurahId)) : 0;
 
   const results = useMemo(() => {
     const q = fold(query.trim());
@@ -138,16 +137,18 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, tit
               ListEmptyComponent={<Text style={styles.empty}>{t('surahLearnMode.noSurahFound', { query: query.trim() })}</Text>}
               renderItem={({ item }) => {
                 const selected = item.id === currentSurahId;
+                const disabled = memorizationIndex(item.id) < fromIndex;
                 return (
                   <Pressable
-                    style={[styles.row, selected && styles.rowSelected]}
+                    style={[styles.row, selected && styles.rowSelected, disabled && styles.rowDisabled]}
+                    disabled={disabled}
                     android_ripple={{ color: color.surfaceSunken }}
                     onPress={() => {
                       setQuery('');
                       onPick(item);
                     }}
                     accessibilityRole="button"
-                    accessibilityState={{ selected }}
+                    accessibilityState={{ selected, disabled }}
                     accessibilityLabel={`${item.surahNumber}. ${item.nameEnglish}, ${lc(item.meaning, item.meaningFr)}, ${t('surahLearnMode.ayahCount', { count: item.ayahCount })}`}
                   >
                     <View style={[styles.number, selected && styles.numberSelected]}>
@@ -229,6 +230,9 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
+  },
+  rowDisabled: {
+    opacity: 0.35,
   },
   row: {
     height: ROW_HEIGHT,
