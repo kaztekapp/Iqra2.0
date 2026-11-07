@@ -66,7 +66,6 @@ export default function LearnModeScreen() {
   );
   const [repeatCount, setRepeatCount] = useState(1);
   const [currentRepeat, setCurrentRepeat] = useState(0);
-  const [autoAdvance, setAutoAdvance] = useState(true);
 
   // Verse range selection (1-indexed verse numbers)
   const [startVerse, setStartVerse] = useState(1);
@@ -705,12 +704,7 @@ export default function LearnModeScreen() {
         reciterName={currentReciter.nameEnglish}
         onVoice={handleVoiceChange}
         repeatCount={repeatCount}
-        autoAdvance={autoAdvance}
         onRepeat={handleRepeatChange}
-        onAutoAdvance={(on) => {
-          setAutoAdvance(on);
-          autoAdvanceRef.current = on;
-        }}
         speed={playbackSpeed}
         onSpeed={handleSpeedChange}
         verseCount={ayahs.length}
@@ -726,8 +720,6 @@ export default function LearnModeScreen() {
             handleVerses(1, ayahs.length);
             // Each verse once, and on to the next: no repeat, no stopping.
             handleRepeatChange(1);
-            setAutoAdvance(true);
-            autoAdvanceRef.current = true;
           }
         }}
         nextSurahName={nextSurah?.nameEnglish ?? null}
