@@ -36,6 +36,14 @@ function verseFontSize(text: string): number {
 /** What the player calls the app's own voice, in Arabic. */
 const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 
+/**
+ * Which Learn screen is the live one. Going on to the next surah replaces
+ * this screen with a new one, and the old one can unmount after the new one
+ * has started playing; its clean-up must not stop that, or take the
+ * learning voice away from it.
+ */
+let liveLearnScreen = 0;
+
 export default function LearnModeScreen() {
   const { t } = useTranslation();
   // Going on to the next surah passes on how it was being heard: autoplay,
@@ -126,6 +134,12 @@ export default function LearnModeScreen() {
       : LAST_SURAH_TO_LEARN;
   const stopHere = !!surah && stopSurah.id === surah.id;
   const nextSurah = surah && !stopHere ? nextSurahToLearn(surah.id) : null;
+  // Read when a surah ends, so a stop chosen while it plays still counts: the
+  // playing chain holds the play function of the render that started it.
+  const stopHereRef = useRef(stopHere);
+  stopHereRef.current = stopHere;
+  const nextSurahRef = useRef(nextSurah);
+  nextSurahRef.current = nextSurah;
 
   // Arrived from the surah before (go on to the next surah): start at once,
   // when the verses are there. The play function is set further down.
@@ -179,8 +193,12 @@ export default function LearnModeScreen() {
     );
   }, [useLearningVoice, ayahs, surah?.surahNumber]);
 
+  const screenId = useRef(0);
   useEffect(() => {
+    const id = ++liveLearnScreen;
+    screenId.current = id;
     return () => {
+      if (liveLearnScreen !== id) return;
       quranAudioService.setSpokenVoice(false, null);
       // Leaving Learn mode ends its playback: it has no mini player to be
       // stopped from elsewhere.
@@ -319,18 +337,22 @@ export default function LearnModeScreen() {
             // The whole surah heard, and the reader chose to go on: the next
             // surah opens and plays from its first verse.
             // The surah the reader chose to stop after: the run ends here.
-            if (currentIndex >= endIdx && endIdx >= ayahs.length - 1 && afterSurahRef.current === 'next' && stopHere) {
+            // Back on the first verse, so Play hears the surah again.
+            if (currentIndex >= endIdx && endIdx >= ayahs.length - 1 && afterSurahRef.current === 'next' && stopHereRef.current) {
               isPlayingRef.current = false;
               setAudioState('idle');
               clearPlayer();
+              currentAyahIndexRef.current = 0;
+              setCurrentAyahIndex(0);
               return;
             }
+            const nextSurah = nextSurahRef.current;
             if (currentIndex >= endIdx && endIdx >= ayahs.length - 1 && afterSurahRef.current === 'next' && nextSurah) {
               isPlayingRef.current = false;
               quranAudioService.stop();
               clearPlayer();
               router.replace(
-                `/quran/surah/${nextSurah.id}/learn?autoplay=1&speed=${playbackSpeedRef.current}&voice=${learningVoiceRef.current ? 'learning' : 'reciter'}`
+                `/quran/surah/${nextSurah.id}/learn?autoplay=1&${keepListening()}`
               );
               return;
             }
@@ -367,6 +389,10 @@ export default function LearnModeScreen() {
     });
   };
 
+  // Another surah opens with the speed and voice the reader chose here.
+  const keepListening = () =>
+    `speed=${playbackSpeedRef.current}&voice=${learningVoiceRef.current ? 'learning' : 'reciter'}`;
+
   autoplayRef.current = () => {
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
@@ -392,11 +418,34 @@ export default function LearnModeScreen() {
       return;
     }
 
+    if (audioState === 'loading') {
+      // Still fetching: the button shows a spinner, and a tap stops it.
+      stopPlayback();
+      return;
+    }
+
     // Start fresh
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
     isPlayingRef.current = true;
     playLearnAyah(currentAyah.ayahNumber);
+  };
+
+  const stopPlayback = () => {
+    isPlayingRef.current = false;
+    quranAudioService.stop();
+    setAudioState('idle');
+    clearPlayer();
+  };
+
+  // Start a verse over while one may still be loading: playAyah ignores a
+  // call made before the last one has its clip, so that one is stopped first.
+  const restartAt = async (ayahNumber: number) => {
+    if (audioState === 'loading') {
+      await quranAudioService.stop();
+      isPlayingRef.current = true;
+    }
+    playLearnAyah(ayahNumber);
   };
 
 
@@ -411,8 +460,12 @@ export default function LearnModeScreen() {
     if (isPlayingRef.current && (audioState === 'playing' || audioState === 'loading')) {
       currentRepeatRef.current = 0;
       setCurrentRepeat(0);
-      playLearnAyah(currentAyah.ayahNumber);
-    } else if (learning) {
+      restartAt(currentAyah.ayahNumber);
+      return;
+    }
+    // Paused in the old voice: Play starts the verse again in the new one.
+    if (audioState === 'paused') stopPlayback();
+    if (learning) {
       // Not playing: make the verse now, so the first press starts at once.
       quranAudioService.prewarmSpokenAyah(currentAyah?.textUthmani);
     }
@@ -456,14 +509,9 @@ export default function LearnModeScreen() {
     currentRepeatRef.current = 0;
     setCurrentRepeat(0);
     if (isPlayingRef.current && audioState !== 'paused') {
-      playLearnAyah(ayahs[index].ayahNumber);
+      restartAt(ayahs[index].ayahNumber);
     } else {
-      if (audioState === 'paused') {
-        isPlayingRef.current = false;
-        quranAudioService.stop();
-        setAudioState('idle');
-        clearPlayer();
-      }
+      if (audioState === 'paused') stopPlayback();
       if (learningVoiceRef.current) quranAudioService.prewarmSpokenAyah(ayahs[index].textUthmani);
     }
   };
@@ -748,7 +796,7 @@ export default function LearnModeScreen() {
           isPlayingRef.current = false;
           quranAudioService.stop();
           clearPlayer();
-          router.replace(`/quran/surah/${startId}/learn`);
+          router.replace(`/quran/surah/${startId}/learn?${keepListening()}`);
         }}
       />
 
@@ -763,7 +811,7 @@ export default function LearnModeScreen() {
           isPlayingRef.current = false;
           quranAudioService.stop();
           clearPlayer();
-          router.replace(`/quran/surah/${picked.id}/learn`);
+          router.replace(`/quran/surah/${picked.id}/learn?${keepListening()}`);
         }}
       />
     </SafeAreaView>
