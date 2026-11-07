@@ -1298,6 +1298,7 @@ export default {
     ayahCount_other: '{{count}} versets',
     verses: 'Versets',
     all: 'Tous',
+    whichVerses: 'Quels versets',
     whenSurahEnds: 'À la fin de la sourate',
     repeatSurahTitle: 'Répéter cette sourate',
     repeatSurahNote: 'Reprendre au premier verset choisi.',
