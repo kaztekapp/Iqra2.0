@@ -64,11 +64,15 @@ const fold = (s: string) =>
     .replace(/[''`ʿʾ-]/g, '')
     .toLowerCase();
 
-export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, title, fromSurahId }: Props) {
+/**
+ * The surahs in memorization order with a search box: the list the picker
+ * sheet shows, and the one the Learn settings sheet shows in place while a
+ * run of surahs is being chosen (a second sheet on top would close it).
+ */
+export function SurahList({ currentSurahId, onPick, fromSurahId }: { currentSurahId: string; onPick: (surah: Surah) => void; fromSurahId?: string }) {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const [query, setQuery] = useState('');
-
   const order = MEMORIZATION_ORDER;
   const fromIndex = fromSurahId ? Math.max(0, MEMORIZATION_ORDER.findIndex((s) => s.id === fromSurahId)) : 0;
 
@@ -83,10 +87,75 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, tit
 
   const currentIndex = order.findIndex((s) => s.id === currentSurahId);
 
-  const close = () => {
-    setQuery('');
-    onClose();
-  };
+  return (
+    <>
+    <View style={styles.search}>
+      <Ionicons name="search" size={18} color={color.textFaint} />
+      <TextInput
+        value={query}
+        onChangeText={setQuery}
+        placeholder={t('surahLearnMode.searchSurah')}
+        placeholderTextColor={color.textFaint}
+        style={styles.searchInput}
+        autoCorrect={false}
+        autoCapitalize="none"
+        returnKeyType="search"
+        accessibilityLabel={t('surahLearnMode.searchSurah')}
+      />
+      {query ? (
+        <Pressable onPress={() => setQuery('')} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('common.clear')}>
+          <Ionicons name="close-circle" size={18} color={color.textFaint} />
+        </Pressable>
+      ) : null}
+    </View>
+
+    <FlatList
+      data={results}
+      keyExtractor={(s) => s.id}
+      style={styles.list}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+      getItemLayout={(_, index) => ({ length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index })}
+      initialScrollIndex={!query && currentIndex > 2 ? currentIndex - 2 : undefined}
+      initialNumToRender={16}
+      ListEmptyComponent={<Text style={styles.empty}>{t('surahLearnMode.noSurahFound', { query: query.trim() })}</Text>}
+      renderItem={({ item }) => {
+        const selected = item.id === currentSurahId;
+        const disabled = memorizationIndex(item.id) < fromIndex;
+        return (
+          <Pressable
+            style={[styles.row, selected && styles.rowSelected, disabled && styles.rowDisabled]}
+            disabled={disabled}
+            android_ripple={{ color: color.surfaceSunken }}
+            onPress={() => {
+              setQuery('');
+              onPick(item);
+            }}
+            accessibilityRole="button"
+            accessibilityState={{ selected, disabled }}
+            accessibilityLabel={`${item.surahNumber}. ${item.nameEnglish}, ${lc(item.meaning, item.meaningFr)}, ${t('surahLearnMode.ayahCount', { count: item.ayahCount })}`}
+          >
+            <View style={[styles.number, selected && styles.numberSelected]}>
+              <Text style={[styles.numberText, selected && styles.numberTextSelected]}>{item.surahNumber}</Text>
+            </View>
+            <View style={styles.rowText}>
+              <Text style={styles.rowTitle} numberOfLines={1}>{item.nameEnglish}</Text>
+              <Text style={styles.rowSub} numberOfLines={1}>
+                {lc(item.meaning, item.meaningFr)}, {t('surahLearnMode.ayahCount', { count: item.ayahCount })}
+              </Text>
+            </View>
+            <Text style={styles.rowArabic} allowFontScaling={false}>{item.nameArabic}</Text>
+          </Pressable>
+        );
+      }}
+    />
+    </>
+  );
+}
+
+export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, title, fromSurahId }: Props) {
+  const { t } = useTranslation();
+  const close = () => onClose();
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={close}>
@@ -105,66 +174,7 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, tit
               </Pressable>
             </View>
 
-            <View style={styles.search}>
-              <Ionicons name="search" size={18} color={color.textFaint} />
-              <TextInput
-                value={query}
-                onChangeText={setQuery}
-                placeholder={t('surahLearnMode.searchSurah')}
-                placeholderTextColor={color.textFaint}
-                style={styles.searchInput}
-                autoCorrect={false}
-                autoCapitalize="none"
-                returnKeyType="search"
-                accessibilityLabel={t('surahLearnMode.searchSurah')}
-              />
-              {query ? (
-                <Pressable onPress={() => setQuery('')} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('common.clear')}>
-                  <Ionicons name="close-circle" size={18} color={color.textFaint} />
-                </Pressable>
-              ) : null}
-            </View>
-
-            <FlatList
-              data={results}
-              keyExtractor={(s) => s.id}
-              style={styles.list}
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-              getItemLayout={(_, index) => ({ length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index })}
-              initialScrollIndex={!query && currentIndex > 2 ? currentIndex - 2 : undefined}
-              initialNumToRender={16}
-              ListEmptyComponent={<Text style={styles.empty}>{t('surahLearnMode.noSurahFound', { query: query.trim() })}</Text>}
-              renderItem={({ item }) => {
-                const selected = item.id === currentSurahId;
-                const disabled = memorizationIndex(item.id) < fromIndex;
-                return (
-                  <Pressable
-                    style={[styles.row, selected && styles.rowSelected, disabled && styles.rowDisabled]}
-                    disabled={disabled}
-                    android_ripple={{ color: color.surfaceSunken }}
-                    onPress={() => {
-                      setQuery('');
-                      onPick(item);
-                    }}
-                    accessibilityRole="button"
-                    accessibilityState={{ selected, disabled }}
-                    accessibilityLabel={`${item.surahNumber}. ${item.nameEnglish}, ${lc(item.meaning, item.meaningFr)}, ${t('surahLearnMode.ayahCount', { count: item.ayahCount })}`}
-                  >
-                    <View style={[styles.number, selected && styles.numberSelected]}>
-                      <Text style={[styles.numberText, selected && styles.numberTextSelected]}>{item.surahNumber}</Text>
-                    </View>
-                    <View style={styles.rowText}>
-                      <Text style={styles.rowTitle} numberOfLines={1}>{item.nameEnglish}</Text>
-                      <Text style={styles.rowSub} numberOfLines={1}>
-                        {lc(item.meaning, item.meaningFr)}, {t('surahLearnMode.ayahCount', { count: item.ayahCount })}
-                      </Text>
-                    </View>
-                    <Text style={styles.rowArabic} allowFontScaling={false}>{item.nameArabic}</Text>
-                  </Pressable>
-                );
-              }}
-            />
+            <SurahList currentSurahId={currentSurahId} fromSurahId={fromSurahId} onPick={onPick} />
           </SafeAreaView>
         </View>
       </View>

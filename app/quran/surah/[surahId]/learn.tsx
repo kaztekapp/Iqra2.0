@@ -126,8 +126,6 @@ export default function LearnModeScreen() {
       : LAST_SURAH_TO_LEARN;
   const stopHere = !!surah && stopSurah.id === surah.id;
   const nextSurah = surah && !stopHere ? nextSurahToLearn(surah.id) : null;
-  // Choosing where a run of surahs starts or stops, from the Select verses sheet.
-  const [rangePicker, setRangePicker] = useState<'start' | 'stop' | null>(null);
 
   // Arrived from the surah before (go on to the next surah): start at once,
   // when the verses are there. The play function is set further down.
@@ -741,45 +739,16 @@ export default function LearnModeScreen() {
           }
         }}
         nextSurahName={surah && nextSurahToLearn(surah.id) ? nextSurahToLearn(surah.id)!.nameEnglish : null}
-        startSurahName={surah.nameEnglish}
-        stopSurahName={stopSurah.nameEnglish}
-        onPickStart={() => {
-          setSheet(null);
-          setRangePicker('start');
-        }}
-        onPickStop={() => {
-          setSheet(null);
-          setRangePicker('stop');
-        }}
-      />
-
-      <SurahPickerSheet
-        visible={rangePicker !== null}
-        currentSurahId={rangePicker === 'stop' ? stopSurah.id : surah.id}
-        title={rangePicker === 'stop' ? t('surahLearnMode.stopAfter') : t('surahLearnMode.startWith')}
-        fromSurahId={rangePicker === 'stop' ? surah.id : undefined}
-        onClose={() => {
-          setRangePicker(null);
-          setSheet('verses');
-        }}
-        onPick={(picked) => {
-          const which = rangePicker;
-          setRangePicker(null);
-          if (which === 'stop') {
-            setStopAfter(picked.id);
-            setSheet('verses');
-            return;
-          }
-          // A new start: that surah opens, and a stop before it no longer applies.
-          if (stopAfterId && memorizationIndex(stopAfterId) < memorizationIndex(picked.id)) setStopAfter(null);
-          if (picked.id === surah.id) {
-            setSheet('verses');
-            return;
-          }
+        startSurahId={surah.id}
+        stopSurahId={stopSurah.id}
+        onRun={(startId, stopId) => {
+          setStopAfter(stopId);
+          if (startId === surah.id) return;
+          // A new start: that surah opens, ready to play.
           isPlayingRef.current = false;
           quranAudioService.stop();
           clearPlayer();
-          router.replace(`/quran/surah/${picked.id}/learn`);
+          router.replace(`/quran/surah/${startId}/learn`);
         }}
       />
 

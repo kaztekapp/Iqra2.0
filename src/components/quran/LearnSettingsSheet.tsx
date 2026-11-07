@@ -15,6 +15,8 @@ import { View, Text, Pressable, StyleSheet, Modal, TextInput, KeyboardAvoidingVi
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { SurahList, memorizationIndex, LAST_SURAH_TO_LEARN } from './SurahPickerSheet';
+import { getSurahById } from '../../data/arabic/quran';
 import { color, radius, type, weight, space, gutter } from '../../theme/tokens';
 
 export type LearnSheetKind = 'voice' | 'repeat' | 'speed' | 'verses';
@@ -50,10 +52,10 @@ interface Props {
   /** The surah that comes next, null after the last one. */
   nextSurahName: string | null;
   /** Going on to the next surah: the one it starts with (the one on screen) and the one it stops after. */
-  startSurahName: string;
-  stopSurahName: string;
-  onPickStart: () => void;
-  onPickStop: () => void;
+  startSurahId: string;
+  stopSurahId: string;
+  /** Applied on Done: the surah to start with and the one to stop after. */
+  onRun: (startId: string, stopId: string) => void;
 }
 
 /** A row that opens the surah list: what it sets, and the surah chosen. */
@@ -192,12 +194,22 @@ export function LearnSettingsSheet(props: Props) {
   // The verses being chosen; they apply only when the reader confirms.
   const [pickStart, setPickStart] = useState(props.startVerse);
   const [pickEnd, setPickEnd] = useState(props.endVerse);
+  // A run of surahs being chosen: shown in the sheet, applied on Done. The
+  // surah list opens inside the sheet, in place of its content, so choosing
+  // never closes it.
+  const [runStart, setRunStart] = useState(props.startSurahId);
+  const [runStop, setRunStop] = useState(props.stopSurahId);
+  const [picking, setPicking] = useState<'start' | 'stop' | null>(null);
   useEffect(() => {
     if (kind === 'verses') {
       setPickStart(props.startVerse);
       setPickEnd(props.endVerse);
+      setRunStart(props.startSurahId);
+      setRunStop(props.stopSurahId);
+      setPicking(null);
     }
   }, [kind]);
+  const nameOf = (id: string) => getSurahById(id)?.nameEnglish ?? id;
 
   const stepRepeat = (n: number) => props.onRepeat(Math.max(1, Math.min(MAX_REPEAT, n)));
 
@@ -217,7 +229,9 @@ export function LearnSettingsSheet(props: Props) {
   };
 
   const title =
-    kind === 'voice' ? t('surahLearnMode.sheetVoice')
+    picking === 'start' ? t('surahLearnMode.startWith')
+    : picking === 'stop' ? t('surahLearnMode.stopAfter')
+    : kind === 'voice' ? t('surahLearnMode.sheetVoice')
     : kind === 'repeat' ? t('surahLearnMode.sheetRepeat')
     : kind === 'speed' ? t('surahLearnMode.sheetSpeed')
     : t('surahLearnMode.sheetVerses');
@@ -232,7 +246,12 @@ export function LearnSettingsSheet(props: Props) {
               <View style={styles.handle} />
             </View>
             <View style={styles.topRow}>
-              <Text style={styles.title}>{title}</Text>
+              {picking && (
+                <Pressable onPress={() => setPicking(null)} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('a11y.back')}>
+                  <Ionicons name="arrow-back" size={22} color={color.text} />
+                </Pressable>
+              )}
+              <Text style={[styles.title, picking && styles.titlePicking]}>{title}</Text>
               <Pressable onPress={onClose} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('listen.close')}>
                 <Ionicons name="close" size={22} color={color.textMuted} />
               </Pressable>
@@ -308,7 +327,26 @@ export function LearnSettingsSheet(props: Props) {
               </View>
             )}
 
-            {kind === 'verses' && (
+            {kind === 'verses' && picking && (
+              <View style={styles.pickList}>
+                <SurahList
+                  currentSurahId={picking === 'start' ? runStart : runStop}
+                  fromSurahId={picking === 'stop' ? runStart : undefined}
+                  onPick={(s) => {
+                    if (picking === 'start') {
+                      setRunStart(s.id);
+                      // A start after the stop: the run goes on to the end of the list.
+                      if (memorizationIndex(runStop) < memorizationIndex(s.id)) setRunStop(LAST_SURAH_TO_LEARN.id);
+                    } else {
+                      setRunStop(s.id);
+                    }
+                    setPicking(null);
+                  }}
+                />
+              </View>
+            )}
+
+            {kind === 'verses' && !picking && (
               <View style={styles.body}>
                 <Text style={styles.label}>{t('surahLearnMode.whenSurahEnds')}</Text>
                 <Option
@@ -333,10 +371,17 @@ export function LearnSettingsSheet(props: Props) {
                 {props.afterSurah === 'next' && (
                   <>
                     <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.whichSurahs')}</Text>
-                    <SurahRow label={t('surahLearnMode.startWith')} value={props.startSurahName} onPress={props.onPickStart} />
-                    <SurahRow label={t('surahLearnMode.stopAfter')} value={props.stopSurahName} onPress={props.onPickStop} />
-                    <Text style={styles.hint}>{t('surahLearnMode.surahRunHint', { stop: props.stopSurahName })}</Text>
-                    <Pressable style={styles.done} onPress={onClose} accessibilityRole="button">
+                    <SurahRow label={t('surahLearnMode.startWith')} value={nameOf(runStart)} onPress={() => setPicking('start')} />
+                    <SurahRow label={t('surahLearnMode.stopAfter')} value={nameOf(runStop)} onPress={() => setPicking('stop')} />
+                    <Text style={styles.hint}>{t('surahLearnMode.surahRunHint', { stop: nameOf(runStop) })}</Text>
+                    <Pressable
+                      style={styles.done}
+                      onPress={() => {
+                        props.onRun(runStart, runStop);
+                        onClose();
+                      }}
+                      accessibilityRole="button"
+                    >
                       <Text style={styles.doneText}>{t('surahLearnMode.done')}</Text>
                     </Pressable>
                   </>
@@ -441,6 +486,14 @@ const styles = StyleSheet.create({
   },
   labelGap: {
     marginTop: space.md,
+  },
+  titlePicking: {
+    flex: 1,
+    marginLeft: space.sm,
+  },
+  pickList: {
+    height: 460,
+    gap: space.sm,
   },
   surahRow: {
     flexDirection: 'row',
