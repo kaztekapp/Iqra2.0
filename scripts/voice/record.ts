@@ -7,6 +7,15 @@
  *   npx tsx scripts/voice/record.ts                  record and upload what is missing
  *   npx tsx scripts/voice/record.ts --find "آيَاتِنَا"  lines containing words, with their clip paths
  *   npx tsx scripts/voice/record.ts --try "آيَاتِنَا"   say a spelling with Hamed and play it here
+ *   npx tsx scripts/voice/record.ts --surahs 78-114 --out DIR   a pilot: record those surahs' ayahs
+ *                                    into DIR with a report, upload nothing
+ *   npx tsx scripts/voice/record.ts --upload-from DIR   upload a pilot once heard (passing clips only)
+ *   --all records clips already on the CDN again (a new recording replaces them).
+ *
+ * Every clip is checked (qc.ts): silence at both ends, its length against its
+ * text, no gaps, no clipping or hiss; then levelled and encoded once at
+ * 192 kbps. A clip that fails is made again once; one that still fails is
+ * reported and not published.
  *
  * The plan comes from the app's own code (narrationPlan + voicePlan), so a
  * clip's name is exactly the one the app asks for. A line is only recorded
@@ -24,7 +33,9 @@ import { createHash, createHmac } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdtempSync, readdirSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
+import { mkdirSync } from 'node:fs';
+import { finish, LEAD_MS, TAIL_MS, type ClipCheck } from './qc';
 import { buildUtterances, type NarratableBlock } from '../../src/services/narrationPlan';
 import {
   ARABIC_VOICE,
@@ -38,6 +49,7 @@ import {
   spokenNarration,
   buildSsml,
   voiceFor,
+  plainSpoken,
 } from '../../src/services/speech/voicePlan';
 import { getProphetsWithStories, getProphetStory } from '../../src/data/arabic/prophets';
 import { getQuranStories } from '../../src/data/arabic/quranStories';
@@ -45,7 +57,7 @@ import { DUAS } from '../../src/data/arabic/duas/duas';
 import en from '../../src/i18n/locales/en';
 import fr from '../../src/i18n/locales/fr';
 
-type Item = { path: string; text: string; voice: string; rate: string; locale: string };
+type Item = { path: string; text: string; voice: string; rate: string; locale: string; surah?: number };
 
 const ROOT = join(__dirname, '..', '..');
 const args = process.argv.slice(2);
@@ -115,6 +127,16 @@ export function quranAyahs(): string[] {
   return out;
 }
 
+/** Every ayah with its surah number (the file name starts with it). */
+function quranAyahEntries(): { surah: number; text: string }[] {
+  const out: { surah: number; text: string }[] = [];
+  for (const file of walk(join(ROOT, 'src', 'data', 'arabic', 'quran', 'surahs'))) {
+    const surah = Number(file.split('/').pop()!.slice(0, 3));
+    for (const m of readFileSync(file, 'utf8').matchAll(/"?textUthmani"?:\s*(['"`])((?:\\.|(?!\1).)*)\1/g)) out.push({ surah, text: m[2] });
+  }
+  return out;
+}
+
 export function buildPlan(): Item[] {
   const items = new Map<string, Item>();
   const addArabic = (line: string) => {
@@ -166,13 +188,13 @@ export function buildPlan(): Item[] {
   for (const line of learningArabic()) addArabic(line);
   // Learn Mode's learning voice reads each ayah whole (synthesizeAyahToFile:
   // no chunking), in Hamed's voice, at the normal pace only.
-  for (const ayah of quranAyahs()) {
+  for (const { surah, text: ayah } of quranAyahEntries()) {
     const text = spokenArabic(asRecitation(ayah));
     if (!text.trim()) continue;
     for (const voice of [voiceFor('ar', 'male')]) {
       const rate = edgeRate(1, voice);
       const path = clipPath(text, voice, rate);
-      items.set(path, { path, text, voice, rate, locale: 'ar-SA' });
+      items.set(path, { path, text, voice, rate, locale: 'ar-SA', surah });
     }
   }
   return [...items.values()];
@@ -187,16 +209,39 @@ function azureKey(): string {
   return execFileSync('az', ['cognitiveservices', 'account', 'keys', 'list', '-n', 'iqra-speech-rec', '-g', 'iqra', '--query', 'key1', '-o', 'tsv'], { encoding: 'utf8' }).trim();
 }
 
-async function synthesize(key: string, item: Pick<Item, 'text' | 'voice' | 'rate' | 'locale'>): Promise<Buffer> {
-  // Same request as supabase/functions/tts, so a recorded clip sounds like a live one.
+/**
+ * The request the app makes, plus exact silence before the first word and
+ * after the last: Azure otherwise ends on the last sound, and a player that
+ * stops a clip a moment early cut it (qc.ts).
+ */
+function recordingSsml(item: Pick<Item, 'text' | 'voice' | 'rate' | 'locale'>): string {
   const ssml = buildSsml(item.text, item.voice, item.rate, item.locale);
+  const opens = [...ssml.matchAll(/<voice name='[^']*'>/g)];
+  const first = opens[0];
+  const last = opens[opens.length - 1];
+  const tail = `<mstts:silence type='Tailing-exact' value='${TAIL_MS}ms'/>`;
+  const lead = `<mstts:silence type='Leading-exact' value='${LEAD_MS}ms'/>`;
+  // Between two voices buildSsml already sets zero silence (Tailing on the
+  // first, Leading on the last), so these never meet a tag of the same kind.
+  let out = ssml.slice(0, last.index! + last[0].length) + tail + ssml.slice(last.index! + last[0].length);
+  out = out.slice(0, first.index! + first[0].length) + lead + out.slice(first.index! + first[0].length);
+  return out;
+}
+
+/** How many letters a line reads, for the length check. */
+const lettersOf = (text: string) => (plainSpoken(text).match(/[\u0621-\u064Aa-zA-Z\u00C0-\u017F]/g) ?? []).length;
+
+async function synthesize(key: string, item: Pick<Item, 'text' | 'voice' | 'rate' | 'locale'>): Promise<Buffer> {
+  // Same voice request as supabase/functions/tts, so a recorded clip sounds
+  // like a live one; uncompressed, so it is encoded once, after levelling.
+  const ssml = recordingSsml(item);
   for (let attempt = 1; ; attempt++) {
     const res = await fetch('https://eastus.tts.speech.microsoft.com/cognitiveservices/v1', {
       method: 'POST',
       headers: {
         'Ocp-Apim-Subscription-Key': key,
         'Content-Type': 'application/ssml+xml',
-        'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
+        'X-Microsoft-OutputFormat': 'riff-48khz-16bit-mono-pcm',
         'User-Agent': 'iqra-voice-recorder',
       },
       body: ssml,
@@ -293,27 +338,76 @@ async function main() {
   console.log(`plan: ${plan.length} clips, ${chars(plan)} characters (${byVoice(plan)})`);
 
   const cfg = r2Config();
+
+  // Upload a pilot that was recorded with --out, once it has been heard.
+  if (value('--upload-from')) {
+    const dir = value('--upload-from')!;
+    const report: Record<string, { ok: boolean }> = JSON.parse(readFileSync(join(dir, 'report.json'), 'utf8'));
+    const paths = Object.entries(report).filter(([, r]) => r.ok || flag('--include-flagged')).map(([path]) => path);
+    let up = 0;
+    for (const path of paths) {
+      const res = await r2(cfg, 'PUT', path, '', readFileSync(join(dir, path)), {
+        'content-type': 'audio/mpeg',
+        'cache-control': 'public, max-age=31536000, immutable',
+      });
+      if (!res.ok) throw new Error(`r2 put ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      if (++up % 100 === 0) console.log(`${up}/${paths.length} uploaded`);
+    }
+    console.log(`uploaded ${up} of ${Object.keys(report).length} (${Object.keys(report).length - paths.length} flagged left out)`);
+    return;
+  }
+
+  // --surahs 78-114: only the ayahs of those surahs (a pilot).
+  let wanted = plan;
+  if (value('--surahs')) {
+    const [a, b] = value('--surahs')!.split('-').map(Number);
+    wanted = plan.filter((it) => it.surah !== undefined && it.surah >= a && it.surah <= (b ?? a));
+  }
   const existing = await listExisting(cfg);
-  const missing = plan.filter((it) => !existing.has(it.path));
+  const missing = flag('--all') ? wanted : wanted.filter((it) => !existing.has(it.path));
   const limit = Number(value('--limit') ?? Infinity);
   const todo = missing.slice(0, limit);
-  console.log(`on the CDN: ${existing.size}; missing: ${missing.length} (${chars(missing)} characters, about $${((chars(missing) / 1e6) * 16).toFixed(2)})`);
+  console.log(`on the CDN: ${existing.size}; to record: ${missing.length} (${chars(missing)} characters, about $${((chars(missing) / 1e6) * 16).toFixed(2)})`);
   if (flag('--dry-run') || !todo.length) return;
 
+  // --out DIR: record and check into a folder, upload nothing (a pilot to hear first).
+  const outDir = value('--out');
   const key = azureKey();
+  const report: Record<string, ClipCheck & { text: string; attempts: number }> = {};
   let done = 0;
+  let flagged = 0;
   let failed = 0;
   const started = Date.now();
   const queue = [...todo];
   const worker = async () => {
     for (let it = queue.shift(); it; it = queue.shift()) {
       try {
-        const audio = await synthesize(key, it);
-        const res = await r2(cfg, 'PUT', it.path, '', audio, {
-          'content-type': 'audio/mpeg',
-          'cache-control': 'public, max-age=31536000, immutable',
-        });
-        if (!res.ok) throw new Error(`r2 put ${res.status}: ${(await res.text()).slice(0, 200)}`);
+        const letters = lettersOf(it.text);
+        let best = finish(await synthesize(key, it), letters);
+        let attempts = 1;
+        // A clip that fails a check is made once more; the better one is kept.
+        if (!best.check.ok) {
+          const again = finish(await synthesize(key, it), letters);
+          attempts = 2;
+          if (again.check.problems.length < best.check.problems.length) best = again;
+        }
+        report[it.path] = { ...best.check, text: plainSpoken(it.text), attempts };
+        if (!best.check.ok) {
+          flagged++;
+          console.error(`FLAGGED ${it.path}: ${best.check.problems.join('; ')}`);
+        }
+        if (outDir) {
+          const file = join(outDir, it.path);
+          mkdirSync(dirname(file), { recursive: true });
+          writeFileSync(file, best.mp3);
+        } else if (best.check.ok) {
+          // A flagged clip is not published: the app reads that line live until it is fixed.
+          const res = await r2(cfg, 'PUT', it.path, '', best.mp3, {
+            'content-type': 'audio/mpeg',
+            'cache-control': 'public, max-age=31536000, immutable',
+          });
+          if (!res.ok) throw new Error(`r2 put ${res.status}: ${(await res.text()).slice(0, 200)}`);
+        }
         done++;
       } catch (e) {
         failed++;
@@ -321,12 +415,14 @@ async function main() {
       }
       if ((done + failed) % 100 === 0) {
         const rate = (done + failed) / ((Date.now() - started) / 1000);
-        console.log(`${done + failed}/${todo.length} (${failed} failed) — ${Math.round((todo.length - done - failed) / rate / 60)} min left`);
+        console.log(`${done + failed}/${todo.length} (${flagged} flagged, ${failed} failed) — ${Math.round((todo.length - done - failed) / rate / 60)} min left`);
       }
     }
   };
-  await Promise.all(Array.from({ length: Number(value('--parallel') ?? 8) }, worker));
-  console.log(`recorded ${done}, failed ${failed}, in ${Math.round((Date.now() - started) / 60000)} min`);
+  await Promise.all(Array.from({ length: Number(value('--parallel') ?? 6) }, worker));
+  const reportFile = join(outDir ?? mkdtempSync(join(tmpdir(), 'iqra-voice-')), 'report.json');
+  writeFileSync(reportFile, JSON.stringify(report, null, 1));
+  console.log(`recorded ${done} (${flagged} flagged${outDir ? '' : ', not uploaded'}), failed ${failed}, in ${Math.round((Date.now() - started) / 60000)} min; report: ${reportFile}`);
   if (failed) process.exitCode = 1;
 }
 
