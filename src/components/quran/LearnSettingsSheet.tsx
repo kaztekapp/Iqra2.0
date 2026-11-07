@@ -34,9 +34,7 @@ interface Props {
   onVoice: (learning: boolean) => void;
   // repeat
   repeatCount: number;
-  autoAdvance: boolean;
   onRepeat: (count: number) => void;
-  onAutoAdvance: (on: boolean) => void;
   // speed
   speed: number;
   onSpeed: (speed: number) => void;
@@ -278,19 +276,6 @@ export function LearnSettingsSheet(props: Props) {
                     <Ionicons name="add" size={18} color={color.text} />
                   </Pressable>
                 </View>
-                <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.afterLastTime')}</Text>
-                <Option
-                  selected={props.autoAdvance}
-                  title={t('surahLearnMode.goOnTitle')}
-                  note={t('surahLearnMode.goOnNote')}
-                  onPress={() => props.onAutoAdvance(true)}
-                />
-                <Option
-                  selected={!props.autoAdvance}
-                  title={t('surahLearnMode.stayTitle')}
-                  note={t('surahLearnMode.stayNote')}
-                  onPress={() => props.onAutoAdvance(false)}
-                />
               </View>
             )}
 
