@@ -13,6 +13,7 @@ import { TOTAL_PROPHETS } from '../../src/data/arabic/prophets';
 import { TOTAL_QURAN_STORIES } from '../../src/data/arabic/quranStories';
 import { useLearnModeStore } from '../../src/stores/learnModeStore';
 import { getSurahById } from '../../src/data/arabic/quran';
+import { StoreUpdateBanner } from '../../src/components/home/StoreUpdateBanner';
 import {
   Txt,
   Arabic,
@@ -81,6 +82,9 @@ export default function HomeScreen() {
           </View>
           <IlluminatedRule style={styles.rule} />
         </View>
+
+        {/* A newer version in the store: stays until updated or closed. */}
+        <StoreUpdateBanner />
 
         {/* Memorize a surah: first on the page, the way into Learn mode. */}
         {learnSurah ? (
