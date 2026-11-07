@@ -62,6 +62,8 @@ export default {
     profile: 'Profil',
   },
   home: {
+    updateBannerText: 'La version {{version}} est sur {{store}}.',
+    updateBannerClose: "Masquer jusqu'à la prochaine fois",
     greeting: '\u0645\u064E\u0631\u0652\u062D\u064E\u0628\u064B\u0627',
     greetingEnglish: 'Bienvenue sur Mudarris',
     yourProgress: 'Votre Progression',

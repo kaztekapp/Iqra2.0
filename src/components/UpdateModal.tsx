@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import * as Updates from 'expo-updates';
 import { color, radius } from '../theme/tokens';
-import { newerStoreRelease, type StoreRelease } from '../services/storeVersion';
+import { useStoreReleaseStore } from '../stores/storeReleaseStore';
 import { quietly } from '../lib/report';
 
 /** The store version the user last answered "Later" to; a newer one asks again. */
@@ -44,7 +44,7 @@ export function UpdateModal() {
   // A fix that cannot be applied must not hold the app hostage: if the
   // restart fails, this prompt stands down until the next update.
   const [otaFailed, setOtaFailed] = useState<string | null>(null);
-  const [storeRelease, setStoreRelease] = useState<StoreRelease | null>(null);
+  const storeRelease = useStoreReleaseStore((s) => s.release);
   const [storeDismissed, setStoreDismissed] = useState<string | null>(null);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export function UpdateModal() {
   const opacity = useRef(new Animated.Value(0)).current;
 
   const check = useCallback(() => {
-    newerStoreRelease().then(setStoreRelease).catch(() => {});
+    useStoreReleaseStore.getState().refresh().catch(() => {});
     if (!Updates.isEnabled) return;
     Updates.checkForUpdateAsync().catch(() => {});
   }, []);
