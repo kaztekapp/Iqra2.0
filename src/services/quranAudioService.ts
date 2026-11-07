@@ -113,6 +113,14 @@ class QuranAudioService {
   private onStateChangeCallback: ((state: AudioState) => void) | null = null;
   private statusSubscription: { remove: () => void } | null = null;
   private isTransitioning = false; // Prevent race conditions
+  /**
+   * Bumped by every playAyah and every stop. A playAyah still fetching its
+   * clip when stop() runs used to carry on afterwards and start playing - a
+   * verse heard after the reader pressed stop or closed the screen, and the
+   * verse before it left playing too. Each await now checks it is still the
+   * newest request, and gives up if not.
+   */
+  private playGeneration = 0;
   private stoppedByUser = false; // Track if playback was stopped by user
   /** Counts a verse as finished if it stopped at its end but the end notice never came. */
   private endFallback: ReturnType<typeof setTimeout> | null = null;
@@ -415,6 +423,7 @@ class QuranAudioService {
     }
     this.isTransitioning = true;
     this.stoppedByUser = false;
+    const generation = ++this.playGeneration;
     // Silence the other producers. Passing our own id means the ayah-to-ayah
     // handover does not stop the recitation it is continuing.
     claimAudio('quran');
@@ -427,12 +436,22 @@ class QuranAudioService {
     let previousSub = this.statusSubscription;
     this.player = null;
     this.statusSubscription = null;
+    // Stopped (or replaced) while the clip was being fetched: release the
+    // verse that was still playing and start nothing.
+    const superseded = () => {
+      if (generation === this.playGeneration) return false;
+      this.detachPlayer(previousPlayer, previousSub);
+      previousPlayer = null;
+      previousSub = null;
+      return true;
+    };
 
     try {
       // Configure audio session (cached after first call, only reconfigures on error)
       await this.configureAudio().catch(() => {
         // Audio config failure is non-fatal, playback may still work
       });
+      if (superseded()) return;
 
       // Update state to loading
       this.audioState = 'loading';
@@ -496,6 +515,7 @@ class QuranAudioService {
       } else {
         url = await this.resolveReciterUrl(surahNumber, ayahNumber, reciterId, options?.reciterId);
       }
+      if (superseded()) return;
 
       const rate = options?.rate || this.playbackRate;
 
@@ -642,6 +662,7 @@ class QuranAudioService {
           this.statusSubscription = null;
           this.isTransitioning = false;
           await new Promise(resolve => setTimeout(resolve, 100));
+          if (generation !== this.playGeneration) return;
           return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
         }
         throw playError;
@@ -656,6 +677,8 @@ class QuranAudioService {
         this.prefetchSurah(surahNumber, surah.ayahCount, { reciterId });
       }
     } catch (error) {
+      // Stopped meanwhile: whoever stopped it owns what happens next.
+      if (superseded()) return;
       // Clean up any partially created player and the outgoing one
       this.detachPlayer(this.player, this.statusSubscription);
       this.player = null;
@@ -670,6 +693,7 @@ class QuranAudioService {
         this.isAudioConfigured = false;
         // Wait a bit and retry
         await new Promise(resolve => setTimeout(resolve, 300 * (retryCount + 1)));
+        if (generation !== this.playGeneration) return;
         return this.playAyah(surahNumber, ayahNumber, options, retryCount + 1);
       }
 
@@ -814,6 +838,8 @@ class QuranAudioService {
 
     // Mark as stopped so playAyahRange loops can exit
     this.stoppedByUser = true;
+    // A playAyah still fetching its clip gives up instead of starting it.
+    this.playGeneration++;
 
     // A real stop means the user is done — halt any background surah prefetch.
     this.cancelPrefetch();
