@@ -73,7 +73,7 @@ export default function PracticeScreen() {
       description: t('practiceScreen.speakingPracticeDesc'),
       icon: 'mic' as const,
       color: tk.warning,
-      route: '/speaking',
+      route: '/vocabulary/speaking-practice',
     },
   ];
 
