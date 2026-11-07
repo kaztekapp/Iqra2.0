@@ -24,6 +24,10 @@ interface Props {
   currentSurahId: string;
   onPick: (surah: Surah) => void;
   onClose: () => void;
+  /** The heading, when choosing for something other than this screen. */
+  title?: string;
+  /** Only this surah and those after it (memorization order): where a run of surahs can stop. */
+  fromSurahId?: string;
 }
 
 const ROW_HEIGHT = 64;
@@ -36,6 +40,14 @@ const MEMORIZATION_ORDER: Surah[] = [
   ...SURAHS.filter((s) => s.surahNumber === 1),
   ...SURAHS.filter((s) => s.surahNumber !== 1).sort((a, b) => b.surahNumber - a.surahNumber),
 ];
+
+/** Where a surah falls in memorization order (-1 if unknown). */
+export function memorizationIndex(surahId: string): number {
+  return MEMORIZATION_ORDER.findIndex((s) => s.id === surahId);
+}
+
+/** The last surah in memorization order (Al-Baqarah). */
+export const LAST_SURAH_TO_LEARN: Surah = MEMORIZATION_ORDER[MEMORIZATION_ORDER.length - 1];
 
 /** The surah learned after this one (memorization order), or null after the last. */
 export function nextSurahToLearn(surahId: string): Surah | null {
@@ -51,21 +63,26 @@ const fold = (s: string) =>
     .replace(/[''`ʿʾ-]/g, '')
     .toLowerCase();
 
-export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose }: Props) {
+export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose, title, fromSurahId }: Props) {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
   const [query, setQuery] = useState('');
 
+  const order = useMemo(() => {
+    const from = fromSurahId ? MEMORIZATION_ORDER.findIndex((s) => s.id === fromSurahId) : 0;
+    return from > 0 ? MEMORIZATION_ORDER.slice(from) : MEMORIZATION_ORDER;
+  }, [fromSurahId]);
+
   const results = useMemo(() => {
     const q = fold(query.trim());
-    if (!q) return MEMORIZATION_ORDER;
-    if (/^\d+$/.test(q)) return MEMORIZATION_ORDER.filter((s) => String(s.surahNumber).startsWith(q));
-    return MEMORIZATION_ORDER.filter((s) =>
+    if (!q) return order;
+    if (/^\d+$/.test(q)) return order.filter((s) => String(s.surahNumber).startsWith(q));
+    return order.filter((s) =>
       [s.nameEnglish, s.nameTransliteration, s.nameArabic, s.meaning, s.meaningFr].some((f) => f && fold(f).includes(q))
     );
-  }, [query]);
+  }, [query, order]);
 
-  const currentIndex = MEMORIZATION_ORDER.findIndex((s) => s.id === currentSurahId);
+  const currentIndex = order.findIndex((s) => s.id === currentSurahId);
 
   const close = () => {
     setQuery('');
@@ -83,7 +100,7 @@ export function SurahPickerSheet({ visible, currentSurahId, onPick, onClose }: P
             </View>
 
             <View style={styles.topRow}>
-              <Text style={styles.title}>{t('surahLearnMode.chooseSurah')}</Text>
+              <Text style={styles.title}>{title ?? t('surahLearnMode.chooseSurah')}</Text>
               <Pressable onPress={close} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('listen.close')}>
                 <Ionicons name="close" size={22} color={color.textMuted} />
               </Pressable>

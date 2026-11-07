@@ -39,6 +39,9 @@ interface SettingsState {
   // on to the next surah in memorization order. Remembered across surahs.
   learnAfterSurah: 'repeat' | 'next';
   setLearnAfterSurah: (mode: 'repeat' | 'next') => void;
+  // Going on to the next surah stops after this one (null: on to the end of the list).
+  learnStopAfter: string | null;
+  setLearnStopAfter: (surahId: string | null) => void;
 
   // Local reminders (continue, streak, reviews, Friday al-Kahf)
   reminders: ReminderSettings;
@@ -83,6 +86,8 @@ export const useSettingsStore = create<SettingsState>()(
       setNarrationVoice: (voice) => set({ narrationVoice: voice }),
       learnAfterSurah: 'repeat',
       setLearnAfterSurah: (mode) => set({ learnAfterSurah: mode }),
+      learnStopAfter: null,
+      setLearnStopAfter: (surahId) => set({ learnStopAfter: surahId }),
       arabicVoiceSource: 'online',
       arabicDeviceVoiceId: null,
       setArabicVoice: (source, voiceId = null) => set({ arabicVoiceSource: source, arabicDeviceVoiceId: voiceId }),
@@ -122,6 +127,7 @@ export const useSettingsStore = create<SettingsState>()(
         arabicSpeechSpeed: state.arabicSpeechSpeed,
         narrationVoice: state.narrationVoice,
         learnAfterSurah: state.learnAfterSurah,
+        learnStopAfter: state.learnStopAfter,
         arabicVoiceSource: state.arabicVoiceSource,
         arabicDeviceVoiceId: state.arabicDeviceVoiceId,
         reminders: state.reminders,
