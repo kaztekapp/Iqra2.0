@@ -76,7 +76,9 @@ export async function newerStoreRelease(): Promise<StoreRelease | null> {
     const res = await fetch(LATEST_VERSION_URL, { headers: { 'Cache-Control': 'no-cache' } });
     if (!res.ok) return null;
     const latest = ((await res.json()) as LatestFile)[Platform.OS];
-    if (!latest?.version || !/^https:\/\//.test(latest.url ?? '')) return null;
+    // Only the two store pages: a file changed by anyone else cannot send
+    // people somewhere else.
+    if (!latest?.version || !/^https:\/\/(apps\.apple\.com|play\.google\.com)\//.test(latest.url ?? '')) return null;
     if (latest.force === false || !isNewerVersion(latest.version, installed)) return null;
     if (Platform.OS === 'ios' && !(await liveOnAppStore(latest.version))) return null;
     return latest;
