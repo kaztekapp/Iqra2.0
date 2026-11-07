@@ -408,6 +408,11 @@ export default function LearnModeScreen() {
 
   // Choose the verses to learn. The verse on screen moves inside them.
   const handleVerses = (start: number, end: number) => {
+    // Going on to the next surah plays each one whole.
+    if (afterSurahRef.current === 'next') {
+      start = 1;
+      end = ayahs.length;
+    }
     setStartVerse(start);
     setEndVerse(end);
     startVerseRef.current = start;
@@ -700,7 +705,11 @@ export default function LearnModeScreen() {
         endVerse={endVerse}
         onVerses={handleVerses}
         afterSurah={afterSurah}
-        onAfterSurah={setAfterSurah}
+        onAfterSurah={(mode) => {
+          setAfterSurah(mode);
+          afterSurahRef.current = mode;
+          if (mode === 'next') handleVerses(1, ayahs.length);
+        }}
         nextSurahName={nextSurah?.nameEnglish ?? null}
       />
 

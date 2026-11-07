@@ -309,21 +309,7 @@ export function LearnSettingsSheet(props: Props) {
 
             {kind === 'verses' && (
               <View style={styles.body}>
-                <View style={styles.quickRow}>
-                  <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse)} accessibilityRole="button">
-                    <Text style={styles.quickText}>{t('surahLearnMode.thisVerse')}</Text>
-                  </Pressable>
-                  <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse + 4)} accessibilityRole="button">
-                    <Text style={styles.quickText}>{t('surahLearnMode.next5')}</Text>
-                  </Pressable>
-                  <Pressable style={styles.quick} onPress={() => quick(1, props.verseCount)} accessibilityRole="button">
-                    <Text style={styles.quickText}>{t('surahLearnMode.wholeSurah')}</Text>
-                  </Pressable>
-                </View>
-                <VerseStepper label={t('surahLearnMode.fromVerse')} value={pickStart} min={1} max={props.verseCount} onChange={changeStart} />
-                <VerseStepper label={t('surahLearnMode.toVerse')} value={pickEnd} min={1} max={props.verseCount} onChange={changeEnd} />
-                <Text style={styles.hint}>{t('surahLearnMode.holdHint', { total: props.verseCount })}</Text>
-                <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.whenSurahEnds')}</Text>
+                <Text style={styles.label}>{t('surahLearnMode.whenSurahEnds')}</Text>
                 <Option
                   selected={props.afterSurah === 'repeat'}
                   title={t('surahLearnMode.repeatSurahTitle')}
@@ -335,8 +321,32 @@ export function LearnSettingsSheet(props: Props) {
                     selected={props.afterSurah === 'next'}
                     title={t('surahLearnMode.nextSurahTitle')}
                     note={t('surahLearnMode.nextSurahNote', { surah: props.nextSurahName })}
-                    onPress={() => props.onAfterSurah('next')}
+                    onPress={() => {
+                      // Going on means hearing each surah whole.
+                      props.onAfterSurah('next');
+                      quick(1, props.verseCount);
+                    }}
                   />
+                )}
+                {/* Going on to the next surah plays each one whole: no verses to pick. */}
+                {props.afterSurah === 'repeat' && (
+                  <>
+                    <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.whichVerses')}</Text>
+                    <View style={styles.quickRow}>
+                      <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse)} accessibilityRole="button">
+                        <Text style={styles.quickText}>{t('surahLearnMode.thisVerse')}</Text>
+                      </Pressable>
+                      <Pressable style={styles.quick} onPress={() => quick(props.currentVerse, props.currentVerse + 4)} accessibilityRole="button">
+                        <Text style={styles.quickText}>{t('surahLearnMode.next5')}</Text>
+                      </Pressable>
+                      <Pressable style={styles.quick} onPress={() => quick(1, props.verseCount)} accessibilityRole="button">
+                        <Text style={styles.quickText}>{t('surahLearnMode.wholeSurah')}</Text>
+                      </Pressable>
+                    </View>
+                    <VerseStepper label={t('surahLearnMode.fromVerse')} value={pickStart} min={1} max={props.verseCount} onChange={changeStart} />
+                    <VerseStepper label={t('surahLearnMode.toVerse')} value={pickEnd} min={1} max={props.verseCount} onChange={changeEnd} />
+                    <Text style={styles.hint}>{t('surahLearnMode.holdHint', { total: props.verseCount })}</Text>
+                  </>
                 )}
                 <Pressable
                   style={styles.done}
