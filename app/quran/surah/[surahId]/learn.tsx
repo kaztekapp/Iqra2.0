@@ -38,7 +38,14 @@ const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 
 export default function LearnModeScreen() {
   const { t } = useTranslation();
-  const { surahId, autoplay } = useLocalSearchParams<{ surahId: string; autoplay?: string }>();
+  // Going on to the next surah passes on how it was being heard: autoplay,
+  // the speed and the voice (the screen's own state starts fresh otherwise).
+  const { surahId, autoplay, speed: speedParam, voice: voiceParam } = useLocalSearchParams<{
+    surahId: string;
+    autoplay?: string;
+    speed?: string;
+    voice?: string;
+  }>();
 
   const surah = getSurahById(surahId);
   const { ayahs, isLoading: isLoadingAyahs } = useQuranSurah(surahId);
@@ -54,7 +61,9 @@ export default function LearnModeScreen() {
 
   const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
   const [audioState, setAudioState] = useState<AudioState>('idle');
-  const [playbackSpeed, setPlaybackSpeed] = useState<number>(Math.min(progress.settings.playbackSpeed, 1.5));
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(
+    speedParam && Number(speedParam) > 0 ? Number(speedParam) : Math.min(progress.settings.playbackSpeed, 1.5)
+  );
   const [repeatCount, setRepeatCount] = useState(1);
   const [currentRepeat, setCurrentRepeat] = useState(0);
   const [autoAdvance, setAutoAdvance] = useState(true);
@@ -128,8 +137,8 @@ export default function LearnModeScreen() {
   // Only Learn mode offers the choice: elsewhere the Quran is recited. It
   // starts on the learning voice, because that is what this screen is for -
   // someone working through the words, who can switch to a reciter in a tap.
-  const [useLearningVoice, setUseLearningVoice] = useState(true);
-  const learningVoiceRef = useRef(true);
+  const [useLearningVoice, setUseLearningVoice] = useState(voiceParam !== 'reciter');
+  const learningVoiceRef = useRef(voiceParam !== 'reciter');
   // The learning voice could not be made and the reciter is reading instead.
   const [voiceFellBack, setVoiceFellBack] = useState(false);
 
@@ -305,7 +314,9 @@ export default function LearnModeScreen() {
               isPlayingRef.current = false;
               quranAudioService.stop();
               clearPlayer();
-              router.replace(`/quran/surah/${nextSurah.id}/learn?autoplay=1`);
+              router.replace(
+                `/quran/surah/${nextSurah.id}/learn?autoplay=1&speed=${playbackSpeedRef.current}&voice=${learningVoiceRef.current ? 'learning' : 'reciter'}`
+              );
               return;
             }
 
@@ -605,10 +616,13 @@ export default function LearnModeScreen() {
               </>
             )}
           </Pressable>
-          <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
-            <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
-            <Text style={styles.chipValue}>{repeatCount}×</Text>
-          </Pressable>
+          {/* Going on to the next surah plays each verse once: no Repeat. */}
+          {afterSurah !== 'next' && (
+            <Pressable style={styles.chip} onPress={() => setSheet('repeat')} accessibilityRole="button">
+              <Text style={styles.chipLabel}>{t('surahLearnMode.repeat')}</Text>
+              <Text style={styles.chipValue}>{repeatCount}×</Text>
+            </Pressable>
+          )}
           <Pressable style={styles.chip} onPress={() => setSheet('speed')} accessibilityRole="button">
             <Text style={styles.chipLabel}>{t('surahLearnMode.speed')}</Text>
             <Text style={styles.chipValue}>{playbackSpeed}×</Text>
@@ -708,7 +722,13 @@ export default function LearnModeScreen() {
         onAfterSurah={(mode) => {
           setAfterSurah(mode);
           afterSurahRef.current = mode;
-          if (mode === 'next') handleVerses(1, ayahs.length);
+          if (mode === 'next') {
+            handleVerses(1, ayahs.length);
+            // Each verse once, and on to the next: no repeat, no stopping.
+            handleRepeatChange(1);
+            setAutoAdvance(true);
+            autoAdvanceRef.current = true;
+          }
         }}
         nextSurahName={nextSurah?.nameEnglish ?? null}
       />
