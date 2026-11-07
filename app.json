@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mudarris",
     "slug": "iqra2",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "description": "Mudarris: Learn Arabic & Quran. Master the Arabic alphabet, build vocabulary, read the Quran with audio recitations, and learn the stories of the prophets.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,8 +16,7 @@
         "UIBackgroundModes": [
           "audio"
         ],
-        "NSSpeechRecognitionUsageDescription": "Mudarris uses speech recognition to check your Arabic pronunciation during speaking practice.",
-        "NSMicrophoneUsageDescription": "Mudarris uses the microphone to check your Arabic pronunciation during speaking practice.",
+        "NSMicrophoneUsageDescription": "Mudarris uses the microphone to record voice messages you send in Community.",
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleAllowMixedLocalizations": true,
         "NSPhotoLibraryUsageDescription": "Mudarris does not use your photo library and never asks to see your photos."
@@ -48,9 +47,13 @@
       "expo-router",
       "expo-font",
       "expo-audio",
-      "expo-speech-recognition",
       "expo-localization",
-      "expo-navigation-bar",
+      [
+        "expo-navigation-bar",
+        {
+          "enforceContrast": false
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -69,7 +72,9 @@
             "useFrameworks": "static"
           },
           "android": {
-            "minSdkVersion": 24
+            "minSdkVersion": 24,
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
           }
         }
       ],

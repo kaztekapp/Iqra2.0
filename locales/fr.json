@@ -1,6 +1,5 @@
 {
   "CFBundleDisplayName": "Mudarris",
-  "NSMicrophoneUsageDescription": "Mudarris utilise le microphone pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
-  "NSSpeechRecognitionUsageDescription": "Mudarris utilise la reconnaissance vocale pour vérifier votre prononciation de l'arabe pendant les exercices d'expression orale.",
+  "NSMicrophoneUsageDescription": "Mudarris utilise le microphone pour enregistrer les messages vocaux que vous envoyez dans la Communauté.",
   "NSPhotoLibraryUsageDescription": "Mudarris n'utilise pas votre photothèque et ne demande jamais à voir vos photos."
 }

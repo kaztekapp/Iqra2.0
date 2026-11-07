@@ -1,6 +1,5 @@
 {
   "CFBundleDisplayName": "Mudarris",
-  "NSMicrophoneUsageDescription": "Mudarris uses the microphone to check your Arabic pronunciation during speaking practice.",
-  "NSSpeechRecognitionUsageDescription": "Mudarris uses speech recognition to check your Arabic pronunciation during speaking practice.",
+  "NSMicrophoneUsageDescription": "Mudarris uses the microphone to record voice messages you send in Community.",
   "NSPhotoLibraryUsageDescription": "Mudarris does not use your photo library and never asks to see your photos."
 }
