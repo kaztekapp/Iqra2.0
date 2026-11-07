@@ -9,6 +9,7 @@ import { audioCacheService } from './audioCacheService';
 import { synthesizeAyahToFile, hasArabicClip } from './speech/arabicTTS';
 import { asRecitation } from './speech/voicePlan';
 import { quietly, reportError } from '../lib/report';
+import { onWifi, roomToKeep } from '../lib/offlineRoom';
 import { NOW_PLAYING_ARTWORK } from './speech/voicePlan';
 
 /**
@@ -238,6 +239,47 @@ class QuranAudioService {
       if (generation === this.prefetchGeneration) {
         this.activePrefetchKey = null;
       }
+    });
+  }
+
+  /**
+   * The learning voice's version of prefetchSurah: on Wi-Fi, keep each
+   * verse's clip on the phone, one at a time, so the surah reads offline and
+   * no verse begins with a wait. `textOf` gives the words (the service does
+   * not hold the mushaf); it defaults to the lookup the Learn screen set.
+   * Same cancellation as prefetchSurah: a newer prefetch or a stop ends it.
+   */
+  prefetchSpokenSurah(
+    surahNumber: number,
+    totalAyahs: number,
+    textOf?: (ayahNumber: number) => string | undefined
+  ): void {
+    const lookup = this.ayahText;
+    const words = textOf ?? ((ayah: number) => lookup?.(surahNumber, ayah));
+    const key = `spoken-${surahNumber}`;
+    if (this.activePrefetchKey === key) return;
+    const generation = ++this.prefetchGeneration;
+    this.activePrefetchKey = key;
+
+    const run = async () => {
+      if (!(await onWifi())) return;
+      for (let ayah = 1; ayah <= totalAyahs; ayah++) {
+        if (generation !== this.prefetchGeneration) return;
+        // Resting after a failure, or the phone is short of space: stop
+        // rather than spend data on clips that will not be kept.
+        if (Date.now() < this.spokenUnavailableUntil || !roomToKeep()) return;
+        const text = words(ayah);
+        if (!text?.trim() || hasArabicClip(asRecitation(text))) continue;
+        try {
+          await synthesizeAyahToFile(text);
+        } catch (e) {
+          quietly(e, 'services/quranAudioService:prefetchSpoken');
+        }
+      }
+    };
+
+    run().finally(() => {
+      if (generation === this.prefetchGeneration) this.activePrefetchKey = null;
     });
   }
 
@@ -672,9 +714,12 @@ class QuranAudioService {
 
       // Warm the rest of this surah into the offline cache in the background so
       // the whole surah stays playable if the network drops mid-listen.
+      // In the voice that is reading: the learning voice's clips on Wi-Fi,
+      // or the reciter's recitation.
       const surah = getSurahByNumber(surahNumber);
       if (surah?.ayahCount) {
-        this.prefetchSurah(surahNumber, surah.ayahCount, { reciterId });
+        if (speakIt) this.prefetchSpokenSurah(surahNumber, surah.ayahCount);
+        else this.prefetchSurah(surahNumber, surah.ayahCount, { reciterId });
       }
     } catch (error) {
       // Stopped meanwhile: whoever stopped it owns what happens next.

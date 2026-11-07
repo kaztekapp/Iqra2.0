@@ -22,11 +22,17 @@ import * as LegacyFileSystem from 'expo-file-system/legacy';
 import { Directory, File, Paths } from 'expo-file-system';
 import { quietly } from '../../lib/report';
 import { clipName } from './voicePlan';
+import { roomToKeep } from '../../lib/offlineRoom';
 
 export { clipName };
 
-/** Roughly forty minutes of speech. All 100 duas come to about 7 MB. */
-const MAX_BYTES = 30 * 1024 * 1024;
+/**
+ * About eleven hours of speech: every story and dua someone works through
+ * stays playable offline. All 100 duas come to about 7 MB. The oldest go
+ * first past this, and nothing is kept while the phone is short of space
+ * (lib/offlineRoom).
+ */
+const MAX_BYTES = 500 * 1024 * 1024;
 
 let dirUri: string | null = null;
 let dirReady = false;
@@ -112,6 +118,7 @@ export function findClip(spoken: string, voice: string, rate: string): string | 
 export async function keepClip(name: string, bytes: Uint8Array): Promise<string> {
   const uri = await ensureStore();
   if (!uri) throw new Error('voice_store_unavailable');
+  if (!roomToKeep()) throw new Error('phone_storage_low');
   const f = new File(uri + name);
   try {
     if (f.exists) f.delete();
