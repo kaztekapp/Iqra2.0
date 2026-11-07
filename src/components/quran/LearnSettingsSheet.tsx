@@ -46,6 +46,11 @@ interface Props {
   startVerse: number;
   endVerse: number;
   onVerses: (start: number, end: number) => void;
+  /** When the last verse of the surah ends: again, or the next surah. */
+  afterSurah: 'repeat' | 'next';
+  onAfterSurah: (mode: 'repeat' | 'next') => void;
+  /** The surah that comes next, null after the last one. */
+  nextSurahName: string | null;
 }
 
 /** One choice in a list: a radio, a title and a line saying what it does. */
@@ -318,6 +323,21 @@ export function LearnSettingsSheet(props: Props) {
                 <VerseStepper label={t('surahLearnMode.fromVerse')} value={pickStart} min={1} max={props.verseCount} onChange={changeStart} />
                 <VerseStepper label={t('surahLearnMode.toVerse')} value={pickEnd} min={1} max={props.verseCount} onChange={changeEnd} />
                 <Text style={styles.hint}>{t('surahLearnMode.holdHint', { total: props.verseCount })}</Text>
+                <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.whenSurahEnds')}</Text>
+                <Option
+                  selected={props.afterSurah === 'repeat'}
+                  title={t('surahLearnMode.repeatSurahTitle')}
+                  note={t('surahLearnMode.repeatSurahNote')}
+                  onPress={() => props.onAfterSurah('repeat')}
+                />
+                {props.nextSurahName && (
+                  <Option
+                    selected={props.afterSurah === 'next'}
+                    title={t('surahLearnMode.nextSurahTitle')}
+                    note={t('surahLearnMode.nextSurahNote', { surah: props.nextSurahName })}
+                    onPress={() => props.onAfterSurah('next')}
+                  />
+                )}
                 <Pressable
                   style={styles.done}
                   onPress={() => {
