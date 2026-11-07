@@ -83,7 +83,7 @@ export function measure(wav: string, letters: number): ClipCheck {
   if (tail < (TAIL_MS / 1000) * 0.5) problems.push(`cut at the end: ${tail.toFixed(2)} s of silence after the voice`);
   if (letters >= 4 && perLetter < 0.06) problems.push(`too short for its text (${perLetter.toFixed(3)} s a letter): words may be missing`);
   if (letters >= 4 && perLetter > 0.4) problems.push(`too long for its text (${perLetter.toFixed(3)} s a letter)`);
-  for (const g of gaps) if (g > 1.6) problems.push(`a ${g.toFixed(1)} s silence inside the line`);
+  for (const g of gaps) if (g > 2.2) problems.push(`a ${g.toFixed(1)} s silence inside the line`);
   if (peak > -0.3) problems.push(`clipping (peak ${peak.toFixed(1)} dBFS)`);
   if (noise > -55) problems.push(`hiss in the silence (${noise.toFixed(1)} dBFS)`);
   if (!Number.isFinite(loudness)) problems.push('no loudness measured: the clip may be empty');

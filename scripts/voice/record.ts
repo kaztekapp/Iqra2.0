@@ -143,6 +143,9 @@ export function buildPlan(): Item[] {
     for (const chunk of chunkLine(line)) {
       const text = spokenArabic(chunk);
       if (!text.trim()) continue;
+      // A vowel mark on its own (the lessons show ٍ ٌ ً alone) has nothing to
+      // say: Azure returns no audio for it.
+      if (!/[\u0621-\u064A]/.test(text)) continue;
       // The Quran is recited by Hamed alone; other Arabic follows the
       // narrator's gender, so it is recorded in both voices.
       for (const voice of chunk.startsWith(RECITE) ? [voiceFor('ar', 'male')] : ARABIC_VOICES) {
