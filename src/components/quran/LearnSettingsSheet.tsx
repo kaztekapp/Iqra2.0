@@ -336,6 +336,9 @@ export function LearnSettingsSheet(props: Props) {
                     <SurahRow label={t('surahLearnMode.startWith')} value={props.startSurahName} onPress={props.onPickStart} />
                     <SurahRow label={t('surahLearnMode.stopAfter')} value={props.stopSurahName} onPress={props.onPickStop} />
                     <Text style={styles.hint}>{t('surahLearnMode.surahRunHint', { stop: props.stopSurahName })}</Text>
+                    <Pressable style={styles.done} onPress={onClose} accessibilityRole="button">
+                      <Text style={styles.doneText}>{t('surahLearnMode.done')}</Text>
+                    </Pressable>
                   </>
                 )}
                 {/* Going on to the next surah plays each one whole: no verses to pick. */}
