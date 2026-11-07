@@ -32,6 +32,7 @@ import {
 } from './storyAudioService';
 import { buildUtterances, type NarratableBlock, type Utterance, type UtteranceLang } from './narrationPlan';
 import { releaseAudioSessionIfIdle } from './audioBus';
+import { onWifi, roomToKeep } from '../lib/offlineRoom';
 import {
   speakArabic,
   stopArabic,
@@ -282,7 +283,37 @@ export function startNarration(fromIndex = 0): void {
   // A rest taken during the last reading - a tunnel, a dropped signal - must
   // not decide that this one is read by the phone.
   forgiveArabicEdge();
-  void loop(Math.max(0, Math.min(fromIndex, Math.max(0, session.utterances.length - 1))));
+  const from = Math.max(0, Math.min(fromIndex, Math.max(0, session.utterances.length - 1)));
+  void loop(from);
+  void saveAhead(session, from);
+}
+
+/**
+ * On Wi-Fi, keep the rest of this reading on the phone while it plays, so a
+ * story begun at home finishes on the train. Quietly: the lines are queued
+ * behind the ones being heard, a line that will not save is skipped, and it
+ * stops when the reading ends or changes, or the phone runs short of space.
+ */
+let savingAhead: NarrationSession | null = null;
+async function saveAhead(session: NarrationSession, from: number): Promise<void> {
+  if (savingAhead === session || !(await onWifi())) return;
+  savingAhead = session;
+  try {
+    const { utterances, lang } = session;
+    // The next line is already being fetched for playback.
+    for (let i = from + 2; i < utterances.length; i++) {
+      if (get().session !== session || get().status === 'idle' || !roomToKeep()) return;
+      const u = utterances[i];
+      try {
+        if (u.lang === 'ar') await saveArabicClip(u.text, ARABIC_PACE_RATE[get().pace]);
+        else await storyAudioService.saveClip(u.text, lang);
+      } catch {
+        // Skipped: playback fetches it when its turn comes.
+      }
+    }
+  } finally {
+    if (savingAhead === session) savingAhead = null;
+  }
 }
 
 export async function stopNarration(): Promise<void> {

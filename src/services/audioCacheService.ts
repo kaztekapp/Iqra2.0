@@ -1,6 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import { Paths } from 'expo-file-system';
 import { quietly } from '../lib/report';
+import { roomToKeep } from '../lib/offlineRoom';
 
 /**
  * Cache directory, resolved on first use rather than at import.
@@ -114,6 +115,9 @@ class AudioCacheService {
     onProgress?: ProgressCallback
   ): Promise<string> {
     await this.initialize();
+    // Recitations are kept with no limit of their own; the phone's free
+    // space is the limit (lib/offlineRoom). Playback streams either way.
+    if (!roomToKeep()) throw new Error('phone_storage_low');
 
     const localPath = this.getLocalPath(surahNumber, ayahNumber, reciterId);
 
