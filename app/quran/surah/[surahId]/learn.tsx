@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect, useRef } from 'react';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
+import { getSurahAyahsSync } from '../../../../src/services/staticQuranService';
+import { onWifi } from '../../../../src/lib/offlineRoom';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState, QURAN_RECITERS, ReciterId } from '../../../../src/services/quranAudioService';
@@ -249,6 +251,22 @@ export default function LearnModeScreen() {
       }
     }
   }, [storeAyahNumber, ayahs]);
+
+  // Going on to the next surah: while this one's last verse plays, that
+  // surah is fetched ahead (on Wi-Fi), so it starts at once and plays offline.
+  const onLastVerse = currentAyahIndex === ayahs.length - 1 && ayahs.length > 0;
+  const runNextId = afterSurah === 'next' && audioState === 'playing' && onLastVerse ? nextSurah?.id : undefined;
+  useEffect(() => {
+    if (!runNextId) return;
+    const next = getSurahById(runNextId);
+    if (!next) return;
+    if (learningVoiceRef.current) {
+      const nextAyahs = getSurahAyahsSync(next.surahNumber);
+      quranAudioService.prefetchSpokenSurah(next.surahNumber, next.ayahCount, (n) => nextAyahs[n - 1]?.textUthmani);
+    } else {
+      onWifi().then((wifi) => wifi && quranAudioService.prefetchSurah(next.surahNumber, next.ayahCount));
+    }
+  }, [runNextId]);
 
   if (!surah) {
     return (
