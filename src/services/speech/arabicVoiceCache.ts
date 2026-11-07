@@ -32,7 +32,8 @@ export { clipName };
  * first past this, and nothing is kept while the phone is short of space
  * (lib/offlineRoom).
  */
-const MAX_BYTES = 500 * 1024 * 1024;
+export const VOICE_STORE_LIMIT = 500 * 1024 * 1024;
+const MAX_BYTES = VOICE_STORE_LIMIT;
 
 let dirUri: string | null = null;
 let dirReady = false;

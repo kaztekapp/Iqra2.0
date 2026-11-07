@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system/legacy';
-import { Paths } from 'expo-file-system';
+import { Directory, File, Paths } from 'expo-file-system';
 import { quietly } from '../lib/report';
 import { roomToKeep } from '../lib/offlineRoom';
 
@@ -257,6 +257,42 @@ class AudioCacheService {
     } catch (error) {
       __DEV__ && console.error('Failed to clear audio cache:', error);
     }
+  }
+
+  /**
+   * What each reciter has kept, largest first: bytes and verse files. Read
+   * with the new file API, which lists a folder with its sizes in one call
+   * instead of one round trip per file.
+   */
+  reciterUsage(): { reciterId: string; bytes: number; verses: number }[] {
+    try {
+      const root = new Directory(audioCacheDir());
+      if (!root.exists) return [];
+      return root
+        .list()
+        .filter((d): d is Directory => d instanceof Directory)
+        .map((d) => {
+          let bytes = 0;
+          let verses = 0;
+          for (const f of d.list()) {
+            if (f instanceof File) {
+              bytes += f.size ?? 0;
+              verses += 1;
+            }
+          }
+          return { reciterId: d.name, bytes, verses };
+        })
+        .filter((r) => r.verses > 0)
+        .sort((a, b) => b.bytes - a.bytes);
+    } catch (e) {
+      quietly(e, 'services/audioCacheService.reciterUsage');
+      return [];
+    }
+  }
+
+  /** Forget one reciter's kept verses; they stream, and are kept, again. */
+  async clearReciter(reciterId: string): Promise<void> {
+    await FileSystem.deleteAsync(`${audioCacheDir()}${reciterId}/`, { idempotent: true });
   }
 
   /**
