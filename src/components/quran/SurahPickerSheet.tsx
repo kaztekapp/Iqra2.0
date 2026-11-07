@@ -37,6 +37,12 @@ const MEMORIZATION_ORDER: Surah[] = [
   ...SURAHS.filter((s) => s.surahNumber !== 1).sort((a, b) => b.surahNumber - a.surahNumber),
 ];
 
+/** The surah learned after this one (memorization order), or null after the last. */
+export function nextSurahToLearn(surahId: string): Surah | null {
+  const i = MEMORIZATION_ORDER.findIndex((s) => s.id === surahId);
+  return i >= 0 && i < MEMORIZATION_ORDER.length - 1 ? MEMORIZATION_ORDER[i + 1] : null;
+}
+
 /** Arabic without its marks, and Latin without case or accents, for search. */
 const fold = (s: string) =>
   s

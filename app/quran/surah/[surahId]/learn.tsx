@@ -12,7 +12,8 @@ import { useAudioPlayerStore } from '../../../../src/stores/audioPlayerStore';
 import { useTranslation } from 'react-i18next';
 import { color, radius, type, weight, space, gutter } from '../../../../src/theme/tokens';
 import { LearnSettingsSheet, type LearnSheetKind } from '../../../../src/components/quran/LearnSettingsSheet';
-import { SurahPickerSheet } from '../../../../src/components/quran/SurahPickerSheet';
+import { SurahPickerSheet, nextSurahToLearn } from '../../../../src/components/quran/SurahPickerSheet';
+import { useSettingsStore } from '../../../../src/stores/settingsStore';
 import { useLearnModeStore } from '../../../../src/stores/learnModeStore';
 import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
@@ -37,7 +38,7 @@ const LEARNING_VOICE_ARABIC = 'صَوْتُ التَّعَلُّمِ';
 
 export default function LearnModeScreen() {
   const { t } = useTranslation();
-  const { surahId } = useLocalSearchParams<{ surahId: string }>();
+  const { surahId, autoplay } = useLocalSearchParams<{ surahId: string; autoplay?: string }>();
 
   const surah = getSurahById(surahId);
   const { ayahs, isLoading: isLoadingAyahs } = useQuranSurah(surahId);
@@ -100,6 +101,24 @@ export default function LearnModeScreen() {
   const currentRepeatRef = useRef(0);
   const repeatCountRef = useRef(1);
   const autoAdvanceRef = useRef(true);
+  // When the surah's last verse ends: play it again, or go on to the next
+  // surah (memorization order). Remembered, so a reader working through the
+  // short surahs keeps going from one to the next.
+  const afterSurah = useSettingsStore((s) => s.learnAfterSurah);
+  const setAfterSurah = useSettingsStore((s) => s.setLearnAfterSurah);
+  const afterSurahRef = useRef(afterSurah);
+  afterSurahRef.current = afterSurah;
+  const nextSurah = surah ? nextSurahToLearn(surah.id) : null;
+
+  // Arrived from the surah before (go on to the next surah): start at once,
+  // when the verses are there. The play function is set further down.
+  const autoplayRef = useRef<(() => void) | null>(null);
+  const autoplayed = useRef(false);
+  useEffect(() => {
+    if (autoplay !== '1' || autoplayed.current || !ayahs.length || !autoplayRef.current) return;
+    autoplayed.current = true;
+    autoplayRef.current();
+  }, [autoplay, ayahs.length]);
   const currentAyahIndexRef = useRef(0);
   const startVerseRef = useRef(1);
   const endVerseRef = useRef(ayahs.length || 1);
@@ -280,6 +299,16 @@ export default function LearnModeScreen() {
             const startIdx = startVerseRef.current - 1;
             const endIdx = endVerseRef.current - 1;
 
+            // The whole surah heard, and the reader chose to go on: the next
+            // surah opens and plays from its first verse.
+            if (currentIndex >= endIdx && endIdx >= ayahs.length - 1 && afterSurahRef.current === 'next' && nextSurah) {
+              isPlayingRef.current = false;
+              quranAudioService.stop();
+              clearPlayer();
+              router.replace(`/quran/surah/${nextSurah.id}/learn?autoplay=1`);
+              return;
+            }
+
             let nextIndex: number;
             if (currentIndex >= endIdx) {
               nextIndex = startIdx; // Loop back
@@ -310,6 +339,13 @@ export default function LearnModeScreen() {
         clearPlayer();
       },
     });
+  };
+
+  autoplayRef.current = () => {
+    currentRepeatRef.current = 0;
+    setCurrentRepeat(0);
+    isPlayingRef.current = true;
+    playLearnAyah(ayahs[0].ayahNumber);
   };
 
   // Play/Pause toggle for the current ayah
@@ -402,16 +438,7 @@ export default function LearnModeScreen() {
   };
   stepRef.current = (delta) => goToVerse(currentAyahIndexRef.current + delta);
 
-  // What pressing play will do, in words: the settings, read back.
   const verseNumber = currentAyah.ayahNumber;
-  const playPart = t('surahLearnMode.sayPlay', { count: repeatCount, verse: verseNumber });
-  const thenPart = !autoAdvance
-    ? t('surahLearnMode.sayThenStop')
-    : verseNumber >= endVerse
-      ? startVerse === endVerse
-        ? t('surahLearnMode.sayThenAgain')
-        : t('surahLearnMode.sayThenLoop', { verse: startVerse })
-      : t('surahLearnMode.sayThenNext', { verse: verseNumber + 1 });
   const wholeSurah = startVerse === 1 && endVerse === ayahs.length;
 
   return (
@@ -560,7 +587,12 @@ export default function LearnModeScreen() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipsScroll} contentContainerStyle={styles.chips}>
           <Pressable style={styles.chip} onPress={() => setSheet('verses')} accessibilityRole="button">
             {wholeSurah ? (
-              <Text style={styles.chipValue}>{t('surahLearnMode.selectVerses')}</Text>
+              <>
+                <Text style={styles.chipValue}>{t('surahLearnMode.selectVerses')}</Text>
+                {afterSurah === 'next' && nextSurah ? (
+                  <Ionicons name="arrow-forward-circle-outline" size={16} color={color.accent} accessibilityLabel={t('surahLearnMode.nextSurahTitle')} />
+                ) : null}
+              </>
             ) : (
               <>
                 <Text style={styles.chipLabel}>{t('surahLearnMode.verses')}</Text>
@@ -584,9 +616,7 @@ export default function LearnModeScreen() {
               {t('surahLearnMode.voiceLearningUnavailable', { reciter: currentReciter.nameEnglish })}
             </Text>
           </View>
-        ) : (
-          <Text style={styles.say} accessibilityLiveRegion="polite">{playPart}, {thenPart}</Text>
-        )}
+        ) : null}
 
         <View style={styles.transport}>
           <Pressable
@@ -613,7 +643,7 @@ export default function LearnModeScreen() {
             ) : (
               <Ionicons
                 name={audioState === 'playing' ? 'pause' : 'play'}
-                size={34}
+                size={28}
                 color={color.textOnAccent}
                 style={audioState === 'playing' ? undefined : styles.playGlyph}
               />
@@ -669,6 +699,9 @@ export default function LearnModeScreen() {
         startVerse={startVerse}
         endVerse={endVerse}
         onVerses={handleVerses}
+        afterSurah={afterSurah}
+        onAfterSurah={setAfterSurah}
+        nextSurahName={nextSurah?.nameEnglish ?? null}
       />
 
       <SurahPickerSheet
@@ -970,12 +1003,6 @@ const styles = StyleSheet.create({
     borderTopColor: color.borderSubtle,
     backgroundColor: color.bg,
   },
-  say: {
-    ...type.caption,
-    color: color.textMuted,
-    textAlign: 'center',
-    minHeight: 36,
-  },
   voiceFallback: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -1015,16 +1042,16 @@ const styles = StyleSheet.create({
     color: color.textMuted,
   },
   play: {
-    width: 76,
-    height: 76,
+    width: 62,
+    height: 62,
     borderRadius: radius.full,
     backgroundColor: color.accent,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: color.accent,
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
     elevation: 6,
   },
   // The triangle's visual centre sits right of its box.

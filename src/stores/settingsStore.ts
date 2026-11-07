@@ -35,6 +35,11 @@ interface SettingsState {
   setArabicVoice: (source: 'online' | 'device', voiceId?: string | null) => void;
   setNarrationVoice: (voice: 'female' | 'male') => void;
 
+  // Memorize a Surah: when the last verse ends, play the surah again or go
+  // on to the next surah in memorization order. Remembered across surahs.
+  learnAfterSurah: 'repeat' | 'next';
+  setLearnAfterSurah: (mode: 'repeat' | 'next') => void;
+
   // Local reminders (continue, streak, reviews, Friday al-Kahf)
   reminders: ReminderSettings;
   setReminders: (patch: Partial<ReminderSettings>) => void;
@@ -76,6 +81,8 @@ export const useSettingsStore = create<SettingsState>()(
       // Story narration voice
       narrationVoice: 'female',
       setNarrationVoice: (voice) => set({ narrationVoice: voice }),
+      learnAfterSurah: 'repeat',
+      setLearnAfterSurah: (mode) => set({ learnAfterSurah: mode }),
       arabicVoiceSource: 'online',
       arabicDeviceVoiceId: null,
       setArabicVoice: (source, voiceId = null) => set({ arabicVoiceSource: source, arabicDeviceVoiceId: voiceId }),
@@ -114,6 +121,7 @@ export const useSettingsStore = create<SettingsState>()(
         learningGoals: state.learningGoals,
         arabicSpeechSpeed: state.arabicSpeechSpeed,
         narrationVoice: state.narrationVoice,
+        learnAfterSurah: state.learnAfterSurah,
         arabicVoiceSource: state.arabicVoiceSource,
         arabicDeviceVoiceId: state.arabicDeviceVoiceId,
         reminders: state.reminders,
