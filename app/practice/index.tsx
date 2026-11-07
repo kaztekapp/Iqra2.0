@@ -66,15 +66,6 @@ export default function PracticeScreen() {
       color: tk.accent,
       route: '/exercise/listening',
     },
-    {
-      id: 'speaking',
-      title: t('practiceScreen.speakingPractice'),
-      titleArabic: 'تَدْرِيبُ التَّحَدُّث',
-      description: t('practiceScreen.speakingPracticeDesc'),
-      icon: 'mic' as const,
-      color: tk.warning,
-      route: '/vocabulary/speaking-practice',
-    },
   ];
 
   return (
