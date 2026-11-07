@@ -199,7 +199,7 @@ export default function VocabularyScreen() {
           </Pressable>
 
           <Pressable accessibilityRole="button"
-            style={[styles.practiceCard, { marginBottom: 12 }]}
+            style={styles.practiceCard}
             onPress={() => router.push('/vocabulary/flashcards')}
           >
             <View style={styles.practiceContent}>
@@ -216,23 +216,6 @@ export default function VocabularyScreen() {
             </View>
           </Pressable>
 
-          <Pressable accessibilityRole="button"
-            style={styles.practiceCard}
-            onPress={() => router.push('/vocabulary/speaking-practice')}
-          >
-            <View style={styles.practiceContent}>
-              <View style={[styles.practiceIcon, { backgroundColor: withAlpha(color.progress, 0.13) }]}>
-                <Ionicons name="mic" size={28} color={color.progress} />
-              </View>
-              <View style={styles.practiceText}>
-                <Text style={styles.practiceTitle}>{t('vocabulary.speakingPractice')}</Text>
-                <Text style={styles.practiceDesc}>
-                  {t('vocabulary.speakingPracticeDesc')}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={24} color={color.textFaint} />
-            </View>
-          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
