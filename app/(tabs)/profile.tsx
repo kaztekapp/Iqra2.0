@@ -1,7 +1,8 @@
 import { View, Text, ScrollView, Pressable, StyleSheet, Modal, Alert, ActivityIndicator, TextInput, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { clipStoreSize, clearClips } from '../../src/services/speech/arabicVoiceCache';
+import { clipStoreSize } from '../../src/services/speech/arabicVoiceCache';
+import { audioCacheService } from '../../src/services/audioCacheService';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProgressStore } from '../../src/stores/progressStore';
@@ -9,7 +10,7 @@ import { ACHIEVEMENTS, Achievement } from '../../src/data/achievements';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { signOut, deleteAccount } from '../../src/services/authService';
 import { getProfile, upsertProfile } from '../../src/services/profileService';
-import { useRouter, Href } from 'expo-router';
+import { useRouter, Href, useFocusEffect } from 'expo-router';
 import { useAdStore } from '../../src/stores/adStore';
 import { iapService } from '../../src/services/iapService';
 import { ENABLE_ADS } from '../../src/services/adService';
@@ -44,27 +45,19 @@ export default function ProfileScreen() {
   // ── Gamification data ──────────────────────────────────────────
   const [refreshing, setRefreshing] = useState(false);
 
-  // What the reading voices have kept on this phone. Read when the screen
-  // opens rather than watched: it only changes while something is playing or
-  // being saved, and neither happens here.
-  const [voiceBytes, setVoiceBytes] = useState(0);
-  useEffect(() => {
-    setVoiceBytes(clipStoreSize());
-  }, []);
-
-  const handleClearVoice = useCallback(() => {
-    Alert.alert(t('voiceStorage.clearTitle'), t('voiceStorage.clearBody'), [
-      { text: t('common.cancel'), style: 'cancel' },
-      {
-        text: t('voiceStorage.clear'),
-        style: 'destructive',
-        onPress: () => {
-          clearClips();
-          setVoiceBytes(clipStoreSize());
-        },
-      },
-    ]);
-  }, [t]);
+  // What is kept for offline listening, for the Storage row. Measured each
+  // time Profile comes into view, after it is up: the Storage page can clear
+  // it, and listing the files must not slow the tab down.
+  const [keptBytes, setKeptBytes] = useState(0);
+  useFocusEffect(
+    useCallback(() => {
+      const id = setTimeout(() => {
+        const quran = audioCacheService.reciterUsage().reduce((n, r) => n + r.bytes, 0);
+        setKeptBytes(quran + clipStoreSize());
+      }, 300);
+      return () => clearTimeout(id);
+    }, [])
+  );
 
   const userId = useSettingsStore((s) => s.user?.id);
 
@@ -627,34 +620,29 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        {/* What the voices have kept here */}
+        {/* What is kept for offline listening: its own page */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('voiceStorage.title')}</Text>
-          <View style={styles.storageCard}>
+          <Text style={styles.sectionTitle}>{t('storage.title')}</Text>
+          <Pressable
+            style={styles.storageCard}
+            onPress={() => router.push('/storage' as Href)}
+            accessibilityRole="button"
+            accessibilityLabel={t('storage.title')}
+          >
             <View style={styles.removeAdsHeader}>
               <View style={styles.removeAdsIcon}>
-                <Ionicons name="pulse-outline" size={24} color={color.accent} />
+                <Ionicons name="cloud-offline-outline" size={24} color={color.accent} />
               </View>
               <View style={styles.removeAdsInfo}>
                 <Text style={styles.storageTitle}>
-                  {voiceBytes > 0
-                    ? t('voiceStorage.size', { mb: (voiceBytes / (1024 * 1024)).toFixed(1) })
-                    : t('voiceStorage.empty')}
+                  {keptBytes > 0
+                    ? t('storage.row', { size: t('storage.mb', { n: Math.round(keptBytes / (1024 * 1024)) }) })
+                    : t('storage.rowEmpty')}
                 </Text>
-                <Text style={styles.storageSize}>{t('voiceStorage.desc')}</Text>
               </View>
+              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
             </View>
-            {voiceBytes > 0 && (
-              <Pressable
-                style={styles.purchaseButton}
-                onPress={handleClearVoice}
-                accessibilityRole="button"
-                accessibilityLabel={t('voiceStorage.clear')}
-              >
-                <Text style={styles.purchaseButtonText}>{t('voiceStorage.clear')}</Text>
-              </Pressable>
-            )}
-          </View>
+          </Pressable>
         </View>
 
         {/* Remove Ads */}
