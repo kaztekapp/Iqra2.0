@@ -39,25 +39,29 @@ let dirReady = false;
 function storeUri(): string | null {
   if (dirUri) return dirUri;
   try {
-    // v2: clips made by the official Azure voices (since 2026-10-30). The
-    // first folder held clips from Edge's read-aloud service, which say some
-    // words wrongly (ءَايَـٰتِنَا as "ayayatina"); a clip's name only records
-    // the text, voice and rate, so those would have been replayed for ever.
-    dirUri = `${Paths.document.uri}arabic-voice-v2/`;
+    // v3: the clean recording (2026-11-07: 192 kbps, silence at both ends,
+    // every clip checked). v2 held clips the live voice made while the
+    // recitation rules were still changing, often under the same names, so a
+    // phone would have replayed them for ever instead of the recording.
+    // v2 itself replaced Edge-era clips that said some words wrongly
+    // (ءَايَـٰتِنَا as "ayayatina"): a clip's name only records the text,
+    // voice and rate, so a new folder is the only way to let them go.
+    dirUri = `${Paths.document.uri}arabic-voice-v3/`;
     return dirUri;
   } catch {
     return null;
   }
 }
 
-/** The Edge-era folder, removed once so its clips are neither played nor kept. */
+/** The earlier folders, removed once so their clips are neither played nor kept. */
 let legacyCleared = false;
 function clearLegacyStore(): void {
   if (legacyCleared) return;
   legacyCleared = true;
   try {
-    const old = `${Paths.document.uri}arabic-voice/`;
-    LegacyFileSystem.deleteAsync(old, { idempotent: true }).catch(() => {});
+    for (const old of ['arabic-voice/', 'arabic-voice-v2/']) {
+      LegacyFileSystem.deleteAsync(`${Paths.document.uri}${old}`, { idempotent: true }).catch(() => {});
+    }
   } catch {
     // No document directory here: nothing was ever kept.
   }
