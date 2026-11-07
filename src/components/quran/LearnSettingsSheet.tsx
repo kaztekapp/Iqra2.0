@@ -49,6 +49,22 @@ interface Props {
   onAfterSurah: (mode: 'repeat' | 'next') => void;
   /** The surah that comes next, null after the last one. */
   nextSurahName: string | null;
+  /** Going on to the next surah: the one it starts with (the one on screen) and the one it stops after. */
+  startSurahName: string;
+  stopSurahName: string;
+  onPickStart: () => void;
+  onPickStop: () => void;
+}
+
+/** A row that opens the surah list: what it sets, and the surah chosen. */
+function SurahRow({ label, value, onPress }: { label: string; value: string; onPress: () => void }) {
+  return (
+    <Pressable style={styles.surahRow} onPress={onPress} accessibilityRole="button" accessibilityLabel={`${label}: ${value}`}>
+      <Text style={styles.surahRowLabel}>{label}</Text>
+      <Text style={styles.surahRowValue} numberOfLines={1}>{value}</Text>
+      <Ionicons name="chevron-down" size={18} color={color.accentStrong} />
+    </Pressable>
+  );
 }
 
 /** One choice in a list: a radio, a title and a line saying what it does. */
@@ -313,6 +329,15 @@ export function LearnSettingsSheet(props: Props) {
                     }}
                   />
                 )}
+                {/* Going on: which surah to start with and which to stop after. */}
+                {props.afterSurah === 'next' && (
+                  <>
+                    <Text style={[styles.label, styles.labelGap]}>{t('surahLearnMode.whichSurahs')}</Text>
+                    <SurahRow label={t('surahLearnMode.startWith')} value={props.startSurahName} onPress={props.onPickStart} />
+                    <SurahRow label={t('surahLearnMode.stopAfter')} value={props.stopSurahName} onPress={props.onPickStop} />
+                    <Text style={styles.hint}>{t('surahLearnMode.surahRunHint', { stop: props.stopSurahName })}</Text>
+                  </>
+                )}
                 {/* Going on to the next surah plays each one whole: no verses to pick. */}
                 {props.afterSurah === 'repeat' && (
                   <>
@@ -333,20 +358,22 @@ export function LearnSettingsSheet(props: Props) {
                     <Text style={styles.hint}>{t('surahLearnMode.holdHint', { total: props.verseCount })}</Text>
                   </>
                 )}
-                <Pressable
-                  style={styles.done}
-                  onPress={() => {
-                    props.onVerses(pickStart, pickEnd);
-                    onClose();
-                  }}
-                  accessibilityRole="button"
-                >
-                  <Text style={styles.doneText}>
-                    {pickStart === pickEnd
-                      ? t('surahLearnMode.learnVerse', { verse: pickStart })
-                      : t('surahLearnMode.learnVerses', { start: pickStart, end: pickEnd })}
-                  </Text>
-                </Pressable>
+                {props.afterSurah === 'repeat' && (
+                  <Pressable
+                    style={styles.done}
+                    onPress={() => {
+                      props.onVerses(pickStart, pickEnd);
+                      onClose();
+                    }}
+                    accessibilityRole="button"
+                  >
+                    <Text style={styles.doneText}>
+                      {pickStart === pickEnd
+                        ? t('surahLearnMode.learnVerse', { verse: pickStart })
+                        : t('surahLearnMode.learnVerses', { start: pickStart, end: pickEnd })}
+                    </Text>
+                  </Pressable>
+                )}
               </View>
             )}
 
@@ -411,6 +438,26 @@ const styles = StyleSheet.create({
   },
   labelGap: {
     marginTop: space.md,
+  },
+  surahRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    paddingHorizontal: space.md,
+    paddingVertical: space.md,
+    borderRadius: radius.md,
+    backgroundColor: color.surfaceSunken,
+  },
+  surahRowLabel: {
+    ...type.body,
+    color: color.textMuted,
+  },
+  surahRowValue: {
+    ...type.body,
+    fontWeight: weight.semibold,
+    color: color.text,
+    flex: 1,
+    textAlign: 'right',
   },
   hint: {
     ...type.caption,
