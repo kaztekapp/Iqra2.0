@@ -457,6 +457,10 @@ export default {
     lessonsCount: '{{count}} le\u00e7ons',
   },
   profile: {
+    learner: 'Apprenant',
+    editName: 'Modifier le nom',
+    enterName: 'Entrez votre nom',
+    saveNameError: "Impossible d'enregistrer votre nom. Réessayez.",
     title: 'Profil',
     currentLevel: 'Niveau Actuel',
     beginner: 'D\u00e9butant',
@@ -1174,6 +1178,8 @@ export default {
     medinan28: 'Médinoises 28',
   },
   surahLearn: {
+    meccan: 'Mecquoise',
+    medinan: 'Médinoise',
     title: 'Sourate et Structure',
     learn: 'Apprendre',
     quiz: 'Quiz',

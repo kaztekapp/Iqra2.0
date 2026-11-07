@@ -457,6 +457,10 @@ export default {
     lessonsCount: '{{count}} lessons',
   },
   profile: {
+    learner: 'Learner',
+    editName: 'Edit name',
+    enterName: 'Enter your name',
+    saveNameError: 'Could not save your name. Try again.',
     title: 'Profile',
     currentLevel: 'Current Level',
     beginner: 'Beginner',
@@ -1174,6 +1178,8 @@ export default {
     medinan28: 'Medinan 28',
   },
   surahLearn: {
+    meccan: 'Meccan',
+    medinan: 'Medinan',
     title: 'Surah & Structure',
     learn: 'Learn',
     quiz: 'Quiz',
