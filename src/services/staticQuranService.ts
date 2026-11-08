@@ -1,100 +1,16 @@
-// Static Quran Data Service
-// Loads verified Quran text from bundled static files
-// Pre-built cache for instant O(1) lookups
+// Static Quran Data Service: surah details, and verses from the data files
+// that ship with the app (offline from the start).
 
 import { Ayah, Surah } from '../types/quran';
 import { SURAHS } from '../data/arabic/quran/surahs';
-
-// Surah ID to number mapping (includes both metadata IDs and data file IDs)
-const SURAH_ID_TO_NUMBER: Record<string, number> = {
-  // Standard IDs (from metadata)
-  'al-fatihah': 1, 'al-baqarah': 2, 'ali-imran': 3, 'an-nisa': 4,
-  'al-maidah': 5, 'al-anam': 6, 'al-araf': 7, 'al-anfal': 8,
-  'at-tawbah': 9, 'yunus': 10, 'hud': 11, 'yusuf': 12,
-  'ar-rad': 13, 'ibrahim': 14, 'al-hijr': 15, 'an-nahl': 16,
-  'al-isra': 17, 'al-kahf': 18, 'maryam': 19, 'ta-ha': 20,
-  'al-anbiya': 21, 'al-hajj': 22, 'al-muminun': 23, 'an-nur': 24,
-  'al-furqan': 25, 'ash-shuara': 26, 'an-naml': 27, 'al-qasas': 28,
-  'al-ankabut': 29, 'ar-rum': 30, 'luqman': 31, 'as-sajdah': 32,
-  'al-ahzab': 33, 'saba': 34, 'fatir': 35, 'ya-sin': 36,
-  'as-saffat': 37, 'sad': 38, 'az-zumar': 39, 'ghafir': 40,
-  'fussilat': 41, 'ash-shura': 42, 'az-zukhruf': 43, 'ad-dukhan': 44,
-  'al-jathiyah': 45, 'al-ahqaf': 46, 'muhammad': 47, 'al-fath': 48,
-  'al-hujurat': 49, 'qaf': 50, 'adh-dhariyat': 51, 'at-tur': 52,
-  'an-najm': 53, 'al-qamar': 54, 'ar-rahman': 55, 'al-waqiah': 56,
-  'al-hadid': 57, 'al-mujadila': 58, 'al-hashr': 59, 'al-mumtahanah': 60,
-  'as-saf': 61, 'al-jumuah': 62, 'al-munafiqun': 63, 'at-taghabun': 64,
-  'at-talaq': 65, 'at-tahrim': 66, 'al-mulk': 67, 'al-qalam': 68,
-  'al-haqqah': 69, 'al-maarij': 70, 'nuh': 71, 'al-jinn': 72,
-  'al-muzzammil': 73, 'al-muddaththir': 74, 'al-qiyamah': 75, 'al-insan': 76,
-  'al-mursalat': 77, 'an-naba': 78, 'an-naziat': 79, 'abasa': 80,
-  'at-takwir': 81, 'al-infitar': 82, 'al-mutaffifin': 83, 'al-inshiqaq': 84,
-  'al-buruj': 85, 'at-tariq': 86, 'al-ala': 87, 'al-ghashiyah': 88,
-  'al-fajr': 89, 'al-balad': 90, 'ash-shams': 91, 'al-layl': 92,
-  'ad-duha': 93, 'ash-sharh': 94, 'at-tin': 95, 'al-alaq': 96,
-  'al-qadr': 97, 'al-bayyinah': 98, 'az-zalzalah': 99, 'al-adiyat': 100,
-  'al-qariah': 101, 'at-takathur': 102, 'al-asr': 103, 'al-humazah': 104,
-  'al-fil': 105, 'quraysh': 106, 'al-maun': 107, 'al-kawthar': 108,
-  'al-kafirun': 109, 'an-nasr': 110, 'al-masad': 111, 'al-ikhlas': 112,
-  'al-falaq': 113, 'an-nas': 114,
-  // Alternative IDs (from data files - spelling variations)
-  'al-ma-idah': 5, 'al-an-am': 6, 'al-a-raf': 7,
-  'ar-ra-d': 13, 'taha': 20,
-  'al-anbya': 21, 'al-mu-minun': 23,
-  'ash-shu-ara': 26,
-  'ash-shuraa': 42,
-  'al-waqi-ah': 56,
-  'al-jumu-ah': 62,
-  'al-ma-arij': 70,
-  'an-nazi-at': 79,
-  'al-a-la': 87,
-  'ad-duhaa': 93,
-  'al-qari-ah': 101,
-  'al-ma-un': 107,
-};
+import { SURAH_ID_TO_NUMBER } from '../data/arabic/quran/surahIds';
+import { cachedSurah, loadSurah } from './quranText';
 
 /**
- * The bundled Quran text, indexed by surah — built on first use, never at
- * import.
- *
- * This used to be a top-level import of every juz plus a loop over all
- * thirty, running the moment anything touched this module. That is the whole
- * Quran, 32 MB of object literals, and it was reached from the root layout:
- * the mini player imports the quran data index, and that index re-exports
- * this service. So every launch built the entire Quran before the first
- * screen appeared, whether or not anyone opened a surah.
- *
- * The require() below is inside the function on purpose. Metro evaluates a
- * module the first time it is actually required, so the text is built when a
- * screen asks for a verse and not before. Do not lift it to the top of the
- * file — that is exactly the change that made launching slow.
+ * The verses come from one data file per surah (services/quranText), read on
+ * first use. They used to be JavaScript: 20 MB of the app's code, which every
+ * over-the-air update sent to every phone again.
  */
-let ayahsBySurah: Map<number, Ayah[]> | null = null;
-
-function surahAyahsCache(): Map<number, Ayah[]> {
-  if (ayahsBySurah) return ayahsBySurah;
-
-  const cache = new Map<number, Ayah[]>();
-  const { QURAN_BY_JUZ } = require('../data/arabic/quran/surahs/allSurahs');
-
-  for (let juz = 1; juz <= 30; juz++) {
-    const juzData = QURAN_BY_JUZ[juz];
-    if (!juzData) continue;
-
-    for (const [, ayahs] of Object.entries(juzData) as [string, Ayah[]][]) {
-      if (ayahs.length > 0) {
-        const firstAyah = ayahs[0];
-        const surahNum = SURAH_ID_TO_NUMBER[firstAyah.surahId];
-        if (surahNum && !cache.has(surahNum)) {
-          cache.set(surahNum, ayahs);
-        }
-      }
-    }
-  }
-
-  ayahsBySurah = cache;
-  return cache;
-}
 
 /**
  * Get surah number from surah ID string
@@ -120,33 +36,29 @@ export function getSurahMetadataById(surahId: string): Surah | null {
 }
 
 /**
- * Get ayahs for a surah - instant O(1) lookup from pre-built cache
+ * The verses if this surah has already been read from its data file, else an
+ * empty list (and the read starts). Screens use useQuranSurah, which waits;
+ * this is for callers that can do without until it is there.
  */
 export function getSurahAyahsSync(surahNumber: number): Ayah[] {
-  return surahAyahsCache().get(surahNumber) || [];
+  const ayahs = cachedSurah(surahNumber);
+  if (!ayahs) loadSurah(surahNumber).catch(() => {});
+  return ayahs ?? [];
 }
 
-/**
- * Get ayahs by surah ID - instant lookup
- */
 export function getSurahAyahsByIdSync(surahId: string): Ayah[] {
   const surahNumber = getSurahNumber(surahId);
-  if (!surahNumber) return [];
-  return surahAyahsCache().get(surahNumber) || [];
+  return surahNumber ? getSurahAyahsSync(surahNumber) : [];
 }
 
-/**
- * Async wrapper for backward compatibility
- */
-export async function fetchSurahAyahs(surahNumber: number): Promise<Ayah[]> {
-  return getSurahAyahsSync(surahNumber);
+/** The verses of a surah, read from its data file if not yet in memory. */
+export function fetchSurahAyahs(surahNumber: number): Promise<Ayah[]> {
+  return loadSurah(surahNumber);
 }
 
-/**
- * Async wrapper for backward compatibility
- */
 export async function fetchSurahAyahsById(surahId: string): Promise<Ayah[]> {
-  return getSurahAyahsByIdSync(surahId);
+  const surahNumber = getSurahNumber(surahId);
+  return surahNumber ? loadSurah(surahNumber) : [];
 }
 
 /**

@@ -5,7 +5,7 @@
  */
 import { getProphetsWithStories, getProphetStory } from '../src/data/arabic/prophets';
 import { getQuranStories } from '../src/data/arabic/quranStories';
-import { getSurahAyahsSync } from '../src/services/staticQuranService';
+import { surahsFromSource } from '../scripts/quran/exportSurahFiles';
 import { splitQuranRuns, hasHadithRun } from '../src/services/narrationText';
 
 type Block = {
@@ -81,11 +81,12 @@ describe('story data', () => {
   });
 
   it('quotes the Quran exactly as the bundled mushaf has it', () => {
+    const mushaf = surahsFromSource();
     let passages = 0;
     for (const s of all) for (const b of s.blocks) {
       if (b.type !== 'quran_source' || b.source?.type !== 'quran') continue;
       const { surahNumber, ayahStart, ayahEnd, arabicText } = b.source;
-      const ayahs = getSurahAyahsSync(surahNumber);
+      const ayahs = mushaf.get(surahNumber) ?? [];
       const ref = ayahs.filter((a) => a.ayahNumber >= ayahStart && a.ayahNumber <= ayahEnd).map((a) => a.textUthmani).join(' ');
       if (!ref) continue; // a surah not bundled statically
       passages++;

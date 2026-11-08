@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect, useRef } from 'react';
 import { getSurahById } from '../../../../src/data/arabic/quran';
 import { useQuranSurah } from '../../../../src/hooks/useQuranData';
-import { getSurahAyahsSync } from '../../../../src/services/staticQuranService';
+import { fetchSurahAyahs } from '../../../../src/services/staticQuranService';
 import { onWifi } from '../../../../src/lib/offlineRoom';
 import { useQuranStore } from '../../../../src/stores/quranStore';
 import { TajweedText } from '../../../../src/components/quran/TajweedText';
@@ -261,8 +261,11 @@ export default function LearnModeScreen() {
     const next = getSurahById(runNextId);
     if (!next) return;
     if (learningVoiceRef.current) {
-      const nextAyahs = getSurahAyahsSync(next.surahNumber);
-      quranAudioService.prefetchSpokenSurah(next.surahNumber, next.ayahCount, (n) => nextAyahs[n - 1]?.textUthmani);
+      fetchSurahAyahs(next.surahNumber)
+        .then((nextAyahs) =>
+          quranAudioService.prefetchSpokenSurah(next.surahNumber, next.ayahCount, (n) => nextAyahs[n - 1]?.textUthmani)
+        )
+        .catch(() => {});
     } else {
       onWifi().then((wifi) => wifi && quranAudioService.prefetchSurah(next.surahNumber, next.ayahCount));
     }

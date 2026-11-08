@@ -1,12 +1,12 @@
-// Hook for fetching Quran data from static files
-// Uses bundled verified Quran text for offline-first experience
-// Data loads synchronously - no loading state needed
+// Hook for the Quran's data: surah details (in code) and verses (data files
+// that ship with the app, read on first use - offline from the start).
 
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { cachedSurah, loadSurah } from '../services/quranText';
+import { quietly } from '../lib/report';
 import { Ayah, Surah } from '../types/quran';
 import {
   getSurahNumber,
-  getSurahAyahsSync,
   getSurahMetadata,
   getSurahList,
 } from '../services/staticQuranService';
@@ -23,37 +23,55 @@ interface UseQuranDataReturn {
 }
 
 /**
- * Hook to get surah data from static files
- * Data loads synchronously - no loading spinner needed
+ * A surah's details and verses. The verses are read from the surah's data
+ * file the first time (services/quranText): instant for most surahs, a
+ * moment for the longest, shown by isLoading. After that they are in memory.
  * @param surahIdOrNumber - Either surah ID string ('al-ikhlas') or surah number (112)
  */
 export function useQuranSurah(surahIdOrNumber: string | number): UseQuranDataReturn {
-  // Convert to number if string
   const surahNumber = typeof surahIdOrNumber === 'string'
     ? getSurahNumber(surahIdOrNumber)
     : surahIdOrNumber;
 
-  // Get data synchronously - memoized to avoid recalculation on re-renders
   const surah = useMemo(() =>
     surahNumber ? getSurahMetadata(surahNumber) : null,
     [surahNumber]
   );
 
-  const ayahs = useMemo(() =>
-    surahNumber ? getSurahAyahsSync(surahNumber) : [],
-    [surahNumber]
-  );
+  const [state, setState] = useState<{ n: number | null; ayahs: Ayah[]; failed: boolean }>(() => ({
+    n: surahNumber,
+    ayahs: (surahNumber && cachedSurah(surahNumber)) || [],
+    failed: false,
+  }));
+  const [attempt, setAttempt] = useState(0);
 
-  const error = useMemo(() =>
-    !surahNumber ? 'Invalid surah ID' : null,
-    [surahNumber]
-  );
+  useEffect(() => {
+    if (!surahNumber) return;
+    const ready = cachedSurah(surahNumber);
+    if (ready) {
+      setState({ n: surahNumber, ayahs: ready, failed: false });
+      return;
+    }
+    let live = true;
+    setState({ n: surahNumber, ayahs: [], failed: false });
+    loadSurah(surahNumber)
+      .then((ayahs) => live && setState({ n: surahNumber, ayahs, failed: false }))
+      .catch((e) => {
+        quietly(e, 'hooks/useQuranSurah');
+        if (live) setState({ n: surahNumber, ayahs: [], failed: true });
+      });
+    return () => {
+      live = false;
+    };
+  }, [surahNumber, attempt]);
 
-  // No loading state needed - data is synchronous
-  const isLoading = false;
-
-  // Refetch is a no-op since data is static
-  const refetch = () => {};
+  // A different surah than the one in state is still loading: never show the
+  // previous surah's verses under the new one's title.
+  const current = state.n === surahNumber;
+  const ayahs = current ? state.ayahs : (surahNumber && cachedSurah(surahNumber)) || [];
+  const isLoading = !!surahNumber && ayahs.length === 0 && !(current && state.failed);
+  const error = !surahNumber ? 'Invalid surah ID' : current && state.failed ? 'Could not read this surah' : null;
+  const refetch = useCallback(() => setAttempt((a) => a + 1), []);
 
   return { surah, ayahs, isLoading, error, refetch };
 }

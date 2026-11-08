@@ -4,6 +4,11 @@ const { withNativeWind } = require("nativewind/metro");
 
 const config = getDefaultConfig(__dirname);
 
+// The Quran's verses ship as data files (assets/quran/*.qjson, written by
+// scripts/quran/exportSurahFiles.ts), not as JavaScript: an update re-sends
+// the JavaScript to every phone, an unchanged asset is never sent again.
+config.resolver.assetExts.push("qjson");
+
 /**
  * Web only: resolve `zustand` to its CommonJS build.
  *
