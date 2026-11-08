@@ -51,7 +51,7 @@ import {
   voiceFor,
   plainSpoken,
 } from '../../src/services/speech/voicePlan';
-import { getProphetsWithStories, getProphetStory } from '../../src/data/arabic/prophets';
+import { getProphetsWithStorySource as getProphetsWithStories, getProphetStorySource as getProphetStory } from '../../src/data/arabic/prophets/source';
 import { getQuranStories } from '../../src/data/arabic/quranStories';
 import { DUAS } from '../../src/data/arabic/duas/duas';
 import en from '../../src/i18n/locales/en';

@@ -6,7 +6,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { sourceLeadHidden, type NarratableBlock } from '../../../src/services/narrationPlan';
-import { getProphetStory, hasProphetStory } from '../../../src/data/arabic/prophets';
+import { getProphetStory, hasProphetStory, loadProphetStory } from '../../../src/data/arabic/prophets';
+import { quietly } from '../../../src/lib/report';
 import { SubStoryNav, StoryContentBlock } from '../../../src/components/prophetStories';
 import { useProphetStoriesStore } from '../../../src/stores/prophetStoriesStore';
 import { SubStory, QuranReference } from '../../../src/types/prophetStories';
@@ -42,9 +43,20 @@ export default function ProphetStoryScreen() {
   const getStoryProgress = useProphetStoriesStore((s) => s.getStoryProgress);
   const isSubStoryCompleted = useProphetStoriesStore((s) => s.isSubStoryCompleted);
 
-  // Get prophet story data
-  // Memoized so the block list keeps one identity for the life of the screen.
-  const storyData = useMemo(() => (prophetId ? getProphetStory(prophetId) : undefined), [prophetId]);
+  // The story, read from its data file the first time it is opened (a
+  // moment for the longest); the spinner below shows until it is there.
+  // Kept in state, so the block list keeps one identity for the life of the screen.
+  const [storyData, setStoryData] = useState(() => (prophetId ? getProphetStory(prophetId) : undefined));
+  useEffect(() => {
+    if (!prophetId) return;
+    let live = true;
+    loadProphetStory(prophetId)
+      .then((story) => live && setStoryData(story))
+      .catch((e) => quietly(e, 'prophets.loadStory'));
+    return () => {
+      live = false;
+    };
+  }, [prophetId]);
   const hasFullStory = prophetId ? hasProphetStory(prophetId) : false;
   const prophet = storyData?.prophet;
   const subStories = storyData?.subStories ?? NO_SUBSTORIES;

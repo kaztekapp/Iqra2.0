@@ -1,6 +1,4 @@
-import { Platform } from 'react-native';
-import { Asset } from 'expo-asset';
-import * as LegacyFileSystem from 'expo-file-system/legacy';
+import { readDataFile } from '../lib/dataFile';
 import type { Ayah } from '../types/quran';
 import { SURAH_FILES } from '../../assets/quran';
 
@@ -21,14 +19,6 @@ export function cachedSurah(surahNumber: number): Ayah[] | null {
   return loaded.get(surahNumber) ?? null;
 }
 
-async function readText(module: number): Promise<string> {
-  const asset = Asset.fromModule(module);
-  if (Platform.OS === 'web') return (await fetch(asset.uri)).text();
-  // Copies the file out of the app package on Android; a no-op once done.
-  if (!asset.localUri) await asset.downloadAsync();
-  return LegacyFileSystem.readAsStringAsync(asset.localUri ?? asset.uri);
-}
-
 /** Read a surah's verses (once; later calls share the first read). */
 export function loadSurah(surahNumber: number): Promise<Ayah[]> {
   const done = loaded.get(surahNumber);
@@ -37,9 +27,8 @@ export function loadSurah(surahNumber: number): Promise<Ayah[]> {
   if (running) return running;
   const module = SURAH_FILES[surahNumber];
   if (module === undefined) return Promise.resolve([]);
-  const work = readText(module)
-    .then((text) => {
-      const ayahs = JSON.parse(text) as Ayah[];
+  const work = readDataFile<Ayah[]>(module)
+    .then((ayahs) => {
       loaded.set(surahNumber, ayahs);
       return ayahs;
     })

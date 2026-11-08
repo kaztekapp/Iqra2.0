@@ -3,7 +3,7 @@
  * by eye across 44 files: block numbering, the shape every hadith card must
  * have after 7730ee3, and that every quoted ayah is the mushaf's own text.
  */
-import { getProphetsWithStories, getProphetStory } from '../src/data/arabic/prophets';
+import { getProphetsWithStorySource as getProphetsWithStories, getProphetStorySource as getProphetStory } from '../src/data/arabic/prophets/source';
 import { getQuranStories } from '../src/data/arabic/quranStories';
 import { surahsFromSource } from '../scripts/quran/exportSurahFiles';
 import { splitQuranRuns, hasHadithRun } from '../src/services/narrationText';
