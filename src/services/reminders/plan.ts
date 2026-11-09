@@ -20,18 +20,35 @@ export interface ReminderSettings {
   /** Daily study time, local. */
   hour: number;
   minute: number;
+  /** Days the study reminder comes: 0 = Sunday … 6 = Saturday (Date#getDay). */
+  days: number[];
   streakGuard: boolean;
+  streakHour: number;
+  streakMinute: number;
   reviews: boolean;
+  reviewHour: number;
+  reviewMinute: number;
   fridayKahf: boolean;
+  kahfHour: number;
+  kahfMinute: number;
 }
+
+export const EVERY_DAY = [0, 1, 2, 3, 4, 5, 6];
 
 export const DEFAULT_REMINDER_SETTINGS: ReminderSettings = {
   enabled: true,
   hour: 20,
   minute: 0,
+  days: EVERY_DAY,
   streakGuard: true,
+  streakHour: 21,
+  streakMinute: 0,
   reviews: true,
+  reviewHour: 9,
+  reviewMinute: 0,
   fridayKahf: true,
+  kahfHour: 9,
+  kahfMinute: 0,
 };
 
 /** Where the learner stopped last, and the screen that continues it. */
@@ -68,12 +85,9 @@ export interface PlannedReminder {
 /** i18n lookup, injected so the planner stays testable without i18next. */
 export type Translate = (key: string, params?: Record<string, string | number>) => string;
 
-const STREAK_HOUR = 21;
-const REVIEW_HOUR = 9;
-const KAHF_HOUR = 9;
 const FRIDAY = 6; // expo-notifications weekday: 1 = Sunday … 7 = Saturday
-/** Days ahead the "continue" reminder is placed; re-planned on every launch anyway. */
-const RESUME_DAYS = 3;
+/** How many "continue" reminders are placed ahead; re-planned on every launch anyway. */
+const RESUME_COUNT = 3;
 /** Two reminders closer than this are one too many; the study one wins. */
 const CROWD_MS = 60 * 60 * 1000;
 
@@ -112,12 +126,16 @@ export function planReminders(input: ReminderInputs, t: Translate): PlannedRemin
   const out: PlannedReminder[] = [];
   const studyToday = at(now, settings.hour, settings.minute);
 
-  // Continue where you left off — at the study time, today (unless already
-  // studied) and the next couple of days.
-  for (let d = 0; d < RESUME_DAYS; d++) {
-    if (d === 0 && studiedToday) continue;
+  // Continue where you left off — at the study time, on the next study days
+  // the learner chose (today too, unless already studied).
+  const days = settings.days?.length ? settings.days : EVERY_DAY;
+  // The next RESUME_COUNT study days, today included even when it is skipped.
+  let studyDays = 0;
+  for (let d = 0; d < 15 && studyDays < RESUME_COUNT; d++) {
     const when = plusDays(studyToday, d);
-    if (when <= now) continue;
+    if (!days.includes(when.getDay())) continue;
+    studyDays++;
+    if ((d === 0 && studiedToday) || when <= now) continue;
     out.push({
       kind: 'resume',
       trigger: { type: 'date', at: when },
@@ -131,11 +149,12 @@ export function planReminders(input: ReminderInputs, t: Translate): PlannedRemin
   // study reminder already lands within the hour (a 20:00 study time keeps
   // it: one nudge, then a last call an hour later).
   if (settings.streakGuard && currentStreak >= 1) {
-    const crowded = Math.abs(at(now, STREAK_HOUR, 0).getTime() - studyToday.getTime()) < CROWD_MS;
+    const streakToday = at(now, settings.streakHour, settings.streakMinute);
+    const crowded = days.includes(now.getDay()) && Math.abs(streakToday.getTime() - studyToday.getTime()) < CROWD_MS;
     if (!crowded) {
       for (let d = 0; d < 2; d++) {
         if (d === 0 && studiedToday) continue;
-        const when = plusDays(at(now, STREAK_HOUR, 0), d);
+        const when = plusDays(streakToday, d);
         if (when <= now) continue;
         out.push({
           kind: 'streak',
@@ -148,11 +167,15 @@ export function planReminders(input: ReminderInputs, t: Translate): PlannedRemin
     }
   }
 
-  // Reviews — a morning nudge when something is due, only when the study
-  // time is in the afternoon or evening (a morning study reminder already
-  // names what is due).
-  if (settings.reviews && (due.verses > 0 || due.words > 0) && settings.hour >= 12) {
-    const when = plusDays(at(now, REVIEW_HOUR, 0), 1);
+  // Reviews — a note at the chosen time tomorrow when something is due.
+  // Skipped when tomorrow's study reminder comes first or within the hour
+  // after it: that reminder already names what is due.
+  const reviewTomorrow = plusDays(at(now, settings.reviewHour, settings.reviewMinute), 1);
+  const studyTomorrow = plusDays(studyToday, 1);
+  const reviewCrowded =
+    days.includes(studyTomorrow.getDay()) && studyTomorrow.getTime() <= reviewTomorrow.getTime() + CROWD_MS;
+  if (settings.reviews && (due.verses > 0 || due.words > 0) && !reviewCrowded) {
+    const when = reviewTomorrow;
     out.push({
       kind: 'review',
       trigger: { type: 'date', at: when },
@@ -166,7 +189,7 @@ export function planReminders(input: ReminderInputs, t: Translate): PlannedRemin
   if (settings.fridayKahf) {
     out.push({
       kind: 'kahf',
-      trigger: { type: 'weekly', weekday: FRIDAY, hour: KAHF_HOUR, minute: 0 },
+      trigger: { type: 'weekly', weekday: FRIDAY, hour: settings.kahfHour, minute: settings.kahfMinute },
       title: t('reminders.kahf.title'),
       body: t('reminders.kahf.body'),
       route: '/quran/surah/al-kahf',

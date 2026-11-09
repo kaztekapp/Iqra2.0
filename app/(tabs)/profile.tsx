@@ -22,7 +22,11 @@ import { Txt, Arabic, IlluminatedRule, MastheadWash, withAlpha } from '../../src
 import { color, space, gutter, font, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import { errorMessage } from '../../src/lib/report';
-import { RemindersCard } from '../../src/components/RemindersCard';
+import Constants from 'expo-constants';
+import { useQuranStore } from '../../src/stores/quranStore';
+import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
+import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
+import { clockLabel } from '../../src/components/TimePickerSheet';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -32,7 +36,6 @@ export default function ProfileScreen() {
   const isAuthenticated = useSettingsStore((s) => s.isAuthenticated);
 
   const progress = useProgressStore((s) => s.progress);
-  const getAccuracy = useProgressStore((s) => s.getAccuracy);
   const resetProgress = useProgressStore((s) => s.resetProgress);
   const unlockedAchievements = useProgressStore((s) => s.unlockedAchievements);
   const newAchievement = useProgressStore((s) => s.newAchievement);
@@ -41,6 +44,23 @@ export default function ProfileScreen() {
 
   const unlockedList = getUnlockedAchievements();
   const lockedList = ACHIEVEMENTS.filter((a) => !unlockedAchievements.includes(a.id));
+
+  // What the reader has done in the Quran, for the stats under their name.
+  const surahsMemorized = useQuranStore(
+    (s) => Object.values(s.progress.surahProgress).filter((p) => p?.status === 'completed').length
+  );
+  const storiesFinished =
+    useProphetStoriesStore((s) => s.getTotalStoriesCompleted()) + useQuranStoriesStore((s) => s.getTotalStoriesCompleted());
+
+  // The Reminders row says when they come, in a few words.
+  const reminders = useSettingsStore((s) => s.reminders);
+  const reminderDays = reminders.days?.length ?? 7;
+  const reminderTime = clockLabel(reminders.hour, reminders.minute, language);
+  const reminderSummary = !reminders.enabled
+    ? t('reminders.summaryOff')
+    : reminderDays === 7
+      ? t('reminders.summaryOn', { time: reminderTime })
+      : t('reminders.summaryDays', { time: reminderTime, count: reminderDays });
 
   // ── Gamification data ──────────────────────────────────────────
   const [refreshing, setRefreshing] = useState(false);
@@ -274,6 +294,9 @@ export default function ProfileScreen() {
     return Math.min(Math.round((current / value) * 100), 100);
   };
 
+  const shownName = displayName || user?.email?.split('@')[0] || t('profile.learner');
+  const initial = (shownName.trim()[0] ?? '?').toUpperCase();
+
   const categoryColors: Record<string, string> = {
     learning: color.accentStrong,
     streak: color.warning,
@@ -295,24 +318,21 @@ export default function ProfileScreen() {
           />
         }
       >
-        {/* Masthead. The app icon that sat here was decoration only — the
-            identity a user wants on this screen is their own, in the hero
-            card directly below. */}
+        {/* Masthead: Arabic leads, the English name beneath in sentence case. */}
         <View style={styles.header}>
           <Arabic size="title" align="left">الْمَلَفُّ الشَّخْصِي</Arabic>
-          <Txt variant="caption" tone="faint" style={styles.headerLatin}>
+          <Txt variant="body" tone="muted" style={styles.headerLatin}>
             {t('profile.title')}
           </Txt>
           <IlluminatedRule style={styles.headerRule} />
         </View>
 
-        {/* Profile hero: identity + XP + stats */}
+        {/* Who you are, and how far you have come */}
         <View style={styles.heroCard}>
           <View style={styles.heroTopRow}>
-            <View style={styles.avatarRing}>
-              <View style={styles.avatarInner}>
-                <Ionicons name="person" size={32} color={color.accent} />
-              </View>
+            {/* A monogram in gold: the reader's own initial, not a stock figure. */}
+            <View style={styles.monogram} accessibilityElementsHidden importantForAccessibility="no">
+              <Text style={styles.monogramText} allowFontScaling={false}>{initial}</Text>
             </View>
             <View style={styles.heroInfo}>
               {isEditingName ? (
@@ -348,7 +368,7 @@ export default function ProfileScreen() {
                 <>
                   <View style={styles.nameRow}>
                     <Text style={styles.profileName} numberOfLines={1}>
-                      {displayName || user?.email?.split('@')[0] || t('profile.learner') || 'Learner'}
+                      {shownName}
                     </Text>
                     <Pressable onPress={handleEditName} style={styles.editNameBtn} accessibilityRole="button" accessibilityLabel={t('profile.editName') || 'Edit name'}>
                       <Ionicons name="pencil" size={15} color={color.textFaint} />
@@ -367,26 +387,10 @@ export default function ProfileScreen() {
           </View>
 
           <View style={styles.statsGrid}>
-            <View style={styles.statTile}>
-              <Ionicons name="flame" size={20} color={color.warning} />
-              <Text style={styles.statValue}>{progress.currentStreak}</Text>
-              <Text style={styles.statLabel}>{t('profile.dayStreak')}</Text>
-            </View>
-            <View style={styles.statTile}>
-              <Ionicons name="trophy" size={20} color={color.sacred} />
-              <Text style={styles.statValue}>{progress.longestStreak}</Text>
-              <Text style={styles.statLabel}>{t('profile.bestStreak')}</Text>
-            </View>
-            <View style={styles.statTile}>
-              <Ionicons name="checkmark-circle" size={20} color={color.progress} />
-              <Text style={styles.statValue}>{progress.exerciseResults.totalCompleted}</Text>
-              <Text style={styles.statLabel}>{t('profile.exercises')}</Text>
-            </View>
-            <View style={styles.statTile}>
-              <Ionicons name="analytics" size={20} color={color.accentStrong} />
-              <Text style={styles.statValue}>{getAccuracy()}%</Text>
-              <Text style={styles.statLabel}>{t('profile.accuracy')}</Text>
-            </View>
+            <Stat icon="flame" tint={color.warning} value={progress.currentStreak} label={t('profile.dayStreak')} />
+            <Stat icon="trophy" tint={color.sacred} value={progress.longestStreak} label={t('profile.bestStreak')} />
+            <Stat icon="book" tint={color.accent} value={surahsMemorized} label={t('profile.surahsMemorized')} />
+            <Stat icon="library" tint={color.accentStrong} value={storiesFinished} label={t('profile.storiesFinished')} />
           </View>
         </View>
 
@@ -417,7 +421,7 @@ export default function ProfileScreen() {
         )}
 
 
-        {/* Achievements */}
+        {/* Achievements: earned first, then the next ones with how close they are */}
         <View style={styles.section}>
           <View style={styles.achievementHeader}>
             <Text style={styles.sectionTitle}>{t('profile.achievements')}</Text>
@@ -428,221 +432,93 @@ export default function ProfileScreen() {
               </Text>
             </View>
           </View>
-
-          {/* Unlocked Achievements */}
-          {unlockedList.length > 0 && (
-            <View style={styles.achievementsContainer}>
-              <Text style={styles.achievementSubtitle}>{t('profile.unlocked')}</Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={styles.achievementScroll}
-              >
-                {unlockedList.map((achievement) => (
-                  <View
-                    key={achievement.id}
-                    style={[
-                      styles.achievementCard,
-                      { borderColor: categoryColors[achievement.category] + '60' }
-                    ]}
-                  >
-                    <View style={[
-                      styles.achievementIcon,
-                      { backgroundColor: categoryColors[achievement.category] + '20' }
-                    ]}>
-                      <Ionicons
-                        name={achievement.icon as IoniconName}
-                        size={24}
-                        color={categoryColors[achievement.category]}
-                      />
-                    </View>
-                    <Text style={styles.achievementTitle}>{achievement.title}</Text>
-                    <Text style={styles.achievementTitleArabic}>{achievement.titleArabic}</Text>
-                    <View style={styles.achievementXp}>
-                      <Ionicons name="star" size={12} color={color.warning} />
-                      <Text style={styles.achievementXpText}>+{achievement.xpReward} XP</Text>
-                    </View>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-          )}
-
-          {/* Locked Achievements (show next 4) */}
-          {lockedList.length > 0 && (
-            <View style={styles.achievementsContainer}>
-              <Text style={styles.achievementSubtitle}>{t('profile.nextUp')}</Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={styles.achievementScroll}
-              >
-                {lockedList.slice(0, 6).map((achievement) => {
-                  const progressPercent = getAchievementProgress(achievement);
-                  return (
-                    <View
-                      key={achievement.id}
-                      style={[styles.achievementCard, styles.achievementCardLocked]}
-                    >
-                      <View style={[styles.achievementIcon, styles.achievementIconLocked]}>
-                        <Ionicons
-                          name={achievement.icon as IoniconName}
-                          size={24}
-                          color={color.textFaint}
-                        />
-                      </View>
-                      <Text style={[styles.achievementTitle, styles.achievementTitleLocked]}>
-                        {achievement.title}
-                      </Text>
-                      <Text style={styles.achievementDesc} numberOfLines={2}>
-                        {achievement.description}
-                      </Text>
-                      <View style={styles.achievementProgressBar}>
-                        <View
-                          style={[
-                            styles.achievementProgressFill,
-                            { width: `${progressPercent}%` }
-                          ]}
-                        />
-                      </View>
-                      <Text style={styles.achievementProgressText}>{progressPercent}%</Text>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-            </View>
-          )}
-        </View>
-
-        {/* Settings */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
-          <View style={styles.settingsCard}>
-            {/* Language Selector */}
-            <View style={styles.settingItem}>
-              <View style={styles.settingLeft}>
-                <Ionicons name="language-outline" size={22} color={color.textMuted} />
-                <View style={styles.settingText}>
-                  <Text style={styles.settingTitle}>{t('profile.language')}</Text>
-                  <Text style={styles.settingDesc}>{t('profile.languageDesc')}</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.achievementScroll} contentContainerStyle={styles.achievementStrip}>
+            {unlockedList.map((achievement) => (
+              <View key={achievement.id} style={[styles.achievementCard, { borderColor: withAlpha(categoryColors[achievement.category], 0.35) }]}>
+                <View style={[styles.achievementIcon, { backgroundColor: withAlpha(categoryColors[achievement.category], 0.12) }]}>
+                  <Ionicons name={achievement.icon as IoniconName} size={22} color={categoryColors[achievement.category]} />
+                </View>
+                <Text style={styles.achievementTitle} numberOfLines={2}>{achievement.title}</Text>
+                <Text style={styles.achievementTitleArabic} numberOfLines={1}>{achievement.titleArabic}</Text>
+                <View style={styles.achievementXp}>
+                  <Ionicons name="star" size={12} color={color.sacred} />
+                  <Text style={styles.achievementXpText}>+{achievement.xpReward} XP</Text>
                 </View>
               </View>
-            </View>
-            <View style={styles.languageOptions}>
-              <Pressable
-                style={[styles.languageOption, language === 'en' && styles.languageOptionActive]}
-                onPress={() => handleLanguageChange('en')}
-                accessibilityRole="button"
-                accessibilityLabel={t('profile.english')}
-                accessibilityState={{ selected: language === 'en' }}
-              >
-                <Text style={[styles.languageOptionText, language === 'en' && styles.languageOptionTextActive]}>
-                  {t('profile.english')}
-                </Text>
-                {language === 'en' && <Ionicons name="checkmark" size={18} color={color.accent} />}
-              </Pressable>
-              <Pressable
-                style={[styles.languageOption, language === 'fr' && styles.languageOptionActive]}
-                onPress={() => handleLanguageChange('fr')}
-                accessibilityRole="button"
-                accessibilityLabel={t('profile.french')}
-                accessibilityState={{ selected: language === 'fr' }}
-              >
-                <Text style={[styles.languageOptionText, language === 'fr' && styles.languageOptionTextActive]}>
-                  {t('profile.french')}
-                </Text>
-                {language === 'fr' && <Ionicons name="checkmark" size={18} color={color.accent} />}
-              </Pressable>
-            </View>
-          </View>
-          <RemindersCard />
+            ))}
+            {lockedList.slice(0, 6).map((achievement) => {
+              const progressPercent = getAchievementProgress(achievement);
+              return (
+                <View key={achievement.id} style={[styles.achievementCard, styles.achievementCardLocked]}>
+                  <View style={[styles.achievementIcon, styles.achievementIconLocked]}>
+                    <Ionicons name={achievement.icon as IoniconName} size={22} color={color.textFaint} />
+                  </View>
+                  <Text style={[styles.achievementTitle, styles.achievementTitleLocked]} numberOfLines={2}>{achievement.title}</Text>
+                  <Text style={styles.achievementDesc} numberOfLines={2}>{achievement.description}</Text>
+                  <View style={styles.achievementProgressBar}>
+                    <View style={[styles.achievementProgressFill, { width: `${progressPercent}%` }]} />
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
 
-        {/* Legal */}
+        {/* Settings: one list */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
+          <View style={styles.group}>
+            <View style={styles.groupRow}>
+              <Ionicons name="language-outline" size={21} color={color.textMuted} />
+              <Text style={styles.groupTitle}>{t('profile.language')}</Text>
+              <View style={styles.segment} accessibilityRole="radiogroup">
+                {(['en', 'fr'] as const).map((lang) => (
+                  <Pressable
+                    key={lang}
+                    onPress={() => handleLanguageChange(lang)}
+                    style={[styles.segmentOption, language === lang && styles.segmentOptionOn]}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: language === lang }}
+                    accessibilityLabel={lang === 'en' ? t('profile.english') : t('profile.french')}
+                  >
+                    <Text style={[styles.segmentText, language === lang && styles.segmentTextOn]}>{lang === 'en' ? 'English' : 'Français'}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+            <View style={styles.groupDivider} />
+            <NavRow
+              icon="notifications-outline"
+              title={t('reminders.title')}
+              detail={reminderSummary}
+              onPress={() => router.push('/reminders' as Href)}
+            />
+            <View style={styles.groupDivider} />
+            <NavRow
+              icon="cloud-offline-outline"
+              title={t('storage.title')}
+              detail={keptBytes > 0 ? t('storage.row', { size: t('storage.mb', { n: Math.round(keptBytes / (1024 * 1024)) }) }) : t('storage.rowEmpty')}
+              onPress={() => router.push('/storage' as Href)}
+            />
+          </View>
+        </View>
+
+        {/* About */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('legal.legal')}</Text>
-          <View style={styles.settingsCard}>
-            <Pressable
-              style={styles.legalRow}
-              onPress={() => router.push('/privacy-policy' as Href)}
-              accessibilityRole="link"
-              accessibilityLabel={t('legal.privacyPolicy')}
-            >
-              <View style={styles.settingLeft}>
-                <Ionicons name="shield-checkmark-outline" size={22} color={color.textMuted} />
-                <Text style={styles.settingTitle}>{t('legal.privacyPolicy')}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
-            </Pressable>
-            <View style={styles.settingDivider} />
-            <Pressable
-              style={styles.legalRow}
-              onPress={() => router.push('/acknowledgements' as Href)}
-              accessibilityRole="link"
-              accessibilityLabel={t('legal.acknowledgements')}
-            >
-              <View style={styles.settingLeft}>
-                <Ionicons name="heart-outline" size={22} color={color.textMuted} />
-                <Text style={styles.settingTitle}>{t('legal.acknowledgements')}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
-            </Pressable>
-            <View style={styles.settingDivider} />
-            <Pressable
-              style={styles.legalRow}
-              onPress={() => router.push('/terms-of-service' as Href)}
-              accessibilityRole="link"
-              accessibilityLabel={t('legal.termsOfService')}
-            >
-              <View style={styles.settingLeft}>
-                <Ionicons name="document-text-outline" size={22} color={color.textMuted} />
-                <Text style={styles.settingTitle}>{t('legal.termsOfService')}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
-            </Pressable>
+          <View style={styles.group}>
+            <NavRow icon="shield-checkmark-outline" title={t('legal.privacyPolicy')} onPress={() => router.push('/privacy-policy' as Href)} />
+            <View style={styles.groupDivider} />
+            <NavRow icon="heart-outline" title={t('legal.acknowledgements')} onPress={() => router.push('/acknowledgements' as Href)} />
+            <View style={styles.groupDivider} />
+            <NavRow icon="document-text-outline" title={t('legal.termsOfService')} onPress={() => router.push('/terms-of-service' as Href)} />
             {COMMUNITY_ENABLED && isAuthenticated && (
               <>
-                <View style={styles.settingDivider} />
-                <Pressable
-                  style={styles.legalRow}
-                  onPress={() => router.push('/community/blocked' as Href)}
-                  accessibilityRole="button"
-                  accessibilityLabel={t('moderation.blockedUsers')}
-                >
-                  <View style={styles.settingLeft}>
-                    <Ionicons name="ban-outline" size={22} color={color.textMuted} />
-                    <Text style={styles.settingTitle}>{t('moderation.blockedUsers')}</Text>
-                  </View>
-                  <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
-                </Pressable>
+                <View style={styles.groupDivider} />
+                <NavRow icon="ban-outline" title={t('moderation.blockedUsers')} onPress={() => router.push('/community/blocked' as Href)} />
               </>
             )}
           </View>
-        </View>
-
-        {/* What is kept for offline listening: its own page */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('storage.title')}</Text>
-          <Pressable
-            style={styles.storageCard}
-            onPress={() => router.push('/storage' as Href)}
-            accessibilityRole="button"
-            accessibilityLabel={t('storage.title')}
-          >
-            <View style={styles.removeAdsHeader}>
-              <View style={styles.removeAdsIcon}>
-                <Ionicons name="cloud-offline-outline" size={24} color={color.accent} />
-              </View>
-              <View style={styles.removeAdsInfo}>
-                <Text style={styles.storageTitle}>
-                  {keptBytes > 0
-                    ? t('storage.row', { size: t('storage.mb', { n: Math.round(keptBytes / (1024 * 1024)) }) })
-                    : t('storage.rowEmpty')}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
-            </View>
-          </Pressable>
         </View>
 
         {/* Remove Ads */}
@@ -708,59 +584,42 @@ export default function ProfileScreen() {
           </View>
         )}
 
-        {/* Log Out */}
-        {isAuthenticated && (
-          <View style={styles.section}>
-            <Pressable style={styles.logOutButton} onPress={handleLogOut} accessibilityRole="button" accessibilityLabel={t('profile.logOut')}>
-              <Ionicons name="log-out-outline" size={20} color={color.warning} />
-              <Text style={styles.logOutButtonText}>{t('profile.logOut')}</Text>
-            </Pressable>
-          </View>
-        )}
-
-        {/* Reset Progress */}
+        {/* Account: quiet rows; only the two that erase things are red */}
         <View style={styles.section}>
-          <Pressable
-            style={styles.resetButton}
-            onPress={() => {
-              Alert.alert(
-                t('profile.resetAllProgress'),
-                t('profile.resetConfirmMessage'),
-                [
+          <Text style={styles.sectionTitle}>{t('profile.account')}</Text>
+          <View style={styles.group}>
+            {isAuthenticated && (
+              <>
+                <ActionRow icon="log-out-outline" title={t('profile.logOut')} onPress={handleLogOut} />
+                <View style={styles.groupDivider} />
+              </>
+            )}
+            <ActionRow
+              icon="refresh"
+              title={t('profile.resetAllProgress')}
+              danger
+              onPress={() => {
+                Alert.alert(t('profile.resetAllProgress'), t('profile.resetConfirmMessage'), [
                   { text: t('common.cancel'), style: 'cancel' },
                   { text: t('profile.resetAllProgress'), style: 'destructive', onPress: () => { resetProgress(); markProgressReset(); } },
-                ]
-              );
-            }}
-            accessibilityRole="button"
-            accessibilityLabel={t('profile.resetAllProgress')}
-          >
-            <Ionicons name="refresh" size={20} color={color.danger} />
-            <Text style={styles.resetButtonText}>{t('profile.resetAllProgress')}</Text>
-          </Pressable>
-        </View>
-
-        {/* Delete Profile */}
-        {isAuthenticated && (
-          <View style={styles.section}>
-            <Pressable
-              style={styles.deleteAccountButton}
-              onPress={handleDeleteAccount}
-              disabled={isDeletingAccount}
-              accessibilityRole="button"
-              accessibilityLabel="Delete Profile"
-            >
-              {isDeletingAccount ? (
-                <ActivityIndicator size="small" color={color.danger} />
-              ) : (
-                <>
-                  <Ionicons name="trash-outline" size={20} color={color.danger} />
-                  <Text style={styles.deleteAccountButtonText}>{t('profile.deleteProfile')}</Text>
-                </>
-              )}
-            </Pressable>
+                ]);
+              }}
+            />
+            {isAuthenticated && (
+              <>
+                <View style={styles.groupDivider} />
+                <ActionRow
+                  icon="trash-outline"
+                  title={t('profile.deleteProfile')}
+                  danger
+                  busy={isDeletingAccount}
+                  onPress={handleDeleteAccount}
+                />
+              </>
+            )}
           </View>
-        )}
+          <Text style={styles.version}>Mudarris {Constants.expoConfig?.version ?? ''}</Text>
+        </View>
 
         <View style={{ height: 100 }} />
       </ScrollView>
@@ -808,6 +667,41 @@ export default function ProfileScreen() {
   );
 }
 
+function Stat({ icon, tint, value, label }: { icon: IoniconName; tint: string; value: number; label: string }) {
+  return (
+    <View style={styles.statTile} accessible accessibilityLabel={`${value} ${label}`}>
+      <Ionicons name={icon} size={19} color={tint} />
+      <Text style={styles.statValue}>{value}</Text>
+      <Text style={styles.statLabel} numberOfLines={2}>{label}</Text>
+    </View>
+  );
+}
+
+/** A row that opens another screen: icon, title, an optional detail, chevron. */
+function NavRow({ icon, title, detail, onPress }: { icon: IoniconName; title: string; detail?: string; onPress: () => void }) {
+  return (
+    <Pressable onPress={onPress} style={styles.groupRow} accessibilityRole="button" accessibilityLabel={detail ? `${title}, ${detail}` : title}>
+      <Ionicons name={icon} size={21} color={color.textMuted} />
+      <View style={styles.groupText}>
+        <Text style={styles.groupTitle}>{title}</Text>
+        {detail ? <Text style={styles.groupDetail} numberOfLines={1}>{detail}</Text> : null}
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={color.textFaint} />
+    </Pressable>
+  );
+}
+
+/** An account action: quiet, red only when it erases something. */
+function ActionRow({ icon, title, onPress, danger, busy }: { icon: IoniconName; title: string; onPress: () => void; danger?: boolean; busy?: boolean }) {
+  const tint = danger ? color.danger : color.text;
+  return (
+    <Pressable onPress={onPress} disabled={busy} style={styles.groupRow} accessibilityRole="button" accessibilityLabel={title}>
+      {busy ? <ActivityIndicator size="small" color={tint} /> : <Ionicons name={icon} size={21} color={danger ? color.danger : color.textMuted} />}
+      <Text style={[styles.groupTitle, { color: tint }]}>{title}</Text>
+    </Pressable>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -820,11 +714,89 @@ const styles = StyleSheet.create({
   },
   headerLatin: {
     marginTop: 2,
-    textTransform: 'uppercase',
-    letterSpacing: 1.6,
   },
   headerRule: {
     marginTop: space.xl,
+  },
+  monogram: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.sacredSoft,
+    borderWidth: 1.5,
+    borderColor: withAlpha(color.sacred, 0.45),
+  },
+  monogramText: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: color.sacred,
+  },
+  achievementStrip: {
+    paddingRight: 20,
+    gap: 12,
+  },
+  group: {
+    backgroundColor: color.surface,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: color.border,
+    paddingHorizontal: 16,
+  },
+  groupRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    minHeight: 56,
+    paddingVertical: 12,
+  },
+  groupText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  groupTitle: {
+    flex: 1,
+    fontSize: 16,
+    color: color.text,
+  },
+  groupDetail: {
+    fontSize: 13,
+    color: color.textMuted,
+    marginTop: 2,
+  },
+  groupDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: color.border,
+    marginLeft: 35,
+  },
+  segment: {
+    flexDirection: 'row',
+    backgroundColor: color.surfaceSunken,
+    borderRadius: radius.full,
+    padding: 3,
+  },
+  segmentOption: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: radius.full,
+  },
+  segmentOptionOn: {
+    backgroundColor: color.surface,
+  },
+  segmentText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: color.textMuted,
+  },
+  segmentTextOn: {
+    color: color.accentStrong,
+  },
+  version: {
+    fontSize: 12,
+    color: color.textFaint,
+    textAlign: 'center',
+    marginTop: 16,
   },
   heroCard: {
     backgroundColor: color.surface,
@@ -839,24 +811,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 14,
-  },
-  avatarRing: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'rgba(129, 140, 248, 0.5)',
-    backgroundColor: 'rgba(129, 140, 248, 0.06)',
-  },
-  avatarInner: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(129, 140, 248, 0.14)',
   },
   heroInfo: {
     flex: 1,
@@ -940,6 +894,7 @@ const styles = StyleSheet.create({
   statLabel: {
     fontSize: 11,
     color: color.textFaint,
+    textAlign: 'center',
   },
   challengeCard: {
     flexDirection: 'row',
@@ -999,125 +954,6 @@ const styles = StyleSheet.create({
     color: color.text,
     marginBottom: 12,
   },
-  settingsCard: {
-    backgroundColor: color.surface,
-    borderRadius: radius.lg,
-    padding: 16,
-  },
-  settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  settingLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  settingText: {
-    flex: 1,
-    marginLeft: 12,
-    marginRight: 12,
-  },
-  settingTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: color.text,
-  },
-  settingDesc: {
-    fontSize: 12,
-    color: color.textMuted,
-    marginTop: 2,
-  },
-  settingDivider: {
-    height: 1,
-    backgroundColor: color.border,
-    marginVertical: 14,
-  },
-  languageOptions: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 12,
-    paddingLeft: 34,
-  },
-  languageOption: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    borderRadius: radius.sm,
-    backgroundColor: color.surfaceSunken,
-    gap: 6,
-  },
-  languageOptionActive: {
-    backgroundColor: withAlpha(color.accent, 0.13),
-    borderWidth: 1,
-    borderColor: withAlpha(color.accent, 0.25),
-  },
-  languageOptionText: {
-    color: color.textMuted,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  languageOptionTextActive: {
-    color: color.accent,
-    fontWeight: '600',
-  },
-  legalRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 4,
-  },
-  logOutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.surface,
-    borderRadius: radius.md,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: withAlpha(color.warning, 0.25),
-    gap: 8,
-  },
-  logOutButtonText: {
-    color: color.warning,
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  deleteAccountButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.surface,
-    borderRadius: radius.md,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: withAlpha(color.danger, 0.25),
-    gap: 8,
-  },
-  deleteAccountButtonText: {
-    color: color.danger,
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  resetButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.surface,
-    borderRadius: radius.md,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: withAlpha(color.danger, 0.25),
-  },
-  resetButtonText: {
-    color: color.danger,
-    fontSize: 15,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
   // Achievement styles
   achievementHeader: {
     flexDirection: 'row',
@@ -1138,14 +974,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginLeft: 4,
-  },
-  achievementsContainer: {
-    marginBottom: 16,
-  },
-  achievementSubtitle: {
-    color: color.textMuted,
-    fontSize: 13,
-    marginBottom: 8,
   },
   achievementScroll: {
     marginHorizontal: -20,
@@ -1222,11 +1050,6 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: color.accentStrong,
     borderRadius: 2,
-  },
-  achievementProgressText: {
-    color: color.textFaint,
-    fontSize: 10,
-    marginTop: 4,
   },
   // Modal styles
   modalOverlay: {
