@@ -2,6 +2,9 @@
 module.exports = {
   preset: 'jest-expo',
   testMatch: ['**/__tests__/**/*.test.ts', '**/__tests__/**/*.test.tsx'],
+  // Working copies of the release branches (git worktrees) live in .worktrees.
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.worktrees/'],
+  modulePathIgnorePatterns: ['<rootDir>/.worktrees/'],
   // The story data is large; tests that walk it need room.
   workerIdleMemoryLimit: '1GB',
   // Surah data files are assets on device; tests read the source files.

@@ -9,6 +9,10 @@ const config = getDefaultConfig(__dirname);
 // the JavaScript to every phone, an unchanged asset is never sent again.
 config.resolver.assetExts.push("qjson");
 
+// Working copies of the release branches (git worktrees) live in .worktrees;
+// the bundler must never pick up their files.
+config.resolver.blockList = [...[].concat(config.resolver.blockList ?? []), new RegExp(path.join(__dirname, ".worktrees").replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "/.*")];
+
 /**
  * Web only: resolve `zustand` to its CommonJS build.
  *

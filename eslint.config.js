@@ -6,7 +6,7 @@ const unusedImports = require('eslint-plugin-unused-imports');
 module.exports = defineConfig([
   expoConfig,
   {
-    ignores: ['dist/*', 'node_modules/*', '.expo/*', 'supabase/functions/*', 'scripts/*', 'coverage/*', 'jest.config.js', 'eslint.config.js'],
+    ignores: ['dist/*', 'node_modules/*', '.worktrees/*', 'android/*', 'ios/*', '.expo/*', 'supabase/functions/*', 'scripts/*', 'coverage/*', 'jest.config.js', 'eslint.config.js'],
   },
   {
     plugins: { 'unused-imports': unusedImports },
