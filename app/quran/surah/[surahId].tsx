@@ -403,7 +403,11 @@ export default function SurahDetailScreen() {
 
       {/* Surah Info Card */}
       <View style={styles.infoCard}>
-        <Text style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
+        {/* Every surah opens with the Basmala except at-Tawbah, which has
+            none; in al-Fatihah it is verse 1 itself, shown in the list below. */}
+        {surah.surahNumber !== 1 && surah.surahNumber !== 9 && (
+          <Text style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
+        )}
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
             <Ionicons name="list" size={16} color={color.progress} />
