@@ -1343,7 +1343,6 @@ export default {
     pause: 'Pause',
     verseOf: 'Verse {{verse}} of {{total}}',
     repeatOf: 'Time {{current}} of {{total}}',
-    showTajweed: 'Tajweed colours',
     sayPlay_one: 'Plays verse {{verse}}',
     sayPlay_other: 'Plays verse {{verse}} {{count}} times',
     sayThenNext: 'then goes on to verse {{verse}}',
