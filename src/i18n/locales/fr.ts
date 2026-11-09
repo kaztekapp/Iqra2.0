@@ -1343,7 +1343,6 @@ export default {
     pause: 'Pause',
     verseOf: 'Verset {{verse}} sur {{total}}',
     repeatOf: 'Fois {{current}} sur {{total}}',
-    showTajweed: 'Couleurs du tajwid',
     sayPlay_one: 'Lit le verset {{verse}}',
     sayPlay_other: 'Lit le verset {{verse}} {{count}} fois',
     sayThenNext: 'puis passe au verset {{verse}}',

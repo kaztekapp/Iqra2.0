@@ -87,7 +87,6 @@ export default function LearnModeScreen() {
   const [switchPressed, setSwitchPressed] = useState(false);
   const { lc } = useLocalizedContent();
   const setLastSurah = useLearnModeStore((s) => s.setLastSurah);
-  const toggleTajweedColors = useQuranStore((s) => s.toggleTajweedColors);
   const completeSurah = useQuranStore((s) => s.completeSurah);
   const uncompleteSurah = useQuranStore((s) => s.uncompleteSurah);
   const surahMemorized = useQuranStore((s) => (surah ? s.progress.surahProgress[surah.id]?.status === 'completed' : false));
@@ -634,22 +633,9 @@ export default function LearnModeScreen() {
             <TajweedText
               text={currentAyah.textUthmani}
               tajweedRules={currentAyah.tajweedRules}
-              showTajweed={progress.settings.showTajweedColors}
+              showTajweed={false}
               fontSize={verseFontSize(currentAyah.textUthmani)}
             />
-          </View>
-          <View style={styles.toggles}>
-            <Pressable
-              style={[styles.toggleChip, progress.settings.showTajweedColors && styles.toggleChipOn]}
-              onPress={toggleTajweedColors}
-              accessibilityRole="switch"
-              accessibilityState={{ checked: progress.settings.showTajweedColors }}
-              accessibilityLabel={t('surahLearnMode.showTajweed')}
-            >
-              <Text style={[styles.toggleChipText, progress.settings.showTajweedColors && styles.toggleChipTextOn]}>
-                {t('surahLearnMode.showTajweed')}
-              </Text>
-            </Pressable>
           </View>
         </View>
 
@@ -1008,41 +994,12 @@ const styles = StyleSheet.create({
     backgroundColor: color.surface,
     borderRadius: radius.xl,
     paddingHorizontal: space.lg,
-    paddingTop: space.xl,
-    paddingBottom: space.lg,
-    gap: space.md,
+    paddingVertical: space.xl,
   },
   // Takes the card's spare height, so a short verse sits in the middle.
   verseText: {
     flexGrow: 1,
     justifyContent: 'center',
-  },
-  toggles: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: space.sm,
-    marginTop: space.xs,
-  },
-  toggleChip: {
-    paddingHorizontal: space.md,
-    paddingVertical: 6,
-    borderRadius: radius.full,
-    borderWidth: 1,
-    borderColor: color.border,
-    backgroundColor: color.surface,
-  },
-  toggleChipOn: {
-    backgroundColor: color.accentSoft,
-    borderColor: 'transparent',
-  },
-  toggleChipText: {
-    ...type.caption,
-    color: color.textMuted,
-  },
-  toggleChipTextOn: {
-    color: color.accentStrong,
-    fontWeight: weight.semibold,
   },
 
   // Settings chips
