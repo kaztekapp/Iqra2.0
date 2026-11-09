@@ -99,4 +99,20 @@ describe('reminder planner', () => {
     const rs = planReminders(base({ currentStreak: 5, due: { verses: 2, words: 2 } }), t);
     expect(rs.length).toBeLessThanOrEqual(8);
   });
+
+  it('comes only on the study days chosen', () => {
+    // Wednesday 16th, 10:00; study days Monday and Friday.
+    const rs = planReminders(base({ settings: { ...DEFAULT_REMINDER_SETTINGS, days: [1, 5] } }), t);
+    expect((dates(rs, 'resume') as Date[]).map((d) => d.getDay())).toEqual([5, 1, 5]);
+  });
+
+  it('uses the times chosen for the streak warning, the review note and al-Kahf', () => {
+    const settings = { ...DEFAULT_REMINDER_SETTINGS, streakHour: 18, streakMinute: 30, reviewHour: 7, reviewMinute: 15, kahfHour: 6, kahfMinute: 45 };
+    const rs = planReminders(base({ currentStreak: 2, due: { verses: 1, words: 0 }, settings }), t);
+    const [s0] = dates(rs, 'streak') as Date[];
+    expect([s0.getHours(), s0.getMinutes()]).toEqual([18, 30]);
+    const [r0] = dates(rs, 'review') as Date[];
+    expect([r0.getDate(), r0.getHours(), r0.getMinutes()]).toEqual([17, 7, 15]);
+    expect(rs.find((r) => r.kind === 'kahf')!.trigger).toEqual({ type: 'weekly', weekday: 6, hour: 6, minute: 45 });
+  });
 });
