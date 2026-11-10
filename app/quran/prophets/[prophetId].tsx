@@ -249,14 +249,14 @@ export default function ProphetStoryScreen() {
               <>
                 <Pressable
                   style={styles.listenButton}
-                  onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(narration.index))}
+                  onPress={() => (narration.isPlaying || narration.status === 'loading' ? setPlayerOpen(true) : narration.status === 'paused' ? narration.resume() : narration.start(narration.index))}
                   accessibilityRole="button"
                 >
                   <Ionicons name="headset" size={18} color={color.textOnAccent} />
                   <Text style={styles.listenButtonText}>{narration.index > 0 ? t('listen.continueListening') : t('listen.listen')}</Text>
                 </Pressable>
                 {/* A place to return to: the choice is the reader's. */}
-                {narration.index > 0 && !narration.isActive ? (
+                {narration.index > 0 && !narration.isPlaying && narration.status !== 'loading' ? (
                   <Pressable
                     style={styles.startOver}
                     onPress={() => narration.start(0)}
