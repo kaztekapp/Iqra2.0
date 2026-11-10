@@ -192,7 +192,7 @@ export default function QuranStoryDetailScreen() {
         {story.content.length > 0 && (
           <Pressable
             style={styles.listenButton}
-            onPress={() => (narration.isActive ? setPlayerOpen(true) : narration.start(narration.index))}
+            onPress={() => (narration.isPlaying || narration.status === 'loading' ? setPlayerOpen(true) : narration.status === 'paused' ? narration.resume() : narration.start(narration.index))}
             accessibilityRole="button"
           >
             <Ionicons name="headset" size={18} color={color.textOnAccent} />
@@ -200,7 +200,7 @@ export default function QuranStoryDetailScreen() {
           </Pressable>
         )}
         {/* A place to return to: the choice is the reader's. */}
-        {story.content.length > 0 && narration.index > 0 && !narration.isActive && (
+        {story.content.length > 0 && narration.index > 0 && !narration.isPlaying && narration.status !== 'loading' && (
           <Pressable
             style={styles.startOver}
             onPress={() => narration.start(0)}
