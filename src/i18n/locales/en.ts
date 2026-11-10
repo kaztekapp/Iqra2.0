@@ -951,6 +951,7 @@ export default {
     clearBody: 'Everything kept here is made again the next time you listen, with a connection.',
   },
   listen: {
+    startOver: 'Start from the beginning',
     continueListening: 'Continue listening',
     nowReading: 'Now reading',
     minutesLeft_one: '{{count}} min left',
