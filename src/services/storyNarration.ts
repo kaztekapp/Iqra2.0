@@ -33,6 +33,7 @@ import {
 import { buildUtterances, type NarratableBlock, type Utterance, type UtteranceLang } from './narrationPlan';
 import { releaseAudioSessionIfIdle } from './audioBus';
 import { onWifi, roomToKeep } from '../lib/offlineRoom';
+import { useNarrationResumeStore } from '../stores/narrationResumeStore';
 import {
   speakArabic,
   stopArabic,
@@ -179,6 +180,8 @@ async function loop(from: number): Promise<void> {
   for (let i = from; i < utterances.length; i++) {
     if (mine !== run) return;
     set({ index: i });
+    // Remembered on the phone, so the reading survives the app being closed.
+    useNarrationResumeStore.getState().savePosition(session.key, i);
 
     const utterance = utterances[i];
     // Fetch the next line while this one plays, so the gap between them is
@@ -216,6 +219,8 @@ async function loop(from: number): Promise<void> {
   }
 
   if (mine !== run) return;
+  // Heard to the end: the next listen starts from the beginning.
+  useNarrationResumeStore.getState().clearPosition(session.key);
   set({ status: 'idle', index: 0 });
   releaseAudioSessionIfIdle();
 }
@@ -249,7 +254,9 @@ export function attachNarration(session: NarrationSession): void {
   storyAudioService.resetSession();
   silence();
   void storyAudioService.stop();
-  set({ session, status: 'idle', index: 0 });
+  // A reading left part-way, even in an earlier launch, picks up there.
+  const saved = useNarrationResumeStore.getState().positions[session.key]?.index ?? 0;
+  set({ session, status: 'idle', index: saved < session.utterances.length ? saved : 0 });
   publishNowPlaying(session);
 }
 

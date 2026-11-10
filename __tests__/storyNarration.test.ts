@@ -49,6 +49,7 @@ import {
   stopNarration,
   NarratableBlock,
 } from '../src/services/storyNarration';
+import { useNarrationResumeStore } from '../src/stores/narrationResumeStore';
 
 const blocks: NarratableBlock[] = [
   { id: 'b0', type: 'narrative', content: 'First paragraph.' },
@@ -93,4 +94,25 @@ describe('story narration engine', () => {
     expect(useNarrationStore.getState().status).toBe('idle');
     await settle();
   });
+
+  it('picks a reading up where it was left, even after the app was closed', async () => {
+    // A reading stopped on its third sentence in an earlier launch.
+    useNarrationResumeStore.getState().savePosition('yusuf|en', 2);
+    attachNarration(session('yusuf|en'));
+    expect(useNarrationStore.getState().index).toBe(2);
+    startNarration(useNarrationStore.getState().index);
+    await settle();
+    expect(spoken).toEqual(['Third paragraph.']);
+    // Heard to the end: the next listen starts from the beginning.
+    expect(useNarrationResumeStore.getState().positions['yusuf|en']).toBeUndefined();
+  });
+
+  it('remembers the sentence being read', async () => {
+    attachNarration(session('isa|en'));
+    seekNarrationToBlock(1);
+    await act(async () => { await new Promise((r) => setTimeout(r, 5)); });
+    expect(useNarrationResumeStore.getState().positions['isa|en']?.index).toBe(1);
+    await settle();
+  });
 });
+
