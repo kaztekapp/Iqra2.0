@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet, ActivityIndicator, LayoutChangeEvent, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -49,6 +49,28 @@ export default function QuranStoryDetailScreen() {
     [story, lc]
   );
   const narration = useStoryNarration(story?.content || [], storyNowPlaying);
+
+  // Listen: a reading left part-way asks first whether to carry on or begin
+  // again; a playing one opens its player.
+  const listen = () => {
+    if (narration.isPlaying || narration.status === 'loading') {
+      setPlayerOpen(true);
+      return;
+    }
+    const carryOn = () => (narration.status === 'paused' ? narration.resume() : narration.start(narration.index));
+    if (narration.index <= 0) {
+      narration.start(0);
+      return;
+    }
+    Alert.alert(
+      t('listen.resumeTitle'),
+      t('listen.resumeMessage', { paragraph: narration.currentBlockIndex + 1, total: narration.blockCount }),
+      [
+        { text: t('listen.startOver'), onPress: () => narration.start(0) },
+        { text: t('listen.resumeContinue'), style: 'default', onPress: carryOn, isPreferred: true },
+      ]
+    );
+  };
   const [playerOpen, setPlayerOpen] = useState(false);
 
   const blockOffsets = useRef<Record<string, number>>({});
@@ -192,22 +214,11 @@ export default function QuranStoryDetailScreen() {
         {story.content.length > 0 && (
           <Pressable
             style={styles.listenButton}
-            onPress={() => (narration.isPlaying || narration.status === 'loading' ? setPlayerOpen(true) : narration.status === 'paused' ? narration.resume() : narration.start(narration.index))}
+            onPress={listen}
             accessibilityRole="button"
           >
             <Ionicons name="headset" size={18} color={color.textOnAccent} />
-            <Text style={styles.listenButtonText}>{narration.index > 0 ? t('listen.continueListening') : t('listen.listen')}</Text>
-          </Pressable>
-        )}
-        {/* A place to return to: the choice is the reader's. */}
-        {story.content.length > 0 && narration.index > 0 && !narration.isPlaying && narration.status !== 'loading' && (
-          <Pressable
-            style={styles.startOver}
-            onPress={() => narration.start(0)}
-            accessibilityRole="button"
-            hitSlop={6}
-          >
-            <Text style={styles.startOverText}>{t('listen.startOver')}</Text>
+            <Text style={styles.listenButtonText}>{t('listen.listen')}</Text>
           </Pressable>
         )}
 
@@ -355,17 +366,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     backgroundColor: color.accentStrong,
     marginBottom: 16,
-  },
-  startOver: {
-    alignSelf: 'center',
-    marginTop: 10,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
-  startOverText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: color.accentStrong,
   },
   listenButtonText: {
     color: color.textOnAccent,
