@@ -131,9 +131,12 @@ export function AyahCard({
         />
       </View>
 
-      {/* Transliteration */}
-      {showTransliteration && (
-        <Text style={styles.transliteration}>{ayah.transliteration}</Text>
+      {/* How to say it: a pronunciation guide on its own mint band, set
+          upright in emerald, so it never reads as part of the translation. */}
+      {showTransliteration && !!ayah.transliteration && (
+        <View style={styles.transliterationBand}>
+          <Text style={styles.transliteration}>{ayah.transliteration}</Text>
+        </View>
       )}
 
       {/* Translation */}
@@ -301,16 +304,24 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: '100%',
   },
+  transliterationBand: {
+    backgroundColor: color.surfaceSunken,
+    borderRadius: radius.md,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    marginBottom: 14,
+  },
   transliteration: {
-    color: color.textMuted,
-    fontSize: 14,
-    marginBottom: 8,
-    fontStyle: 'italic',
+    color: color.accentStrong,
+    fontSize: 15,
+    lineHeight: 24,
+    letterSpacing: 0.2,
   },
   translation: {
-    color: color.textMuted,
-    fontSize: 14,
-    lineHeight: 22,
+    color: color.text,
+    fontSize: 15,
+    lineHeight: 24,
+    opacity: 0.82,
   },
   speedControlContainer: {
     flexDirection: 'row',
