@@ -267,7 +267,19 @@ export default function ProphetStoryScreen() {
                   <Ionicons name="headset" size={18} color={color.textOnAccent} />
                   <Text style={styles.listenButtonText}>{narration.index > 0 ? t('listen.continueListening') : t('listen.listen')}</Text>
                 </Pressable>
-                <Text style={styles.listenHint}>{t('listen.tapToStart')}</Text>
+                {/* A place to return to: the choice is the reader's. */}
+                {narration.index > 0 && !narration.isActive ? (
+                  <Pressable
+                    style={styles.startOver}
+                    onPress={() => narration.start(0)}
+                    accessibilityRole="button"
+                    hitSlop={6}
+                  >
+                    <Text style={styles.startOverText}>{t('listen.startOver')}</Text>
+                  </Pressable>
+                ) : (
+                  <Text style={styles.listenHint}>{t('listen.tapToStart')}</Text>
+                )}
               </>
             )}
           </View>
@@ -480,6 +492,17 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: color.textFaint,
     textAlign: 'center',
+  },
+  startOver: {
+    alignSelf: 'center',
+    marginTop: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  startOverText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: color.accentStrong,
   },
   listenButtonText: {
     color: color.textOnAccent,
