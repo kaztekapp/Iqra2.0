@@ -199,6 +199,17 @@ export default function QuranStoryDetailScreen() {
             <Text style={styles.listenButtonText}>{narration.index > 0 ? t('listen.continueListening') : t('listen.listen')}</Text>
           </Pressable>
         )}
+        {/* A place to return to: the choice is the reader's. */}
+        {story.content.length > 0 && narration.index > 0 && !narration.isActive && (
+          <Pressable
+            style={styles.startOver}
+            onPress={() => narration.start(0)}
+            accessibilityRole="button"
+            hitSlop={6}
+          >
+            <Text style={styles.startOverText}>{t('listen.startOver')}</Text>
+          </Pressable>
+        )}
 
         {/* Summary Card */}
         <View style={styles.summaryCard}>
@@ -344,6 +355,17 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     backgroundColor: color.accentStrong,
     marginBottom: 16,
+  },
+  startOver: {
+    alignSelf: 'center',
+    marginTop: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  startOverText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: color.accentStrong,
   },
   listenButtonText: {
     color: color.textOnAccent,
