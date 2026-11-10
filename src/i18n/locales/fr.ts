@@ -951,6 +951,7 @@ export default {
     clearBody: 'Tout ce qui est conservé ici sera refait à la prochaine écoute, avec une connexion.',
   },
   listen: {
+    continueListening: 'Reprendre l\u2019\u00e9coute',
     nowReading: 'Lecture en cours',
     minutesLeft_one: '{{count}} min restante',
     minutesLeft_other: '{{count}} min restantes',
