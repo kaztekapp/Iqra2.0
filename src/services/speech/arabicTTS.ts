@@ -461,19 +461,22 @@ export function prepareArabic(text: string, speed = 1.0): void {
   for (const chunk of chunkLine(line)) {
     const key = preparedKey(chunk, speed);
     if (prepared.has(key) || prepared.size >= PREPARED_LIMIT) continue;
-    prepared.set(
-      key,
-      fetchChunkToFile(chunk, speed, false).then(
-        (uri) => {
-          preloadClip(uri);
-          return uri;
-        },
-        (e) => {
-          prepared.delete(key);
-          throw e;
-        }
-      )
+    const ahead = fetchChunkToFile(chunk, speed, false).then(
+      (uri) => {
+        preloadClip(uri);
+        return uri;
+      },
+      (e) => {
+        prepared.delete(key);
+        throw e;
+      }
     );
+    // Fetching ahead is allowed to fail: the line is fetched again, or read by
+    // the phone's voice, when its turn comes. With nobody listening yet, the
+    // failure reached Sentry as an unhandled rejection (IQRA2-5 tts_resting,
+    // IQRA2-9 tts-not-recorded). Whoever awaits `ahead` still sees it fail.
+    ahead.catch((e) => quietly(e, 'services/speech/arabicTTS prepare'));
+    prepared.set(key, ahead);
   }
 }
 
