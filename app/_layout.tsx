@@ -14,7 +14,7 @@ import { quranAudioService } from '../src/services/quranAudioService';
 import { adService } from '../src/services/adService';
 import { iapService } from '../src/services/iapService';
 import { useSettingsStore } from '../src/stores/settingsStore';
-import { supabase, isSupabaseConfigured, safeGetSession } from '../src/lib/supabase';
+import { supabase, isSupabaseConfigured, safeGetSession, storedSession } from '../src/lib/supabase';
 import { MiniAudioPlayer } from '../src/components/quran/MiniAudioPlayer';
 import { NarrationMiniPlayer } from '../src/components/listen/NarrationMiniPlayer';
 import { UpdateModal } from '../src/components/UpdateModal';
@@ -141,23 +141,36 @@ function RootLayout() {
       return;
     }
 
-    // Timeout: if auth check hangs, proceed anyway after 3s
+    // Timeout: if reading the phone's storage hangs, proceed anyway after 3s
     const timeout = setTimeout(() => setAuthReady(true), 3000);
+    let cancelled = false;
 
-    safeGetSession().then((session) => {
+    // Launch decides from the sign-in kept on the phone, which needs no
+    // network: the app is meant to work offline, and waiting on the server
+    // (to renew a token over an hour old) sent offline readers to the login
+    // page. The server is asked afterwards, in the background.
+    storedSession().then((kept) => {
+      if (cancelled) return;
       clearTimeout(timeout);
-      setSession(session);
+      if (kept) setSession(kept);
       setAuthReady(true);
-      // Start auto-refresh only after initial session is validated
-      if (session) {
-        supabase!.auth.startAutoRefresh();
-      }
+      return safeGetSession().then((session) => {
+        if (cancelled) return;
+        // Null here is a definite sign-out (see safeGetSession); a dropped
+        // connection returns the kept session.
+        setSession(session);
+        if (session) supabase!.auth.startAutoRefresh();
+      });
     }).catch(() => {
       clearTimeout(timeout);
       setAuthReady(true);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      // Offline, the client reports "no session" when it could not renew the
+      // token (INITIAL_SESSION with null) while the session is still kept on
+      // the phone. Only SIGNED_OUT means the reader is really signed out.
+      if (!session && event !== 'SIGNED_OUT') return;
       setSession(session);
       // Crash reports carry the account id (never the email), as the privacy
       // policy says, so a report can be matched to the person who wrote in.
@@ -168,6 +181,7 @@ function RootLayout() {
     });
 
     return () => {
+      cancelled = true;
       clearTimeout(timeout);
       subscription.unsubscribe();
     };
