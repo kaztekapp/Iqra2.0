@@ -1,3 +1,4 @@
+import { isAuthRetryableFetchError } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { unregisterPushToken } from './push';
 import { flushProgress, stopProgressSync, forgetProgressOwner } from './progressSync';
@@ -124,7 +125,13 @@ export async function signOut() {
   // otherwise group messages for the person leaving keep arriving here.
   await unregisterPushToken();
   const { error } = await getClient().auth.signOut();
-  if (error) throw error;
+  if (error) {
+    // Offline the server cannot be told; signing out of this phone must still
+    // work (the token simply expires on its own).
+    if (!isAuthRetryableFetchError(error)) throw error;
+    const local = await getClient().auth.signOut({ scope: 'local' });
+    if (local.error) throw local.error;
+  }
   await forgetCommunityOnDevice();
   useSettingsStore.getState().setSession(null);
 }
