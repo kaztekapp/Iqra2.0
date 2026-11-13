@@ -19,6 +19,7 @@ import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function VerbsQuizPracticeScreen() {
   const { t } = useTranslation();
@@ -247,7 +248,7 @@ export default function VerbsQuizPracticeScreen() {
           <Animated.View style={[styles.questionContainer, shakeStyle]}>
             <Text style={styles.questionText}>{currentExercise.question}</Text>
             {currentExercise.questionArabic && (
-              <Text style={styles.questionArabic}>{currentExercise.questionArabic}</Text>
+              <ArText style={styles.questionArabic}>{currentExercise.questionArabic}</ArText>
             )}
           </Animated.View>
 

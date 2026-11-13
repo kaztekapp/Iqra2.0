@@ -8,6 +8,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { writingLessons } from '../../src/data/arabic/writing/writingLessons';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 const ACCENT = color.accent;
 
@@ -44,7 +45,7 @@ export default function WritingScreen() {
             <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
             {isDone && <Ionicons name="checkmark-circle" size={18} color={color.progress} />}
           </View>
-          <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
+          <ArText style={styles.lessonTitleArabic}>{lesson.titleArabic}</ArText>
           <Text style={styles.lessonDescription} numberOfLines={2}>
             {lc(lesson.description, lesson.descriptionFr)}
           </Text>
@@ -64,7 +65,7 @@ export default function WritingScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('learn.writing')}</Text>
-            <Text style={styles.titleArabic}>الْكِتَابَة</Text>
+            <ArText style={styles.titleArabic}>الْكِتَابَة</ArText>
           </View>
         </View>
 
@@ -88,7 +89,7 @@ export default function WritingScreen() {
                 <View style={styles.sectionCount}>
                   <Text style={styles.sectionCountText}>{unitLessons.length}</Text>
                 </View>
-                <Text style={styles.sectionTitleAr}>{u.ar}</Text>
+                <ArText style={styles.sectionTitleAr}>{u.ar}</ArText>
               </View>
               {unitLessons.map(renderCard)}
             </View>

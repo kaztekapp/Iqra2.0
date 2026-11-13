@@ -9,6 +9,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function VocabularyScreen() {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ export default function VocabularyScreen() {
           <Text style={styles.themeIcon}>{theme.icon}</Text>
         </View>
         <Text style={styles.themeName}>{lc(theme.name, theme.nameFr)}</Text>
-        <Text style={styles.themeNameAr}>{theme.nameArabic}</Text>
+        <ArText style={styles.themeNameAr}>{theme.nameArabic}</ArText>
         <View style={styles.themeFooter}>
           <Text style={styles.themeWordCount}>{t('vocabulary.wordsCount', { count: theme.wordCount })}</Text>
           {status === 'completed' && (
@@ -74,7 +75,7 @@ export default function VocabularyScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('vocabulary.title')}</Text>
-            <Text style={styles.titleArabic}>الْمُفْرَدَات</Text>
+            <ArText style={styles.titleArabic}>الْمُفْرَدَات</ArText>
           </View>
         </View>
 
@@ -122,7 +123,7 @@ export default function VocabularyScreen() {
                       <Text style={styles.levelGroupCountText}>{group.length}</Text>
                     </View>
                   </View>
-                  <Text style={styles.levelGroupAr}>{lvl.ar}</Text>
+                  <ArText style={styles.levelGroupAr}>{lvl.ar}</ArText>
                 </View>
                 <View style={styles.themeGrid}>
                   {group.map(renderThemeCard)}
@@ -145,7 +146,7 @@ export default function VocabularyScreen() {
                 </View>
                 <View style={styles.reviewText}>
                   <Text style={styles.reviewTitle}>{t('vocabulary.spacedReview')}</Text>
-                  <Text style={styles.reviewTitleArabic}>المراجعة المتكررة</Text>
+                  <ArText style={styles.reviewTitleArabic}>المراجعة المتكررة</ArText>
                   <Text style={styles.reviewDesc}>
                     {t('vocabulary.wordsDueReview', { count: reviewStats.dueToday })}
                   </Text>

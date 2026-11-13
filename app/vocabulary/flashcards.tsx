@@ -24,6 +24,7 @@ import { VocabularyWord } from '../../src/types/arabic';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function FlashcardsScreen() {
   // Live width: a value captured at import is wrong after a rotation and in
@@ -208,9 +209,9 @@ export default function FlashcardsScreen() {
               {/* Front of Card (Arabic) */}
               <Animated.View style={[styles.card, frontAnimatedStyle]}>
                 <View style={styles.cardContent}>
-                  <Text style={styles.cardArabic}>
+                  <ArText style={styles.cardArabic}>
                     {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-                  </Text>
+                  </ArText>
                   <Text style={styles.cardTranslit}>
                     {currentWord.transliteration}
                   </Text>
@@ -232,15 +233,15 @@ export default function FlashcardsScreen() {
                 <View style={styles.cardContent}>
                   <Text style={styles.cardEnglish}>{lc(currentWord.english, currentWord.french)}</Text>
                   <View style={styles.backArabic}>
-                    <Text style={styles.backArabicText}>
+                    <ArText style={styles.backArabicText}>
                       {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-                    </Text>
+                    </ArText>
                   </View>
                   {currentWord.exampleSentence && (
                     <View style={styles.exampleBox}>
-                      <Text style={styles.exampleArabic}>
+                      <ArText style={styles.exampleArabic}>
                         {currentWord.exampleSentence.arabic}
-                      </Text>
+                      </ArText>
                       <Text style={styles.exampleEnglish}>
                         {lc(currentWord.exampleSentence.english, currentWord.exampleSentence.french)}
                       </Text>

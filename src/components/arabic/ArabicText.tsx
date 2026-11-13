@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useProgressStore } from '../../stores/progressStore';
 import { color, font, radius, space, type } from '../../theme/tokens';
 import i18n from 'i18next';
+import { ArText } from './ArText';
 
 interface ArabicTextProps extends TextProps {
   children: string;
@@ -73,9 +74,9 @@ export function ArabicText({
   ]);
 
   const textElement = (
-    <Text style={textStyle} {...props}>
+    <ArText style={textStyle} {...props}>
       {displayText}
-    </Text>
+    </ArText>
   );
 
   if (showSpeaker && onPlayAudio) {

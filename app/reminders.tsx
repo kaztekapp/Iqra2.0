@@ -17,6 +17,7 @@ import { EVERY_DAY, ReminderSettings } from '../src/services/reminders/plan';
 import { TimePickerSheet, clockLabel } from '../src/components/TimePickerSheet';
 import { withAlpha } from '../src/components/ui/Primitives';
 import { color, font, radius } from '../src/theme/tokens';
+import { ArText } from '../src/components/arabic/ArText';
 
 type TimeField = 'study' | 'streak' | 'review' | 'kahf';
 const FIELDS: Record<TimeField, [keyof ReminderSettings, keyof ReminderSettings]> = {
@@ -112,7 +113,7 @@ export default function RemindersScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.arabic} allowFontScaling={false}>التَّذْكِيرُ</Text>
+        <ArText style={styles.arabic} allowFontScaling={false}>التَّذْكِيرُ</ArText>
 
         {/* On or off, and what the phone allows */}
         <View style={styles.card}>

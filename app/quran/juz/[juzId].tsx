@@ -17,6 +17,7 @@ import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 // Expandable Section Component
 function ExpandableSection({
@@ -89,7 +90,7 @@ function VerseCard({
   const { lc } = useLocalizedContent();
   return (
     <View style={styles.verseCard}>
-      <Text style={styles.verseArabic}>{verse.arabic}</Text>
+      <ArText style={styles.verseArabic}>{verse.arabic}</ArText>
       <Text style={styles.verseTranslation}>"{lc(verse.translation, verse.translationFr)}"</Text>
       <View style={styles.verseReference}>
         <Ionicons name="bookmark" size={12} color={color.accent} />
@@ -189,7 +190,7 @@ export default function JuzDetailScreen() {
               <Text style={styles.heroNumberText}>{juz.id}</Text>
             </View>
             <Text style={styles.heroNameEnglish}>{juz.nameEnglish}</Text>
-            <Text style={styles.heroNameArabic}>{juz.nameArabic}</Text>
+            <ArText style={styles.heroNameArabic}>{juz.nameArabic}</ArText>
             {juz.alternativeName && (
               <Text style={styles.heroAltName}>{t('juzFeature.alsoKnownAs', { name: juz.alternativeName })}</Text>
             )}

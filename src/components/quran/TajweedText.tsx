@@ -3,7 +3,7 @@ import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { TajweedOccurrence, TajweedRuleId } from '../../types/quran';
 import { TAJWEED_COLORS } from '../../data/arabic/quran/tajweed/colors';
 import { color, font, radius, space } from '../../theme/tokens';
-import { QuranLastLineRoom } from './QuranLastLineRoom';
+import { ArText } from '../arabic/ArText';
 
 interface TajweedTextProps {
   text: string;
@@ -96,7 +96,7 @@ export function TajweedText({
   return (
     // Nested segments inherit fontFamily from this parent, which keeps the
     // script shaping consistent across tajweed colour boundaries.
-    <Text
+    <ArText
       style={[
         styles.container,
         { fontSize, lineHeight: fontSize * QURAN_LINE_HEIGHT },
@@ -126,9 +126,7 @@ export function TajweedText({
           </Text>
         );
       })}
-      {/* Android cuts the marks that hang below the last line; see the file. */}
-      <QuranLastLineRoom fontSize={fontSize} />
-    </Text>
+    </ArText>
   );
 }
 
@@ -163,7 +161,7 @@ export function WordByWordText({
             ]}
             onPress={() => onWordPress?.(index)}
           >
-            <Text
+            <ArText
               style={[
                 styles.wordArabic,
                 { fontSize },
@@ -171,7 +169,7 @@ export function WordByWordText({
               ]}
             >
               {word.text}
-            </Text>
+            </ArText>
             {showTransliteration && (
               <Text style={[styles.wordTransliteration, isHighlighted && styles.textHighlighted]}>
                 {word.transliteration}

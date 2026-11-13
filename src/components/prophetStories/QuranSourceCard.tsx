@@ -7,6 +7,7 @@ import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { TajweedText } from '../quran/TajweedText';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface QuranSourceCardProps {
   source: QuranReference;
@@ -35,9 +36,9 @@ export function QuranSourceCard({
           <Text style={styles.referenceText}>
             {source.surahNameEnglish} {source.surahNumber}:{ayahRange}
           </Text>
-          <Text style={styles.referenceArabic}>
+          <ArText style={styles.referenceArabic}>
             {source.surahNameArabic}
-          </Text>
+          </ArText>
         </View>
         {onPlayArabic && (
           <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}

@@ -29,6 +29,7 @@ import {
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 
 type TabType = 'learn' | 'quiz';
@@ -130,7 +131,7 @@ export default function TajweedLearnScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('tajweedFeature.title')}</Text>
-          <Text style={styles.titleArabic}>أحكام التجويد</Text>
+          <ArText style={styles.titleArabic}>أحكام التجويد</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>
@@ -243,9 +244,9 @@ export default function TajweedLearnScreen() {
                       </View>
                       <View style={styles.categoryTitles}>
                         <Text style={styles.categoryTitle}>{categoryI18nKey ? t(categoryI18nKey) : category}</Text>
-                        <Text style={[styles.categoryArabic, { color: categoryColor }]}>
+                        <ArText style={[styles.categoryArabic, { color: categoryColor }]}>
                           {categoryArabic}
-                        </Text>
+                        </ArText>
                       </View>
                     </View>
 
@@ -264,7 +265,7 @@ export default function TajweedLearnScreen() {
                           <View style={styles.ruleContent}>
                             <View style={styles.ruleHeader}>
                               <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
-                              <Text style={styles.ruleArabic}>{rule.nameArabic}</Text>
+                              <ArText style={styles.ruleArabic}>{rule.nameArabic}</ArText>
                             </View>
                             <Text style={styles.ruleDesc} numberOfLines={2}>
                               {lc(rule.description, rule.descriptionFr)}

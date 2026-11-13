@@ -11,6 +11,7 @@ import { TajweedRuleId } from '../../../src/types/quran';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 const CATEGORY_KEYS: Record<string, { key: string; arabic: string }> = {
   noon_sakinah: { key: 'tajweedFeature.noonSakinah', arabic: 'النون الساكنة والتنوين' },
@@ -52,7 +53,7 @@ export default function TajweedRulesScreen() {
           </Pressable>
           <View style={styles.headerTitle}>
             <Text style={styles.title}>{t('tajweedFeature.title')}</Text>
-            <Text style={styles.titleArabic}>أحكام التجويد</Text>
+            <ArText style={styles.titleArabic}>أحكام التجويد</ArText>
           </View>
           <View style={styles.headerRight} />
         </View>
@@ -103,9 +104,9 @@ export default function TajweedRulesScreen() {
                   </View>
                   <View style={styles.categoryTitles}>
                     <Text style={styles.categoryTitle}>{t(categoryKeyInfo.key)}</Text>
-                    <Text style={[styles.categoryArabic, { color: categoryColor }]}>
+                    <ArText style={[styles.categoryArabic, { color: categoryColor }]}>
                       {categoryKeyInfo.arabic}
-                    </Text>
+                    </ArText>
                   </View>
                 </View>
 
@@ -124,7 +125,7 @@ export default function TajweedRulesScreen() {
                       <View style={styles.ruleContent}>
                         <View style={styles.ruleHeader}>
                           <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
-                          <Text style={styles.ruleArabic}>{rule.nameArabic}</Text>
+                          <ArText style={styles.ruleArabic}>{rule.nameArabic}</ArText>
                         </View>
                         <Text style={styles.ruleDesc} numberOfLines={2}>
                           {lc(rule.description, rule.descriptionFr)}

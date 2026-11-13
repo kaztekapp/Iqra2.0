@@ -21,6 +21,7 @@ import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 // Recommended reciters for Tajweed learning (clear pronunciation)
 const TAJWEED_RECITERS = [
@@ -154,9 +155,9 @@ export default function TajweedRuleDetailScreen() {
           </Pressable>
           <View style={styles.headerCenter}>
             <Text style={styles.ruleName}>{lc(rule.nameEnglish, rule.nameFrench)}</Text>
-            <Text style={[styles.ruleArabic, { color: rule.colorCode }]}>
+            <ArText style={[styles.ruleArabic, { color: rule.colorCode }]}>
               {rule.nameArabic}
-            </Text>
+            </ArText>
           </View>
           <View style={styles.headerRight}>
             {isMastered && <Ionicons name="star" size={24} color={color.warning} />}
@@ -197,9 +198,9 @@ export default function TajweedRuleDetailScreen() {
             <Ionicons name="person-circle-outline" size={24} color={color.progress} />
             <View style={styles.reciterText}>
               <Text style={styles.reciterLabel}>{t('tajweedFeature.reciter')}</Text>
-              <Text style={styles.reciterName}>
+              <ArText style={styles.reciterName}>
                 {selectedReciterInfo?.name} ({selectedReciterInfo?.nameArabic})
-              </Text>
+              </ArText>
             </View>
           </View>
           <Ionicons name="chevron-down" size={20} color={color.textFaint} />
@@ -211,7 +212,7 @@ export default function TajweedRuleDetailScreen() {
           <View style={styles.descriptionCard}>
             <Text style={styles.description}>{lc(rule.description, rule.descriptionFr)}</Text>
             {rule.descriptionArabic && (
-              <Text style={styles.descriptionArabic}>{rule.descriptionArabic}</Text>
+              <ArText style={styles.descriptionArabic}>{rule.descriptionArabic}</ArText>
             )}
           </View>
         </View>
@@ -414,9 +415,9 @@ export default function TajweedRuleDetailScreen() {
                   />
                 </View>
                 <View style={styles.reciterOptionInfo}>
-                  <Text style={styles.reciterOptionName}>
+                  <ArText style={styles.reciterOptionName}>
                     {reciter.name} ({reciter.nameArabic})
-                  </Text>
+                  </ArText>
                   <Text style={styles.reciterOptionDesc}>{t(reciter.descriptionKey)}</Text>
                 </View>
                 {selectedReciter === reciter.id && (

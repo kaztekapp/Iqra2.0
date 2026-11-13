@@ -10,6 +10,7 @@ import { ARABIC_SCRIPT_FONTS, SCRIPT_META } from '../../src/data/arabic/alphabet
 import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 const FONT_ASSETS = ARABIC_SCRIPT_FONTS;
 const STYLES = SCRIPT_META;
@@ -33,7 +34,7 @@ export default function AlphabetStylesScreen() {
         </Pressable>
         <View style={styles.headerText}>
           <Text style={styles.title}>{t('alphabet.scriptsTitle')}</Text>
-          <Text style={styles.titleArabic}>خُطُوطُ الْكِتَابَة</Text>
+          <ArText style={styles.titleArabic}>خُطُوطُ الْكِتَابَة</ArText>
         </View>
       </View>
 
@@ -92,7 +93,7 @@ export default function AlphabetStylesScreen() {
                 </View>
                 {STYLES.map((s) => (
                   <View key={s.key} style={styles.glyphCell}>
-                    <Text style={[styles.glyph, s.font ? { fontFamily: s.font } : null]}>{glyph}</Text>
+                    <ArText style={[styles.glyph, s.font ? { fontFamily: s.font } : null]}>{glyph}</ArText>
                   </View>
                 ))}
               </View>

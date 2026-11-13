@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -128,7 +129,7 @@ export default function TenseDetailScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{tense.title}</Text>
-            <Text style={[styles.titleArabic, { color: tense.color }]}>{tense.titleArabic}</Text>
+            <ArText style={[styles.titleArabic, { color: tense.color }]}>{tense.titleArabic}</ArText>
           </View>
         </View>
 
@@ -142,33 +143,33 @@ export default function TenseDetailScreen() {
         {tenseId === 'past' && (
           <View style={styles.patternCard}>
             <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
-            <Text style={styles.patternText}>
+            <ArText style={styles.patternText}>
               {t('verbTense.pastTenseEndings')} <Text style={styles.highlight}>ـتُ</Text> (I), <Text style={styles.highlight}>ـتَ</Text> (you m), <Text style={styles.highlight}>ـتِ</Text> (you f), <Text style={styles.highlight}>ـنَا</Text> (we), <Text style={styles.highlight}>ـوا</Text> (they)
-            </Text>
+            </ArText>
           </View>
         )}
         {tenseId === 'present' && (
           <View style={styles.patternCard}>
             <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
-            <Text style={styles.patternText}>
+            <ArText style={styles.patternText}>
               {t('verbTense.presentPrefixes')} <Text style={styles.highlight}>أَ</Text> (I), <Text style={styles.highlight}>تَ</Text> (you/she), <Text style={styles.highlight}>يَ</Text> (he/they), <Text style={styles.highlight}>نَ</Text> (we)
-            </Text>
+            </ArText>
           </View>
         )}
         {tenseId === 'future' && (
           <View style={styles.patternCard}>
             <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
-            <Text style={styles.patternText}>
+            <ArText style={styles.patternText}>
               Future = <Text style={styles.highlight}>سَـ</Text> + present tense. Example: يَكْتُبُ → <Text style={styles.highlight}>سَـ</Text>يَكْتُبُ
-            </Text>
+            </ArText>
           </View>
         )}
         {tenseId === 'imperative' && (
           <View style={styles.patternCard}>
             <Text style={styles.patternTitle}>{t('verbTense.patternRecognition')}</Text>
-            <Text style={styles.patternText}>
+            <ArText style={styles.patternText}>
               Commands drop the present prefix and may add <Text style={styles.highlight}>اِ</Text> at the start. Only for "you" forms!
-            </Text>
+            </ArText>
           </View>
         )}
 
@@ -188,9 +189,9 @@ export default function TenseDetailScreen() {
                     style={[styles.verbArabic, { backgroundColor: tense.color + '20' }]}
                     onPress={() => speak(verb.pastTense)}
                   >
-                    <Text style={[styles.verbArabicText, { color: tense.color }]}>
+                    <ArText style={[styles.verbArabicText, { color: tense.color }]}>
                       {tenseId === 'present' ? verb.presentTense : verb.pastTense}
-                    </Text>
+                    </ArText>
                     <Ionicons name="volume-high" size={16} color={tense.color} />
                   </Pressable>
                   <View>
@@ -218,7 +219,7 @@ export default function TenseDetailScreen() {
                       >
                         <View style={styles.personInfo}>
                           <Text style={styles.personLabel}>{person.label}</Text>
-                          <Text style={styles.personArabic}>{person.labelArabic}</Text>
+                          <ArText style={styles.personArabic}>{person.labelArabic}</ArText>
                         </View>
                         <View style={styles.conjugationValue}>
                           <Text style={styles.conjugationText}>
@@ -241,7 +242,7 @@ export default function TenseDetailScreen() {
                           onPress={() => speak(example.arabic)}
                         >
                           <View style={styles.exampleContent}>
-                            <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                            <ArText style={styles.exampleArabic}>{example.arabic}</ArText>
                             <Text style={styles.exampleEnglish}>{example.english}</Text>
                           </View>
                           <Ionicons name="volume-high" size={18} color={tense.color} />

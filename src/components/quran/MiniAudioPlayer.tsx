@@ -8,6 +8,7 @@ import { quranAudioService } from '../../services/quranAudioService';
 import { useNarrationStore } from '../../services/storyNarration';
 import { getSurahByNumber } from '../../data/arabic/quran';
 import { font, color, radius } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 export function MiniAudioPlayer() {
   const router = useRouter();
@@ -165,9 +166,9 @@ export function MiniAudioPlayer() {
 
         {/* Surah Info */}
         <View style={styles.info}>
-          <Text style={styles.surahArabic} numberOfLines={1}>
+          <ArText style={styles.surahArabic} numberOfLines={1}>
             {currentlyPlaying.surahNameArabic}
-          </Text>
+          </ArText>
           <View style={styles.metaRow}>
             <Text style={styles.surahName} numberOfLines={1}>
               {currentlyPlaying.surahNameEnglish}

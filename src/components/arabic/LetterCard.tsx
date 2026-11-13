@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ArabicLetter } from '../../types/arabic';
 import { useProgressStore } from '../../stores/progressStore';
 import { font, color, radius } from '../../theme/tokens';
+import { ArText } from './ArText';
 
 interface LetterCardProps {
   letter: ArabicLetter;
@@ -154,7 +155,7 @@ export function LetterDetail({ letter, onPlayAudio, isPlaying }: LetterDetailPro
       {/* Letter info */}
       <View style={styles.infoSection}>
         <Text style={styles.letterName}>{letter.name}</Text>
-        <Text style={styles.letterNameArabic}>{letter.nameArabic}</Text>
+        <ArText style={styles.letterNameArabic}>{letter.nameArabic}</ArText>
         <Text style={styles.transliteration}>/{letter.transliteration}/</Text>
       </View>
 
@@ -192,7 +193,7 @@ export function LetterDetail({ letter, onPlayAudio, isPlaying }: LetterDetailPro
         <Text style={styles.examplesTitle}>{t('alphabet.examples')}</Text>
         {letter.examples.map((example, index) => (
           <View key={index} style={styles.exampleItem}>
-            <Text style={styles.exampleArabic}>{example.word}</Text>
+            <ArText style={styles.exampleArabic}>{example.word}</ArText>
             <Text style={styles.exampleTranslit}>{example.transliteration}</Text>
             <Text style={styles.exampleMeaning}>{example.meaning}</Text>
             <Text style={styles.examplePosition}>({example.position})</Text>

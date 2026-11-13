@@ -16,6 +16,7 @@ import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Part of speech labels with colors
 const partOfSpeechConfig: Record<string, { label: string; labelArabic: string; color: string }> = {
@@ -137,7 +138,7 @@ export default function ThemeDetailScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{lc(theme.name, theme.nameFr)}</Text>
-            <Text style={styles.titleArabic}>{theme.nameArabic}</Text>
+            <ArText style={styles.titleArabic}>{theme.nameArabic}</ArText>
           </View>
         </View>
 
@@ -268,11 +269,11 @@ export default function ThemeDetailScreen() {
                   onPress={() => speak(word.exampleSentence!.arabic)}
                 >
                   <View style={styles.exampleCardHeader}>
-                    <Text style={styles.exampleCardWord}>{word.arabicWithVowels}</Text>
+                    <ArText style={styles.exampleCardWord}>{word.arabicWithVowels}</ArText>
                     <Text style={styles.exampleCardMeaning}>{lc(word.english, word.french)}</Text>
                   </View>
                   <View style={styles.exampleCardDivider} />
-                  <Text style={styles.exampleCardArabic}>{word.exampleSentence!.arabic}</Text>
+                  <ArText style={styles.exampleCardArabic}>{word.exampleSentence!.arabic}</ArText>
                   <Text style={styles.exampleCardEnglish}>{lc(word.exampleSentence!.english, word.exampleSentence!.french)}</Text>
                   <View style={styles.exampleCardAudioIcon}>
                     <Ionicons name="volume-medium" size={16} color={color.progress} />
@@ -313,9 +314,9 @@ export default function ThemeDetailScreen() {
                         speak(word.arabicWithVowels || word.arabic);
                       }}
                     >
-                      <Text style={styles.wordArabic}>
+                      <ArText style={styles.wordArabic}>
                         {showVowels ? word.arabicWithVowels : word.arabic}
-                      </Text>
+                      </ArText>
                       <View style={styles.wordAudioBtn}>
                         <Ionicons name="volume-medium" size={16} color={color.progress} />
                       </View>
@@ -380,7 +381,7 @@ export default function ThemeDetailScreen() {
                             style={styles.wordDetailValue}
                             onPress={() => speak(word.plural!)}
                           >
-                            <Text style={styles.wordDetailArabic}>{word.plural}</Text>
+                            <ArText style={styles.wordDetailArabic}>{word.plural}</ArText>
                             <Ionicons name="volume-medium" size={14} color={color.progress} />
                           </Pressable>
                         </View>
@@ -388,9 +389,9 @@ export default function ThemeDetailScreen() {
                       <View style={styles.wordDetail}>
                         <Text style={styles.wordDetailLabel}>{t('vocabulary.type')}</Text>
                         <View style={styles.wordDetailValue}>
-                          <Text style={[styles.wordDetailText, { color: posConfig.color }]}>
+                          <ArText style={[styles.wordDetailText, { color: posConfig.color }]}>
                             {posConfig.labelArabic} ({posConfig.label})
-                          </Text>
+                          </ArText>
                         </View>
                       </View>
                       {word.gender && (
@@ -416,9 +417,9 @@ export default function ThemeDetailScreen() {
                           <Text style={styles.exampleLabel}>{t('vocabulary.exampleSentence')}</Text>
                           <Ionicons name="volume-medium" size={16} color={color.progress} />
                         </View>
-                        <Text style={styles.exampleArabic}>
+                        <ArText style={styles.exampleArabic}>
                           {word.exampleSentence.arabic}
-                        </Text>
+                        </ArText>
                         <Text style={styles.exampleEnglish}>
                           {lc(word.exampleSentence.english, word.exampleSentence.french)}
                         </Text>

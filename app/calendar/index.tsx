@@ -8,6 +8,7 @@ import { CALENDAR_LESSONS } from '../../src/data/arabic/calendar/calendarCourse'
 import { font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function CalendarIndexScreen() {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ export default function CalendarIndexScreen() {
         </Pressable>
         <View style={styles.headerTitles}>
           <Text style={styles.headerTitle}>{t('calendarFeature.title')}</Text>
-          <Text style={styles.headerTitleArabic}>التَّقْوِيمُ الْهِجْرِيّ</Text>
+          <ArText style={styles.headerTitleArabic}>التَّقْوِيمُ الْهِجْرِيّ</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>
@@ -44,7 +45,7 @@ export default function CalendarIndexScreen() {
             <View style={styles.lessonText}>
               <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
               <Text style={styles.lessonSubtitle} numberOfLines={1}>{lc(lesson.subtitle, lesson.subtitleFr)}</Text>
-              <Text style={[styles.lessonArabic, { color: lesson.color }]}>{lesson.titleArabic}</Text>
+              <ArText style={[styles.lessonArabic, { color: lesson.color }]}>{lesson.titleArabic}</ArText>
             </View>
             <View style={styles.lessonNumber}>
               <Text style={styles.lessonNumberText}>{index + 1}</Text>

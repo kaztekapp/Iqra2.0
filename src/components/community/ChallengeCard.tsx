@@ -6,6 +6,7 @@ import { router, type Href } from 'expo-router';
 import { Challenge } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import { ArText } from '../arabic/ArText';
 
 interface ChallengeCardProps {
   challenge: Challenge;
@@ -96,7 +97,7 @@ export const ChallengeCard: React.FC<ChallengeCardProps> = ({ challenge }) => {
       </View>
 
       <Text style={styles.title}>{challenge.title}</Text>
-      <Text style={styles.titleArabic}>{challenge.titleArabic}</Text>
+      <ArText style={styles.titleArabic}>{challenge.titleArabic}</ArText>
       <Text style={styles.description}>{challenge.description}</Text>
 
       <View style={styles.progressContainer}>

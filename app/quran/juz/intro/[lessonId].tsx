@@ -17,6 +17,7 @@ import { JUZ_INTRO_LESSONS } from '../../../../src/data/arabic/quran/lessons/juz
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 // Content Block Component
 function ContentBlock({ item }: { item: { type: string; text: string; textFr?: string; icon?: string } }) {
@@ -148,7 +149,7 @@ export default function IntroLessonScreen() {
             style={styles.titleGradient}
           >
             <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
-            <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
+            <ArText style={styles.lessonTitleArabic}>{lesson.titleArabic}</ArText>
             <View style={styles.divider} />
             <Text style={styles.lessonDescription}>{lc(lesson.description, lesson.descriptionFr)}</Text>
           </LinearGradient>

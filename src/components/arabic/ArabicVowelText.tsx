@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { Text, TextStyle, StyleSheet } from 'react-native';
+import { TextStyle, StyleSheet } from 'react-native';
 import { font, color } from '../../theme/tokens';
+import { ArText } from './ArText';
 
 interface ArabicVowelTextProps {
   text: string;
@@ -36,7 +37,7 @@ const ArabicVowelText = memo(function ArabicVowelText({
   showVowelHighlight = true,
 }: ArabicVowelTextProps) {
   if (!showVowelHighlight) {
-    return <Text style={[styles.arabicText, style]}>{text}</Text>;
+    return <ArText style={[styles.arabicText, style]}>{text}</ArText>;
   }
 
   // Parse the text and separate vowels from base letters
@@ -50,15 +51,15 @@ const ArabicVowelText = memo(function ArabicVowelText({
       // If we have accumulated base text, add it first
       if (currentBase) {
         elements.push(
-          <Text key={`base-${i}`} style={[styles.arabicText, style]}>
+          <ArText key={`base-${i}`} style={[styles.arabicText, style]}>
             {currentBase}
-          </Text>
+          </ArText>
         );
         currentBase = '';
       }
       // Add the vowel with highlight color
       elements.push(
-        <Text
+        <ArText
           key={`vowel-${i}`}
           style={[
             styles.arabicText,
@@ -67,7 +68,7 @@ const ArabicVowelText = memo(function ArabicVowelText({
           ]}
         >
           {char}
-        </Text>
+        </ArText>
       );
     } else {
       currentBase += char;
@@ -77,13 +78,13 @@ const ArabicVowelText = memo(function ArabicVowelText({
   // Add any remaining base text
   if (currentBase) {
     elements.push(
-      <Text key="base-final" style={[styles.arabicText, style]}>
+      <ArText key="base-final" style={[styles.arabicText, style]}>
         {currentBase}
-      </Text>
+      </ArText>
     );
   }
 
-  return <Text style={[styles.arabicText, style]}>{elements}</Text>;
+  return <ArText style={[styles.arabicText, style]}>{elements}</ArText>;
 });
 
 const styles = StyleSheet.create({

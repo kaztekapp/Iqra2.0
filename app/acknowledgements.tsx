@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ACKNOWLEDGEMENTS } from '../src/data/legal/acknowledgements';
 import { color, font, radius } from '../src/theme/tokens';
 import { quietly } from '../src/lib/report';
+import { ArText } from '../src/components/arabic/ArText';
 
 /**
  * The app's sources, credited as their terms ask: each one named, what it is
@@ -31,7 +32,7 @@ export default function AcknowledgementsScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.arabic} allowFontScaling={false}>شُكْرٌ وَتَقْدِير</Text>
+        <ArText style={styles.arabic} allowFontScaling={false}>شُكْرٌ وَتَقْدِير</ArText>
         <Text style={styles.intro}>{intro}</Text>
 
         {groups.map((group) => (

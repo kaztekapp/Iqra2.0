@@ -12,6 +12,7 @@ import { ProphetListItem } from '../../../src/types/prophetStories';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 export default function ProphetListScreen() {
   const { t } = useTranslation();
@@ -73,7 +74,7 @@ export default function ProphetListScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('prophetsFeature.title')}</Text>
-          <Text style={styles.titleArabic}>قصص الأنبياء</Text>
+          <ArText style={styles.titleArabic}>قصص الأنبياء</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>

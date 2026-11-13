@@ -15,6 +15,7 @@ import { NarrationPace, NarrationStatus, SleepOption } from '../../hooks/useStor
 import type { VoiceGender } from '../../services/storyAudioService';
 import { formatClock } from './format';
 import i18n from 'i18next';
+import { ArText } from '../arabic/ArText';
 
 const PACES: NarrationPace[] = ['normal', 'slow'];
 const SLEEP_OPTIONS: SleepOption[] = ['off', 5, 15, 30, 45];
@@ -116,9 +117,9 @@ export function ListenSheet({
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
               <View style={styles.plate}>
-                <Text style={styles.plateArabic} numberOfLines={1}>
+                <ArText style={styles.plateArabic} numberOfLines={1}>
                   {arabicTitle || '﷽'}
-                </Text>
+                </ArText>
               </View>
 
               <Text style={styles.title} numberOfLines={2}>

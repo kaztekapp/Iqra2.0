@@ -14,6 +14,7 @@ import type { SharedContent } from '../../../src/data/community/socialData';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 type TenseType = 'past' | 'present' | 'future' | 'imperative';
 
@@ -176,14 +177,14 @@ export default function VerbDetailScreen() {
               >
                 {tenseLabels[tense].en}
               </Text>
-              <Text
+              <ArText
                 style={[
                   styles.tenseTabArabic,
                   activeTense === tense && { color: tenseColors[tense] },
                 ]}
               >
                 {tenseLabels[tense].ar}
-              </Text>
+              </ArText>
             </Pressable>
           ))}
         </View>
@@ -205,7 +206,7 @@ export default function VerbDetailScreen() {
                 >
                   <View style={styles.personInfo}>
                     <Text style={styles.personLabel}>{person.label}</Text>
-                    <Text style={styles.personArabic}>{person.labelArabic}</Text>
+                    <ArText style={styles.personArabic}>{person.labelArabic}</ArText>
                   </View>
                   <View style={styles.conjugationValue}>
                     <Text style={styles.conjugationText}>{conjugation}</Text>
@@ -228,7 +229,7 @@ export default function VerbDetailScreen() {
                 onPress={() => speak(example.arabic)}
               >
                 <View style={styles.exampleContent}>
-                  <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                  <ArText style={styles.exampleArabic}>{example.arabic}</ArText>
                   <Text style={styles.exampleEnglish}>{example.english}</Text>
                 </View>
                 <Ionicons name="volume-high" size={20} color={tenseColors[activeTense]} />
@@ -252,7 +253,7 @@ export default function VerbDetailScreen() {
                     {example.tense}
                   </Text>
                 </View>
-                <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                <ArText style={styles.exampleArabic}>{example.arabic}</ArText>
                 <Text style={styles.exampleEnglish}>{example.english}</Text>
               </View>
               <Ionicons name="volume-high" size={20} color={color.textFaint} />

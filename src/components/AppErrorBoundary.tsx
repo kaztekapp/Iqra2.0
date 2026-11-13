@@ -5,6 +5,7 @@ import * as Updates from 'expo-updates';
 import i18n from 'i18next';
 import { font, color, radius } from '../theme/tokens';
 import { reportError } from '../lib/report';
+import { ArText } from './arabic/ArText';
 
 interface Props {
   children: ReactNode;
@@ -47,7 +48,7 @@ export class AppErrorBoundary extends Component<Props, State> {
             </View>
 
             <Text style={styles.title}>{i18n.t('profile.errorBoundaryTitle')}</Text>
-            <Text style={styles.titleArabic}>حدث خطأ ما</Text>
+            <ArText style={styles.titleArabic}>حدث خطأ ما</ArText>
 
             <Text style={styles.message}>
               {i18n.t('profile.errorBoundaryMessage')}

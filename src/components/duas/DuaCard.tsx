@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { DuaListItem, DUA_CATEGORY_LABELS, HADITH_COLLECTION_NAMES } from '../../types/duas';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface DuaCardProps {
   dua: DuaListItem;
@@ -22,7 +23,7 @@ export function DuaCard({ dua, onPress }: DuaCardProps) {
 
       <View style={styles.content}>
         <View style={styles.nameRow}>
-          <Text style={styles.nameArabic}>{dua.titleArabic}</Text>
+          <ArText style={styles.nameArabic}>{dua.titleArabic}</ArText>
           <Text style={styles.nameEnglish}>{dua.titleEnglish}</Text>
         </View>
 
@@ -30,9 +31,9 @@ export function DuaCard({ dua, onPress }: DuaCardProps) {
           <Text style={styles.categoryText}>{categoryLabel.english}</Text>
         </View>
 
-        <Text style={styles.arabicPreview} numberOfLines={1}>
+        <ArText style={styles.arabicPreview} numberOfLines={1}>
           {dua.arabicText}
-        </Text>
+        </ArText>
 
         <View style={styles.metaRow}>
           <View style={styles.metaItem}>

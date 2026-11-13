@@ -27,6 +27,7 @@ import {
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 
 type TabType = 'learn' | 'quiz';
@@ -55,7 +56,7 @@ function IntroCard({ lesson, onPress }: { lesson: JuzIntroLesson; onPress: () =>
         </View>
         <View style={styles.introCardContent}>
           <Text style={styles.introCardTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
-          <Text style={styles.introCardTitleArabic}>{lesson.titleArabic}</Text>
+          <ArText style={styles.introCardTitleArabic}>{lesson.titleArabic}</ArText>
           <Text style={styles.introCardDesc} numberOfLines={2}>
             {lc(lesson.description, lesson.descriptionFr)}
           </Text>
@@ -91,7 +92,7 @@ function JuzCard({ juz, onPress }: { juz: JuzLesson; onPress: () => void }) {
         </View>
         <View style={styles.juzInfo}>
           <Text style={styles.juzName}>{juz.nameEnglish}</Text>
-          <Text style={styles.juzNameArabic}>{juz.nameArabic}</Text>
+          <ArText style={styles.juzNameArabic}>{juz.nameArabic}</ArText>
         </View>
         <View
           style={[
@@ -219,7 +220,7 @@ export default function JuzMainScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('juzFeature.title')} (Ajza')</Text>
-          <Text style={styles.titleArabic}>الأجزاء</Text>
+          <ArText style={styles.titleArabic}>الأجزاء</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>

@@ -16,6 +16,7 @@ import { useArabicTextsStore } from '../../../src/stores/arabicTextsStore';
 import { playArabicLines, stopArabic } from '../../../src/services/speech/arabicTTS';
 import { color, radius } from '../../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 const BRAND = color.progress;
 const SPEEDS = [
@@ -168,9 +169,9 @@ export default function ArabicPlayerScreen() {
               }}
               style={[styles.verseRow, isActive && styles.verseRowActive]}
             >
-              <Text style={[styles.verseText, isActive && styles.verseTextActive]}>
+              <ArText style={[styles.verseText, isActive && styles.verseTextActive]}>
                 {line.trim()}
-              </Text>
+              </ArText>
             </Pressable>
           );
         })}

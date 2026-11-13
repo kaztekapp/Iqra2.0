@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { CommunityAchievement } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import { ArText } from '../arabic/ArText';
 
 interface AchievementFeedProps {
   achievements: CommunityAchievement[];
@@ -47,7 +48,7 @@ export const AchievementFeed: React.FC<AchievementFeedProps> = ({ achievements }
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{t('community.recentAchievements')}</Text>
-          <Text style={styles.titleArabic}>الإنجازات</Text>
+          <ArText style={styles.titleArabic}>الإنجازات</ArText>
         </View>
         <View style={styles.emptyState}>
           <Ionicons name="trophy-outline" size={40} color={color.textFaint} />
@@ -62,7 +63,7 @@ export const AchievementFeed: React.FC<AchievementFeedProps> = ({ achievements }
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t('community.recentAchievements')}</Text>
-        <Text style={styles.titleArabic}>الإنجازات</Text>
+        <ArText style={styles.titleArabic}>الإنجازات</ArText>
       </View>
 
       <View style={styles.feed}>
@@ -93,9 +94,9 @@ export const AchievementFeed: React.FC<AchievementFeedProps> = ({ achievements }
                     {' '}earned "{achievement.achievementTitle}"
                   </Text>
                 </Text>
-                <Text style={styles.achievementArabic}>
+                <ArText style={styles.achievementArabic}>
                   {achievement.achievementTitleArabic}
-                </Text>
+                </ArText>
               </View>
               <Text style={styles.timestamp}>{getTimeAgo(achievement.timestamp)}</Text>
             </View>

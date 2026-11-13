@@ -8,6 +8,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { getNumbersLesson, NUMBERS_LESSONS, NumbersBlock } from '../../src/data/arabic/numbers/numbersCourse';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function NumbersLessonScreen() {
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
@@ -54,7 +55,7 @@ export default function NumbersLessonScreen() {
                     <View style={{ flex: 1 }} />
                     <Ionicons name="volume-medium" size={16} color={color.sacred} />
                   </View>
-                  <Text style={styles.numberArabic}>{item.arabic}</Text>
+                  <ArText style={styles.numberArabic}>{item.arabic}</ArText>
                   <Text style={styles.numberTranslit}>{item.translit}</Text>
                   <Text style={styles.numberMeaning}>{lc(item.en, item.fr)}</Text>
                 </Pressable>
@@ -79,7 +80,7 @@ export default function NumbersLessonScreen() {
             {block.items.map((ex, j) => (
               <Pressable accessibilityRole="button" key={j} style={styles.exampleRow} onPress={() => speak(ex.arabic)}>
                 <View style={styles.exampleText}>
-                  <Text style={styles.exampleArabic}>{ex.arabic}</Text>
+                  <ArText style={styles.exampleArabic}>{ex.arabic}</ArText>
                   <Text style={styles.exampleTranslit}>{ex.translit}</Text>
                   <Text style={styles.exampleMeaning}>{lc(ex.en, ex.fr)}</Text>
                 </View>
@@ -140,7 +141,7 @@ export default function NumbersLessonScreen() {
         </Pressable>
         <View style={styles.headerTitles}>
           <Text style={styles.headerTitle} numberOfLines={1}>{lc(lesson.title, lesson.titleFr)}</Text>
-          <Text style={styles.headerTitleArabic}>{lesson.titleArabic}</Text>
+          <ArText style={styles.headerTitleArabic}>{lesson.titleArabic}</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>

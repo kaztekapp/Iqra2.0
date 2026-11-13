@@ -18,6 +18,7 @@ import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 
 // Rating descriptions for SM-2 scale
@@ -115,7 +116,7 @@ export default function VocabularyReviewScreen() {
             <Ionicons name="checkmark-done-circle" size={64} color={color.progress} />
           </View>
           <Text style={styles.emptyTitle}>{t('vocabulary.allCaughtUp')}</Text>
-          <Text style={styles.emptyTitleArabic}>لا مراجعات اليوم</Text>
+          <ArText style={styles.emptyTitleArabic}>لا مراجعات اليوم</ArText>
           <Text style={styles.emptySubtitle}>
             {t('vocabulary.noReviewsDue')}
           </Text>
@@ -141,7 +142,7 @@ export default function VocabularyReviewScreen() {
             <Ionicons name="trophy" size={64} color={color.sacred} />
           </View>
           <Text style={styles.completeTitle}>{t('vocabulary.reviewComplete')}</Text>
-          <Text style={styles.completeTitleArabic}>اكتملت المراجعة</Text>
+          <ArText style={styles.completeTitleArabic}>اكتملت المراجعة</ArText>
 
           <View style={styles.statsCard}>
             <View style={styles.statItem}>
@@ -223,9 +224,9 @@ export default function VocabularyReviewScreen() {
           {/* Front of Card (Arabic) */}
           <Animated.View style={[styles.card, frontAnimatedStyle]}>
             <View style={styles.cardContent}>
-              <Text style={styles.cardArabic}>
+              <ArText style={styles.cardArabic}>
                 {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-              </Text>
+              </ArText>
               <Text style={styles.cardTranslit}>
                 {currentWord.transliteration}
               </Text>
@@ -247,15 +248,15 @@ export default function VocabularyReviewScreen() {
             <View style={styles.cardContent}>
               <Text style={styles.cardEnglish}>{lc(currentWord.english, currentWord.french)}</Text>
               <View style={styles.backArabic}>
-                <Text style={styles.backArabicText}>
+                <ArText style={styles.backArabicText}>
                   {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-                </Text>
+                </ArText>
               </View>
               {currentWord.exampleSentence && (
                 <View style={styles.exampleBox}>
-                  <Text style={styles.exampleArabic}>
+                  <ArText style={styles.exampleArabic}>
                     {currentWord.exampleSentence.arabic}
-                  </Text>
+                  </ArText>
                   <Text style={styles.exampleEnglish}>
                     {lc(currentWord.exampleSentence.english, currentWord.exampleSentence.french)}
                   </Text>

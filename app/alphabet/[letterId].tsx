@@ -16,6 +16,7 @@ import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function LetterDetailScreen() {
   const { letterId } = useLocalSearchParams<{ letterId: string }>();
@@ -93,7 +94,7 @@ export default function LetterDetailScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{lc(letter.name, letter.nameFr)}</Text>
-            <Text style={styles.titleArabic}>{letter.nameArabic}</Text>
+            <ArText style={styles.titleArabic}>{letter.nameArabic}</ArText>
           </View>
           {COMMUNITY_ENABLED && (
             <Pressable
@@ -126,7 +127,7 @@ export default function LetterDetailScreen() {
 
         {/* Main Letter Display */}
         <View style={styles.mainLetterCard}>
-          <Text style={[styles.mainLetter, arabicFont ? { fontFamily: arabicFont } : null]}>{letter.letter}</Text>
+          <ArText style={[styles.mainLetter, arabicFont ? { fontFamily: arabicFont } : null]}>{letter.letter}</ArText>
           <Text style={styles.transliteration}>{letter.transliteration}</Text>
           {isMastered && (
             <View style={styles.masteredBadge}>
@@ -177,7 +178,7 @@ export default function LetterDetailScreen() {
               <View key={form.key} style={styles.formCard}>
                 <Text style={[styles.formLetter, arabicFont ? { fontFamily: arabicFont } : null]}>{form.form}</Text>
                 <Text style={styles.formLabel}>{form.label}</Text>
-                <Text style={styles.formLabelAr}>{form.labelAr}</Text>
+                <ArText style={styles.formLabelAr}>{form.labelAr}</ArText>
               </View>
             ))}
           </View>
@@ -189,7 +190,7 @@ export default function LetterDetailScreen() {
           {letter.examples.map((example, index) => (
             <View key={index} style={styles.exampleCard}>
               <View style={styles.exampleLeft}>
-                <Text style={[styles.exampleArabic, arabicFont ? { fontFamily: arabicFont } : null]}>{example.word}</Text>
+                <ArText style={[styles.exampleArabic, arabicFont ? { fontFamily: arabicFont } : null]}>{example.word}</ArText>
                 <Text style={styles.exampleTranslit}>{example.transliteration}</Text>
               </View>
               <View style={styles.exampleRight}>

@@ -13,6 +13,7 @@ import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
 import { withCommunityGate } from '../../src/components/community/withCommunityGate';
+import { ArText } from '../../src/components/arabic/ArText';
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   const { t } = useTranslation();
   const { lc } = useLocalizedContent();
@@ -65,7 +66,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
       </View>
 
       <Text style={styles.challengeTitle}>{lc(challenge.title, challenge.titleFr)}</Text>
-      <Text style={styles.challengeTitleArabic}>{challenge.titleArabic}</Text>
+      <ArText style={styles.challengeTitleArabic}>{challenge.titleArabic}</ArText>
       <Text style={styles.challengeDescription}>{lc(challenge.description, challenge.descriptionFr)}</Text>
 
       <View style={styles.progressSection}>
@@ -140,7 +141,7 @@ function ChallengesScreen() {
         </Pressable>
         <View style={styles.headerTitles}>
           <Text style={styles.headerTitle}>{t('community.challenges')}</Text>
-          <Text style={styles.headerTitleArabic}>التحديات</Text>
+          <ArText style={styles.headerTitleArabic}>التحديات</ArText>
         </View>
         <View style={styles.headerSpacer} />
       </View>

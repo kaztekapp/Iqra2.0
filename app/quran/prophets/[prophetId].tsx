@@ -18,6 +18,7 @@ import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 /**
  * Stable empty arrays. A fresh `[]` every render changes the identity of the
@@ -266,7 +267,7 @@ export default function ProphetStoryScreen() {
           <View style={styles.subStoryHeader}>
             <Text style={styles.subStoryTitle}>{lc(currentSubStory.title, currentSubStory.titleFr)}</Text>
             {currentSubStory.titleArabic && (
-              <Text style={styles.subStoryTitleArabic}>{currentSubStory.titleArabic}</Text>
+              <ArText style={styles.subStoryTitleArabic}>{currentSubStory.titleArabic}</ArText>
             )}
             <View style={styles.subStoryMeta}>
               <View style={styles.metaItem}>
@@ -344,7 +345,7 @@ export default function ProphetStoryScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <View style={styles.prophetNameRow}>
-            <Text style={styles.prophetNameArabic}>{prophet.nameArabic}</Text>
+            <ArText style={styles.prophetNameArabic}>{prophet.nameArabic}</ArText>
             <Text style={styles.prophetNameEnglish}>{lc(prophet.nameEnglish, prophet.nameFrench)}</Text>
           </View>
           <Text style={styles.prophetTitle}>{lc(prophet.title, prophet.titleFr)}</Text>
