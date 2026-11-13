@@ -4,12 +4,32 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import Svg, { Path } from 'react-native-svg';
 import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 import { color, radius } from '../src/theme/tokens';
 import { errorMessage, errorCode } from '../src/lib/report';
 
-// Feature flag: set to true once Google/Apple OAuth credentials are configured
-const ENABLE_SOCIAL_LOGIN = false;
+// Apple: the app ID and the build already carry Sign in with Apple. Turn this on
+// once the Apple provider is switched on in Supabase (client ID com.iqra2.app).
+const APPLE_PROVIDER_READY = false;
+const SHOW_APPLE = APPLE_PROVIDER_READY && Platform.OS === 'ios';
+// Google shows itself as soon as its client IDs are in the environment. iOS also
+// needs its own client ID (and its URL scheme in the build), or the SDK fails.
+const SHOW_GOOGLE =
+  !!process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID &&
+  (Platform.OS !== 'ios' || !!process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID);
+
+/** Google's own mark, in its four colours, as its sign-in guidelines ask. */
+function GoogleMark() {
+  return (
+    <Svg width={20} height={20} viewBox="0 0 48 48">
+      <Path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <Path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <Path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <Path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </Svg>
+  );
+}
 
 export default function AuthScreen() {
   const { t } = useTranslation();
@@ -378,12 +398,7 @@ export default function AuthScreen() {
             </View>
           </View>
 
-          {/* Social Login - Hidden until OAuth credentials are configured.
-              To re-enable: set ENABLE_SOCIAL_LOGIN to true and configure:
-              1. Google: Set EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID & EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID in .env
-              2. Apple: Enable Sign in with Apple capability in Apple Developer portal
-              3. Supabase: Enable Google & Apple providers in Supabase Auth settings */}
-          {ENABLE_SOCIAL_LOGIN && (
+          {(SHOW_APPLE || SHOW_GOOGLE) && (
             <>
               <View style={styles.dividerRow}>
                 <View style={styles.dividerLine} />
@@ -391,25 +406,7 @@ export default function AuthScreen() {
                 <View style={styles.dividerLine} />
               </View>
 
-              <TouchableOpacity
-                style={[styles.socialButton, isAnyLoading && { opacity: 0.7 }]}
-                activeOpacity={0.7}
-                onPress={handleGoogleSignIn}
-                disabled={isAnyLoading}
-                accessibilityRole="button"
-                accessibilityLabel={t('auth.continueWithGoogle')}
-              >
-                {socialLoading === 'google' ? (
-                  <ActivityIndicator color={color.text} size="small" />
-                ) : (
-                  <>
-                    <Ionicons name="logo-google" size={20} color={color.text} />
-                    <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
-                  </>
-                )}
-              </TouchableOpacity>
-
-              {Platform.OS === 'ios' && (
+              {SHOW_APPLE && (
                 <TouchableOpacity
                   style={[styles.appleButton, isAnyLoading && { opacity: 0.7 }]}
                   activeOpacity={0.7}
@@ -419,11 +416,31 @@ export default function AuthScreen() {
                   accessibilityLabel={t('auth.continueWithApple')}
                 >
                   {socialLoading === 'apple' ? (
+                    <ActivityIndicator color={color.textOnAccent} size="small" />
+                  ) : (
+                    <>
+                      <Ionicons name="logo-apple" size={20} color={color.textOnAccent} />
+                      <Text style={[styles.socialText, styles.appleText]}>{t('auth.continueWithApple')}</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
+              )}
+
+              {SHOW_GOOGLE && (
+                <TouchableOpacity
+                  style={[styles.socialButton, isAnyLoading && { opacity: 0.7 }]}
+                  activeOpacity={0.7}
+                  onPress={handleGoogleSignIn}
+                  disabled={isAnyLoading}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('auth.continueWithGoogle')}
+                >
+                  {socialLoading === 'google' ? (
                     <ActivityIndicator color={color.text} size="small" />
                   ) : (
                     <>
-                      <Ionicons name="logo-apple" size={22} color={color.text} />
-                      <Text style={styles.socialText}>{t('auth.continueWithApple')}</Text>
+                      <GoogleMark />
+                      <Text style={styles.socialText}>{t('auth.continueWithGoogle')}</Text>
                     </>
                   )}
                 </TouchableOpacity>
@@ -693,9 +710,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: radius.md,
     borderWidth: 1,
-    borderColor: '#333333',
+    borderColor: '#000000',
     gap: 10,
     marginBottom: 10,
+  },
+  appleText: {
+    color: color.textOnAccent,
   },
   socialText: {
     color: color.text,

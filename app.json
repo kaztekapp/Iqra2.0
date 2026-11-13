@@ -10,6 +10,7 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": false,
+      "usesAppleSignIn": true,
       "bundleIdentifier": "com.iqra2.app",
       "buildNumber": "1",
       "infoPlist": {
