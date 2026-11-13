@@ -10,6 +10,7 @@ import { getCalendarLesson, CALENDAR_LESSONS, CALENDAR_EVENTS, CalendarBlock } f
 import { toHijri, fromHijri, daysUntil, formatHijri, formatHijriArabic, usesUmmAlQura, toArabicDigits, WEEKDAYS_AR } from '../../src/lib/hijri';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function CalendarLessonScreen() {
   const { lessonId } = useLocalSearchParams<{ lessonId: string }>();
@@ -56,7 +57,7 @@ export default function CalendarLessonScreen() {
                     <View style={{ flex: 1 }} />
                     <Ionicons name="volume-medium" size={16} color={color.sacred} />
                   </View>
-                  <Text style={styles.numberArabic}>{item.arabic}</Text>
+                  <ArText style={styles.numberArabic}>{item.arabic}</ArText>
                   <Text style={styles.numberTranslit}>{item.translit}</Text>
                   <Text style={styles.numberMeaning}>{lc(item.en, item.fr)}</Text>
                 </Pressable>
@@ -81,7 +82,7 @@ export default function CalendarLessonScreen() {
             {block.items.map((ex, j) => (
               <Pressable accessibilityRole="button" key={j} style={styles.exampleRow} onPress={() => speak(ex.arabic)}>
                 <View style={styles.exampleText}>
-                  <Text style={styles.exampleArabic}>{ex.arabic}</Text>
+                  <ArText style={styles.exampleArabic}>{ex.arabic}</ArText>
                   <Text style={styles.exampleTranslit}>{ex.translit}</Text>
                   <Text style={styles.exampleMeaning}>{lc(ex.en, ex.fr)}</Text>
                 </View>
@@ -137,7 +138,7 @@ export default function CalendarLessonScreen() {
               <Text style={styles.sourceRef}>{block.ref}</Text>
               {block.arabic ? <Ionicons name="volume-medium" size={16} color={color.sacred} /> : null}
             </View>
-            {block.arabic ? <Text style={styles.sourceArabic}>{block.arabic}</Text> : null}
+            {block.arabic ? <ArText style={styles.sourceArabic}>{block.arabic}</ArText> : null}
             <Text style={styles.sourceText}>{lc(block.text, block.textFr)}</Text>
           </Pressable>
         );
@@ -158,7 +159,7 @@ export default function CalendarLessonScreen() {
         </Pressable>
         <View style={styles.headerTitles}>
           <Text style={styles.headerTitle} numberOfLines={1}>{lc(lesson.title, lesson.titleFr)}</Text>
-          <Text style={styles.headerTitleArabic}>{lesson.titleArabic}</Text>
+          <ArText style={styles.headerTitleArabic}>{lesson.titleArabic}</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>
@@ -219,7 +220,7 @@ function TodayBlock({ lang }: { lang: 'en' | 'fr' }) {
   return (
     <View style={styles.today}>
       <Text style={styles.todayLabel}>{t('calendarFeature.today')}</Text>
-      <Text style={styles.todayArabic}>{WEEKDAYS_AR[now.getDay()]}، {formatHijriArabic(hijri)}</Text>
+      <ArText style={styles.todayArabic}>{WEEKDAYS_AR[now.getDay()]}، {formatHijriArabic(hijri)}</ArText>
       <Text style={styles.todayLatin}>{formatHijri(hijri, lang)}</Text>
       <Text style={styles.todayGregorian}>{gregorian}</Text>
       <Text style={styles.todayNote}>
@@ -237,10 +238,10 @@ function TodayBlock({ lang }: { lang: 'en' | 'fr' }) {
             <Text style={styles.upcomingName}>{ev.name}</Text>
             <Text style={styles.upcomingHijri}>{ev.hijri}</Text>
           </View>
-          <Text style={styles.upcomingArabic}>{ev.arabic}</Text>
+          <ArText style={styles.upcomingArabic}>{ev.arabic}</ArText>
         </View>
       ))}
-      <Text style={styles.todayYear}>{toArabicDigits(hijri.year)} هـ</Text>
+      <ArText style={styles.todayYear}>{toArabicDigits(hijri.year)} هـ</ArText>
     </View>
   );
 }

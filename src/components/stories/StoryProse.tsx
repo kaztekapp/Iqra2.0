@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TextStyle, StyleProp } from 'react-native';
 import { splitQuranRuns } from '../../services/narrationText';
 import { font, color } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 interface StoryProseProps {
   text: string;
@@ -38,16 +39,16 @@ export function StoryProse({ text, style }: StoryProseProps) {
       {segments.map((segment, i) => {
         if (segment.kind === 'quran') {
           return (
-            <Text key={i} style={styles.ayah} allowFontScaling>
+            <ArText key={i} style={styles.ayah} allowFontScaling>
               {`﴿ ${segment.text} ﴾`}
-            </Text>
+            </ArText>
           );
         }
         if (segment.kind === 'hadith') {
           return (
-            <Text key={i} style={styles.hadith} allowFontScaling>
+            <ArText key={i} style={styles.hadith} allowFontScaling>
               {segment.text}
-            </Text>
+            </ArText>
           );
         }
         const prose = segment.text.trim();

@@ -9,6 +9,7 @@ import { useArabicTextsStore } from '../../../src/stores/arabicTextsStore';
 import { SavedArabicText } from '../../../src/types/arabicText';
 import { font, color, radius } from '../../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 const BRAND = color.progress;
 
@@ -47,9 +48,9 @@ const TextCard = React.memo(function TextCard(
           </View>
         </View>
 
-        <Text style={styles.cardArabic} numberOfLines={2}>
+        <ArText style={styles.cardArabic} numberOfLines={2}>
           {preview}
-        </Text>
+        </ArText>
 
         <View style={styles.cardFooter}>
           <View style={styles.metaRow}>
@@ -119,7 +120,7 @@ export default function ArabicLibraryScreen() {
         </Pressable>
         <View style={styles.headerText}>
           <Text style={styles.title}>{t('reading.memo.libraryTitle')}</Text>
-          <Text style={styles.titleAr}>حفظ النصوص</Text>
+          <ArText style={styles.titleAr}>حفظ النصوص</ArText>
         </View>
         <View style={styles.headerBadge}>
           <Text style={styles.headerBadgeText}>{texts.length}</Text>

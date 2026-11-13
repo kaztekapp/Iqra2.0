@@ -15,6 +15,7 @@ import { buildAyahScene, AnchorWord } from '../../../../src/utils/sceneBuilder';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../../src/theme/icons';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 // ============ Types & Constants ============
 
@@ -39,7 +40,7 @@ function AnchorChip({ anchor, index, hidden, onReveal }: { anchor: AnchorWord; i
     return (
       <Pressable style={styles.anchorChip} onPress={onReveal} accessibilityRole="button" accessibilityLabel={`Hide word ${index}`}>
         <Text style={styles.anchorIndex}>{index}</Text>
-        <Text style={styles.anchorArabic}>{anchor.arabic}</Text>
+        <ArText style={styles.anchorArabic}>{anchor.arabic}</ArText>
         <Text style={styles.anchorMeaning} numberOfLines={2}>{anchor.meaning}</Text>
       </Pressable>
     );
@@ -47,7 +48,7 @@ function AnchorChip({ anchor, index, hidden, onReveal }: { anchor: AnchorWord; i
   return (
     <View style={styles.anchorChip}>
       <Text style={styles.anchorIndex}>{index}</Text>
-      <Text style={styles.anchorArabic}>{anchor.arabic}</Text>
+      <ArText style={styles.anchorArabic}>{anchor.arabic}</ArText>
       <Text style={styles.anchorMeaning} numberOfLines={2}>{anchor.meaning}</Text>
     </View>
   );
@@ -189,7 +190,7 @@ export default function VisualizationScreen() {
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.headerMethodLabel}>{t('visualization.title')}</Text>
         </View>
         <View style={styles.ayahCounter}>

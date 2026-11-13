@@ -16,6 +16,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 
 export default function WritingPracticeScreen() {
@@ -155,7 +156,7 @@ export default function WritingPracticeScreen() {
         {/* Letter Info */}
         <View style={styles.letterInfo}>
           <Text style={styles.letterName}>{lc(currentLetter.name, currentLetter.nameFr)}</Text>
-          <Text style={styles.letterNameAr}>{currentLetter.nameArabic}</Text>
+          <ArText style={styles.letterNameAr}>{currentLetter.nameArabic}</ArText>
           <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
             style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
             onPress={() => speak(currentLetter.letter)}

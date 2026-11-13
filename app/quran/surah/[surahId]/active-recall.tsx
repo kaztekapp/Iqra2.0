@@ -18,6 +18,7 @@ import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 const METHOD_COLOR = color.accent;
 
@@ -341,7 +342,7 @@ export default function ActiveRecallScreen() {
         <View style={styles.breakdownWordsRow}>
           {currentAyah.words.map((word, idx) => (
             <View key={word.id || idx} style={styles.breakdownWordItem}>
-              <Text style={styles.breakdownWordArabic}>{word.text}</Text>
+              <ArText style={styles.breakdownWordArabic}>{word.text}</ArText>
               <Text style={styles.breakdownWordTranslit}>{word.transliteration}</Text>
               {language === 'en' && (
                 <Text style={styles.breakdownWordMeaning}>{word.translation}</Text>
@@ -404,9 +405,9 @@ export default function ActiveRecallScreen() {
           <>
             <View style={styles.wordRow}>
               {words.map((word, i) => (
-                <Text key={word.id || i} style={styles.wordArabicHint}>
+                <ArText key={word.id || i} style={styles.wordArabicHint}>
                   {getHintText(word.text)}
-                </Text>
+                </ArText>
               ))}
             </View>
             <Pressable accessibilityRole="button" style={styles.actionButton} onPress={() => setIsRevealed(true)}>
@@ -472,9 +473,9 @@ export default function ActiveRecallScreen() {
             {/* Meaning Match: Arabic words all visible, translation blanks below */}
             <View style={styles.wordRow}>
               {words.map((word, i) => (
-                <Text key={word.id || i} style={styles.wordArabic}>
+                <ArText key={word.id || i} style={styles.wordArabic}>
                   {word.text}
-                </Text>
+                </ArText>
               ))}
             </View>
 
@@ -521,9 +522,9 @@ export default function ActiveRecallScreen() {
                 const isBlanked = blankIndices.includes(i);
                 if (!isBlanked) {
                   return (
-                    <Text key={word.id || i} style={styles.wordArabic}>
+                    <ArText key={word.id || i} style={styles.wordArabic}>
                       {word.text}
-                    </Text>
+                    </ArText>
                   );
                 }
                 const filled = filledWords[i];
@@ -621,17 +622,17 @@ export default function ActiveRecallScreen() {
 
         <View style={styles.wordRow}>
           {words.slice(0, splitAt).map((word, i) => (
-            <Text key={word.id || i} style={styles.wordArabic}>
+            <ArText key={word.id || i} style={styles.wordArabic}>
               {word.text}
-            </Text>
+            </ArText>
           ))}
           {!isRevealed && (
             <Text style={styles.ellipsis}>...</Text>
           )}
           {isRevealed && words.slice(splitAt).map((word, i) => (
-            <Text key={word.id || (splitAt + i)} style={styles.wordArabicRevealed}>
+            <ArText key={word.id || (splitAt + i)} style={styles.wordArabicRevealed}>
               {word.text}
-            </Text>
+            </ArText>
           ))}
         </View>
 
@@ -744,7 +745,7 @@ export default function ActiveRecallScreen() {
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.methodTitle}>{t('activeRecall.title')}</Text>
         </View>
         <View style={styles.headerRight}>

@@ -25,6 +25,7 @@ import {
   withAlpha,
 } from '../../src/components/ui/Primitives';
 import { color, type, weight, space, radius, gutter, font } from '../../src/theme/tokens';
+import { ArText } from '../../src/components/arabic/ArText';
 
 
 type ExploreCard = { titleKey: string; titleArabic: string; icon: keyof typeof Ionicons.glyphMap; color: string; route: string; arabicChar: string };
@@ -99,7 +100,7 @@ export default function HomeScreen() {
               <IconTile name="headset" tint={color.sacred} size="lg" />
               <View style={styles.continueText}>
                 <Txt variant="bodyLarge" weight="bold" numberOfLines={2}>{t('home.learnMode')}</Txt>
-                <Text style={styles.learnArabic} allowFontScaling={false} numberOfLines={1}>{learnSurah.nameArabic}</Text>
+                <ArText style={styles.learnArabic} allowFontScaling={false} numberOfLines={1}>{learnSurah.nameArabic}</ArText>
                 <Txt variant="caption" tone="faint" numberOfLines={1}>
                   {t('home.learnModeDesc', { surah: learnSurah.nameEnglish })}
                 </Txt>

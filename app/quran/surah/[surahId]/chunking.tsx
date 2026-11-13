@@ -14,6 +14,7 @@ import { useLocalizedContent } from '../../../../src/hooks/useLocalizedContent';
 import { useSettingsStore } from '../../../../src/stores/settingsStore';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import type { IoniconName } from '../../../../src/theme/icons';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 // ============ Types ============
 
@@ -337,7 +338,7 @@ export default function ChunkingScreen() {
         </Pressable>
 
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.headerMethodLabel}>{t('chunking.title')}</Text>
         </View>
 
@@ -434,7 +435,7 @@ export default function ChunkingScreen() {
 
               return (
                 <View key={word.id || wordIndex} style={styles.wordWrapper}>
-                  <Text
+                  <ArText
                     style={[
                       styles.wordText,
                       visualState === 'current' && styles.wordCurrent,
@@ -443,7 +444,7 @@ export default function ChunkingScreen() {
                     ]}
                   >
                     {word.text}
-                  </Text>
+                  </ArText>
                   {visualState === 'current' && (
                     <View style={styles.wordUnderline} />
                   )}
@@ -476,7 +477,7 @@ export default function ChunkingScreen() {
             <View style={styles.chunkWordsRow}>
               {chunks[currentStep.chunkIndex]?.map((word, idx) => (
                 <View key={word.id || idx} style={styles.chunkWordItem}>
-                  <Text style={styles.chunkWordArabic}>{word.text}</Text>
+                  <ArText style={styles.chunkWordArabic}>{word.text}</ArText>
                   <Text style={styles.chunkWordTranslit}>{word.transliteration}</Text>
                   {language === 'en' && (
                     <Text style={styles.chunkWordMeaning}>{word.translation}</Text>
@@ -496,7 +497,7 @@ export default function ChunkingScreen() {
             <View style={styles.chunkWordsRow}>
               {chunks.slice(currentStep.fromChunk, currentStep.toChunk + 1).flat().map((word, idx) => (
                 <View key={word.id || idx} style={styles.chunkWordItem}>
-                  <Text style={styles.chunkWordArabic}>{word.text}</Text>
+                  <ArText style={styles.chunkWordArabic}>{word.text}</ArText>
                   <Text style={styles.chunkWordTranslit}>{word.transliteration}</Text>
                   {language === 'en' && (
                     <Text style={styles.chunkWordMeaning}>{word.translation}</Text>
@@ -516,7 +517,7 @@ export default function ChunkingScreen() {
             <View style={styles.chunkWordsRow}>
               {currentAyah.words.map((word, idx) => (
                 <View key={word.id || idx} style={styles.chunkWordItem}>
-                  <Text style={styles.chunkWordArabic}>{word.text}</Text>
+                  <ArText style={styles.chunkWordArabic}>{word.text}</ArText>
                   <Text style={styles.chunkWordTranslit}>{word.transliteration}</Text>
                   {language === 'en' && (
                     <Text style={styles.chunkWordMeaning}>{word.translation}</Text>

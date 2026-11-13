@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSettingsStore } from '../../src/stores/settingsStore';
 import { color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
+import { ArText } from '../../src/components/arabic/ArText';
 
 const LANGUAGES = [
   {
@@ -44,7 +45,7 @@ export default function LanguageScreen() {
           </View>
           <Text style={styles.title}>Choose your language</Text>
           <Text style={styles.titleFr}>Choisissez votre langue</Text>
-          <Text style={styles.titleAr}>اختر لغتك</Text>
+          <ArText style={styles.titleAr}>اختر لغتك</ArText>
         </View>
 
         {/* Language cards */}

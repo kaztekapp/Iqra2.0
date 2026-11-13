@@ -19,6 +19,7 @@ import ArabicWritingInput from '../../src/components/arabic/ArabicWritingInput';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function TypingPracticeScreen() {
   const showVowels = useProgressStore((s) => s.showVowels);
@@ -252,9 +253,9 @@ export default function TypingPracticeScreen() {
         {/* Hint Display */}
         {showHint && !isAnswered && (
           <View style={styles.hintBox}>
-            <Text style={styles.hintArabic}>
+            <ArText style={styles.hintArabic}>
               {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-            </Text>
+            </ArText>
           </View>
         )}
 
@@ -279,9 +280,9 @@ export default function TypingPracticeScreen() {
                   style={styles.correctAnswerRow}
                   onPress={() => speak(currentWord.arabicWithVowels || currentWord.arabic)}
                 >
-                  <Text style={styles.correctAnswerText}>
+                  <ArText style={styles.correctAnswerText}>
                     {showVowels ? currentWord.arabicWithVowels : currentWord.arabic}
-                  </Text>
+                  </ArText>
                   <Ionicons name="volume-medium" size={20} color={color.accentStrong} />
                 </Pressable>
               </View>

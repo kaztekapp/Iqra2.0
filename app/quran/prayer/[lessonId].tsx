@@ -18,6 +18,7 @@ import { font, color as tk, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 export default function PrayerLessonScreen() {
   const { t } = useTranslation();
@@ -116,14 +117,14 @@ export default function PrayerLessonScreen() {
           <View style={styles.descriptionHeader}>
             <Text style={styles.descriptionTitle}>{lc(block.title, block.titleFr)}</Text>
             {block.titleArabic && (
-              <Text style={styles.descriptionTitleArabic}>{block.titleArabic}</Text>
+              <ArText style={styles.descriptionTitleArabic}>{block.titleArabic}</ArText>
             )}
           </View>
         )}
         {block.arabic && (
           <Pressable accessibilityRole="button" onPress={() => handlePlayArabic(block.arabic!)}>
             <View style={styles.arabicTextContainer}>
-              <Text style={styles.arabicText}>{block.arabic}</Text>
+              <ArText style={styles.arabicText}>{block.arabic}</ArText>
               <Ionicons
                 name={isSpeaking && speakingText === block.arabic ? 'stop-circle' : 'volume-high'}
                 size={18}
@@ -166,7 +167,7 @@ export default function PrayerLessonScreen() {
         <View style={styles.tableTitleRow}>
           <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
-            <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
+            <ArText style={styles.sectionTitleArabic}>{block.titleArabic}</ArText>
           )}
         </View>
       )}
@@ -204,7 +205,7 @@ export default function PrayerLessonScreen() {
         <View style={styles.tableTitleRow}>
           <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
-            <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
+            <ArText style={styles.sectionTitleArabic}>{block.titleArabic}</ArText>
           )}
         </View>
       )}
@@ -216,7 +217,7 @@ export default function PrayerLessonScreen() {
             onPress={() => handlePlayArabic(example.arabic)}
           >
             <View style={styles.exampleArabicRow}>
-              <Text style={styles.exampleArabic}>{example.arabic}</Text>
+              <ArText style={styles.exampleArabic}>{example.arabic}</ArText>
               <Ionicons
                 name={isSpeaking && speakingText === example.arabic ? 'stop-circle' : 'volume-high'}
                 size={14}
@@ -242,7 +243,7 @@ export default function PrayerLessonScreen() {
           </View>
           <View style={styles.prayerStepNames}>
             <Text style={styles.prayerStepName}>{lc(step.positionName, step.positionNameFr)}</Text>
-            <Text style={styles.prayerStepNameArabic}>{step.positionNameArabic}</Text>
+            <ArText style={styles.prayerStepNameArabic}>{step.positionNameArabic}</ArText>
           </View>
           {step.isSunnah && (
             <View style={styles.sunnahBadge}>
@@ -256,7 +257,7 @@ export default function PrayerLessonScreen() {
           style={styles.prayerStepArabicContainer}
           onPress={() => handlePlayArabic(step.arabic)}
         >
-          <Text style={styles.prayerStepArabic}>{step.arabic}</Text>
+          <ArText style={styles.prayerStepArabic}>{step.arabic}</ArText>
           <Ionicons
             name={isSpeaking && speakingText === step.arabic ? 'stop-circle' : 'volume-high'}
             size={20}
@@ -296,7 +297,7 @@ export default function PrayerLessonScreen() {
         <View style={styles.tableTitleRow}>
           <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
-            <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
+            <ArText style={styles.sectionTitleArabic}>{block.titleArabic}</ArText>
           )}
         </View>
       )}
@@ -314,7 +315,7 @@ export default function PrayerLessonScreen() {
               <View style={styles.stepListTitleRow}>
                 <Text style={styles.stepListTitle}>{lc(step.title, step.titleFr)}</Text>
                 {step.titleArabic && (
-                  <Text style={styles.stepListTitleArabic}>{step.titleArabic}</Text>
+                  <ArText style={styles.stepListTitleArabic}>{step.titleArabic}</ArText>
                 )}
               </View>
               <Text style={styles.stepListDescription}>{lc(step.description, step.descriptionFr)}</Text>
@@ -323,7 +324,7 @@ export default function PrayerLessonScreen() {
                   onPress={() => handlePlayArabic(step.arabic!)}
                   style={styles.stepListArabicContainer}
                 >
-                  <Text style={styles.stepListArabic}>{step.arabic}</Text>
+                  <ArText style={styles.stepListArabic}>{step.arabic}</ArText>
                   <Ionicons
                     name={isSpeaking && speakingText === step.arabic ? 'stop-circle' : 'volume-high'}
                     size={14}
@@ -353,7 +354,7 @@ export default function PrayerLessonScreen() {
         <View style={styles.tableTitleRow}>
           <Text style={styles.sectionTitle}>{lc(block.title, block.titleFr)}</Text>
           {block.titleArabic && (
-            <Text style={styles.sectionTitleArabic}>{block.titleArabic}</Text>
+            <ArText style={styles.sectionTitleArabic}>{block.titleArabic}</ArText>
           )}
         </View>
       )}
@@ -365,7 +366,7 @@ export default function PrayerLessonScreen() {
             <View key={i} style={[styles.prayerTimeCard, { borderLeftColor: color }]}>
               <View style={styles.prayerTimeHeader}>
                 <Text style={[styles.prayerTimeName, { color }]}>{lc(row.name, row.nameFr)}</Text>
-                <Text style={styles.prayerTimeArabic}>{row.nameArabic}</Text>
+                <ArText style={styles.prayerTimeArabic}>{row.nameArabic}</ArText>
                 <View style={[styles.rakaatBadge, { backgroundColor: color + '20' }]}>
                   <Text style={[styles.rakaatText, { color }]}>{row.rakaat} {t('prayerFeature.rakaat')}</Text>
                 </View>
@@ -437,7 +438,7 @@ export default function PrayerLessonScreen() {
           <Text style={styles.headerTitleText} numberOfLines={1}>
             {lc(lesson.title, lesson.titleFr)}
           </Text>
-          <Text style={styles.headerTitleArabic}>{lesson.titleArabic}</Text>
+          <ArText style={styles.headerTitleArabic}>{lesson.titleArabic}</ArText>
         </View>
         {COMMUNITY_ENABLED && (
           <Pressable

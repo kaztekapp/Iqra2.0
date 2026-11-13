@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, TextStyle, StyleProp } from 'react-native';
 import { ARABIC_REGEX } from '../chatText';
 import { color, font } from '../../../theme/tokens';
+import { ArText } from '../../arabic/ArText';
 
 // Inline markup used by the lesson editor's formatting toolbar.
 export const MARKERS = {
@@ -56,7 +57,7 @@ function arabicSplit(text: string, keyBase: string, arabicSize?: number): React.
 
   return segments.map((seg, i) =>
     seg.isArabic
-      ? <Text key={`${keyBase}-${i}`} style={[styles.arabic, arabicSize ? { fontSize: arabicSize, lineHeight: arabicSize * 1.6 } : null]}>{seg.text}</Text>
+      ? <ArText key={`${keyBase}-${i}`} style={[styles.arabic, arabicSize ? { fontSize: arabicSize, lineHeight: arabicSize * 1.6 } : null]}>{seg.text}</ArText>
       : <Text key={`${keyBase}-${i}`}>{seg.text}</Text>
   );
 }

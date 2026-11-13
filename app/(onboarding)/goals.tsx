@@ -9,6 +9,7 @@ import { useSettingsStore } from '../../src/stores/settingsStore';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import type { IoniconName } from '../../src/theme/icons';
+import { ArText } from '../../src/components/arabic/ArText';
 
 const CARD_GAP = 12;
 const HORIZONTAL_PADDING = 20;
@@ -79,9 +80,9 @@ export default function GoalsScreen() {
                 <Text style={[styles.goalLabel, isSelected && { color: color.text }]}>
                   {t(goal.labelKey)}
                 </Text>
-                <Text style={[styles.goalArabic, isSelected && { opacity: 1 }]}>
+                <ArText style={[styles.goalArabic, isSelected && { opacity: 1 }]}>
                   {goal.arabic}
-                </Text>
+                </ArText>
                 {isSelected && (
                   <View style={[styles.checkmark, { backgroundColor: goal.color }]}>
                     <Ionicons name="checkmark" size={12} color={color.text} />

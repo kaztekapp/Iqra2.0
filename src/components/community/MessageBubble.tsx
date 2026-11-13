@@ -16,6 +16,7 @@ import { ReactionBadges } from './ReactionBadges';
 import { font, color, radius } from '../../theme/tokens';
 import { quietly } from '../../lib/report';
 import type { ClassContent } from '../../types/classContent';
+import { ArText } from '../arabic/ArText';
 
 export interface MessageBubbleMessage {
   id: string;
@@ -190,12 +191,12 @@ export const MessageBubble = React.memo(function MessageBubble({ msg, getTimeAgo
       ) : msg.type === 'image' && msg.imageUrl ? (
         <ImageContent msg={msg} onImagePress={onImagePress} isMe={isMe} groupColor={groupColor} />
       ) : (
-        <Text style={[isMe ? styles.bubbleMeBody : styles.bubbleOtherBody, arabic && styles.arabicBody]}>
+        <ArText style={[isMe ? styles.bubbleMeBody : styles.bubbleOtherBody, arabic && styles.arabicBody]}>
           {renderMessageText(msg.body, {
             arabicStyle: styles.arabicInline,
             mentionStyle: [styles.mention, { color: isMe ? color.progressSoft : groupColor }],
           })}
-        </Text>
+        </ArText>
       )}
 
       <View style={styles.metaRow}>

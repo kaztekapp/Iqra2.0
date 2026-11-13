@@ -21,6 +21,7 @@ import {
 } from '../../../src/data/arabic/quran/quizzes';
 import { font, color, radius } from '../../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 const CARD_HEIGHT = 280;
 
@@ -103,7 +104,7 @@ function SurahFlashcard({
               end={{ x: 1, y: 1 }}
               style={styles.cardGradient}
             >
-              <Text style={styles.cardLabel}>سُورَة رَقْم</Text>
+              <ArText style={styles.cardLabel}>سُورَة رَقْم</ArText>
               <Text style={styles.cardLabelEn}>{t('surahLearn.surahNumber')}</Text>
               <Text style={styles.cardNumber}>{surah.surahNumber}</Text>
               <View style={styles.tapHint}>
@@ -122,7 +123,7 @@ function SurahFlashcard({
               style={styles.cardGradient}
             >
               {/* Surah Name */}
-              <Text style={styles.cardNameArabic}>{surah.nameArabic}</Text>
+              <ArText style={styles.cardNameArabic}>{surah.nameArabic}</ArText>
               <Text style={styles.cardNameEnglish}>{surah.nameEnglish}</Text>
 
               {/* Meaning */}
@@ -133,7 +134,7 @@ function SurahFlashcard({
               {/* Details Row */}
               <View style={styles.detailsRow}>
                 <View style={styles.detailBox}>
-                  <Text style={styles.detailBoxLabel}>{surah.ayahCount} آيات</Text>
+                  <ArText style={styles.detailBoxLabel}>{surah.ayahCount} آيات</ArText>
                 </View>
                 <View style={styles.detailBox}>
                   <Text style={styles.detailBoxLabel}>
@@ -354,7 +355,7 @@ export default function SurahLearnScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('surahLearn.title')}</Text>
-          <Text style={styles.titleArabic}>السُّوَر والتَّرْكِيب</Text>
+          <ArText style={styles.titleArabic}>السُّوَر والتَّرْكِيب</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { QuranStoryListItem, STORY_CATEGORY_LABELS } from '../../types/quranStories';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface QuranStoryCardProps {
   story: QuranStoryListItem;
@@ -21,7 +22,7 @@ export function QuranStoryCard({ story, onPress }: QuranStoryCardProps) {
 
       <View style={styles.content}>
         <View style={styles.nameRow}>
-          <Text style={styles.nameArabic}>{story.titleArabic}</Text>
+          <ArText style={styles.nameArabic}>{story.titleArabic}</ArText>
           <Text style={styles.nameEnglish}>{story.titleEnglish}</Text>
         </View>
         <View style={styles.categoryBadge}>

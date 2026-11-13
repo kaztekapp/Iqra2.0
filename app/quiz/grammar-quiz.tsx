@@ -22,6 +22,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { QuizIntro } from '../../src/components/quiz/QuizIntro';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
@@ -315,12 +316,12 @@ export default function GrammarQuizScreen() {
             </View>
             {showQuestionArabic && (
               <View style={styles.arabicQuestionRow}>
-                <Text style={styles.questionArabic}>
+                <ArText style={styles.questionArabic}>
                   {currentQuestion.type === 'fill_blank'
                     ? // For fill_blank, show only the part with the blank (after = or :)
                       currentQuestion.questionArabic!.split(/[=:→]/)[1]?.trim() || currentQuestion.questionArabic!
                     : currentQuestion.questionArabic!}
-                </Text>
+                </ArText>
                 <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={styles.audioButton}
                   onPress={() => {
@@ -418,7 +419,7 @@ export default function GrammarQuizScreen() {
                     const segments = templatePart.split(/_+/);
 
                     return (
-                      <Text style={styles.templateText}>
+                      <ArText style={styles.templateText}>
                         {segments.map((segment, idx) => (
                           <Text key={idx}>
                             {segment}
@@ -429,7 +430,7 @@ export default function GrammarQuizScreen() {
                             )}
                           </Text>
                         ))}
-                      </Text>
+                      </ArText>
                     );
                   })()}
                 </View>
@@ -562,9 +563,9 @@ export default function GrammarQuizScreen() {
             <Text style={styles.resultTitle}>
               {quizResult.passed ? t('grammarQuiz.quizPassed') : t('grammarQuiz.keepPracticing')}
             </Text>
-            <Text style={styles.resultTitleArabic}>
+            <ArText style={styles.resultTitleArabic}>
               {quizResult.passed ? 'أحسنت!' : 'استمر في التدريب!'}
-            </Text>
+            </ArText>
           </View>
 
           {/* Stats */}
@@ -636,7 +637,7 @@ export default function GrammarQuizScreen() {
 
                   {question.questionArabic && (
                     <View style={styles.reviewArabicRow}>
-                      <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
+                      <ArText style={styles.reviewQuestionArabic}>{question.questionArabic}</ArText>
                       <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                         style={styles.audioButtonSmall}
                         onPress={() => playArabicAudio(question.questionArabic!)}

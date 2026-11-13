@@ -8,6 +8,7 @@ import { useQuranStore } from '../../../../src/stores/quranStore';
 import { LEARNING_METHODS, LearningMethodOption, AgeGroup } from '../../../../src/types/learningMethod';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import type { IoniconName } from '../../../../src/theme/icons';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 export default function MethodPickerScreen() {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ export default function MethodPickerScreen() {
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.subtitle}>{t('learningMethods.title')}</Text>
         </View>
         <View style={styles.headerSpacer} />

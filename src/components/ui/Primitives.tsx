@@ -19,6 +19,7 @@ import {
 import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { color, palette, type, arabicType, font, weight, space, radius, gutter, elevation, pressedOpacity } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 // ---------------------------------------------------------------------------
 // Text
@@ -85,7 +86,7 @@ export function Arabic({
     accent: color.accent,
   };
   return (
-    <Text
+    <ArText
       style={[
         arabicType[size],
         {
@@ -99,7 +100,7 @@ export function Arabic({
       {...props}
     >
       {children}
-    </Text>
+    </ArText>
   );
 }
 

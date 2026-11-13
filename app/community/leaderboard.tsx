@@ -14,6 +14,7 @@ import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
 
 import { withCommunityGate } from '../../src/components/community/withCommunityGate';
+import { ArText } from '../../src/components/arabic/ArText';
 const TAB_KEYS: { type: LeaderboardType; labelKey: string; icon: string }[] = [
   { type: 'weekly', labelKey: 'community.weekly', icon: 'calendar' },
   { type: 'streaks', labelKey: 'community.streaks', icon: 'flame' },
@@ -58,7 +59,7 @@ const LeaderboardRow = memo(function LeaderboardRow({
           {entry.isCurrentUser ? t('community.you') : entry.name}
         </Text>
         {!entry.isCurrentUser && (
-          <Text style={styles.userNameArabic}>{entry.nameArabic}</Text>
+          <ArText style={styles.userNameArabic}>{entry.nameArabic}</ArText>
         )}
       </View>
       <View style={styles.valueContainer}>
@@ -142,7 +143,7 @@ function LeaderboardScreen() {
         </Pressable>
         <View style={styles.headerTitles}>
           <Text style={styles.headerTitle}>{t('community.leaderboard')}</Text>
-          <Text style={styles.headerTitleArabic}>الترتيب</Text>
+          <ArText style={styles.headerTitleArabic}>الترتيب</ArText>
         </View>
         <View style={styles.headerSpacer} />
       </View>

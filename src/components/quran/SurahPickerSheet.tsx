@@ -16,6 +16,7 @@ import { SURAHS } from '../../data/arabic/quran/surahs';
 import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { withAlpha } from '../ui/Primitives';
 import { color, font, radius, type, weight, space, gutter } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 type Surah = (typeof SURAHS)[number];
 
@@ -144,7 +145,7 @@ export function SurahList({ currentSurahId, onPick, fromSurahId }: { currentSura
                 {lc(item.meaning, item.meaningFr)}, {t('surahLearnMode.ayahCount', { count: item.ayahCount })}
               </Text>
             </View>
-            <Text style={styles.rowArabic} allowFontScaling={false}>{item.nameArabic}</Text>
+            <ArText style={styles.rowArabic} allowFontScaling={false}>{item.nameArabic}</ArText>
           </Pressable>
         );
       }}

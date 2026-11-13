@@ -11,6 +11,7 @@ import { TajweedText } from '../../../../src/components/quran/TajweedText';
 import { quranAudioService, AudioState } from '../../../../src/services/quranAudioService';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 type ShadowPhase = 'listen' | 'shadow' | 'solo';
 
@@ -177,7 +178,7 @@ export default function ShadowingScreen() {
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.headerMethodLabel}>{t('shadowing.title')}</Text>
         </View>
         <View style={styles.ayahCounter}>

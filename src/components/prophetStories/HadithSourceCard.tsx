@@ -6,6 +6,7 @@ import { useLocalizedContent } from '../../hooks/useLocalizedContent';
 import { useTranslation } from 'react-i18next';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface HadithSourceCardProps {
   source: HadithReference;
@@ -67,7 +68,7 @@ export function HadithSourceCard({ source }: HadithSourceCardProps) {
       )}
 
       {/* The hadith in Arabic, chain and all, as the collection records it. */}
-      {source.arabicText && <Text style={styles.arabic}>{source.arabicText}</Text>}
+      {source.arabicText && <ArText style={styles.arabic}>{source.arabicText}</ArText>}
 
       {/* Translation */}
       <Text style={styles.translation}>"{lc(source.translation, source.translationFr)}"</Text>

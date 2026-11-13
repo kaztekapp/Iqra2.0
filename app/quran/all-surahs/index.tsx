@@ -8,6 +8,7 @@ import { SURAHS } from '../../../src/data/arabic/quran/surahs';
 import { useLocalizedContent } from '../../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 // Normalize text for better search matching
 const normalizeText = (text: string): string => {
@@ -79,7 +80,7 @@ export default function AllSurahsScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('allSurahsFeature.title')}</Text>
-          <Text style={styles.titleArabic}>جَمِيع السُّوَر</Text>
+          <ArText style={styles.titleArabic}>جَمِيع السُّوَر</ArText>
         </View>
         <View style={styles.countBadge}>
           <Text style={styles.countText}>{t('allSurahsFeature.count')}</Text>
@@ -129,7 +130,7 @@ export default function AllSurahsScreen() {
             </View>
             <View style={styles.surahInfo}>
               <View style={styles.surahHeader}>
-                <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+                <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
                 <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
               </View>
               <Text style={styles.surahMeaning}>{lc(surah.meaning, surah.meaningFr)}</Text>

@@ -14,6 +14,7 @@ import type { SharedContent } from '../../src/data/community/socialData';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Reading content
 const readingContent: Record<string, {
@@ -335,7 +336,7 @@ const SentenceCard = memo(function SentenceCard({ index, arabic, english, color,
       </View>
 
       {/* Arabic Text */}
-      <Text style={styles.sentenceArabic}>{arabic}</Text>
+      <ArText style={styles.sentenceArabic}>{arabic}</ArText>
 
       {/* Translation */}
       <Text style={styles.sentenceEnglish}>{english}</Text>
@@ -452,7 +453,7 @@ export default function ReadingDetailScreen() {
             <Ionicons name="arrow-back" size={24} color={tk.text} />
           </Pressable>
           <View style={styles.headerTitle}>
-            <Text style={styles.titleArabic}>{text.titleArabic}</Text>
+            <ArText style={styles.titleArabic}>{text.titleArabic}</ArText>
             <Text style={styles.title}>{lc(text.title, text.titleFr)}</Text>
           </View>
           {COMMUNITY_ENABLED && (

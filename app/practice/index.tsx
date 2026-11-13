@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 interface PracticeCardProps {
   title: string;
@@ -27,7 +28,7 @@ function PracticeCard({ title, titleArabic, description, icon, color, route }: P
       </View>
       <View style={styles.practiceContent}>
         <Text style={styles.practiceTitle}>{title}</Text>
-        <Text style={[styles.practiceTitleArabic, { color }]}>{titleArabic}</Text>
+        <ArText style={[styles.practiceTitleArabic, { color }]}>{titleArabic}</ArText>
         <Text style={styles.practiceDescription}>{description}</Text>
       </View>
       <Ionicons name="chevron-forward" size={24} color={tk.textFaint} />
@@ -78,7 +79,7 @@ export default function PracticeScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('practiceScreen.title')}</Text>
-            <Text style={styles.titleArabic}>التَّدْرِيب</Text>
+            <ArText style={styles.titleArabic}>التَّدْرِيب</ArText>
           </View>
         </View>
 

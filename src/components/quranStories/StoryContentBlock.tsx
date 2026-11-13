@@ -8,6 +8,7 @@ import { StoryProse } from '../stories/StoryProse';
 import { useTranslation } from 'react-i18next';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface StoryContentBlockProps {
   block: ContentBlock;
@@ -44,9 +45,9 @@ function QuranSourceCard({
           <Text style={quranStyles.referenceText}>
             {source.surahNameEnglish} {source.surahNumber}:{ayahRange}
           </Text>
-          <Text style={quranStyles.referenceArabic}>
+          <ArText style={quranStyles.referenceArabic}>
             {source.surahNameArabic}
-          </Text>
+          </ArText>
         </View>
         {onPlayArabic && (
           <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
@@ -69,7 +70,7 @@ function QuranSourceCard({
 
       <View style={quranStyles.arabicContainer}>
         {source.arabicText.split(' ').map((word, index) => (
-          <Text key={index} style={quranStyles.arabicWord}>{word}</Text>
+          <ArText key={index} style={quranStyles.arabicWord}>{word}</ArText>
         ))}
       </View>
 
@@ -108,7 +109,7 @@ function HadithSourceCard({ source }: { source: HadithReference }) {
         </View>
       )}
 
-      {source.arabicText && <Text style={hadithStyles.arabic}>{source.arabicText}</Text>}
+      {source.arabicText && <ArText style={hadithStyles.arabic}>{source.arabicText}</ArText>}
 
       <Text style={hadithStyles.translation}>"{lc(source.translation, source.translationFr)}"</Text>
     </View>

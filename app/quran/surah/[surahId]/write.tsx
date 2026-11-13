@@ -19,6 +19,7 @@ import { getHintText } from '../../../../src/utils/arabicTextUtils';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 type WritingMode = 'hints_only' | 'with_reference';
 
@@ -365,7 +366,7 @@ export default function WritingExerciseScreen() {
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.surahName}>{surah.nameArabic}</Text>
+            <ArText style={styles.surahName}>{surah.nameArabic}</ArText>
             <Text style={styles.subtitle}>{t('surahWrite.writingPractice')}</Text>
           </View>
           <View style={styles.headerRight}>
@@ -476,7 +477,7 @@ export default function WritingExerciseScreen() {
                 <Ionicons name="book" size={16} color={color.progress} />
                 <Text style={styles.referenceLabel}>{t('surahWrite.reference')}</Text>
               </View>
-              <Text style={styles.referenceText}>{selectedAyah.textUthmani}</Text>
+              <ArText style={styles.referenceText}>{selectedAyah.textUthmani}</ArText>
             </View>
           )}
 
@@ -620,7 +621,7 @@ export default function WritingExerciseScreen() {
                   {/* Full correct ayah */}
                   <View style={styles.fullAyahSection}>
                     <Text style={styles.fullAyahLabel}>{t('surahWrite.completeAyah')}</Text>
-                    <Text style={styles.fullAyahText}>{selectedAyah.textUthmani}</Text>
+                    <ArText style={styles.fullAyahText}>{selectedAyah.textUthmani}</ArText>
                   </View>
                 </View>
               )}
@@ -687,9 +688,9 @@ export default function WritingExerciseScreen() {
                     <View style={styles.ayahOptionNumber}>
                       <Text style={styles.ayahOptionNumberText}>{index + 1}</Text>
                     </View>
-                    <Text style={styles.ayahOptionText} numberOfLines={2}>
+                    <ArText style={styles.ayahOptionText} numberOfLines={2}>
                       {ayah.textUthmani}
-                    </Text>
+                    </ArText>
                     {selectedAyahIndex === index && (
                       <Ionicons name="checkmark-circle" size={20} color={color.progress} />
                     )}

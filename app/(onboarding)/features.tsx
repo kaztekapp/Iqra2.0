@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useRef, useState } from 'react';
 import { font, color, radius } from '../../src/theme/tokens';
+import { ArText } from '../../src/components/arabic/ArText';
 
 
 interface FeaturePage {
@@ -96,7 +97,7 @@ export default function FeaturesScreen() {
             <View style={[styles.iconCircle, { backgroundColor: feature.color + '20' }]}>
               <Ionicons name={feature.icon} size={48} color={feature.color} />
             </View>
-            <Text style={styles.arabicTitle}>{feature.arabic}</Text>
+            <ArText style={styles.arabicTitle}>{feature.arabic}</ArText>
             <Text style={styles.featureTitle}>{t(feature.titleKey)}</Text>
             <Text style={styles.featureDesc}>{t(feature.descKey)}</Text>
           </View>

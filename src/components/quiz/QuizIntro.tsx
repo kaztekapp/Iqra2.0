@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { font, color, radius } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../arabic/ArText';
 
 export interface QuizIntroFeature {
   icon: string;
@@ -68,7 +69,7 @@ export function QuizIntro({
         </View>
 
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.titleArabic}>{titleArabic}</Text>
+        <ArText style={styles.titleArabic}>{titleArabic}</ArText>
         <Text style={styles.subtitle}>{subtitle}</Text>
 
         {error ? (

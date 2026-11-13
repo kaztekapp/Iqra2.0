@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Animated } from 'react-native';
+import { View, StyleSheet, Pressable, Animated } from 'react-native';
 import { font, color, radius } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 const REACTIONS = ['❤️', '👍', '🤲', '🔥', 'ماشاءالله', 'بارك الله'];
 
@@ -43,7 +44,7 @@ function ReactionButton({ emoji, onPress }: { emoji: string; onPress: () => void
   return (
     <Pressable accessibilityRole="button" onPressIn={handlePressIn} onPressOut={handlePressOut} onPress={onPress}>
       <Animated.View style={[styles.emojiBtn, { transform: [{ scale }] }]}>
-        <Text style={[styles.emoji, isArabic && styles.arabicEmoji]}>{emoji}</Text>
+        <ArText style={[styles.emoji, isArabic && styles.arabicEmoji]}>{emoji}</ArText>
       </Animated.View>
     </Pressable>
   );

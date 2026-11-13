@@ -12,6 +12,7 @@ import { DuaCategory, DUA_CATEGORY_LABELS, DuaListItem } from '../../../src/type
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 type FilterCategory = 'all' | DuaCategory;
 
@@ -58,7 +59,7 @@ export default function DuasListScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('duasFeature.title')}</Text>
-          <Text style={styles.titleArabic}>الأدعية النبوية</Text>
+          <ArText style={styles.titleArabic}>الأدعية النبوية</ArText>
         </View>
         <View style={styles.headerSpacer} />
       </View>

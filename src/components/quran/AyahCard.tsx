@@ -7,6 +7,7 @@ import { TajweedText } from './TajweedText';
 import { withAlpha } from '../ui/Primitives';
 import { color, font, radius, space, type, weight } from '../../theme/tokens';
 import type { IoniconName } from '../../theme/icons';
+import { ArText } from '../arabic/ArText';
 
 interface AyahCardProps {
   ayah: Ayah;
@@ -228,9 +229,9 @@ export function AyahListItem({
         <Text style={styles.listItemNumberText}>{ayah.ayahNumber}</Text>
       </View>
       <View style={styles.listItemContent}>
-        <Text style={styles.listItemArabic} numberOfLines={1}>
+        <ArText style={styles.listItemArabic} numberOfLines={1}>
           {ayah.textUthmani}
-        </Text>
+        </ArText>
         <Text style={styles.listItemTranslation} numberOfLines={1}>
           {ayah.translation}
         </Text>

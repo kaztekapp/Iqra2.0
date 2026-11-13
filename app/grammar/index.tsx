@@ -9,6 +9,7 @@ import { grammarLessons as lessonsData } from '../../src/data/arabic/grammar/les
 import { font, color, radius } from '../../src/theme/tokens';
 import type { IoniconName } from '../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Map category to icon and color
 const categoryConfig: Record<string, { icon: string; color: string }> = {
@@ -84,7 +85,7 @@ export default function GrammarScreen() {
             {status === 'completed' && <Ionicons name="checkmark-circle" size={20} color={color.progress} />}
             {status === 'in_progress' && <Ionicons name="time" size={20} color={color.sacred} />}
           </View>
-          <Text style={styles.lessonTitleAr}>{lesson.titleArabic}</Text>
+          <ArText style={styles.lessonTitleAr}>{lesson.titleArabic}</ArText>
           <Text style={styles.lessonDesc}>{lc(lesson.description, lesson.descriptionFr)}</Text>
           <View style={[styles.categoryPill, { backgroundColor: lesson.color + '1a' }]}>
             <View style={[styles.categoryDot, { backgroundColor: lesson.color }]} />
@@ -112,7 +113,7 @@ export default function GrammarScreen() {
             <Text style={styles.sectionCountText}>{lessons.length}</Text>
           </View>
         </View>
-        <Text style={styles.sectionTitleAr}>{titleAr}</Text>
+        <ArText style={styles.sectionTitleAr}>{titleAr}</ArText>
       </View>
       {lessons.map(renderCard)}
     </View>
@@ -128,7 +129,7 @@ export default function GrammarScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('grammar.title')}</Text>
-            <Text style={styles.titleArabic}>الْقَوَاعِد</Text>
+            <ArText style={styles.titleArabic}>الْقَوَاعِد</ArText>
           </View>
         </View>
 
