@@ -497,19 +497,20 @@ class StoryAudioService {
     if (engine !== 'edge') return;
     const key = this.preparedKey(body, lang);
     if (this.prepared.has(key) || this.prepared.size >= 3) return;
-    this.prepared.set(
-      key,
-      this.edgeClip(body, lang).then(
-        (uri) => {
-          preloadClip(uri);
-          return uri;
-        },
-        (e) => {
-          this.prepared.delete(key);
-          throw e;
-        }
-      )
+    const ahead = this.edgeClip(body, lang).then(
+      (uri) => {
+        preloadClip(uri);
+        return uri;
+      },
+      (e) => {
+        this.prepared.delete(key);
+        throw e;
+      }
     );
+    // Fetching ahead is allowed to fail (see the comment above); with nobody
+    // listening yet the failure reached Sentry as an unhandled rejection.
+    ahead.catch((e) => quietly(e, 'services/storyAudioService prepare'));
+    this.prepared.set(key, ahead);
   }
 
   private preparedKey(body: string, lang: NarrationLang): string {

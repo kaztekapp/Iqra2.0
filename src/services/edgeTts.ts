@@ -40,9 +40,18 @@ export async function synthesize(rawText: string, voice: string, lang: EdgeLang,
   // already spoken (spokenArabic).
   const text = lang === 'ar' ? rawText : spokenNarration(rawText, lang);
   // Recorded once for everyone: a plain download, no voice-service call.
-  const recorded = await fromVoiceCdn(text, voice, rate);
+  let recorded: Uint8Array | null = null;
+  let unreachable: unknown = null;
+  try {
+    recorded = await fromVoiceCdn(text, voice, rate);
+  } catch (e) {
+    unreachable = e;
+  }
   if (recorded) return recorded;
-  if (!quran) throw new Error('tts-not-recorded');
+  // A download that never got an answer is the phone's connection, and is
+  // said so: reported as "not recorded" it reached Sentry as an error
+  // (IQRA2-9) for clips that were on the CDN all along.
+  if (!quran) throw unreachable ?? new Error('tts-not-recorded');
 
   const session = await safeGetSession();
   if (!session?.access_token) throw new Error('tts-signed-out');
@@ -73,7 +82,11 @@ export async function synthesize(rawText: string, voice: string, lang: EdgeLang,
   }
 }
 
-/** The pre-recorded clip for this exact line, or null if it was never recorded. */
+/**
+ * The pre-recorded clip for this exact line, or null if it was never recorded.
+ * Throws when the CDN could not be asked at all (no signal, too slow), so the
+ * two are not mistaken for each other.
+ */
 async function fromVoiceCdn(text: string, voice: string, rate: string): Promise<Uint8Array | null> {
   if (!VOICE_CDN_URL) return null;
   const controller = new AbortController();
@@ -83,8 +96,10 @@ async function fromVoiceCdn(text: string, voice: string, rate: string): Promise<
     if (!res.ok) return null;
     const bytes = new Uint8Array(await res.arrayBuffer());
     return bytes.length ? bytes : null;
-  } catch {
-    return null;
+  } catch (e) {
+    // Worded so that networkFailure.ts knows it for what it is.
+    if (controller.signal.aborted) throw new Error('voice CDN: request timed out');
+    throw e;
   } finally {
     clearTimeout(timer);
   }
