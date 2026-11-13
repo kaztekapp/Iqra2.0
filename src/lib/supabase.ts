@@ -1,6 +1,6 @@
 import 'react-native-url-polyfill/auto';
 import * as SecureStore from 'expo-secure-store';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, isAuthRetryableFetchError, SupabaseClient, type Session } from '@supabase/supabase-js';
 import { AppState } from 'react-native';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
@@ -122,20 +122,52 @@ function getSupabase(): SupabaseClient | null {
 export const supabase = getSupabase();
 export { isConfigured as isSupabaseConfigured };
 
-// Safe session getter that clears stale sessions on error
-export async function safeGetSession() {
+/**
+ * The sign-in kept on this phone, read straight from storage: no network, no
+ * refresh, so it answers at once with or without a signal.
+ *
+ * The app is meant to work offline. Asking the auth client instead meant that
+ * when the access token was more than an hour old it first tried to renew it;
+ * offline that cannot succeed (it retries for up to ~30 s), so launch gave up
+ * waiting and sent a signed-in reader to the login page. The kept session is
+ * still the reader's: the server is asked about it once there is a signal.
+ */
+export async function storedSession(): Promise<Session | null> {
+  if (!_supabase) return null;
+  try {
+    // GoTrueClient keeps its storage key protected; it is the key the session is saved under.
+    const key = (_supabase.auth as unknown as { storageKey: string }).storageKey;
+    const raw = await secureStorage.getItem(key);
+    if (!raw) return null;
+    const session = JSON.parse(raw) as Session;
+    return session?.refresh_token && session?.user?.id ? session : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The current session, renewed when the network allows.
+ *
+ * Only a definite answer signs the reader out: the server rejecting the
+ * refresh token (the auth client then removes it itself) or a session that
+ * cannot be read at all. Not reaching the server is not a sign-out; the kept
+ * session is returned and renewed on the next try.
+ */
+export async function safeGetSession(): Promise<Session | null> {
   if (!_supabase) return null;
   try {
     const { data: { session }, error } = await _supabase.auth.getSession();
+    if (session) return session;
+    if (error && isAuthRetryableFetchError(error)) return storedSession();
     if (error) {
-      // Stale/invalid session — sign out to clear it
-      await _supabase.auth.signOut().catch(() => {});
-      return null;
+      // A session the server will not take any more. Local scope: signing out
+      // must not depend on reaching the server either.
+      await _supabase.auth.signOut({ scope: 'local' }).catch(() => {});
     }
-    return session;
-  } catch {
-    // Fatal error — clear stored session
-    await _supabase.auth.signOut().catch(() => {});
     return null;
+  } catch {
+    // Something failed before any answer came back: keep what the phone has.
+    return storedSession();
   }
 }
