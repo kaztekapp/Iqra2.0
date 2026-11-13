@@ -8,6 +8,7 @@ import { renderRichText } from './richText';
 import { font, color, radius } from '../../../theme/tokens';
 import type { IoniconName } from '../../../theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../arabic/ArText';
 
 interface Props {
   visible: boolean;
@@ -45,8 +46,8 @@ function Block({ block, groupColor }: { block: LessonBlock; groupColor: string }
     case 'arabic':
       return (
         <View style={styles.arabicBlock}>
-          <Text style={styles.arabicText}>{block.text}</Text>
-          {block.translation ? <Text style={styles.arabicTranslation}>{block.translation}</Text> : null}
+          <ArText style={styles.arabicText}>{block.text}</ArText>
+          {block.translation ? <ArText style={styles.arabicTranslation}>{block.translation}</ArText> : null}
         </View>
       );
     case 'callout': {

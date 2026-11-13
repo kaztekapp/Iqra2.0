@@ -9,6 +9,7 @@ import { useProgressStore } from '../../src/stores/progressStore';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 const readingTexts = [
   {
@@ -172,7 +173,7 @@ export default function ReadingScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('reading.title')}</Text>
-            <Text style={styles.titleArabic}>الْقِرَاءَة</Text>
+            <ArText style={styles.titleArabic}>الْقِرَاءَة</ArText>
           </View>
         </View>
 
@@ -205,10 +206,10 @@ export default function ReadingScreen() {
               <Ionicons name="bookmark" size={22} color={color.text} />
             </View>
             <View style={styles.arabicTextWrap}>
-              <Text style={styles.arabicTitle}>{t('reading.memo.entryTitle')}</Text>
-              <Text style={styles.arabicSubtitle}>
+              <ArText style={styles.arabicTitle}>{t('reading.memo.entryTitle')}</ArText>
+              <ArText style={styles.arabicSubtitle}>
                 {t('reading.memo.entrySubtitle')}
-              </Text>
+              </ArText>
             </View>
             <Ionicons name="chevron-forward" size={20} color="rgba(255,255,255,0.85)" />
           </LinearGradient>
@@ -222,7 +223,7 @@ export default function ReadingScreen() {
                 <Ionicons name="leaf" size={16} color={color.progress} />
               </View>
               <Text style={styles.sectionTitle}>{t('common.beginner')}</Text>
-              <Text style={styles.sectionTitleAr}>الْمُبْتَدِئ</Text>
+              <ArText style={styles.sectionTitleAr}>الْمُبْتَدِئ</ArText>
             </View>
             <Text style={styles.sectionCount}>{t('reading.textsCount', { count: beginnerTexts.length })}</Text>
           </View>
@@ -248,7 +249,7 @@ export default function ReadingScreen() {
                       <Ionicons name="time" size={20} color={color.sacred} />
                     )}
                   </View>
-                  <Text style={styles.textTitleAr}>{text.titleArabic}</Text>
+                  <ArText style={styles.textTitleAr}>{text.titleArabic}</ArText>
                   <Text style={styles.textPreview}>{text.preview}</Text>
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>
@@ -271,7 +272,7 @@ export default function ReadingScreen() {
                 <Ionicons name="trending-up" size={16} color={color.accentStrong} />
               </View>
               <Text style={styles.sectionTitle}>{t('common.intermediate')}</Text>
-              <Text style={styles.sectionTitleAr}>الْمُتَوَسِّط</Text>
+              <ArText style={styles.sectionTitleAr}>الْمُتَوَسِّط</ArText>
             </View>
             <Text style={styles.sectionCount}>{t('reading.textsCount', { count: intermediateTexts.length })}</Text>
           </View>
@@ -297,7 +298,7 @@ export default function ReadingScreen() {
                       <Ionicons name="time" size={20} color={color.sacred} />
                     )}
                   </View>
-                  <Text style={styles.textTitleAr}>{text.titleArabic}</Text>
+                  <ArText style={styles.textTitleAr}>{text.titleArabic}</ArText>
                   <Text style={styles.textPreview}>{text.preview}</Text>
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>
@@ -320,7 +321,7 @@ export default function ReadingScreen() {
                 <Ionicons name="trophy" size={16} color={color.sacred} />
               </View>
               <Text style={styles.sectionTitle}>{t('common.advanced')}</Text>
-              <Text style={styles.sectionTitleAr}>الْمُتَقَدِّم</Text>
+              <ArText style={styles.sectionTitleAr}>الْمُتَقَدِّم</ArText>
             </View>
             <Text style={styles.sectionCount}>{t('reading.textsCount', { count: advancedTexts.length })}</Text>
           </View>
@@ -346,7 +347,7 @@ export default function ReadingScreen() {
                       <Ionicons name="time" size={20} color={color.sacred} />
                     )}
                   </View>
-                  <Text style={styles.textTitleAr}>{text.titleArabic}</Text>
+                  <ArText style={styles.textTitleAr}>{text.titleArabic}</ArText>
                   <Text style={styles.textPreview}>{text.preview}</Text>
                   <View style={styles.textMetaRow}>
                     <View style={styles.wordCountBadge}>

@@ -21,6 +21,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { QuizIntro } from '../../src/components/quiz/QuizIntro';
 import { font, color, radius } from '../../src/theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 type ScreenState = 'loading' | 'ready' | 'playing' | 'feedback' | 'results';
 
@@ -295,7 +296,7 @@ export default function ArabicQuizScreen() {
           <View style={styles.questionContainer}>
             {currentQuestion.questionArabic && (
               <View style={styles.arabicQuestionRow}>
-                <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
+                <ArText style={styles.questionArabic}>{currentQuestion.questionArabic}</ArText>
                 <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={styles.audioButton}
                   onPress={() => playArabicAudio(currentQuestion.questionArabic!)}
@@ -347,7 +348,7 @@ export default function ArabicQuizScreen() {
                     )}
                   </View>
 
-                  <Text
+                  <ArText
                     style={[
                       isArabicOption ? styles.optionTextArabic : styles.optionText,
                       isCorrectOption && styles.optionTextCorrect,
@@ -358,7 +359,7 @@ export default function ArabicQuizScreen() {
                     {isArabicOption
                       ? option
                       : lc(currentQuestion.optionsEn?.[index] ?? option, currentQuestion.optionsFr?.[index])}
-                  </Text>
+                  </ArText>
 
                   {isSelected && (
                     <Ionicons
@@ -397,7 +398,7 @@ export default function ArabicQuizScreen() {
                   >
                     <Ionicons name="volume-high" size={28} color={color.sacred} />
                   </Pressable>
-                  <Text style={styles.arabicLarge}>{currentQuestion.explanation.arabic}</Text>
+                  <ArText style={styles.arabicLarge}>{currentQuestion.explanation.arabic}</ArText>
                   <Text style={styles.transliteration}>{currentQuestion.explanation.transliteration}</Text>
                   <Text style={styles.englishMeaning}>{lc(currentQuestion.explanation.english, currentQuestion.explanation.french)}</Text>
                 </View>
@@ -454,9 +455,9 @@ export default function ArabicQuizScreen() {
             <Text style={styles.resultTitle}>
               {quizResult.passed ? t('arabicQuiz.quizPassed') : t('arabicQuiz.keepPracticing')}
             </Text>
-            <Text style={styles.resultTitleArabic}>
+            <ArText style={styles.resultTitleArabic}>
               {quizResult.passed ? 'أحسنت!' : 'استمر في التدريب!'}
-            </Text>
+            </ArText>
             {quizResult.passed && (
               <Text style={styles.newWordsMessage}>
                 {t('arabicQuiz.newWordsUnlocked')}
@@ -525,7 +526,7 @@ export default function ArabicQuizScreen() {
                   </Text>
 
                   {question.questionArabic && (
-                    <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
+                    <ArText style={styles.reviewQuestionArabic}>{question.questionArabic}</ArText>
                   )}
 
                   <View style={styles.reviewAnswers}>
@@ -558,7 +559,7 @@ export default function ArabicQuizScreen() {
                       >
                         <Ionicons name="volume-high" size={18} color={color.sacred} />
                       </Pressable>
-                      <Text style={styles.reviewArabic}>{question.explanation.arabic}</Text>
+                      <ArText style={styles.reviewArabic}>{question.explanation.arabic}</ArText>
                       <Text style={styles.reviewTranslit}>({question.explanation.transliteration})</Text>
                       <Text style={styles.reviewEnglish}>= {lc(question.explanation.english, question.explanation.french)}</Text>
                     </View>

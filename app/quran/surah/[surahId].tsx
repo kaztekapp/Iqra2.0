@@ -18,6 +18,7 @@ import { useAyahTranslations } from '../../../src/hooks/useAyahTranslations';
 import { showInterstitialIfReady } from '../../../src/services/adService';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 export default function SurahDetailScreen() {
   const { t } = useTranslation();
@@ -367,7 +368,7 @@ export default function SurahDetailScreen() {
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.surahNameEnglish}>{surah.nameEnglish}</Text>
         </View>
         <View style={styles.headerNav}>
@@ -406,7 +407,7 @@ export default function SurahDetailScreen() {
         {/* Every surah opens with the Basmala except at-Tawbah, which has
             none; in al-Fatihah it is verse 1 itself, shown in the list below. */}
         {surah.surahNumber !== 1 && surah.surahNumber !== 9 && (
-          <Text style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</Text>
+          <ArText style={styles.bismillah}>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</ArText>
         )}
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
@@ -433,7 +434,7 @@ export default function SurahDetailScreen() {
           <View style={styles.reciterDetails}>
             <Text style={styles.reciterLabel}>{t('surahFeature.reciter')}</Text>
             <Text style={styles.reciterName}>{currentReciter.nameEnglish}</Text>
-            <Text style={styles.reciterNameArabic}>{currentReciter.nameArabic}</Text>
+            <ArText style={styles.reciterNameArabic}>{currentReciter.nameArabic}</ArText>
           </View>
         </View>
         <View style={styles.reciterAction}>
@@ -602,7 +603,7 @@ export default function SurahDetailScreen() {
                 >
                   <View style={styles.reciterOptionInfo}>
                     <Text style={styles.reciterOptionName}>{reciter.nameEnglish}</Text>
-                    <Text style={styles.reciterOptionArabic}>{reciter.nameArabic}</Text>
+                    <ArText style={styles.reciterOptionArabic}>{reciter.nameArabic}</ArText>
                     <View style={styles.reciterMeta}>
                       <View style={styles.styleBadge}>
                         <Text style={styles.reciterStyle}>{reciter.style}</Text>

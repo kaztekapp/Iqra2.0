@@ -12,6 +12,7 @@ import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 // Helper function to extract Arabic text from a string (removes English part)
 const extractArabicText = (text: string): string => {
@@ -462,7 +463,7 @@ export default function QuizScreen() {
 
                     {/* Question */}
                     {question.questionArabic && (
-                      <Text style={styles.reviewQuestionArabic}>{question.questionArabic}</Text>
+                      <ArText style={styles.reviewQuestionArabic}>{question.questionArabic}</ArText>
                     )}
                     <Text style={styles.reviewQuestionEnglish}>
                       {getEnglishOnly(lc(question.question, question.questionFr))}
@@ -485,7 +486,7 @@ export default function QuizScreen() {
                         ) : (
                           <>
                             {userAnswerSplit?.arabic && (
-                              <Text style={styles.reviewAnswerArabic}>{userAnswerSplit.arabic}</Text>
+                              <ArText style={styles.reviewAnswerArabic}>{userAnswerSplit.arabic}</ArText>
                             )}
                             {userAnswerSplit?.english && (
                               <Text style={styles.reviewAnswerEnglish}>{userAnswerSplit.english}</Text>
@@ -510,7 +511,7 @@ export default function QuizScreen() {
                           ) : (
                             <>
                               {correctArabic && (
-                                <Text style={styles.reviewAnswerArabic}>{correctArabic}</Text>
+                                <ArText style={styles.reviewAnswerArabic}>{correctArabic}</ArText>
                               )}
                               {correctEnglish && (
                                 <Text style={styles.reviewAnswerEnglish}>{correctEnglish}</Text>
@@ -612,7 +613,7 @@ export default function QuizScreen() {
             {/* Arabic Question */}
             {currentQuestion.questionArabic && (
               <View style={styles.arabicQuestionBox}>
-                <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
+                <ArText style={styles.questionArabic}>{currentQuestion.questionArabic}</ArText>
                 <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                   style={[
                     styles.questionAudioBtn,
@@ -670,7 +671,7 @@ export default function QuizScreen() {
                     ) : arabic ? (
                       <>
                         <View style={styles.optionArabicRow}>
-                          <Text style={styles.optionArabicText}>{arabic}</Text>
+                          <ArText style={styles.optionArabicText}>{arabic}</ArText>
                           {showAudio && (
                             <Pressable accessibilityLabel={i18n.t('a11y.playAudio')}
                               style={[

@@ -16,6 +16,7 @@ import { QuranStoryListItem } from '../../../src/types/quranStories';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 type TabType = 'prophets' | 'other';
 
@@ -127,7 +128,7 @@ export default function StoriesScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('storiesFeature.title')}</Text>
-          <Text style={styles.titleArabic}>قصص القرآن</Text>
+          <ArText style={styles.titleArabic}>قصص القرآن</ArText>
         </View>
         <View style={{ width: 40 }} />
       </View>

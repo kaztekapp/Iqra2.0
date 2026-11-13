@@ -11,6 +11,7 @@ import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 type TabFilter = 'prayer_guide' | 'sujud_sahw';
 
@@ -44,7 +45,7 @@ export default function PrayerIndexScreen() {
         </Pressable>
         <View style={styles.headerTitle}>
           <Text style={styles.title}>{t('prayerFeature.title')}</Text>
-          <Text style={styles.titleArabic}>تعلم الصلاة</Text>
+          <ArText style={styles.titleArabic}>تعلم الصلاة</ArText>
         </View>
         <View style={styles.headerSpacer} />
       </View>
@@ -139,7 +140,7 @@ export default function PrayerIndexScreen() {
               <View style={styles.lessonContent}>
                 <View style={styles.lessonNameRow}>
                   <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
-                  <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
+                  <ArText style={styles.lessonTitleArabic}>{lesson.titleArabic}</ArText>
                 </View>
                 <Text style={styles.lessonDescription} numberOfLines={2}>
                   {lc(lesson.description, lesson.descriptionFr)}

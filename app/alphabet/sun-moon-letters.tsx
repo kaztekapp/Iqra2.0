@@ -8,6 +8,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Sun Letters (الحروف الشمسية) - 14 letters
 // The "ل" in "ال" assimilates to these letters
@@ -90,7 +91,7 @@ export default function SunMoonLettersScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('alphabet.sunMoonLetters')}</Text>
-            <Text style={styles.titleArabic}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
+            <ArText style={styles.titleArabic}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</ArText>
           </View>
         </View>
 
@@ -127,7 +128,7 @@ export default function SunMoonLettersScreen() {
             </View>
             <View>
               <Text style={styles.sectionTitle}>{t('alphabet.sunLetters')}</Text>
-              <Text style={styles.sectionTitleArabic}>الْحُرُوفُ الشَّمْسِيَّة</Text>
+              <ArText style={styles.sectionTitleArabic}>الْحُرُوفُ الشَّمْسِيَّة</ArText>
             </View>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>14</Text>
@@ -148,7 +149,7 @@ export default function SunMoonLettersScreen() {
                 onPress={() => speakWord(item.example)}
               >
                 <View style={styles.letterMain}>
-                  <Text style={styles.letterArabic}>{item.letter}</Text>
+                  <ArText style={styles.letterArabic}>{item.letter}</ArText>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.sunAudioBtn]}
                     onPress={() => speakWord(item.example)}
@@ -158,7 +159,7 @@ export default function SunMoonLettersScreen() {
                 </View>
                 <Text style={styles.letterName}>{item.name}</Text>
                 <View style={styles.exampleContainer}>
-                  <Text style={styles.exampleArabic}>{item.example}</Text>
+                  <ArText style={styles.exampleArabic}>{item.example}</ArText>
                   <Text style={styles.exampleTrans}>{item.exampleTrans}</Text>
                   <Text style={styles.exampleMeaning}>{item.meaning}</Text>
                 </View>
@@ -175,7 +176,7 @@ export default function SunMoonLettersScreen() {
             </View>
             <View>
               <Text style={styles.sectionTitle}>{t('alphabet.moonLetters')}</Text>
-              <Text style={styles.sectionTitleArabic}>الْحُرُوفُ الْقَمَرِيَّة</Text>
+              <ArText style={styles.sectionTitleArabic}>الْحُرُوفُ الْقَمَرِيَّة</ArText>
             </View>
             <View style={[styles.badge, styles.moonBadge]}>
               <Text style={styles.badgeText}>14</Text>
@@ -196,7 +197,7 @@ export default function SunMoonLettersScreen() {
                 onPress={() => speakWord(item.example)}
               >
                 <View style={styles.letterMain}>
-                  <Text style={styles.letterArabic}>{item.letter}</Text>
+                  <ArText style={styles.letterArabic}>{item.letter}</ArText>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                     style={[styles.audioBtn, styles.moonAudioBtn]}
                     onPress={() => speakWord(item.example)}
@@ -206,7 +207,7 @@ export default function SunMoonLettersScreen() {
                 </View>
                 <Text style={styles.letterName}>{item.name}</Text>
                 <View style={[styles.exampleContainer, styles.moonExample]}>
-                  <Text style={styles.exampleArabic}>{item.example}</Text>
+                  <ArText style={styles.exampleArabic}>{item.example}</ArText>
                   <Text style={styles.exampleTrans}>{item.exampleTrans}</Text>
                   <Text style={styles.exampleMeaning}>{item.meaning}</Text>
                 </View>
@@ -226,7 +227,7 @@ export default function SunMoonLettersScreen() {
               reordered and wrapped with the English line height, and the lines
               overlapped. One half of the verse per line. */}
           <View style={styles.mnemonicPhraseBox}>
-            <Text style={styles.mnemonicArabic}>{SUN_VERSE.join('\n')}</Text>
+            <ArText style={styles.mnemonicArabic}>{SUN_VERSE.join('\n')}</ArText>
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={versePlaying ? t('listen.stop') : t('listen.listen')}

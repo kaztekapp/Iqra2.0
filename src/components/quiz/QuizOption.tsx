@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { font, color, radius } from '../../theme/tokens';
 import i18n from 'i18next';
+import { ArText } from '../arabic/ArText';
 
 export type QuizOptionState = 'idle' | 'selected' | 'correct' | 'wrong';
 
@@ -80,7 +81,7 @@ export const QuizOption = React.memo(function QuizOption({
       </View>
 
       <View style={styles.textCol}>
-        <Text
+        <ArText
           style={[
             primaryArabic ? styles.primaryArabic : styles.primary,
             isCorrect && styles.textCorrect,
@@ -89,14 +90,14 @@ export const QuizOption = React.memo(function QuizOption({
           numberOfLines={primaryArabic ? 2 : 3}
         >
           {primary}
-        </Text>
+        </ArText>
         {secondary ? (
-          <Text
+          <ArText
             style={secondaryArabic ? styles.secondaryArabic : styles.secondary}
             numberOfLines={2}
           >
             {secondary}
-          </Text>
+          </ArText>
         ) : null}
       </View>
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { LeaderboardEntry, LeaderboardType } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 interface LeaderboardCardProps {
   entries: LeaderboardEntry[];
@@ -60,7 +61,7 @@ export const LeaderboardCard: React.FC<LeaderboardCardProps> = ({
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>{t('community.leaderboards')}</Text>
-          <Text style={styles.titleArabic}>الترتيب</Text>
+          <ArText style={styles.titleArabic}>الترتيب</ArText>
         </View>
       </View>
 
@@ -105,7 +106,7 @@ export const LeaderboardCard: React.FC<LeaderboardCardProps> = ({
                 {entry.isCurrentUser ? 'You' : entry.name}
               </Text>
               {!entry.isCurrentUser && (
-                <Text style={styles.userNameArabic}>{entry.nameArabic}</Text>
+                <ArText style={styles.userNameArabic}>{entry.nameArabic}</ArText>
               )}
             </View>
             <Text
@@ -144,7 +145,7 @@ export const LeaderboardCard: React.FC<LeaderboardCardProps> = ({
                     {entry.isCurrentUser ? 'You' : entry.name}
                   </Text>
                   {!entry.isCurrentUser && (
-                    <Text style={styles.userNameArabic}>{entry.nameArabic}</Text>
+                    <ArText style={styles.userNameArabic}>{entry.nameArabic}</ArText>
                   )}
                 </View>
                 <Text

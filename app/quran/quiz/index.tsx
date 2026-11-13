@@ -10,6 +10,7 @@ import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import type { IoniconName } from '../../../src/theme/icons';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 interface CategoryCardProps {
   category: QuizCategoryInfo;
@@ -26,7 +27,7 @@ function CategoryCard({ category, onPress }: CategoryCardProps) {
       </View>
       <View style={styles.categoryInfo}>
         <Text style={styles.categoryName}>{lc(category.nameEnglish, category.nameFrench)}</Text>
-        <Text style={styles.categoryNameArabic}>{category.nameArabic}</Text>
+        <ArText style={styles.categoryNameArabic}>{category.nameArabic}</ArText>
         <Text style={styles.categoryDesc}>{lc(category.description, category.descriptionFr)}</Text>
         <View style={styles.questionCount}>
           <Ionicons name="help-circle-outline" size={14} color={color.textFaint} />
@@ -69,7 +70,7 @@ export default function QuizCategoriesScreen() {
           </Pressable>
           <View style={styles.headerTitle}>
             <Text style={styles.title}>{t('quranQuiz.title')}</Text>
-            <Text style={styles.titleArabic}>اختبارات القرآن</Text>
+            <ArText style={styles.titleArabic}>اختبارات القرآن</ArText>
           </View>
           <View style={{ width: 40 }} />
         </View>

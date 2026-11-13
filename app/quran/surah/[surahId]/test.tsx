@@ -10,6 +10,7 @@ import { Ayah } from '../../../../src/types/quran';
 import { color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 type TestType = 'fill_blank' | 'continue_from' | 'what_next';
 
@@ -185,7 +186,7 @@ export default function TestModeScreen() {
         <View style={styles.questionContent}>
           <Text style={styles.questionLabel}>{t('surahTest.whatNext')}</Text>
           <View style={styles.continueContainer}>
-            <Text style={styles.continueAyah}>{ayah.textUthmani}</Text>
+            <ArText style={styles.continueAyah}>{ayah.textUthmani}</ArText>
           </View>
         </View>
       );
@@ -202,7 +203,7 @@ export default function TestModeScreen() {
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahName}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahName}>{surah.nameArabic}</ArText>
           <Text style={styles.subtitle}>{t('surahTest.testMode')}</Text>
         </View>
         <View style={styles.headerProgress}>
@@ -249,14 +250,14 @@ export default function TestModeScreen() {
               onPress={() => handleSelectAnswer(option)}
               disabled={showResult}
             >
-              <Text
+              <ArText
                 style={[
                   styles.optionText,
                   isSelected && styles.optionTextSelected,
                 ]}
               >
                 {option}
-              </Text>
+              </ArText>
               {showCorrect && (
                 <Ionicons name="checkmark-circle" size={24} color={color.progress} />
               )}

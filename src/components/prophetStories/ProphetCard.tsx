@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ProphetListItem } from '../../types/prophetStories';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface ProphetCardProps {
   prophet: ProphetListItem;
@@ -19,7 +20,7 @@ export function ProphetCard({ prophet, onPress }: ProphetCardProps) {
 
       <View style={styles.content}>
         <View style={styles.nameRow}>
-          <Text style={styles.nameArabic}>{prophet.nameArabic}</Text>
+          <ArText style={styles.nameArabic}>{prophet.nameArabic}</ArText>
           <Text style={styles.nameEnglish}>{prophet.nameEnglish}</Text>
         </View>
         {prophet.title && (

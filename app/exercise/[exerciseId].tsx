@@ -20,6 +20,7 @@ import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 interface Question {
   id: string;
@@ -324,7 +325,7 @@ export default function ExerciseScreen() {
         </Text>
         {currentQuestion.questionArabic && (
           <View style={styles.questionArabicContainer}>
-            <Text style={styles.questionArabic}>{currentQuestion.questionArabic}</Text>
+            <ArText style={styles.questionArabic}>{currentQuestion.questionArabic}</ArText>
             <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
               style={[styles.questionAudioBtn, isSpeaking && styles.questionAudioBtnActive]}
               onPress={() => speak(currentQuestion.questionArabic!)}

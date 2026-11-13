@@ -27,6 +27,7 @@ import { useQuranStore } from '../../src/stores/quranStore';
 import { useProphetStoriesStore } from '../../src/stores/prophetStoriesStore';
 import { useQuranStoriesStore } from '../../src/stores/quranStoriesStore';
 import { clockLabel } from '../../src/components/TimePickerSheet';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function ProfileScreen() {
   const { t, i18n } = useTranslation();
@@ -407,7 +408,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.challengeText}>
               <Text style={styles.challengeTitle}>{t('community.challenges')}</Text>
-              <Text style={styles.challengeArabic}>التحديات</Text>
+              <ArText style={styles.challengeArabic}>التحديات</ArText>
             </View>
             {dailyChallenge && (
               <View style={styles.challengeProgressPill}>
@@ -439,7 +440,7 @@ export default function ProfileScreen() {
                   <Ionicons name={achievement.icon as IoniconName} size={22} color={categoryColors[achievement.category]} />
                 </View>
                 <Text style={styles.achievementTitle} numberOfLines={2}>{achievement.title}</Text>
-                <Text style={styles.achievementTitleArabic} numberOfLines={1}>{achievement.titleArabic}</Text>
+                <ArText style={styles.achievementTitleArabic} numberOfLines={1}>{achievement.titleArabic}</ArText>
                 <View style={styles.achievementXp}>
                   <Ionicons name="star" size={12} color={color.sacred} />
                   <Text style={styles.achievementXpText}>+{achievement.xpReward} XP</Text>
@@ -635,7 +636,7 @@ export default function ProfileScreen() {
           <View style={styles.achievementPopup}>
             <View style={styles.popupGlow} />
             <Text style={styles.popupTitle}>{t('profile.achievementUnlocked')}</Text>
-            <Text style={styles.popupTitleArabic}>إنجاز جديد!</Text>
+            <ArText style={styles.popupTitleArabic}>إنجاز جديد!</ArText>
             {newAchievement && (
               <>
                 <View style={[
@@ -649,7 +650,7 @@ export default function ProfileScreen() {
                   />
                 </View>
                 <Text style={styles.popupAchievementTitle}>{newAchievement.title}</Text>
-                <Text style={styles.popupAchievementArabic}>{newAchievement.titleArabic}</Text>
+                <ArText style={styles.popupAchievementArabic}>{newAchievement.titleArabic}</ArText>
                 <Text style={styles.popupDesc}>{newAchievement.description}</Text>
                 <View style={styles.popupXpBadge}>
                   <Ionicons name="star" size={18} color={color.warning} />

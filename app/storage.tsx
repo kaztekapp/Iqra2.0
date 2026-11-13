@@ -10,6 +10,7 @@ import { QURAN_RECITERS, type ReciterId } from '../src/services/quranAudioServic
 import { clipStoreSize, clearClips, VOICE_STORE_LIMIT } from '../src/services/speech/arabicVoiceCache';
 import { color, font, radius } from '../src/theme/tokens';
 import { quietly } from '../src/lib/report';
+import { ArText } from '../src/components/arabic/ArText';
 
 type Usage = {
   reciters: { reciterId: string; bytes: number; verses: number }[];
@@ -102,7 +103,7 @@ export default function StorageScreen() {
       </View>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.arabic} allowFontScaling={false}>الاِسْتِمَاعُ دُونَ اتِّصَالٍ</Text>
+        <ArText style={styles.arabic} allowFontScaling={false}>الاِسْتِمَاعُ دُونَ اتِّصَالٍ</ArText>
 
         {!usage ? (
           <ActivityIndicator color={color.progress} style={styles.loading} />
@@ -148,7 +149,7 @@ export default function StorageScreen() {
                     <View style={styles.rowText}>
                       <Text style={styles.rowTitle} numberOfLines={1}>{reciterName(r.reciterId)}</Text>
                       {reciterArabic(r.reciterId) ? (
-                        <Text style={styles.rowArabic} allowFontScaling={false} numberOfLines={1}>{reciterArabic(r.reciterId)}</Text>
+                        <ArText style={styles.rowArabic} allowFontScaling={false} numberOfLines={1}>{reciterArabic(r.reciterId)}</ArText>
                       ) : null}
                       <Text style={styles.rowMeta}>
                         {size(r.bytes)}, {t('storage.verses', { count: r.verses })}

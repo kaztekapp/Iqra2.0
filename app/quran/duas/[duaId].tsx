@@ -22,6 +22,7 @@ import {
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 export default function DuaDetailScreen() {
   const { t } = useTranslation();
@@ -240,7 +241,7 @@ export default function DuaDetailScreen() {
           <Ionicons name="arrow-back" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerTitle}>
-          <Text style={styles.duaNameArabic}>{dua.titleArabic}</Text>
+          <ArText style={styles.duaNameArabic}>{dua.titleArabic}</ArText>
           <Text style={styles.duaNameEnglish}>{lc(dua.titleEnglish, dua.titleFrench)}</Text>
         </View>
         {COMMUNITY_ENABLED && (
@@ -266,7 +267,7 @@ export default function DuaDetailScreen() {
       <View style={styles.subHeader}>
         <View style={styles.categoryBadge}>
           <Text style={styles.categoryText}>{lc(categoryLabel!.english, categoryLabel!.french)}</Text>
-          <Text style={styles.categoryTextArabic}>{categoryLabel!.arabic}</Text>
+          <ArText style={styles.categoryTextArabic}>{categoryLabel!.arabic}</ArText>
         </View>
         <View style={{ flex: 1 }} />
         <View style={styles.headerNav}>
@@ -303,7 +304,7 @@ export default function DuaDetailScreen() {
       >
         {/* Arabic Text */}
         <View style={[styles.arabicCard, readingId === `${dua.id}-dua` && styles.reading]}>
-          <Text style={styles.arabicText}>{dua.arabicText}</Text>
+          <ArText style={styles.arabicText}>{dua.arabicText}</ArText>
 
           {/* Audio Controls: what it sounds like, then the one action */}
           <View style={styles.audioControls}>

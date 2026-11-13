@@ -15,6 +15,7 @@ import { ListenBar, ListenSheet } from '../../../src/components/listen';
 import { font, color, radius } from '../../../src/theme/tokens';
 import { withAlpha } from '../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../src/components/arabic/ArText';
 
 export default function QuranStoryDetailScreen() {
   const { t } = useTranslation();
@@ -174,7 +175,7 @@ export default function QuranStoryDetailScreen() {
         <View style={styles.headerTitle}>
           <View style={styles.storyNameRow}>
             <Text style={styles.storyIcon}>{story.icon}</Text>
-            <Text style={styles.storyNameArabic}>{story.titleArabic}</Text>
+            <ArText style={styles.storyNameArabic}>{story.titleArabic}</ArText>
           </View>
           <Text style={styles.storyNameEnglish}>{lc(story.titleEnglish, story.titleFrench)}</Text>
         </View>
@@ -194,9 +195,9 @@ export default function QuranStoryDetailScreen() {
         {story.mainSurah && (
           <View style={styles.surahBadge}>
             <Ionicons name="book-outline" size={12} color={color.accent} />
-            <Text style={styles.surahText}>
+            <ArText style={styles.surahText}>
               {t('storiesFeature.surah')} {story.mainSurah.name} ({story.mainSurah.nameArabic})
-            </Text>
+            </ArText>
           </View>
         )}
         <View style={styles.sourceCountBadge}>

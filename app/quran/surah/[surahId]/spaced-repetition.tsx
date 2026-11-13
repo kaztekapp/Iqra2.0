@@ -14,6 +14,7 @@ import { ReviewRating } from '../../../../src/types/quran';
 import { font, color, radius } from '../../../../src/theme/tokens';
 import { withAlpha } from '../../../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../../../src/components/arabic/ArText';
 
 const METHOD_COLOR = color.accent;
 
@@ -169,7 +170,7 @@ export default function SpacedRepetitionScreen() {
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+            <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
             <Text style={styles.methodTitle}>{t('spacedRepetition.title')}</Text>
           </View>
           <View style={styles.headerSpacer} />
@@ -201,7 +202,7 @@ export default function SpacedRepetitionScreen() {
             <Ionicons name="close" size={24} color={color.text} />
           </Pressable>
           <View style={styles.headerCenter}>
-            <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+            <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
             <Text style={styles.methodTitle}>{t('spacedRepetition.title')}</Text>
           </View>
           <View style={styles.headerSpacer} />
@@ -255,7 +256,7 @@ export default function SpacedRepetitionScreen() {
           <Ionicons name="close" size={24} color={color.text} />
         </Pressable>
         <View style={styles.headerCenter}>
-          <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
+          <ArText style={styles.surahNameArabic}>{surah.nameArabic}</ArText>
           <Text style={styles.methodTitle}>{t('spacedRepetition.title')}</Text>
         </View>
         <View style={styles.cardCounter}>

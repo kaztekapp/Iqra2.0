@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRef } from 'react';
 import { color, radius } from '../../theme/tokens';
 import i18n from 'i18next';
+import { ArText } from './ArText';
 
 
 interface ArabicKeyboardProps {
@@ -160,7 +161,7 @@ export default function ArabicKeyboard({
           </Pressable>
         )}
         <Pressable accessibilityRole="button" style={styles.spaceKey} onPress={onSpace}>
-          <Text style={styles.spaceKeyText}>مسافة</Text>
+          <ArText style={styles.spaceKeyText}>مسافة</ArText>
         </Pressable>
         <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.done')} style={styles.submitKey} onPress={onSubmit}>
           <Ionicons name="checkmark" size={24} color={color.text} />

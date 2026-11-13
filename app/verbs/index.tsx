@@ -11,6 +11,7 @@ import { useArabicSpeech } from '../../src/hooks/useArabicSpeech';
 import { font, color as tk, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function VerbsScreen() {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ export default function VerbsScreen() {
       </View>
       <View style={styles.lessonContent}>
         <Text style={styles.lessonTitle}>{lc(lesson.title, lesson.titleFr)}</Text>
-        <Text style={styles.lessonTitleArabic}>{lesson.titleArabic}</Text>
+        <ArText style={styles.lessonTitleArabic}>{lesson.titleArabic}</ArText>
         <Text style={styles.lessonDescription} numberOfLines={2}>
           {lc(lesson.description, lesson.descriptionFr)}
         </Text>
@@ -95,7 +96,7 @@ export default function VerbsScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('verbs.title')}</Text>
-            <Text style={styles.titleArabic}>تَصْرِيفُ الْأَفْعَال</Text>
+            <ArText style={styles.titleArabic}>تَصْرِيفُ الْأَفْعَال</ArText>
           </View>
         </View>
 
@@ -127,7 +128,7 @@ export default function VerbsScreen() {
                       <Text style={styles.levelGroupCountText}>{group.length}</Text>
                     </View>
                   </View>
-                  <Text style={styles.levelGroupAr}>{lvl.ar}</Text>
+                  <ArText style={styles.levelGroupAr}>{lvl.ar}</ArText>
                 </View>
                 <View style={styles.lessonsGrid}>
                   {group.map((lesson) => renderLessonCard(lesson, lvl.color))}
@@ -151,7 +152,7 @@ export default function VerbsScreen() {
               </View>
               <View style={styles.categoryContent}>
                 <Text style={styles.categoryTitle}>{category.title}</Text>
-                <Text style={styles.categoryTitleArabic}>{category.titleArabic}</Text>
+                <ArText style={styles.categoryTitleArabic}>{category.titleArabic}</ArText>
                 <Text style={styles.categoryDescription}>{category.description}</Text>
               </View>
               <Ionicons name="chevron-forward" size={20} color={tk.textFaint} />
@@ -179,7 +180,7 @@ export default function VerbsScreen() {
                 >
                   <Ionicons name="volume-high" size={16} color={tk.progress} />
                 </Pressable>
-                <Text style={styles.verbArabicText}>{verb.pastTense}</Text>
+                <ArText style={styles.verbArabicText}>{verb.pastTense}</ArText>
                 <Text style={styles.verbMeaningText}>{lc(verb.meaning, verb.meaningFr)}</Text>
                 <Text style={styles.verbRootText}>{verb.root}</Text>
               </Pressable>

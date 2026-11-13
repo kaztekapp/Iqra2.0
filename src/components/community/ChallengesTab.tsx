@@ -9,6 +9,7 @@ import { Challenge } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 import type { IoniconName } from '../../theme/icons';
+import { ArText } from '../arabic/ArText';
 
 const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
   const { t } = useTranslation();
@@ -62,7 +63,7 @@ const ChallengeCard = ({ challenge }: { challenge: Challenge }) => {
       </View>
 
       <Text style={styles.challengeTitle}>{lc(challenge.title, challenge.titleFr)}</Text>
-      <Text style={styles.challengeTitleArabic}>{challenge.titleArabic}</Text>
+      <ArText style={styles.challengeTitleArabic}>{challenge.titleArabic}</ArText>
       <Text style={styles.challengeDescription}>{lc(challenge.description, challenge.descriptionFr)}</Text>
 
       <View style={styles.progressSection}>

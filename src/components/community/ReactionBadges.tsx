@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
+import { ArText } from '../arabic/ArText';
 
 interface ReactionGroup {
   emoji: string;
@@ -27,7 +28,7 @@ export function ReactionBadges({ reactions, onToggle }: Props) {
             style={[styles.badge, r.hasReacted && styles.badgeActive]}
             onPress={() => onToggle(r.emoji)}
           >
-            <Text style={[styles.emoji, isArabic && styles.arabicEmoji]}>{r.emoji}</Text>
+            <ArText style={[styles.emoji, isArabic && styles.arabicEmoji]}>{r.emoji}</ArText>
             <Text style={[styles.count, r.hasReacted && styles.countActive]}>{r.count}</Text>
           </Pressable>
         );

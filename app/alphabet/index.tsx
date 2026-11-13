@@ -10,6 +10,7 @@ import { useLocalizedContent } from '../../src/hooks/useLocalizedContent';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Four letters per row inside the section's 20pt gutters.
 const GRID_COLUMNS = 4;
@@ -69,7 +70,7 @@ export default function AlphabetScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{t('alphabet.title')}</Text>
-            <Text style={styles.titleArabic}>الْحُرُوفُ الْعَرَبِيَّة</Text>
+            <ArText style={styles.titleArabic}>الْحُرُوفُ الْعَرَبِيَّة</ArText>
           </View>
         </View>
 
@@ -137,7 +138,7 @@ export default function AlphabetScreen() {
                   style={[styles.letterCard, cardSize, { borderColor: statusColor }]}
                   onPress={() => router.push(`/alphabet/${letter.id}`)}
                 >
-                  <Text style={styles.letterArabic}>{letter.letter}</Text>
+                  <ArText style={styles.letterArabic}>{letter.letter}</ArText>
                   <Text style={styles.letterName}>{gridName(letter)}</Text>
                   <Text style={styles.letterTranslit}>{letter.transliteration}</Text>
                   <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
@@ -180,7 +181,7 @@ export default function AlphabetScreen() {
             </View>
             <View style={styles.sunMoonContent}>
               <Text style={styles.sunMoonTitle}>{t('alphabet.sunMoonLetters')}</Text>
-              <Text style={styles.sunMoonTitleAr}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</Text>
+              <ArText style={styles.sunMoonTitleAr}>الْحُرُوفُ الشَّمْسِيَّة وَالْقَمَرِيَّة</ArText>
               <Text style={styles.sunMoonDesc}>{t('alphabet.sunMoonDesc')}</Text>
             </View>
             <Ionicons name="chevron-forward" size={24} color={color.textFaint} />

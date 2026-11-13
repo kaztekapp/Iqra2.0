@@ -9,6 +9,7 @@ import type { SharedContent } from '../../data/community/socialData';
 import { font, color, radius } from '../../theme/tokens';
 import { withAlpha } from '../ui/Primitives';
 import type { IoniconName } from '../../theme/icons';
+import { ArText } from '../arabic/ArText';
 
 interface Props {
   content: SharedContent;
@@ -50,7 +51,7 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
 
       {content.arabic ? (
         <Pressable accessibilityRole="button" onPress={() => audioText && speak(audioText)}>
-          <Text style={styles.arabic}>{content.arabic}</Text>
+          <ArText style={styles.arabic}>{content.arabic}</ArText>
         </Pressable>
       ) : null}
 
@@ -61,7 +62,7 @@ export const SharedContentCard = React.memo(function SharedContentCard({ content
 
       {content.example ? (
         <View style={styles.exampleBox}>
-          <Text style={styles.exampleArabic} numberOfLines={2}>{content.example}</Text>
+          <ArText style={styles.exampleArabic} numberOfLines={2}>{content.example}</ArText>
           {content.exampleTranslation ? <Text style={styles.exampleTr} numberOfLines={2}>{content.exampleTranslation}</Text> : null}
         </View>
       ) : null}

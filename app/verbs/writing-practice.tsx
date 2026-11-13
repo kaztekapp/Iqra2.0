@@ -18,6 +18,7 @@ import { QuizPrimaryButton } from '../../src/components/quiz/QuizPrimaryButton';
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 export default function VerbsWritingPracticeScreen() {
   const { t } = useTranslation();
@@ -227,7 +228,7 @@ export default function VerbsWritingPracticeScreen() {
           <Text style={styles.questionText}>{currentExercise.question}</Text>
           {currentExercise.questionArabic && (
             <View style={styles.questionArabicRow}>
-              <Text style={styles.questionArabic}>{currentExercise.questionArabic}</Text>
+              <ArText style={styles.questionArabic}>{currentExercise.questionArabic}</ArText>
               <Pressable accessibilityRole="button" accessibilityLabel={i18n.t('a11y.playAudio')}
                 style={[styles.audioButton, isSpeaking && styles.audioButtonActive]}
                 onPress={() => speak(currentExercise.questionArabic || '')}

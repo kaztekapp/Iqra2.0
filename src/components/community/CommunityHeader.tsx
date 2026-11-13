@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommunityStats } from '../../types/community';
 import { font, color, radius } from '../../theme/tokens';
+import { ArText } from '../arabic/ArText';
 
 interface CommunityHeaderProps {
   stats: CommunityStats;
@@ -15,7 +16,7 @@ export const CommunityHeader: React.FC<CommunityHeaderProps> = ({ stats }) => {
     <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>{t('community.title')}</Text>
-        <Text style={styles.titleArabic}>المجتمع</Text>
+        <ArText style={styles.titleArabic}>المجتمع</ArText>
       </View>
       <View style={styles.statsRow}>
         <View style={styles.statItem}>

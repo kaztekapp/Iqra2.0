@@ -18,6 +18,7 @@ import { QuizOption, QuizOptionState } from '../../src/components/quiz/QuizOptio
 import { font, color, radius } from '../../src/theme/tokens';
 import { withAlpha } from '../../src/components/ui/Primitives';
 import i18n from 'i18next';
+import { ArText } from '../../src/components/arabic/ArText';
 
 // Note: lessonContent and helper functions are now imported from
 // '../../src/data/arabic/grammar/lessonContent'
@@ -374,7 +375,7 @@ export default function GrammarLessonScreen() {
             <Text style={styles.title}>
               {practiceType === 'writing' ? t('grammar.writingPractice') : t('grammar.quizPractice')}
             </Text>
-            <Text style={styles.titleArabic}>{lesson.titleArabic}</Text>
+            <ArText style={styles.titleArabic}>{lesson.titleArabic}</ArText>
           </View>
         </View>
 
@@ -404,7 +405,7 @@ export default function GrammarLessonScreen() {
                 style={styles.questionArabicRow}
                 onPress={() => currentExercise.questionArabic && speak(currentExercise.questionArabic)}
               >
-                <Text style={styles.questionArabic}>{currentExercise.questionArabic}</Text>
+                <ArText style={styles.questionArabic}>{currentExercise.questionArabic}</ArText>
                 <Ionicons name="volume-medium" size={20} color={color.sacred} />
               </Pressable>
             )}
@@ -590,7 +591,7 @@ export default function GrammarLessonScreen() {
           </Pressable>
           <View style={styles.headerText}>
             <Text style={styles.title}>{lc(lesson.title, lesson.titleFr)}</Text>
-            <Text style={styles.titleArabic}>{lesson.titleArabic}</Text>
+            <ArText style={styles.titleArabic}>{lesson.titleArabic}</ArText>
           </View>
         </View>
 
@@ -611,13 +612,13 @@ export default function GrammarLessonScreen() {
                       style={styles.arabicDescriptionRow}
                       onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                     >
-                      <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
+                      <ArText style={styles.arabicDescriptionText}>{section.arabicDescription}</ArText>
                       <View style={styles.audioBtn}>
                         <Ionicons name="volume-medium" size={18} color={color.progress} />
                       </View>
                     </Pressable>
                     {section.arabicTranslation && (
-                      <Text style={styles.arabicTranslationText}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</Text>
+                      <ArText style={styles.arabicTranslationText}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</ArText>
                     )}
                   </View>
                 )}
@@ -645,7 +646,7 @@ export default function GrammarLessonScreen() {
                       {isVowelsLesson ? (
                         <ArabicVowelText text={comp.left.arabic} style={styles.comparisonArabic} />
                       ) : (
-                        <Text style={styles.comparisonArabic}>{comp.left.arabic}</Text>
+                        <ArText style={styles.comparisonArabic}>{comp.left.arabic}</ArText>
                       )}
                       <Text style={styles.comparisonEnglish}>{lc(comp.left.label, comp.left.labelFr)}</Text>
                     </Pressable>
@@ -657,7 +658,7 @@ export default function GrammarLessonScreen() {
                       {isVowelsLesson ? (
                         <ArabicVowelText text={comp.right.arabic} style={styles.comparisonArabic} />
                       ) : (
-                        <Text style={styles.comparisonArabic}>{comp.right.arabic}</Text>
+                        <ArText style={styles.comparisonArabic}>{comp.right.arabic}</ArText>
                       )}
                       <Text style={styles.comparisonEnglish}>{lc(comp.right.label, comp.right.labelFr)}</Text>
                     </Pressable>
@@ -709,7 +710,7 @@ export default function GrammarLessonScreen() {
                     ) : isVowelsLesson ? (
                       <ArabicVowelText text={example.arabic} style={styles.exampleCardArabic} />
                     ) : (
-                      <Text style={styles.exampleCardArabic}>{example.arabic}</Text>
+                      <ArText style={styles.exampleCardArabic}>{example.arabic}</ArText>
                     )}
                     <HighlightedText text={lc(example.english, example.french)} style={styles.exampleCardEnglish} />
                     <View style={styles.exampleCardAudioIcon}>
@@ -753,10 +754,10 @@ export default function GrammarLessonScreen() {
                             ]}
                             onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                           >
-                            <Text style={[
+                            <ArText style={[
                               styles.arabicDescriptionText,
                               { color: section.itemType === 'rule' ? color.progress : color.warning }
-                            ]}>{section.arabicDescription}</Text>
+                            ]}>{section.arabicDescription}</ArText>
                             <View style={styles.audioBtn}>
                               <Ionicons
                                 name="volume-medium"
@@ -766,10 +767,10 @@ export default function GrammarLessonScreen() {
                             </View>
                           </Pressable>
                           {section.arabicTranslation && (
-                            <Text style={[
+                            <ArText style={[
                               styles.arabicTranslationText,
                               { color: section.itemType === 'rule' ? '#10b98199' : '#f59e0b99' }
-                            ]}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</Text>
+                            ]}>{lc(section.arabicTranslation, section.arabicTranslationFr)}</ArText>
                           )}
                         </View>
                       )}
@@ -787,7 +788,7 @@ export default function GrammarLessonScreen() {
                     style={styles.arabicDescriptionRow}
                     onPress={() => section.arabicDescription && speak(section.arabicDescription)}
                   >
-                    <Text style={styles.arabicDescriptionText}>{section.arabicDescription}</Text>
+                    <ArText style={styles.arabicDescriptionText}>{section.arabicDescription}</ArText>
                     <View style={styles.audioBtn}>
                       <Ionicons name="volume-medium" size={18} color={color.progress} />
                     </View>
@@ -809,7 +810,7 @@ export default function GrammarLessonScreen() {
                           {isVowelsLesson ? (
                             <ArabicVowelText text={example.arabic} style={styles.exampleArabic} />
                           ) : (
-                            <Text style={styles.exampleArabic}>{example.arabic}</Text>
+                            <ArText style={styles.exampleArabic}>{example.arabic}</ArText>
                           )}
                         </View>
                         <Text style={styles.exampleEnglish}>{lc(example.english, example.french)}</Text>
