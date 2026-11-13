@@ -21,6 +21,7 @@
  * running, and a superseded loop cannot advance the index it no longer owns.
  */
 import { AppState } from 'react-native';
+import { after, sleep } from './speech/audioClock';
 import { create } from 'zustand';
 import { useSettingsStore } from '../stores/settingsStore';
 import {
@@ -214,7 +215,8 @@ async function loop(from: number): Promise<void> {
 
     const next = utterances[i + 1];
     const gap = next && next.blockIndex !== utterance.blockIndex ? GAP_BLOCK : GAP_SENTENCE;
-    await new Promise((r) => setTimeout(r, gap));
+    // Not setTimeout: Android pauses JS timers in the background (see audioClock).
+    await sleep(gap);
     if (mine !== run) return;
   }
 
@@ -408,17 +410,19 @@ export function toggleNarrationPace(): void {
 
 // Sleep timer. It pauses rather than stops, so the story is exactly where it
 // was left when the listener comes back to it.
-let sleepHandle: ReturnType<typeof setTimeout> | null = null;
+// It runs on the audio clock: a plain timer never fired in the background on
+// Android, where a sleep timer is mostly used.
+let cancelSleep: (() => void) | null = null;
 export function setNarrationSleep(option: SleepOption): void {
-  if (sleepHandle) clearTimeout(sleepHandle);
-  sleepHandle = null;
+  cancelSleep?.();
+  cancelSleep = null;
   set({ sleep: option });
   if (option === 'off') return;
-  sleepHandle = setTimeout(() => {
-    sleepHandle = null;
+  cancelSleep = after(option * 60 * 1000, () => {
+    cancelSleep = null;
     void pauseNarration();
     set({ sleep: 'off' });
-  }, option * 60 * 1000);
+  });
 }
 
 export function setNarrationVoice(next: VoiceGender): void {

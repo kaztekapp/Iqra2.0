@@ -10,11 +10,14 @@
 // the generation to cancel whatever is running — preventing overlapping audio when
 // verses/play are tapped rapidly.
 
+import { Platform } from 'react-native';
 import { createAudioPlayer } from 'expo-audio';
 import type { AudioMetadata , AudioPlayer } from 'expo-audio';
 import * as Speech from 'expo-speech';
 import { registerAudioProducer, claimAudio, ensureAudioSession } from '../audioBus';
 import { clipTaken, forgetClip, preloadClip } from './clipPreload';
+import { lockScreenClaimed, lockScreenReleased } from './lockScreenOwner';
+import { after, sleep } from './audioClock';
 import { File, Paths } from 'expo-file-system';
 import { asRecitation, chunkLine, RECITE, edgeRate, NOW_PLAYING_ARTWORK, plainSpoken, spokenArabic, voiceFor } from './voicePlan';
 import { synthesize as edgeSynthesize } from '../edgeTts';
@@ -358,13 +361,20 @@ function playFile(uri: string): Promise<void> {
     // requested tempo. Resampling it here is what made the voice warble.
     currentPlayer = player;
 
-    if (lockScreen) {
+    // Android keeps the app alive in the background through the media
+    // notification of the player that holds the controls. A line taking them
+    // and then being released ended that, and the story's player could not
+    // take them back from the background (Android 12+ refuses), so the app
+    // was killed a while later. The story's player keeps them there; on
+    // iPhone the line takes them so the controls stay up during the verse.
+    if (lockScreen && Platform.OS !== 'android') {
       try {
         // Play/pause only, to match the story's own controls.
         player.setActiveForLockScreen(true, { artworkUrl: NOW_PLAYING_ARTWORK, ...lockScreen }, {
           showSeekForward: false,
           showSeekBackward: false,
         });
+        lockScreenClaimed(player);
       } catch (e) {
         quietly(e, 'services/speech/arabicTTS');
   // Not available everywhere; the line still plays.
@@ -381,22 +391,24 @@ function playFile(uri: string): Promise<void> {
      * the engine reports itself as speaking for ever, and the story's queue
      * waits on a line that will never finish. Only force-quitting clears it.
      */
-    let watchdog: ReturnType<typeof setTimeout> | null = null;
+    // On the audio clock: a plain timer never fires in the background on Android.
+    let cancelWatchdog: (() => void) | null = null;
     const arm = (ms: number) => {
-      if (watchdog) clearTimeout(watchdog);
-      watchdog = setTimeout(finish, ms);
+      cancelWatchdog?.();
+      cancelWatchdog = after(ms, finish);
     };
 
     const finish = () => {
       if (settled) return;
       settled = true;
-      if (watchdog) clearTimeout(watchdog);
+      cancelWatchdog?.();
       try {
         subscription.remove();
       } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
       try {
         player.pause();
       } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
+      lockScreenReleased(player);
       try {
         player.remove();
       } catch (e) { quietly(e, 'services/speech/arabicTTS'); }
@@ -540,7 +552,7 @@ export async function playArabicLines(
           // to the device voice, which spells the mushaf; wait a moment and
           // fetch once more before giving up on the network voice.
           try {
-            await new Promise((r) => setTimeout(r, 400));
+            await sleep(400); // the audio clock: JS timers stop in the background on Android
             if (myGen !== generation) return;
             uri = await fetchChunkToFile(chunk, speed, true, true);
           } catch {

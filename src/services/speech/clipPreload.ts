@@ -43,7 +43,18 @@ export function forgetClip(uri: string): void {
   } catch { /* nothing held */ }
 }
 
-/** The clip is being played now: the player has taken the preloaded copy. */
+/**
+ * The player has the clip now: let the preloaded copy go. Call it after the
+ * player was created with, or swapped to, this clip.
+ *
+ * iOS hands the preloaded copy over to the player, so this frees nothing
+ * there. Android only lends it: the clip's bytes stayed in memory until
+ * cleared, one more for every sentence of a story, until the system killed
+ * the app in the background. (The player keeps its own reference.)
+ */
 export function clipTaken(uri: string): void {
   ready.delete(uri);
+  try {
+    clearPreloadedSource({ uri }).catch(() => {});
+  } catch { /* nothing held */ }
 }
