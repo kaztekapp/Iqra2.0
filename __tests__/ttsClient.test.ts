@@ -51,6 +51,24 @@ describe('tts client', () => {
     expect(functionCalls()).toHaveLength(0);
   });
 
+  it('says the connection dropped, not "not recorded", when the CDN gave no answer', async () => {
+    // The clip is on the CDN; the phone just could not reach it. Reported as
+    // "not recorded" this reached Sentry as an error (IQRA2-9).
+    (global.fetch as jest.Mock).mockImplementation(() => Promise.reject(new TypeError('Network request failed')));
+    const failure = await synthesize('hello', voiceFor('en', 'female'), 'en').catch((e: unknown) => e);
+    expect((failure as Error).message).toBe('Network request failed');
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    expect(require('../src/lib/networkFailure').isNetworkFailure(failure)).toBe(true);
+    expect(functionCalls()).toHaveLength(0);
+  });
+
+  it('still asks the function for a Quran line when the CDN gave no answer', async () => {
+    (global.fetch as jest.Mock).mockImplementation((url: string) =>
+      isCdn(url) ? Promise.reject(new TypeError('Network request failed')) : ok([1, 2, 3]));
+    const bytes = await synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true);
+    expect(Array.from(bytes)).toEqual([1, 2, 3]);
+  });
+
   it('rejects an unrecorded line without a session, without calling the function', async () => {
     mockSession.mockResolvedValue(null);
     await expect(synthesize('بِسْمِ اللَّهِ', voiceFor('ar', 'male'), 'ar', '-4%', true)).rejects.toThrow('tts-signed-out');
