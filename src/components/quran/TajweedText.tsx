@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View, Pressable, StyleSheet, Platform } from 'react-native';
+import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { TajweedOccurrence, TajweedRuleId } from '../../types/quran';
 import { TAJWEED_COLORS } from '../../data/arabic/quran/tajweed/colors';
 import { color, font, radius, space } from '../../theme/tokens';
+import { QuranLastLineRoom } from './QuranLastLineRoom';
 
 interface TajweedTextProps {
   text: string;
@@ -99,10 +100,6 @@ export function TajweedText({
       style={[
         styles.container,
         { fontSize, lineHeight: fontSize * QURAN_LINE_HEIGHT },
-        // Android clips what is drawn below the last line's box, and the
-        // kasras of the bottom line hang below it (bismi, ar-raḥīm). Room for
-        // them; iOS draws past the box and needs none.
-        Platform.OS === 'android' && { paddingBottom: fontSize * 0.45 },
       ]}
     >
       {segments.map((segment, index) => {
@@ -129,6 +126,8 @@ export function TajweedText({
           </Text>
         );
       })}
+      {/* Android cuts the marks that hang below the last line; see the file. */}
+      <QuranLastLineRoom fontSize={fontSize} />
     </Text>
   );
 }

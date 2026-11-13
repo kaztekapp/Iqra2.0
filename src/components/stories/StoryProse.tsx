@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextStyle, StyleProp } from 'react-native';
 import { splitQuranRuns } from '../../services/narrationText';
+import { QuranLastLineRoom } from '../quran/QuranLastLineRoom';
 import { font, color } from '../../theme/tokens';
 
 interface StoryProseProps {
@@ -40,6 +41,7 @@ export function StoryProse({ text, style }: StoryProseProps) {
           return (
             <Text key={i} style={styles.ayah} allowFontScaling>
               {`﴿ ${segment.text} ﴾`}
+              <QuranLastLineRoom fontSize={26} />
             </Text>
           );
         }
