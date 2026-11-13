@@ -54,6 +54,8 @@ import { File, Paths } from 'expo-file-system';
 import { synthesize as edgeSynthesize, synthesizeToFile, voiceFor } from './edgeTts';
 import { NARRATION_RATE, NOW_PLAYING_ARTWORK, spokenNarration } from './speech/voicePlan';
 import { clipTaken, forgetClip, preloadClip } from './speech/clipPreload';
+import { lockScreenClaimed, lockScreenOwnedBy, lockScreenReleased } from './speech/lockScreenOwner';
+import { after, audioTick, every } from './speech/audioClock';
 import {
   clipName,
   findClip,
@@ -175,6 +177,9 @@ class StoryAudioService {
    * always rendering, whatever the network is doing.
    */
   private keepAlive: AudioPlayer | null = null;
+  private keepAliveWanted = false;
+  private keepAliveStarting = false;
+  private keepAliveTicks: { remove: () => void } | null = null;
   /** Sentences synthesized ahead of their turn (Edge only; the others stream). */
   private prepared = new Map<string, Promise<string>>();
   private silentUri: string | null = null;
@@ -416,6 +421,7 @@ class StoryAudioService {
     const player = this.player;
     this.player = null;
     if (!player) return;
+    lockScreenReleased(player);
     try {
       player.remove();
     } catch (e) { quietly(e, 'services/storyAudioService'); }
@@ -713,7 +719,6 @@ class StoryAudioService {
 
       let player: AudioPlayer;
       try {
-        clipTaken(uri);
         if (this.player) {
           this.player.replace({ uri });
         } else {
@@ -726,9 +731,12 @@ class StoryAudioService {
           this.player = createAudioPlayer({ uri }, { keepAudioSessionActive: true });
         }
         player = this.player;
+        // The player read the preloaded copy as it took the clip.
+        clipTaken(uri);
         player.shouldCorrectPitch = true;
         player.setPlaybackRate(speed, 'high');
       } catch (e) {
+        clipTaken(uri);
         // Hand the player back rather than leaving a wedged one in place, so
         // the next sentence starts from a fresh one instead of failing the
         // same way for the rest of the story.
@@ -751,9 +759,9 @@ class StoryAudioService {
       const settle = (fn: () => void) => {
         if (settled) return;
         settled = true;
-        clearTimeout(startTimer);
-        if (endTimer) clearTimeout(endTimer);
-        clearInterval(staleCheck);
+        cancelStart();
+        cancelEnd?.();
+        stopStaleCheck();
         // Only touch the player if it is still ours. Once a newer sentence
         // has claimed it, pausing would silence that one instead.
         if (token === this.clipToken) {
@@ -770,36 +778,38 @@ class StoryAudioService {
       // Nothing playing within five seconds means the file will not decode.
       // Paused does not count against it — waiting out a pause and then
       // giving up would strand the clip, so reschedule instead.
-      let startTimer: ReturnType<typeof setTimeout>;
+      // These run on the audio clock: a plain timer never fires in the
+      // background on Android, which is where a clip most often goes quiet.
+      let cancelStart: () => void = () => {};
       const waitForStart = () => {
-        startTimer = setTimeout(() => {
+        cancelStart = after(5000, () => {
           if (started) return;
           if (this.paused) {
             waitForStart();
             return;
           }
           settle(() => reject(new Error('tts-timeout')));
-        }, 5000);
+        });
       };
       waitForStart();
 
       // And once it is playing, a clip that stops reporting status must not
       // hang the queue.
-      let endTimer: ReturnType<typeof setTimeout> | null = null;
+      let cancelEnd: (() => void) | null = null;
       const armEnd = () => {
-        if (endTimer) clearTimeout(endTimer);
-        endTimer = setTimeout(() => {
+        cancelEnd?.();
+        cancelEnd = after((estSeconds + 10) * 1000, () => {
           if (this.paused) {
             armEnd();
             return;
           }
           settle(resolve);
-        }, (estSeconds + 10) * 1000);
+        });
       };
 
-      const staleCheck = setInterval(() => {
+      const stopStaleCheck = every(60, () => {
         if (generation !== this.generation || token !== this.clipToken) settle(resolve);
-      }, 60);
+      });
 
       this.clipSub = player.addListener('playbackStatusUpdate', (status) => {
         // A status update from the sentence before this one, arriving after
@@ -809,7 +819,7 @@ class StoryAudioService {
         if (status.playing || status.currentTime > 0) {
           if (!started) {
             started = true;
-            clearTimeout(startTimer);
+            cancelStart();
             armEnd();
           }
         }
@@ -978,9 +988,14 @@ class StoryAudioService {
     this.generation++;
     this.paused = false;
     this.deviceSpeaking = false;
-    // A real stop is the one moment the player is handed back, well away
-    // from any callback that might still be standing on it.
-    this.releasePlayer();
+    // While a listening session is on, the player is only silenced, not
+    // handed back. Every quoted Arabic line claims the audio, which lands
+    // here; releasing the player there took the media notification with it,
+    // and on Android a new one cannot be put up from the background, so the
+    // app lost its "playing" status at the first verse and was killed a while
+    // later. The player is handed back when the session ends (setNarrating).
+    if (this.narrating) this.silenceClip();
+    else this.releasePlayer();
     try {
       await Speech.stop();
     } catch {
@@ -998,15 +1013,20 @@ class StoryAudioService {
    */
   setNowPlaying(meta: AudioMetadata | null): void {
     this.nowPlaying = meta;
-    if (meta) this.applyLockScreen();
+    if (meta) this.applyLockScreen(true);
     else this.clearLockScreen();
   }
 
   /** The hook says when a listening session begins and ends. */
   setNarrating(active: boolean): void {
     this.narrating = active;
-    if (active) this.startKeepAlive();
-    else this.stopKeepAlive();
+    if (active) {
+      this.startKeepAlive();
+    } else {
+      this.stopKeepAlive();
+      // The session is over: now the player is handed back (see stop).
+      this.releasePlayer();
+    }
   }
 
   /** A 1-second, 8 kHz, 16-bit mono WAV of zeros, written once to the cache. */
@@ -1028,21 +1048,38 @@ class StoryAudioService {
   }
 
   private startKeepAlive(): void {
-    if (this.keepAlive) return;
-    try {
-      const player = createAudioPlayer({ uri: this.silentTrack() }, { keepAudioSessionActive: true });
-      player.loop = true;
-      player.volume = 0;
-      player.play();
-      this.keepAlive = player;
-    } catch (e) {
-      __DEV__ && console.log('[story audio] keep-alive:', e);
-    }
+    this.keepAliveWanted = true;
+    if (this.keepAlive || this.keepAliveStarting) return;
+    this.keepAliveStarting = true;
+    // Audio first. Android refuses play() while audio is switched off, and it
+    // is switched off whenever the app was idle - so the keep-alive started
+    // here, before the first sentence switched it back on, never played.
+    ensureAudioSession('longform')
+      .catch((e) => quietly(e, 'services/storyAudioService keep-alive'))
+      .then(() => {
+        this.keepAliveStarting = false;
+        if (!this.keepAliveWanted || this.keepAlive) return;
+        try {
+          // Reports four times a second: they are also the clock the story
+          // waits on in the background (see audioClock).
+          const player = createAudioPlayer({ uri: this.silentTrack() }, { keepAudioSessionActive: true, updateInterval: 250 });
+          player.loop = true;
+          player.volume = 0;
+          this.keepAliveTicks = player.addListener('playbackStatusUpdate', audioTick);
+          player.play();
+          this.keepAlive = player;
+        } catch (e) {
+          quietly(e, 'services/storyAudioService keep-alive');
+        }
+      });
   }
 
   private stopKeepAlive(): void {
+    this.keepAliveWanted = false;
     const player = this.keepAlive;
     this.keepAlive = null;
+    try { this.keepAliveTicks?.remove(); } catch { /* already gone */ }
+    this.keepAliveTicks = null;
     if (!player) return;
     try { player.pause(); } catch (e) { quietly(e, 'services/storyAudioService'); }
     try { player.remove(); } catch (e) { quietly(e, 'services/storyAudioService'); }
@@ -1057,8 +1094,14 @@ class StoryAudioService {
     this.onTransport = fn;
   }
 
-  private applyLockScreen(): void {
+  /**
+   * Put the story on the lock screen. Only when another player took it (a
+   * quoted ayah on iPhone) or the title changed (`force`): claiming again for
+   * every sentence piled up handlers on iOS (see lockScreenOwner).
+   */
+  private applyLockScreen(force = false): void {
     if (!this.player || !this.nowPlaying) return;
+    if (!force && lockScreenOwnedBy(this.player)) return;
     try {
       this.player.setActiveForLockScreen(true, { artworkUrl: NOW_PLAYING_ARTWORK, ...this.nowPlaying }, {
         // No seek buttons. A story is played as one-sentence clips, so the
@@ -1068,6 +1111,7 @@ class StoryAudioService {
         showSeekForward: false,
         showSeekBackward: false,
       });
+      lockScreenClaimed(this.player);
     } catch (e) {
       quietly(e, 'services/storyAudioService');
   // Not available on every platform or simulator; playback is unaffected.
@@ -1076,6 +1120,7 @@ class StoryAudioService {
 
   private clearLockScreen(): void {
     if (!this.player) return;
+    lockScreenReleased(this.player);
     try {
       this.player.clearLockScreenControls();
     } catch {
