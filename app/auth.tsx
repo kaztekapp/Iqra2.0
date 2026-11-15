@@ -9,10 +9,9 @@ import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, sign
 import { color, radius } from '../src/theme/tokens';
 import { errorMessage, errorCode } from '../src/lib/report';
 
-// Apple: the app ID and the build already carry Sign in with Apple. Turn this on
-// once the Apple provider is switched on in Supabase (client ID com.iqra2.app).
-const APPLE_PROVIDER_READY = false;
-const SHOW_APPLE = APPLE_PROVIDER_READY && Platform.OS === 'ios';
+// Apple: the app ID and every iOS build carry Sign in with Apple, and the
+// provider is on in Supabase (client ID com.iqra2.app) since 2026-11-15.
+const SHOW_APPLE = Platform.OS === 'ios';
 // Google shows itself as soon as its client IDs are in the environment. iOS also
 // needs its own client ID (and its URL scheme in the build), or the SDK fails.
 const SHOW_GOOGLE =
