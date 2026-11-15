@@ -18,6 +18,7 @@
  * new way to touch the disk: the first version of this file did, and the
  * result was a Save button that quietly saved nothing.
  */
+import { AppState } from 'react-native';
 import * as LegacyFileSystem from 'expo-file-system/legacy';
 import { Directory, File, Paths } from 'expo-file-system';
 import { quietly } from '../../lib/report';
@@ -129,6 +130,7 @@ export async function keepClip(name: string, bytes: Uint8Array): Promise<string>
   }
   f.write(bytes);
   if (!f.exists || (f.size ?? 0) === 0) throw new Error('voice_store_write_failed');
+  if (knownTotal !== null) knownTotal += bytes.length;
   return f.uri;
 }
 
@@ -139,10 +141,20 @@ export function isKeptClip(uri: string): boolean {
 }
 
 /**
+ * The store's size as last walked, plus what has been saved since; null until
+ * the first walk. Walking it is NOT cheap: every one of its thousands of files
+ * is asked for its size and date. Doing that after every save, while a story
+ * saved itself ahead on Wi-Fi, kept the processor above 80% and iOS killed the
+ * app in the background (cpu_resource_fatal, 2026-11-15). Now it is walked
+ * once per launch, in the foreground, and again only past the cap.
+ */
+let knownTotal: number | null = null;
+
+/**
  * Drop the oldest clips until the store is under its cap.
  *
- * Called after a save rather than on a timer: the store only grows when
- * something is saved, and walking the directory is cheap next to synthesis.
+ * Called after every save; returns at once while the running total is under
+ * the cap.
  */
 export function pruneClips(): void {
   const uri = storeUri();
@@ -150,6 +162,10 @@ export function pruneClips(): void {
   // restarts, and gating meant a store that was full from yesterday was never
   // trimmed until something new was saved into it.
   if (!uri) return;
+  if (knownTotal !== null && knownTotal <= MAX_BYTES) return;
+  // The first walk waits for the foreground: in the background its cost
+  // counts against the processor limit iOS enforces there.
+  if (knownTotal === null && AppState.currentState !== 'active') return;
   try {
     const files = new Directory(uri).list().filter((e): e is File => e instanceof File);
     let total = 0;
@@ -159,6 +175,7 @@ export function pruneClips(): void {
       total += size;
       rows.push({ f, size, at: f.modificationTime ?? 0 });
     }
+    knownTotal = total;
     if (total <= MAX_BYTES) return;
     rows.sort((a, b) => a.at - b.at); // oldest first
     for (const row of rows) {
@@ -166,6 +183,7 @@ export function pruneClips(): void {
       try {
         row.f.delete();
         total -= row.size;
+        knownTotal = total;
       } catch (e) {
         quietly(e, 'services/speech/arabicVoiceCache');
   // A file that will not delete is not worth failing a save over.
@@ -195,6 +213,7 @@ export function clipStoreSize(): number {
 export function clearClips(): void {
   const uri = storeUri();
   if (!uri) return;
+  knownTotal = null;
   try {
     for (const e of new Directory(uri).list()) {
       try {
