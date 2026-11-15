@@ -1,0 +1,14 @@
+diff --git a/node_modules/expo-audio/android/src/main/java/expo/modules/audio/service/AudioControlsService.kt b/node_modules/expo-audio/android/src/main/java/expo/modules/audio/service/AudioControlsService.kt
+index 196a5d5..a4bc5f7 100644
+--- a/node_modules/expo-audio/android/src/main/java/expo/modules/audio/service/AudioControlsService.kt
++++ b/node_modules/expo-audio/android/src/main/java/expo/modules/audio/service/AudioControlsService.kt
+@@ -184,6 +184,9 @@ class AudioControlsService : MediaSessionService() {
+       .setContentIntent(buildContentIntent())
+       .setAutoCancel(false)
+       .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
++      // Iqra patch: media controls must be public, or a phone with a secure lock
++      // screen hides them there (Android 10 and older draw them as a notification).
++      .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+ 
+     val style = MediaStyleNotificationHelper.MediaStyle(session)
+ 
