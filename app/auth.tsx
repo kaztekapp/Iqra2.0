@@ -159,7 +159,8 @@ export default function AuthScreen() {
     if (isAnyLoading) return;
     setSocialLoading('google');
     try {
-      await signInWithGoogle();
+      const signedIn = await signInWithGoogle();
+      if (!signedIn) return;
       router.replace('/(tabs)');
     } catch (err) {
       // statusCodes.SIGN_IN_CANCELLED = '12501', IN_PROGRESS = '12502'

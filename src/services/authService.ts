@@ -66,6 +66,10 @@ export async function signInWithGoogle() {
 
   await GoogleSignin.hasPlayServices();
   const response = await GoogleSignin.signIn();
+  // Since google-signin 13 a dismissed account picker resolves with
+  // { type: 'cancelled' } instead of throwing: that is the reader changing
+  // their mind, not an error.
+  if (response?.type === 'cancelled') return null;
   const idToken = response.data?.idToken;
   if (!idToken) throw new Error('No ID token from Google');
 
