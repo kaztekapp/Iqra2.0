@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 import { unregisterPushToken } from './push';
 import { flushProgress, stopProgressSync, forgetProgressOwner } from './progressSync';
 import { useSettingsStore } from '../stores/settingsStore';
+import { quietly } from '../lib/report';
 import { clearCommunityCache } from './communityCache';
 import { clearAllGroupSnapshots } from './groupContentCache';
 
@@ -101,6 +102,13 @@ export async function signInWithApple() {
   );
   if (error) throw error;
 
+  // Keep Apple's refresh token server-side, so it can be revoked if the
+  // account is deleted (App Store Review Guideline 5.1.1(v)). The code is
+  // good for five minutes and once; signing in does not wait on this.
+  if (credential.authorizationCode) {
+    keepAppleToken(credential.authorizationCode).catch((e) => quietly(e, 'authService apple-token store'));
+  }
+
   // Apple only provides the user's name on the first sign-in.
   // Persist it in the Supabase user metadata if available.
   if (credential.fullName) {
@@ -114,6 +122,26 @@ export async function signInWithApple() {
   }
 
   return data;
+}
+
+async function keepAppleToken(code: string): Promise<void> {
+  const { error } = await getClient().functions.invoke('apple-token', { body: { action: 'store', code } });
+  if (error) throw error;
+}
+
+/**
+ * Revoke the account's Sign in with Apple token with Apple, before the
+ * account goes (App Store Review Guideline 5.1.1(v)). The server knows whether
+ * there is one; for an account that never used Apple this is a no-op.
+ */
+async function revokeAppleToken(): Promise<void> {
+  const user = useSettingsStore.getState().user;
+  const usedApple =
+    user?.app_metadata?.provider === 'apple' ||
+    (Array.isArray(user?.app_metadata?.providers) && user.app_metadata.providers.includes('apple'));
+  if (!usedApple) return;
+  const { error } = await getClient().functions.invoke('apple-token', { body: { action: 'revoke' } });
+  if (error) throw error;
 }
 
 export async function signOut() {
@@ -168,6 +196,8 @@ export async function updatePassword(newPassword: string) {
  */
 export async function deleteAccount() {
   const client = getClient();
+  // First, while the session can still prove whose token it is.
+  await revokeAppleToken();
   await deleteOwnStorageObjects();
   await deleteOwnProgressCopy();
   const { error } = await client.rpc('delete_own_account');
