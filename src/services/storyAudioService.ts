@@ -190,7 +190,7 @@ class StoryAudioService {
   private paused = false;
   private supportsDevicePause: boolean | null = null;
   private voiceCache = new Map<string, string | undefined>();
-  private gender: VoiceGender = 'female';
+  private gender: VoiceGender = 'male';
   /**
    * Which engine this listening session settled on. Chosen once and only ever
    * degraded: hearing the voice change halfway through a chapter is worse

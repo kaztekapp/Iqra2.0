@@ -591,7 +591,7 @@ const FEMALE = ['laila', 'maryam', 'amira', 'hoda', 'salma', 'zeina', 'lana', 's
 const MALE = ['maged', 'majed', 'tarik', 'omar', 'khaled', 'ahmed', 'hassan', 'male'];
 
 let voicePromise: Promise<string | undefined> | null = null;
-let preferredGender: 'female' | 'male' = 'female';
+let preferredGender: 'female' | 'male' = 'male';
 
 /**
  * The neural Arabic voice. The Quran is always recited by Hamed, whoever
