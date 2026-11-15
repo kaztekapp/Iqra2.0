@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image, TurboModuleRegistry } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -14,9 +14,12 @@ import { errorMessage, errorCode } from '../src/lib/report';
 const SHOW_APPLE = Platform.OS === 'ios';
 // Google shows itself as soon as its client IDs are in the environment. iOS also
 // needs its own client ID (and its URL scheme in the build), or the SDK fails.
+// And only where the app carries Google Sign-In's native code: Expo Go does
+// not, and tapping the button there threw "RNGoogleSignin could not be found".
 const SHOW_GOOGLE =
   !!process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID &&
-  (Platform.OS !== 'ios' || !!process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID);
+  (Platform.OS !== 'ios' || !!process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID) &&
+  TurboModuleRegistry.get('RNGoogleSignin') != null;
 
 /** Google's own mark, in its four colours, as its sign-in guidelines ask. */
 function GoogleMark() {
