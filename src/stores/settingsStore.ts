@@ -62,6 +62,22 @@ interface SettingsState {
   setSession: (session: Session | null) => void;
 }
 
+export const SETTINGS_VERSION = 1;
+
+/**
+ * Bring settings saved by an older version up to date.
+ *
+ * Version 1: the story voice became male by default. Before it every install
+ * saved 'female' whether or not anyone chose it, so a saved 'female' cannot
+ * be told apart from the old default; everyone moves to male once, and a
+ * listener who wants the female voice picks it again in the Listen sheet.
+ */
+export function migrateSettings(persisted: unknown, version: number): Record<string, unknown> {
+  const saved = { ...((persisted ?? {}) as Record<string, unknown>) };
+  if (version < 1) saved.narrationVoice = 'male';
+  return saved;
+}
+
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
@@ -81,8 +97,8 @@ export const useSettingsStore = create<SettingsState>()(
       arabicSpeechSpeed: 1.0,
       setArabicSpeechSpeed: (speed) => set({ arabicSpeechSpeed: speed }),
 
-      // Story narration voice
-      narrationVoice: 'female',
+      // Story narration voice. Male by default (see migrateSettings).
+      narrationVoice: 'male',
       setNarrationVoice: (voice) => set({ narrationVoice: voice }),
       learnAfterSurah: 'repeat',
       setLearnAfterSurah: (mode) => set({ learnAfterSurah: mode }),
@@ -115,6 +131,8 @@ export const useSettingsStore = create<SettingsState>()(
     {
       name: 'iqra-settings',
       storage: createJSONStorage(() => AsyncStorage),
+      version: SETTINGS_VERSION,
+      migrate: (persisted, version) => migrateSettings(persisted, version) as unknown as SettingsState,
       // Settings saved before a reminder field existed still get its default.
       merge: (persisted, current) => {
         const saved = (persisted ?? {}) as Partial<SettingsState>;
