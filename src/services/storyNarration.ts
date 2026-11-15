@@ -311,6 +311,10 @@ async function saveAhead(session: NarrationSession, from: number): Promise<void>
     const { utterances, lang } = session;
     // The next line is already being fetched for playback.
     for (let i = from + 2; i < utterances.length; i++) {
+      // Only in the foreground. In the background iOS kills an app that keeps
+      // the processor above 80% for a minute, and saving clip after clip did
+      // (cpu_resource_fatal, 2026-11-15). Playback fetches its own next line.
+      await untilActive();
       if (get().session !== session || get().status === 'idle' || !roomToKeep()) return;
       const u = utterances[i];
       try {
@@ -319,10 +323,26 @@ async function saveAhead(session: NarrationSession, from: number): Promise<void>
       } catch {
         // Skipped: playback fetches it when its turn comes.
       }
+      // A breath between saves, so this stays a background wish.
+      await sleep(SAVE_AHEAD_GAP_MS);
     }
   } finally {
     if (savingAhead === session) savingAhead = null;
   }
+}
+
+const SAVE_AHEAD_GAP_MS = 400;
+
+/** Resolves when the app is (or comes back) in the foreground. */
+function untilActive(): Promise<void> {
+  if (AppState.currentState === 'active') return Promise.resolve();
+  return new Promise((resolve) => {
+    const sub = AppState.addEventListener('change', (next) => {
+      if (next !== 'active') return;
+      sub.remove();
+      resolve();
+    });
+  });
 }
 
 export async function stopNarration(): Promise<void> {
