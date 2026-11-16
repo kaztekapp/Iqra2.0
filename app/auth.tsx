@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 import { color, radius } from '../src/theme/tokens';
-import { errorMessage, errorCode } from '../src/lib/report';
+import { errorMessage, errorCode, reportError } from '../src/lib/report';
 
 // Apple: the app ID and every iOS build carry Sign in with Apple, and the
 // provider is on in Supabase (client ID com.iqra2.app) since 2026-11-15.
@@ -166,6 +166,9 @@ export default function AuthScreen() {
 
       const msg = errorMessage(err).toLowerCase();
       if (msg.includes('canceled') || msg.includes('cancelled')) return;
+      // A failed social sign-in is reported: the alert says only
+      // "something went wrong", and the reason is the part we need.
+      reportError(err, { where: 'auth google sign-in', code: code ?? '' });
       if (msg.includes('play services')) {
         Alert.alert(t('common.error'), t('auth.googlePlayServicesError'));
       } else {
@@ -187,6 +190,7 @@ export default function AuthScreen() {
       if (errorCode(err) === 'ERR_REQUEST_CANCELED' || errorCode(err) === 'ERR_CANCELED') return;
       const msg = errorMessage(err).toLowerCase();
       if (msg.includes('canceled') || msg.includes('cancelled')) return;
+      reportError(err, { where: 'auth apple sign-in', code: errorCode(err) ?? '' });
       Alert.alert(t('common.error'), t('auth.genericError'));
     } finally {
       setSocialLoading(null);
