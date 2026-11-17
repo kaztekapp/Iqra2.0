@@ -20,6 +20,7 @@
 //   supabase functions deploy tts --project-ref <ref>
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
+import { isRecitedArabic, RECITER_VOICE } from './recitedText.ts';
 
 const VOICES: Record<string, string> = {
   'ar-SA-HamedNeural': 'ar-SA',
@@ -31,8 +32,14 @@ const VOICES: Record<string, string> = {
 };
 /** Longer than any verse or story paragraph the app sends in one piece. */
 const MAX_TEXT = 4000;
-/** Fresh (not cached) characters one account may have synthesized per day. */
-const DAILY_CHAR_LIMIT = 60_000;
+/**
+ * Fresh (not cached) characters per day: for one account, and for everyone
+ * together. Accounts are free to make, so the shared cap is what actually
+ * protects the Azure quota (the free tier is 500k characters a month).
+ * Both can be changed with secrets of the same name.
+ */
+const DAILY_CHAR_LIMIT = Number(Deno.env.get('TTS_ACCOUNT_DAILY_CHARS') ?? 8_000);
+const GLOBAL_DAILY_CHAR_LIMIT = Number(Deno.env.get('TTS_GLOBAL_DAILY_CHARS') ?? 16_000);
 const BUCKET = 'tts-cache';
 
 Deno.serve(async (req) => {
@@ -68,6 +75,10 @@ Deno.serve(async (req) => {
     // being settled (2026-11): a recited Quran line is made live, within the
     // per-account budget below. Set the secret TTS_LIVE=off to stop that too.
     if (Deno.env.get('TTS_LIVE') === 'off' || quran !== true) return json({ error: 'not recorded' }, 404);
+    // The flag comes from the caller, so the line has to look like what the
+    // app recites: Hamed's voice, Arabic only. Anything else is "not recorded"
+    // and the app reads it with the phone's own voice.
+    if (voice !== RECITER_VOICE || !isRecitedArabic(text)) return json({ error: 'not recorded' }, 404);
 
     // Fresh synthesis costs money, so it is budgeted per account.
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
@@ -78,6 +89,9 @@ Deno.serve(async (req) => {
       .gte('created_at', since);
     const used = (usage ?? []).reduce((sum, row) => sum + (row.chars as number), 0);
     if (used + text.length > DAILY_CHAR_LIMIT) return json({ error: 'daily limit reached' }, 429);
+    const { data: everyone } = await supa.from('tts_usage').select('chars').gte('created_at', since);
+    const usedByAll = (everyone ?? []).reduce((sum, row) => sum + (row.chars as number), 0);
+    if (usedByAll + text.length > GLOBAL_DAILY_CHAR_LIMIT) return json({ error: 'daily limit reached' }, 429);
 
     const key = Deno.env.get('AZURE_SPEECH_KEY');
     const region = Deno.env.get('AZURE_SPEECH_REGION');
@@ -104,7 +118,8 @@ Deno.serve(async (req) => {
     // Keep it for everyone and count it against this account; neither may
     // stand between the listener and the clip they asked for.
     await Promise.allSettled([
-      supa.storage.from(BUCKET).upload(path, bytes, { contentType: 'audio/mpeg', upsert: true }),
+      // Never replace a clip that exists: a recording is made once.
+      supa.storage.from(BUCKET).upload(path, bytes, { contentType: 'audio/mpeg', upsert: false }),
       supa.from('tts_usage').insert({ user_id: caller.id, chars: text.length }),
       // And on the voice CDN, under the name the app looks for first, so the
       // next listener anywhere is served the recording without this function.
@@ -165,6 +180,9 @@ async function toVoiceCdn(key: string, body: Uint8Array): Promise<void> {
     'cache-control': 'public, max-age=31536000, immutable',
     'content-type': 'audio/mpeg',
     host,
+    // Write only if nothing is there yet: a clip on the CDN is never replaced
+    // by this function (scripts/voice/record.ts owns re-recording).
+    'if-none-match': '*',
     'x-amz-content-sha256': payloadHash,
     'x-amz-date': amzDate,
   };
@@ -177,7 +195,7 @@ async function toVoiceCdn(key: string, body: Uint8Array): Promise<void> {
   const signature = hex(await hmac(k, toSign));
   headers.authorization = `AWS4-HMAC-SHA256 Credential=${id}/${scope}, SignedHeaders=${signed.join(';')}, Signature=${signature}`;
   const res = await fetch(`https://${host}${path}`, { method: 'PUT', headers, body: body as BodyInit });
-  if (!res.ok) console.error('tts: voice CDN put failed', res.status, await res.text());
+  if (!res.ok && res.status !== 412) console.error('tts: voice CDN put failed', res.status, await res.text());
 }
 
 /** SSML is XML; unescaped prose would break the request. */
