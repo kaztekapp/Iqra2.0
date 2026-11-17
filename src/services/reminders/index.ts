@@ -13,6 +13,7 @@ import { quietly } from '../../lib/report';
 import { planReminders, PlannedReminder, ReminderInputs, ResumeTarget } from './plan';
 
 import { notificationsModule } from '../notificationsModule';
+import { isAppRoute } from './route';
 /**
  * Local reminders: "continue the story of Musa", "your 12-day streak ends at
  * midnight", "8 verses are due", "it's Friday — Surah al-Kahf". Scheduled on
@@ -266,6 +267,7 @@ export function reconcileReminders(): Promise<void> {
 // ---- Responding to a tap -------------------------------------------------
 
 function open(route: string): void {
+  if (!isAppRoute(route)) return;
   try {
     router.navigate(route as never);
   } catch {
