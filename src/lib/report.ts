@@ -30,6 +30,31 @@ export const reportingEnabled = DSN.length > 0;
 
 let started = false;
 
+/** An address without its query: the part that can carry text or user ids. */
+export function stripQuery(url: string): string {
+  const cut = url.search(/[?#]/);
+  return cut === -1 ? url : url.slice(0, cut);
+}
+
+/** Request data with every address cut at its query, and the query fields gone. */
+export function withoutQueries<T extends Record<string, unknown>>(data: T): T {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (key === 'http.query' || key === 'http.fragment' || key === 'query_string') continue;
+    out[key] = typeof value === 'string' && /^https?:\/\//.test(value) ? stripQuery(value) : value;
+  }
+  return out as T;
+}
+
+/** A span with no request query in its description or data. */
+export function scrubSpan<S extends { description?: string; data?: Record<string, unknown> }>(span: S): S {
+  return {
+    ...span,
+    description: span.description?.replace(/https?:\/\/\S+/g, stripQuery),
+    data: span.data ? withoutQueries(span.data) : span.data,
+  };
+}
+
 /** Call once, before the root component renders. Safe to call twice. */
 export function initReporting(): void {
   if (started || !reportingEnabled) return;
@@ -52,11 +77,19 @@ export function initReporting(): void {
       return isNetworkFailure(thrown) ? null : event;
     },
     beforeBreadcrumb(breadcrumb) {
-      const url = breadcrumb.data?.url;
-      if (typeof url === 'string' && url.includes('?')) {
-        breadcrumb.data = { ...breadcrumb.data, url: url.split('?')[0] };
-      }
+      if (breadcrumb.data) breadcrumb.data = withoutQueries(breadcrumb.data);
       return breadcrumb;
+    },
+    // Traced requests carry the same addresses as the breadcrumbs, in the
+    // span's description and data (url, http.query), so they get the same
+    // treatment before a transaction leaves the phone.
+    beforeSendSpan(span) {
+      return scrubSpan(span);
+    },
+    beforeSendTransaction(event) {
+      if (event.spans) event.spans = event.spans.map(scrubSpan);
+      if (event.request?.url) event.request = { ...event.request, url: stripQuery(event.request.url), query_string: undefined };
+      return event;
     },
   });
   Sentry.setTag('update.channel', Updates.channel ?? 'none');
