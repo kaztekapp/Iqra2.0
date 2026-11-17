@@ -377,8 +377,10 @@ export async function fetchPartnerSuggestions(userId: string): Promise<StudyPart
 
     // Get progress data for these users
     const userIds = (users || []).map((u: any) => u.id);
+    // Other people's numbers come from the leaderboard view: their own
+    // progress rows are private (20261117_privacy_lockdown).
     const { data: progress } = await client
-      .from('user_arabic_progress')
+      .from('leaderboard')
       .select('user_id, total_xp, current_streak')
       .in('user_id', userIds);
 
@@ -542,7 +544,7 @@ export async function fetchGroupMembers(groupId: string): Promise<any[]> {
 
     const [profilesRes, progressRes] = await Promise.all([
       client.from('user_profiles').select('user_id, display_name').in('user_id', userIds),
-      client.from('user_arabic_progress').select('user_id, total_xp, current_streak').in('user_id', userIds),
+      client.from('leaderboard').select('user_id, total_xp, current_streak').in('user_id', userIds),
     ]);
 
     const nameMap = new Map<string, string>();

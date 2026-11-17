@@ -155,41 +155,17 @@ function mapLeaderboardRows(
  * Fetch real community stats from Supabase.
  */
 export async function fetchCommunityStats(): Promise<CommunityStats> {
-  const client = getClient();
-  const today = new Date().toISOString().split('T')[0];
-
-  // Run queries in parallel
-  const [activeResult, xpResult, streaksResult] = await Promise.all([
-    // Count users who studied today
-    client
-      .from('user_daily_log')
-      .select('user_id', { count: 'exact', head: true })
-      .eq('study_date', today),
-
-    // Sum today's XP
-    client
-      .from('user_daily_log')
-      .select('xp_earned')
-      .eq('study_date', today),
-
-    // Count users with active streaks
-    client
-      .from('user_arabic_progress')
-      .select('user_id', { count: 'exact', head: true })
-      .gt('current_streak', 0),
-  ]);
-
-  const activeLearnersTodayCount = activeResult.count ?? 0;
-  const totalXpEarnedToday = (xpResult.data || []).reduce(
-    (sum: number, row: { xp_earned: number }) => sum + (row.xp_earned || 0),
-    0
-  );
-  const activeStreaksCount = streaksResult.count ?? 0;
-
+  // Totals only: other people's daily logs and progress rows are private
+  // (20261117_privacy_lockdown), so the server adds them up.
+  const { data, error } = await getClient().rpc('community_today_stats');
+  if (error) throw error;
+  const row = (Array.isArray(data) ? data[0] : data) as
+    | { active_learners: number | string; xp_today: number | string; active_streaks: number | string }
+    | undefined;
   return {
-    activeLearnersTodayCount,
+    activeLearnersTodayCount: Number(row?.active_learners ?? 0),
     totalWordsLearnedToday: 0,
-    totalXpEarnedToday,
-    activeStreaksCount,
+    totalXpEarnedToday: Number(row?.xp_today ?? 0),
+    activeStreaksCount: Number(row?.active_streaks ?? 0),
   };
 }
