@@ -574,6 +574,8 @@ export default {
     checkEmail: 'Vérifiez votre e-mail',
     confirmEmailSent: 'Nous avons envoyé un lien de confirmation à votre e-mail. Veuillez vérifier pour vous connecter.',
     genericError: 'Une erreur est survenue. Veuillez réessayer.',
+    appleUnavailableTitle: 'Connexion avec Apple impossible',
+    appleUnavailable: 'La connexion avec Apple n\'a pas pu aboutir sur cet appareil. Vérifiez que vous êtes connecté à votre compte Apple dans Réglages et à Internet, puis réessayez. Vous pouvez aussi vous connecter avec votre e-mail.',
     invalidCredentials: 'E-mail ou mot de passe invalide.',
     emailAlreadyRegistered: 'Cet e-mail est déjà enregistré.',
     networkError: 'Erreur réseau. Vérifiez votre connexion.',

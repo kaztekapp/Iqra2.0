@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { signUpWithEmail, signInWithEmail, resetPassword, signInWithGoogle, signInWithApple } from '../src/services/authService';
 import { color, radius } from '../src/theme/tokens';
-import { errorMessage, errorCode, reportError } from '../src/lib/report';
+import { errorMessage, errorCode, reportError, quietly } from '../src/lib/report';
 
 // Apple: the app ID and every iOS build carry Sign in with Apple, and the
 // provider is on in Supabase (client ID com.iqra2.app) since 2026-11-15.
@@ -194,7 +194,17 @@ export default function AuthScreen() {
       if (errorCode(err) === 'ERR_REQUEST_CANCELED' || errorCode(err) === 'ERR_CANCELED') return;
       const msg = errorMessage(err).toLowerCase();
       if (msg.includes('canceled') || msg.includes('cancelled')) return;
-      reportError(err, { where: 'auth apple sign-in', code: errorCode(err) ?? '' });
+      // Apple's "unknown" failure is the device, not the app: no Apple
+      // Account signed in, or Apple's sign-in servers out of reach (IQRA2-D,
+      // an iPad on iOS 18.2). Say what to check instead of "something went
+      // wrong", and keep it out of the error reports.
+      const code = errorCode(err) ?? '';
+      if (code === 'ERR_REQUEST_UNKNOWN' || code === 'ERR_REQUEST_NOT_INTERACTIVE' || msg.includes('unknown reason')) {
+        quietly(err, 'auth apple sign-in unavailable');
+        Alert.alert(t('auth.appleUnavailableTitle'), t('auth.appleUnavailable'));
+        return;
+      }
+      reportError(err, { where: 'auth apple sign-in', code });
       Alert.alert(t('common.error'), t('auth.genericError'));
     } finally {
       setSocialLoading(null);
