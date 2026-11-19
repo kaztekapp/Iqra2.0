@@ -574,6 +574,8 @@ export default {
     checkEmail: 'Check your email',
     confirmEmailSent: 'We sent a confirmation link to your email. Please verify to sign in.',
     genericError: 'Something went wrong. Please try again.',
+    appleUnavailableTitle: 'Couldn\'t sign in with Apple',
+    appleUnavailable: 'Sign in with Apple couldn\'t finish on this device. Check that you\'re signed in to your Apple Account in Settings and connected to the internet, then try again. You can also sign in with your email.',
     invalidCredentials: 'Invalid email or password.',
     emailAlreadyRegistered: 'This email is already registered.',
     networkError: 'Network error. Please check your connection.',
